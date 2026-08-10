@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lab 4 · Data Visualization — Communicating Status | MIS 320</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0e0e0d; --off-black:#1a1a18;
+  --magenta:#e8197d; --magenta-dark:#c0146a; --magenta-pale:#fdeaf3;
+  --white:#ffffff; --off-white:#f6f4f1;
+  --text-dark:#0e0e0d; --text-muted:#3a3a38; --text-light:#6b6b68;
+  --border:#e0ddd8;
+  --warn:#b3261e; --warn-pale:#fdeceb;
+  --good:#1f7a53; --good-pale:#e8f4ee;
+  --sans:'Space Grotesk',sans-serif; --display:'Oswald',sans-serif;
+  --wrap:1180px; --col:44rem;
+  /* legacy aliases so existing markup keeps working */
+  --navy:#0e0e0d; --navy-soft:#1a1a18; --accent:#e8197d; --accent-deep:#c0146a;
+  --accent-pale:#fdeaf3; --cream:#ffffff; --cream-deep:#f6f4f1; --paper:#ffffff;
+  --ink:#0e0e0d; --muted:#6b6b68; --rule:#e0ddd8; --serif:'Space Grotesk',sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--white);color:var(--text-dark);
+  font-family:var(--sans);font-size:16.5px;line-height:1.65;-webkit-font-smoothing:antialiased}
+
+/* ---------- shell ---------- */
+.shell{max-width:var(--wrap);margin:0 auto;display:grid;grid-template-columns:15rem minmax(0,1fr);gap:3.5rem;padding:0 1.5rem 6rem}
+main{max-width:var(--col);padding-top:2.5rem}
+
+/* ---------- sidebar ---------- */
+.rail{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:2.5rem 0 3rem;border-right:1px solid var(--border)}
+.rail .book{font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--magenta);margin:0 0 .2rem}
+.rail .course{font-size:12px;color:var(--text-light);margin:0 0 1.75rem}
+.rail nav a{display:block;font-size:13.5px;line-height:1.35;color:var(--text-muted);text-decoration:none;padding:.42rem .8rem .42rem .85rem;border-left:2px solid transparent;margin-left:-.85rem}
+.rail nav a:hover{color:var(--magenta);border-left-color:var(--magenta)}
+.rail nav a.sub{font-size:12.5px;color:var(--text-light);padding-left:1.7rem}
+.rail .back{display:inline-block;margin-top:2rem;font-size:12.5px;color:var(--text-light);text-decoration:none}
+.rail .back:hover{color:var(--magenta)}
+.railtoggle{display:none}
+
+/* ---------- chapter head ---------- */
+.chaphead{border-bottom:3px solid var(--black);padding-bottom:1.6rem;margin-bottom:2.5rem}
+.eyebrow{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--magenta);margin:0 0 .7rem}
+.chaphead h1{font-family:var(--display);font-weight:600;font-size:clamp(1.9rem,4.4vw,2.7rem);line-height:1.12;text-transform:uppercase;letter-spacing:.01em;margin:0 0 .6rem;color:var(--black)}
+.chaphead .anchor{font-size:14.5px;color:var(--text-light);margin:0}
+.chaphead .anchor strong{color:var(--text-muted);font-weight:500}
+.meta-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.2rem}
+.meta-row span{font-size:11.5px;letter-spacing:.03em;background:var(--off-white);border:1px solid var(--border);padding:.32rem .65rem;color:var(--text-muted)}
+.meta-row span.alt{background:var(--magenta-pale);border-color:#f6cfe1;color:var(--magenta-dark)}
+
+/* ---------- type ---------- */
+h2{font-family:var(--display);font-weight:600;font-size:1.5rem;line-height:1.22;text-transform:uppercase;letter-spacing:.01em;color:var(--black);margin:3.2rem 0 .9rem}
+h2 .num{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;color:var(--magenta);display:block;margin-bottom:.4rem;text-transform:uppercase}
+h3{font-family:var(--display);font-weight:600;font-size:1.05rem;text-transform:uppercase;letter-spacing:.03em;color:var(--off-black);margin:2rem 0 .55rem}
+p{margin:0 0 1.05rem}
+a{color:var(--magenta-dark)}
+strong{font-weight:600;color:var(--black)}
+.lede{font-size:1.16rem;line-height:1.55;color:var(--text-muted)}
+code.inline{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--off-white);padding:.1em .35em;border:1px solid var(--border)}
+ul,ol{margin:0 0 1.15rem;padding-left:1.3rem}
+li{margin-bottom:.45rem}
+
+/* ---------- pull quote ---------- */
+.pull{margin:2.2rem 0;padding:0 0 0 1.4rem;border-left:3px solid var(--magenta)}
+.pull p{font-family:var(--display);font-weight:400;font-size:1.32rem;line-height:1.3;color:var(--black);margin:0 0 .5rem}
+.pull cite{font-style:normal;font-size:12.5px;color:var(--text-light)}
+
+/* ---------- callouts ---------- */
+.callout{border:1px solid var(--border);border-left:4px solid var(--magenta);background:var(--off-white);padding:1.15rem 1.3rem;margin:1.9rem 0}
+.callout strong:first-child{display:block;font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--magenta);margin-bottom:.5rem}
+.callout p:last-child{margin-bottom:0}
+.callout-caution{border-left-color:var(--warn);background:var(--warn-pale)}
+.callout-caution strong:first-child{color:var(--warn)}
+.callout-bridge{border-left-color:var(--black);background:var(--off-white)}
+.callout-bridge strong:first-child{color:var(--black)}
+.callout-good{border-left-color:var(--good);background:var(--good-pale)}
+.callout-good strong:first-child{color:var(--good)}
+
+/* ---------- signature: value chain rail ---------- */
+.vc{margin:2.4rem 0;border:1px solid var(--border);background:var(--white);overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,.07)}
+.vc-head{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#fff;background:var(--black);padding:.7rem 1rem}
+.vc-strip{display:grid;grid-template-columns:repeat(5,1fr)}
+.vc-cell{padding:.85rem .7rem;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+.vc-cell:last-child{border-right:none}
+.vc-stage{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-light);display:block;margin-bottom:.3rem}
+.vc-cell p{font-size:12.5px;line-height:1.4;margin:0;color:var(--text-muted)}
+.vc-cell.broke{background:var(--magenta-pale)}
+.vc-cell.broke .vc-stage{color:var(--magenta)}
+.vc-cell.broke p{color:#8a1450}
+.vc-note{padding:.8rem 1rem;font-size:12.5px;color:var(--text-light);background:var(--off-white);border-top:1px solid var(--border)}
+.vc-note b{color:var(--magenta);font-weight:600}
+
+/* ---------- stat band ---------- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(8.5rem,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin:2rem 0}
+.stat{background:var(--white);padding:1rem .9rem}
+.stat b{display:block;font-family:var(--display);font-weight:700;font-size:1.6rem;color:var(--magenta);line-height:1.1}
+.stat span{display:block;font-size:11.5px;line-height:1.3;color:var(--text-light);margin-top:.3rem}
+
+/* ---------- timeline ---------- */
+.tl{list-style:none;padding:0;margin:1.8rem 0;border-left:2px solid var(--border)}
+.tl li{position:relative;padding:0 0 1.1rem 1.3rem;margin:0}
+.tl li:before{content:"";position:absolute;left:-5px;top:.55em;width:8px;height:8px;border-radius:50%;background:var(--magenta)}
+.tl li.bad:before{background:var(--warn)}
+.tl .when{font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--magenta);display:block}
+.tl li.bad .when{color:var(--warn)}
+
+/* ---------- vocabulary ---------- */
+.vocab{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin:1.8rem 0}
+.vocab div{background:var(--white);padding:.95rem 1rem}
+.vocab dt{font-family:var(--display);font-weight:600;font-size:13.5px;text-transform:uppercase;letter-spacing:.03em;color:var(--black);margin-bottom:.3rem}
+.vocab dd{margin:0;font-size:13.5px;line-height:1.5;color:var(--text-muted)}
+
+/* ---------- discussion questions ---------- */
+.dq{counter-reset:dq;margin:1.6rem 0 0;padding:0;list-style:none}
+.dq li{counter-increment:dq;position:relative;padding:1rem 0 1rem 2.6rem;border-top:1px solid var(--border)}
+.dq li:last-child{border-bottom:1px solid var(--border)}
+.dq li:before{content:counter(dq,decimal-leading-zero);position:absolute;left:0;top:1.05rem;font-family:var(--display);font-size:13px;font-weight:600;color:var(--magenta)}
+.tag{display:inline-block;font-family:var(--display);font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:.2rem .5rem;margin-left:.5rem;vertical-align:.12em}
+.tag-hard{background:var(--warn);color:#fff}
+.tag-open{background:var(--black);color:#fff}
+.tag-warm{background:var(--magenta-pale);color:var(--magenta-dark)}
+
+/* ---------- sources ---------- */
+.sources{margin-top:3.5rem;padding-top:1.2rem;border-top:1px solid var(--border);font-size:13px;color:var(--text-light)}
+.sources h3{font-family:var(--display);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin:0 0 .6rem}
+.sources li{margin-bottom:.35rem;line-height:1.5}
+
+/* ---------- responsive ---------- */
+@media (max-width:860px){
+  .shell{grid-template-columns:1fr;gap:0;padding:0 1.15rem 4rem}
+  .rail{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);padding:1.5rem 0 1rem;margin-bottom:.5rem}
+  .rail nav{display:none}
+  .rail nav.open{display:block;margin-top:.8rem}
+  .railtoggle{display:inline-block;font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--magenta);background:none;border:1px solid var(--border);padding:.4rem .7rem;cursor:pointer}
+  main{padding-top:1.2rem}
+  .vc-strip{grid-template-columns:repeat(2,1fr)}
+}
+:focus-visible{outline:2px solid var(--magenta);outline-offset:2px}
+
+.cp{border:1px solid var(--rule);background:var(--paper);border-radius:2px;margin:1rem 0;padding:1rem 1.15rem}
+.cp.locked{opacity:.45;pointer-events:none}
+.cp.done{border-left:4px solid var(--good);background:var(--good-pale)}
+.cp .q{font-family:var(--sans);font-size:.92rem;color:var(--navy);margin:0 0 .6rem;font-weight:500}
+.cp input[type=text]{font-family:var(--sans);font-size:.9rem;padding:.45rem .6rem;border:1px solid var(--rule);border-radius:2px;width:14rem;max-width:100%}
+.cp button{font-family:var(--sans);font-size:.8rem;font-weight:600;letter-spacing:.04em;background:var(--accent-deep);color:#fff;border:none;border-radius:2px;padding:.5rem .9rem;cursor:pointer;margin-left:.4rem}
+.cp button.hintb{background:none;color:var(--accent-deep);border:1px solid var(--rule)}
+.cp .msg{font-family:var(--sans);font-size:.8rem;margin:.5rem 0 0}
+.cp .hint{font-family:var(--sans);font-size:.8rem;color:var(--muted);margin:.5rem 0 0;display:none;border-top:1px dashed var(--rule);padding-top:.5rem}
+.progress{position:sticky;top:0;z-index:5;background:var(--black);color:#fff;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:.6rem 1rem;margin:1.5rem 0}
+.certbox{border:2px solid var(--black);background:var(--paper);padding:1.2rem 1.3rem;margin:1.5rem 0;display:none}
+.certbox.show{display:block}
+.certbox h3{margin-top:0}
+.codebox code{font-family:ui-monospace,Menlo,monospace;background:var(--cream-deep);padding:.15em .45em;border-radius:2px}
+</style></head><body>
+<div class="shell">
+<aside class="rail">
+  <p class="book">MIS 320</p><p class="course">Introduction to Information Systems</p>
+  <button class="railtoggle" aria-expanded="false" aria-controls="chapnav">Lab contents</button>
+  <nav id="chapnav">
+    <a href="#top">Overview</a><a href="#steps">The work</a>
+    <a href="#checkpoints">Checkpoints</a><a href="#submit">What to submit</a>
+    <a href="chapter4-healthcaregov.html">↳ Chapter 4 · Systems Analysis</a>
+  </nav>
+  <a class="back" href="index.html">← All chapters &amp; labs</a>
+</aside>
+<main id="top">
+<header class="chaphead">
+  <p class="eyebrow">Lab 4 · Week 4</p>
+  <h1>Data Visualization — Communicating Status</h1>
+  <div class="meta-row"><span>Lab session · 80 min</span><span class="alt">Pairs with Chapter 4 · Systems Analysis</span></div>
+</header>
+<p class="lede">Healthcare.gov failed in part because nobody built the picture that would
+  have made the truth undeniable. A chart is not decoration — it is how a system's status gets
+  communicated to the people who decide. This week you build Cascadia's status pictures, and you
+  build them honestly.</p>
+  <p>Work from your <strong>cleaned</strong> Lab 3 file, or re-download
+  <a href="cascadia-sales-2025.xlsx">the clean workbook</a>.</p>
+<div class="callout callout-bridge"><strong>From lecture to lab</strong><p><strong>Lab professor's intro (10 min):</strong> Connect to Monday's Healthcare.gov
+  case: the site's builders had no dashboard that told leadership, honestly, whether the system was
+  ready — status was communicated in meetings, optimistically. This lab is about charts as honest
+  status instruments. Students pivot the Cascadia data and build a small dashboard: monthly revenue
+  line, category bar, store comparison. Emphasize chart-type choice (time = line, comparison = bar)
+  and axis honesty. Difficulty is moderate; pivots were previewed in DataCamp's Visualization
+  module.</p></div>
+<div id="steps">
+<h2><span class="num">Skills</span>Pivot tables, line charts, bar charts, dashboard assembly</h2>
+<ol>
+<li><strong>Monthly revenue, as a line.</strong> Pivot with sale_date grouped by month against
+revenue; insert a line chart. Seasonality should jump out — this is a gear co-op, and the calendar
+is its heartbeat.</li>
+<li><strong>Category revenue, as bars.</strong> New pivot, categories sorted descending, bar chart.
+Resist 3-D. Resist pie.</li>
+<li><strong>Store comparison.</strong> Revenue by store, bars, sorted. Title it as a claim, not a
+label: "Seattle Flagship carries a fifth of the co-op" beats "Revenue by Store."</li>
+<li><strong>Assemble.</strong> Arrange the three charts on one sheet named
+<code class="inline">Dashboard</code> so a manager gets the year in one glance.</li>
+</ol>
+<div class="callout"><strong>Axis honesty</strong>
+<p>Truncating a bar chart's y-axis manufactures drama the data doesn't contain. Healthcare.gov's
+leadership got optimistic pictures for three years; the correction arrived all at once on launch
+day. Your dashboards should make bad news visible early, because that is what dashboards are
+for.</p></div>
+<div class="callout callout-bridge"><strong>What you have not been asked to chart</strong>
+<p>Notice this dashboard says nothing about <em>members</em>. Revenue looks healthy everywhere. In
+Lab 5, after the exam, the co-op's board asks a question this dashboard cannot answer — and you will
+find that healthy revenue can hide a sick store.</p></div></div>
+
+<h2 id="checkpoints"><span class="num">Required</span>Checkpoints <span style="font-weight:400;color:var(--muted);font-size:.65em">— complete as you work</span></h2>
+<p style="font-family:var(--sans);font-size:.88rem">Each checkpoint matches a step above. Do the work in
+Excel, paste your answer, and a correct answer unlocks the next. Clear them all, write your reflection,
+and download your completion certificate for Canvas. <strong>Progress lives only on this page</strong> —
+download the certificate before closing or refreshing.</p>
+<div class="progress" id="prog">Checkpoint progress: 0 / 6</div>
+<div id="cps"></div>
+<div class="certbox" id="reflectbox">
+  <h3>Reflection — required before your certificate</h3>
+  <p style="font-family:var(--sans);font-size:.88rem">A chart is how a system's status reaches the people who decide. In your intended field, describe one situation where an honest chart shown early would change a decision — and one way a chart in that field could technically be accurate while still misleading the person reading it.</p>
+  <p style="font-family:var(--sans);font-size:.8rem;color:var(--muted)">Write at least 50 words. Your
+  reflection prints as page 2 of your certificate PDF, so your lab professor reads it alongside your
+  verification code.</p>
+  <textarea id="refl" rows="6" style="width:100%;font-family:var(--sans);font-size:.9rem;padding:.6rem;border:1px solid var(--rule);border-radius:2px" aria-label="Lab reflection"></textarea>
+  <p class="msg" id="reflcount" style="font-family:var(--sans);font-size:.8rem;color:var(--muted)">0 words</p>
+</div>
+<div class="certbox" id="certbox">
+  <h3>All checkpoints cleared</h3>
+  <p style="font-family:var(--sans);font-size:.88rem">Enter your name exactly as it appears in Canvas,
+  then download your certificate. The verification code is unique to your name and this lab.</p>
+  <input type="text" id="nm" placeholder="Last, First" aria-label="Your name as in Canvas">
+  <button onclick="cert()">Download certificate (PDF)</button>
+  <p class="codebox" id="codeout" style="font-family:var(--sans);font-size:.85rem"></p>
+</div>
+
+<h2 id="submit"><span class="num">Canvas</span>What to submit</h2>
+<p style="font-family:var(--sans);font-size:.92rem">Your workbook as LAB4_Last_First.xlsx with the Dashboard sheet, plus your completion certificate PDF (your reflection is page 2 of it).</p>
+</main></div>
+<script>
+(function(){var b=document.querySelector('.railtoggle'),n=document.getElementById('chapnav');
+if(!b||!n)return;b.addEventListener('click',function(){var o=n.classList.toggle('open');
+b.setAttribute('aria-expanded',o?'true':'false');});})();
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+const LAB="LAB4", QS=[{"q": "Checkpoint 1 \u00b7 Chart monthly revenue as a line. Which month is the peak?", "t": "txt", "a": "SmFudWFyeQ==", "h": "Group sale_date by month first \u2014 a pivot table with sale_date in Rows (grouped by month) and revenue in Values, then insert a line chart from it."}, {"q": "Checkpoint 2 \u00b7 Revenue for that peak month, in dollars?", "t": "num", "a": "NjkyNTkuMzU=", "tol": 1, "h": "Read it off your pivot, not the chart."}, {"q": "Checkpoint 3 \u00b7 Which month is the trough?", "t": "txt", "a": "QXByaWw=", "h": "Look for the shoulder season \u2014 after ski gear stops selling and before camping starts."}, {"q": "Checkpoint 4 \u00b7 Build a bar chart of revenue by category. Which category leads?", "t": "txt", "a": "Q2FtcGluZw==", "h": "Pivot: category in Rows, revenue in Values, sort descending, insert bar chart."}, {"q": "Checkpoint 5 \u00b7 Revenue for that leading category?", "t": "num", "a": "MTk3MzQ0Ljk1", "tol": 1, "h": "Same pivot as Checkpoint 4."}, {"q": "Checkpoint 6 \u00b7 Top single product by revenue across the year?", "t": "txt", "a": "VG91cmluZyBTa2kgUGFja2FnZQ==", "h": "Swap category for product in your pivot Rows. One product is far ahead."}];
+const solved=new Set();
+const norm=s=>s.replace(/[$,\s]/g,'').toLowerCase();
+function render(){
+ const c=document.getElementById('cps');c.innerHTML='';
+ QS.forEach((q,i)=>{
+  const d=document.createElement('div');
+  d.className='cp'+(solved.has(i)?' done':(i>0&&!solved.has(i-1)?' locked':''));
+  d.innerHTML='<p class="q">'+q.q+'</p>'
+   +(solved.has(i)?'<p class="msg" style="color:var(--good)">Correct.</p>'
+   :'<input type="text" id="in'+i+'" aria-label="Answer '+(i+1)+'">'
+   +'<button onclick="chk('+i+')">Check</button>'
+   +'<button class="hintb" onclick="hint('+i+')">Hint</button>'
+   +'<p class="msg" id="m'+i+'"></p><p class="hint" id="h'+i+'">'+q.h+'</p>');
+  c.appendChild(d);});
+ document.getElementById('prog').textContent='Checkpoint progress: '+solved.size+' / '+QS.length;
+ const done=solved.size===QS.length;
+ document.getElementById('reflectbox').className='certbox'+(done?' show':'');
+ document.getElementById('certbox').className='certbox'+(done&&wc()>=50?' show':'');
+}
+function wc(){const t=document.getElementById('refl');return t?t.value.trim().split(/\s+/).filter(Boolean).length:0}
+document.addEventListener('input',function(e){
+ if(e.target&&e.target.id==='refl'){
+  const n=wc();document.getElementById('reflcount').textContent=n+' words'+(n<50?' — '+(50-n)+' more to unlock your certificate':' — certificate unlocked below');
+  document.getElementById('certbox').className='certbox'+(solved.size===QS.length&&n>=50?' show':'');
+ }
+});
+function hint(i){const h=document.getElementById('h'+i);h.style.display=h.style.display==='block'?'none':'block'}
+function chk(i){
+ const v=document.getElementById('in'+i).value,m=document.getElementById('m'+i);
+ if(!v.trim()){m.textContent='Enter an answer first.';m.style.color='#7d6608';return}
+ const ans=atob(QS[i].a);let ok=false;
+ if(QS[i].t==='num'){const g=parseFloat(norm(v)),a=parseFloat(ans);ok=!isNaN(g)&&Math.abs(g-a)<=QS[i].tol}
+ else ok=norm(v)===norm(ans);
+ if(ok){solved.add(i);render()}
+ else{m.textContent='Not yet — check the hint, or re-read the step above.';m.style.color='#a03434'}
+}
+function h32(s){let h=5381;for(const c of s)h=((h<<5)+h+c.charCodeAt(0))|0;return(h>>>0).toString(36).toUpperCase()}
+function cert(){
+ const n=document.getElementById('nm').value.trim();
+ if(!n){document.getElementById('codeout').textContent='Enter your name first.';return}
+ const r=document.getElementById('refl').value.trim();
+ if(wc()<50){document.getElementById('codeout').textContent='Finish your 50-word reflection above first.';return}
+ const code=LAB+'-'+h32(n.toLowerCase()+'|'+LAB+'|'+QS.length);
+ const d=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+ const {jsPDF}=window.jspdf;const p=new jsPDF({orientation:'landscape',unit:'pt',format:[560,380]});
+ p.setFillColor(11,29,51);p.rect(0,0,560,380,'F');
+ p.setFillColor(253,252,250);p.rect(16,16,528,348,'F');
+ p.setTextColor(26,82,118);p.setFont('helvetica','bold');p.setFontSize(10);
+ p.text('MIS 320 \u00B7 INTRODUCTION TO INFORMATION SYSTEMS \u00B7 WWU',280,58,{align:'center'});
+ p.setTextColor(26,26,26);p.setFont('times','bold');p.setFontSize(26);
+ p.text('Certificate of Lab Completion',280,105,{align:'center'});
+ p.setFont('times','normal');p.setFontSize(13);p.text('This certifies that',280,140,{align:'center'});
+ p.setFont('times','bold');p.setFontSize(20);p.text(n,280,170,{align:'center'});
+ p.setFont('times','normal');p.setFontSize(13);
+ p.text('completed all '+QS.length+' checkpoints of',280,198,{align:'center'});
+ p.setFont('helvetica','bold');p.setFontSize(15);p.setTextColor(26,82,118);
+ p.text('Lab 4 \u00B7 Data Visualization — Communicating Status',280,222,{align:'center'});
+ p.setFont('helvetica','normal');p.setFontSize(11);p.setTextColor(90,90,90);
+ p.text(d,280,252,{align:'center'});
+ p.setFont('courier','bold');p.setFontSize(12);p.setTextColor(17,120,100);
+ p.text('Verification code: '+code,280,290,{align:'center'});
+ p.setFontSize(8);p.setFont('helvetica','normal');p.setTextColor(150,150,150);
+ p.text('Upload this PDF to Canvas. Reflection on page 2. Code is unique to name + lab.',280,330,{align:'center'});
+ p.addPage([560,380],'landscape');
+ p.setFillColor(253,252,250);p.rect(0,0,560,380,'F');
+ p.setDrawColor(11,29,51);p.setLineWidth(2);p.rect(16,16,528,348);
+ p.setTextColor(26,82,118);p.setFont('helvetica','bold');p.setFontSize(10);
+ p.text('LAB REFLECTION \u00B7 '+n+' \u00B7 '+code,280,44,{align:'center'});
+ p.setTextColor(60,60,60);p.setFont('times','italic');p.setFontSize(9);
+ const promptLines=p.splitTextToSize('Prompt: A chart is how a system\'s status reaches the people who decide. In your intended field, describe one situation where an honest chart shown early would change a decision — and one way a chart in that field could technically be accurate while still misleading the person reading it.',480);
+ p.text(promptLines,40,70);
+ p.setFont('times','normal');p.setFontSize(11);p.setTextColor(26,26,26);
+ const lines=p.splitTextToSize(r,480);
+ p.text(lines.slice(0,22),40,70+promptLines.length*11+14);
+ p.save(LAB+'_certificate_'+n.replace(/[^a-z0-9]/gi,'_')+'.pdf');
+ document.getElementById('codeout').innerHTML='Certificate downloaded (reflection on page 2). Your code: <code>'+code+'</code>';
+}
+render();
+</script>
+
+</body></html>

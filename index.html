@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Introduction to Information Systems — MIS 320 | Western Washington University</title>
+<meta name="description" content="A free, case-based digital textbook for MIS 320. Real companies, real failures, hands-on Excel, Tableau, and SQL labs with a single running client.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0e0e0d; --navy2:#1a1a18; --blue:#e8197d; --blue-bright:#e8197d;
+  --white:#ffffff; --off:#f6f4f1; --ink:#0e0e0d; --muted:#3a3a38;
+  --border:#e0ddd8; --warn:#b3261e;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{font-family:'Space Grotesk',sans-serif;background:var(--white);color:var(--ink);line-height:1.6}
+a{color:inherit}
+
+nav.top{position:sticky;top:0;z-index:50;background:var(--navy);border-bottom:1px solid rgba(255,255,255,.1);padding:.85rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.nav-brand{font-family:'Oswald',sans-serif;color:var(--blue-bright);font-size:15px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none}
+.nav-links{display:flex;gap:1.4rem;font-size:13px}
+.nav-links a{color:rgba(255,255,255,.75);text-decoration:none}
+.nav-links a:hover{color:#fff}
+@media(max-width:640px){.nav-links{display:none}}
+
+.hero{background:var(--navy);color:#fff;padding:4.5rem 1.5rem 4rem}
+.hero-inner{max-width:1080px;margin:0 auto}
+.hero-stamp{font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--blue-bright);margin-bottom:1.1rem}
+.hero h1{font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(2rem,5vw,3.4rem);line-height:1.12;text-transform:uppercase;letter-spacing:.01em}
+.hero-sub{font-size:17px;color:rgba(255,255,255,.75);max-width:44rem;margin:1.4rem 0 0}
+.hero-tagline{font-size:15px;color:rgba(255,255,255,.55);font-style:italic;margin-top:.9rem}
+.hero-tagline a{color:rgba(255,255,255,.7)}
+.hero-meta{display:flex;flex-wrap:wrap;gap:2.5rem;margin-top:2.8rem}
+.hero-meta-num{font-family:'Oswald',sans-serif;font-size:28px;font-weight:700;color:var(--blue-bright)}
+.hero-meta-label{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+
+section{padding:3.6rem 1.5rem}
+.inner{max-width:1080px;margin:0 auto}
+.section-label{font-family:'Oswald',sans-serif;font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);margin-bottom:.35rem}
+h2.sec{font-family:'Oswald',sans-serif;font-weight:600;font-size:1.7rem;text-transform:uppercase;letter-spacing:.01em;margin-bottom:1rem}
+.sec-sub{color:var(--muted);max-width:46rem;margin-bottom:1.8rem}
+
+.about{background:var(--off)}
+.about-features{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.4rem;margin-top:2rem}
+.feature-item .fi-title{font-weight:600;margin:.4rem 0 .25rem}
+.feature-item p{font-size:14px;color:var(--muted)}
+.feature-icon{font-size:22px}
+
+.how-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.4rem;margin-top:1.6rem}
+.how-step{border:1px solid var(--border);padding:1.3rem 1.4rem;background:#fff}
+.how-step-num{font-family:'Oswald',sans-serif;font-size:26px;font-weight:700;color:var(--blue)}
+.how-step h4{font-weight:600;margin:.4rem 0 .3rem}
+.how-step p{font-size:14px;color:var(--muted)}
+
+.chainband{background:var(--navy);color:#fff}
+.chain-steps{display:flex;flex-wrap:wrap;align-items:stretch;gap:.6rem;margin-top:1.8rem}
+.chain-step{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);padding:.85rem 1.15rem;text-align:center;min-width:106px;flex:1}
+.chain-step b{font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.05em;text-transform:uppercase;font-size:13px;display:block}
+.chain-step span{font-size:11.5px;color:rgba(255,255,255,.55)}
+.chain-arrow{align-self:center;color:var(--blue-bright);font-size:18px}
+.chain-note{margin-top:1.6rem;font-size:14px;color:rgba(255,255,255,.65);max-width:46rem}
+.chain-note b{color:#fff}
+
+.chapter-card{border:1px solid var(--border);box-shadow:0 2px 16px rgba(0,0,0,.07);margin-bottom:1.75rem;overflow:hidden}
+.chapter-header{background:var(--navy);color:#fff;padding:1.15rem 1.4rem;display:flex;flex-wrap:wrap;justify-content:space-between;gap:.8rem;align-items:flex-end}
+.chapter-num{font-family:'Oswald',sans-serif;font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;opacity:.85;margin-bottom:.35rem}
+.chapter-title{font-family:'Oswald',sans-serif;font-weight:600;font-size:1.25rem;line-height:1.25;text-transform:uppercase}
+.chapter-company{font-size:13px;opacity:.6}
+.chapter-links{display:flex;gap:.6rem}
+.btn{display:inline-block;padding:.5rem 1.1rem;font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;transition:opacity .15s}
+.btn:hover{opacity:.85}
+.btn-solid{background:var(--blue);color:#fff}
+.btn-outline{border:1px solid rgba(255,255,255,.45);color:#fff}
+.chapter-body{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.4rem;padding:1.3rem 1.4rem;background:#fff}
+.chapter-body h5{font-family:'Oswald',sans-serif;font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--blue);margin-bottom:.5rem}
+.chapter-body ul{list-style:none;font-size:13.5px;color:var(--muted)}
+.chapter-body li{padding:.16rem 0}
+.chapter-body li:before{content:"— ";color:var(--border)}
+
+.lab-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem;margin-top:1.4rem}
+.lab-card{border:1px solid var(--border);background:#fff;padding:1.05rem 1.15rem;text-decoration:none;display:block}
+.lab-card:hover{border-color:var(--blue)}
+.lab-num{font-family:'Oswald',sans-serif;font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--blue)}
+.lab-card h4{font-weight:600;font-size:15px;margin:.3rem 0 .25rem}
+.lab-card p{font-size:13px;color:var(--muted)}
+.datarow{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.2rem}
+.datarow a{font-size:13px;border:1px solid var(--border);background:var(--off);padding:.45rem .85rem;text-decoration:none;color:var(--ink)}
+.datarow a:hover{border-color:var(--blue)}
+.soon{color:var(--warn);font-size:13px;font-weight:500}
+
+footer{background:var(--navy);color:rgba(255,255,255,.6);font-size:13px;text-align:center;padding:2.2rem 1.5rem}
+footer a{color:rgba(255,255,255,.8)}
+:focus-visible{outline:2px solid var(--blue-bright);outline-offset:2px}
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <a class="nav-brand" href="index.html">MIS 320 · Intro to Information Systems</a>
+  <div class="nav-links">
+    <a href="#chapters">Chapters</a><a href="#labs">Labs</a><a href="#data">Client Data</a><a href="#thread">The Five Components</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner">
+    <p class="hero-stamp">Western Washington University · MIS 320 · Free</p>
+    <h1>Introduction to Information Systems:<br>Real Companies. Real Failures. Real Decisions.</h1>
+    <p class="hero-sub">A free, case-based digital textbook. Every chapter anchors to a real, time-bounded
+    case — a turnaround, a collapse, a recovery. Every lab puts you inside the data of one running client:
+    a Pacific Northwest gear co-op with a problem it doesn't know it has.</p>
+    <p class="hero-tagline">Sibling to <a href="https://prof-califf.github.io/ai-in-business/index.html">AI in Business (MIS 432)</a> — same approach, earlier questions.</p>
+    <div class="hero-meta">
+      <div><div class="hero-meta-num">6</div><div class="hero-meta-label">Chapters live</div></div>
+      <div><div class="hero-meta-num">7</div><div class="hero-meta-label">Labs live</div></div>
+      <div><div class="hero-meta-num">Free</div><div class="hero-meta-label">Always</div></div>
+    </div>
+  </div>
+</header>
+
+<section class="about">
+  <div class="inner">
+    <p class="section-label">About the digital textbook</p>
+    <h2 class="sec">Case-first, hands-on, one client</h2>
+    <p class="sec-sub">Most textbooks teach concepts and hope the business follows. This one starts with
+    the business: a real company, a real system, and what actually happened — then teaches the concepts
+    the story needs. Then you do the work yourself, in the labs, on data that behaves like the real thing.</p>
+    <div class="about-features">
+      <div class="feature-item"><div class="feature-icon">📖</div><div class="fi-title">Case-first learning</div><p>Domino's, Healthcare.gov, Nike, Starbucks — every concept arrives inside a real story with real dates.</p></div>
+      <div class="feature-item"><div class="feature-icon">🔬</div><div class="fi-title">One running client</div><p>Cascadia Outfitters, a member-owned gear co-op, runs through the Excel, Tableau, and SQL labs — with an anomaly hidden in the data.</p></div>
+      <div class="feature-item"><div class="feature-icon">✅</div><div class="fi-title">Checkpoint-gated labs</div><p>Every lab embeds sequential checkpoints; clearing them all generates a verifiable completion certificate for Canvas.</p></div>
+      <div class="feature-item"><div class="feature-icon">🤖</div><div class="fi-title">AI, on purpose</div><p>Lab 1 sets a three-light AI policy in Week 1; you use AI as a tutor all quarter, never as a substitute for thinking.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="inner">
+    <p class="section-label">How each chapter works</p>
+    <h2 class="sec">Three parts. One big idea.</h2>
+    <div class="how-steps">
+      <div class="how-step"><div class="how-step-num">1</div><h4>The Business Case</h4><p>A real company, a real system, and what actually happened — with the numbers and the dates.</p></div>
+      <div class="how-step"><div class="how-step-num">2</div><h4>The Concepts &amp; the Components</h4><p>Vocabulary introduced inline, then the case mapped onto the five components of MIS — with the broken ones highlighted.</p></div>
+      <div class="how-step"><div class="how-step-num">3</div><h4>The Discussion &amp; the Lab</h4><p>Group-assigned discussion questions for Wednesday, and a bridge into that week's hands-on lab.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="chainband" id="thread">
+  <div class="inner">
+    <p class="section-label" style="color:var(--blue-bright)">The thread that connects every chapter</p>
+    <h2 class="sec" style="color:#fff">The Five Components of MIS</h2>
+    <div class="chain-steps">
+      <div class="chain-step"><b>Hardware</b><span>The machines</span></div><div class="chain-arrow">+</div>
+      <div class="chain-step"><b>Software</b><span>The instructions</span></div><div class="chain-arrow">+</div>
+      <div class="chain-step"><b>Data</b><span>The facts</span></div><div class="chain-arrow">+</div>
+      <div class="chain-step"><b>Networks</b><span>The connections</span></div><div class="chain-arrow">+</div>
+      <div class="chain-step"><b>People</b><span>The judgment</span></div>
+    </div>
+    <p class="chain-note">Every information system is built from these five components, and every case in this book is mapped
+    onto them. One rule governs the course: <b>a system is only as strong as its weakest component</b>.
+    Learning to locate the break is the core skill — the labs make you practice it on data.</p>
+  </div>
+</section>
+
+<section id="chapters">
+  <div class="inner">
+    <p class="section-label">Course chapters</p>
+    <h2 class="sec">Start Reading</h2>
+    <p class="sec-sub">Chapters follow the course calendar: Monday concepts, Wednesday case discussion,
+    labs Thursday/Friday. Exam 1 covers Chapters 0–4; Chapter 6 opens the back half.</p>
+
+    <div class="chapter-card">
+      <div class="chapter-header"><div><div class="chapter-num">Chapter 0 · Week 1 · What is MIS</div>
+        <div class="chapter-title">What Is MIS? — Spotify Wrapped</div>
+        <div class="chapter-company">Spotify · The five components · Data exhaust</div></div>
+        <div class="chapter-links"><a class="btn btn-solid" href="chapter0-what-is-mis.html">Read Case →</a><a class="btn btn-outline" href="lab1-genai.html">Lab 1</a></div></div>
+      <div class="chapter-body">
+        <div><h5>Concepts</h5><ul><li>Information systems</li><li>Data vs. information</li><li>The five components of MIS</li><li>Weakest component rule</li></ul></div>
+        <div><h5>Business topics</h5><ul><li>Wrapped as marketing engine</li><li>Data exhaust</li><li>Why MIS is a business discipline</li></ul></div>
+        <div><h5>In the lab</h5><ul><li>The three-light AI policy</li><li>AI as tutor, deliberately</li><li>First checkpoints &amp; certificate</li></ul></div>
+      </div>
+    </div>
+
+    <div class="chapter-card">
+      <div class="chapter-header"><div><div class="chapter-num">Chapter 1 · Week 2 · Value of information</div>
+        <div class="chapter-title">The Value of Information — Starbucks</div>
+        <div class="chapter-company">Starbucks · Deep Brew · Site selection · Loyalty</div></div>
+        <div class="chapter-links"><a class="btn btn-solid" href="chapter1-starbucks.html">Read Case →</a><a class="btn btn-outline" href="lab2-excel-basics.html">Lab 2</a></div></div>
+      <div class="chapter-body">
+        <div><h5>Concepts</h5><ul><li>Value of information</li><li>Accuracy · timeliness · relevance</li><li>Decision levels</li><li>Decision support</li><li>Feedback loops</li></ul></div>
+        <div><h5>Business topics</h5><ul><li>Store siting with mobility data</li><li>Deep Brew in operations</li><li>Loyalty &amp; customer identification</li></ul></div>
+        <div><h5>In the lab</h5><ul><li>Meet Cascadia Outfitters</li><li>SUM, AVERAGE, SUMIF</li><li>The member-attach number</li></ul></div>
+      </div>
+    </div>
+
+    <div class="chapter-card">
+      <div class="chapter-header"><div><div class="chapter-num">Chapter 2 · Week 2 · Competitive advantage</div>
+        <div class="chapter-title">Technology &amp; Competitive Advantage — Zara</div>
+        <div class="chapter-company">Zara / Inditex · The two-week loop · Carr's "IT Doesn't Matter"</div></div>
+        <div class="chapter-links"><a class="btn btn-solid" href="chapter2-competitive-advantage.html">Read Case →</a><a class="btn btn-outline" href="lab2-excel-basics.html">Lab 2</a></div></div>
+      <div class="chapter-body">
+        <div><h5>Concepts</h5><ul><li>Sustained advantage</li><li>Porter’s Five Forces</li><li>Switching costs &amp; network effects</li><li>Commoditization &amp; table stakes</li><li>Speed of learning</li></ul></div>
+        <div><h5>Business topics</h5><ul><li>Design to rack in two weeks</li><li>Store managers as sensors</li><li>Why rivals can't copy the weave</li><li>A careers note: who builds this</li></ul></div>
+        <div><h5>In the lab</h5><ul><li>Cascadia's moat: membership</li><li>Your first billable hour</li><li>SUM, AVERAGE, SUMIF</li></ul></div>
+      </div>
+    </div>
+
+    <div class="chapter-card">
+      <div class="chapter-header"><div><div class="chapter-num">Chapter 3 · Week 3 · Business processes</div>
+        <div class="chapter-title">Business Processes — Domino's, 2008–2013</div>
+        <div class="chapter-company">Domino's · Pizza Tracker · The turnaround</div></div>
+        <div class="chapter-links"><a class="btn btn-solid" href="chapter3-dominos.html">Read Case →</a><a class="btn btn-outline" href="lab3-excel-dataprep.html">Lab 3</a></div></div>
+      <div class="chapter-body">
+        <div><h5>Concepts</h5><ul><li>As-is / to-be &amp; swimlanes</li><li>Handoffs &amp; bottlenecks</li><li>Cycle time &amp; throughput</li><li>Operational transparency</li></ul></div>
+        <div><h5>Business topics</h5><ul><li>Technology on a broken process</li><li>The measurement trap</li><li>Admitting failure in public</li><li>#4 U.S. e-retailer, 2010</li></ul></div>
+        <div><h5>In the lab</h5><ul><li>The controller's dirty export</li><li>Dedupe, TRIM, date repair</li><li>VLOOKUP · hardest pre-exam lab</li></ul></div>
+      </div>
+    </div>
+
+    <div class="chapter-card">
+      <div class="chapter-header"><div><div class="chapter-num">Chapter 4 · Week 4 · Systems analysis</div>
+        <div class="chapter-title">Systems Analysis &amp; the SDLC — Healthcare.gov</div>
+        <div class="chapter-company">Healthcare.gov · October 2013 · 4M visitors, 6 enrollments</div></div>
+        <div class="chapter-links"><a class="btn btn-solid" href="chapter4-healthcaregov.html">Read Case →</a><a class="btn btn-outline" href="lab4-excel-dataviz.html">Lab 4</a></div></div>
+      <div class="chapter-body">
+        <div><h5>Concepts</h5><ul><li>The SDLC</li><li>Functional vs. non-functional requirements</li><li>Waterfall vs. agile</li><li>Rollout strategies</li><li>Stage gates</li></ul></div>
+        <div><h5>Business topics</h5><ul><li>33 contractors, no integrator</li><li>The scope–schedule–quality triangle</li><li>The six-week tiger-team recovery</li></ul></div>
+        <div><h5>In the lab</h5><ul><li>Charts as honest status</li><li>Pivots, line &amp; bar charts</li><li>A dashboard with a blind spot</li></ul></div>
+      </div>
+    </div>
+
+    <div class="chapter-card">
+      <div class="chapter-header"><div><div class="chapter-num">Chapter 6 · Week 5 · Enterprise systems</div>
+        <div class="chapter-title">Enterprise Systems — Nike/SAP + Modern Coda</div>
+        <div class="chapter-company">Nike &amp; i2, 2000–01 · Lamb Weston, 2023–24 · Zimmer Biomet</div></div>
+        <div class="chapter-links"><a class="btn btn-solid" href="chapter6-nike-sap.html">Read Case →</a><a class="btn btn-outline" href="lab5-excel-analysis.html">Lab 5</a></div></div>
+      <div class="chapter-body">
+        <div><h5>Concepts</h5><ul><li>ERP · CRM · SCM</li><li>Configuration vs. customization</li><li>Silos &amp; the bullwhip effect</li><li>Change management</li></ul></div>
+        <div><h5>Business topics</h5><ul><li>"This is what you get for $400 million"</li><li>$100M in wayward sneakers</li><li>Why it still happens: 2024's ERP failures</li><li>Material disclosure</li></ul></div>
+        <div><h5>In the lab</h5><ul><li>The board's memo</li><li>Open-brief investigation</li><li>Hardest Excel assignment of the quarter</li></ul></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="labs">
+  <div class="inner">
+    <p class="section-label">Labs</p>
+    <h2 class="sec">The Cascadia Engagement</h2>
+    <p class="sec-sub">Ten labs across the quarter; seven are live. Each embeds required
+    checkpoints — work the skill in Excel, paste the answer, unlock the next — and generates a verifiable
+    completion certificate when cleared. The "From lecture to lab" box on each page is the lab professor's
+    10-minute intro script.</p>
+    <div class="lab-strip">
+      <a class="lab-card" href="lab1-genai.html"><div class="lab-num">Lab 1 · Week 1</div><h4>GenAI for Thinking</h4><p>The three-light policy, set before anything else. 4 checkpoints.</p></a>
+      <a class="lab-card" href="lab2-excel-basics.html"><div class="lab-num">Lab 2 · Week 2</div><h4>Excel Basics — Meeting the Client</h4><p>The engagement opens. 6 checkpoints.</p></a>
+      <a class="lab-card" href="lab3-excel-dataprep.html"><div class="lab-num">Lab 3 · Week 3</div><h4>Data Preparation — The RAW File</h4><p>The controller's dirty export. 7 checkpoints.</p></a>
+      <a class="lab-card" href="lab4-excel-dataviz.html"><div class="lab-num">Lab 4 · Week 4</div><h4>Data Visualization — Communicating Status</h4><p>Honest dashboards, paired with Healthcare.gov. 6 checkpoints.</p></a>
+      <a class="lab-card" href="lab5-excel-analysis.html"><div class="lab-num">Lab 5 · Week 5</div><h4>Data Analysis — Why Are Members Disappearing?</h4><p>The open-brief mini project. 8 checkpoints.</p></a>
+      <a class="lab-card" href="lab6-tableau.html"><div class="lab-num">Lab 6 · Week 6</div><h4>Tableau — Seeing the Co-op</h4><p>The finding, re-found visually. 7 checkpoints.</p></a>
+      <a class="lab-card" href="lab7-sql.html"><div class="lab-num">Lab 7 · Week 7</div><h4>SQL — Asking Directly</h4><p>Live in-browser sandbox on the real database. 7 checkpoints.</p></a>
+      <div class="lab-card"><div class="lab-num">Labs 8–10</div><h4>UX · AI/ML · Information Architecture</h4><p class="soon">In progress — UX and IA await the lab professor's input.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="data">
+  <div class="inner">
+    <p class="section-label">Client data</p>
+    <h2 class="sec">Cascadia Outfitters, 2025</h2>
+    <p class="sec-sub">The co-op's canonical dataset — eight stores, 35 products, 2,899 sales lines. Each
+    lab links the file it needs; the full set is here for the lab professor.</p>
+    <div class="datarow">
+      <a href="cascadia-sales-2025.xlsx">Clean workbook (.xlsx)</a>
+      <a href="cascadia-sales-2025-RAW.xlsx">RAW workbook — Lab 3 (.xlsx)</a>
+      <a href="cascadia-sales-2025.csv">Flat CSV — Tableau, Wk 6</a>
+      <a href="cascadia.db">SQLite database — SQL lab, Wk 7</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  MIS 320 · Introduction to Information Systems · Western Washington University · College of Business and Economics<br>
+  <a href="https://cbe.wwu.edu/dsci/management-information-systems">MIS @ WWU</a> ·
+  <a href="https://prof-califf.github.io/ai-in-business/index.html">AI in Business (MIS 432)</a> · Free to use for educational purposes
+</footer>
+
+</body>
+</html>
