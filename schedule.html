@@ -1,7 +1,10 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8">
+<html lang="en">
+<head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lab 6 · Tableau: Seeing the Co-op | MIS 320</title>
+<title>Course Schedule | MIS 320</title>
+<meta name="description" content="MIS 320 fall course schedule: weekly lectures, case discussions, labs, and exams.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -176,8 +179,52 @@ li{margin-bottom:.45rem}
   .dd-btn{width:100%;font-size:13px;padding:.4rem .5rem}
   .dd-menu{right:auto;left:0;min-width:min(92vw,22rem)}
 }
-.cp{border:1px solid var(--rule);background:var(--paper);border-radius:2px;margin:1rem 0;padding:1rem 1.15rem}.cp.locked{opacity:.45;pointer-events:none}.cp.done{border-left:4px solid var(--good);background:var(--good-pale)}.cp.q{font-family:var(--sans);font-size:.92rem;color:var(--navy);margin:0 0.6rem;font-weight:500}.cp input[type=text]{font-family:var(--sans);font-size:.9rem;padding:.45rem.6rem;border:1px solid var(--rule);border-radius:2px;width:14rem;max-width:100%}.cp button{font-family:var(--sans);font-size:.8rem;font-weight:600;letter-spacing:.04em;background:var(--accent-deep);color:#fff;border:none;border-radius:2px;padding:.5rem.9rem;cursor:pointer;margin-left:.4rem}.cp button.hintb{background:none;color:var(--accent-deep);border:1px solid var(--rule)}.cp.msg{font-family:var(--sans);font-size:.8rem;margin:.5rem 0 0}.cp.hint{font-family:var(--sans);font-size:.8rem;color:var(--muted);margin:.5rem 0 0;display:none;border-top:1px dashed var(--rule);padding-top:.5rem}.progress{position:sticky;top:0;z-index:5;background:var(--black);color:#fff;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:.6rem 1rem;margin:1.5rem 0}.certbox{border:2px solid var(--black);background:var(--paper);padding:1.2rem 1.3rem;margin:1.5rem 0;display:none}.certbox.show{display:block}.certbox h3{margin-top:0}.codebox code{font-family:ui-monospace,Menlo,monospace;background:var(--cream-deep);padding:.15em.45em;border-radius:2px}
-</style></head><body>
+
+/* ---------- schedule page ---------- */
+.schedwrap{max-width:64rem;margin:0 auto;padding:2.5rem 1.5rem 6rem}
+.sched-intro{max-width:44rem}
+.legend{display:flex;flex-wrap:wrap;gap:.5rem;margin:1.4rem 0 2.2rem}
+.legend span{font-family:var(--sans);font-size:13px;border:1px solid var(--border);background:var(--off-white);padding:.32rem .65rem}
+.legend span.exam{background:var(--warn-pale);border-color:#e8bdb8;color:var(--warn);font-weight:600}
+.legend span.soon{color:var(--text-light)}
+.wk{border:1px solid var(--border);margin-bottom:1rem;background:#fff}
+.wk-head{background:var(--black);color:#fff;padding:.7rem 1.1rem;display:flex;justify-content:space-between;
+  align-items:baseline;gap:1rem;flex-wrap:wrap}
+.wk-num{font-family:var(--display);font-size:15px;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
+.wk-theme{font-family:var(--sans);font-size:14px;color:rgba(255,255,255,.72)}
+.wk.examweek .wk-head{background:var(--warn)}
+.wk-body{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
+.slot{background:#fff;padding:.95rem 1.1rem;min-height:6.5rem}
+.slot-day{font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--magenta);margin-bottom:.4rem}
+.slot h4{font-family:var(--sans);font-size:15px;font-weight:600;margin:0 0 .25rem;line-height:1.3}
+.slot h4 a{color:var(--text-dark);text-decoration:none;border-bottom:1px solid var(--magenta-pale)}
+.slot h4 a:hover{color:var(--magenta-dark);border-bottom-color:var(--magenta)}
+.slot p{font-size:13.5px;color:var(--text-muted);margin:0;line-height:1.45}
+.slot.exam{background:var(--warn-pale)}
+.slot.exam .slot-day{color:var(--warn)}
+.slot.exam h4{color:var(--warn)}
+.slot.none{background:var(--off-white)}
+.slot.none p{color:var(--text-light);font-style:italic}
+.slot.pending h4{color:var(--text-light)}
+.pill{display:inline-block;font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;padding:.15rem .45rem;margin-left:.35rem;vertical-align:.1em;
+  background:var(--magenta-pale);color:var(--magenta-dark)}
+.pill.hard{background:var(--warn);color:#fff}
+.pill.wip{background:var(--off-white);color:var(--text-light);border:1px solid var(--border)}
+.notebox{border:1px solid var(--border);border-left:4px solid var(--magenta);background:var(--off-white);
+  padding:1.1rem 1.25rem;margin:2.2rem 0 0}
+.notebox strong:first-child{display:block;font-family:var(--display);font-size:12.5px;font-weight:600;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--magenta);margin-bottom:.5rem}
+.notebox ul{margin:.4rem 0 0;padding-left:1.2rem}
+.notebox li{font-size:15px;margin-bottom:.3rem}
+@media (max-width:760px){
+  .wk-body{grid-template-columns:1fr}
+  .slot{min-height:0}
+}
+</style>
+</head>
+<body>
 <nav class="topnav">
   <div class="topnav-in">
     <a class="topnav-brand" href="index.html">MIS 320 &middot; Intro to Information Systems</a>
@@ -203,7 +250,7 @@ li{margin-bottom:.45rem}
       <a href="lab3-excel-dataprep.html"><span class="lbl">Lab 3 &middot; Week 3</span>Data Preparation: The RAW File</a>
       <a href="lab4-excel-dataviz.html"><span class="lbl">Lab 4 &middot; Week 4</span>Data Visualization</a>
       <a href="lab5-excel-analysis.html"><span class="lbl">Lab 5 &middot; Week 5</span>Data Analysis &amp; Mini Project</a>
-      <a class="current" href="lab6-tableau.html"><span class="lbl">Lab 6 &middot; Week 6</span>Tableau: Seeing the Co-op</a>
+      <a href="lab6-tableau.html"><span class="lbl">Lab 6 &middot; Week 6</span>Tableau: Seeing the Co-op</a>
       <a href="lab7-sql.html"><span class="lbl">Lab 7 &middot; Week 7</span>SQL Fundamentals</a>
       <div class="dd-sep"></div>
       <a class="soon" href="#"><span class="lbl">Labs 8&ndash;10</span>UX, AI/ML, Information Architecture (in progress)</a>
@@ -222,172 +269,207 @@ li{margin-bottom:.45rem}
 </nav>
 
 
-<div class="shell">
-<aside class="rail">
-  <p class="book">MIS 320</p><p class="course">Introduction to Information Systems</p>
-  <button class="railtoggle" aria-expanded="false" aria-controls="chapnav">Lab contents</button>
-  <nav id="chapnav">
-    <a href="#top">Overview</a><a href="#steps">The work</a>
-    <a href="#checkpoints">Checkpoints</a><a href="#submit">What to submit</a>
-    <a href="index.html">↳ Chapter 7 · BI &amp; Analytics (coming)</a>
-  </nav>
-  <a class="back" href="index.html">← All chapters &amp; labs</a>
-</aside>
-<main id="top">
+<main class="schedwrap">
+
 <header class="chaphead">
-  <p class="eyebrow">Lab 6 · Week 6</p>
-  <h1>Tableau: Seeing the Co-op</h1>
-  <div class="meta-row"><span>Lab session · 80 min</span><span class="alt"><a href="index.html" style="color:inherit;text-decoration:none">Pairs with Chapter 7 · BI &amp; Analytics (coming) &#8594;</a></span></div>
+  <p class="eyebrow">MIS 320</p>
+  <h1>Course Schedule</h1>
+  <p class="anchor">Eleven weeks. Lectures Monday and Wednesday, labs Thursday and Friday.</p>
 </header>
-<p class="lede">Same client, new instrument. Everything you found in Excel is still true, but this week you'll watch a finding that took a careful pivot table become impossible to miss the
-  moment it's drawn. That difference is why analytics teams fight over dashboards.</p>
-  <p>Download <a href="cascadia-sales-2025.csv"><strong>cascadia-sales-2025.csv</strong></a> and connect
-  Tableau (or free <a href="https://public.tableau.com">Tableau Public</a>) to it.</p>
-<div class="callout callout-bridge"><strong>From lecture to lab</strong><p><strong>Lab professor's intro (10 min):</strong> Frame with Monday's Moneyball
-  discussion: the A's won by measuring what the league didn't. Today students point a new instrument, Tableau, at data they already know, and re-find last week's discovery visually, which lands the
-  argument for visualization better than any lecture could. Show connecting to a CSV on the projector
-  (Data Source pane, then one drag-and-drop), then release them. If desktop Tableau isn't installed,
-  Tableau Public is free and sufficient. Checkpoint 5's answer is deliberately counterintuitive: let
-  them be surprised.</p></div>
-<div id="steps">
-<h2><span class="num">Skills</span>Connecting data, marks &amp; shelves, calculated fields, highlight tables</h2>
-<ol>
-<li><strong>Get connected, then look before you build.</strong> Open the CSV as a data source; check the row count and that
-Tableau typed revenue as a number and sale_date as a date.</li>
-<li><strong>Make your first chart fast.</strong> Revenue by store as sorted bars. Then swap store for
-category, then for product: feel how fast iteration is compared to rebuilding a pivot.</li>
-<li><strong>Calculated fields.</strong> Build margin_rate and format it as a percent. This is the
-Moneyball move: a ratio the raw data doesn't contain, made first-class.</li>
-<li><strong>Highlight table.</strong> Store by month, colored by revenue. The co-op's year on one
-screen. Find the surprises: the best single cell is not in the best month.</li>
-<li><strong>The re-discovery.</strong> Build attach rate by store and watch last week's investigation
-become a single picture. Screenshot this one. It goes in your submission.</li>
-</ol>
-<div class="callout"><strong>Undervalued gear</strong>
-<p>Before you leave: put revenue on one axis and margin_rate on the other, by category. The A's looked
-for players the market underpriced; a merchant looks for categories earning a high rate on low volume.
-Which category would you tell Cascadia to promote harder? No checkpoint for this: your pick and one
-sentence of reasoning go in the submission note, and there is more than one defensible answer.</p></div></div>
 
-<h2 id="checkpoints"><span class="num">Required</span>Checkpoints <span style="font-weight:400;color:var(--muted);font-size:.65em">, complete as you work</span></h2>
-<p style="font-family:var(--sans);font-size:.95rem">Here is how this works. Each checkpoint matches a
-step above. You do the actual work in your own file, then paste the answer here. Get it right and the
-next question opens up. There is no penalty for a wrong answer, so guess, check, and lean on the hint if
-you get stuck. That is what it is there for.</p>
-<p style="font-family:var(--sans);font-size:.95rem">Once you have cleared them all, write your reflection
-and download your certificate for Canvas. One warning worth taking seriously: <strong>your progress lives
-only on this page.</strong> Close the tab or refresh before you download, and you start over.</p>
-<div class="progress" id="prog">Checkpoint progress: 0 / 7</div>
-<div id="cps"></div>
-<div class="certbox" id="reflectbox">
-  <h3>One last thing before your certificate</h3>
-  <p style="font-family:var(--sans);font-size:.88rem">Tableau showed you in one glance what took a careful pivot table to find last week. In the field you plan to enter, describe one decision that is currently made from tables of numbers but should be made from a picture, and one risk of letting a beautiful chart substitute for checking the underlying data.</p>
-  <p style="font-family:var(--sans);font-size:.88rem;color:var(--muted)">Fifty words is the minimum, but
-  do not write to the counter. This prints as page 2 of your certificate, so it is the part your lab
-  professor actually reads. Answer it like someone asked you the question out loud.</p>
-  <textarea id="refl" rows="6" style="width:100%;font-family:var(--sans);font-size:.9rem;padding:.6rem;border:1px solid var(--rule);border-radius:2px" aria-label="Lab reflection"></textarea>
-  <p class="msg" id="reflcount" style="font-family:var(--sans);font-size:.8rem;color:var(--muted)">0 words</p>
-</div>
-<div class="certbox" id="certbox">
-  <h3>All checkpoints cleared</h3>
-  <p style="font-family:var(--sans);font-size:.95rem">Put your name in exactly as it appears in Canvas,
-  then download your certificate. The code on it is generated from your name, so it is yours and nobody
-  else's.</p>
-  <input type="text" id="nm" placeholder="Last, First" aria-label="Your name as in Canvas">
-  <button onclick="cert()">Download certificate (PDF)</button>
-  <p class="codebox" id="codeout" style="font-family:var(--sans);font-size:.85rem"></p>
+<p class="lede sched-intro">Mondays introduce concepts. Wednesdays apply them to a real case, with group
+presentations on the discussion questions from that chapter. Labs run Thursday and Friday and are
+hands-on. Everything below links to the chapter or lab it refers to.</p>
+
+<div class="legend">
+  <span>Chapter reading listed with its lecture</span>
+  <span>Labs meet Thu/Fri</span>
+  <span class="exam">Exams: Weeks 5, 9, 11</span>
+  <span class="soon">Greyed items are still in development</span>
 </div>
 
-<h2 id="submit"><span class="num">Canvas</span>What to submit</h2>
-<p style="font-family:var(--sans);font-size:.92rem">A PDF or image export of your attach-rate chart and your highlight table, your undervalued-gear pick with one sentence of reasoning, plus your completion certificate PDF (your reflection is page 2 of it).</p>
-</main></div>
-<script>
-(function(){var b=document.querySelector('.railtoggle'),n=document.getElementById('chapnav');
-if(!b||!n)return;b.addEventListener('click',function(){var o=n.classList.toggle('open');
-b.setAttribute('aria-expanded',o?'true':'false');});})();
-</script>
+<!-- WEEK 1 -->
+<div class="wk">
+  <div class="wk-head"><span class="wk-num">Week 1</span><span class="wk-theme">What information systems are</span></div>
+  <div class="wk-body">
+    <div class="slot none"><div class="slot-day">Monday</div><p>No class. Quarter begins Wednesday.</p></div>
+    <div class="slot"><div class="slot-day">Wednesday</div>
+      <h4><a href="chapter0-what-is-mis.html">What Is MIS?</a></h4>
+      <p>Syllabus, the five components, and Spotify Wrapped as a working system.</p></div>
+    <div class="slot"><div class="slot-day">Lab · Thu/Fri</div>
+      <h4><a href="lab1-genai.html">Lab 1: GenAI for Thinking</a></h4>
+      <p>The AI policy for the quarter, plus your first certificate.</p></div>
+  </div>
+</div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script>
-const LAB="LAB6", QS=[{"q": "Checkpoint 1 \u00b7 Connect Tableau to cascadia-sales-2025.csv. How many rows does the data source show?", "t": "num", "a": "Mjg5OQ==", "tol": 0, "h": "Data Source tab, bottom-left corner after the connection loads."}, {"q": "Checkpoint 2 \u00b7 Bar chart of revenue by store, sorted descending. Which store is SECOND?", "t": "txt", "a": "UG9ydGxhbmQgUGVhcmw=", "h": "Drag store to Rows, revenue to Columns, sort with the toolbar button. Seattle Flagship is first: who's next?"}, {"q": "Checkpoint 3 \u00b7 Create a calculated field: margin_rate = SUM([gross_margin]) / SUM([revenue]). Which category has the HIGHEST margin rate?", "t": "txt", "a": "QXBwYXJlbA==", "h": "Analysis \u2192 Create Calculated Field. Then category to Rows, your new field to Columns, format as percent."}, {"q": "Checkpoint 4 \u00b7 That category's margin rate, as a percent to one decimal?", "t": "num", "a": "NTkuOQ==", "tol": 0.1, "h": "Hover the bar, or add the field to Label."}, {"q": "Checkpoint 5 \u00b7 Highlight table: store in Rows, month of sale_date in Columns, revenue in Color. Which single store-month cell is the darkest (highest) of the whole year? Answer as 'store month'.", "t": "txt", "a": "U2VhdHRsZSBGbGFnc2hpcCBTZXB0ZW1iZXI=", "h": "Click the cell. The tooltip settles arguments. And notice it is NOT January, even though January is the co-op's best month overall."}, {"q": "Checkpoint 6 \u00b7 Now build the view Cascadia never built: store in Rows, and the PERCENT of each store's sales that are member-attached (is_member = 'Y'). You found this in a pivot in Lab 5, which store does the chart make impossible to miss?", "t": "txt", "a": "QmVsbGluZ2hhbQ==", "h": "COUNT(IF [is_member]='Y' THEN 1 END) / COUNT([sale_id]), formatted as percent. Notice how much faster the eye catches it than the pivot did. That is the argument for visualization."}, {"q": "Checkpoint 7 \u00b7 Read that store's rate off your chart, as a percent to one decimal.", "t": "num", "a": "NTEuNg==", "tol": 0.2, "h": "Label or tooltip. Same number as Lab 5 (same data, new instrument."}];
-const solved=new Set();
-const norm=s=>s.replace(/[$,\s]/g,'').toLowerCase();
-function render(){
- const c=document.getElementById('cps');c.innerHTML='';
- QS.forEach((q,i)=>{
-  const d=document.createElement('div');
-  d.className='cp'+(solved.has(i)?' done':(i>0&&!solved.has(i-1)?' locked':''));
-  d.innerHTML='<p class="q">'+q.q+'</p>'
-   +(solved.has(i)?'<p class="msg" style="color:var(--good)">Correct.</p>':'<input type="text" id="in'+i+'" aria-label="Answer '+(i+1)+'">'
-   +'<button onclick="chk('+i+')">Check</button>'
-   +'<button class="hintb" onclick="hint('+i+')">Hint</button>'
-   +'<p class="msg" id="m'+i+'"></p><p class="hint" id="h'+i+'">'+q.h+'</p>');
-  c.appendChild(d);});
- document.getElementById('prog').textContent='Checkpoint progress: '+solved.size+' / '+QS.length;
- const done=solved.size===QS.length;
- document.getElementById('reflectbox').className='certbox'+(done?' show':'');
- document.getElementById('certbox').className='certbox'+(done&&wc()>=50?' show':'');
-}
-function wc(){const t=document.getElementById('refl');return t?t.value.trim().split(/\s+/).filter(Boolean).length:0}
-document.addEventListener('input',function(e){
- if(e.target&&e.target.id==='refl'){
-  const n=wc();document.getElementById('reflcount').textContent=n+' words'+(n<50?': '+(50-n)+' more to unlock your certificate':': certificate unlocked below');
-  document.getElementById('certbox').className='certbox'+(solved.size===QS.length&&n>=50?' show':'');
- }
-});
-function hint(i){const h=document.getElementById('h'+i);h.style.display=h.style.display==='block'?'none':'block'}
-function chk(i){
- const v=document.getElementById('in'+i).value,m=document.getElementById('m'+i);
- if(!v.trim()){m.textContent='Enter an answer first.';m.style.color='#7d6608';return}
- const ans=atob(QS[i].a);let ok=false;
- if(QS[i].t==='num'){const g=parseFloat(norm(v)),a=parseFloat(ans);ok=!isNaN(g)&&Math.abs(g-a)<=QS[i].tol}
- else ok=norm(v)===norm(ans);
- if(ok){solved.add(i);render()}
- else{m.textContent='Not yet: check the hint, or re-read the step above.';m.style.color='#a03434'}
-}
-function h32(s){let h=5381;for(const c of s)h=((h<<5)+h+c.charCodeAt(0))|0;return(h>>>0).toString(36).toUpperCase()}
-function cert(){
- const n=document.getElementById('nm').value.trim();
- if(!n){document.getElementById('codeout').textContent='Enter your name first.';return}
- const r=document.getElementById('refl').value.trim();
- if(wc()<50){document.getElementById('codeout').textContent='Finish your 50-word reflection above first.';return}
- const code=LAB+'-'+h32(n.toLowerCase()+'|'+LAB+'|'+QS.length);
- const d=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
- const {jsPDF}=window.jspdf;const p=new jsPDF({orientation:'landscape',unit:'pt',format:[560,380]});
- p.setFillColor(11,29,51);p.rect(0,0,560,380,'F');
- p.setFillColor(253,252,250);p.rect(16,16,528,348,'F');
- p.setTextColor(26,82,118);p.setFont('helvetica','bold');p.setFontSize(10);
- p.text('MIS 320 \u00B7 INTRODUCTION TO INFORMATION SYSTEMS \u00B7 WWU',280,58,{align:'center'});
- p.setTextColor(26,26,26);p.setFont('times','bold');p.setFontSize(26);
- p.text('Certificate of Lab Completion',280,105,{align:'center'});
- p.setFont('times','normal');p.setFontSize(13);p.text('This certifies that',280,140,{align:'center'});
- p.setFont('times','bold');p.setFontSize(20);p.text(n,280,170,{align:'center'});
- p.setFont('times','normal');p.setFontSize(13);
- p.text('completed all '+QS.length+' checkpoints of',280,198,{align:'center'});
- p.setFont('helvetica','bold');p.setFontSize(15);p.setTextColor(26,82,118);
- p.text('Lab 6 \u00B7 Tableau: Seeing the Co-op',280,222,{align:'center'});
- p.setFont('helvetica','normal');p.setFontSize(11);p.setTextColor(90,90,90);
- p.text(d,280,252,{align:'center'});
- p.setFont('courier','bold');p.setFontSize(12);p.setTextColor(17,120,100);
- p.text('Verification code: '+code,280,290,{align:'center'});
- p.setFontSize(8);p.setFont('helvetica','normal');p.setTextColor(150,150,150);
- p.text('Upload this PDF to Canvas. Reflection on page 2. Code is unique to name + lab.',280,330,{align:'center'});
- p.addPage([560,380],'landscape');
- p.setFillColor(253,252,250);p.rect(0,0,560,380,'F');
- p.setDrawColor(11,29,51);p.setLineWidth(2);p.rect(16,16,528,348);
- p.setTextColor(26,82,118);p.setFont('helvetica','bold');p.setFontSize(10);
- p.text('LAB REFLECTION \u00B7 '+n+' \u00B7 '+code,280,44,{align:'center'});
- p.setTextColor(60,60,60);p.setFont('times','italic');p.setFontSize(9);
- const promptLines=p.splitTextToSize('Prompt: Tableau showed you in one glance what took a careful pivot table to find last week. In the field you plan to enter, describe one decision that is currently made from tables of numbers but should be made from a picture, and one risk of letting a beautiful chart substitute for checking the underlying data.',480);
- p.text(promptLines,40,70);
- p.setFont('times','normal');p.setFontSize(11);p.setTextColor(26,26,26);
- const lines=p.splitTextToSize(r,480);
- p.text(lines.slice(0,22),40,70+promptLines.length*11+14);
- p.save(LAB+'_certificate_'+n.replace(/[^a-z0-9]/gi,'_')+'.pdf');
- document.getElementById('codeout').innerHTML='Certificate downloaded (reflection on page 2). Your code: <code>'+code+'</code>';
-}
-render();
-</script>
+<!-- WEEK 2 -->
+<div class="wk">
+  <div class="wk-head"><span class="wk-num">Week 2</span><span class="wk-theme">Why information is worth money</span></div>
+  <div class="wk-body">
+    <div class="slot"><div class="slot-day">Monday</div>
+      <h4><a href="chapter1-starbucks.html">Starbucks</a> + <a href="chapter2-competitive-advantage.html">Zara</a></h4>
+      <p>The value of information, then when technology creates lasting advantage.</p></div>
+    <div class="slot"><div class="slot-day">Wednesday</div>
+      <h4>Business processes</h4>
+      <p>Concepts for Chapter 3: handoffs, bottlenecks, and how to measure a process.</p></div>
+    <div class="slot"><div class="slot-day">Lab · Thu/Fri</div>
+      <h4><a href="lab2-excel-basics.html">Lab 2: Excel Basics</a></h4>
+      <p>Meet Cascadia Outfitters, the client for the rest of the quarter.</p></div>
+  </div>
+</div>
+
+<!-- WEEK 3 -->
+<div class="wk">
+  <div class="wk-head"><span class="wk-num">Week 3</span><span class="wk-theme">Processes, and the data they leave behind</span></div>
+  <div class="wk-body">
+    <div class="slot"><div class="slot-day">Monday</div>
+      <h4><a href="chapter3-dominos.html">Domino's, 2008&ndash;2013</a></h4>
+      <p>A tracker on a broken pizza, and what fixed it.</p></div>
+    <div class="slot"><div class="slot-day">Wednesday</div>
+      <h4>Systems analysis and the SDLC</h4>
+      <p>Concepts for Chapter 4: requirements, rollout strategies, stage gates.</p></div>
+    <div class="slot"><div class="slot-day">Lab · Thu/Fri</div>
+      <h4><a href="lab3-excel-dataprep.html">Lab 3: Data Preparation</a><span class="pill hard">Hardest so far</span></h4>
+      <p>The controller's dirty export. Budget the full session.</p></div>
+  </div>
+</div>
+
+<!-- WEEK 4 -->
+<div class="wk">
+  <div class="wk-head"><span class="wk-num">Week 4</span><span class="wk-theme">How systems get built, and fail</span></div>
+  <div class="wk-body">
+    <div class="slot"><div class="slot-day">Monday</div>
+      <h4><a href="chapter4-healthcaregov.html">Healthcare.gov</a></h4>
+      <p>Four million visitors, six enrollments, and why capacity was the symptom.</p></div>
+    <div class="slot"><div class="slot-day">Wednesday</div>
+      <h4>Enterprise systems</h4>
+      <p>Concepts for Chapter 6: ERP, CRM, SCM, and the silo problem.</p></div>
+    <div class="slot"><div class="slot-day">Lab · Thu/Fri</div>
+      <h4><a href="lab4-excel-dataviz.html">Lab 4: Data Visualization</a></h4>
+      <p>Charts as honest status reporting.</p></div>
+  </div>
+</div>
+
+<!-- WEEK 5 -->
+<div class="wk examweek">
+  <div class="wk-head"><span class="wk-num">Week 5</span><span class="wk-theme">Exam 1 and enterprise systems</span></div>
+  <div class="wk-body">
+    <div class="slot exam"><div class="slot-day">Monday</div>
+      <h4>EXAM 1</h4>
+      <p>Covers Chapters 0 through 4 and Labs 1 through 4.</p></div>
+    <div class="slot"><div class="slot-day">Wednesday</div>
+      <h4><a href="chapter6-nike-sap.html">Nike / SAP</a></h4>
+      <p>$400 million spent, $100 million lost, and why it still happens in 2024.</p></div>
+    <div class="slot"><div class="slot-day">Lab · Thu/Fri</div>
+      <h4><a href="lab5-excel-analysis.html">Lab 5: Data Analysis</a><span class="pill hard">Hardest Excel lab</span></h4>
+      <p>An open brief: something is wrong at Cascadia. Find it.</p></div>
+  </div>
+</div>
+
+<!-- WEEK 6 -->
+<div class="wk">
+  <div class="wk-head"><span class="wk-num">Week 6</span><span class="wk-theme">Measuring the right thing</span></div>
+  <div class="wk-body">
+    <div class="slot"><div class="slot-day">Monday</div>
+      <h4 class="pending">BI and analytics concepts<span class="pill wip">Chapter in progress</span></h4>
+      <p>What business intelligence is, and what it is not.</p></div>
+    <div class="slot"><div class="slot-day">Wednesday</div>
+      <h4 class="pending">Moneyball / Oakland A's</h4>
+      <p>An industry that measured the wrong thing for a century.</p></div>
+    <div class="slot"><div class="slot-day">Lab · Thu/Fri</div>
+      <h4><a href="lab6-tableau.html">Lab 6: Tableau</a></h4>
+      <p>The same client, a new instrument.</p></div>
+  </div>
+</div>
+
+<!-- WEEK 7 -->
+<div class="wk">
+  <div class="wk-head"><span class="wk-num">Week 7</span><span class="wk-theme">Where the data actually lives</span></div>
+  <div class="wk-body">
+    <div class="slot"><div class="slot-day">Monday</div>
+      <h4 class="pending">Databases and normalization<span class="pill wip">Chapter in progress</span></h4>
+      <p>Why structure comes before queries.</p></div>
+    <div class="slot"><div class="slot-day">Wednesday</div>
+      <h4 class="pending">Walmart</h4>
+      <p>Retail scale as a data problem.</p></div>
+    <div class="slot"><div class="slot-day">Lab · Thu/Fri</div>
+      <h4><a href="lab7-sql.html">Lab 7: SQL Fundamentals</a></h4>
+      <p>Query the real Cascadia database in your browser.</p></div>
+  </div>
+</div>
+
+<!-- WEEK 8 -->
+<div class="wk">
+  <div class="wk-head"><span class="wk-num">Week 8</span><span class="wk-theme">Security, governance, and who systems are for</span></div>
+  <div class="wk-body">
+    <div class="slot"><div class="slot-day">Monday</div>
+      <h4 class="pending">Cybersecurity and IT governance<span class="pill wip">Chapter in progress</span></h4>
+      <p>Protecting the systems everyone else builds.</p></div>
+    <div class="slot"><div class="slot-day">Wednesday</div>
+      <h4 class="pending">Target + Equifax</h4>
+      <p>Two breaches, two failures of governance.</p></div>
+    <div class="slot"><div class="slot-day">Lab · Thu/Fri</div>
+      <h4 class="pending">Lab 8: UX Design<span class="pill wip">In development</span></h4>
+      <p>Usability and accessibility. No lab Veterans Day, Nov 11.</p></div>
+  </div>
+</div>
+
+<!-- WEEK 9 -->
+<div class="wk examweek">
+  <div class="wk-head"><span class="wk-num">Week 9</span><span class="wk-theme">Exam 2 and machine learning</span></div>
+  <div class="wk-body">
+    <div class="slot exam"><div class="slot-day">Monday</div>
+      <h4>EXAM 2</h4>
+      <p>Covers Chapters 5 through 10 and Labs 5 through 8.</p></div>
+    <div class="slot"><div class="slot-day">Wednesday</div>
+      <h4 class="pending">AI and machine learning concepts<span class="pill wip">Chapter in progress</span></h4>
+      <p>What models can and cannot do, and where the data comes from.</p></div>
+    <div class="slot"><div class="slot-day">Lab · Thu/Fri</div>
+      <h4 class="pending">Lab 9: AI/ML Hands-On<span class="pill wip">In development</span></h4>
+      <p>Build something small, then audit it.</p></div>
+  </div>
+</div>
+
+<!-- WEEK 10 -->
+<div class="wk">
+  <div class="wk-head"><span class="wk-num">Week 10</span><span class="wk-theme">Where computing happens now</span></div>
+  <div class="wk-body">
+    <div class="slot"><div class="slot-day">Monday</div>
+      <h4 class="pending">Amazon and cloud computing<span class="pill wip">Chapter in progress</span></h4>
+      <p>Renting infrastructure instead of owning it.</p></div>
+    <div class="slot"><div class="slot-day">Wednesday</div>
+      <h4 class="pending">Netflix + John Deere</h4>
+      <p>Streaming architecture, and computers in unexpected places.</p></div>
+    <div class="slot"><div class="slot-day">Lab · Thu/Fri</div>
+      <h4 class="pending">Lab 10: Information Architecture<span class="pill wip">In development</span></h4>
+      <p>Organizing information so people can find it. No lab Thanksgiving week.</p></div>
+  </div>
+</div>
+
+<!-- WEEK 11 -->
+<div class="wk examweek">
+  <div class="wk-head"><span class="wk-num">Week 11</span><span class="wk-theme">Final</span></div>
+  <div class="wk-body">
+    <div class="slot exam"><div class="slot-day">Final exam</div>
+      <h4>FINAL EXAM</h4>
+      <p>Cumulative. No new content this week.</p></div>
+    <div class="slot none"><div class="slot-day">Wednesday</div><p>No new material.</p></div>
+    <div class="slot none"><div class="slot-day">Lab</div><p>No lab this week.</p></div>
+  </div>
+</div>
+
+<div class="notebox">
+  <strong>Things worth knowing</strong>
+  <ul>
+    <li><strong>Labs are graded by certificate.</strong> Clear every checkpoint, write the reflection, and the lab page generates a PDF. Upload that one file to Canvas.</li>
+    <li><strong>Wednesdays are participatory.</strong> Your group presents an assigned discussion question from that week's chapter. Read the chapter before class.</li>
+    <li><strong>Exam 1</strong> covers the first five weeks. <strong>Exam 2</strong> covers the middle of the quarter. The <strong>final</strong> is cumulative.</li>
+    <li><strong>No labs</strong> on Veterans Day (Nov 11), during Thanksgiving week, or in Week 11.</li>
+    <li>Dates and details can shift. Canvas is the authority if anything here disagrees with it.</li>
+  </ul>
+</div>
+
+</main>
 
 <!--NAVJS-->
 <script>
@@ -415,4 +497,5 @@ render();
   });
 })();
 </script>
-</body></html>
+</body>
+</html>
