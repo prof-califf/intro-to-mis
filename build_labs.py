@@ -120,7 +120,7 @@ how much to trust it on things you <em>don't</em> know.</li>
 
 "lab2-excel-basics.html": dict(reflect="""Cascadia's leaders could not answer basic questions about their own business until someone computed these totals. In the field you plan to enter, what is one number that leadership probably cannot state off the top of their head but should be able to, and what decision would knowing it change?""",
   labid="LAB2", n="Lab 2", title="Excel Basics: Meeting the Client", week="Week 2",
-  pair=('chapter3-dominos.html','Chapter 3 · Business Processes'),
+  pair=('chapter1-starbucks.html','Chapter 1 · The Value of Information'),
   bridge="""<p><strong>Lab professor's intro (10 min):</strong> Introduce the client: Cascadia
   Outfitters, a member-owned outdoor co-op with eight PNW stores, whose 2025 sales data the class
   will work in Excel, Tableau, and SQL all quarter. Show the workbook's Read Me tab on the projector
@@ -134,20 +134,20 @@ how much to trust it on things you <em>don't</em> know.</li>
   company's data, you have to know what is actually in it. Every analyst you will ever work with starts
   a new engagement exactly this way.</p>
   <p>Download <a href="cascadia-sales-2025.xlsx"><strong>cascadia-sales-2025.xlsx</strong></a>, and read
-  the Read Me tab before you touch anything else. I know that sounds like the boring advice. Analysts who
+  the Read Me tab before you touch anything else. I know that sounds like routine advice. Analysts who
   skip the data dictionary are the ones who confidently present the wrong number.</p>""",
   steps="""
 <h2><span class="num">Skills</span>Navigation, SUM, AVERAGE, sort, filter, SUMIF</h2>
 <ol>
 <li><strong>Get oriented first.</strong> Press Ctrl+End (Cmd+Fn+Right on a Mac) to jump to the far
-corner of the data. Now you know how big this thing is. Scroll around a bit. I have already frozen the
+corner of the data. Now you know how big the dataset is. Scroll around a bit. I have already frozen the
 header row for you, so watch what that does as you go down.</li>
 <li><strong>Get your totals.</strong> Find some empty space to the right of the data and build
-yourself a little scratch area. Total revenue, total units, average revenue per line, using SUM and
+yourself a scratch area. Total revenue, total units, average revenue per line, using SUM and
 AVERAGE. Keep these visible, because you will be checking later work against them.</li>
 <li><strong>Poke around.</strong> Sort by revenue, highest first. What is the single biggest sale of
-the year, and does it surprise you? Then filter down to whichever store you like best and just read a
-week of its sales. Getting a feel for data is real work, not procrastination.</li>
+the year, and does it surprise you? Then filter down to whichever store you like best and read a
+week of its sales. Building familiarity with a dataset is part of the analysis, not a delay before it.</li>
 <li><strong>Now make Excel answer a question.</strong> SUMIF revenue by store name. COUNTIF rows where
 <code class="inline">is_member</code> is "N": you'll meet that number again later in the course.</li>
 </ol>
@@ -304,7 +304,7 @@ is the analyst's version of the audit Nike never ran.</p></div>""",
 
 "lab6-tableau.html": dict(labid="LAB6", n="Lab 6", title="Tableau: Seeing the Co-op", week="Week 6",
   reflect="""Tableau showed you in one glance what took a careful pivot table to find last week. In the field you plan to enter, describe one decision that is currently made from tables of numbers but should be made from a picture, and one risk of letting a beautiful chart substitute for checking the underlying data.""",
-  pair=('index.html','Chapter 7 · BI &amp; Analytics (Moneyball)'),
+  pair=('index.html','Chapter 7 · BI &amp; Analytics (coming)'),
   bridge="""<p><strong>Lab professor's intro (10 min):</strong> Frame with Monday's Moneyball
   discussion: the A's won by measuring what the league didn't. Today students point a new instrument, Tableau, at data they already know, and re-find last week's discovery visually, which lands the
   argument for visualization better than any lecture could. Show connecting to a CSV on the projector
@@ -339,7 +339,7 @@ sentence of reasoning go in the submission note, and there is more than one defe
 
 "lab7-sql.html": dict(labid="LAB7", n="Lab 7", title="SQL Fundamentals: Asking Directly", week="Week 7",
   reflect="""SQL let you ask the database a question and get the answer with no intermediary. No export, no spreadsheet, no one else's report. In your intended field, what is one question people currently answer by asking another person or waiting for a weekly report, that a direct query could answer in seconds? What changes about the work when the wait disappears?""",
-  pair=('index.html','Chapter 5 · Databases (Walmart)'),
+  pair=('index.html','Chapter 5 · Databases (coming)'),
   bridge="""<p><strong>Lab professor's intro (10 min):</strong> Connect to Monday's databases lecture
   and the Walmart case: retailers live and die by asking their own data questions fast. The sandbox on
   this page runs entirely in the browser. The real Cascadia database, seven tables, nothing to
@@ -436,9 +436,9 @@ only on this page.</strong> Close the tab or refresh before you download, and yo
   <p class="msg" id="reflcount" style="font-family:var(--sans);font-size:.8rem;color:var(--muted)">0 words</p>
 </div>
 <div class="certbox" id="certbox">
-  <h3>Nicely done. All checkpoints cleared.</h3>
+  <h3>All checkpoints cleared</h3>
   <p style="font-family:var(--sans);font-size:.95rem">Put your name in exactly as it appears in Canvas,
-  then grab your certificate. The code on it is generated from your name, so it is yours and nobody
+  then download your certificate. The code on it is generated from your name, so it is yours and nobody
   else's.</p>
   <input type="text" id="nm" placeholder="Last, First" aria-label="Your name as in Canvas">
   <button onclick="cert()">Download certificate (PDF)</button>
@@ -553,7 +553,7 @@ PAGE = """<!DOCTYPE html>
 <header class="chaphead">
   <p class="eyebrow">{n} · {week}</p>
   <h1>{title}</h1>
-  <div class="meta-row"><span>Lab session · 80 min</span><span class="alt">Pairs with {pairname}</span></div>
+  <div class="meta-row"><span>Lab session · 80 min</span><span class="alt"><a href="{pairhref}" style="color:inherit;text-decoration:none">Pairs with {pairname} &#8594;</a></span></div>
 </header>
 {intro}
 <div class="callout callout-bridge"><strong>From lecture to lab</strong>{bridge}</div>

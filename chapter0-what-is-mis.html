@@ -137,11 +137,18 @@ li{margin-bottom:.45rem}
   .vc-strip{grid-template-columns:repeat(2,1fr)}
 }
 :focus-visible{outline:2px solid var(--magenta);outline-offset:2px}
+
+/* ---------- prominent lab link ---------- */
+.lablink{display:inline-block;margin-top:.9rem;font-family:var(--display);font-size:14.5px;font-weight:600;
+  letter-spacing:.06em;text-transform:uppercase;text-decoration:none;background:var(--magenta);color:#fff;
+  padding:.6rem 1.15rem;border:none}
+.lablink:hover{background:var(--magenta-dark);color:#fff}
+.callout .lablink{margin-top:1rem}
 </style></head><body><div class="shell">
 <aside class="rail"><p class="book">MIS 320</p><p class="course">Introduction to Information Systems</p>
 <button class="railtoggle" aria-expanded="false" aria-controls="chapnav">Chapter contents</button>
 <nav id="chapnav">
-<a href="#wrapped">Spotify Wrapped</a><a href="#defn">What MIS is</a><a href="#chain">The five components</a>
+<a href="#wrapped">Spotify Wrapped</a><a href="#defn">What MIS is</a><a href="#chain">The five components</a><a href="#archive">Inside the 2025 Archive</a>
 <a href="#course">How this course works</a><a href="#vocab">Vocabulary</a><a href="#discussion">Discussion questions</a><a href="#lab">From lecture to lab</a></nav><a class="back" href="index.html">&#8592; All chapters &amp; labs</a></aside><main>
 <header class="chaphead"><p class="eyebrow">Chapter 0</p><h1>What Is MIS?</h1>
 <p class="anchor">Anchor case: <strong>Spotify Wrapped</strong></p>
@@ -156,7 +163,7 @@ information systems do.</p>
 <h2 id="wrapped"><span class="num">01</span>Wrapped as a system</h2>
 <p>Strip the confetti off and look at what has to be true for Wrapped to exist. Every play, skip, and
 replay you produced all year was <strong>captured</strong>, timestamped, attached to your account, stored.
-That raw exhaust was <strong>processed</strong>: aggregated, ranked, compared against everyone
+That raw data was <strong>processed</strong>: aggregated, ranked, compared against everyone
 else&#8217;s. The results were <strong>packaged</strong> into a form a human wants to look at. And the package
 was <strong>delivered</strong> at the exact moment of the year you&#8217;d most want to share it, turning you,
 unpaid, into Spotify&#8217;s distribution channel during the season people choose next year&#8217;s subscriptions.</p>
@@ -188,7 +195,120 @@ carrying events in and finished stories out (networks), and millions of listener
 distribution channel (people). Next week you meet a company running the same five on coffee. By Week 3
 you meet companies where a component is broken, and you practice locating which one.</p>
 
-<h2 id="course"><span class="num">04</span>How this course works</h2>
+
+<h2 id="archive"><span class="num">04</span>Inside the 2025 Archive</h2>
+
+<p>Everything above is the shape of Wrapped from outside. In March 2026, Spotify's engineering team
+published <a href="https://engineering.atspotify.com/2026/3/inside-the-archive-2025-wrapped">an account of how they actually built the 2025 edition</a>, and it is worth
+walking through carefully, because it turns the five components from a definition you memorize into five sets of
+decisions you can see people making.</p>
+
+<p>The 2025 feature was called <strong>Wrapped Archive</strong>. Rather than just handing you your top
+artist, it picked up to five <em>remarkable days</em> out of your listening year and wrote you a short
+story about each one. The day you discovered the artist that changed everything. The day your taste took
+a hard left turn. Here is what had to be true for that to reach you.</p>
+
+<h3>Data: finding five days in a year of listening</h3>
+
+<p>Start with the raw material, because everything downstream depends on it. Spotify had every play
+event from every listener, timestamped. The problem was not collecting data. The problem was that a year
+of listening for hundreds of millions of people is far too much to hand to anything and say "find what
+matters."</p>
+
+<p>So the team wrote rules, what engineers call <strong>heuristics</strong>, that define what
+"remarkable" means in terms a computer can check. Biggest listening day is just the highest total
+minutes. Biggest discovery day is the day you heard the most first-time artists. Most unusual day is the
+day you strayed furthest from your normal taste. Then they ranked the candidates and kept the best few
+per person. Notice what happened there: a fuzzy human idea ("what was memorable about your year?") got
+translated into arithmetic. That translation is most of what data work actually is, and you will do a
+smaller version of it in every lab this quarter.</p>
+
+<p>One detail from their account is worth noting. When they sent each day to the model
+that wrote the story, they also sent a pre-computed block of statistics, because, in their words, language
+models are bad at math. The system was designed around a known weakness of one of its own components.
+Good engineering is mostly that.</p>
+
+<h3>Software: teaching a model to write 1.4 billion stories</h3>
+
+<p>Around 350 million eligible listeners, up to five stories each, comes to roughly
+<strong>1.4 billion reports</strong>. Every one had to be written before launch day.</p>
+
+<p>The first version of the writing instructions took more than three months of daily iteration. The
+team split the instructions in two: a standing set of rules about tone and safety, and a per-story packet
+containing that day's listening log, the stats block, the listener's country, and the stories already
+written for that person so the next one would not repeat them. One of their findings runs against intuition: <em>the more instructions they added, the less creative the output
+became.</em></p>
+
+<p>Then economics intervened. The best available model wrote wonderful stories and would have been
+financially impossible to run 1.4 billion times. So they used the expensive model to produce a carefully
+reviewed set of excellent examples, and used those examples to train a smaller, cheaper, faster model to
+write the same way. That tradeoff, quality against cost at scale, is a business decision rather than
+a purely technical one, and it is exactly the kind of judgment MIS graduates are asked to make.</p>
+
+<h3>Hardware: what "one second idle, the next second global" requires</h3>
+
+<p>Wrapped does not roll out gradually. It arrives everywhere at once, which makes the preparation behind
+it worth examining closely, because you will meet the opposite outcome in Week 4.</p>
+
+<p>Automatic scaling, where a system adds capacity in response to load, is standard practice and would
+have failed here. It reacts, and Wrapped does not ramp, it spikes. So the team scaled up compute and
+database capacity <em>hours before</em> launch, coordinated capacity with their model provider ahead of
+time, and then ran fake traffic through every region on purpose, timed to finish just before real
+listeners arrived. The point of the fake traffic was to warm everything up. As they put it, when real
+traffic arrived, nothing was cold.</p>
+
+<div class="callout callout-bridge">
+<strong>Hold onto this comparison</strong>
+<p>Wrapped and Healthcare.gov are the same launch shape: no gradual rollout, everyone at once, one
+high-stakes moment. One team pre-scaled capacity, coordinated with suppliers, and rehearsed with
+synthetic load across every region. The other launched on a date set by law with no idea how many people
+would show up. In Week 4 you will read what that second choice cost. The lesson is not that big-bang
+launches are reckless. It is that they are survivable only when someone does this work first.</p>
+</div>
+
+<h3>Networks: moving the work, and the safe way to store it</h3>
+
+<p>Once a listener's remarkable days were computed, they went onto a <strong>message queue</strong>, a
+line that work waits in so the next stage can pick it up when ready. The pieces of the system do not
+have to run at the same speed or at the same time, which is what let generation run flat out for four
+days straight.</p>
+
+<p>Storage held a second lesson. Each listener's five stories were written at the same moment by
+different processes. Written naively, two of them updating the same "here is what's done" list would
+overwrite each other, and stories would silently vanish. Instead the team gave every day its own slot,
+labeled by date, so simultaneous writes touch different places and never collide. Their conclusion is the
+sentence to remember: the most elegant solution to that problem was not clever code, it was
+<strong>thoughtful data modeling</strong>. When you get to databases in Week 7, that is the whole
+argument for why structure comes before queries.</p>
+
+<h3>People: the timezone bug</h3>
+
+<p>The final component is the one that determined whether any of this worked, and it is the reason this case belongs at the front of an MIS course.</p>
+
+<p>At this scale, a failure rate of one tenth of one percent still means millions of broken stories, and
+nobody can read a billion anything. So the team had larger models grade a sample of about 165,000 stories
+on accuracy, safety, tone, and formatting, with humans reviewing on top.</p>
+
+<p>The grading caught something. Some "biggest discovery day" stories were confidently celebrating the
+wrong number of new artists. The rule for picking the day was fine. The writing was fine. Buried upstream
+in the data pipeline was a <strong>timezone bug</strong> that occasionally surfaced the wrong day, and
+the model, faithfully and beautifully, wrote a compelling story about a day that was not the right one.</p>
+
+<div class="pull">
+  <p>The data was wrong, so the system produced fluent, confident, well-written nonsense.</p>
+</div>
+
+<p>That sentence summarizes the course. Four components performed perfectly.
+Hardware served, software wrote, networks delivered, and the data was quietly wrong, so the output was
+wrong. No amount of excellence in the other four could rescue it. And notice how it got caught: not by
+the machinery, but by people who assumed their system would fail somewhere and built the checking, the
+logging, and the ability to trace a bad story back to its source. Then they fixed the pipeline, deleted
+the affected stories in bulk, and regenerated them.</p>
+
+<p>That is the weakest component rule with a real company's name on it. It is also your job description.
+Somebody has to be the person who asks whether the beautiful output is actually true.</p>
+
+<h2 id="course"><span class="num">05</span>How this course works</h2>
 <p><strong>Mondays</strong> introduce concepts. <strong>Wednesdays</strong> apply them to a real,
 time-bounded case, with your groups presenting assigned discussion questions. <strong>Labs</strong>
 (Thursday/Friday) are hands-on: Excel, Tableau, SQL, and more, mostly in service of one fictional client,
@@ -200,29 +320,54 @@ week&#8217;s lab, so you always know why you&#8217;re learning what you&#8217;re
 week. The short version: AI as tutor is always fine; AI as ghostwriter needs disclosure; AI as substitute
 for your own thinking, or during exams, is never fine.</p></div>
 
-<h2 id="vocab"><span class="num">05</span>Vocabulary</h2>
+<h2 id="vocab"><span class="num">06</span>Vocabulary</h2>
 <dl class="vocab">
 <div><dt>Information system</dt><dd>The combination of data, technology, process, and people that produces information for decisions.</dd></div>
 <div><dt>MIS</dt><dd>The business discipline studying how organizations use information systems to create value.</dd></div>
 <div><dt>Data vs. information</dt><dd>Data is captured facts; information is data processed into something that changes a decision.</dd></div>
 <div><dt>Five components of MIS</dt><dd>Hardware, software, data, networks, and people, this book&#8217;s analytical thread.</dd></div>
 <div><dt>Weakest component rule</dt><dd>System value is capped by the weakest of the five components, not the strongest.</dd></div>
-<div><dt>Data exhaust</dt><dd>By-product data generated by ordinary activity, often more valuable than the activity&#8217;s product.</dd></div>
+<div><dt>Heuristic</dt><dd>A rule that turns a fuzzy human idea into something a computer can check.</dd></div>
+<div><dt>Pre-scaling</dt><dd>Adding capacity before a known spike, rather than reacting to load as it arrives.</dd></div>
+<div><dt>Message queue</dt><dd>A line work waits in, letting parts of a system run at different speeds.</dd></div>
+<div><dt>By-product data</dt><dd>Data generated as a side effect of ordinary activity, often more valuable than the activity itself.</dd></div>
 </dl>
 
-<h2 id="discussion"><span class="num">06</span>Discussion questions</h2>
+<h2 id="discussion"><span class="num">07</span>Discussion questions</h2>
 <ol class="dq">
 <li>Map Wrapped onto all five components in your own words. <span class="tag tag-warm">Warm-up</span></li>
-<li>Name an app you used today and identify one piece of data exhaust it captured that you did not deliberately give it. What decision might it feed?</li>
+<li>Name an app you used today and identify one piece of by-product data it captured that you did not deliberately give it. What decision might that data inform?</li>
 <li>Wrapped users do Spotify&#8217;s marketing for free, happily. Is that a fair exchange? What exactly does each side give and get?</li>
 <li>Give an example, real or plausible, of a system with excellent hardware and software but a broken People component. What does the failure look like from outside? <span class="tag tag-open">Open judgment</span></li>
+
+<li>The timezone bug produced stories that were fluent, confident, and wrong. Where else do you accept a
+well-presented answer without checking whether the data underneath it is correct?
+(<a href="https://engineering.atspotify.com/2026/3/inside-the-archive-2025-wrapped">Spotify's account</a> describes how they caught it.)</li>
+
+<li>Spotify replaced their best model with a cheaper one that was nearly as good, because 1.4 billion
+reports had to be affordable. Explain that tradeoff to someone who does not work in technology, and say
+where you would have drawn the line. <span class="tag tag-hard">Hard</span></li>
+
+<li>Wrapped Archive used a year of listening history to write stories about people's lives. Spotify did
+not ask permission for that specific use. Is the exchange fair, and would your answer change if the
+stories were about something more sensitive than music? <span class="tag tag-open">Open judgment</span></li>
 </ol>
 
-<h2 id="lab"><span class="num">07</span>From lecture to lab</h2>
+<h2 id="lab"><span class="num">08</span>From lecture to lab</h2>
 <div class="callout callout-bridge"><strong>Week 1 &#183; Lab 1</strong>
 <p>This week&#8217;s lab, <a href="lab1-genai.html"><strong>GenAI for Thinking</strong></a>, sets the AI ground
 rules for the quarter and gets you using AI in the green zone on this chapter&#8217;s ideas. It is also your
-first checkpoint-and-certificate lab, so you learn the mechanics while the stakes are low.</p></div>
+first checkpoint-and-certificate lab, so you learn the mechanics while the stakes are low.</p>
+  <a class="lablink" href="lab1-genai.html">Go to Lab 1 &#8594;</a>
+</div>
+<div class="sources">
+  <h3>Sources and further reading</h3>
+  <ul>
+    <li>Yoshnee Raveendran, <a href="https://engineering.atspotify.com/2026/3/inside-the-archive-2025-wrapped">"Inside the Archive: The Tech Behind Your 2025 Wrapped Highlights"</a>, Spotify Engineering, March 2026. The source for section 04, and a readable look inside a system operating at scale. Assigned reading is optional, but recommended.</li>
+    <li>Spotify newsroom releases on annual Wrapped launches.</li>
+  </ul>
+</div>
+
 </main></div><script>(function(){var b=document.querySelector('.railtoggle'),n=document.getElementById('chapnav');
 if(!b||!n)return;b.addEventListener('click',function(){var o=n.classList.toggle('open');
 b.setAttribute('aria-expanded',o?'true':'false');});})();</script></body></html>
