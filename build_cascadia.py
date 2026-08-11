@@ -218,6 +218,50 @@ con.executemany("INSERT INTO inventory VALUES(?,?,?,?)", inventory)
 con.executemany("INSERT INTO used_gear VALUES(?,?,?,?,?,?,?)", used)
 con.commit()
 
+
+# ---------------------------------------------------------------- messy table for the SQL cleaning lab
+# Mirrors the dirt planted in cascadia-sales-2025-RAW.xlsx so Lab 3 (Excel) and Lab 7 (SQL)
+# clean the SAME mess with different tools.
+random.seed(320)  # re-seed so the dirt is reproducible independent of earlier draws
+raw_rows = []
+smap_ = {s[0]: s for s in STORES}
+pmap_ = {p[0]: p for p in PRODUCTS}
+STATE_VARIANTS = {"WA": ["WA", "wa", "Wash.", "Washington", " WA "],
+                  "OR": ["OR", "or", "Oregon", "Ore.", " OR"],
+                  "ID": ["ID", "id", "Idaho", " ID "]}
+
+for sid_, date, st, pid, mid, qty, unit in sales:
+    p = pmap_[pid]; sh = smap_[st]
+    store = sh[1]; cat = p[2]; d = date
+    price = f"{unit:.2f}"
+    q = qty
+    state = {"Puget Sound": "WA", "North Cascades": "WA", "Inland": "ID",
+             "Willamette": "OR"}[sh[2]]
+    stv = state
+    # planted problems
+    if random.random() < 0.07: store = "  " + store + " "        # whitespace
+    if random.random() < 0.06: cat = cat.upper()                  # casing
+    if random.random() < 0.05:                                    # mixed date formats
+        y, m, dd = date.split("-"); d = f"{int(m)}/{int(dd)}/{y}"
+    if random.random() < 0.04: price = "$" + price                # currency symbol in text
+    if random.random() < 0.03: q = None                           # missing quantity
+    if random.random() < 0.05: stv = random.choice(STATE_VARIANTS[state])  # inconsistent state codes
+    if random.random() < 0.02: store = store.lower()
+    raw_rows.append((sid_, d, store, cat, stv, q, price, mid))
+
+# duplicate a set of rows outright (the classic double-posted export)
+for r in random.sample(raw_rows, 24):
+    raw_rows.append(r)
+random.shuffle(raw_rows)
+
+con.executescript("""
+CREATE TABLE sales_raw(
+  sale_id INTEGER, sale_date TEXT, store TEXT, category TEXT,
+  state TEXT, quantity INTEGER, unit_price TEXT, member_id INTEGER);
+""")
+con.executemany("INSERT INTO sales_raw VALUES(?,?,?,?,?,?,?,?)", raw_rows)
+con.commit()
+
 # ---------------------------------------------------------------- flat CSV (joined export)
 smap = {s[0]: s for s in STORES}
 pmap = {p[0]: p for p in PRODUCTS}
@@ -241,4 +285,4 @@ with open(os.path.join(OUT, "cascadia-sales-2025.csv"), "w", newline="") as f:
     w.writeheader(); w.writerows(rows)
 
 print(json.dumps({"sales": len(sales), "products": len(PRODUCTS), "members": len(members),
-                  "inventory": len(inventory), "used_gear": len(used)}, indent=None))
+                  "inventory": len(inventory), "used_gear": len(used), "sales_raw": len(raw_rows)}, indent=None))
