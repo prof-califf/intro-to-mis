@@ -149,7 +149,7 @@ li{margin-bottom:.45rem}
 <button class="railtoggle" aria-expanded="false" aria-controls="chapnav">Chapter contents</button>
 <nav id="chapnav">
 <a href="#open">Information as an asset</a><a href="#value">When information has value</a><a href="#siting">Where to put a store</a>
-<a href="#deepbrew">Deep Brew</a><a href="#chain">The five components</a><a href="#vocab">Vocabulary</a>
+<a href="#deepbrew">Deep Brew</a><a href="#inside">Inside Deep Brew</a><a href="#chain">The five components</a><a href="#vocab">Vocabulary</a>
 <a href="#discussion">Discussion questions</a><a href="#lab">From lecture to lab</a></nav><a class="back" href="index.html">&#8592; All chapters &amp; labs</a></aside><main>
 <header class="chaphead"><p class="eyebrow">Chapter 1</p><h1>The Value of Information</h1>
 <p class="anchor">Anchor case: <strong>Starbucks</strong></p>
@@ -220,16 +220,63 @@ this mechanism: <strong>a member number attached to a sale is the difference bet
 see its customers and one that cannot.</strong> Your lab client this quarter is a co-op whose entire
 business model rests on it.</p>
 
-<h2 id="chain"><span class="num">05</span>The case on the five components</h2>
+
+<h2 id="inside"><span class="num">05</span>What Deep Brew actually runs, and what it got wrong</h2>
+
+<p>It is easy to describe a company's technology in the language of its press releases. It is more
+useful to look at what shipped, what it cost, and what failed, so this section does that.</p>
+
+<h3>The scale problem</h3>
+
+<p>Starbucks operates north of 40,000 stores. At that size, a decision that improves a single store by a
+trivial amount is worth a great deal in aggregate, and a decision that degrades a single store by a
+trivial amount is a disaster. This is why the company builds prediction into ordinary operations:
+forecasting hourly demand from historical sales, staffing, expected foot traffic from the app, and local
+weather, then feeding those forecasts into scheduling, inventory, and equipment maintenance. The espresso
+machines themselves report their condition, so a failing component can generate a work order before a
+barista notices anything wrong.</p>
+
+<p>Note where the money goes. The company has publicly discussed annual spending in the hundreds of
+millions of dollars on enterprise software and infrastructure from outside vendors. When you read in
+Chapter 6 that Nike spent $400 million on a supply chain system, that figure should no longer sound
+exotic. It is the going rate for running a large company's nervous system.</p>
+
+<h3>The failure worth studying: counting milk</h3>
+
+<p>In September 2025, Starbucks deployed an artificial intelligence inventory tool from a vendor called
+NomadGo across roughly 11,000 stores. The promise was specific and attractive: computer vision counting
+inventory with about 99% accuracy, up to eight times faster than a person with a clipboard. Counting
+stock is exactly the kind of repetitive, structured task that automation should own.</p>
+
+<p>In May 2026, Reuters reported that Starbucks had retired the program. The system confused similar
+milk varieties, missed products sitting on shelves, and in practice slowed employees down rather than
+speeding them up. Baristas went back to counting by hand.</p>
+
+<div class="callout callout-caution">
+<strong>Read this against the five components</strong>
+<p>The hardware worked. The software ran. The network delivered. The technology was not obviously
+broken in any way an engineer would flag. It failed at the <strong>People</strong> component, in the
+gap between a demo that counts neatly stacked cartons and a real back room where milk varieties look
+alike and a barista is already behind. A tool that makes a task slower will be abandoned no matter how
+impressive the model behind it is.</p>
+</div>
+
+<p>Keep this in mind whenever you read a company described as a technology leader. Starbucks genuinely is
+one, and it still shipped an expensive failure to 11,000 locations before finding out. The pattern to
+notice is not that they failed. It is that the failure surfaced only after deployment, because nothing in
+the rollout tested the thing that actually mattered: whether a person mid-shift could go faster with it
+than without it.</p>
+
+<h2 id="chain"><span class="num">06</span>The case on the five components</h2>
 <div class="vc"><div class="vc-head">The Five Components &#183; Starbucks</div><div class="vc-strip">
 <div class="vc-cell"><span class="vc-stage">Hardware</span><p>Registers, espresso machines streaming telemetry, phones running the app.</p></div>
 <div class="vc-cell"><span class="vc-stage">Software</span><p>Deep Brew&#8217;s models for siting, scheduling, inventory, and offers.</p></div>
 <div class="vc-cell"><span class="vc-stage">Data</span><p>Transactions, mobility patterns, loyalty profiles, machine telemetry.</p></div>
 <div class="vc-cell"><span class="vc-stage">Networks</span><p>Tens of thousands of stores streaming into one shared brain, and predictions flowing back.</p></div>
 <div class="vc-cell"><span class="vc-stage">People</span><p>Managers retain override; their corrections retrain the system.</p></div>
-</div><div class="vc-note">A rare system with <b>no broken component</b>, keep it in view all quarter as the reference for what working looks like.</div></div>
+</div><div class="vc-note">Strong across all five, which is why it serves as the quarter's reference case. But note the <b>People</b> component: the same company shipped an inventory tool to 11,000 stores that baristas could not use, and had to withdraw it. Being good at this is not the same as being safe from it.</div></div>
 
-<h2 id="vocab"><span class="num">06</span>Vocabulary</h2>
+<h2 id="vocab"><span class="num">07</span>Vocabulary</h2>
 <dl class="vocab">
 <div><dt>Value of information</dt><dd>The improvement in decision outcomes attributable to having it.</dd></div>
 <div><dt>Decision support</dt><dd>Systems that inform a human decision rather than make it.</dd></div>
@@ -241,15 +288,20 @@ business model rests on it.</p>
 <div><dt>Cannibalization</dt><dd>New capacity taking demand from your own existing capacity, invisible without shared data.</dd></div>
 </dl>
 
-<h2 id="discussion"><span class="num">07</span>Discussion questions</h2>
+<h2 id="discussion"><span class="num">08</span>Discussion questions</h2>
 <ol class="dq">
 <li>Apply the &#8220;what decision changes?&#8221; test to Starbucks&#8217;s mobility data. Name the decision, and what deciding wrongly costs. <span class="tag tag-warm">Warm-up</span></li>
 <li>Wrong information has negative value. Construct a concrete siting example where bad data is worse than no data.</li>
 <li>Deep Brew predicts; managers decide. Pick one Deep Brew decision you would fully automate and one you never would, and defend the line you drew.</li>
 <li>The rewards app buys identification with discounts. What is Starbucks actually paying for, and is the customer&#8217;s side of that trade well priced? <span class="tag tag-hard">Hard</span></li>
+
+<li>The NomadGo inventory tool promised 99% accuracy and eight times the speed of a human, and was
+withdrawn after nine months. Design the test Starbucks should have run before deploying to 11,000 stores.
+Who is in it, how long does it run, and what result would have stopped the rollout?
+<span class="tag tag-hard">Hard</span></li>
 </ol>
 
-<h2 id="lab"><span class="num">08</span>From lecture to lab</h2>
+<h2 id="lab"><span class="num">09</span>From lecture to lab</h2>
 <div class="callout callout-bridge"><strong>Week 2 &#183; Lab 2</strong>
 <p>This week you meet your own client. <a href="lab2-excel-basics.html"><strong>Lab 2: Excel Basics</strong></a>
 opens the engagement with Cascadia Outfitters, a member-owned co-op whose member-attach mechanism is
@@ -257,6 +309,15 @@ this chapter&#8217;s identification idea made concrete. You compute their 2025 t
 you will live with for a month.</p>
   <a class="lablink" href="lab2-excel-basics.html">Go to Lab 2 &#8594;</a>
 </div>
+<div class="sources">
+  <h3>Sources and further reading</h3>
+  <ul>
+    <li><a href="https://www.starbucks.com/about-us/">Starbucks corporate information</a> and quarterly investor materials, for store counts and strategy statements.</li>
+    <li>Reuters reporting on the withdrawal of the NomadGo inventory system, May 2026, and contemporaneous coverage of the September 2025 deployment.</li>
+    <li>Starbucks announcements on Deep Brew and in-store technology, 2019 onward.</li>
+  </ul>
+</div>
+
 </main></div><script>(function(){var b=document.querySelector('.railtoggle'),n=document.getElementById('chapnav');
 if(!b||!n)return;b.addEventListener('click',function(){var o=n.classList.toggle('open');
 b.setAttribute('aria-expanded',o?'true':'false');});})();</script></body></html>

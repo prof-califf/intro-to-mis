@@ -166,7 +166,7 @@ li{margin-bottom:.45rem}
     <a href="#measure" class="sub">Measuring a process</a>
     <a href="#redesign">Redesigning the product</a>
     <a href="#transparency">Operational transparency</a>
-    <a href="#results">What it was worth</a>
+    <a href="#results">What it was worth</a><a href="#anyware">AnyWare and after</a>
     <a href="#chain">The five components</a>
     <a href="#vocab">Vocabulary</a>
     <a href="#discussion">Discussion questions</a>
@@ -348,7 +348,63 @@ top-five e-commerce company, not by building better e-commerce software than Ama
 product its e-commerce software was selling. The digital ordering capability had existed, largely unchanged,
 throughout the collapse.</p>
 
-<h2 id="chain"><span class="num">07</span>The case on the five components</h2>
+
+<h2 id="anyware"><span class="num">07</span>What they built after the process worked</h2>
+
+<p>The turnaround gets the headlines, but the decade after it is the part with the transferable lesson.
+Once the product was worth ordering, Domino's spent ten years making ordering the thing it was best at,
+and the results show what happens when technology lands on a process that is finally sound.</p>
+
+<h3>AnyWare: ordering as an interface problem</h3>
+
+<p>Beginning around 2015, the company built what it calls <strong>AnyWare</strong>, a set of ordering
+paths across platforms that had never been ordering platforms. A Ford dashboard. A Samsung smart TV. An
+Apple Watch. A pizza emoji sent as a tweet or a text. Amazon's voice assistant. Facebook Messenger and
+Slack. The stated goal was to let people order using whatever they already had in their hand, and the
+company now supports well over a dozen such paths.</p>
+
+<p>Look past the novelty at the architectural claim underneath. Every one of those surfaces reaches the
+same ordering system, which reaches the same store, which triggers the same tracked fulfillment process
+from Section 05. Adding a new ordering surface is a small piece of work rather than a new company,
+because the process beneath is one process. That property has a name you will meet in Week 10, and it is
+what people mean when they say a system is well architected.</p>
+
+<h3>The data underneath</h3>
+
+<p>Every one of those orders emits data, and the volume is the point. Domino's has described integrating
+data from thousands of stores along with supply chain, staffing, and third-party sources, running through
+thousands of separate data pipelines into a central warehouse, in order to assemble one view of the
+customer and the operation. A loyalty program launched in 2015 attaches a large share of those orders to
+identified individuals rather than anonymous transactions.</p>
+
+<p>Recognize that last mechanism, because you met it in Chapter 1 with Starbucks and you are about to
+spend a month inside it. An order attached to a known customer can be analyzed, predicted, and served.
+An anonymous order is a single event that teaches the company nothing. Your lab client is a co-op whose
+entire business model depends on making that attachment happen, and one of whose stores has quietly
+stopped.</p>
+
+<h3>Pizza theater: the tracker, rebuilt in a room</h3>
+
+<p>In 2012 Domino's introduced a store format it calls pizza theater: an open view of food preparation
+from the lobby, seating, and a screen showing the status of carryout orders. Read that as a design
+decision rather than a decor decision. It is the Pizza Tracker implemented in architecture. The same
+principle from Section 05, expose the stages so waiting becomes legible, applied to a physical room
+instead of a screen.</p>
+
+<p>By the late 2010s the company was reporting that a majority of United States sales arrived through
+digital channels, alongside a long unbroken run of same-store sales growth. Patrick Doyle's line, that
+Domino's is a technology company that sells pizza, stopped being a provocation and started being a
+description of the org chart.</p>
+
+<div class="callout callout-bridge">
+<strong>The sequence is the lesson</strong>
+<p>Everything in this section was possible in 2008. The company had online ordering, a tracker, and
+capable engineers, and sales fell anyway, because the pizza was bad. The technology only compounded once
+the underlying process produced something worth ordering. Get the order of operations wrong and you
+build a very efficient way to sell a product people do not want.</p>
+</div>
+
+<h2 id="chain"><span class="num">08</span>The case on the five components</h2>
 
 <div class="vc">
   <div class="vc-head">The Five Components · Domino's, 2008 (before the turnaround)</div>
@@ -362,7 +418,7 @@ throughout the collapse.</p>
   <div class="vc-note">Break located at <b>Data</b> and <b>People</b>: the system measured minutes because people asked only for minutes, and strong software made the failure <em>more</em> efficient, not less.</div>
 </div>
 
-<h2 id="vocab"><span class="num">08</span>Vocabulary</h2>
+<h2 id="vocab"><span class="num">09</span>Vocabulary</h2>
 
 <dl class="vocab">
   <div><dt>Business process</dt><dd>Structured activities converting inputs into an output a customer values.</dd></div>
@@ -375,10 +431,12 @@ throughout the collapse.</p>
   <div><dt>Operational transparency</dt><dd>Deliberately exposing internal process stages to the customer.</dd></div>
   <div><dt>Process instrumentation</dt><dd>Capturing timestamped events at each step so the process becomes measurable.</dd></div>
   <div><dt>Feedback loop</dt><dd>A path by which process output re-enters as input, enabling correction.</dd></div>
-  <div><dt>Business process redesign</dt><dd>Rethinking a process end to end rather than optimizing steps in place.</dd></div>
+  <div><dt>Omnichannel</dt><dd>Many customer-facing surfaces reaching one underlying process and one record of the order.</dd></div>
+<div><dt>Data pipeline</dt><dd>An automated route that moves data from where it is produced to where it is analyzed.</dd></div>
+<div><dt>Business process redesign</dt><dd>Rethinking a process end to end rather than optimizing steps in place.</dd></div>
 </dl>
 
-<h2 id="discussion"><span class="num">09</span>Discussion questions</h2>
+<h2 id="discussion"><span class="num">10</span>Discussion questions</h2>
 
 <ol class="dq">
   <li>Map the Domino's order-to-delivery process as it stood in 2008. Mark every handoff and identify the
@@ -405,9 +463,13 @@ throughout the collapse.</p>
   <li>Suppose the recipe had never changed and only the digital ordering had improved from 2009 to 2013. Sketch
   what the sales curve looks like and justify your shape from the evidence in this chapter.
   <span class="tag tag-open">Open judgment</span></li>
+
+  <li>AnyWare lets people order by tweeting a pizza emoji. Argue that this is a serious business
+  capability rather than a marketing stunt, using the idea that every surface reaches one process. Then
+  argue the opposite.</li>
 </ol>
 
-<h2 id="lab"><span class="num">10</span>From lecture to lab</h2>
+<h2 id="lab"><span class="num">11</span>From lecture to lab</h2>
 
 <div class="callout callout-bridge">
   <strong>Week 3</strong>
@@ -435,6 +497,8 @@ throughout the collapse.</p>
     <li>"Pizza Turnaround" campaign materials, Crispin Porter + Bogusky, December 2009.</li>
     <li>Ryan Buell and Michael Norton on operational transparency, Harvard Business School working papers.</li>
     <li>UCLA Anderson case, <em>Domino's: The Turnaround</em>.</li>
+    <li><a href="https://biz.dominos.com/about-us/innovations/">Domino's corporate innovations timeline</a>, the company's own record of the Tracker, AnyWare, and pizza theater.</li>
+    <li>Trade and vendor case studies documenting Domino's data pipeline and warehouse architecture.</li>
   </ul>
 </div>
 
