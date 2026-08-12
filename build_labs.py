@@ -296,7 +296,7 @@ for now.</p></div>
 
 "lab3-excel-dataprep.html": dict(reflect="""Dirty data is the fingerprint of a broken process. Describe where dirty data would most likely appear in the industry you want to work in, what upstream process failure would cause it, and what it would cost the business if nobody cleaned it before a decision was made from it.""",
   labid="LAB3", n="Lab 3", title="Data Preparation. The RAW File", week="Week 3",
-  pair=('chapter3-dominos.html','Chapter 3 · Business Processes'),
+  pair=('chapter2-competitive-advantage.html','Chapter 2 · Competitive Advantage'),
   bridge="""<p><strong>Lab professor's intro (10 min):</strong> Frame this with Monday's Domino's
   discussion: dirty data is the fingerprint of a process with an unmanaged handoff. Cascadia's
   point-of-sale export has duplicates (a double-post between POS and the export job), mixed date
@@ -398,10 +398,10 @@ exercise.</p></div>
 "lab4-excel-dataviz.html": dict(
   labid="LAB4", n="Lab 4", title="Data Visualization: Charts That Tell the Truth", week="Week 4",
   reflect="""Every chart in Part 3 was built from accurate data and every one of them misled. In the field you plan to enter, describe a situation where someone would have an incentive to present true numbers in a misleading shape. What would you look at first to catch it?""",
-  pair=('chapter4-healthcaregov.html','Chapter 4 \u00b7 Systems Analysis'),
-  bridge="""<p><strong>Lab professor's intro (10 min):</strong> Connect to Monday's Healthcare.gov case
-  with one idea: leadership was not lied to. They had accurate status information that told them the
-  wrong thing, which is a communication failure sitting on top of a technical one. Part 1 of this lab is
+  pair=('chapter3-dominos.html','Chapter 3 \u00b7 Business Processes'),
+  bridge="""<p><strong>Lab professor's intro (10 min):</strong> Connect to this week's Domino's case. The
+  tracker made a process visible, and visibility is what lets anyone manage anything. Charts are how
+  visibility reaches a manager, which means a misleading chart is a broken instrument. Part 1 of this lab is
   quick, matching the chart to the question. Part 3 is the real work, four charts built from true
   Cascadia numbers that each mislead in a different way. Worth doing the first one on the projector:
   show Chart A, ask the room how much bigger Bellevue is than Bellingham, let them answer from the
@@ -544,10 +544,10 @@ are training for.</p>
 
 "lab5-excel-analysis.html": dict(reflect="""You just found a problem that every standard report concealed. In the career you are heading toward, what is one 'healthy-looking sick store': a metric that could look fine while something underneath it fails? What would you have to break out, segment, or cross-tab to catch it early?""",
   labid="LAB5", n="Lab 5", title="Data Analysis: Why Are Members Disappearing?", week="Week 5",
-  pair=('chapter6-nike-sap.html','Chapter 6 · Enterprise Systems'),
+  pair=('chapter4-healthcaregov.html','Chapter 4 · Systems Analysis'),
   bridge="""<p><strong>Lab professor's intro (10 min):</strong> This is the hardest Excel assignment of
-  the quarter, by design, and it lands two days after Exam 1 with Wednesday's Nike/SAP case fresh: a
-  company whose numbers looked fine while its planning system quietly broke. Part A is guided skill work
+  the quarter, by design, and it lands two days after Exam 1 with Wednesday's Healthcare.gov case fresh: a
+  system whose status reports were accurate and told leadership nothing that mattered. Part A is guided skill work
   (pivots, % of total, Goal Seek, FORECAST.LINEAR). Part B is an open brief: read the board memo aloud,
   then say nothing more. Do not name the store, do not name the metric. Students who ask for direction
   get one sentence: "The memo tells you what the board can see. Find what they can't." Budget the full
@@ -629,11 +629,10 @@ is the analyst's version of the audit Nike never ran.</p></div>
   qs=L5),
 
 "lab6-tableau.html": dict(
-  labid="LAB6", n="Lab 6", title="Tableau: From Worksheets to a Dashboard", week="Week 6",
+  labid="LAB6", n="Lab 6", title="Data Visualization with Tableau", week="Week 6",
   reflect="""You built a dashboard that shows revenue, and revenue at this co-op looks healthy. In the field you plan to enter, name one dashboard you have seen or can imagine that would show green while something serious was going wrong underneath. What single chart would you add to catch it?""",
   pair=('index.html','Chapter 7 \u00b7 BI &amp; Analytics (coming)'),
-  bridge="""<p><strong>Lab professor's intro (10 min):</strong> Frame with Monday's Moneyball
-  discussion: the A's won by measuring what the league was not measuring. Today students point a
+  bridge="""<p><strong>Lab professor's intro (10 min):</strong> Frame with Monday's BI discussion: the A's won by measuring what the league was not measuring. Today students point a
   different instrument at data they already know well. Two things are worth doing on the projector.
   First, show the Data Source pane and one drag-and-drop so the interface stops being intimidating.
   Second, show the difference between a worksheet and a dashboard, because that distinction is the whole
