@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lab 1 · GenAI for Thinking | MIS 320</title>
+<title>Lab 1 · GenAI for Thinking, Not Instead of It | MIS 320</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -199,6 +199,23 @@ li{margin-bottom:.45rem}
   letter-spacing:.2em;text-transform:uppercase;color:var(--black);margin-bottom:.5rem}
 .stuck ol{margin:.5rem 0 0;padding-left:1.3rem}
 .stuck li{font-size:15px;margin-bottom:.35rem}
+
+/* ---------- AI traffic lights ---------- */
+.ailight{display:flex;gap:1rem;align-items:flex-start;border:1px solid var(--border);background:#fff;
+  padding:1rem 1.2rem;margin:1rem 0}
+.ailight .lamp{flex:0 0 auto;width:34px;background:#1c1c1a;border-radius:8px;padding:7px 0;
+  display:flex;flex-direction:column;align-items:center;gap:5px}
+.ailight .bulb{width:20px;height:20px;border-radius:50%;background:#2e2e2b;box-shadow:inset 0 2px 4px rgba(0,0,0,.6)}
+.ailight.g .bulb.b3{background:#2fae5f;box-shadow:0 0 10px rgba(47,174,95,.8),inset 0 -2px 3px rgba(0,0,0,.25)}
+.ailight.y .bulb.b2{background:#e6b93c;box-shadow:0 0 10px rgba(230,185,60,.8),inset 0 -2px 3px rgba(0,0,0,.25)}
+.ailight.r .bulb.b1{background:#d5453a;box-shadow:0 0 10px rgba(213,69,58,.8),inset 0 -2px 3px rgba(0,0,0,.25)}
+.ailight .lighttext{flex:1;min-width:0}
+.ailight .lighttext strong:first-child{display:block;font-family:var(--display);font-size:13px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;margin-bottom:.3rem}
+.ailight.g .lighttext strong:first-child{color:#1e7c43}
+.ailight.y .lighttext strong:first-child{color:#a07a10}
+.ailight.r .lighttext strong:first-child{color:#a03434}
+.ailight p{margin:.2rem 0 0;font-size:15px;line-height:1.55}
 .cp{border:1px solid var(--rule);background:var(--paper);border-radius:2px;margin:1rem 0;padding:1rem 1.15rem}.cp.locked{opacity:.45;pointer-events:none}.cp.done{border-left:4px solid var(--good);background:var(--good-pale)}.cp.q{font-family:var(--sans);font-size:.92rem;color:var(--navy);margin:0 0.6rem;font-weight:500}.cp input[type=text]{font-family:var(--sans);font-size:.9rem;padding:.45rem.6rem;border:1px solid var(--rule);border-radius:2px;width:14rem;max-width:100%}.cp button{font-family:var(--sans);font-size:.8rem;font-weight:600;letter-spacing:.04em;background:var(--accent-deep);color:#fff;border:none;border-radius:2px;padding:.5rem.9rem;cursor:pointer;margin-left:.4rem}.cp button.hintb{background:none;color:var(--accent-deep);border:1px solid var(--rule)}.cp.msg{font-family:var(--sans);font-size:.8rem;margin:.5rem 0 0}.cp.hint{font-family:var(--sans);font-size:.8rem;color:var(--muted);margin:.5rem 0 0;display:none;border-top:1px dashed var(--rule);padding-top:.5rem}.progress{position:sticky;top:0;z-index:5;background:var(--black);color:#fff;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:.6rem 1rem;margin:1.5rem 0}.certbox{border:2px solid var(--black);background:var(--paper);padding:1.2rem 1.3rem;margin:1.5rem 0;display:none}.certbox.show{display:block}.certbox h3{margin-top:0}.codebox code{font-family:ui-monospace,Menlo,monospace;background:var(--cream-deep);padding:.15em.45em;border-radius:2px}
 </style></head><body>
 <nav class="topnav">
@@ -258,39 +275,139 @@ li{margin-bottom:.45rem}
 <main id="top">
 <header class="chaphead">
   <p class="eyebrow">Lab 1 · Week 1</p>
-  <h1>GenAI for Thinking</h1>
+  <h1>GenAI for Thinking, Not Instead of It</h1>
   <div class="meta-row"><span>Lab session · 80 min</span><span class="alt"><a href="chapter0-what-is-mis.html" style="color:inherit;text-decoration:none">Pairs with Chapter 0 · What Is MIS? &#8594;</a></span></div>
 </header>
-<p class="lede">Before you analyze a single row of data in this course, we settle how you may
-  and may not use generative AI. Not because AI is forbidden, you will use it in this very lab, but because the difference between using AI to <em>think better</em> and using it to
-  <em>avoid thinking</em> is the difference between graduating employable and graduating hollow.</p>
-<div class="callout callout-bridge"><strong>From lecture to lab</strong><p><strong>Lab professor's intro (10 min):</strong> This lab sets the AI policy for the
-  whole quarter, before students touch any tool. Walk the three lights on the projector, run one
-  live example of a green-zone use (ask Claude to explain a concept from Wednesday's lecture), and
-  emphasize that the policy is the same in lab and lecture. Students then work the exercises and
-  checkpoints on their own machines. Nothing here requires a dataset.</p></div>
+<p class="lede">Nobody hands a first grader a calculator. Not because calculators are bad,
+  but because the point of first grade arithmetic is not the answers. It is building the number sense
+  that lets you catch a wrong answer later, including a wrong answer from the calculator. You are in
+  the first grade of business analysis right now. That is not an insult, it is a schedule: this quarter
+  you learn the basics by hand, precisely so that AI becomes a tool you command instead of a crutch you
+  cannot check.</p>
+  <p>So this course does not ban AI, and it does not pretend AI is optional in the careers you are
+  heading into. It asks something harder: that you use it in ways that make you better at thinking,
+  and that you always remain the person who can tell when it is wrong. Today you learn the rules and
+  the three ways of using AI that actually build skill.</p>
+<div class="callout callout-bridge"><strong>From lecture to lab</strong><p><strong>Lab professor's intro (10 min):</strong> Open with the calculator line, it frames
+  the whole quarter: we do not hand first graders calculators, because the point of first grade math is
+  building the number sense that makes a calculator useful later. Same logic here. Then walk the three
+  lights on the projector and do the coach exercise live: ask an AI to quiz YOU on the five components,
+  one question at a time, hints not answers. Students immediately see AI making someone think harder
+  rather than less. Flag that checkpoints 5 and 6 contain deliberately wrong AI output and finding the
+  errors is the exercise. This is also everyone's first run through checkpoints, reflection, and the
+  certificate, so leave five minutes at the end for the download step.</p></div>
 <div id="steps">
-<h2><span class="num">The policy</span>Three lights</h2>
-<div class="callout callout-good"><strong>Green: always fine, no disclosure needed</strong>
-<p>Explaining concepts, debugging your own formulas, quizzing yourself, translating jargon,
-summarizing your own notes. AI as tutor. The thinking remains yours.</p></div>
-<div class="callout"><strong>Yellow: permitted with disclosure</strong>
-<p>Drafting that you substantially rewrite, brainstorming structures, critique of your own work.
-One sentence at the end of the submission: what you used, and for what. Undisclosed yellow is red.</p></div>
-<div class="callout callout-caution"><strong>Red: never</strong>
-<p>Submitting AI output as your work. Any AI during exams. Fabricating checkpoint answers instead of
-doing the Excel work. The verification codes exist precisely to make that conversation short.</p></div>
+<h2><span class="num">Part 1</span>The rules: three lights</h2>
 
-<h2><span class="num">Exercise</span>Use the green zone, on purpose</h2>
-<p>Open Claude (or the AI of your choice) and do these three things. They are graded by the
-checkpoints, not by screenshots, but you will be asked about them in lab.</p>
+<p>Every use of AI in this course falls into one of three zones. When in doubt, ask which one you are
+in, and if you are still in doubt, ask us.</p>
+
+<div class="ailight g">
+  <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
+  <div class="lighttext"><strong>Green &middot; always fine</strong>
+  <p>Asking AI to explain a concept, quiz you, critique your reasoning, or help you understand an error
+  you then fix yourself. Green uses make you smarter and need no disclosure.</p></div>
+</div>
+
+<div class="ailight y">
+  <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
+  <div class="lighttext"><strong>Yellow &middot; fine with disclosure</strong>
+  <p>AI drafts or outlines that you substantially rework in your own words, with a one-line note saying
+  how you used it. The thinking in the final product must be yours.</p></div>
+</div>
+
+<div class="ailight r">
+  <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
+  <div class="lighttext"><strong>Red &middot; never</strong>
+  <p>Submitting AI output as your own work, using AI on exams, and using AI to write the lab
+  reflections. The reflections exist to capture <em>your</em> thinking, and an AI-written one defeats
+  the entire purpose while being easier to spot than students expect.</p></div>
+</div>
+
+<div class="callout"><strong>You will see these lights all quarter</strong>
+<p>These traffic lights appear throughout the textbook, on chapters and labs, marking the moments where
+AI helps and the moments where it must stay closed. A green light next to an exercise means use AI
+freely, and usually names the role to use it in. Yellow means allowed with a disclosure line. Red means
+this one is you alone. When you see a light, that is the policy for that specific task, decided so you
+do not have to guess.</p></div>
+
+<div class="callout"><strong>The test behind the lights</strong>
+<p>Ask: is the thing being graded the thinking itself? If yes, the thinking must be yours. That single
+question sorts almost every case into the right zone.</p></div>
+
+<h2><span class="num">Part 2</span>The three roles worth knowing</h2>
+
+<p>Most students arrive knowing exactly one way to use AI: "write it for me." That is the vending
+machine, and it is the one use this course restricts, because it does your thinking for you. Here are
+the three roles that do the opposite. Learn their names, we will use them all quarter.</p>
+
+<h3>The coach: it asks, you answer</h3>
+<p>A coach does not play the game for you. Tell an AI: <em>"Quiz me on the five components of MIS. One
+question at a time. When I get one wrong, give me a hint, not the answer."</em> Now the AI is doing
+what a good tutor does at two in the morning before an exam: making you retrieve, which is the thing
+that actually builds memory. Reading feels like learning. Retrieval is learning.</p>
+<p><strong>Try it now.</strong> Run that exact prompt in whatever AI you use, answer five questions,
+and notice how different it feels from reading the chapter again.</p>
+
+<h3>The sparring partner: it attacks, you defend</h3>
+<p>Write three sentences answering this: <em>should Cascadia Outfitters, a small gear co-op, spend
+money on AI tools this year?</em> Your opinion, your reasoning. Then tell the AI: <em>"Argue against
+this. Find my weakest claim and press on it."</em></p>
+<p>Your first answer is never your best answer. A sparring partner exposes the soft spots while the
+stakes are zero, which is exactly what a good study group does, except this one is available at any
+hour and never gets tired of you.</p>
+
+<h3>The calculator: it works fast, you check it</h3>
+<p>Back to where this lab started. A calculator is a wonderful thing in the hands of someone who knows
+arithmetic, and a trap in the hands of someone who does not, because the person who cannot estimate
+cannot notice a wrong answer. Every professional lives by the rule that follows: you can delegate the
+work, you can never delegate the checking. AI is the most powerful calculator ever built, and it can be
+wrong in ways a pocket calculator never was. The next section makes this concrete.</p>
+
+<h2><span class="num">Part 3</span>The calculator test</h2>
+
+<p>Below are ten order lines from a Cascadia store. An AI was asked for the total and answered,
+instantly and confidently: <strong>"The total is $1,440.75."</strong></p>
+
+<div class="callout"><strong>The order lines</strong>
+<p style="font-family:ui-monospace,Menlo,monospace;font-size:.9rem;line-height:1.7">
+2 &times; $24.50 &nbsp;&nbsp; 1 &times; $189.95 &nbsp;&nbsp; 3 &times; $12.00 &nbsp;&nbsp; 1 &times; $449.00 &nbsp;&nbsp; 2 &times; $67.25<br>
+4 &times; $8.75 &nbsp;&nbsp; 1 &times; $95.00 &nbsp;&nbsp; 2 &times; $154.90 &nbsp;&nbsp; 1 &times; $22.35 &nbsp;&nbsp; 3 &times; $39.99</p></div>
+
+<p>Checkpoint 5 asks for the real total. Compute it yourself, in Excel or on paper. The point is not
+that AI is bad at arithmetic, some tools now do it well. The point is that the error, when it comes,
+will look exactly like the right answer, and the only person who catches it is the one who can still
+do first grade math.</p>
+
+<h2><span class="num">Part 4</span>The autopsy: what wrong looks like</h2>
+
+<p>A student asked an AI to summarize the course's central rule and got this paragraph back:</p>
+
+<div class="callout callout-caution"><strong>AI output, verbatim</strong>
+<p><em>"Information systems are built from five components: hardware, software, data, networks, and
+people. These components work together to turn raw data into decisions a business can act on. The key
+principle, sometimes called the weakest component rule, is that a system is only as strong as its
+strongest component, which is why companies invest heavily in their best-performing areas. When
+analyzing any system failure, start by identifying which component broke."</em></p></div>
+
+<p>It is fluent. It is confident. It is well organized. And it contains one factual error that reverses
+the meaning of the rule it is explaining. Checkpoint 6 asks you to find it, and here is why this
+exercise sits in Week 1: in Chapter 0 you read about a system that produced fluent, confident,
+well-written nonsense because of one wrong input, and it took deliberate checking to catch. Learning to
+read AI output the way an editor reads a draft, trusting nothing on fluency alone, is the single most
+valuable AI skill this course teaches.</p>
+
+<div class="stuck"><strong>When you get stuck</strong>
+<p>Before raising your hand, try these in order.</p>
 <ol>
-<li>Ask it to explain the <strong>five components of MIS</strong> (hardware, software, data, networks, people) from Chapter 0 to you as if you run a food truck. Push back on one component that seems wrong for a food truck. Does it hold up?</li>
-<li>Paste a paragraph of your own writing from any other class and ask for critique, not a rewrite,
-critique. Notice the difference in what you learn.</li>
-<li>Ask it something from your major that you already know deeply. Grade its answer. This calibrates
-how much to trust it on things you <em>don't</em> know.</li>
-</ol></div>
+<li>Re-read the checkpoint. Every answer in this lab is either a single word or a number.</li>
+<li>For checkpoint 5, lay the ten lines out in two Excel columns and multiply, do not do it in your
+head.</li>
+<li>For checkpoint 6, read the AI paragraph against the rule as Chapter 0 states it, one clause at a
+time.</li>
+<li>Use the hint button. It is part of the lab, not a penalty.</li>
+<li>Ask a neighbour. Then raise your hand.</li>
+</ol></div></div>
 
 <h2 id="checkpoints"><span class="num">Required</span>Checkpoints <span style="font-weight:400;color:var(--muted);font-size:.65em">, complete as you work</span></h2>
 <p style="font-family:var(--sans);font-size:.95rem">Here is how this works. Each checkpoint matches a
@@ -300,11 +417,11 @@ you get stuck. That is what it is there for.</p>
 <p style="font-family:var(--sans);font-size:.95rem">Once you have cleared them all, write your reflection
 and download your certificate for Canvas. One warning worth taking seriously: <strong>your progress lives
 only on this page.</strong> Close the tab or refresh before you download, and you start over.</p>
-<div class="progress" id="prog">Checkpoint progress: 0 / 4</div>
+<div class="progress" id="prog">Checkpoint progress: 0 / 6</div>
 <div id="cps"></div>
 <div class="certbox" id="reflectbox">
   <h3>One last thing before your certificate</h3>
-  <p style="font-family:var(--sans);font-size:.88rem">Think about the field you plan to work in. Describe one task in that field where AI in the green zone would genuinely make someone better at their job, and one task where leaning on AI would quietly erode a skill that professionals in that field cannot afford to lose. Be specific to your field, not generic.</p>
+  <p style="font-family:var(--sans);font-size:.88rem">Pick the field you plan to enter. Name one skill in that field that a professional must be able to do without AI, the way an analyst must be able to check a total, and explain what goes wrong for someone who lets AI do it for them from day one. Then name one way you plan to use AI as a coach this quarter.</p>
   <p style="font-family:var(--sans);font-size:.88rem;color:var(--muted)">Fifty words is the minimum, but
   do not write to the counter. This prints as page 2 of your certificate, so it is the part your lab
   professor actually reads. Answer it like someone asked you the question out loud.</p>
@@ -322,7 +439,7 @@ only on this page.</strong> Close the tab or refresh before you download, and yo
 </div>
 
 <h2 id="submit"><span class="num">Canvas</span>What to submit</h2>
-<p style="font-family:var(--sans);font-size:.92rem">Your completion certificate PDF: your reflection is page 2 of it.</p>
+<p style="font-family:var(--sans);font-size:.92rem">Your completion certificate PDF (your reflection is page 2 of it). Nothing else this week: the point today is the system itself, and your first certificate.</p>
 </main></div>
 <script>
 (function(){var b=document.querySelector('.railtoggle'),n=document.getElementById('chapnav');
@@ -332,7 +449,7 @@ b.setAttribute('aria-expanded',o?'true':'false');});})();
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-const LAB="LAB1", QS=[{"q": "A classmate pastes this week's discussion question into Claude and submits the answer unedited. Which light is that: green, yellow, or red?", "t": "txt", "a": "cmVk", "h": "If the deliverable is the thinking, outsourcing the thinking is the red zone."}, {"q": "You ask Claude to explain why your VLOOKUP returns #N/A, then fix it yourself. Which light?", "t": "txt", "a": "Z3JlZW4=", "h": "Using AI to understand your own error is exactly what the green zone is for."}, {"q": "You have Claude draft a first version of your case memo, then substantially rewrite it in your own words and cite the assist. Which light?", "t": "txt", "a": "eWVsbG93", "h": "Permitted with disclosure: that's the definition of the yellow zone."}, {"q": "During Exam 1, you open Claude in another tab 'just to check a definition.' Which light?", "t": "txt", "a": "cmVk", "h": "Exams are closed-AI, full stop. No disclosure makes it permissible."}];
+const LAB="LAB1", QS=[{"q": "Checkpoint 1 \u00b7 The policy. A classmate pastes this week's discussion question into an AI and submits the answer unedited. Which light is that: green, yellow, or red?", "t": "txt", "a": "cmVk", "h": "If the deliverable is the thinking, outsourcing the thinking is the red zone."}, {"q": "Checkpoint 2 \u00b7 You ask an AI to explain why your VLOOKUP returns #N/A, then fix it yourself. Which light?", "t": "txt", "a": "Z3JlZW4=", "h": "Using AI to understand your own error is exactly what the green zone is for."}, {"q": "Checkpoint 3 \u00b7 The roles. You tell an AI: 'Quiz me on the five components of MIS, one question at a time, and when I miss one give me a hint instead of the answer.' Which role is the AI playing: coach, sparring partner, or calculator?", "t": "txt", "a": "Y29hY2g=", "h": "A coach makes you do the work. Handing you answers on demand would make it a calculator, and a coach is the opposite of a calculator."}, {"q": "Checkpoint 4 \u00b7 Run that coach session for real, five questions, in whatever AI tool you use. Then answer this one yourself, no tab-switching: espresso machines that report their own condition to headquarters. Which of the five components are the machines themselves: hardware, software, data, networks, or people?", "t": "txt", "a": "aGFyZHdhcmU=", "h": "The machines are hardware. The condition reports they emit are data, and the telemetry travels the network. If the coach session worked, this took you five seconds."}, {"q": "Checkpoint 5 \u00b7 The calculator test. You gave an AI the ten order lines printed in the lab above and it answered, confidently: 'The total is $1,440.75.' Compute the real total yourself in Excel or on paper. What is it?", "t": "num", "a": "MTQ0MC41Nw==", "tol": 0.01, "h": "SUM of quantity times price for each line. The AI transposed two digits. It happens, it looks right, and nobody catches it except the person who checks."}, {"q": "Checkpoint 6 \u00b7 The autopsy. The AI paragraph printed above is fluent, confident, and contains one factual error about this course's central rule. One word appears where its opposite should be. What is the wrong word?", "t": "txt", "a": "c3Ryb25nZXN0", "h": "The weakest component rule says a system is only as strong as its WEAKEST component. The paragraph says strongest, which reverses the entire point while sounding completely reasonable. This is what wrong looks like from an AI: not garbled, just wrong."}];
 const solved=new Set();
 const norm=s=>s.replace(/[$,\s]/g,'').toLowerCase();
 function render(){
@@ -388,7 +505,7 @@ function cert(){
  p.setFont('times','normal');p.setFontSize(13);
  p.text('completed all '+QS.length+' checkpoints of',280,198,{align:'center'});
  p.setFont('helvetica','bold');p.setFontSize(15);p.setTextColor(26,82,118);
- p.text('Lab 1 \u00B7 GenAI for Thinking',280,222,{align:'center'});
+ p.text('Lab 1 \u00B7 GenAI for Thinking, Not Instead of It',280,222,{align:'center'});
  p.setFont('helvetica','normal');p.setFontSize(11);p.setTextColor(90,90,90);
  p.text(d,280,252,{align:'center'});
  p.setFont('courier','bold');p.setFontSize(12);p.setTextColor(17,120,100);
@@ -401,7 +518,7 @@ function cert(){
  p.setTextColor(26,82,118);p.setFont('helvetica','bold');p.setFontSize(10);
  p.text('LAB REFLECTION \u00B7 '+n+' \u00B7 '+code,280,44,{align:'center'});
  p.setTextColor(60,60,60);p.setFont('times','italic');p.setFontSize(9);
- const promptLines=p.splitTextToSize('Prompt: Think about the field you plan to work in. Describe one task in that field where AI in the green zone would genuinely make someone better at their job, and one task where leaning on AI would quietly erode a skill that professionals in that field cannot afford to lose. Be specific to your field, not generic.',480);
+ const promptLines=p.splitTextToSize('Prompt: Pick the field you plan to enter. Name one skill in that field that a professional must be able to do without AI, the way an analyst must be able to check a total, and explain what goes wrong for someone who lets AI do it for them from day one. Then name one way you plan to use AI as a coach this quarter.',480);
  p.text(promptLines,40,70);
  p.setFont('times','normal');p.setFontSize(11);p.setTextColor(26,26,26);
  const lines=p.splitTextToSize(r,480);

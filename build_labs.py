@@ -14,11 +14,13 @@ def num(prompt, ans, tol, hint):  return {"q":prompt,"t":"num","a":b64(ans),"tol
 def txt(prompt, ans, hint):       return {"q":prompt,"t":"txt","a":b64(ans),"h":hint}
 
 # ---------------- checkpoint sets (answers pulled from the db) ----------------
-L1 = [  # three-light AI policy: classification drills, no dataset needed
- txt("A classmate pastes this week's discussion question into Claude and submits the answer unedited. Which light is that: green, yellow, or red?","red","If the deliverable is the thinking, outsourcing the thinking is the red zone."),
- txt("You ask Claude to explain why your VLOOKUP returns #N/A, then fix it yourself. Which light?","green","Using AI to understand your own error is exactly what the green zone is for."),
- txt("You have Claude draft a first version of your case memo, then substantially rewrite it in your own words and cite the assist. Which light?","yellow","Permitted with disclosure: that's the definition of the yellow zone."),
- txt("During Exam 1, you open Claude in another tab 'just to check a definition.' Which light?","red","Exams are closed-AI, full stop. No disclosure makes it permissible."),
+L1 = [  # calculator problem -> policy -> roles -> catching the confident error
+ txt("Checkpoint 1 \u00b7 The policy. A classmate pastes this week's discussion question into an AI and submits the answer unedited. Which light is that: green, yellow, or red?","red","If the deliverable is the thinking, outsourcing the thinking is the red zone."),
+ txt("Checkpoint 2 \u00b7 You ask an AI to explain why your VLOOKUP returns #N/A, then fix it yourself. Which light?","green","Using AI to understand your own error is exactly what the green zone is for."),
+ txt("Checkpoint 3 \u00b7 The roles. You tell an AI: 'Quiz me on the five components of MIS, one question at a time, and when I miss one give me a hint instead of the answer.' Which role is the AI playing: coach, sparring partner, or calculator?","coach","A coach makes you do the work. Handing you answers on demand would make it a calculator, and a coach is the opposite of a calculator."),
+ txt("Checkpoint 4 \u00b7 Run that coach session for real, five questions, in whatever AI tool you use. Then answer this one yourself, no tab-switching: espresso machines that report their own condition to headquarters. Which of the five components are the machines themselves: hardware, software, data, networks, or people?","hardware","The machines are hardware. The condition reports they emit are data, and the telemetry travels the network. If the coach session worked, this took you five seconds."),
+ num("Checkpoint 5 \u00b7 The calculator test. You gave an AI the ten order lines printed in the lab above and it answered, confidently: 'The total is $1,440.75.' Compute the real total yourself in Excel or on paper. What is it?", 1440.57, 0.01, "SUM of quantity times price for each line. The AI transposed two digits. It happens, it looks right, and nobody catches it except the person who checks."),
+ txt("Checkpoint 6 \u00b7 The autopsy. The AI paragraph printed above is fluent, confident, and contains one factual error about this course's central rule. One word appears where its opposite should be. What is the wrong word?","strongest","The weakest component rule says a system is only as strong as its WEAKEST component. The paragraph says strongest, which reverses the entire point while sounding completely reasonable. This is what wrong looks like from an AI: not garbled, just wrong."),
 ]
 
 L2 = [  # Excel basics: deliberately easy
@@ -88,40 +90,141 @@ L7 = [  # SQL data cleaning, following the six-step framework
 
 # ---------------- lab page content ----------------
 LABS = {
-"lab1-genai.html": dict(reflect="""Think about the field you plan to work in. Describe one task in that field where AI in the green zone would genuinely make someone better at their job, and one task where leaning on AI would quietly erode a skill that professionals in that field cannot afford to lose. Be specific to your field, not generic.""",
-  labid="LAB1", n="Lab 1", title="GenAI for Thinking", week="Week 1",
-  pair=('chapter0-what-is-mis.html','Chapter 0 · What Is MIS?'),
-  bridge="""<p><strong>Lab professor's intro (10 min):</strong> This lab sets the AI policy for the
-  whole quarter, before students touch any tool. Walk the three lights on the projector, run one
-  live example of a green-zone use (ask Claude to explain a concept from Wednesday's lecture), and
-  emphasize that the policy is the same in lab and lecture. Students then work the exercises and
-  checkpoints on their own machines. Nothing here requires a dataset.</p>""",
-  intro="""<p class="lede">Before you analyze a single row of data in this course, we settle how you may
-  and may not use generative AI. Not because AI is forbidden, you will use it in this very lab, but because the difference between using AI to <em>think better</em> and using it to
-  <em>avoid thinking</em> is the difference between graduating employable and graduating hollow.</p>""",
+"lab1-genai.html": dict(
+  labid="LAB1", n="Lab 1", title="GenAI for Thinking, Not Instead of It", week="Week 1",
+  reflect="""Pick the field you plan to enter. Name one skill in that field that a professional must be able to do without AI, the way an analyst must be able to check a total, and explain what goes wrong for someone who lets AI do it for them from day one. Then name one way you plan to use AI as a coach this quarter.""",
+  pair=('chapter0-what-is-mis.html','Chapter 0 \u00b7 What Is MIS?'),
+  bridge="""<p><strong>Lab professor's intro (10 min):</strong> Open with the calculator line, it frames
+  the whole quarter: we do not hand first graders calculators, because the point of first grade math is
+  building the number sense that makes a calculator useful later. Same logic here. Then walk the three
+  lights on the projector and do the coach exercise live: ask an AI to quiz YOU on the five components,
+  one question at a time, hints not answers. Students immediately see AI making someone think harder
+  rather than less. Flag that checkpoints 5 and 6 contain deliberately wrong AI output and finding the
+  errors is the exercise. This is also everyone's first run through checkpoints, reflection, and the
+  certificate, so leave five minutes at the end for the download step.</p>""",
+  intro="""<p class="lede">Nobody hands a first grader a calculator. Not because calculators are bad,
+  but because the point of first grade arithmetic is not the answers. It is building the number sense
+  that lets you catch a wrong answer later, including a wrong answer from the calculator. You are in
+  the first grade of business analysis right now. That is not an insult, it is a schedule: this quarter
+  you learn the basics by hand, precisely so that AI becomes a tool you command instead of a crutch you
+  cannot check.</p>
+  <p>So this course does not ban AI, and it does not pretend AI is optional in the careers you are
+  heading into. It asks something harder: that you use it in ways that make you better at thinking,
+  and that you always remain the person who can tell when it is wrong. Today you learn the rules and
+  the three ways of using AI that actually build skill.</p>""",
   steps="""
-<h2><span class="num">The policy</span>Three lights</h2>
-<div class="callout callout-good"><strong>Green: always fine, no disclosure needed</strong>
-<p>Explaining concepts, debugging your own formulas, quizzing yourself, translating jargon,
-summarizing your own notes. AI as tutor. The thinking remains yours.</p></div>
-<div class="callout"><strong>Yellow: permitted with disclosure</strong>
-<p>Drafting that you substantially rewrite, brainstorming structures, critique of your own work.
-One sentence at the end of the submission: what you used, and for what. Undisclosed yellow is red.</p></div>
-<div class="callout callout-caution"><strong>Red: never</strong>
-<p>Submitting AI output as your work. Any AI during exams. Fabricating checkpoint answers instead of
-doing the Excel work. The verification codes exist precisely to make that conversation short.</p></div>
+<h2><span class="num">Part 1</span>The rules: three lights</h2>
 
-<h2><span class="num">Exercise</span>Use the green zone, on purpose</h2>
-<p>Open Claude (or the AI of your choice) and do these three things. They are graded by the
-checkpoints, not by screenshots, but you will be asked about them in lab.</p>
+<p>Every use of AI in this course falls into one of three zones. When in doubt, ask which one you are
+in, and if you are still in doubt, ask us.</p>
+
+<div class="ailight g">
+  <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
+  <div class="lighttext"><strong>Green &middot; always fine</strong>
+  <p>Asking AI to explain a concept, quiz you, critique your reasoning, or help you understand an error
+  you then fix yourself. Green uses make you smarter and need no disclosure.</p></div>
+</div>
+
+<div class="ailight y">
+  <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
+  <div class="lighttext"><strong>Yellow &middot; fine with disclosure</strong>
+  <p>AI drafts or outlines that you substantially rework in your own words, with a one-line note saying
+  how you used it. The thinking in the final product must be yours.</p></div>
+</div>
+
+<div class="ailight r">
+  <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
+  <div class="lighttext"><strong>Red &middot; never</strong>
+  <p>Submitting AI output as your own work, using AI on exams, and using AI to write the lab
+  reflections. The reflections exist to capture <em>your</em> thinking, and an AI-written one defeats
+  the entire purpose while being easier to spot than students expect.</p></div>
+</div>
+
+<div class="callout"><strong>You will see these lights all quarter</strong>
+<p>These traffic lights appear throughout the textbook, on chapters and labs, marking the moments where
+AI helps and the moments where it must stay closed. A green light next to an exercise means use AI
+freely, and usually names the role to use it in. Yellow means allowed with a disclosure line. Red means
+this one is you alone. When you see a light, that is the policy for that specific task, decided so you
+do not have to guess.</p></div>
+
+<div class="callout"><strong>The test behind the lights</strong>
+<p>Ask: is the thing being graded the thinking itself? If yes, the thinking must be yours. That single
+question sorts almost every case into the right zone.</p></div>
+
+<h2><span class="num">Part 2</span>The three roles worth knowing</h2>
+
+<p>Most students arrive knowing exactly one way to use AI: "write it for me." That is the vending
+machine, and it is the one use this course restricts, because it does your thinking for you. Here are
+the three roles that do the opposite. Learn their names, we will use them all quarter.</p>
+
+<h3>The coach: it asks, you answer</h3>
+<p>A coach does not play the game for you. Tell an AI: <em>"Quiz me on the five components of MIS. One
+question at a time. When I get one wrong, give me a hint, not the answer."</em> Now the AI is doing
+what a good tutor does at two in the morning before an exam: making you retrieve, which is the thing
+that actually builds memory. Reading feels like learning. Retrieval is learning.</p>
+<p><strong>Try it now.</strong> Run that exact prompt in whatever AI you use, answer five questions,
+and notice how different it feels from reading the chapter again.</p>
+
+<h3>The sparring partner: it attacks, you defend</h3>
+<p>Write three sentences answering this: <em>should Cascadia Outfitters, a small gear co-op, spend
+money on AI tools this year?</em> Your opinion, your reasoning. Then tell the AI: <em>"Argue against
+this. Find my weakest claim and press on it."</em></p>
+<p>Your first answer is never your best answer. A sparring partner exposes the soft spots while the
+stakes are zero, which is exactly what a good study group does, except this one is available at any
+hour and never gets tired of you.</p>
+
+<h3>The calculator: it works fast, you check it</h3>
+<p>Back to where this lab started. A calculator is a wonderful thing in the hands of someone who knows
+arithmetic, and a trap in the hands of someone who does not, because the person who cannot estimate
+cannot notice a wrong answer. Every professional lives by the rule that follows: you can delegate the
+work, you can never delegate the checking. AI is the most powerful calculator ever built, and it can be
+wrong in ways a pocket calculator never was. The next section makes this concrete.</p>
+
+<h2><span class="num">Part 3</span>The calculator test</h2>
+
+<p>Below are ten order lines from a Cascadia store. An AI was asked for the total and answered,
+instantly and confidently: <strong>"The total is $1,440.75."</strong></p>
+
+<div class="callout"><strong>The order lines</strong>
+<p style="font-family:ui-monospace,Menlo,monospace;font-size:.9rem;line-height:1.7">
+2 &times; $24.50 &nbsp;&nbsp; 1 &times; $189.95 &nbsp;&nbsp; 3 &times; $12.00 &nbsp;&nbsp; 1 &times; $449.00 &nbsp;&nbsp; 2 &times; $67.25<br>
+4 &times; $8.75 &nbsp;&nbsp; 1 &times; $95.00 &nbsp;&nbsp; 2 &times; $154.90 &nbsp;&nbsp; 1 &times; $22.35 &nbsp;&nbsp; 3 &times; $39.99</p></div>
+
+<p>Checkpoint 5 asks for the real total. Compute it yourself, in Excel or on paper. The point is not
+that AI is bad at arithmetic, some tools now do it well. The point is that the error, when it comes,
+will look exactly like the right answer, and the only person who catches it is the one who can still
+do first grade math.</p>
+
+<h2><span class="num">Part 4</span>The autopsy: what wrong looks like</h2>
+
+<p>A student asked an AI to summarize the course's central rule and got this paragraph back:</p>
+
+<div class="callout callout-caution"><strong>AI output, verbatim</strong>
+<p><em>"Information systems are built from five components: hardware, software, data, networks, and
+people. These components work together to turn raw data into decisions a business can act on. The key
+principle, sometimes called the weakest component rule, is that a system is only as strong as its
+strongest component, which is why companies invest heavily in their best-performing areas. When
+analyzing any system failure, start by identifying which component broke."</em></p></div>
+
+<p>It is fluent. It is confident. It is well organized. And it contains one factual error that reverses
+the meaning of the rule it is explaining. Checkpoint 6 asks you to find it, and here is why this
+exercise sits in Week 1: in Chapter 0 you read about a system that produced fluent, confident,
+well-written nonsense because of one wrong input, and it took deliberate checking to catch. Learning to
+read AI output the way an editor reads a draft, trusting nothing on fluency alone, is the single most
+valuable AI skill this course teaches.</p>
+
+<div class="stuck"><strong>When you get stuck</strong>
+<p>Before raising your hand, try these in order.</p>
 <ol>
-<li>Ask it to explain the <strong>five components of MIS</strong> (hardware, software, data, networks, people) from Chapter 0 to you as if you run a food truck. Push back on one component that seems wrong for a food truck. Does it hold up?</li>
-<li>Paste a paragraph of your own writing from any other class and ask for critique, not a rewrite,
-critique. Notice the difference in what you learn.</li>
-<li>Ask it something from your major that you already know deeply. Grade its answer. This calibrates
-how much to trust it on things you <em>don't</em> know.</li>
-</ol>""",
-  submit="Your completion certificate PDF: your reflection is page 2 of it.",
+<li>Re-read the checkpoint. Every answer in this lab is either a single word or a number.</li>
+<li>For checkpoint 5, lay the ten lines out in two Excel columns and multiply, do not do it in your
+head.</li>
+<li>For checkpoint 6, read the AI paragraph against the rule as Chapter 0 states it, one clause at a
+time.</li>
+<li>Use the hint button. It is part of the lab, not a penalty.</li>
+<li>Ask a neighbour. Then raise your hand.</li>
+</ol></div>""",
+  submit="Your completion certificate PDF (your reflection is page 2 of it). Nothing else this week: the point today is the system itself, and your first certificate.",
   qs=L1),
 
 "lab2-excel-basics.html": dict(reflect="""Cascadia's leaders could not answer basic questions about their own business until someone computed these totals. In the field you plan to enter, what is one number that leadership probably cannot state off the top of their head but should be able to, and what decision would knowing it change?""",
@@ -143,6 +246,13 @@ how much to trust it on things you <em>don't</em> know.</li>
   the Read Me tab before you touch anything else. I know that sounds like routine advice. Analysts who
   skip the data dictionary are the ones who confidently present the wrong number.</p>""",
   steps="""
+
+<div class="ailight g">
+  <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
+  <div class="lighttext"><strong>Green &middot; AI as coach</strong>
+  <p>Stuck on what SUMIF does or why a formula errors? Ask an AI to explain it, then write the formula yourself. Do not paste the checkpoint questions in and ask for answers; the checkpoint measures whether your workbook is right, and the workbook is yours.</p></div>
+</div>
+
 <h2><span class="num">Skills</span>Navigation, SUM, AVERAGE, sort, filter, SUMIF</h2>
 <ol>
 <li><strong>Get oriented first.</strong> Press Ctrl+End (Cmd+Fn+Right on a Mac) to jump to the far
@@ -201,6 +311,13 @@ for now.</p></div>
   <p>Download <a href="cascadia-sales-2025-RAW.xlsx"><strong>cascadia-sales-2025-RAW.xlsx</strong></a>.
   Do not reuse Lab 2's clean file: reproducing it is the assignment.</p>""",
   steps="""
+
+<div class="ailight y">
+  <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
+  <div class="lighttext"><strong>Yellow &middot; AI as calculator, with checking</strong>
+  <p>You may ask an AI to draft a cleaning formula, a nested TRIM or a VLOOKUP, but you must test it on rows where you already know the right answer before trusting it, and note the assist in your reflection. A formula you never verified is not your work, it is your risk.</p></div>
+</div>
+
 <h2><span class="num">Skills</span>Remove Duplicates, TRIM, date repair, type conversion, VLOOKUP</h2>
 <ol>
 <li><strong>Count before you clean.</strong> Row count first. An analyst who cleans before
@@ -295,6 +412,8 @@ exercise.</p></div>
   <p>Open <a href="cascadia-sales-2025.xlsx"><strong>cascadia-sales-2025.xlsx</strong></a>. You will
   build everything from pivot tables, so this is also good pivot practice before Exam 1.</p>""",
   steps="""
+
+
 <h2><span class="num">Part 1</span>The question decides the chart</h2>
 
 <p>Almost every chart mistake is really a question mistake: someone picked a shape before deciding what
@@ -354,6 +473,14 @@ of the co-op's year before you move on, because you will need it later.</li>
 </ol>
 <p><span class="mac">Mac</span> Chart tools live in the <strong>Chart Design</strong> and <strong>Format</strong> tabs that appear when a chart is selected.</p>
 </div></details>
+
+<div class="ailight r">
+  <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
+  <div class="lighttext"><strong>Red &middot; this part is you alone</strong>
+  <p>Do not ask an AI what is wrong with these charts. Diagnosing a misleading chart with your own eyes
+  is the skill this lab exists to build, and it is the one you will need in a meeting where no AI is
+  open and a vendor's slide looks a little too convincing.</p></div>
+</div>
 <h2><span class="num">Part 3</span>Four charts that lie</h2>
 
 <p>Here is the part that matters. Each of the four charts below is built from Cascadia's real 2025 data.
@@ -436,6 +563,13 @@ are training for.</p>
   would take to fix it."</em></p></div>
   <p>Work from the clean data: <a href="cascadia-sales-2025.xlsx">cascadia-sales-2025.xlsx</a>.</p>""",
   steps="""
+
+<div class="ailight r">
+  <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
+  <div class="lighttext"><strong>Red, then green</strong>
+  <p>The open-brief investigation in this lab is the one part of the Excel sequence where AI stays closed: the skill being graded is noticing something wrong in data nobody annotated for you. After you have found it and written it up, the light turns green: ask an AI to argue against your explanation, sparring partner mode, and see if your finding survives.</p></div>
+</div>
+
 <h2><span class="num">Part A</span>Skills: pivots as instruments, what-if, forecasting</h2>
 <ol>
 <li><strong>Two-dimensional pivots.</strong> Rows and Columns together: store by category, store by
@@ -512,6 +646,13 @@ is the analyst's version of the audit Nike never ran.</p></div>
   <p>Download <a href="cascadia-sales-2025.csv"><strong>cascadia-sales-2025.csv</strong></a> and connect
   Tableau, or free <a href="https://public.tableau.com">Tableau Public</a>, to it.</p>""",
   steps="""
+
+<div class="ailight g">
+  <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
+  <div class="lighttext"><strong>Green &middot; AI as coach</strong>
+  <p>Tableau questions are perfect coach material: ask an AI where a setting lives or why your chart shows SUM when you wanted a percentage, then make the change yourself. The dashboard you submit must be assembled by you.</p></div>
+</div>
+
 <h2><span class="num">Part 1</span>Worksheets and dashboards are different things</h2>
 
 <p>Tableau's vocabulary trips up nearly everyone in the first hour, so get it straight before you build
@@ -622,6 +763,13 @@ one defensible answer; your pick and one sentence of reasoning go in the submiss
   <code class="inline">inventory</code>(store_id, product_id, quantity_on_hand, reorder_point) &#183;
   <code class="inline">used_gear</code>(item_id, product_id, store_id, condition, listed_price, date_listed, date_sold)</p></div>""",
   steps="""
+
+
+<div class="ailight g">
+  <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
+  <div class="lighttext"><strong>Green &middot; AI as coach</strong>
+  <p>SQL error messages are terse, and asking an AI to explain one is exactly the right use: paste the error and your query, understand the explanation, then fix it yourself. Asking it to write the checkpoint queries from scratch is different; in Week 7 the syntax is still the thing you are building.</p></div>
+</div>
 
 <h2><span class="num">Part 1</span>Why the data is not in Excel</h2>
 
