@@ -176,6 +176,29 @@ li{margin-bottom:.45rem}
   .dd-btn{width:100%;font-size:13px;padding:.4rem .5rem}
   .dd-menu{right:auto;left:0;min-width:min(92vw,22rem)}
 }
+
+/* ---------- collapsible step-by-step help ---------- */
+.howto{margin:.7rem 0 1.1rem;border:1px solid var(--border);background:var(--off-white)}
+.howto>summary{cursor:pointer;padding:.6rem .9rem;font-family:var(--display);font-size:13px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--magenta-dark);list-style:none}
+.howto>summary::-webkit-details-marker{display:none}
+.howto>summary:before{content:"\25B8  ";font-size:11px}
+.howto[open]>summary:before{content:"\25BE  "}
+.howto>summary:hover{background:var(--magenta-pale)}
+.howto-body{padding:.3rem 1.1rem 1rem;border-top:1px solid var(--border);background:#fff}
+.howto-body ol{margin:.7rem 0;padding-left:1.3rem}
+.howto-body li{margin-bottom:.45rem;font-size:15px;line-height:1.5}
+.howto-body p{font-size:15px;margin:.6rem 0}
+.kbd{font-family:ui-monospace,Menlo,monospace;font-size:.85em;background:var(--off-white);
+  border:1px solid var(--border);border-radius:2px;padding:.1em .35em;white-space:nowrap}
+.mac{display:inline-block;font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;background:var(--black);color:#fff;padding:.1rem .4rem;margin-right:.35rem}
+.stuck{border:1px solid var(--border);border-left:4px solid var(--black);background:var(--off-white);
+  padding:1rem 1.2rem;margin:2rem 0 0}
+.stuck strong:first-child{display:block;font-family:var(--display);font-size:12.5px;font-weight:600;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--black);margin-bottom:.5rem}
+.stuck ol{margin:.5rem 0 0;padding-left:1.3rem}
+.stuck li{font-size:15px;margin-bottom:.35rem}
 .cp{border:1px solid var(--rule);background:var(--paper);border-radius:2px;margin:1rem 0;padding:1rem 1.15rem}.cp.locked{opacity:.45;pointer-events:none}.cp.done{border-left:4px solid var(--good);background:var(--good-pale)}.cp.q{font-family:var(--sans);font-size:.92rem;color:var(--navy);margin:0 0.6rem;font-weight:500}.cp input[type=text]{font-family:var(--sans);font-size:.9rem;padding:.45rem.6rem;border:1px solid var(--rule);border-radius:2px;width:14rem;max-width:100%}.cp button{font-family:var(--sans);font-size:.8rem;font-weight:600;letter-spacing:.04em;background:var(--accent-deep);color:#fff;border:none;border-radius:2px;padding:.5rem.9rem;cursor:pointer;margin-left:.4rem}.cp button.hintb{background:none;color:var(--accent-deep);border:1px solid var(--rule)}.cp.msg{font-family:var(--sans);font-size:.8rem;margin:.5rem 0 0}.cp.hint{font-family:var(--sans);font-size:.8rem;color:var(--muted);margin:.5rem 0 0;display:none;border-top:1px dashed var(--rule);padding-top:.5rem}.progress{position:sticky;top:0;z-index:5;background:var(--black);color:#fff;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:.6rem 1rem;margin:1.5rem 0}.certbox{border:2px solid var(--black);background:var(--paper);padding:1.2rem 1.3rem;margin:1.5rem 0;display:none}.certbox.show{display:block}.certbox h3{margin-top:0}.codebox code{font-family:ui-monospace,Menlo,monospace;background:var(--cream-deep);padding:.15em.45em;border-radius:2px}
 </style></head><body>
 <nav class="topnav">
@@ -201,9 +224,9 @@ li{margin-bottom:.45rem}
       <a href="lab1-genai.html"><span class="lbl">Lab 1 &middot; Week 1</span>GenAI for Thinking</a>
       <a href="lab2-excel-basics.html"><span class="lbl">Lab 2 &middot; Week 2</span>Excel Basics: Meeting the Client</a>
       <a href="lab3-excel-dataprep.html"><span class="lbl">Lab 3 &middot; Week 3</span>Data Preparation: The RAW File</a>
-      <a href="lab4-excel-dataviz.html"><span class="lbl">Lab 4 &middot; Week 4</span>Data Visualization</a>
+      <a href="lab4-excel-dataviz.html"><span class="lbl">Lab 4 &middot; Week 4</span>Data Visualization: Charts That Tell the Truth</a>
       <a href="lab5-excel-analysis.html"><span class="lbl">Lab 5 &middot; Week 5</span>Data Analysis &amp; Mini Project</a>
-      <a href="lab6-tableau.html"><span class="lbl">Lab 6 &middot; Week 6</span>Tableau: Seeing the Co-op</a>
+      <a href="lab6-tableau.html"><span class="lbl">Lab 6 &middot; Week 6</span>Tableau: Worksheets to a Dashboard</a>
       <a class="current" href="lab7-sql.html"><span class="lbl">Lab 7 &middot; Week 7</span>SQL Fundamentals</a>
       <div class="dd-sep"></div>
       <a class="soon" href="#"><span class="lbl">Labs 8&ndash;10</span>UX, AI/ML, Information Architecture (in progress)</a>
@@ -220,7 +243,6 @@ li{margin-bottom:.45rem}
     </div>
   </div>
 </nav>
-
 
 <div class="shell">
 <aside class="rail">
@@ -268,6 +290,40 @@ li{margin-bottom:.45rem}
   the schema box and the worked example. Students who finish early: have them find the single largest
   sale in the cleaned data with ORDER BY and LIMIT.</p></div>
 <div id="steps">
+
+<h2><span class="num">Part 1</span>Why the data is not in Excel</h2>
+
+<p>Everything you have touched this quarter has been a spreadsheet, so it is worth saying plainly:
+no real company keeps its operating data in Excel. Cascadia's registers do not write to a workbook.
+They write to a <strong>database</strong>, and the difference is not cosmetic.</p>
+
+<p>A spreadsheet is one grid, edited by one person at a time, that tops out around a million rows and
+lives in a file someone can move, break, or email around. A <strong>relational database</strong> is a
+set of tables that live on a server, get written to by hundreds of registers and websites at the same
+moment, hold effectively unlimited rows, and are read by asking questions in SQL rather than by
+scrolling.</p>
+
+<p>The word <em>relational</em> is the important one. Look at the schema box above: the sales table
+does not contain store names. It contains a <strong>store_id</strong>, a number pointing at one row of
+the stores table, where the name, region, and square footage live exactly once. That pointer is called
+a <strong>foreign key</strong>, and the column it points at, the one that uniquely identifies each row,
+is a <strong>primary key</strong>.</p>
+
+<p>Why build it that way? Because facts should live in one place. If Bellingham's name were spelled out
+on all of its sales rows and the co-op renamed the store, someone would have to fix thousands of rows
+and would miss some, and you have already seen this movie: it is exactly how the state column in
+sales_raw ended up with fourteen spellings. Storing each fact once and pointing at it is the cure for
+the disease you are about to spend this lab treating. Monday's lecture calls this
+<strong>normalization</strong>; today you get to feel why it exists.</p>
+
+<div class="callout"><strong>The one-sentence version</strong>
+<p>Excel is where analysis happens. A database is where the truth lives. The skill this lab teaches is
+going to the truth directly.</p></div>
+
+<div class="callout"><strong>See it before you write it</strong>
+<p>Open the <a href="join-builder.html"><strong>Join Builder</strong></a> in another tab. Click a
+foreign key, click the primary key it points at, and watch the arrow become a working JOIN against this
+same database. Five minutes there makes the last two checkpoints here much easier.</p></div>
 <h2><span class="num">Sandbox</span>The Cascadia database, live</h2>
 <div id="sqlbox" style="border:1px solid var(--rule);background:var(--paper);border-radius:2px;padding:1rem 1.15rem;margin:1.2rem 0">
   <p id="sqlstatus" style="font-family:var(--sans);font-size:.85rem;color:var(--muted);margin:0 0 .6rem">Loading database&hellip;</p>
@@ -276,7 +332,7 @@ li{margin-bottom:.45rem}
   <div id="sqlout" style="overflow-x:auto;margin-top:.8rem;font-family:var(--sans);font-size:.85rem"></div>
 </div>
 
-<h2><span class="num">The method</span>Six steps for cleaning any table</h2>
+<h2><span class="num">Part 2</span>Six steps for cleaning any table</h2>
 
 <h3>1. Understand the data</h3>
 <p>Never clean anything before you have measured what is wrong with it. Your first job is a damage
@@ -355,6 +411,17 @@ QUALIFY exists only in Snowflake, BigQuery, and a few others. Try it and read th
 experiencing once: SQL is a standard that every database extends differently, and code you copy from the
 internet may be written for a database you are not using.</p></div>
 
+
+<h3>The payoff: tables that connect</h3>
+<p>Cleaning one table is half the story. The other half is that tables answer questions
+<em>together</em>. The pattern is JOIN:</p>
+<pre style="background:var(--off-white);border:1px solid var(--border);padding:.9rem 1rem;overflow-x:auto;font-family:ui-monospace,Menlo,monospace;font-size:.85rem;line-height:1.5">SELECT s.store_name, SUM(sa.quantity * sa.unit_price) AS revenue
+FROM sales sa
+JOIN stores s ON s.store_id = sa.store_id
+GROUP BY s.store_name;</pre>
+<p>Read the ON clause out loud: connect each sales row to the stores row whose primary key matches its
+foreign key. Every VLOOKUP you wrote in Lab 3 was a hand-built imitation of this one line, and the last
+two checkpoints ask you to use it.</p>
 <h3>Putting it together</h3>
 <p>The final checkpoint asks you to do all of it at once: deduplicate, strip the dollar signs, treat
 missing quantities as zero, and total the revenue. Build it in pieces and run each piece before you
@@ -396,7 +463,7 @@ you get stuck. That is what it is there for.</p>
 <p style="font-family:var(--sans);font-size:.95rem">Once you have cleared them all, write your reflection
 and download your certificate for Canvas. One warning worth taking seriously: <strong>your progress lives
 only on this page.</strong> Close the tab or refresh before you download, and you start over.</p>
-<div class="progress" id="prog">Checkpoint progress: 0 / 8</div>
+<div class="progress" id="prog">Checkpoint progress: 0 / 10</div>
 <div id="cps"></div>
 <div class="certbox" id="reflectbox">
   <h3>One last thing before your certificate</h3>
@@ -428,7 +495,7 @@ b.setAttribute('aria-expanded',o?'true':'false');});})();
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-const LAB="LAB7", QS=[{"q": "Step 1 \u00b7 Understand the data. Run: SELECT COUNT(*) FROM sales_raw; How many rows are in the messy export?", "t": "num", "a": "MjkyMw==", "tol": 0, "h": "Type it in the sandbox above and press Run. This is the same export you cleaned by hand in Lab 3."}, {"q": "Step 1 \u00b7 Now count the real orders: SELECT COUNT(DISTINCT sale_id) FROM sales_raw; How many distinct sale IDs?", "t": "num", "a": "Mjg5OQ==", "tol": 0, "h": "COUNT(DISTINCT column) counts unique values. The gap between this and Checkpoint 1 is your duplicate problem, already measured, in one line."}, {"q": "Step 2 \u00b7 Standardize formats. The store column has stray spaces and inconsistent casing. Run SELECT COUNT(DISTINCT store) FROM sales_raw, then wrap it: SELECT COUNT(DISTINCT lower(trim(store))). What does the second query return?", "t": "num", "a": "OA==", "tol": 0, "h": "trim() strips spaces, lower() forces one casing. The co-op has eight stores, so eight is the right answer and anything higher means the text is still dirty."}, {"q": "Step 2 \u00b7 Some prices were exported as text with a dollar sign. Count them: SELECT COUNT(*) FROM sales_raw WHERE unit_price LIKE '$%'; How many?", "t": "num", "a": "MTA4", "tol": 0, "h": "LIKE '$%' matches any value starting with a dollar sign. In Lab 3 you found these by eye in Excel."}, {"q": "Step 3 \u00b7 Identify missing values. SELECT COUNT(*) FROM sales_raw WHERE quantity IS NULL; How many rows are missing a quantity?", "t": "num", "a": "ODE=", "tol": 0, "h": "IS NULL, never = NULL. Nothing equals NULL, not even NULL itself."}, {"q": "Step 4 \u00b7 Recode variables. The state column is a mess. SELECT COUNT(DISTINCT state) FROM sales_raw returns how many different spellings?", "t": "num", "a": "MTQ=", "tol": 0, "h": "Run SELECT DISTINCT state FROM sales_raw ORDER BY 1 first and look at what you are dealing with. Then count them."}, {"q": "Step 4 \u00b7 Cleaning the text only gets you partway: SELECT COUNT(DISTINCT upper(trim(state))) still returns 8, because 'Washington' and 'WA' are the same state spelled differently. Write a CASE expression that maps every variant to WA, OR, or ID, and count the distinct results. What do you get?", "t": "num", "a": "Mw==", "tol": 0, "h": "SELECT COUNT(DISTINCT CASE WHEN upper(trim(state)) IN ('WA','WASHINGTON','WASH.') THEN 'WA' WHEN upper(trim(state)) IN ('OR','OREGON','ORE.') THEN 'OR' ELSE 'ID' END) FROM sales_raw; This is recoding, and no string function can do it for you, because only a human knows Wash. means Washington."}, {"q": "Step 5 and 6 \u00b7 Put it together. Deduplicate with ROW_NUMBER, replace the dollar signs, and treat missing quantities as zero, then total the revenue. Round to two decimals. What is the cleaned total?", "t": "num", "a": "NjkyMjIwLjY=", "tol": 1, "h": "Use the pattern in the worked example above the checkpoints. The full query is: SELECT ROUND(SUM(COALESCE(quantity,0)*CAST(replace(unit_price,'$','') AS REAL)),2) FROM (SELECT sale_id, quantity, unit_price, ROW_NUMBER() OVER (PARTITION BY sale_id ORDER BY sale_id) rn FROM sales_raw) WHERE rn = 1;"}];
+const LAB="LAB7", QS=[{"q": "Step 1 \u00b7 Understand the data. Run: SELECT COUNT(*) FROM sales_raw; How many rows are in the messy export?", "t": "num", "a": "MjkyMw==", "tol": 0, "h": "Type it in the sandbox above and press Run. This is the same export you cleaned by hand in Lab 3."}, {"q": "Step 1 \u00b7 Now count the real orders: SELECT COUNT(DISTINCT sale_id) FROM sales_raw; How many distinct sale IDs?", "t": "num", "a": "Mjg5OQ==", "tol": 0, "h": "COUNT(DISTINCT column) counts unique values. The gap between this and Checkpoint 1 is your duplicate problem, already measured, in one line."}, {"q": "Step 2 \u00b7 Standardize formats. The store column has stray spaces and inconsistent casing. Run SELECT COUNT(DISTINCT store) FROM sales_raw, then wrap it: SELECT COUNT(DISTINCT lower(trim(store))). What does the second query return?", "t": "num", "a": "OA==", "tol": 0, "h": "trim() strips spaces, lower() forces one casing. The co-op has eight stores, so eight is the right answer and anything higher means the text is still dirty."}, {"q": "Step 2 \u00b7 Some prices were exported as text with a dollar sign. Count them: SELECT COUNT(*) FROM sales_raw WHERE unit_price LIKE '$%'; How many?", "t": "num", "a": "MTA4", "tol": 0, "h": "LIKE '$%' matches any value starting with a dollar sign. In Lab 3 you found these by eye in Excel."}, {"q": "Step 3 \u00b7 Identify missing values. SELECT COUNT(*) FROM sales_raw WHERE quantity IS NULL; How many rows are missing a quantity?", "t": "num", "a": "ODE=", "tol": 0, "h": "IS NULL, never = NULL. Nothing equals NULL, not even NULL itself."}, {"q": "Step 4 \u00b7 Recode variables. The state column is a mess. SELECT COUNT(DISTINCT state) FROM sales_raw returns how many different spellings?", "t": "num", "a": "MTQ=", "tol": 0, "h": "Run SELECT DISTINCT state FROM sales_raw ORDER BY 1 first and look at what you are dealing with. Then count them."}, {"q": "Step 4 \u00b7 Cleaning the text only gets you partway: SELECT COUNT(DISTINCT upper(trim(state))) still returns 8, because 'Washington' and 'WA' are the same state spelled differently. Write a CASE expression that maps every variant to WA, OR, or ID, and count the distinct results. What do you get?", "t": "num", "a": "Mw==", "tol": 0, "h": "SELECT COUNT(DISTINCT CASE WHEN upper(trim(state)) IN ('WA','WASHINGTON','WASH.') THEN 'WA' WHEN upper(trim(state)) IN ('OR','OREGON','ORE.') THEN 'OR' ELSE 'ID' END) FROM sales_raw; This is recoding, and no string function can do it for you, because only a human knows Wash. means Washington."}, {"q": "Step 5 and 6 \u00b7 Put it together. Deduplicate with ROW_NUMBER, replace the dollar signs, and treat missing quantities as zero, then total the revenue. Round to two decimals. What is the cleaned total?", "t": "num", "a": "NjkyMjIwLjY=", "tol": 1, "h": "Use the pattern in the worked example above the checkpoints. The full query is: SELECT ROUND(SUM(COALESCE(quantity,0)*CAST(replace(unit_price,'$','') AS REAL)),2) FROM (SELECT sale_id, quantity, unit_price, ROW_NUMBER() OVER (PARTITION BY sale_id ORDER BY sale_id) rn FROM sales_raw) WHERE rn = 1;"}, {"q": "The relational payoff, part 1 \u00b7 The products table stores a supplier_id, not a supplier name. JOIN products to suppliers: which supplier makes the Avalanche Beacon?", "t": "txt", "a": "Tm9yZHZpayBPdXRkb29y", "h": "SELECT su.supplier_name FROM products p JOIN suppliers su ON su.supplier_id = p.supplier_id WHERE p.product_name = 'Avalanche Beacon'; The ON clause states which columns connect the tables."}, {"q": "The relational payoff, part 2 \u00b7 One question across two tables: JOIN sales to stores, group by store name, and compute each store's member attach rate: 100.0 * SUM(CASE WHEN member_id IS NOT NULL THEN 1 ELSE 0 END) / COUNT(*). One store is drastically below the others. Which one?", "t": "txt", "a": "QmVsbGluZ2hhbQ==", "h": "You have now found this three ways: a pivot table in Lab 5, a chart in Lab 6, and a query today. The instrument keeps changing. The fact does not, which is what it means for a finding to be real."}];
 const solved=new Set();
 const norm=s=>s.replace(/[$,\s]/g,'').toLowerCase();
 function render(){

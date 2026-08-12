@@ -54,7 +54,11 @@ reproducible. If a code looks wrong, have the student regenerate it in front of 
 python3 build_cascadia.py    # regenerate dataset (deterministic)
 python3 build_labs.py        # regenerate lab pages from the dataset
 python3 add_nav.py           # re-inject navigation
+python3 verify_facts.py      # REQUIRED: checks every stated fact against the database
 ```
+
+`verify_facts.py` exits nonzero if any checkpoint answer or prose claim disagrees with
+the data. Run it after every content change, not just after regenerating the dataset.
 
 ## Still to build
 

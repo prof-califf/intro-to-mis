@@ -40,13 +40,15 @@ L3 = [  # Data prep on the RAW file: hardest pre-exam lab
  num("Checkpoint 7 · Fully clean the file: dedupe, TRIM store names, fix dates to one format, convert text prices to numbers, resolve blanks per the instructions. Recompute total revenue. What do you get?", round(Q(f"SELECT SUM({R}) FROM sales"),2), 1, "If your cleaned total matches Lab 2's total exactly, you have reconstructed the clean dataset. That agreement is the whole test."),
 ]
 
-L4 = [  # Data visualization: medium
- txt("Checkpoint 1 · Chart monthly revenue as a line. Which month is the peak?","January","Group sale_date by month first: a pivot table with sale_date in Rows (grouped by month) and revenue in Values, then insert a line chart from it."),
- num("Checkpoint 2 · Revenue for that peak month, in dollars?", round(Q(f"SELECT SUM({R}) FROM sales WHERE substr(sale_date,6,2)='01'"),2), 1, "Read it off your pivot, not the chart."),
- txt("Checkpoint 3 · Which month is the trough?","April","Look for the shoulder season: after ski gear stops selling and before camping starts."),
- txt("Checkpoint 4 · Build a bar chart of revenue by category. Which category leads?","Camping","Pivot: category in Rows, revenue in Values, sort descending, insert bar chart."),
- num("Checkpoint 5 · Revenue for that leading category?", round(Q(f"SELECT SUM({R}) FROM sales s JOIN products p ON p.product_id=s.product_id WHERE p.category='Camping'"),2), 1, "Same pivot as Checkpoint 4."),
- txt("Checkpoint 6 · Top single product by revenue across the year?","Touring Ski Package","Swap category for product in your pivot Rows. One product is far ahead."),
+L4 = [  # Chart selection, then diagnosing charts that mislead
+ txt("Checkpoint 1 \u00b7 You want to compare total revenue across the eight stores. Which chart type is right: bar, line, scatter, or pie?", "bar", "Comparing one number across separate named things is what bar charts are for."),
+ txt("Checkpoint 2 \u00b7 Build it. Pivot revenue by store, insert a bar chart, sort highest to lowest. Which store is SECOND?", "Portland Pearl", "Sorting matters. An unsorted bar chart makes the reader do the ranking you should have done for them."),
+ txt("Checkpoint 3 \u00b7 Different question: how did revenue move across the twelve months of 2025? Which chart type?", "line", "Time on the horizontal axis, connected points. The line says these values are steps in one sequence, not separate categories."),
+ txt("Checkpoint 4 \u00b7 Build it. Which month was the co-op's highest?", "January", "Group by month and chart it. Answer with the month name."),
+ num("Checkpoint 5 \u00b7 Now the diagnosis work. Chart A (above) shows Bellevue, Tacoma, and Bellingham with a vertical axis starting at $80,000, and Bellevue's bar looks roughly six times taller than Bellingham's. What is the ACTUAL percentage gap between Bellevue and Bellingham? One decimal.", 8.1, 0.3, "Compute it: (Bellevue minus Bellingham) divided by Bellingham, times 100. Then look at Chart A again. That is what a truncated axis does to a reader who trusts you."),
+ txt("Checkpoint 6 \u00b7 Chart B plots the eight stores on a LINE chart, left to right, and the line slopes downward. What is wrong with it? Answer with one word: the chart type implies something false about the relationship between the items on the horizontal axis. That false implication is a ______ (one word, starts with T).", "trend", "A line connects points to say they are steps in a sequence. Stores are not a sequence. Reorder them alphabetically and the 'trend' reverses, which proves it was never there."),
+ num("Checkpoint 7 \u00b7 Chart C is a pie chart of revenue by individual product. How many slices does it have? (Count the products in the data.)", 35, 0, "Humans compare angles badly, and a pie stops being readable at about five slices. This one is not a chart, it is a colour wheel."),
+ txt("Checkpoint 8 \u00b7 Chart D is an accurate line chart of monthly revenue titled 'Revenue Collapsing After January.' Revenue does fall 24.6% from January to February, so the number in the title is real. Now look at the whole year: which month is the co-op's SECOND-highest?", "October", "October, and December is third. Revenue recovers and the year ends strong, so a seasonal dip has been relabelled a collapse. Nothing in this chart is factually wrong, which is what makes it the most dangerous of the four."),
 ]
 
 L5 = [  # Data analysis + mini project: hardest Excel lab of the quarter
@@ -60,14 +62,15 @@ L5 = [  # Data analysis + mini project: hardest Excel lab of the quarter
  num("Checkpoint 8 · Goal Seek thinking: converting how many of the problem store's existing non-member sales to member sales would lift its attach rate to 87%?", 123, 1, "It has 347 total lines. What member count makes member/total reach 87%? Subtract the current member count. Goal Seek on a small model, or algebra (both are legitimate analyst moves."),
 ]
 
-L6 = [  # Tableau) medium; the anomaly's visual encounter
- num("Checkpoint 1 · Connect Tableau to cascadia-sales-2025.csv. How many rows does the data source show?", 2899, 0, "Data Source tab, bottom-left corner after the connection loads."),
- txt("Checkpoint 2 · Bar chart of revenue by store, sorted descending. Which store is SECOND?","Portland Pearl","Drag store to Rows, revenue to Columns, sort with the toolbar button. Seattle Flagship is first: who's next?"),
- txt("Checkpoint 3 · Create a calculated field: margin_rate = SUM([gross_margin]) / SUM([revenue]). Which category has the HIGHEST margin rate?","Apparel","Analysis → Create Calculated Field. Then category to Rows, your new field to Columns, format as percent."),
- num("Checkpoint 4 · That category's margin rate, as a percent to one decimal?", 59.9, 0.1, "Hover the bar, or add the field to Label."),
- txt("Checkpoint 5 · Highlight table: store in Rows, month of sale_date in Columns, revenue in Color. Which single store-month cell is the darkest (highest) of the whole year? Answer as 'store month'.","Seattle Flagship September","Click the cell. The tooltip settles arguments. And notice it is NOT January, even though January is the co-op's best month overall."),
- txt("Checkpoint 6 · Now build the view Cascadia never built: store in Rows, and the PERCENT of each store's sales that are member-attached (is_member = 'Y'). You found this in a pivot in Lab 5, which store does the chart make impossible to miss?","Bellingham","COUNT(IF [is_member]='Y' THEN 1 END) / COUNT([sale_id]), formatted as percent. Notice how much faster the eye catches it than the pivot did. That is the argument for visualization."),
- num("Checkpoint 7 · Read that store's rate off your chart, as a percent to one decimal.", 51.6, 0.2, "Label or tooltip. Same number as Lab 5 (same data, new instrument."),
+L6 = [  # Tableau: worksheets to dashboard
+ num("Checkpoint 1 \u00b7 Connect Tableau to cascadia-sales-2025.csv. How many rows does the data source show?", 2899, 0, "Data Source tab, bottom left, after the connection loads."),
+ txt("Checkpoint 2 \u00b7 Worksheet 1. Revenue by store as a sorted bar chart. Which store is SECOND?", "Portland Pearl", "Store to Rows, revenue to Columns, then the sort button in the toolbar. Same chart-type logic as Lab 4: comparing a number across separate named places is a bar chart."),
+ txt("Checkpoint 3 \u00b7 Worksheet 2. Revenue by month as a line chart. Which month is highest?", "January", "Drag sale_date to Columns and set it to Month. Time on the horizontal axis, connected points, because these values are one continuous story."),
+ txt("Checkpoint 4 \u00b7 Worksheet 3. Create a calculated field: margin_rate = SUM([gross_margin]) / SUM([revenue]). Which category has the highest margin rate?", "Apparel", "Analysis menu, then Create Calculated Field. Category to Rows, your new field to Columns, format as a percentage."),
+ num("Checkpoint 5 \u00b7 Worksheet 4. Build a highlight table: store in Rows, month in Columns, revenue on Color. Click the single darkest cell and read its value off the tooltip. What is it, to the nearest dollar?", 17338, 3, "Colour alone is hard to judge, which is why you click to confirm rather than squinting. The answer is a store-month you might not expect, and it is not January."),
+ txt("Checkpoint 6 \u00b7 Which store and month is that darkest cell? Answer as 'Store Month'.", "Seattle Flagship September", "The tooltip tells you both. Note that the co-op's best month overall is January, but its single best store-month is not, which is the kind of thing a highlight table shows and a bar chart cannot."),
+ txt("Checkpoint 7 \u00b7 Worksheet 5, the view Cascadia never built. Store in Rows, and the PERCENT of each store's sales that are member-attached (is_member = 'Y') in Columns. You found this in a pivot table in Lab 5. Which store does the chart make impossible to miss?", "Bellingham", "COUNT(IF [is_member]='Y' THEN 1 END) / COUNT([sale_id]), formatted as a percentage. Watch how much faster your eye catches it here than the pivot table did."),
+ num("Checkpoint 8 \u00b7 Assemble your five worksheets into a Dashboard, then add region as a filter and apply it to all sheets. Filter to Puget Sound only. What total revenue does your dashboard now show, to the nearest dollar?", 319628, 5, "Dashboard tab at the bottom, drag your sheets in, then use the filter dropdown and choose Apply to Worksheets, All Using This Data Source. If only one chart changes, the filter is not applied across the dashboard yet."),
 ]
 
 L7 = [  # SQL data cleaning, following the six-step framework
@@ -79,6 +82,8 @@ L7 = [  # SQL data cleaning, following the six-step framework
  num("Step 4 \u00b7 Recode variables. The state column is a mess. SELECT COUNT(DISTINCT state) FROM sales_raw returns how many different spellings?", 14, 0, "Run SELECT DISTINCT state FROM sales_raw ORDER BY 1 first and look at what you are dealing with. Then count them."),
  num("Step 4 \u00b7 Cleaning the text only gets you partway: SELECT COUNT(DISTINCT upper(trim(state))) still returns 8, because 'Washington' and 'WA' are the same state spelled differently. Write a CASE expression that maps every variant to WA, OR, or ID, and count the distinct results. What do you get?", 3, 0, "SELECT COUNT(DISTINCT CASE WHEN upper(trim(state)) IN ('WA','WASHINGTON','WASH.') THEN 'WA' WHEN upper(trim(state)) IN ('OR','OREGON','ORE.') THEN 'OR' ELSE 'ID' END) FROM sales_raw; This is recoding, and no string function can do it for you, because only a human knows Wash. means Washington."),
  num("Step 5 and 6 \u00b7 Put it together. Deduplicate with ROW_NUMBER, replace the dollar signs, and treat missing quantities as zero, then total the revenue. Round to two decimals. What is the cleaned total?", 692220.6, 1, "Use the pattern in the worked example above the checkpoints. The full query is: SELECT ROUND(SUM(COALESCE(quantity,0)*CAST(replace(unit_price,'$','') AS REAL)),2) FROM (SELECT sale_id, quantity, unit_price, ROW_NUMBER() OVER (PARTITION BY sale_id ORDER BY sale_id) rn FROM sales_raw) WHERE rn = 1;"),
+ txt("The relational payoff, part 1 \u00b7 The products table stores a supplier_id, not a supplier name. JOIN products to suppliers: which supplier makes the Avalanche Beacon?", "Nordvik Outdoor", "SELECT su.supplier_name FROM products p JOIN suppliers su ON su.supplier_id = p.supplier_id WHERE p.product_name = 'Avalanche Beacon'; The ON clause states which columns connect the tables."),
+ txt("The relational payoff, part 2 \u00b7 One question across two tables: JOIN sales to stores, group by store name, and compute each store's member attach rate: 100.0 * SUM(CASE WHEN member_id IS NOT NULL THEN 1 ELSE 0 END) / COUNT(*). One store is drastically below the others. Which one?", "Bellingham", "You have now found this three ways: a pivot table in Lab 5, a chart in Lab 6, and a query today. The instrument keeps changing. The fact does not, which is what it means for a finding to be real."),
 ]
 
 # ---------------- lab page content ----------------
@@ -149,13 +154,33 @@ AVERAGE. Keep these visible, because you will be checking later work against the
 <li><strong>Poke around.</strong> Sort by revenue, highest first. What is the single biggest sale of
 the year, and does it surprise you? Then filter down to whichever store you like best and read a
 week of its sales. Building familiarity with a dataset is part of the analysis, not a delay before it.</li>
+<details class="howto"><summary>How to make a pivot table</summary><div class="howto-body">
+<ol>
+<li>Click any single cell inside the data.</li>
+<li><strong>Insert</strong> tab, then <strong>PivotTable</strong>. <span class="mac">Mac</span> same menu, but the button may read <strong>Summarize with PivotTable</strong>.</li>
+<li>Excel guesses the data range. Check that it covers all the rows, then choose <strong>New Worksheet</strong> and click OK.</li>
+<li>A panel appears on the right with your column names. Drag a field into <strong>Rows</strong> to group by it, and drag a number into <strong>Values</strong> to total it.</li>
+<li>If Values shows a count instead of a sum, click it, choose <strong>Value Field Settings</strong>, and pick <strong>Sum</strong>. This catches almost everyone once.</li>
+</ol>
+<p><strong>If your pivot is empty:</strong> you probably selected a single cell outside the data before inserting. Undo and click inside the table first.</p>
+</div></details>
 <li><strong>Now make Excel answer a question.</strong> SUMIF revenue by store name. COUNTIF rows where
 <code class="inline">is_member</code> is "N": you'll meet that number again later in the course.</li>
 </ol>
 <div class="callout"><strong>Why a co-op cares about attach</strong>
 <p>Every sale without a member number is a customer the co-op cannot send a dividend to, cannot
 survey, and cannot see in its demand planning. Keep that in the back of your mind. Just the back,
-for now.</p></div>""",
+for now.</p></div>
+<div class="stuck"><strong>When you get stuck</strong>
+<p>Before raising your hand, try these in order. Most problems in this lab are one of them.</p>
+<ol>
+<li>Re-read the checkpoint question. Is it asking for a count, a total, or an average? Those are three different numbers.</li>
+<li>Check whether your number is plausible. If total revenue comes out as 12 or as 40 million, something is off by a lot and you can usually see where.</li>
+<li>Expand the grey "How to" box for that step. It has the exact clicks.</li>
+<li>Check the formula bar of the cell you think is wrong. Does it reference the range you meant?</li>
+<li>Use the hint button on the checkpoint. It is not a penalty, it is part of the lab.</li>
+<li>Ask a neighbour. Then raise your hand.</li>
+</ol></div>""",
   submit="Your workbook saved as LAB2_Last_First.xlsx with your scratch calculations visible, plus your completion certificate PDF (your reflection is page 2 of it).",
   qs=L2),
 
@@ -194,6 +219,38 @@ rule: a blank quantity on a line with revenue is a keying failure: set it to
 <li><strong>Enrich with VLOOKUP.</strong> Build this supplier table on a new sheet and add a
 lead-time column to the data:</li>
 </ol>
+<details class="howto"><summary>How to find and remove duplicates</summary><div class="howto-body">
+<p><strong>See them first, then delete.</strong> Never delete before you have looked.</p>
+<ol>
+<li>Select the column you think has duplicates.</li>
+<li><strong>Home</strong> tab, <strong>Conditional Formatting</strong>, <strong>Highlight Cells Rules</strong>, <strong>Duplicate Values</strong>. They turn red. Scroll and confirm they are genuine copies.</li>
+<li>To remove: click inside the data, then <strong>Data</strong> tab, then <strong>Remove Duplicates</strong>.</li>
+<li>A box lists every column with checkboxes. This matters: Excel deletes a row only when <em>every</em> checked column matches. To dedupe on the ID alone, check only the ID column.</li>
+<li>Excel reports how many it removed. Write that number down, you will need it.</li>
+</ol>
+<p><strong>Work on a copy of the sheet.</strong> Remove Duplicates cannot be undone reliably after other edits.</p>
+</div></details><details class="howto"><summary>How to clean text and fix number columns</summary><div class="howto-body">
+<p>Build these in an empty column beside the dirty one, then paste the results back as values.</p>
+<ol>
+<li><strong>Stray spaces:</strong> <span class="kbd">=TRIM(A2)</span></li>
+<li><strong>Inconsistent casing:</strong> <span class="kbd">=PROPER(A2)</span> for names, <span class="kbd">=UPPER(A2)</span> for codes</li>
+<li><strong>Both at once:</strong> <span class="kbd">=PROPER(TRIM(A2))</span></li>
+<li><strong>Numbers stored as text</strong> (left-aligned, with a $ typed in): <span class="kbd">=VALUE(SUBSTITUTE(A2,"$",""))</span></li>
+<li>Fill down, then select your clean column, Copy, then right-click the original and choose <strong>Paste Special, Values</strong>. Now delete the helper column.</li>
+</ol>
+<p><strong>How to tell a real number from text:</strong> numbers align right by default, text aligns left. If a column of numbers is left-aligned, Excel thinks it is text and SUM will return 0.</p>
+</div></details><details class="howto"><summary>How to write a VLOOKUP</summary><div class="howto-body">
+<p>The formula is <span class="kbd">=VLOOKUP(what you are looking up, where to look, which column to return, FALSE)</span></p>
+<ol>
+<li>Click the empty cell where you want the answer.</li>
+<li>Type <span class="kbd">=VLOOKUP(</span> then click the cell holding the value you are looking up, then a comma.</li>
+<li>Select the whole lookup table, including its header row, then press <span class="kbd">F4</span> (<span class="mac">Mac</span> <span class="kbd">fn+F4</span>) to lock it with dollar signs. Without this the range slides as you fill down and results go wrong.</li>
+<li>Type a comma, then the column number to return, counting from the left edge of your selection starting at 1.</li>
+<li>Type <span class="kbd">,FALSE)</span> and press Enter. FALSE means exact match, and you want exact match essentially always.</li>
+<li>Fill down by double-clicking the small square at the bottom-right of the cell.</li>
+</ol>
+<p><strong>#N/A</strong> means no match was found. Usually stray spaces: wrap the lookup value in <span class="kbd">TRIM()</span>. <strong>#REF!</strong> means your column number is larger than your selection.</p>
+</div></details>
 <table style="border-collapse:collapse;margin:1rem 0;font-family:var(--sans);font-size:.85rem">
 <tr style="background:var(--navy);color:#fff"><th style="padding:.4rem.8rem;text-align:left">supplier</th><th style="padding:.4rem.8rem">lead_time_days</th></tr>
 <tr><td style="padding:.35rem.8rem;border:1px solid var(--rule)">Olympic Down Works</td><td style="padding:.35rem.8rem;border:1px solid var(--rule);text-align:center">18</td></tr>
@@ -207,49 +264,155 @@ lead-time column to the data:</li>
 <div class="callout callout-caution"><strong>The self-test</strong>
 <p>A correctly cleaned RAW file is the clean file. Your final revenue total must match Lab 2's to
 the cent. If it doesn't, one of your six repairs went wrong, and finding which one is the real
-exercise.</p></div>""",
+exercise.</p></div>
+<div class="stuck"><strong>When you get stuck</strong>
+<p>Before raising your hand, try these in order. Most problems in this lab are one of them.</p>
+<ol>
+<li>Re-read the checkpoint question. Is it asking for a count, a total, or an average? Those are three different numbers.</li>
+<li>Check whether your number is plausible. If total revenue comes out as 12 or as 40 million, something is off by a lot and you can usually see where.</li>
+<li>Expand the grey "How to" box for that step. It has the exact clicks.</li>
+<li>Check the formula bar of the cell you think is wrong. Does it reference the range you meant?</li>
+<li>Use the hint button on the checkpoint. It is not a penalty, it is part of the lab.</li>
+<li>Ask a neighbour. Then raise your hand.</li>
+</ol></div>""",
   submit="Your cleaned workbook as LAB3_Last_First.xlsx including your helper columns, a three-sentence note to the controller quantifying what was wrong, plus your completion certificate PDF (your reflection is page 2 of it).",
   qs=L3),
 
-"lab4-excel-dataviz.html": dict(reflect="""A chart is how a system's status reaches the people who decide. In your intended field, describe one situation where an honest chart shown early would change a decision, and one way a chart in that field could technically be accurate while still misleading the person reading it.""",
-  labid="LAB4", n="Lab 4", title="Data Visualization: Communicating Status", week="Week 4",
-  pair=('chapter4-healthcaregov.html','Chapter 4 · Systems Analysis'),
-  bridge="""<p><strong>Lab professor's intro (10 min):</strong> Connect to Monday's Healthcare.gov
-  case: the site's builders had no dashboard that told leadership, honestly, whether the system was
-  ready: status was communicated in meetings, optimistically. This lab is about charts as honest
-  status instruments. Students pivot the Cascadia data and build a small dashboard: monthly revenue
-  line, category bar, store comparison. Emphasize chart-type choice (time = line, comparison = bar)
-  and axis honesty. Difficulty is moderate; pivots were previewed in DataCamp's Visualization
-  module.</p>""",
-  intro="""<p class="lede">Healthcare.gov failed in part because nobody built the picture that would
-  have made the truth undeniable. A chart is not decoration. It is how a system's status gets
-  communicated to the people who decide. This week you build Cascadia's status pictures, and you
-  build them honestly.</p>
-  <p>Work from your <strong>cleaned</strong> Lab 3 file, or re-download
-  <a href="cascadia-sales-2025.xlsx">the clean workbook</a>.</p>""",
+"lab4-excel-dataviz.html": dict(
+  labid="LAB4", n="Lab 4", title="Data Visualization: Charts That Tell the Truth", week="Week 4",
+  reflect="""Every chart in Part 3 was built from accurate data and every one of them misled. In the field you plan to enter, describe a situation where someone would have an incentive to present true numbers in a misleading shape. What would you look at first to catch it?""",
+  pair=('chapter4-healthcaregov.html','Chapter 4 \u00b7 Systems Analysis'),
+  bridge="""<p><strong>Lab professor's intro (10 min):</strong> Connect to Monday's Healthcare.gov case
+  with one idea: leadership was not lied to. They had accurate status information that told them the
+  wrong thing, which is a communication failure sitting on top of a technical one. Part 1 of this lab is
+  quick, matching the chart to the question. Part 3 is the real work, four charts built from true
+  Cascadia numbers that each mislead in a different way. Worth doing the first one on the projector:
+  show Chart A, ask the room how much bigger Bellevue is than Bellingham, let them answer from the
+  picture, then reveal it is 8 percent. That moment lands better than any explanation.</p>""",
+  intro="""<p class="lede">A chart is an argument, not decoration. The wrong chart makes a true finding
+  unreadable, and a carefully wrong chart makes a false finding look obvious. Today you learn to pick
+  the right one, and then you practice catching charts that lie while telling the truth.</p>
+  <p>Open <a href="cascadia-sales-2025.xlsx"><strong>cascadia-sales-2025.xlsx</strong></a>. You will
+  build everything from pivot tables, so this is also good pivot practice before Exam 1.</p>""",
   steps="""
-<h2><span class="num">Skills</span>Pivot tables, line charts, bar charts, dashboard assembly</h2>
+<h2><span class="num">Part 1</span>The question decides the chart</h2>
+
+<p>Almost every chart mistake is really a question mistake: someone picked a shape before deciding what
+they were asking. Learn the mapping.</p>
+
+<h3>Bar chart: comparing across categories</h3>
+<p>One number measured across separate named things. Revenue by store. Units by product. The bars sit
+apart because the categories are unrelated, and length is what your eye compares, which is why bars work.
+Humans read length accurately.</p>
+<p><strong>Sort by value</strong> unless the categories have a natural order, and <strong>start the axis
+at zero</strong>. Both rules come back to bite you in Part 3.</p>
+
+<h3>Line chart: change over time</h3>
+<p>The horizontal axis is time and the points are steps in a sequence. Revenue by month. Enrollments by
+day. The connecting line is doing real work: it tells the reader these values belong to one continuous
+story, which is exactly why you must never use a line for categories.</p>
+
+<h3>Scatter plot: the relationship between two numbers</h3>
+<p>Two measurements per thing, one dot each, position carrying both. Store size against store revenue.
+Scatter plots answer a question no other chart can: they show you the outlier sitting off the pattern,
+which is usually the most interesting item in the dataset.</p>
+
+<h3>Pie chart: parts of one whole</h3>
+<p>Only when the slices sum to a meaningful 100 percent, and only with a handful of them. Humans compare
+angles badly. If you are ranking things, use a bar chart. Most pie charts in business decks should have
+been bar charts.</p>
+
+<div class="callout"><strong>The test before you chart anything</strong>
+<p>Say the question out loud in one sentence. "How do the stores compare?" is a bar. "What happened over
+the year?" is a line. "Does bigger mean richer?" is a scatter. If you cannot say the question in a
+sentence, you are not ready to chart yet.</p></div>
+
+<h2><span class="num">Part 2</span>Build two, properly</h2>
 <ol>
-<li><strong>Monthly revenue, as a line.</strong> Pivot with sale_date grouped by month against
-revenue; insert a line chart. Seasonality should jump out. This is a gear co-op, and the calendar
-is its heartbeat.</li>
-<li><strong>Category revenue, as bars.</strong> New pivot, categories sorted descending, bar chart.
-Resist 3-D. Resist pie.</li>
-<li><strong>Store comparison.</strong> Revenue by store, bars, sorted. Title it as a claim, not a
-label: "Seattle Flagship carries a fifth of the co-op" beats "Revenue by Store."</li>
-<li><strong>Assemble.</strong> Arrange the three charts on one sheet named
-<code class="inline">Dashboard</code> so a manager gets the year in one glance.</li>
+<li><strong>Revenue by store, sorted bar.</strong> Pivot, chart, sort descending, axis at zero, title
+that states the finding rather than the topic.</li>
+<li><strong>Revenue by month, line.</strong> Twelve points, time on the horizontal. Look at the shape
+of the co-op's year before you move on, because you will need it later.</li>
 </ol>
-<div class="callout"><strong>Axis honesty</strong>
-<p>Truncating a bar chart's y-axis manufactures drama the data doesn't contain. Healthcare.gov's
-leadership got optimistic pictures for three years; the correction arrived all at once on launch
-day. Your dashboards should make bad news visible early, because that is what dashboards are
-for.</p></div>
-<div class="callout callout-bridge"><strong>What you have not been asked to chart</strong>
-<p>Notice this dashboard says nothing about <em>members</em>. Revenue looks healthy everywhere. In
-Lab 5, after the exam, the co-op's board asks a question this dashboard cannot answer, and you will
-find that healthy revenue can hide a sick store.</p></div>""",
-  submit="Your workbook as LAB4_Last_First.xlsx with the Dashboard sheet, plus your completion certificate PDF (your reflection is page 2 of it).",
+
+<details class="howto"><summary>How to make a pivot table</summary><div class="howto-body">
+<ol>
+<li>Click any single cell inside the data.</li>
+<li><strong>Insert</strong> tab, then <strong>PivotTable</strong>. <span class="mac">Mac</span> same menu, but the button may read <strong>Summarize with PivotTable</strong>.</li>
+<li>Excel guesses the data range. Check that it covers all the rows, then choose <strong>New Worksheet</strong> and click OK.</li>
+<li>A panel appears on the right with your column names. Drag a field into <strong>Rows</strong> to group by it, and drag a number into <strong>Values</strong> to total it.</li>
+<li>If Values shows a count instead of a sum, click it, choose <strong>Value Field Settings</strong>, and pick <strong>Sum</strong>. This catches almost everyone once.</li>
+</ol>
+<p><strong>If your pivot is empty:</strong> you probably selected a single cell outside the data before inserting. Undo and click inside the table first.</p>
+</div></details><details class="howto"><summary>How to insert and clean up a chart</summary><div class="howto-body">
+<ol>
+<li>Select the pivot table results, including the row labels.</li>
+<li><strong>Insert</strong> tab, then the chart type you want. Hover any icon to see its name before clicking.</li>
+<li>To sort a bar chart: sort the pivot table itself. Click the dropdown arrow on the Row Labels header, then <strong>More Sort Options</strong>, then sort by your value column, descending.</li>
+<li>To set the axis to zero: right-click the vertical axis, choose <strong>Format Axis</strong>, and set Minimum to 0.</li>
+<li>To retitle: click the chart title once, then type. To delete a legend you do not need, click it and press Delete.</li>
+</ol>
+<p><span class="mac">Mac</span> Chart tools live in the <strong>Chart Design</strong> and <strong>Format</strong> tabs that appear when a chart is selected.</p>
+</div></details>
+<h2><span class="num">Part 3</span>Four charts that lie</h2>
+
+<p>Here is the part that matters. Each of the four charts below is built from Cascadia's real 2025 data.
+Every number in them is correct. Every one of them misleads. Build each one yourself so you can see how
+easy it is, then answer the checkpoint that exposes it.</p>
+
+<h3>Chart A: the truncated axis</h3>
+<p>Bar chart of Bellevue, Tacoma, and Bellingham revenue, with the vertical axis starting at $80,000
+instead of zero. Build it. Bellevue's bar towers over Bellingham's, looking several times taller.</p>
+<p>Then compute the actual gap between them. The distance between what the picture says and what the
+arithmetic says is the whole lesson, and this is the single most common way charts mislead in business,
+usually without anyone intending it.</p>
+
+<h3>Chart B: the line that invents a trend</h3>
+<p>Put the eight stores on a line chart, left to right, revenue on the vertical. The line slopes
+downward and looks like decline.</p>
+<p>Nothing is declining. A line says these points are steps in a sequence, and stores are not a sequence.
+The proof: reorder the stores alphabetically and the "trend" changes shape entirely. Any pattern that
+depends on the order you happened to type things in was never a pattern.</p>
+
+<h3>Chart C: the unreadable pie</h3>
+<p>Pie chart of revenue by individual product. Build it and try to answer a simple question from it, such
+as which product is fourth largest. You cannot, and neither can anyone in your audience.</p>
+<p>The chart is accurate and useless, which is its own category of failure. A chart that cannot be read
+is not a neutral choice; it consumes attention and returns nothing.</p>
+
+<h3>Chart D: the honest chart with the dishonest title</h3>
+<p>A clean line chart of monthly revenue, correctly built, titled <em>"Revenue Collapsing After
+January."</em> Revenue really does fall about 25 percent from January to February. The chart is accurate,
+the number is accurate, and the conclusion is false.</p>
+<p>Look at the full year and you will see why. This is the most dangerous of the four, because there is
+nothing to catch by inspecting the chart itself. The lie lives in the framing, and the only defence is
+knowing enough about the business to notice that a seasonal dip has been renamed a collapse.</p>
+
+<div class="callout callout-caution"><strong>Where this connects to Monday</strong>
+<p>Healthcare.gov's leadership was not lied to. They received status reports that were accurate about
+what they measured: contract deliverables completed, milestones marked green. Nothing in those reports
+was false. What none of them said was whether the assembled system could serve the number of people who
+would arrive on October 1st. Accurate information, wrong question, catastrophic outcome. Every chart in
+this part of the lab is a small version of that.</p></div>
+
+<h2><span class="num">Part 4</span>Fix one</h2>
+<p>Pick whichever of the four you find most misleading and rebuild it honestly: right chart type, axis
+from zero, readable number of items, and a title that states what the data actually supports. Put the
+before and after side by side on one sheet.</p>
+<p>Then write one sentence naming who would benefit from the misleading version. Sometimes the answer is
+nobody and it was carelessness. Often it is not, and being able to say so plainly is part of the job you
+are training for.</p>
+<div class="stuck"><strong>When you get stuck</strong>
+<p>Before raising your hand, try these in order. Most problems in this lab are one of them.</p>
+<ol>
+<li>Re-read the checkpoint question. Is it asking for a count, a total, or an average? Those are three different numbers.</li>
+<li>Check whether your number is plausible. If total revenue comes out as 12 or as 40 million, something is off by a lot and you can usually see where.</li>
+<li>Expand the grey "How to" box for that step. It has the exact clicks.</li>
+<li>Check the formula bar of the cell you think is wrong. Does it reference the range you meant?</li>
+<li>Use the hint button on the checkpoint. It is not a penalty, it is part of the lab.</li>
+<li>Ask a neighbour. Then raise your hand.</li>
+</ol></div>""",
+  submit="Your workbook containing the two charts from Part 2, your four rebuilt misleading charts from Part 3, and the before-and-after fix from Part 4 with your one-sentence note, plus your completion certificate PDF (your reflection is page 2 of it).",
   qs=L4),
 
 "lab5-excel-analysis.html": dict(reflect="""You just found a problem that every standard report concealed. In the career you are heading toward, what is one 'healthy-looking sick store': a metric that could look fine while something underneath it fails? What would you have to break out, segment, or cross-tab to catch it early?""",
@@ -284,6 +447,24 @@ Goal Seek (Data → What-If Analysis) to answer questions of the form "what inpu
 2026 revenue, and say in one sentence why a linear forecast is suspect for a business this seasonal.
 (No checkpoint: your reasoning goes in the submission note.)</li>
 </ol>
+<details class="howto"><summary>How to make a pivot table</summary><div class="howto-body">
+<ol>
+<li>Click any single cell inside the data.</li>
+<li><strong>Insert</strong> tab, then <strong>PivotTable</strong>. <span class="mac">Mac</span> same menu, but the button may read <strong>Summarize with PivotTable</strong>.</li>
+<li>Excel guesses the data range. Check that it covers all the rows, then choose <strong>New Worksheet</strong> and click OK.</li>
+<li>A panel appears on the right with your column names. Drag a field into <strong>Rows</strong> to group by it, and drag a number into <strong>Values</strong> to total it.</li>
+<li>If Values shows a count instead of a sum, click it, choose <strong>Value Field Settings</strong>, and pick <strong>Sum</strong>. This catches almost everyone once.</li>
+</ol>
+<p><strong>If your pivot is empty:</strong> you probably selected a single cell outside the data before inserting. Undo and click inside the table first.</p>
+</div></details><details class="howto"><summary>How to use Goal Seek (it is well hidden)</summary><div class="howto-body">
+<ol>
+<li>You need a cell containing a <em>formula</em> whose result you want to force to a particular value, and another cell the formula depends on.</li>
+<li><strong>Data</strong> tab, then <strong>What-If Analysis</strong>, then <strong>Goal Seek</strong>. <span class="mac">Mac</span> same path, under the Data tab.</li>
+<li><strong>Set cell:</strong> the formula cell. <strong>To value:</strong> the number you want it to reach. <strong>By changing cell:</strong> the input cell.</li>
+<li>Click OK. Excel changes the input until the formula hits your target.</li>
+</ol>
+<p><strong>"Cell must contain a value" error:</strong> you put the formula in the wrong box. Set cell must hold a formula, By changing cell must hold a plain number.</p>
+</div></details>
 <h2><span class="num">Part B</span>The mini project: open brief</h2>
 <p>Re-read the memo. There are no numbered steps for this part; the structure of the investigation is
 the assignment. The checkpoints below will confirm each finding as you reach it, and their order is a
@@ -299,43 +480,113 @@ reports missed it, and one costed recommendation.</li>
 corrupted, and the gap between looked-fine and was-fine cost $100 million. Cascadia's board has the
 same gap on a co-op's scale: the revenue signal is healthy while the membership signal, the one the
 entire business model runs on, has quietly failed at one store. Finding a healthy-looking sick store
-is the analyst's version of the audit Nike never ran.</p></div>""",
+is the analyst's version of the audit Nike never ran.</p></div>
+<div class="stuck"><strong>When you get stuck</strong>
+<p>Before raising your hand, try these in order. Most problems in this lab are one of them.</p>
+<ol>
+<li>Re-read the checkpoint question. Is it asking for a count, a total, or an average? Those are three different numbers.</li>
+<li>Check whether your number is plausible. If total revenue comes out as 12 or as 40 million, something is off by a lot and you can usually see where.</li>
+<li>Expand the grey "How to" box for that step. It has the exact clicks.</li>
+<li>Check the formula bar of the cell you think is wrong. Does it reference the range you meant?</li>
+<li>Use the hint button on the checkpoint. It is not a penalty, it is part of the lab.</li>
+<li>Ask a neighbour. Then raise your hand.</li>
+</ol></div>""",
   submit="Your workbook as LAB5_Last_First.xlsx (Part A sheets plus your investigation pivots), your one-page board memo, plus your completion certificate PDF (your reflection is page 2 of it).",
   qs=L5),
 
-"lab6-tableau.html": dict(labid="LAB6", n="Lab 6", title="Tableau: Seeing the Co-op", week="Week 6",
-  reflect="""Tableau showed you in one glance what took a careful pivot table to find last week. In the field you plan to enter, describe one decision that is currently made from tables of numbers but should be made from a picture, and one risk of letting a beautiful chart substitute for checking the underlying data.""",
-  pair=('index.html','Chapter 7 · BI &amp; Analytics (coming)'),
+"lab6-tableau.html": dict(
+  labid="LAB6", n="Lab 6", title="Tableau: From Worksheets to a Dashboard", week="Week 6",
+  reflect="""You built a dashboard that shows revenue, and revenue at this co-op looks healthy. In the field you plan to enter, name one dashboard you have seen or can imagine that would show green while something serious was going wrong underneath. What single chart would you add to catch it?""",
+  pair=('index.html','Chapter 7 \u00b7 BI &amp; Analytics (coming)'),
   bridge="""<p><strong>Lab professor's intro (10 min):</strong> Frame with Monday's Moneyball
-  discussion: the A's won by measuring what the league didn't. Today students point a new instrument, Tableau, at data they already know, and re-find last week's discovery visually, which lands the
-  argument for visualization better than any lecture could. Show connecting to a CSV on the projector
-  (Data Source pane, then one drag-and-drop), then release them. If desktop Tableau isn't installed,
-  Tableau Public is free and sufficient. Checkpoint 5's answer is deliberately counterintuitive: let
-  them be surprised.</p>""",
-  intro="""<p class="lede">Same client, new instrument. Everything you found in Excel is still true, but this week you'll watch a finding that took a careful pivot table become impossible to miss the
-  moment it's drawn. That difference is why analytics teams fight over dashboards.</p>
+  discussion: the A's won by measuring what the league was not measuring. Today students point a
+  different instrument at data they already know well. Two things are worth doing on the projector.
+  First, show the Data Source pane and one drag-and-drop so the interface stops being intimidating.
+  Second, show the difference between a worksheet and a dashboard, because that distinction is the whole
+  lab and Tableau's own vocabulary makes it confusing at first. Tableau Public is free and sufficient if
+  desktop licences are a problem. Checkpoints 5 and 6 have a deliberately surprising answer.</p>""",
+  intro="""<p class="lede">In Lab 4 you learned which chart answers which question and assembled one in
+  Excel. Tableau exists because that assembly should be faster, and because a real dashboard does
+  something an Excel sheet cannot: the pieces talk to each other. Click a region, and every chart
+  responds.</p>
   <p>Download <a href="cascadia-sales-2025.csv"><strong>cascadia-sales-2025.csv</strong></a> and connect
-  Tableau (or free <a href="https://public.tableau.com">Tableau Public</a>) to it.</p>""",
+  Tableau, or free <a href="https://public.tableau.com">Tableau Public</a>, to it.</p>""",
   steps="""
-<h2><span class="num">Skills</span>Connecting data, marks &amp; shelves, calculated fields, highlight tables</h2>
+<h2><span class="num">Part 1</span>Worksheets and dashboards are different things</h2>
+
+<p>Tableau's vocabulary trips up nearly everyone in the first hour, so get it straight before you build
+anything.</p>
+
+<p>A <strong>worksheet</strong> is one chart answering one question. Revenue by store. That is a
+worksheet. In Tableau you build worksheets one at a time, each on its own tab at the bottom of the
+window, and each one is a complete little argument by itself.</p>
+
+<p>A <strong>dashboard</strong> is an arrangement of finished worksheets on one screen, plus the
+connections between them. This is the part that matters and the part people skip: on a real dashboard,
+a filter can apply to every chart at once, and clicking a bar in one chart can filter all the others.
+The charts stop being pictures sitting next to each other and start behaving like one instrument.</p>
+
+<p>Hold onto the definition from Lab 4, because it still governs: a dashboard is a single screen that
+answers a specific person's recurring questions about the current state of something, without them
+having to ask anyone. Tableau gives you better tools for building one. It does not decide for you who
+the person is or what they need to know, and no software ever will.</p>
+
+<div class="callout"><strong>Chart choice did not change</strong>
+<p>Tableau has a Show Me panel that offers you every chart type it can draw with your fields, and it is
+a trap if you let it choose for you. The logic from Lab 4 still applies. Comparing across categories is
+a bar chart. Change over time is a line. A relationship between two numbers is a scatter. Show Me tells
+you what is possible, not what is right.</p></div>
+
+<h2><span class="num">Part 2</span>Build five worksheets</h2>
+
 <ol>
-<li><strong>Get connected, then look before you build.</strong> Open the CSV as a data source; check the row count and that
-Tableau typed revenue as a number and sale_date as a date.</li>
-<li><strong>Make your first chart fast.</strong> Revenue by store as sorted bars. Then swap store for
-category, then for product: feel how fast iteration is compared to rebuilding a pivot.</li>
-<li><strong>Calculated fields.</strong> Build margin_rate and format it as a percent. This is the
-Moneyball move: a ratio the raw data doesn't contain, made first-class.</li>
-<li><strong>Highlight table.</strong> Store by month, colored by revenue. The co-op's year on one
-screen. Find the surprises: the best single cell is not in the best month.</li>
-<li><strong>The re-discovery.</strong> Build attach rate by store and watch last week's investigation
-become a single picture. Screenshot this one. It goes in your submission.</li>
+<li><strong>Connect and check.</strong> Open the CSV as a data source. Confirm the row count, and that
+Tableau read revenue as a number and sale_date as a date rather than text. Fixing types here is much
+easier than fixing them after you have built six charts on top of them.</li>
+<li><strong>Sorted bar: revenue by store.</strong> Store to Rows, revenue to Columns, sort descending
+with the toolbar button. Notice how much faster this is than the Excel version.</li>
+<li><strong>Line: revenue by month.</strong> Drag sale_date to Columns and set it to Month. Watch the
+shape of the year.</li>
+<li><strong>Calculated field: margin rate by category.</strong> Analysis, then Create Calculated Field.
+This is the Moneyball move, building a ratio the raw data does not contain and making it something you
+can chart.</li>
+<li><strong>Highlight table: store by month.</strong> Store in Rows, month in Columns, revenue on
+Color. The co-op's whole year on one screen. Click cells rather than judging colour by eye, because
+colour is genuinely hard to read precisely and that is a limitation worth knowing about the chart type
+you just chose.</li>
+<li><strong>Attach rate by store.</strong> The view Cascadia never built. You know what you found in
+Lab 5; watch what happens when it is drawn instead of tabulated.</li>
 </ol>
-<div class="callout"><strong>Undervalued gear</strong>
-<p>Before you leave: put revenue on one axis and margin_rate on the other, by category. The A's looked
-for players the market underpriced; a merchant looks for categories earning a high rate on low volume.
-Which category would you tell Cascadia to promote harder? No checkpoint for this: your pick and one
-sentence of reasoning go in the submission note, and there is more than one defensible answer.</p></div>""",
-  submit="A PDF or image export of your attach-rate chart and your highlight table, your undervalued-gear pick with one sentence of reasoning, plus your completion certificate PDF (your reflection is page 2 of it).",
+
+<h2><span class="num">Part 3</span>Assemble the dashboard</h2>
+
+<ol>
+<li><strong>New dashboard.</strong> The dashboard tab is at the bottom of the window, next to your
+worksheet tabs. Set a size that matches how it will be viewed rather than leaving it automatic.</li>
+<li><strong>Drag your worksheets in.</strong> Put the chart answering the most important question in the
+top left. Everything you learned about arrangement in Lab 4 applies here.</li>
+<li><strong>Add a filter and apply it everywhere.</strong> This is the step that makes it a dashboard
+rather than a poster. Add region as a filter, then set it to apply to all worksheets using this data
+source. Now changing one dropdown changes every chart at once.</li>
+<li><strong>Add a dashboard action.</strong> Dashboard menu, then Actions, then Add Action, then Filter.
+Set it so clicking a store in your bar chart filters the other charts to that store. Click Seattle
+Flagship and watch the rest of the screen answer a new question. Nothing in Excel does this.</li>
+<li><strong>Title it with the finding.</strong> Not "Cascadia Dashboard." Something a manager could act
+on.</li>
+</ol>
+
+<div class="callout callout-caution"><strong>The honest question, again</strong>
+<p>Your dashboard is built mostly on revenue, and revenue at this co-op looks fine. In Lab 5 you found
+something that revenue never showed you. Look at your finished screen and ask what else it would fail to
+reveal. Every dashboard has a blind spot, and the professional skill is not building one without blind
+spots, which is impossible. It is knowing where yours are and saying so out loud.</p></div>
+
+<div class="callout"><strong>If you finish early</strong>
+<p>Put revenue on one axis and margin rate on the other, by category, as a scatter. The A's looked for
+players the market underpriced. A merchant looks for categories earning a high rate on modest volume.
+Which category would you tell Cascadia to promote harder? There is no checkpoint for this and more than
+one defensible answer; your pick and one sentence of reasoning go in the submission note.</p></div>""",
+  submit="Your packaged workbook (.twbx) or a PDF export of the dashboard showing the region filter applied, your undervalued-category pick with one sentence of reasoning, plus your completion certificate PDF (your reflection is page 2 of it).",
   qs=L6),
 
 "lab7-sql.html": dict(
@@ -371,6 +622,40 @@ sentence of reasoning go in the submission note, and there is more than one defe
   <code class="inline">inventory</code>(store_id, product_id, quantity_on_hand, reorder_point) &#183;
   <code class="inline">used_gear</code>(item_id, product_id, store_id, condition, listed_price, date_listed, date_sold)</p></div>""",
   steps="""
+
+<h2><span class="num">Part 1</span>Why the data is not in Excel</h2>
+
+<p>Everything you have touched this quarter has been a spreadsheet, so it is worth saying plainly:
+no real company keeps its operating data in Excel. Cascadia's registers do not write to a workbook.
+They write to a <strong>database</strong>, and the difference is not cosmetic.</p>
+
+<p>A spreadsheet is one grid, edited by one person at a time, that tops out around a million rows and
+lives in a file someone can move, break, or email around. A <strong>relational database</strong> is a
+set of tables that live on a server, get written to by hundreds of registers and websites at the same
+moment, hold effectively unlimited rows, and are read by asking questions in SQL rather than by
+scrolling.</p>
+
+<p>The word <em>relational</em> is the important one. Look at the schema box above: the sales table
+does not contain store names. It contains a <strong>store_id</strong>, a number pointing at one row of
+the stores table, where the name, region, and square footage live exactly once. That pointer is called
+a <strong>foreign key</strong>, and the column it points at, the one that uniquely identifies each row,
+is a <strong>primary key</strong>.</p>
+
+<p>Why build it that way? Because facts should live in one place. If Bellingham's name were spelled out
+on all of its sales rows and the co-op renamed the store, someone would have to fix thousands of rows
+and would miss some, and you have already seen this movie: it is exactly how the state column in
+sales_raw ended up with fourteen spellings. Storing each fact once and pointing at it is the cure for
+the disease you are about to spend this lab treating. Monday's lecture calls this
+<strong>normalization</strong>; today you get to feel why it exists.</p>
+
+<div class="callout"><strong>The one-sentence version</strong>
+<p>Excel is where analysis happens. A database is where the truth lives. The skill this lab teaches is
+going to the truth directly.</p></div>
+
+<div class="callout"><strong>See it before you write it</strong>
+<p>Open the <a href="join-builder.html"><strong>Join Builder</strong></a> in another tab. Click a
+foreign key, click the primary key it points at, and watch the arrow become a working JOIN against this
+same database. Five minutes there makes the last two checkpoints here much easier.</p></div>
 <h2><span class="num">Sandbox</span>The Cascadia database, live</h2>
 <div id="sqlbox" style="border:1px solid var(--rule);background:var(--paper);border-radius:2px;padding:1rem 1.15rem;margin:1.2rem 0">
   <p id="sqlstatus" style="font-family:var(--sans);font-size:.85rem;color:var(--muted);margin:0 0 .6rem">Loading database&hellip;</p>
@@ -379,7 +664,7 @@ sentence of reasoning go in the submission note, and there is more than one defe
   <div id="sqlout" style="overflow-x:auto;margin-top:.8rem;font-family:var(--sans);font-size:.85rem"></div>
 </div>
 
-<h2><span class="num">The method</span>Six steps for cleaning any table</h2>
+<h2><span class="num">Part 2</span>Six steps for cleaning any table</h2>
 
 <h3>1. Understand the data</h3>
 <p>Never clean anything before you have measured what is wrong with it. Your first job is a damage
@@ -458,6 +743,17 @@ QUALIFY exists only in Snowflake, BigQuery, and a few others. Try it and read th
 experiencing once: SQL is a standard that every database extends differently, and code you copy from the
 internet may be written for a database you are not using.</p></div>
 
+
+<h3>The payoff: tables that connect</h3>
+<p>Cleaning one table is half the story. The other half is that tables answer questions
+<em>together</em>. The pattern is JOIN:</p>
+<pre style="background:var(--off-white);border:1px solid var(--border);padding:.9rem 1rem;overflow-x:auto;font-family:ui-monospace,Menlo,monospace;font-size:.85rem;line-height:1.5">SELECT s.store_name, SUM(sa.quantity * sa.unit_price) AS revenue
+FROM sales sa
+JOIN stores s ON s.store_id = sa.store_id
+GROUP BY s.store_name;</pre>
+<p>Read the ON clause out loud: connect each sales row to the stores row whose primary key matches its
+foreign key. Every VLOOKUP you wrote in Lab 3 was a hand-built imitation of this one line, and the last
+two checkpoints ask you to use it.</p>
 <h3>Putting it together</h3>
 <p>The final checkpoint asks you to do all of it at once: deduplicate, strip the dollar signs, treat
 missing quantities as zero, and total the revenue. Build it in pieces and run each piece before you

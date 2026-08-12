@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lab 4 · Data Visualization: Communicating Status | MIS 320</title>
+<title>Lab 4 · Data Visualization: Charts That Tell the Truth | MIS 320</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -176,6 +176,29 @@ li{margin-bottom:.45rem}
   .dd-btn{width:100%;font-size:13px;padding:.4rem .5rem}
   .dd-menu{right:auto;left:0;min-width:min(92vw,22rem)}
 }
+
+/* ---------- collapsible step-by-step help ---------- */
+.howto{margin:.7rem 0 1.1rem;border:1px solid var(--border);background:var(--off-white)}
+.howto>summary{cursor:pointer;padding:.6rem .9rem;font-family:var(--display);font-size:13px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--magenta-dark);list-style:none}
+.howto>summary::-webkit-details-marker{display:none}
+.howto>summary:before{content:"\25B8  ";font-size:11px}
+.howto[open]>summary:before{content:"\25BE  "}
+.howto>summary:hover{background:var(--magenta-pale)}
+.howto-body{padding:.3rem 1.1rem 1rem;border-top:1px solid var(--border);background:#fff}
+.howto-body ol{margin:.7rem 0;padding-left:1.3rem}
+.howto-body li{margin-bottom:.45rem;font-size:15px;line-height:1.5}
+.howto-body p{font-size:15px;margin:.6rem 0}
+.kbd{font-family:ui-monospace,Menlo,monospace;font-size:.85em;background:var(--off-white);
+  border:1px solid var(--border);border-radius:2px;padding:.1em .35em;white-space:nowrap}
+.mac{display:inline-block;font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;background:var(--black);color:#fff;padding:.1rem .4rem;margin-right:.35rem}
+.stuck{border:1px solid var(--border);border-left:4px solid var(--black);background:var(--off-white);
+  padding:1rem 1.2rem;margin:2rem 0 0}
+.stuck strong:first-child{display:block;font-family:var(--display);font-size:12.5px;font-weight:600;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--black);margin-bottom:.5rem}
+.stuck ol{margin:.5rem 0 0;padding-left:1.3rem}
+.stuck li{font-size:15px;margin-bottom:.35rem}
 .cp{border:1px solid var(--rule);background:var(--paper);border-radius:2px;margin:1rem 0;padding:1rem 1.15rem}.cp.locked{opacity:.45;pointer-events:none}.cp.done{border-left:4px solid var(--good);background:var(--good-pale)}.cp.q{font-family:var(--sans);font-size:.92rem;color:var(--navy);margin:0 0.6rem;font-weight:500}.cp input[type=text]{font-family:var(--sans);font-size:.9rem;padding:.45rem.6rem;border:1px solid var(--rule);border-radius:2px;width:14rem;max-width:100%}.cp button{font-family:var(--sans);font-size:.8rem;font-weight:600;letter-spacing:.04em;background:var(--accent-deep);color:#fff;border:none;border-radius:2px;padding:.5rem.9rem;cursor:pointer;margin-left:.4rem}.cp button.hintb{background:none;color:var(--accent-deep);border:1px solid var(--rule)}.cp.msg{font-family:var(--sans);font-size:.8rem;margin:.5rem 0 0}.cp.hint{font-family:var(--sans);font-size:.8rem;color:var(--muted);margin:.5rem 0 0;display:none;border-top:1px dashed var(--rule);padding-top:.5rem}.progress{position:sticky;top:0;z-index:5;background:var(--black);color:#fff;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:.6rem 1rem;margin:1.5rem 0}.certbox{border:2px solid var(--black);background:var(--paper);padding:1.2rem 1.3rem;margin:1.5rem 0;display:none}.certbox.show{display:block}.certbox h3{margin-top:0}.codebox code{font-family:ui-monospace,Menlo,monospace;background:var(--cream-deep);padding:.15em.45em;border-radius:2px}
 </style></head><body>
 <nav class="topnav">
@@ -201,9 +224,9 @@ li{margin-bottom:.45rem}
       <a href="lab1-genai.html"><span class="lbl">Lab 1 &middot; Week 1</span>GenAI for Thinking</a>
       <a href="lab2-excel-basics.html"><span class="lbl">Lab 2 &middot; Week 2</span>Excel Basics: Meeting the Client</a>
       <a href="lab3-excel-dataprep.html"><span class="lbl">Lab 3 &middot; Week 3</span>Data Preparation: The RAW File</a>
-      <a class="current" href="lab4-excel-dataviz.html"><span class="lbl">Lab 4 &middot; Week 4</span>Data Visualization</a>
+      <a class="current" href="lab4-excel-dataviz.html"><span class="lbl">Lab 4 &middot; Week 4</span>Data Visualization: Charts That Tell the Truth</a>
       <a href="lab5-excel-analysis.html"><span class="lbl">Lab 5 &middot; Week 5</span>Data Analysis &amp; Mini Project</a>
-      <a href="lab6-tableau.html"><span class="lbl">Lab 6 &middot; Week 6</span>Tableau: Seeing the Co-op</a>
+      <a href="lab6-tableau.html"><span class="lbl">Lab 6 &middot; Week 6</span>Tableau: Worksheets to a Dashboard</a>
       <a href="lab7-sql.html"><span class="lbl">Lab 7 &middot; Week 7</span>SQL Fundamentals</a>
       <div class="dd-sep"></div>
       <a class="soon" href="#"><span class="lbl">Labs 8&ndash;10</span>UX, AI/ML, Information Architecture (in progress)</a>
@@ -221,7 +244,6 @@ li{margin-bottom:.45rem}
   </div>
 </nav>
 
-
 <div class="shell">
 <aside class="rail">
   <p class="book">MIS 320</p><p class="course">Introduction to Information Systems</p>
@@ -236,44 +258,139 @@ li{margin-bottom:.45rem}
 <main id="top">
 <header class="chaphead">
   <p class="eyebrow">Lab 4 · Week 4</p>
-  <h1>Data Visualization: Communicating Status</h1>
+  <h1>Data Visualization: Charts That Tell the Truth</h1>
   <div class="meta-row"><span>Lab session · 80 min</span><span class="alt"><a href="chapter4-healthcaregov.html" style="color:inherit;text-decoration:none">Pairs with Chapter 4 · Systems Analysis &#8594;</a></span></div>
 </header>
-<p class="lede">Healthcare.gov failed in part because nobody built the picture that would
-  have made the truth undeniable. A chart is not decoration. It is how a system's status gets
-  communicated to the people who decide. This week you build Cascadia's status pictures, and you
-  build them honestly.</p>
-  <p>Work from your <strong>cleaned</strong> Lab 3 file, or re-download
-  <a href="cascadia-sales-2025.xlsx">the clean workbook</a>.</p>
-<div class="callout callout-bridge"><strong>From lecture to lab</strong><p><strong>Lab professor's intro (10 min):</strong> Connect to Monday's Healthcare.gov
-  case: the site's builders had no dashboard that told leadership, honestly, whether the system was
-  ready: status was communicated in meetings, optimistically. This lab is about charts as honest
-  status instruments. Students pivot the Cascadia data and build a small dashboard: monthly revenue
-  line, category bar, store comparison. Emphasize chart-type choice (time = line, comparison = bar)
-  and axis honesty. Difficulty is moderate; pivots were previewed in DataCamp's Visualization
-  module.</p></div>
+<p class="lede">A chart is an argument, not decoration. The wrong chart makes a true finding
+  unreadable, and a carefully wrong chart makes a false finding look obvious. Today you learn to pick
+  the right one, and then you practice catching charts that lie while telling the truth.</p>
+  <p>Open <a href="cascadia-sales-2025.xlsx"><strong>cascadia-sales-2025.xlsx</strong></a>. You will
+  build everything from pivot tables, so this is also good pivot practice before Exam 1.</p>
+<div class="callout callout-bridge"><strong>From lecture to lab</strong><p><strong>Lab professor's intro (10 min):</strong> Connect to Monday's Healthcare.gov case
+  with one idea: leadership was not lied to. They had accurate status information that told them the
+  wrong thing, which is a communication failure sitting on top of a technical one. Part 1 of this lab is
+  quick, matching the chart to the question. Part 3 is the real work, four charts built from true
+  Cascadia numbers that each mislead in a different way. Worth doing the first one on the projector:
+  show Chart A, ask the room how much bigger Bellevue is than Bellingham, let them answer from the
+  picture, then reveal it is 8 percent. That moment lands better than any explanation.</p></div>
 <div id="steps">
-<h2><span class="num">Skills</span>Pivot tables, line charts, bar charts, dashboard assembly</h2>
+<h2><span class="num">Part 1</span>The question decides the chart</h2>
+
+<p>Almost every chart mistake is really a question mistake: someone picked a shape before deciding what
+they were asking. Learn the mapping.</p>
+
+<h3>Bar chart: comparing across categories</h3>
+<p>One number measured across separate named things. Revenue by store. Units by product. The bars sit
+apart because the categories are unrelated, and length is what your eye compares, which is why bars work.
+Humans read length accurately.</p>
+<p><strong>Sort by value</strong> unless the categories have a natural order, and <strong>start the axis
+at zero</strong>. Both rules come back to bite you in Part 3.</p>
+
+<h3>Line chart: change over time</h3>
+<p>The horizontal axis is time and the points are steps in a sequence. Revenue by month. Enrollments by
+day. The connecting line is doing real work: it tells the reader these values belong to one continuous
+story, which is exactly why you must never use a line for categories.</p>
+
+<h3>Scatter plot: the relationship between two numbers</h3>
+<p>Two measurements per thing, one dot each, position carrying both. Store size against store revenue.
+Scatter plots answer a question no other chart can: they show you the outlier sitting off the pattern,
+which is usually the most interesting item in the dataset.</p>
+
+<h3>Pie chart: parts of one whole</h3>
+<p>Only when the slices sum to a meaningful 100 percent, and only with a handful of them. Humans compare
+angles badly. If you are ranking things, use a bar chart. Most pie charts in business decks should have
+been bar charts.</p>
+
+<div class="callout"><strong>The test before you chart anything</strong>
+<p>Say the question out loud in one sentence. "How do the stores compare?" is a bar. "What happened over
+the year?" is a line. "Does bigger mean richer?" is a scatter. If you cannot say the question in a
+sentence, you are not ready to chart yet.</p></div>
+
+<h2><span class="num">Part 2</span>Build two, properly</h2>
 <ol>
-<li><strong>Monthly revenue, as a line.</strong> Pivot with sale_date grouped by month against
-revenue; insert a line chart. Seasonality should jump out. This is a gear co-op, and the calendar
-is its heartbeat.</li>
-<li><strong>Category revenue, as bars.</strong> New pivot, categories sorted descending, bar chart.
-Resist 3-D. Resist pie.</li>
-<li><strong>Store comparison.</strong> Revenue by store, bars, sorted. Title it as a claim, not a
-label: "Seattle Flagship carries a fifth of the co-op" beats "Revenue by Store."</li>
-<li><strong>Assemble.</strong> Arrange the three charts on one sheet named
-<code class="inline">Dashboard</code> so a manager gets the year in one glance.</li>
+<li><strong>Revenue by store, sorted bar.</strong> Pivot, chart, sort descending, axis at zero, title
+that states the finding rather than the topic.</li>
+<li><strong>Revenue by month, line.</strong> Twelve points, time on the horizontal. Look at the shape
+of the co-op's year before you move on, because you will need it later.</li>
 </ol>
-<div class="callout"><strong>Axis honesty</strong>
-<p>Truncating a bar chart's y-axis manufactures drama the data doesn't contain. Healthcare.gov's
-leadership got optimistic pictures for three years; the correction arrived all at once on launch
-day. Your dashboards should make bad news visible early, because that is what dashboards are
-for.</p></div>
-<div class="callout callout-bridge"><strong>What you have not been asked to chart</strong>
-<p>Notice this dashboard says nothing about <em>members</em>. Revenue looks healthy everywhere. In
-Lab 5, after the exam, the co-op's board asks a question this dashboard cannot answer, and you will
-find that healthy revenue can hide a sick store.</p></div></div>
+
+<details class="howto"><summary>How to make a pivot table</summary><div class="howto-body">
+<ol>
+<li>Click any single cell inside the data.</li>
+<li><strong>Insert</strong> tab, then <strong>PivotTable</strong>. <span class="mac">Mac</span> same menu, but the button may read <strong>Summarize with PivotTable</strong>.</li>
+<li>Excel guesses the data range. Check that it covers all the rows, then choose <strong>New Worksheet</strong> and click OK.</li>
+<li>A panel appears on the right with your column names. Drag a field into <strong>Rows</strong> to group by it, and drag a number into <strong>Values</strong> to total it.</li>
+<li>If Values shows a count instead of a sum, click it, choose <strong>Value Field Settings</strong>, and pick <strong>Sum</strong>. This catches almost everyone once.</li>
+</ol>
+<p><strong>If your pivot is empty:</strong> you probably selected a single cell outside the data before inserting. Undo and click inside the table first.</p>
+</div></details><details class="howto"><summary>How to insert and clean up a chart</summary><div class="howto-body">
+<ol>
+<li>Select the pivot table results, including the row labels.</li>
+<li><strong>Insert</strong> tab, then the chart type you want. Hover any icon to see its name before clicking.</li>
+<li>To sort a bar chart: sort the pivot table itself. Click the dropdown arrow on the Row Labels header, then <strong>More Sort Options</strong>, then sort by your value column, descending.</li>
+<li>To set the axis to zero: right-click the vertical axis, choose <strong>Format Axis</strong>, and set Minimum to 0.</li>
+<li>To retitle: click the chart title once, then type. To delete a legend you do not need, click it and press Delete.</li>
+</ol>
+<p><span class="mac">Mac</span> Chart tools live in the <strong>Chart Design</strong> and <strong>Format</strong> tabs that appear when a chart is selected.</p>
+</div></details>
+<h2><span class="num">Part 3</span>Four charts that lie</h2>
+
+<p>Here is the part that matters. Each of the four charts below is built from Cascadia's real 2025 data.
+Every number in them is correct. Every one of them misleads. Build each one yourself so you can see how
+easy it is, then answer the checkpoint that exposes it.</p>
+
+<h3>Chart A: the truncated axis</h3>
+<p>Bar chart of Bellevue, Tacoma, and Bellingham revenue, with the vertical axis starting at $80,000
+instead of zero. Build it. Bellevue's bar towers over Bellingham's, looking several times taller.</p>
+<p>Then compute the actual gap between them. The distance between what the picture says and what the
+arithmetic says is the whole lesson, and this is the single most common way charts mislead in business,
+usually without anyone intending it.</p>
+
+<h3>Chart B: the line that invents a trend</h3>
+<p>Put the eight stores on a line chart, left to right, revenue on the vertical. The line slopes
+downward and looks like decline.</p>
+<p>Nothing is declining. A line says these points are steps in a sequence, and stores are not a sequence.
+The proof: reorder the stores alphabetically and the "trend" changes shape entirely. Any pattern that
+depends on the order you happened to type things in was never a pattern.</p>
+
+<h3>Chart C: the unreadable pie</h3>
+<p>Pie chart of revenue by individual product. Build it and try to answer a simple question from it, such
+as which product is fourth largest. You cannot, and neither can anyone in your audience.</p>
+<p>The chart is accurate and useless, which is its own category of failure. A chart that cannot be read
+is not a neutral choice; it consumes attention and returns nothing.</p>
+
+<h3>Chart D: the honest chart with the dishonest title</h3>
+<p>A clean line chart of monthly revenue, correctly built, titled <em>"Revenue Collapsing After
+January."</em> Revenue really does fall about 25 percent from January to February. The chart is accurate,
+the number is accurate, and the conclusion is false.</p>
+<p>Look at the full year and you will see why. This is the most dangerous of the four, because there is
+nothing to catch by inspecting the chart itself. The lie lives in the framing, and the only defence is
+knowing enough about the business to notice that a seasonal dip has been renamed a collapse.</p>
+
+<div class="callout callout-caution"><strong>Where this connects to Monday</strong>
+<p>Healthcare.gov's leadership was not lied to. They received status reports that were accurate about
+what they measured: contract deliverables completed, milestones marked green. Nothing in those reports
+was false. What none of them said was whether the assembled system could serve the number of people who
+would arrive on October 1st. Accurate information, wrong question, catastrophic outcome. Every chart in
+this part of the lab is a small version of that.</p></div>
+
+<h2><span class="num">Part 4</span>Fix one</h2>
+<p>Pick whichever of the four you find most misleading and rebuild it honestly: right chart type, axis
+from zero, readable number of items, and a title that states what the data actually supports. Put the
+before and after side by side on one sheet.</p>
+<p>Then write one sentence naming who would benefit from the misleading version. Sometimes the answer is
+nobody and it was carelessness. Often it is not, and being able to say so plainly is part of the job you
+are training for.</p>
+<div class="stuck"><strong>When you get stuck</strong>
+<p>Before raising your hand, try these in order. Most problems in this lab are one of them.</p>
+<ol>
+<li>Re-read the checkpoint question. Is it asking for a count, a total, or an average? Those are three different numbers.</li>
+<li>Check whether your number is plausible. If total revenue comes out as 12 or as 40 million, something is off by a lot and you can usually see where.</li>
+<li>Expand the grey "How to" box for that step. It has the exact clicks.</li>
+<li>Check the formula bar of the cell you think is wrong. Does it reference the range you meant?</li>
+<li>Use the hint button on the checkpoint. It is not a penalty, it is part of the lab.</li>
+<li>Ask a neighbour. Then raise your hand.</li>
+</ol></div></div>
 
 <h2 id="checkpoints"><span class="num">Required</span>Checkpoints <span style="font-weight:400;color:var(--muted);font-size:.65em">, complete as you work</span></h2>
 <p style="font-family:var(--sans);font-size:.95rem">Here is how this works. Each checkpoint matches a
@@ -283,11 +400,11 @@ you get stuck. That is what it is there for.</p>
 <p style="font-family:var(--sans);font-size:.95rem">Once you have cleared them all, write your reflection
 and download your certificate for Canvas. One warning worth taking seriously: <strong>your progress lives
 only on this page.</strong> Close the tab or refresh before you download, and you start over.</p>
-<div class="progress" id="prog">Checkpoint progress: 0 / 6</div>
+<div class="progress" id="prog">Checkpoint progress: 0 / 8</div>
 <div id="cps"></div>
 <div class="certbox" id="reflectbox">
   <h3>One last thing before your certificate</h3>
-  <p style="font-family:var(--sans);font-size:.88rem">A chart is how a system's status reaches the people who decide. In your intended field, describe one situation where an honest chart shown early would change a decision, and one way a chart in that field could technically be accurate while still misleading the person reading it.</p>
+  <p style="font-family:var(--sans);font-size:.88rem">Every chart in Part 3 was built from accurate data and every one of them misled. In the field you plan to enter, describe a situation where someone would have an incentive to present true numbers in a misleading shape. What would you look at first to catch it?</p>
   <p style="font-family:var(--sans);font-size:.88rem;color:var(--muted)">Fifty words is the minimum, but
   do not write to the counter. This prints as page 2 of your certificate, so it is the part your lab
   professor actually reads. Answer it like someone asked you the question out loud.</p>
@@ -305,7 +422,7 @@ only on this page.</strong> Close the tab or refresh before you download, and yo
 </div>
 
 <h2 id="submit"><span class="num">Canvas</span>What to submit</h2>
-<p style="font-family:var(--sans);font-size:.92rem">Your workbook as LAB4_Last_First.xlsx with the Dashboard sheet, plus your completion certificate PDF (your reflection is page 2 of it).</p>
+<p style="font-family:var(--sans);font-size:.92rem">Your workbook containing the two charts from Part 2, your four rebuilt misleading charts from Part 3, and the before-and-after fix from Part 4 with your one-sentence note, plus your completion certificate PDF (your reflection is page 2 of it).</p>
 </main></div>
 <script>
 (function(){var b=document.querySelector('.railtoggle'),n=document.getElementById('chapnav');
@@ -315,7 +432,7 @@ b.setAttribute('aria-expanded',o?'true':'false');});})();
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-const LAB="LAB4", QS=[{"q": "Checkpoint 1 \u00b7 Chart monthly revenue as a line. Which month is the peak?", "t": "txt", "a": "SmFudWFyeQ==", "h": "Group sale_date by month first: a pivot table with sale_date in Rows (grouped by month) and revenue in Values, then insert a line chart from it."}, {"q": "Checkpoint 2 \u00b7 Revenue for that peak month, in dollars?", "t": "num", "a": "NjkyNTkuMzU=", "tol": 1, "h": "Read it off your pivot, not the chart."}, {"q": "Checkpoint 3 \u00b7 Which month is the trough?", "t": "txt", "a": "QXByaWw=", "h": "Look for the shoulder season: after ski gear stops selling and before camping starts."}, {"q": "Checkpoint 4 \u00b7 Build a bar chart of revenue by category. Which category leads?", "t": "txt", "a": "Q2FtcGluZw==", "h": "Pivot: category in Rows, revenue in Values, sort descending, insert bar chart."}, {"q": "Checkpoint 5 \u00b7 Revenue for that leading category?", "t": "num", "a": "MTk3MzQ0Ljk1", "tol": 1, "h": "Same pivot as Checkpoint 4."}, {"q": "Checkpoint 6 \u00b7 Top single product by revenue across the year?", "t": "txt", "a": "VG91cmluZyBTa2kgUGFja2FnZQ==", "h": "Swap category for product in your pivot Rows. One product is far ahead."}];
+const LAB="LAB4", QS=[{"q": "Checkpoint 1 \u00b7 You want to compare total revenue across the eight stores. Which chart type is right: bar, line, scatter, or pie?", "t": "txt", "a": "YmFy", "h": "Comparing one number across separate named things is what bar charts are for."}, {"q": "Checkpoint 2 \u00b7 Build it. Pivot revenue by store, insert a bar chart, sort highest to lowest. Which store is SECOND?", "t": "txt", "a": "UG9ydGxhbmQgUGVhcmw=", "h": "Sorting matters. An unsorted bar chart makes the reader do the ranking you should have done for them."}, {"q": "Checkpoint 3 \u00b7 Different question: how did revenue move across the twelve months of 2025? Which chart type?", "t": "txt", "a": "bGluZQ==", "h": "Time on the horizontal axis, connected points. The line says these values are steps in one sequence, not separate categories."}, {"q": "Checkpoint 4 \u00b7 Build it. Which month was the co-op's highest?", "t": "txt", "a": "SmFudWFyeQ==", "h": "Group by month and chart it. Answer with the month name."}, {"q": "Checkpoint 5 \u00b7 Now the diagnosis work. Chart A (above) shows Bellevue, Tacoma, and Bellingham with a vertical axis starting at $80,000, and Bellevue's bar looks roughly six times taller than Bellingham's. What is the ACTUAL percentage gap between Bellevue and Bellingham? One decimal.", "t": "num", "a": "OC4x", "tol": 0.3, "h": "Compute it: (Bellevue minus Bellingham) divided by Bellingham, times 100. Then look at Chart A again. That is what a truncated axis does to a reader who trusts you."}, {"q": "Checkpoint 6 \u00b7 Chart B plots the eight stores on a LINE chart, left to right, and the line slopes downward. What is wrong with it? Answer with one word: the chart type implies something false about the relationship between the items on the horizontal axis. That false implication is a ______ (one word, starts with T).", "t": "txt", "a": "dHJlbmQ=", "h": "A line connects points to say they are steps in a sequence. Stores are not a sequence. Reorder them alphabetically and the 'trend' reverses, which proves it was never there."}, {"q": "Checkpoint 7 \u00b7 Chart C is a pie chart of revenue by individual product. How many slices does it have? (Count the products in the data.)", "t": "num", "a": "MzU=", "tol": 0, "h": "Humans compare angles badly, and a pie stops being readable at about five slices. This one is not a chart, it is a colour wheel."}, {"q": "Checkpoint 8 \u00b7 Chart D is an accurate line chart of monthly revenue titled 'Revenue Collapsing After January.' Revenue does fall 24.6% from January to February, so the number in the title is real. Now look at the whole year: which month is the co-op's SECOND-highest?", "t": "txt", "a": "T2N0b2Jlcg==", "h": "October, and December is third. Revenue recovers and the year ends strong, so a seasonal dip has been relabelled a collapse. Nothing in this chart is factually wrong, which is what makes it the most dangerous of the four."}];
 const solved=new Set();
 const norm=s=>s.replace(/[$,\s]/g,'').toLowerCase();
 function render(){
@@ -371,7 +488,7 @@ function cert(){
  p.setFont('times','normal');p.setFontSize(13);
  p.text('completed all '+QS.length+' checkpoints of',280,198,{align:'center'});
  p.setFont('helvetica','bold');p.setFontSize(15);p.setTextColor(26,82,118);
- p.text('Lab 4 \u00B7 Data Visualization: Communicating Status',280,222,{align:'center'});
+ p.text('Lab 4 \u00B7 Data Visualization: Charts That Tell the Truth',280,222,{align:'center'});
  p.setFont('helvetica','normal');p.setFontSize(11);p.setTextColor(90,90,90);
  p.text(d,280,252,{align:'center'});
  p.setFont('courier','bold');p.setFontSize(12);p.setTextColor(17,120,100);
@@ -384,7 +501,7 @@ function cert(){
  p.setTextColor(26,82,118);p.setFont('helvetica','bold');p.setFontSize(10);
  p.text('LAB REFLECTION \u00B7 '+n+' \u00B7 '+code,280,44,{align:'center'});
  p.setTextColor(60,60,60);p.setFont('times','italic');p.setFontSize(9);
- const promptLines=p.splitTextToSize('Prompt: A chart is how a system\'s status reaches the people who decide. In your intended field, describe one situation where an honest chart shown early would change a decision, and one way a chart in that field could technically be accurate while still misleading the person reading it.',480);
+ const promptLines=p.splitTextToSize('Prompt: Every chart in Part 3 was built from accurate data and every one of them misled. In the field you plan to enter, describe a situation where someone would have an incentive to present true numbers in a misleading shape. What would you look at first to catch it?',480);
  p.text(promptLines,40,70);
  p.setFont('times','normal');p.setFontSize(11);p.setTextColor(26,26,26);
  const lines=p.splitTextToSize(r,480);

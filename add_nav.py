@@ -17,9 +17,9 @@ LABS = [
     ("lab1-genai.html",           "Lab 1 &middot; Week 1", "GenAI for Thinking"),
     ("lab2-excel-basics.html",    "Lab 2 &middot; Week 2", "Excel Basics: Meeting the Client"),
     ("lab3-excel-dataprep.html",  "Lab 3 &middot; Week 3", "Data Preparation: The RAW File"),
-    ("lab4-excel-dataviz.html",   "Lab 4 &middot; Week 4", "Data Visualization"),
+    ("lab4-excel-dataviz.html",   "Lab 4 &middot; Week 4", "Data Visualization: Charts That Tell the Truth"),
     ("lab5-excel-analysis.html",  "Lab 5 &middot; Week 5", "Data Analysis &amp; Mini Project"),
-    ("lab6-tableau.html",         "Lab 6 &middot; Week 6", "Tableau: Seeing the Co-op"),
+    ("lab6-tableau.html",         "Lab 6 &middot; Week 6", "Tableau: Worksheets to a Dashboard"),
     ("lab7-sql.html",             "Lab 7 &middot; Week 7", "SQL Fundamentals"),
     (None,                        "Labs 8&ndash;10",      "UX, AI/ML, Information Architecture"),
 ]
@@ -116,6 +116,6 @@ def inject(path):
 if __name__ == '__main__':
     os.chdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'out'))
     done = []
-    for f in sorted(glob.glob('chapter*.html') + glob.glob('lab*.html') + glob.glob('schedule.html')):
+    for f in sorted(glob.glob('chapter*.html') + glob.glob('lab*.html') + glob.glob('schedule.html') + glob.glob('join-builder.html')):
         done.append(inject(f))
     print(f"nav injected into {len(done)} pages")

@@ -176,6 +176,29 @@ li{margin-bottom:.45rem}
   .dd-btn{width:100%;font-size:13px;padding:.4rem .5rem}
   .dd-menu{right:auto;left:0;min-width:min(92vw,22rem)}
 }
+
+/* ---------- collapsible step-by-step help ---------- */
+.howto{margin:.7rem 0 1.1rem;border:1px solid var(--border);background:var(--off-white)}
+.howto>summary{cursor:pointer;padding:.6rem .9rem;font-family:var(--display);font-size:13px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--magenta-dark);list-style:none}
+.howto>summary::-webkit-details-marker{display:none}
+.howto>summary:before{content:"\25B8  ";font-size:11px}
+.howto[open]>summary:before{content:"\25BE  "}
+.howto>summary:hover{background:var(--magenta-pale)}
+.howto-body{padding:.3rem 1.1rem 1rem;border-top:1px solid var(--border);background:#fff}
+.howto-body ol{margin:.7rem 0;padding-left:1.3rem}
+.howto-body li{margin-bottom:.45rem;font-size:15px;line-height:1.5}
+.howto-body p{font-size:15px;margin:.6rem 0}
+.kbd{font-family:ui-monospace,Menlo,monospace;font-size:.85em;background:var(--off-white);
+  border:1px solid var(--border);border-radius:2px;padding:.1em .35em;white-space:nowrap}
+.mac{display:inline-block;font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;background:var(--black);color:#fff;padding:.1rem .4rem;margin-right:.35rem}
+.stuck{border:1px solid var(--border);border-left:4px solid var(--black);background:var(--off-white);
+  padding:1rem 1.2rem;margin:2rem 0 0}
+.stuck strong:first-child{display:block;font-family:var(--display);font-size:12.5px;font-weight:600;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--black);margin-bottom:.5rem}
+.stuck ol{margin:.5rem 0 0;padding-left:1.3rem}
+.stuck li{font-size:15px;margin-bottom:.35rem}
 .cp{border:1px solid var(--rule);background:var(--paper);border-radius:2px;margin:1rem 0;padding:1rem 1.15rem}.cp.locked{opacity:.45;pointer-events:none}.cp.done{border-left:4px solid var(--good);background:var(--good-pale)}.cp.q{font-family:var(--sans);font-size:.92rem;color:var(--navy);margin:0 0.6rem;font-weight:500}.cp input[type=text]{font-family:var(--sans);font-size:.9rem;padding:.45rem.6rem;border:1px solid var(--rule);border-radius:2px;width:14rem;max-width:100%}.cp button{font-family:var(--sans);font-size:.8rem;font-weight:600;letter-spacing:.04em;background:var(--accent-deep);color:#fff;border:none;border-radius:2px;padding:.5rem.9rem;cursor:pointer;margin-left:.4rem}.cp button.hintb{background:none;color:var(--accent-deep);border:1px solid var(--rule)}.cp.msg{font-family:var(--sans);font-size:.8rem;margin:.5rem 0 0}.cp.hint{font-family:var(--sans);font-size:.8rem;color:var(--muted);margin:.5rem 0 0;display:none;border-top:1px dashed var(--rule);padding-top:.5rem}.progress{position:sticky;top:0;z-index:5;background:var(--black);color:#fff;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:.6rem 1rem;margin:1.5rem 0}.certbox{border:2px solid var(--black);background:var(--paper);padding:1.2rem 1.3rem;margin:1.5rem 0;display:none}.certbox.show{display:block}.certbox h3{margin-top:0}.codebox code{font-family:ui-monospace,Menlo,monospace;background:var(--cream-deep);padding:.15em.45em;border-radius:2px}
 </style></head><body>
 <nav class="topnav">
@@ -201,9 +224,9 @@ li{margin-bottom:.45rem}
       <a href="lab1-genai.html"><span class="lbl">Lab 1 &middot; Week 1</span>GenAI for Thinking</a>
       <a href="lab2-excel-basics.html"><span class="lbl">Lab 2 &middot; Week 2</span>Excel Basics: Meeting the Client</a>
       <a class="current" href="lab3-excel-dataprep.html"><span class="lbl">Lab 3 &middot; Week 3</span>Data Preparation: The RAW File</a>
-      <a href="lab4-excel-dataviz.html"><span class="lbl">Lab 4 &middot; Week 4</span>Data Visualization</a>
+      <a href="lab4-excel-dataviz.html"><span class="lbl">Lab 4 &middot; Week 4</span>Data Visualization: Charts That Tell the Truth</a>
       <a href="lab5-excel-analysis.html"><span class="lbl">Lab 5 &middot; Week 5</span>Data Analysis &amp; Mini Project</a>
-      <a href="lab6-tableau.html"><span class="lbl">Lab 6 &middot; Week 6</span>Tableau: Seeing the Co-op</a>
+      <a href="lab6-tableau.html"><span class="lbl">Lab 6 &middot; Week 6</span>Tableau: Worksheets to a Dashboard</a>
       <a href="lab7-sql.html"><span class="lbl">Lab 7 &middot; Week 7</span>SQL Fundamentals</a>
       <div class="dd-sep"></div>
       <a class="soon" href="#"><span class="lbl">Labs 8&ndash;10</span>UX, AI/ML, Information Architecture (in progress)</a>
@@ -220,7 +243,6 @@ li{margin-bottom:.45rem}
     </div>
   </div>
 </nav>
-
 
 <div class="shell">
 <aside class="rail">
@@ -271,6 +293,38 @@ rule: a blank quantity on a line with revenue is a keying failure: set it to
 <li><strong>Enrich with VLOOKUP.</strong> Build this supplier table on a new sheet and add a
 lead-time column to the data:</li>
 </ol>
+<details class="howto"><summary>How to find and remove duplicates</summary><div class="howto-body">
+<p><strong>See them first, then delete.</strong> Never delete before you have looked.</p>
+<ol>
+<li>Select the column you think has duplicates.</li>
+<li><strong>Home</strong> tab, <strong>Conditional Formatting</strong>, <strong>Highlight Cells Rules</strong>, <strong>Duplicate Values</strong>. They turn red. Scroll and confirm they are genuine copies.</li>
+<li>To remove: click inside the data, then <strong>Data</strong> tab, then <strong>Remove Duplicates</strong>.</li>
+<li>A box lists every column with checkboxes. This matters: Excel deletes a row only when <em>every</em> checked column matches. To dedupe on the ID alone, check only the ID column.</li>
+<li>Excel reports how many it removed. Write that number down, you will need it.</li>
+</ol>
+<p><strong>Work on a copy of the sheet.</strong> Remove Duplicates cannot be undone reliably after other edits.</p>
+</div></details><details class="howto"><summary>How to clean text and fix number columns</summary><div class="howto-body">
+<p>Build these in an empty column beside the dirty one, then paste the results back as values.</p>
+<ol>
+<li><strong>Stray spaces:</strong> <span class="kbd">=TRIM(A2)</span></li>
+<li><strong>Inconsistent casing:</strong> <span class="kbd">=PROPER(A2)</span> for names, <span class="kbd">=UPPER(A2)</span> for codes</li>
+<li><strong>Both at once:</strong> <span class="kbd">=PROPER(TRIM(A2))</span></li>
+<li><strong>Numbers stored as text</strong> (left-aligned, with a $ typed in): <span class="kbd">=VALUE(SUBSTITUTE(A2,"$",""))</span></li>
+<li>Fill down, then select your clean column, Copy, then right-click the original and choose <strong>Paste Special, Values</strong>. Now delete the helper column.</li>
+</ol>
+<p><strong>How to tell a real number from text:</strong> numbers align right by default, text aligns left. If a column of numbers is left-aligned, Excel thinks it is text and SUM will return 0.</p>
+</div></details><details class="howto"><summary>How to write a VLOOKUP</summary><div class="howto-body">
+<p>The formula is <span class="kbd">=VLOOKUP(what you are looking up, where to look, which column to return, FALSE)</span></p>
+<ol>
+<li>Click the empty cell where you want the answer.</li>
+<li>Type <span class="kbd">=VLOOKUP(</span> then click the cell holding the value you are looking up, then a comma.</li>
+<li>Select the whole lookup table, including its header row, then press <span class="kbd">F4</span> (<span class="mac">Mac</span> <span class="kbd">fn+F4</span>) to lock it with dollar signs. Without this the range slides as you fill down and results go wrong.</li>
+<li>Type a comma, then the column number to return, counting from the left edge of your selection starting at 1.</li>
+<li>Type <span class="kbd">,FALSE)</span> and press Enter. FALSE means exact match, and you want exact match essentially always.</li>
+<li>Fill down by double-clicking the small square at the bottom-right of the cell.</li>
+</ol>
+<p><strong>#N/A</strong> means no match was found. Usually stray spaces: wrap the lookup value in <span class="kbd">TRIM()</span>. <strong>#REF!</strong> means your column number is larger than your selection.</p>
+</div></details>
 <table style="border-collapse:collapse;margin:1rem 0;font-family:var(--sans);font-size:.85rem">
 <tr style="background:var(--navy);color:#fff"><th style="padding:.4rem.8rem;text-align:left">supplier</th><th style="padding:.4rem.8rem">lead_time_days</th></tr>
 <tr><td style="padding:.35rem.8rem;border:1px solid var(--rule)">Olympic Down Works</td><td style="padding:.35rem.8rem;border:1px solid var(--rule);text-align:center">18</td></tr>
@@ -284,7 +338,17 @@ lead-time column to the data:</li>
 <div class="callout callout-caution"><strong>The self-test</strong>
 <p>A correctly cleaned RAW file is the clean file. Your final revenue total must match Lab 2's to
 the cent. If it doesn't, one of your six repairs went wrong, and finding which one is the real
-exercise.</p></div></div>
+exercise.</p></div>
+<div class="stuck"><strong>When you get stuck</strong>
+<p>Before raising your hand, try these in order. Most problems in this lab are one of them.</p>
+<ol>
+<li>Re-read the checkpoint question. Is it asking for a count, a total, or an average? Those are three different numbers.</li>
+<li>Check whether your number is plausible. If total revenue comes out as 12 or as 40 million, something is off by a lot and you can usually see where.</li>
+<li>Expand the grey "How to" box for that step. It has the exact clicks.</li>
+<li>Check the formula bar of the cell you think is wrong. Does it reference the range you meant?</li>
+<li>Use the hint button on the checkpoint. It is not a penalty, it is part of the lab.</li>
+<li>Ask a neighbour. Then raise your hand.</li>
+</ol></div></div>
 
 <h2 id="checkpoints"><span class="num">Required</span>Checkpoints <span style="font-weight:400;color:var(--muted);font-size:.65em">, complete as you work</span></h2>
 <p style="font-family:var(--sans);font-size:.95rem">Here is how this works. Each checkpoint matches a

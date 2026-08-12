@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lab 6 · Tableau: Seeing the Co-op | MIS 320</title>
+<title>Lab 6 · Tableau: From Worksheets to a Dashboard | MIS 320</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -176,6 +176,29 @@ li{margin-bottom:.45rem}
   .dd-btn{width:100%;font-size:13px;padding:.4rem .5rem}
   .dd-menu{right:auto;left:0;min-width:min(92vw,22rem)}
 }
+
+/* ---------- collapsible step-by-step help ---------- */
+.howto{margin:.7rem 0 1.1rem;border:1px solid var(--border);background:var(--off-white)}
+.howto>summary{cursor:pointer;padding:.6rem .9rem;font-family:var(--display);font-size:13px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--magenta-dark);list-style:none}
+.howto>summary::-webkit-details-marker{display:none}
+.howto>summary:before{content:"\25B8  ";font-size:11px}
+.howto[open]>summary:before{content:"\25BE  "}
+.howto>summary:hover{background:var(--magenta-pale)}
+.howto-body{padding:.3rem 1.1rem 1rem;border-top:1px solid var(--border);background:#fff}
+.howto-body ol{margin:.7rem 0;padding-left:1.3rem}
+.howto-body li{margin-bottom:.45rem;font-size:15px;line-height:1.5}
+.howto-body p{font-size:15px;margin:.6rem 0}
+.kbd{font-family:ui-monospace,Menlo,monospace;font-size:.85em;background:var(--off-white);
+  border:1px solid var(--border);border-radius:2px;padding:.1em .35em;white-space:nowrap}
+.mac{display:inline-block;font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;background:var(--black);color:#fff;padding:.1rem .4rem;margin-right:.35rem}
+.stuck{border:1px solid var(--border);border-left:4px solid var(--black);background:var(--off-white);
+  padding:1rem 1.2rem;margin:2rem 0 0}
+.stuck strong:first-child{display:block;font-family:var(--display);font-size:12.5px;font-weight:600;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--black);margin-bottom:.5rem}
+.stuck ol{margin:.5rem 0 0;padding-left:1.3rem}
+.stuck li{font-size:15px;margin-bottom:.35rem}
 .cp{border:1px solid var(--rule);background:var(--paper);border-radius:2px;margin:1rem 0;padding:1rem 1.15rem}.cp.locked{opacity:.45;pointer-events:none}.cp.done{border-left:4px solid var(--good);background:var(--good-pale)}.cp.q{font-family:var(--sans);font-size:.92rem;color:var(--navy);margin:0 0.6rem;font-weight:500}.cp input[type=text]{font-family:var(--sans);font-size:.9rem;padding:.45rem.6rem;border:1px solid var(--rule);border-radius:2px;width:14rem;max-width:100%}.cp button{font-family:var(--sans);font-size:.8rem;font-weight:600;letter-spacing:.04em;background:var(--accent-deep);color:#fff;border:none;border-radius:2px;padding:.5rem.9rem;cursor:pointer;margin-left:.4rem}.cp button.hintb{background:none;color:var(--accent-deep);border:1px solid var(--rule)}.cp.msg{font-family:var(--sans);font-size:.8rem;margin:.5rem 0 0}.cp.hint{font-family:var(--sans);font-size:.8rem;color:var(--muted);margin:.5rem 0 0;display:none;border-top:1px dashed var(--rule);padding-top:.5rem}.progress{position:sticky;top:0;z-index:5;background:var(--black);color:#fff;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:.6rem 1rem;margin:1.5rem 0}.certbox{border:2px solid var(--black);background:var(--paper);padding:1.2rem 1.3rem;margin:1.5rem 0;display:none}.certbox.show{display:block}.certbox h3{margin-top:0}.codebox code{font-family:ui-monospace,Menlo,monospace;background:var(--cream-deep);padding:.15em.45em;border-radius:2px}
 </style></head><body>
 <nav class="topnav">
@@ -201,9 +224,9 @@ li{margin-bottom:.45rem}
       <a href="lab1-genai.html"><span class="lbl">Lab 1 &middot; Week 1</span>GenAI for Thinking</a>
       <a href="lab2-excel-basics.html"><span class="lbl">Lab 2 &middot; Week 2</span>Excel Basics: Meeting the Client</a>
       <a href="lab3-excel-dataprep.html"><span class="lbl">Lab 3 &middot; Week 3</span>Data Preparation: The RAW File</a>
-      <a href="lab4-excel-dataviz.html"><span class="lbl">Lab 4 &middot; Week 4</span>Data Visualization</a>
+      <a href="lab4-excel-dataviz.html"><span class="lbl">Lab 4 &middot; Week 4</span>Data Visualization: Charts That Tell the Truth</a>
       <a href="lab5-excel-analysis.html"><span class="lbl">Lab 5 &middot; Week 5</span>Data Analysis &amp; Mini Project</a>
-      <a class="current" href="lab6-tableau.html"><span class="lbl">Lab 6 &middot; Week 6</span>Tableau: Seeing the Co-op</a>
+      <a class="current" href="lab6-tableau.html"><span class="lbl">Lab 6 &middot; Week 6</span>Tableau: Worksheets to a Dashboard</a>
       <a href="lab7-sql.html"><span class="lbl">Lab 7 &middot; Week 7</span>SQL Fundamentals</a>
       <div class="dd-sep"></div>
       <a class="soon" href="#"><span class="lbl">Labs 8&ndash;10</span>UX, AI/ML, Information Architecture (in progress)</a>
@@ -221,7 +244,6 @@ li{margin-bottom:.45rem}
   </div>
 </nav>
 
-
 <div class="shell">
 <aside class="rail">
   <p class="book">MIS 320</p><p class="course">Introduction to Information Systems</p>
@@ -236,38 +258,97 @@ li{margin-bottom:.45rem}
 <main id="top">
 <header class="chaphead">
   <p class="eyebrow">Lab 6 · Week 6</p>
-  <h1>Tableau: Seeing the Co-op</h1>
+  <h1>Tableau: From Worksheets to a Dashboard</h1>
   <div class="meta-row"><span>Lab session · 80 min</span><span class="alt"><a href="index.html" style="color:inherit;text-decoration:none">Pairs with Chapter 7 · BI &amp; Analytics (coming) &#8594;</a></span></div>
 </header>
-<p class="lede">Same client, new instrument. Everything you found in Excel is still true, but this week you'll watch a finding that took a careful pivot table become impossible to miss the
-  moment it's drawn. That difference is why analytics teams fight over dashboards.</p>
+<p class="lede">In Lab 4 you learned which chart answers which question and assembled one in
+  Excel. Tableau exists because that assembly should be faster, and because a real dashboard does
+  something an Excel sheet cannot: the pieces talk to each other. Click a region, and every chart
+  responds.</p>
   <p>Download <a href="cascadia-sales-2025.csv"><strong>cascadia-sales-2025.csv</strong></a> and connect
-  Tableau (or free <a href="https://public.tableau.com">Tableau Public</a>) to it.</p>
+  Tableau, or free <a href="https://public.tableau.com">Tableau Public</a>, to it.</p>
 <div class="callout callout-bridge"><strong>From lecture to lab</strong><p><strong>Lab professor's intro (10 min):</strong> Frame with Monday's Moneyball
-  discussion: the A's won by measuring what the league didn't. Today students point a new instrument, Tableau, at data they already know, and re-find last week's discovery visually, which lands the
-  argument for visualization better than any lecture could. Show connecting to a CSV on the projector
-  (Data Source pane, then one drag-and-drop), then release them. If desktop Tableau isn't installed,
-  Tableau Public is free and sufficient. Checkpoint 5's answer is deliberately counterintuitive: let
-  them be surprised.</p></div>
+  discussion: the A's won by measuring what the league was not measuring. Today students point a
+  different instrument at data they already know well. Two things are worth doing on the projector.
+  First, show the Data Source pane and one drag-and-drop so the interface stops being intimidating.
+  Second, show the difference between a worksheet and a dashboard, because that distinction is the whole
+  lab and Tableau's own vocabulary makes it confusing at first. Tableau Public is free and sufficient if
+  desktop licences are a problem. Checkpoints 5 and 6 have a deliberately surprising answer.</p></div>
 <div id="steps">
-<h2><span class="num">Skills</span>Connecting data, marks &amp; shelves, calculated fields, highlight tables</h2>
+<h2><span class="num">Part 1</span>Worksheets and dashboards are different things</h2>
+
+<p>Tableau's vocabulary trips up nearly everyone in the first hour, so get it straight before you build
+anything.</p>
+
+<p>A <strong>worksheet</strong> is one chart answering one question. Revenue by store. That is a
+worksheet. In Tableau you build worksheets one at a time, each on its own tab at the bottom of the
+window, and each one is a complete little argument by itself.</p>
+
+<p>A <strong>dashboard</strong> is an arrangement of finished worksheets on one screen, plus the
+connections between them. This is the part that matters and the part people skip: on a real dashboard,
+a filter can apply to every chart at once, and clicking a bar in one chart can filter all the others.
+The charts stop being pictures sitting next to each other and start behaving like one instrument.</p>
+
+<p>Hold onto the definition from Lab 4, because it still governs: a dashboard is a single screen that
+answers a specific person's recurring questions about the current state of something, without them
+having to ask anyone. Tableau gives you better tools for building one. It does not decide for you who
+the person is or what they need to know, and no software ever will.</p>
+
+<div class="callout"><strong>Chart choice did not change</strong>
+<p>Tableau has a Show Me panel that offers you every chart type it can draw with your fields, and it is
+a trap if you let it choose for you. The logic from Lab 4 still applies. Comparing across categories is
+a bar chart. Change over time is a line. A relationship between two numbers is a scatter. Show Me tells
+you what is possible, not what is right.</p></div>
+
+<h2><span class="num">Part 2</span>Build five worksheets</h2>
+
 <ol>
-<li><strong>Get connected, then look before you build.</strong> Open the CSV as a data source; check the row count and that
-Tableau typed revenue as a number and sale_date as a date.</li>
-<li><strong>Make your first chart fast.</strong> Revenue by store as sorted bars. Then swap store for
-category, then for product: feel how fast iteration is compared to rebuilding a pivot.</li>
-<li><strong>Calculated fields.</strong> Build margin_rate and format it as a percent. This is the
-Moneyball move: a ratio the raw data doesn't contain, made first-class.</li>
-<li><strong>Highlight table.</strong> Store by month, colored by revenue. The co-op's year on one
-screen. Find the surprises: the best single cell is not in the best month.</li>
-<li><strong>The re-discovery.</strong> Build attach rate by store and watch last week's investigation
-become a single picture. Screenshot this one. It goes in your submission.</li>
+<li><strong>Connect and check.</strong> Open the CSV as a data source. Confirm the row count, and that
+Tableau read revenue as a number and sale_date as a date rather than text. Fixing types here is much
+easier than fixing them after you have built six charts on top of them.</li>
+<li><strong>Sorted bar: revenue by store.</strong> Store to Rows, revenue to Columns, sort descending
+with the toolbar button. Notice how much faster this is than the Excel version.</li>
+<li><strong>Line: revenue by month.</strong> Drag sale_date to Columns and set it to Month. Watch the
+shape of the year.</li>
+<li><strong>Calculated field: margin rate by category.</strong> Analysis, then Create Calculated Field.
+This is the Moneyball move, building a ratio the raw data does not contain and making it something you
+can chart.</li>
+<li><strong>Highlight table: store by month.</strong> Store in Rows, month in Columns, revenue on
+Color. The co-op's whole year on one screen. Click cells rather than judging colour by eye, because
+colour is genuinely hard to read precisely and that is a limitation worth knowing about the chart type
+you just chose.</li>
+<li><strong>Attach rate by store.</strong> The view Cascadia never built. You know what you found in
+Lab 5; watch what happens when it is drawn instead of tabulated.</li>
 </ol>
-<div class="callout"><strong>Undervalued gear</strong>
-<p>Before you leave: put revenue on one axis and margin_rate on the other, by category. The A's looked
-for players the market underpriced; a merchant looks for categories earning a high rate on low volume.
-Which category would you tell Cascadia to promote harder? No checkpoint for this: your pick and one
-sentence of reasoning go in the submission note, and there is more than one defensible answer.</p></div></div>
+
+<h2><span class="num">Part 3</span>Assemble the dashboard</h2>
+
+<ol>
+<li><strong>New dashboard.</strong> The dashboard tab is at the bottom of the window, next to your
+worksheet tabs. Set a size that matches how it will be viewed rather than leaving it automatic.</li>
+<li><strong>Drag your worksheets in.</strong> Put the chart answering the most important question in the
+top left. Everything you learned about arrangement in Lab 4 applies here.</li>
+<li><strong>Add a filter and apply it everywhere.</strong> This is the step that makes it a dashboard
+rather than a poster. Add region as a filter, then set it to apply to all worksheets using this data
+source. Now changing one dropdown changes every chart at once.</li>
+<li><strong>Add a dashboard action.</strong> Dashboard menu, then Actions, then Add Action, then Filter.
+Set it so clicking a store in your bar chart filters the other charts to that store. Click Seattle
+Flagship and watch the rest of the screen answer a new question. Nothing in Excel does this.</li>
+<li><strong>Title it with the finding.</strong> Not "Cascadia Dashboard." Something a manager could act
+on.</li>
+</ol>
+
+<div class="callout callout-caution"><strong>The honest question, again</strong>
+<p>Your dashboard is built mostly on revenue, and revenue at this co-op looks fine. In Lab 5 you found
+something that revenue never showed you. Look at your finished screen and ask what else it would fail to
+reveal. Every dashboard has a blind spot, and the professional skill is not building one without blind
+spots, which is impossible. It is knowing where yours are and saying so out loud.</p></div>
+
+<div class="callout"><strong>If you finish early</strong>
+<p>Put revenue on one axis and margin rate on the other, by category, as a scatter. The A's looked for
+players the market underpriced. A merchant looks for categories earning a high rate on modest volume.
+Which category would you tell Cascadia to promote harder? There is no checkpoint for this and more than
+one defensible answer; your pick and one sentence of reasoning go in the submission note.</p></div></div>
 
 <h2 id="checkpoints"><span class="num">Required</span>Checkpoints <span style="font-weight:400;color:var(--muted);font-size:.65em">, complete as you work</span></h2>
 <p style="font-family:var(--sans);font-size:.95rem">Here is how this works. Each checkpoint matches a
@@ -277,11 +358,11 @@ you get stuck. That is what it is there for.</p>
 <p style="font-family:var(--sans);font-size:.95rem">Once you have cleared them all, write your reflection
 and download your certificate for Canvas. One warning worth taking seriously: <strong>your progress lives
 only on this page.</strong> Close the tab or refresh before you download, and you start over.</p>
-<div class="progress" id="prog">Checkpoint progress: 0 / 7</div>
+<div class="progress" id="prog">Checkpoint progress: 0 / 8</div>
 <div id="cps"></div>
 <div class="certbox" id="reflectbox">
   <h3>One last thing before your certificate</h3>
-  <p style="font-family:var(--sans);font-size:.88rem">Tableau showed you in one glance what took a careful pivot table to find last week. In the field you plan to enter, describe one decision that is currently made from tables of numbers but should be made from a picture, and one risk of letting a beautiful chart substitute for checking the underlying data.</p>
+  <p style="font-family:var(--sans);font-size:.88rem">You built a dashboard that shows revenue, and revenue at this co-op looks healthy. In the field you plan to enter, name one dashboard you have seen or can imagine that would show green while something serious was going wrong underneath. What single chart would you add to catch it?</p>
   <p style="font-family:var(--sans);font-size:.88rem;color:var(--muted)">Fifty words is the minimum, but
   do not write to the counter. This prints as page 2 of your certificate, so it is the part your lab
   professor actually reads. Answer it like someone asked you the question out loud.</p>
@@ -299,7 +380,7 @@ only on this page.</strong> Close the tab or refresh before you download, and yo
 </div>
 
 <h2 id="submit"><span class="num">Canvas</span>What to submit</h2>
-<p style="font-family:var(--sans);font-size:.92rem">A PDF or image export of your attach-rate chart and your highlight table, your undervalued-gear pick with one sentence of reasoning, plus your completion certificate PDF (your reflection is page 2 of it).</p>
+<p style="font-family:var(--sans);font-size:.92rem">Your packaged workbook (.twbx) or a PDF export of the dashboard showing the region filter applied, your undervalued-category pick with one sentence of reasoning, plus your completion certificate PDF (your reflection is page 2 of it).</p>
 </main></div>
 <script>
 (function(){var b=document.querySelector('.railtoggle'),n=document.getElementById('chapnav');
@@ -309,7 +390,7 @@ b.setAttribute('aria-expanded',o?'true':'false');});})();
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-const LAB="LAB6", QS=[{"q": "Checkpoint 1 \u00b7 Connect Tableau to cascadia-sales-2025.csv. How many rows does the data source show?", "t": "num", "a": "Mjg5OQ==", "tol": 0, "h": "Data Source tab, bottom-left corner after the connection loads."}, {"q": "Checkpoint 2 \u00b7 Bar chart of revenue by store, sorted descending. Which store is SECOND?", "t": "txt", "a": "UG9ydGxhbmQgUGVhcmw=", "h": "Drag store to Rows, revenue to Columns, sort with the toolbar button. Seattle Flagship is first: who's next?"}, {"q": "Checkpoint 3 \u00b7 Create a calculated field: margin_rate = SUM([gross_margin]) / SUM([revenue]). Which category has the HIGHEST margin rate?", "t": "txt", "a": "QXBwYXJlbA==", "h": "Analysis \u2192 Create Calculated Field. Then category to Rows, your new field to Columns, format as percent."}, {"q": "Checkpoint 4 \u00b7 That category's margin rate, as a percent to one decimal?", "t": "num", "a": "NTkuOQ==", "tol": 0.1, "h": "Hover the bar, or add the field to Label."}, {"q": "Checkpoint 5 \u00b7 Highlight table: store in Rows, month of sale_date in Columns, revenue in Color. Which single store-month cell is the darkest (highest) of the whole year? Answer as 'store month'.", "t": "txt", "a": "U2VhdHRsZSBGbGFnc2hpcCBTZXB0ZW1iZXI=", "h": "Click the cell. The tooltip settles arguments. And notice it is NOT January, even though January is the co-op's best month overall."}, {"q": "Checkpoint 6 \u00b7 Now build the view Cascadia never built: store in Rows, and the PERCENT of each store's sales that are member-attached (is_member = 'Y'). You found this in a pivot in Lab 5, which store does the chart make impossible to miss?", "t": "txt", "a": "QmVsbGluZ2hhbQ==", "h": "COUNT(IF [is_member]='Y' THEN 1 END) / COUNT([sale_id]), formatted as percent. Notice how much faster the eye catches it than the pivot did. That is the argument for visualization."}, {"q": "Checkpoint 7 \u00b7 Read that store's rate off your chart, as a percent to one decimal.", "t": "num", "a": "NTEuNg==", "tol": 0.2, "h": "Label or tooltip. Same number as Lab 5 (same data, new instrument."}];
+const LAB="LAB6", QS=[{"q": "Checkpoint 1 \u00b7 Connect Tableau to cascadia-sales-2025.csv. How many rows does the data source show?", "t": "num", "a": "Mjg5OQ==", "tol": 0, "h": "Data Source tab, bottom left, after the connection loads."}, {"q": "Checkpoint 2 \u00b7 Worksheet 1. Revenue by store as a sorted bar chart. Which store is SECOND?", "t": "txt", "a": "UG9ydGxhbmQgUGVhcmw=", "h": "Store to Rows, revenue to Columns, then the sort button in the toolbar. Same chart-type logic as Lab 4: comparing a number across separate named places is a bar chart."}, {"q": "Checkpoint 3 \u00b7 Worksheet 2. Revenue by month as a line chart. Which month is highest?", "t": "txt", "a": "SmFudWFyeQ==", "h": "Drag sale_date to Columns and set it to Month. Time on the horizontal axis, connected points, because these values are one continuous story."}, {"q": "Checkpoint 4 \u00b7 Worksheet 3. Create a calculated field: margin_rate = SUM([gross_margin]) / SUM([revenue]). Which category has the highest margin rate?", "t": "txt", "a": "QXBwYXJlbA==", "h": "Analysis menu, then Create Calculated Field. Category to Rows, your new field to Columns, format as a percentage."}, {"q": "Checkpoint 5 \u00b7 Worksheet 4. Build a highlight table: store in Rows, month in Columns, revenue on Color. Click the single darkest cell and read its value off the tooltip. What is it, to the nearest dollar?", "t": "num", "a": "MTczMzg=", "tol": 3, "h": "Colour alone is hard to judge, which is why you click to confirm rather than squinting. The answer is a store-month you might not expect, and it is not January."}, {"q": "Checkpoint 6 \u00b7 Which store and month is that darkest cell? Answer as 'Store Month'.", "t": "txt", "a": "U2VhdHRsZSBGbGFnc2hpcCBTZXB0ZW1iZXI=", "h": "The tooltip tells you both. Note that the co-op's best month overall is January, but its single best store-month is not, which is the kind of thing a highlight table shows and a bar chart cannot."}, {"q": "Checkpoint 7 \u00b7 Worksheet 5, the view Cascadia never built. Store in Rows, and the PERCENT of each store's sales that are member-attached (is_member = 'Y') in Columns. You found this in a pivot table in Lab 5. Which store does the chart make impossible to miss?", "t": "txt", "a": "QmVsbGluZ2hhbQ==", "h": "COUNT(IF [is_member]='Y' THEN 1 END) / COUNT([sale_id]), formatted as a percentage. Watch how much faster your eye catches it here than the pivot table did."}, {"q": "Checkpoint 8 \u00b7 Assemble your five worksheets into a Dashboard, then add region as a filter and apply it to all sheets. Filter to Puget Sound only. What total revenue does your dashboard now show, to the nearest dollar?", "t": "num", "a": "MzE5NjI4", "tol": 5, "h": "Dashboard tab at the bottom, drag your sheets in, then use the filter dropdown and choose Apply to Worksheets, All Using This Data Source. If only one chart changes, the filter is not applied across the dashboard yet."}];
 const solved=new Set();
 const norm=s=>s.replace(/[$,\s]/g,'').toLowerCase();
 function render(){
@@ -365,7 +446,7 @@ function cert(){
  p.setFont('times','normal');p.setFontSize(13);
  p.text('completed all '+QS.length+' checkpoints of',280,198,{align:'center'});
  p.setFont('helvetica','bold');p.setFontSize(15);p.setTextColor(26,82,118);
- p.text('Lab 6 \u00B7 Tableau: Seeing the Co-op',280,222,{align:'center'});
+ p.text('Lab 6 \u00B7 Tableau: From Worksheets to a Dashboard',280,222,{align:'center'});
  p.setFont('helvetica','normal');p.setFontSize(11);p.setTextColor(90,90,90);
  p.text(d,280,252,{align:'center'});
  p.setFont('courier','bold');p.setFontSize(12);p.setTextColor(17,120,100);
@@ -378,7 +459,7 @@ function cert(){
  p.setTextColor(26,82,118);p.setFont('helvetica','bold');p.setFontSize(10);
  p.text('LAB REFLECTION \u00B7 '+n+' \u00B7 '+code,280,44,{align:'center'});
  p.setTextColor(60,60,60);p.setFont('times','italic');p.setFontSize(9);
- const promptLines=p.splitTextToSize('Prompt: Tableau showed you in one glance what took a careful pivot table to find last week. In the field you plan to enter, describe one decision that is currently made from tables of numbers but should be made from a picture, and one risk of letting a beautiful chart substitute for checking the underlying data.',480);
+ const promptLines=p.splitTextToSize('Prompt: You built a dashboard that shows revenue, and revenue at this co-op looks healthy. In the field you plan to enter, name one dashboard you have seen or can imagine that would show green while something serious was going wrong underneath. What single chart would you add to catch it?',480);
  p.text(promptLines,40,70);
  p.setFont('times','normal');p.setFontSize(11);p.setTextColor(26,26,26);
  const lines=p.splitTextToSize(r,480);

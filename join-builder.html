@@ -1,7 +1,10 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8">
+<html lang="en">
+<head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lab 2 · Excel Basics: Meeting the Client | MIS 320</title>
+<title>Join Builder | MIS 320</title>
+<meta name="description" content="Draw arrows between Cascadia's tables and watch the JOIN happen against the live database.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -199,8 +202,52 @@ li{margin-bottom:.45rem}
   letter-spacing:.2em;text-transform:uppercase;color:var(--black);margin-bottom:.5rem}
 .stuck ol{margin:.5rem 0 0;padding-left:1.3rem}
 .stuck li{font-size:15px;margin-bottom:.35rem}
-.cp{border:1px solid var(--rule);background:var(--paper);border-radius:2px;margin:1rem 0;padding:1rem 1.15rem}.cp.locked{opacity:.45;pointer-events:none}.cp.done{border-left:4px solid var(--good);background:var(--good-pale)}.cp.q{font-family:var(--sans);font-size:.92rem;color:var(--navy);margin:0 0.6rem;font-weight:500}.cp input[type=text]{font-family:var(--sans);font-size:.9rem;padding:.45rem.6rem;border:1px solid var(--rule);border-radius:2px;width:14rem;max-width:100%}.cp button{font-family:var(--sans);font-size:.8rem;font-weight:600;letter-spacing:.04em;background:var(--accent-deep);color:#fff;border:none;border-radius:2px;padding:.5rem.9rem;cursor:pointer;margin-left:.4rem}.cp button.hintb{background:none;color:var(--accent-deep);border:1px solid var(--rule)}.cp.msg{font-family:var(--sans);font-size:.8rem;margin:.5rem 0 0}.cp.hint{font-family:var(--sans);font-size:.8rem;color:var(--muted);margin:.5rem 0 0;display:none;border-top:1px dashed var(--rule);padding-top:.5rem}.progress{position:sticky;top:0;z-index:5;background:var(--black);color:#fff;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:.6rem 1rem;margin:1.5rem 0}.certbox{border:2px solid var(--black);background:var(--paper);padding:1.2rem 1.3rem;margin:1.5rem 0;display:none}.certbox.show{display:block}.certbox h3{margin-top:0}.codebox code{font-family:ui-monospace,Menlo,monospace;background:var(--cream-deep);padding:.15em.45em;border-radius:2px}
-</style></head><body>
+
+/* ---------- join builder ---------- */
+.jbwrap{max-width:72rem;margin:0 auto;padding:2.5rem 1.5rem 6rem}
+.jb-intro{max-width:46rem}
+#board{position:relative;border:1px solid var(--border);background:
+  repeating-linear-gradient(0deg,transparent,transparent 23px,#f3f1ee 23px,#f3f1ee 24px),
+  repeating-linear-gradient(90deg,transparent,transparent 23px,#f3f1ee 23px,#f3f1ee 24px),#fff;
+  margin:1.6rem 0;padding:1.5rem;display:flex;flex-wrap:wrap;gap:2.2rem 3rem;align-items:flex-start;min-height:24rem}
+#wires{position:absolute;inset:0;pointer-events:none;z-index:5}
+.tbl{background:#fff;border:1px solid var(--border);box-shadow:0 2px 12px rgba(0,0,0,.08);min-width:13rem;z-index:2}
+.tbl-head{font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  background:var(--black);color:#fff;padding:.5rem .85rem}
+.col{display:flex;align-items:center;gap:.45rem;padding:.42rem .85rem;font-family:var(--sans);font-size:14px;
+  border-top:1px solid var(--border);cursor:pointer;user-select:none}
+.col:hover{background:var(--magenta-pale)}
+.col.armed{background:var(--magenta);color:#fff}
+.col.joined{background:var(--good-pale)}
+.col .key{font-size:11px;color:var(--magenta-dark)}
+.col.armed .key{color:#fff}
+.col .typ{margin-left:auto;font-size:11px;color:var(--text-light)}
+.col.armed .typ{color:rgba(255,255,255,.8)}
+#msg{font-family:var(--sans);font-size:15px;min-height:1.6em;margin:.4rem 0 0}
+#msg.good{color:var(--good)} #msg.bad{color:var(--warn)}
+.jb-panel{border:1px solid var(--border);margin:1.4rem 0}
+.jb-panel-head{display:flex;justify-content:space-between;align-items:center;gap:1rem;
+  font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  background:var(--off-white);border-bottom:1px solid var(--border);padding:.55rem .9rem;color:var(--text-muted)}
+#sqlout{font-family:ui-monospace,Menlo,monospace;font-size:.92rem;line-height:1.55;padding:1rem 1.1rem;
+  white-space:pre;overflow-x:auto;background:#fff;margin:0}
+#sqlout .kw{color:var(--magenta-dark);font-weight:600}
+#rows{overflow-x:auto;padding: .6rem .9rem 1rem;background:#fff}
+#rows table{border-collapse:collapse;font-family:var(--sans);font-size:13.5px}
+#rows th{border:1px solid var(--border);background:var(--off-white);padding:.35rem .6rem;text-align:left;white-space:nowrap}
+#rows td{border:1px solid var(--border);padding:.35rem .6rem;white-space:nowrap}
+.jb-btn{font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  background:var(--magenta);color:#fff;border:none;padding:.45rem .95rem;cursor:pointer}
+.jb-btn.ghost{background:none;color:var(--text-muted);border:1px solid var(--border)}
+.jb-btn.ghost:hover{color:var(--magenta-dark);border-color:var(--magenta)}
+.challenges{border:1px solid var(--border);border-left:4px solid var(--magenta);background:var(--off-white);padding:1rem 1.2rem;margin:1.8rem 0}
+.challenges strong:first-child{display:block;font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--magenta);margin-bottom:.5rem}
+.challenges li{font-size:15px;margin-bottom:.4rem}
+.challenges li.done{color:var(--good);text-decoration:line-through}
+@media(max-width:760px){#board{gap:1.4rem}}
+</style>
+</head>
+<body>
 <nav class="topnav">
   <div class="topnav-in">
     <a class="topnav-brand" href="index.html">MIS 320 &middot; Intro to Information Systems</a>
@@ -222,7 +269,7 @@ li{margin-bottom:.45rem}
       <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddl">Labs<span class="caret">&#9660;</span></button>
       <div class="dd-menu" id="ddl">
       <a href="lab1-genai.html"><span class="lbl">Lab 1 &middot; Week 1</span>GenAI for Thinking</a>
-      <a class="current" href="lab2-excel-basics.html"><span class="lbl">Lab 2 &middot; Week 2</span>Excel Basics: Meeting the Client</a>
+      <a href="lab2-excel-basics.html"><span class="lbl">Lab 2 &middot; Week 2</span>Excel Basics: Meeting the Client</a>
       <a href="lab3-excel-dataprep.html"><span class="lbl">Lab 3 &middot; Week 3</span>Data Preparation: The RAW File</a>
       <a href="lab4-excel-dataviz.html"><span class="lbl">Lab 4 &middot; Week 4</span>Data Visualization: Charts That Tell the Truth</a>
       <a href="lab5-excel-analysis.html"><span class="lbl">Lab 5 &middot; Week 5</span>Data Analysis &amp; Mini Project</a>
@@ -244,198 +291,231 @@ li{margin-bottom:.45rem}
   </div>
 </nav>
 
-<div class="shell">
-<aside class="rail">
-  <p class="book">MIS 320</p><p class="course">Introduction to Information Systems</p>
-  <button class="railtoggle" aria-expanded="false" aria-controls="chapnav">Lab contents</button>
-  <nav id="chapnav">
-    <a href="#top">Overview</a><a href="#steps">The work</a>
-    <a href="#checkpoints">Checkpoints</a><a href="#submit">What to submit</a>
-    <a href="chapter1-starbucks.html">↳ Chapter 1 · The Value of Information</a>
-  </nav>
-  <a class="back" href="index.html">← All chapters &amp; labs</a>
-</aside>
-<main id="top">
+
+<main class="jbwrap">
+
 <header class="chaphead">
-  <p class="eyebrow">Lab 2 · Week 2</p>
-  <h1>Excel Basics: Meeting the Client</h1>
-  <div class="meta-row"><span>Lab session · 80 min</span><span class="alt"><a href="chapter1-starbucks.html" style="color:inherit;text-decoration:none">Pairs with Chapter 1 · The Value of Information &#8594;</a></span></div>
+  <p class="eyebrow">MIS 320 · Interactive</p>
+  <h1>Join Builder</h1>
+  <p class="anchor">Draw the connection between two tables and watch the JOIN run against the real database.</p>
 </header>
-<p class="lede">Meet your client. Cascadia Outfitters is a member-owned gear co-op with eight stores
-  from Boise to Bellingham, 35 products, and a business model that lives or dies on its members. For the
-  next month, you are their analyst.</p>
-  <p>Today is the gentle one, and that is deliberate. Before you can find anything interesting in a
-  company's data, you have to know what is actually in it. Every analyst you will ever work with starts
-  a new engagement exactly this way.</p>
-  <p>Download <a href="cascadia-sales-2025.xlsx"><strong>cascadia-sales-2025.xlsx</strong></a>, and read
-  the Read Me tab before you touch anything else. I know that sounds like routine advice. Analysts who
-  skip the data dictionary are the ones who confidently present the wrong number.</p>
-<div class="callout callout-bridge"><strong>From lecture to lab</strong><p><strong>Lab professor's intro (10 min):</strong> Introduce the client: Cascadia
-  Outfitters, a member-owned outdoor co-op with eight PNW stores, whose 2025 sales data the class
-  will work in Excel, Tableau, and SQL all quarter. Show the workbook's Read Me tab on the projector
-  and define <em>member attach</em>, a sale linked to a member number, because the co-op's dividend
-  and demand planning both depend on it. Then let them work. This lab is deliberately gentle;
-  DataCamp's Introduction to Excel is its companion. Do not preview later labs' findings.</p></div>
-<div id="steps">
-<h2><span class="num">Skills</span>Navigation, SUM, AVERAGE, sort, filter, SUMIF</h2>
-<ol>
-<li><strong>Get oriented first.</strong> Press Ctrl+End (Cmd+Fn+Right on a Mac) to jump to the far
-corner of the data. Now you know how big the dataset is. Scroll around a bit. I have already frozen the
-header row for you, so watch what that does as you go down.</li>
-<li><strong>Get your totals.</strong> Find some empty space to the right of the data and build
-yourself a scratch area. Total revenue, total units, average revenue per line, using SUM and
-AVERAGE. Keep these visible, because you will be checking later work against them.</li>
-<li><strong>Poke around.</strong> Sort by revenue, highest first. What is the single biggest sale of
-the year, and does it surprise you? Then filter down to whichever store you like best and read a
-week of its sales. Building familiarity with a dataset is part of the analysis, not a delay before it.</li>
-<details class="howto"><summary>How to make a pivot table</summary><div class="howto-body">
-<ol>
-<li>Click any single cell inside the data.</li>
-<li><strong>Insert</strong> tab, then <strong>PivotTable</strong>. <span class="mac">Mac</span> same menu, but the button may read <strong>Summarize with PivotTable</strong>.</li>
-<li>Excel guesses the data range. Check that it covers all the rows, then choose <strong>New Worksheet</strong> and click OK.</li>
-<li>A panel appears on the right with your column names. Drag a field into <strong>Rows</strong> to group by it, and drag a number into <strong>Values</strong> to total it.</li>
-<li>If Values shows a count instead of a sum, click it, choose <strong>Value Field Settings</strong>, and pick <strong>Sum</strong>. This catches almost everyone once.</li>
-</ol>
-<p><strong>If your pivot is empty:</strong> you probably selected a single cell outside the data before inserting. Undo and click inside the table first.</p>
-</div></details>
-<li><strong>Now make Excel answer a question.</strong> SUMIF revenue by store name. COUNTIF rows where
-<code class="inline">is_member</code> is "N": you'll meet that number again later in the course.</li>
-</ol>
-<div class="callout"><strong>Why a co-op cares about attach</strong>
-<p>Every sale without a member number is a customer the co-op cannot send a dividend to, cannot
-survey, and cannot see in its demand planning. Keep that in the back of your mind. Just the back,
-for now.</p></div>
-<div class="stuck"><strong>When you get stuck</strong>
-<p>Before raising your hand, try these in order. Most problems in this lab are one of them.</p>
-<ol>
-<li>Re-read the checkpoint question. Is it asking for a count, a total, or an average? Those are three different numbers.</li>
-<li>Check whether your number is plausible. If total revenue comes out as 12 or as 40 million, something is off by a lot and you can usually see where.</li>
-<li>Expand the grey "How to" box for that step. It has the exact clicks.</li>
-<li>Check the formula bar of the cell you think is wrong. Does it reference the range you meant?</li>
-<li>Use the hint button on the checkpoint. It is not a penalty, it is part of the lab.</li>
-<li>Ask a neighbour. Then raise your hand.</li>
-</ol></div></div>
 
-<h2 id="checkpoints"><span class="num">Required</span>Checkpoints <span style="font-weight:400;color:var(--muted);font-size:.65em">, complete as you work</span></h2>
-<p style="font-family:var(--sans);font-size:.95rem">Here is how this works. Each checkpoint matches a
-step above. You do the actual work in your own file, then paste the answer here. Get it right and the
-next question opens up. There is no penalty for a wrong answer, so guess, check, and lean on the hint if
-you get stuck. That is what it is there for.</p>
-<p style="font-family:var(--sans);font-size:.95rem">Once you have cleared them all, write your reflection
-and download your certificate for Canvas. One warning worth taking seriously: <strong>your progress lives
-only on this page.</strong> Close the tab or refresh before you download, and you start over.</p>
-<div class="progress" id="prog">Checkpoint progress: 0 / 6</div>
-<div id="cps"></div>
-<div class="certbox" id="reflectbox">
-  <h3>One last thing before your certificate</h3>
-  <p style="font-family:var(--sans);font-size:.88rem">Cascadia's leaders could not answer basic questions about their own business until someone computed these totals. In the field you plan to enter, what is one number that leadership probably cannot state off the top of their head but should be able to, and what decision would knowing it change?</p>
-  <p style="font-family:var(--sans);font-size:.88rem;color:var(--muted)">Fifty words is the minimum, but
-  do not write to the counter. This prints as page 2 of your certificate, so it is the part your lab
-  professor actually reads. Answer it like someone asked you the question out loud.</p>
-  <textarea id="refl" rows="6" style="width:100%;font-family:var(--sans);font-size:.9rem;padding:.6rem;border:1px solid var(--rule);border-radius:2px" aria-label="Lab reflection"></textarea>
-  <p class="msg" id="reflcount" style="font-family:var(--sans);font-size:.8rem;color:var(--muted)">0 words</p>
-</div>
-<div class="certbox" id="certbox">
-  <h3>All checkpoints cleared</h3>
-  <p style="font-family:var(--sans);font-size:.95rem">Put your name in exactly as it appears in Canvas,
-  then download your certificate. The code on it is generated from your name, so it is yours and nobody
-  else's.</p>
-  <input type="text" id="nm" placeholder="Last, First" aria-label="Your name as in Canvas">
-  <button onclick="cert()">Download certificate (PDF)</button>
-  <p class="codebox" id="codeout" style="font-family:var(--sans);font-size:.85rem"></p>
+<div class="jb-intro">
+<p class="lede">Cascadia's data lives in separate tables that point at each other with keys. A JOIN
+follows the pointer. Click a key column in one table, then the matching key column in another, and the
+arrow you draw becomes real SQL, run live against the co-op's database.</p>
+<p id="dbstatus" style="font-family:var(--sans);font-size:14px;color:var(--text-light)">Loading database&hellip;</p>
 </div>
 
-<h2 id="submit"><span class="num">Canvas</span>What to submit</h2>
-<p style="font-family:var(--sans);font-size:.92rem">Your workbook saved as LAB2_Last_First.xlsx with your scratch calculations visible, plus your completion certificate PDF (your reflection is page 2 of it).</p>
-</main></div>
-<script>
-(function(){var b=document.querySelector('.railtoggle'),n=document.getElementById('chapnav');
-if(!b||!n)return;b.addEventListener('click',function(){var o=n.classList.toggle('open');
-b.setAttribute('aria-expanded',o?'true':'false');});})();
-</script>
+<div id="board">
+  <svg id="wires"></svg>
+  <!-- tables injected by script -->
+</div>
+<p id="msg"></p>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<div class="jb-panel">
+  <div class="jb-panel-head"><span>The SQL your arrows wrote</span>
+    <span><button class="jb-btn ghost" onclick="undoJoin()">Undo last</button>
+    <button class="jb-btn ghost" onclick="resetJoins()">Start over</button></span></div>
+  <pre id="sqlout">Click a key column to begin.</pre>
+</div>
+
+<div class="jb-panel">
+  <div class="jb-panel-head"><span>Live result, first 8 rows</span><span id="rowcount"></span></div>
+  <div id="rows"><p style="font-family:var(--sans);font-size:14px;color:var(--text-light);padding:.4rem 0">No join yet.</p></div>
+</div>
+
+<div class="challenges">
+<strong>Try these</strong>
+<ol id="chlist">
+  <li data-ch="stores">Connect sales to stores. Which columns hold the same identifiers?</li>
+  <li data-ch="products">Add products, so every sale shows what was sold.</li>
+  <li data-ch="suppliers">Reach suppliers. Notice you cannot get there from sales directly; the path runs through products.</li>
+  <li data-ch="members">Connect members, then look at the member_name column in the result. Some rows show NULL. You know which store those cluster at.</li>
+</ol>
+</div>
+
+<div class="callout">
+<strong>What the arrow means</strong>
+<p>Every arrow you draw connects a <strong>foreign key</strong>, a column holding pointers, to the
+<strong>primary key</strong> it points at, the column that uniquely identifies each row of the other
+table. That pairing is the entire idea of a relational database, and it is why the sales table can stay
+small and clean: names, regions, and prices live once, in their own tables, and JOINs bring them
+together when a question needs them. In Lab 7 you write these same JOINs by hand.</p>
+</div>
+
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
 <script>
-const LAB="LAB2", QS=[{"q": "Checkpoint 1 \u00b7 How many rows of sales data are in the Sales2025 sheet? (Count data rows, not the header.)", "t": "num", "a": "Mjg5OQ==", "tol": 0, "h": "Click any cell in the data, press Ctrl+End, and read the row number, then subtract 1 for the header."}, {"q": "Checkpoint 2 \u00b7 Use SUM on the revenue column. Total revenue for 2025, in dollars?", "t": "num", "a": "NzEyOTcxLjU=", "tol": 1, "h": "=SUM(K:K) if revenue is column K. Enter the number with or without cents."}, {"q": "Checkpoint 3 \u00b7 Use SUM on quantity. How many total units did the co-op sell?", "t": "num", "a": "NDI0Ng==", "tol": 0, "h": "Same idea as Checkpoint 2, different column."}, {"q": "Checkpoint 4 \u00b7 Use AVERAGE on revenue. Average revenue per line, to the cent?", "t": "num", "a": "MjQ1Ljk0", "tol": 0.05, "h": "=AVERAGE(revenue column). Give two decimals."}, {"q": "Checkpoint 5 \u00b7 Sort or filter by store. Which store produced the most revenue in 2025?", "t": "txt", "a": "U2VhdHRsZSBGbGFnc2hpcA==", "h": "Sort descending on revenue won't answer this alone. You need revenue BY store. A quick way: select the data, Insert \u2192 PivotTable, or just sort by store and eyeball the SUBTOTALs. The answer is a store name."}, {"q": "Checkpoint 6 \u00b7 Use SUMIF: revenue for the Seattle Flagship store only?", "t": "num", "a": "MTQ4NDcxLjc1", "tol": 1, "h": "=SUMIF(store_column,\"Seattle Flagship\",revenue_column)"}];
-const solved=new Set();
-const norm=s=>s.replace(/[$,\s]/g,'').toLowerCase();
-function render(){
- const c=document.getElementById('cps');c.innerHTML='';
- QS.forEach((q,i)=>{
-  const d=document.createElement('div');
-  d.className='cp'+(solved.has(i)?' done':(i>0&&!solved.has(i-1)?' locked':''));
-  d.innerHTML='<p class="q">'+q.q+'</p>'
-   +(solved.has(i)?'<p class="msg" style="color:var(--good)">Correct.</p>':'<input type="text" id="in'+i+'" aria-label="Answer '+(i+1)+'">'
-   +'<button onclick="chk('+i+')">Check</button>'
-   +'<button class="hintb" onclick="hint('+i+')">Hint</button>'
-   +'<p class="msg" id="m'+i+'"></p><p class="hint" id="h'+i+'">'+q.h+'</p>');
-  c.appendChild(d);});
- document.getElementById('prog').textContent='Checkpoint progress: '+solved.size+' / '+QS.length;
- const done=solved.size===QS.length;
- document.getElementById('reflectbox').className='certbox'+(done?' show':'');
- document.getElementById('certbox').className='certbox'+(done&&wc()>=50?' show':'');
-}
-function wc(){const t=document.getElementById('refl');return t?t.value.trim().split(/\s+/).filter(Boolean).length:0}
-document.addEventListener('input',function(e){
- if(e.target&&e.target.id==='refl'){
-  const n=wc();document.getElementById('reflcount').textContent=n+' words'+(n<50?': '+(50-n)+' more to unlock your certificate':': certificate unlocked below');
-  document.getElementById('certbox').className='certbox'+(solved.size===QS.length&&n>=50?' show':'');
- }
+// ---------------- schema ----------------
+var SCHEMA = {
+  sales:    {cols:[['sale_id','pk'],['sale_date',''],['store_id','fk'],['product_id','fk'],['member_id','fk'],['quantity',''],['unit_price','']]},
+  stores:   {cols:[['store_id','pk'],['store_name',''],['region',''],['square_feet','']]},
+  products: {cols:[['product_id','pk'],['product_name',''],['category',''],['supplier_id','fk'],['unit_cost','']]},
+  suppliers:{cols:[['supplier_id','pk'],['supplier_name',''],['country','']]},
+  members:  {cols:[['member_id','pk'],['first_name',''],['last_name',''],['member_type','']]}
+};
+// legal arrows: fk table.col -> pk table.col (either click order accepted)
+var LEGAL = {
+  'sales.store_id>stores.store_id':1,
+  'sales.product_id>products.product_id':1,
+  'sales.member_id>members.member_id':1,
+  'products.supplier_id>suppliers.supplier_id':1
+};
+// columns to show in the preview once a table is joined
+var SHOW = {
+  sales:['sale_id','sale_date','quantity','unit_price'],
+  stores:['store_name','region'],
+  products:['product_name','category'],
+  suppliers:['supplier_name'],
+  members:["first_name || ' ' || last_name AS member_name"]
+};
+
+var DB=null, armed=null, joins=[];
+
+// ---------------- build the board ----------------
+var board=document.getElementById('board');
+Object.keys(SCHEMA).forEach(function(t){
+  var d=document.createElement('div'); d.className='tbl'; d.id='tbl-'+t;
+  var h='<div class="tbl-head">'+t+'</div>';
+  SCHEMA[t].cols.forEach(function(c){
+    var mark=c[1]==='pk'?'<span class="key">&#128273; PK</span>':(c[1]==='fk'?'<span class="key">&#8618; FK</span>':'');
+    h+='<div class="col" data-t="'+t+'" data-c="'+c[0]+'" data-k="'+c[1]+'">'+mark+'<span>'+c[0]+'</span></div>';
+  });
+  d.innerHTML=h; board.appendChild(d);
 });
-function hint(i){const h=document.getElementById('h'+i);h.style.display=h.style.display==='block'?'none':'block'}
-function chk(i){
- const v=document.getElementById('in'+i).value,m=document.getElementById('m'+i);
- if(!v.trim()){m.textContent='Enter an answer first.';m.style.color='#7d6608';return}
- const ans=atob(QS[i].a);let ok=false;
- if(QS[i].t==='num'){const g=parseFloat(norm(v)),a=parseFloat(ans);ok=!isNaN(g)&&Math.abs(g-a)<=QS[i].tol}
- else ok=norm(v)===norm(ans);
- if(ok){solved.add(i);render()}
- else{m.textContent='Not yet: check the hint, or re-read the step above.';m.style.color='#a03434'}
-}
-function h32(s){let h=5381;for(const c of s)h=((h<<5)+h+c.charCodeAt(0))|0;return(h>>>0).toString(36).toUpperCase()}
-function cert(){
- const n=document.getElementById('nm').value.trim();
- if(!n){document.getElementById('codeout').textContent='Enter your name first.';return}
- const r=document.getElementById('refl').value.trim();
- if(wc()<50){document.getElementById('codeout').textContent='Finish your 50-word reflection above first.';return}
- const code=LAB+'-'+h32(n.toLowerCase()+'|'+LAB+'|'+QS.length);
- const d=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
- const {jsPDF}=window.jspdf;const p=new jsPDF({orientation:'landscape',unit:'pt',format:[560,380]});
- p.setFillColor(11,29,51);p.rect(0,0,560,380,'F');
- p.setFillColor(253,252,250);p.rect(16,16,528,348,'F');
- p.setTextColor(26,82,118);p.setFont('helvetica','bold');p.setFontSize(10);
- p.text('MIS 320 \u00B7 INTRODUCTION TO INFORMATION SYSTEMS \u00B7 WWU',280,58,{align:'center'});
- p.setTextColor(26,26,26);p.setFont('times','bold');p.setFontSize(26);
- p.text('Certificate of Lab Completion',280,105,{align:'center'});
- p.setFont('times','normal');p.setFontSize(13);p.text('This certifies that',280,140,{align:'center'});
- p.setFont('times','bold');p.setFontSize(20);p.text(n,280,170,{align:'center'});
- p.setFont('times','normal');p.setFontSize(13);
- p.text('completed all '+QS.length+' checkpoints of',280,198,{align:'center'});
- p.setFont('helvetica','bold');p.setFontSize(15);p.setTextColor(26,82,118);
- p.text('Lab 2 \u00B7 Excel Basics: Meeting the Client',280,222,{align:'center'});
- p.setFont('helvetica','normal');p.setFontSize(11);p.setTextColor(90,90,90);
- p.text(d,280,252,{align:'center'});
- p.setFont('courier','bold');p.setFontSize(12);p.setTextColor(17,120,100);
- p.text('Verification code: '+code,280,290,{align:'center'});
- p.setFontSize(8);p.setFont('helvetica','normal');p.setTextColor(150,150,150);
- p.text('Upload this PDF to Canvas. Reflection on page 2. Code is unique to name + lab.',280,330,{align:'center'});
- p.addPage([560,380],'landscape');
- p.setFillColor(253,252,250);p.rect(0,0,560,380,'F');
- p.setDrawColor(11,29,51);p.setLineWidth(2);p.rect(16,16,528,348);
- p.setTextColor(26,82,118);p.setFont('helvetica','bold');p.setFontSize(10);
- p.text('LAB REFLECTION \u00B7 '+n+' \u00B7 '+code,280,44,{align:'center'});
- p.setTextColor(60,60,60);p.setFont('times','italic');p.setFontSize(9);
- const promptLines=p.splitTextToSize('Prompt: Cascadia\'s leaders could not answer basic questions about their own business until someone computed these totals. In the field you plan to enter, what is one number that leadership probably cannot state off the top of their head but should be able to, and what decision would knowing it change?',480);
- p.text(promptLines,40,70);
- p.setFont('times','normal');p.setFontSize(11);p.setTextColor(26,26,26);
- const lines=p.splitTextToSize(r,480);
- p.text(lines.slice(0,22),40,70+promptLines.length*11+14);
- p.save(LAB+'_certificate_'+n.replace(/[^a-z0-9]/gi,'_')+'.pdf');
- document.getElementById('codeout').innerHTML='Certificate downloaded (reflection on page 2). Your code: <code>'+code+'</code>';
-}
-render();
-</script>
 
+document.querySelectorAll('.col').forEach(function(el){
+  el.addEventListener('click',function(){ pick(el); });
+});
+
+function say(t,cls){var m=document.getElementById('msg');m.textContent=t;m.className=cls||'';}
+
+function pick(el){
+  var t=el.dataset.t,c=el.dataset.c,k=el.dataset.k;
+  if(!k){ say("That column holds data, not keys. Arrows connect keys: look for the PK and FK marks.","bad"); return; }
+  if(!armed){ armed=el; el.classList.add('armed'); say("Now click the matching key in another table."); return; }
+  if(armed===el){ armed.classList.remove('armed'); armed=null; say(""); return; }
+  var a=armed.dataset, b=el.dataset;
+  armed.classList.remove('armed');
+  var k1=a.t+'.'+a.c+'>'+b.t+'.'+b.c, k2=b.t+'.'+b.c+'>'+a.t+'.'+a.c;
+  if(LEGAL[k1]||LEGAL[k2]){
+    var legal = LEGAL[k1]? {fk:[a.t,a.c],pk:[b.t,b.c]} : {fk:[b.t,b.c],pk:[a.t,a.c]};
+    if(joins.some(function(j){return j.fk[0]===legal.fk[0]&&j.fk[1]===legal.fk[1];})){
+      say("That connection is already drawn.","bad"); armed=null; return;
+    }
+    // must connect to the growing join graph (sales is the root once >1 join)
+    joins.push(legal);
+    armed=null;
+    say("Connected: "+legal.fk.join('.')+" \u2192 "+legal.pk.join('.')+". That is a foreign key finding its primary key.","good");
+    render();
+  } else if(a.t===b.t){
+    armed=null; say("Both columns are in the same table. A JOIN connects two different tables.","bad");
+  } else {
+    armed=null;
+    say("Those columns do not hold the same identifiers, so a join on them would match nothing (or nonsense). Keys join to the keys they point at: "+a.c+" and "+b.c+" have no such relationship.","bad");
+  }
+}
+
+function undoJoin(){ joins.pop(); say(""); render(); }
+function resetJoins(){ joins=[]; armed=null; document.querySelectorAll('.col.armed').forEach(function(e){e.classList.remove('armed')}); say(""); render(); }
+
+// ---------------- SQL generation ----------------
+function buildSQL(){
+  if(!joins.length) return null;
+  var tables=['sales']; joins.forEach(function(j){ [j.fk[0],j.pk[0]].forEach(function(t){ if(tables.indexOf(t)<0) tables.push(t); }); });
+  var sel=[]; tables.forEach(function(t){ (SHOW[t]||[]).forEach(function(c){ sel.push(c.indexOf('AS')>=0? t+'.'+c : t+'.'+c); }); });
+  var sql='SELECT '+sel.join(',\n       ')+'\nFROM sales';
+  // order joins so each new table connects to one already present
+  var placed={sales:1}, remaining=joins.slice(), guard=0;
+  while(remaining.length && guard++<20){
+    for(var i=0;i<remaining.length;i++){
+      var j=remaining[i], nt=null;
+      if(placed[j.fk[0]]&&!placed[j.pk[0]]) nt=j.pk[0];
+      else if(placed[j.pk[0]]&&!placed[j.fk[0]]) nt=j.fk[0];
+      else if(placed[j.fk[0]]&&placed[j.pk[0]]) nt='';
+      if(nt!==null){
+        if(nt!=='') { sql+='\nJOIN '+nt+' ON '+j.fk.join('.')+' = '+j.pk.join('.'); placed[nt]=1; }
+        remaining.splice(i,1); break;
+      }
+    }
+    if(guard>=20) break;
+  }
+  if(remaining.length){ return {sql:null, orphan:remaining[0]}; }
+  return {sql:sql+'\nLIMIT 8;', display:sql+'\nLIMIT 8;'};
+}
+
+function highlight(sql){
+  return sql.replace(/\b(SELECT|FROM|JOIN|ON|LIMIT|AS)\b/g,'<span class="kw">$1</span>');
+}
+
+// ---------------- render ----------------
+function render(){
+  drawWires();
+  document.querySelectorAll('.col.joined').forEach(function(e){e.classList.remove('joined')});
+  joins.forEach(function(j){
+    [j.fk,j.pk].forEach(function(p){
+      var el=document.querySelector('.col[data-t="'+p[0]+'"][data-c="'+p[1]+'"]'); if(el)el.classList.add('joined');
+    });
+  });
+  var out=document.getElementById('sqlout'), rows=document.getElementById('rows'), rc=document.getElementById('rowcount');
+  if(!joins.length){ out.textContent='Click a key column to begin.'; rows.innerHTML='<p style="font-family:var(--sans);font-size:14px;color:var(--text-light);padding:.4rem 0">No join yet.</p>'; rc.textContent=''; markChallenges(); return; }
+  var b=buildSQL();
+  if(!b.sql){ out.textContent='That join does not connect to the rest yet. Joins chain: each new table must link to one already in the query.'; return; }
+  out.innerHTML=highlight(b.display);
+  if(!DB){ rows.innerHTML='<p style="font-family:var(--sans);font-size:14px;color:var(--text-light);padding:.4rem 0">Database still loading&hellip;</p>'; return; }
+  try{
+    var res=DB.exec(b.sql);
+    if(!res.length){ rows.innerHTML='<p style="font-family:var(--sans);font-size:14px;padding:.4rem 0">No rows.</p>'; rc.textContent=''; }
+    else{
+      var r=res[0], h='<table><tr>';
+      r.columns.forEach(function(c){h+='<th>'+c+'</th>'});h+='</tr>';
+      r.values.forEach(function(row){h+='<tr>';row.forEach(function(v){h+='<td>'+(v===null?'<em style="color:#a03434">NULL</em>':String(v))+'</td>'});h+='</tr>'});
+      rows.innerHTML=h+'</table>';
+      // total count without limit
+      var countSql=b.sql.replace(/SELECT[\s\S]*?FROM/,'SELECT COUNT(*) FROM').replace(/\nLIMIT 8;/,';');
+      rc.textContent=DB.exec(countSql)[0].values[0][0].toLocaleString()+' rows total';
+    }
+  }catch(e){ rows.innerHTML='<p style="color:var(--warn);font-family:var(--sans);font-size:14px;padding:.4rem 0">'+e.message+'</p>'; }
+  markChallenges();
+}
+
+function markChallenges(){
+  var t={}; joins.forEach(function(j){t[j.pk[0]]=1;t[j.fk[0]]=1;});
+  document.querySelectorAll('#chlist li').forEach(function(li){
+    li.classList.toggle('done', !!t[li.dataset.ch]);
+  });
+}
+
+function drawWires(){
+  var svg=document.getElementById('wires'), br=board.getBoundingClientRect();
+  svg.setAttribute('width',board.clientWidth); svg.setAttribute('height',board.clientHeight);
+  var h='<defs><marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#e8197d"/></marker></defs>';
+  joins.forEach(function(j){
+    var a=document.querySelector('.col[data-t="'+j.fk[0]+'"][data-c="'+j.fk[1]+'"]');
+    var b=document.querySelector('.col[data-t="'+j.pk[0]+'"][data-c="'+j.pk[1]+'"]');
+    if(!a||!b)return;
+    var ra=a.getBoundingClientRect(), rb=b.getBoundingClientRect();
+    var ax=ra.left-br.left+(ra.left<rb.left?ra.width:0), ay=ra.top-br.top+ra.height/2;
+    var bx=rb.left-br.left+(rb.left<ra.left?rb.width:0), by=rb.top-br.top+rb.height/2;
+    var mx=(ax+bx)/2;
+    h+='<path d="M'+ax+','+ay+' C'+mx+','+ay+' '+mx+','+by+' '+bx+','+by+'" fill="none" stroke="#e8197d" stroke-width="2.5" marker-end="url(#arr)"/>';
+  });
+  svg.innerHTML=h;
+}
+window.addEventListener('resize',drawWires);
+
+// ---------------- database ----------------
+initSqlJs({locateFile:function(f){return 'https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/'+f}})
+.then(function(SQL){return fetch('cascadia.db').then(function(r){if(!r.ok)throw new Error('fetch '+r.status);return r.arrayBuffer()}).then(function(buf){
+  DB=new SQL.Database(new Uint8Array(buf));
+  document.getElementById('dbstatus').textContent='Database loaded. Click any column marked PK or FK.';
+  render();
+})}).catch(function(e){
+  document.getElementById('dbstatus').innerHTML='Could not load the database ('+e.message+'). This page needs to be served over http, so it works on the course site but not from a locally opened file.';
+});
+</script>
 <!--NAVJS-->
 <script>
 (function(){
@@ -462,4 +542,5 @@ render();
   });
 })();
 </script>
-</body></html>
+</body>
+</html>
