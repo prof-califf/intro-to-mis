@@ -251,6 +251,29 @@ li{margin-bottom:.45rem}
   text-transform:uppercase;color:var(--magenta);white-space:nowrap}
 .plan td.w{width:8rem;font-weight:600}
 @media(max-width:640px){.plan td.w{width:auto}}
+
+/* ---------- chapter depth: stat strip, TOC, key concept, summary table ---------- */
+.statrow{display:flex;flex-wrap:wrap;gap:1px;background:var(--border);border:1px solid var(--border);margin:1.6rem 0}
+.stat{flex:1 1 8rem;background:#fff;padding:.85rem 1rem;text-align:center}
+.stat b{display:block;font-family:var(--display);font-size:22px;font-weight:600;color:var(--magenta);line-height:1.1}
+.stat span{font-size:12.5px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;font-family:var(--display)}
+.toc{border:1px solid var(--border);background:var(--off-white);padding:1rem 1.25rem;margin:1.6rem 0;font-family:var(--sans);font-size:14.5px;line-height:2}
+.toc strong{display:block;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.3rem}
+.toc a{color:var(--text-dark);text-decoration:none;border-bottom:1px solid var(--border);margin-right:1rem;white-space:nowrap}
+.toc a:hover{color:var(--magenta-dark);border-bottom-color:var(--magenta)}
+.kc{border:1px solid var(--border);border-left:4px solid var(--magenta);background:#fff;margin:1.4rem 0;padding:1rem 1.2rem}
+.kc .kc-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.15rem}
+.kc .kc-term{font-family:var(--display);font-size:17px;font-weight:600;display:block;margin-bottom:.45rem}
+.kc p{margin:0;font-size:15.5px;line-height:1.62}
+.sumtable{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:14.5px}
+.sumtable th{background:var(--black);color:#fff;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.55rem .8rem;text-align:left}
+.sumtable td{border:1px solid var(--border);padding:.6rem .8rem;vertical-align:top;line-height:1.5}
+.sumtable tr:nth-child(even) td{background:var(--off-white)}
+
+/* ---------- IS concepts chip strip ---------- */
+.concepts{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;margin:1.1rem 0 0}
+.concepts .clabel{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-right:.3rem}
+.concepts span:not(.clabel){font-family:var(--display);font-size:12.5px;font-weight:500;letter-spacing:.04em;border:1px solid var(--border);background:var(--off-white);padding:.22rem .6rem;color:var(--text-dark)}
 </style>
 </head>
 <body>
@@ -263,12 +286,15 @@ li{margin-bottom:.45rem}
       <div class="dd-menu" id="ddc">
       <a href="chapter0-what-is-mis.html"><span class="lbl">Chapter 0 &middot; Week 1</span>What Is MIS? &mdash; Spotify Wrapped</a>
       <a href="chapter1-starbucks.html"><span class="lbl">Chapter 1 &middot; Week 2</span>The Value of Information &mdash; Starbucks</a>
-      <a class="current" href="chapter2-competitive-advantage.html"><span class="lbl">Chapter 2 &middot; Week 2</span>Technology &amp; Competitive Advantage &mdash; Zara</a>
-      <a href="chapter3-dominos.html"><span class="lbl">Chapter 3 &middot; Week 3</span>Business Processes &mdash; Domino's</a>
-      <a href="chapter4-healthcaregov.html"><span class="lbl">Chapter 4 &middot; Week 4</span>Systems Analysis &amp; the SDLC &mdash; Healthcare.gov</a>
-      <a href="chapter6-nike-sap.html"><span class="lbl">Chapter 6 &middot; Week 5</span>Enterprise Systems &mdash; Nike/SAP</a>
+      <a class="current" href="chapter2-competitive-advantage.html"><span class="lbl">Chapter 2 &middot; Week 3</span>Technology &amp; Competitive Advantage &mdash; Zara</a>
+      <a href="chapter3-dominos.html"><span class="lbl">Chapter 3 &middot; Week 4</span>Business Processes &mdash; Domino's</a>
+      <a href="chapter4-healthcaregov.html"><span class="lbl">Chapter 4 &middot; Week 5</span>Systems Analysis &amp; the SDLC &mdash; Healthcare.gov</a>
+      <a href="chapter5-walmart.html"><span class="lbl">Chapter 5 &middot; Week 7</span>What Data Is: Databases &mdash; Walmart</a>
+      <a href="chapter6-nike-sap.html"><span class="lbl">Chapter 6 &middot; Week 7</span>Enterprise Systems &mdash; Nike/SAP</a>
+      <a href="chapter9-changehealthcare.html"><span class="lbl">Chapter 9 &middot; Week 8</span>Cybersecurity &mdash; Change Healthcare</a>
+      <a href="chapter10-equifax.html"><span class="lbl">Chapter 10 &middot; Week 8</span>IT Governance &mdash; Equifax</a>
       <div class="dd-sep"></div>
-      <a class="soon" href="#"><span class="lbl">Chapters 5, 7&ndash;12</span>Databases, BI, AI/ML, Security, Cloud, IoT (in progress)</a>
+      <a class="soon" href="#"><span class="lbl">Chapters 7&ndash;8, 11&ndash;12</span>BI, AI/ML, Cloud, IoT (in progress)</a>
       </div>
     </div>
     <div class="dd">
@@ -281,8 +307,9 @@ li{margin-bottom:.45rem}
       <a href="lab5-excel-analysis.html"><span class="lbl">Lab 5 &middot; Week 5</span>Data Analysis &amp; Mini Project</a>
       <a href="lab6-tableau.html"><span class="lbl">Lab 6 &middot; Week 6</span>Tableau: Worksheets to a Dashboard</a>
       <a href="lab7-sql.html"><span class="lbl">Lab 7 &middot; Week 7</span>SQL Fundamentals</a>
+      <a href="lab8-security.html"><span class="lbl">Lab 8 &middot; Week 8</span>Security &amp; Data Governance: The Audit</a>
       <div class="dd-sep"></div>
-      <a class="soon" href="#"><span class="lbl">Labs 8&ndash;10</span>UX, AI/ML, Information Architecture (in progress)</a>
+      <a class="soon" href="#"><span class="lbl">Labs 9&ndash;10</span>AI/ML, Information Architecture (in progress)</a>
       </div>
     </div>
     <div class="dd">
@@ -296,9 +323,6 @@ li{margin-bottom:.45rem}
     </div>
   </div>
 </nav>
-
-
-
 
 
 <div class="shell">
@@ -331,7 +355,24 @@ li{margin-bottom:.45rem}
     <span>Week 2 · Monday (with Ch 1)</span>
     <span class="alt">Concepts + case in one session</span>
   </div>
+  
+<div class="concepts"><span class="clabel">IS concepts</span><span>Competitive advantage</span><span>Porter’s Five Forces</span><span>Sustainable vs. temporary advantage</span><span>First-mover advantage</span><span>Commoditization</span><span>Switching costs</span></div>
 </header>
+<div class="statrow"><div class="stat"><b>~2 wks</b><span>design to rack</span></div><div class="stat"><b>2016</b><span>RFID rollout complete</span></div><div class="stat"><b>low single digits</b><span>% unsold vs mid-teens industry</span></div><div class="stat"><b>&euro;2B</b><span>logistics investment 2024&ndash;25</span></div><div class="stat"><b>8&ndash;10%</b><span>of global emissions: textiles</span></div></div>
+<div class="toc"><strong>Contents</strong>
+<a href="#open">The two-week dress</a>
+<a href="#what">What competitive advantage actually is</a>
+<a href="#how">How information systems shift the game</a>
+<a href="#inside">What the loop is actually made of</a>
+<a href="#evaporate">Why most IT advantage evaporates</a>
+<a href="#chain">The case on the five components</a>
+<a href="#careers">Who builds this: a note on MIS careers</a>
+<a href="#vocab">Vocabulary</a>
+<a href="#cost">The cost of the advantage</a>
+<a href="#discussion">Discussion questions</a>
+<a href="#lab">From lecture to lab</a>
+</div>
+
 
 <p class="lede">A fashion trend appears on a runway or a street corner. At most clothing companies, a
 garment responding to it reaches stores six to nine months later: an eternity, and a guess. At Zara,
@@ -358,6 +399,9 @@ big on a guess. Zara's system bets small on data, thousands of times, and lets t
 </div>
 
 <h2 id="what"><span class="num">02</span>What competitive advantage actually is</h2>
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Sustainable competitive advantage</span>
+<p>An advantage is sustainable only when rivals cannot copy it at a price worth paying. Technology alone rarely qualifies, because technology is for sale to everyone. What resists copying is technology fused with process, geography, and authority: who is allowed to decide what, and how fast the decision travels. Keep this test in hand as you read the Zara loop, and ask at each step what a rival with unlimited money would still find hard.</p></div>
+
 
 <p><strong>Competitive advantage</strong> is the ability to create more value than rivals: by charging
 more for something customers prefer (<em>differentiation</em>), by delivering at lower cost
@@ -437,10 +481,10 @@ moved. Judgment where judgment is needed, counting where counting is needed.</p>
 
 <p>Inditex runs a centralized logistics operation in Arteixo, in Galicia, with the Zara hub covering
 millions of square feet and running close to around the clock, nearly every day of the year. Merchandise
-is routed through Spain regardless of where it is going, shipments reach stores about twice a week, and
-the company's stated target is that any store in the world can have new inventory within roughly two
-days of ordering it. Much of the fast-turning production sits close by rather than an ocean away, which
-is what makes a two-week cycle arithmetically possible in the first place.</p>
+is routed through Spain regardless of where it is going. Shipments reach stores about twice a week.
+The company's stated target: any store in the world can have new inventory within roughly two days of
+ordering it. Much of the fast-turning production sits close by rather than an ocean away, and that
+closeness is what makes a two-week cycle arithmetically possible in the first place.</p>
 
 <p>This is the expensive, slow part of the advantage, and it is why the strategy resists copying.
 Inditex committed on the order of two billion euros to logistics expansion for 2024 and 2025 alone,
@@ -468,6 +512,16 @@ weave from the previous section, described in equipment and floor plans.</p>
 </div>
 
 <h2 id="evaporate"><span class="num">05</span>Why most IT advantage evaporates</h2>
+<p>A note on being early. <strong>First-mover advantage</strong> is the edge that comes from doing
+something before rivals: learning curves, brand association, and customers locked in by switching
+costs. It is real and it is routinely oversold, because being first also means paying to educate the
+market and making the mistakes later entrants get to skip. Zara’s RFID rollout, completed in 2016,
+was not especially early; the advantage came from what the company attached the tags to. Being first
+matters far less than being first to build something others find expensive to copy.</p>
+
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Commoditization</span>
+<p>When a capability becomes purchasable by anyone, it stops differentiating anyone. This is commoditization, and it is the engine of Carr’s 2003 argument that IT no longer matters strategically. The RFID tags Zara uses are a commodity. The twice-weekly delivery rhythm, the store-manager reorder authority, and the Arteixo logistics complex are not, because they are organizational commitments compounded over decades.</p></div>
+
 
 <p>History is littered with technology advantages that died. American Airlines' SABRE reservation system
 was such a weapon in the 1970s and 80s that regulators eventually forced changes to how it displayed
@@ -522,6 +576,8 @@ around it.</p>
   its receipts.</p>
 </div>
 
+
+<table class="sumtable"><tr><th>Idea</th><th>This chapter’s version</th><th>Where you meet it next</th></tr><tr><td><strong>Five Forces</strong></td><td>Buyer power, substitutes, and rivalry mapped onto fast fashion</td><td>Every case that follows</td></tr><tr><td><strong>The information loop</strong></td><td>Store observations to Arteixo to design to rack in about two weeks</td><td>Domino’s pipeline (Wk 4)</td></tr><tr><td><strong>Commoditization</strong></td><td>Tags are purchasable; the operating model is not</td><td>Cloud computing (Wk 10)</td></tr><tr><td><strong>The cost of the advantage</strong></td><td>The same speed that cuts inventory waste raises industry output</td><td>What computing costs (Wk 10)</td></tr></table>
 <h2 id="vocab"><span class="num">08</span>Vocabulary</h2>
 
 <dl class="vocab">
@@ -531,6 +587,7 @@ around it.</p>
   <div><dt>Network effects</dt><dd>A system that grows more valuable to each user as more users join.</dd></div>
   <div><dt>Barrier to entry</dt><dd>An upfront requirement, often a system, that keeps newcomers out.</dd></div>
   <div><dt>Porter's Five Forces</dt><dd>Rivalry, new entrants, substitutes, buyer power, supplier power, the map of where industry profit drains.</dd></div>
+<div><dt>First-mover advantage</dt><dd>The edge from acting before rivals; real, and routinely oversold.</dd></div>
 <div><dt>Commoditization</dt><dd>The process by which a once-special technology becomes cheap, ubiquitous, and strategically neutral.</dd></div>
   <div><dt>Table stakes</dt><dd>Capabilities required merely to compete, conferring no edge once everyone has them.</dd></div>
   <div><dt>RFID</dt><dd>Radio tags that let a reader identify many items at once without line of sight; the basis of Zara's live inventory picture.</dd></div>
@@ -542,7 +599,7 @@ around it.</p>
 
 
 
-<h2><span class="num">06</span>The cost of the advantage</h2>
+<h2 id="cost"><span class="num">09</span>The cost of the advantage</h2>
 
 <p>Everything above is a story about an information system working. It would be dishonest to stop
 there, because the same capability that makes Zara efficient is the capability that makes fast fashion
@@ -571,10 +628,9 @@ because the system is optimised for throughput.</p>
 <h3>Where the labour cost lands</h3>
 <p>The environmental story has a human counterpart. Fast fashion's cost structure depends on
 manufacturing in countries with lower wages and weaker enforcement, and audits repeatedly find gaps
-between stated policy and factory reality. Zara manufactures more of its fashion-sensitive product
-closer to headquarters than most competitors, which is part of why it is fast, but its full supply chain
-still reaches into the same regions as everyone else's, and it has faced documented labour concerns
-along with the rest of the industry. Inditex has announced sustainability targets, including sustainable
+between stated policy and factory reality. Zara makes more of its fashion-sensitive product close to headquarters than most competitors do,
+which is part of why it is fast. But its full supply chain still reaches into the same regions as
+everyone else's, and it has faced documented labour concerns along with the rest of the industry. Inditex has announced sustainability targets, including sustainable
 or recycled cotton, linen, and polyester, and has been criticised for the gap between announcement and
 verified outcome.</p>
 
@@ -609,7 +665,7 @@ learns from a biased past.</p></div>
   claim, sparring partner mode, before you present. Red: submitting or reading out an AI-written answer.
   The Wednesday discussion grades your reasoning, and everyone in the room can tell the difference.</p></div>
 </div>
-<h2 id="discussion"><span class="num">09</span>Discussion questions</h2>
+<h2 id="discussion"><span class="num">10</span>Discussion questions</h2>
 
 <ol class="dq">
   <li>Walk Zara's loop through the five components and identify which component would be hardest for
@@ -639,7 +695,7 @@ learns from a biased past.</p></div>
 <li>Zara's speed reduces its own inventory waste and increases the total volume of clothing produced industry-wide. Are those two facts in tension, and does one of them matter more? <span class="dqtag">Judgment</span></li>
 </ol>
 
-<h2 id="lab"><span class="num">10</span>From lecture to lab</h2>
+<h2 id="lab"><span class="num">11</span>From lecture to lab</h2>
 
 <div class="callout callout-bridge">
   <strong>Week 2 · Lab 2</strong>

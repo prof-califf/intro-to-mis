@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lab 3 · Data Preparation. The RAW File | MIS 320</title>
+<title>Lab 7 · SQL: Cleaning Data at the Source | MIS 320</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -298,12 +298,12 @@ li{margin-bottom:.45rem}
       <div class="dd-menu" id="ddl">
       <a href="lab1-genai.html"><span class="lbl">Lab 1 &middot; Week 1</span>GenAI for Thinking</a>
       <a href="lab2-excel-basics.html"><span class="lbl">Lab 2 &middot; Week 2</span>Excel Basics: Meeting the Client</a>
-      <a class="current" href="lab3-excel-dataprep.html"><span class="lbl">Lab 3 &middot; Week 3</span>Data Preparation: The RAW File</a>
+      <a href="lab3-excel-dataprep.html"><span class="lbl">Lab 3 &middot; Week 3</span>Data Preparation: The RAW File</a>
       <a href="lab4-excel-dataviz.html"><span class="lbl">Lab 4 &middot; Week 4</span>Data Visualization: Charts That Tell the Truth</a>
       <a href="lab5-excel-analysis.html"><span class="lbl">Lab 5 &middot; Week 5</span>Data Analysis &amp; Mini Project</a>
       <a href="lab6-tableau.html"><span class="lbl">Lab 6 &middot; Week 6</span>Tableau: Worksheets to a Dashboard</a>
       <a href="lab7-sql.html"><span class="lbl">Lab 7 &middot; Week 7</span>SQL Fundamentals</a>
-      <a href="lab8-security.html"><span class="lbl">Lab 8 &middot; Week 8</span>Security &amp; Data Governance: The Audit</a>
+      <a class="current" href="lab8-security.html"><span class="lbl">Lab 8 &middot; Week 8</span>Security &amp; Data Governance: The Audit</a>
       <div class="dd-sep"></div>
       <a class="soon" href="#"><span class="lbl">Labs 9&ndash;10</span>AI/ML, Information Architecture (in progress)</a>
       </div>
@@ -326,114 +326,231 @@ li{margin-bottom:.45rem}
   <p class="book">MIS 320</p><p class="course">Introduction to Information Systems</p>
   <button class="railtoggle" aria-expanded="false" aria-controls="chapnav">Lab contents</button>
   <nav id="chapnav">
-    <a href="#top">Overview</a><a href="#steps">The work</a>
+    <a href="#top">Overview</a><a href="#inventory">Part 1 · The inventory</a>
+    <a href="#verify">Part 2 · Verification</a><a href="#blast">Part 3 · Blast radius</a>
+    <a href="#controls">Part 4 · Control numbers</a><a href="#map">Part 5 · The access map</a>
     <a href="#checkpoints">Checkpoints</a><a href="#submit">What to submit</a>
-    <a href="chapter2-competitive-advantage.html">↳ Chapter 2 · Competitive Advantage</a>
+    <a href="chapter9-changehealthcare.html">↳ Chapter 9 · Cybersecurity</a>
   </nav>
   <a class="back" href="index.html">← All chapters &amp; labs</a>
 </aside>
 <main id="top">
 <header class="chaphead">
-  <p class="eyebrow">Lab 3 · Week 3</p>
-  <h1>Data Preparation. The RAW File</h1>
-  <div class="meta-row"><span>Lab session · 80 min</span><span class="alt"><a href="chapter2-competitive-advantage.html" style="color:inherit;text-decoration:none">Pairs with Chapter 2 · Competitive Advantage &#8594;</a></span></div>
+  <p class="eyebrow">Lab 8 · Week 8</p>
+  <h1>Security &amp; Data Governance: The Audit</h1>
+  <div class="meta-row"><span>Lab session · 80 min</span><span class="alt"><a href="chapter9-changehealthcare.html" style="color:inherit;text-decoration:none">Pairs with Chapter 9 · Cybersecurity &#8594;</a></span><span class="alt"><a href="chapter10-equifax.html" style="color:inherit;text-decoration:none">and Chapter 10 · Governance &#8594;</a></span></div>
 </header>
-<p class="lede">Cascadia's controller sends you their raw point-of-sale export with a
-  note: <em>"The numbers from this file don't match our dashboard. Find out why, fix it, and tell me
-  how bad it was."</em> This is the most common first assignment in every analyst's career, and the
-  least glamorous. It is also where trust in every later analysis is earned.</p>
-  <p>Download <a href="cascadia-sales-2025-RAW.xlsx"><strong>cascadia-sales-2025-RAW.xlsx</strong></a>.
-  Do not reuse Lab 2's clean file: reproducing it is the assignment.</p>
-<div class="callout callout-bridge"><strong>From lecture to lab</strong><p><strong>Lab professor's intro (10 min):</strong> Frame this with Monday's Domino's
-  discussion: dirty data is the fingerprint of a process with an unmanaged handoff. Cascadia's
-  point-of-sale export has duplicates (a double-post between POS and the export job), mixed date
-  formats (two store systems configured differently), text-formatted prices, and blank quantities.
-  Their controller wants it clean and wants the damage quantified. This is the hardest lab before
-  Exam 1: budget the full session, and point students to the final checkpoint's self-test: a
-  correctly cleaned file reproduces Lab 2's revenue total exactly.</p></div>
-<div id="steps">
 
-<div class="ailight y">
+<p class="lede">Monday's lecture ended with a company that processed a third of American healthcare going
+dark because one login was missing one control. Cascadia's board read the same story, and this morning
+they asked the question every board is now asking: could that be us? You are the co-op's newly appointed
+security lead, and this lab is your first week on the job.</p>
+
+<p>Here is what you will notice by the end of the session: nothing in this lab requires a single skill
+you do not already have. The audit is counting, and you count with SQL. The phish is caught by checking a
+claim against a database, which is a JOIN and a WHERE. The case for least privilege is one division. The
+chapter argued that most security is management, not code. Today you get to test that claim on a company
+whose data you know better than anyone.</p>
+
+<div class="callout"><strong>The schema, one more time</strong>
+<p style="font-family:var(--sans);font-size:.88rem"><code class="inline">stores</code>(store_id, store_name, region, opened_year, square_feet) &#183;
+<code class="inline">suppliers</code>(supplier_id, supplier_name, country, lead_time_days) &#183;
+<code class="inline">products</code>(product_id, product_name, category, supplier_id, unit_cost, list_price) &#183;
+<code class="inline">members</code>(member_id, first_name, last_name, city, state, member_type, join_date) &#183;
+<code class="inline">sales</code>(sale_id, sale_date, store_id, product_id, member_id, quantity, unit_price) &#183;
+<code class="inline">inventory</code>(store_id, product_id, quantity_on_hand, reorder_point) &#183;
+<code class="inline">used_gear</code>(item_id, product_id, store_id, condition, listed_price, date_listed, date_sold)</p></div>
+
+<div class="callout callout-bridge"><strong>From lecture to lab</strong><p><strong>Lab professor's intro (10 min):</strong>
+One sentence of recap: Change Healthcare, one portal without MFA, a third of US claims frozen. Then the
+reframe: today students stop reading about a breach and start preventing one, as Cascadia's security
+lead. Emphasize that every checkpoint uses only Lab 7 SQL, so nobody should feel behind. Demo Part 2 on
+the projector: read the Nordvik email aloud in your best urgent voice, let the room feel how plausible it
+is, then run the one-line query that kills it. Say the phrase out loud: verify the claim, not the tone.
+Point out that Part 5, the access map, has no checkpoint because it is judgment, and judgment is what the
+memo is for. Students who finish early: give them the $10,000 question from the callout at the end.</p></div>
+
+<div class="ailight g">
   <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
-  <div class="lighttext"><strong>Yellow &middot; AI as calculator, with checking</strong>
-  <p>You may ask an AI to draft a cleaning formula, a nested TRIM or a VLOOKUP, but you must test it on rows where you already know the right answer before trusting it, and note the assist in your reflection. A formula you never verified is not your work, it is your risk.</p></div>
+  <div class="lighttext"><strong>Green &middot; AI as sparring partner</strong>
+  <p>Draft your access map first, then ask an AI to attack it: "Here is who can read what at a retail
+  co-op. Which cell would you exploit?" Defending your map against the pushback is exactly the drill.
+  Asking it to fill in the map for you skips the only part that is graded on thinking.</p></div>
 </div>
 
-<h2><span class="num">Skills</span>Remove Duplicates, TRIM, date repair, type conversion, VLOOKUP</h2>
-<ol>
-<li><strong>Count before you clean.</strong> Row count first. An analyst who cleans before
-counting cannot report what was wrong.</li>
-<li><strong>Duplicates.</strong> Data → Remove Duplicates across all columns. Record what Excel
-reports.</li>
-<li><strong>Whitespace and case.</strong> Some store names carry stray spaces; some categories are
-UPPERCASE. TRIM and PROPER in helper columns, then paste-as-values back.</li>
-<li><strong>Dates.</strong> Two formats coexist: ISO (2025-03-14) and US (3/14/2025). Standardize to
-one. Text-to-Columns or DATEVALUE both work; pick one and be consistent.</li>
-<li><strong>Text prices.</strong> Some unit_price cells are text with a leading $. Find them,
-convert them, and confirm revenue math still works.</li>
-<li><strong>Blanks.</strong> Some quantity cells are empty. Count them, then apply the controller's
-rule: a blank quantity on a line with revenue is a keying failure: set it to
-<code class="inline">revenue / unit_price</code>, rounded to a whole number.</li>
-<li><strong>Enrich with VLOOKUP.</strong> Build this supplier table on a new sheet and add a
-lead-time column to the data:</li>
-</ol>
-<details class="howto"><summary>How to find and remove duplicates</summary><div class="howto-body">
-<p><strong>See them first, then delete.</strong> Never delete before you have looked.</p>
-<ol>
-<li>Select the column you think has duplicates.</li>
-<li><strong>Home</strong> tab, <strong>Conditional Formatting</strong>, <strong>Highlight Cells Rules</strong>, <strong>Duplicate Values</strong>. They turn red. Scroll and confirm they are genuine copies.</li>
-<li>To remove: click inside the data, then <strong>Data</strong> tab, then <strong>Remove Duplicates</strong>.</li>
-<li>A box lists every column with checkboxes. This matters: Excel deletes a row only when <em>every</em> checked column matches. To dedupe on the ID alone, check only the ID column.</li>
-<li>Excel reports how many it removed. Write that number down, you will need it.</li>
-</ol>
-<p><strong>Work on a copy of the sheet.</strong> Remove Duplicates cannot be undone reliably after other edits.</p>
-</div></details><details class="howto"><summary>How to clean text and fix number columns</summary><div class="howto-body">
-<p>Build these in an empty column beside the dirty one, then paste the results back as values.</p>
-<ol>
-<li><strong>Stray spaces:</strong> <span class="kbd">=TRIM(A2)</span></li>
-<li><strong>Inconsistent casing:</strong> <span class="kbd">=PROPER(A2)</span> for names, <span class="kbd">=UPPER(A2)</span> for codes</li>
-<li><strong>Both at once:</strong> <span class="kbd">=PROPER(TRIM(A2))</span></li>
-<li><strong>Numbers stored as text</strong> (left-aligned, with a $ typed in): <span class="kbd">=VALUE(SUBSTITUTE(A2,"$",""))</span></li>
-<li>Fill down, then select your clean column, Copy, then right-click the original and choose <strong>Paste Special, Values</strong>. Now delete the helper column.</li>
-</ol>
-<p><strong>How to tell a real number from text:</strong> numbers align right by default, text aligns left. If a column of numbers is left-aligned, Excel thinks it is text and SUM will return 0.</p>
-</div></details><details class="howto"><summary>How to write a VLOOKUP</summary><div class="howto-body">
-<p>The formula is <span class="kbd">=VLOOKUP(what you are looking up, where to look, which column to return, FALSE)</span></p>
-<ol>
-<li>Click the empty cell where you want the answer.</li>
-<li>Type <span class="kbd">=VLOOKUP(</span> then click the cell holding the value you are looking up, then a comma.</li>
-<li>Select the whole lookup table, including its header row, then press <span class="kbd">F4</span> (<span class="mac">Mac</span> <span class="kbd">fn+F4</span>) to lock it with dollar signs. Without this the range slides as you fill down and results go wrong.</li>
-<li>Type a comma, then the column number to return, counting from the left edge of your selection starting at 1.</li>
-<li>Type <span class="kbd">,FALSE)</span> and press Enter. FALSE means exact match, and you want exact match essentially always.</li>
-<li>Fill down by double-clicking the small square at the bottom-right of the cell.</li>
-</ol>
-<p><strong>#N/A</strong> means no match was found. Usually stray spaces: wrap the lookup value in <span class="kbd">TRIM()</span>. <strong>#REF!</strong> means your column number is larger than your selection.</p>
-</div></details>
-<table style="border-collapse:collapse;margin:1rem 0;font-family:var(--sans);font-size:.85rem">
-<tr style="background:var(--navy);color:#fff"><th style="padding:.4rem.8rem;text-align:left">supplier</th><th style="padding:.4rem.8rem">lead_time_days</th></tr>
-<tr><td style="padding:.35rem.8rem;border:1px solid var(--rule)">Olympic Down Works</td><td style="padding:.35rem.8rem;border:1px solid var(--rule);text-align:center">18</td></tr>
-<tr><td style="padding:.35rem.8rem;border:1px solid var(--rule)">Cascade Textiles</td><td style="padding:.35rem.8rem;border:1px solid var(--rule);text-align:center">24</td></tr>
-<tr><td style="padding:.35rem.8rem;border:1px solid var(--rule)">Kitsap Forge</td><td style="padding:.35rem.8rem;border:1px solid var(--rule);text-align:center">30</td></tr>
-<tr><td style="padding:.35rem.8rem;border:1px solid var(--rule)">Nordvik Outdoor</td><td style="padding:.35rem.8rem;border:1px solid var(--rule);text-align:center">56</td></tr>
-<tr><td style="padding:.35rem.8rem;border:1px solid var(--rule)">Sanko Technical</td><td style="padding:.35rem.8rem;border:1px solid var(--rule);text-align:center">62</td></tr>
-<tr><td style="padding:.35rem.8rem;border:1px solid var(--rule)">Andes Alpaca Co-op</td><td style="padding:.35rem.8rem;border:1px solid var(--rule);text-align:center">48</td></tr>
-<tr><td style="padding:.35rem.8rem;border:1px solid var(--rule)">Fraser Valley Rubber</td><td style="padding:.35rem.8rem;border:1px solid var(--rule);text-align:center">21</td></tr>
-</table>
-<div class="callout callout-caution"><strong>The self-test</strong>
-<p>A correctly cleaned RAW file is the clean file. Your final revenue total must match Lab 2's to
-the cent. If it doesn't, one of your six repairs went wrong, and finding which one is the real
-exercise.</p></div>
-<div class="stuck"><strong>When you get stuck</strong>
-<p>Before raising your hand, try these in order. Most problems in this lab are one of them.</p>
-<ol>
-<li>Re-read the checkpoint question. Is it asking for a count, a total, or an average? Those are three different numbers.</li>
-<li>Check whether your number is plausible. If total revenue comes out as 12 or as 40 million, something is off by a lot and you can usually see where.</li>
-<li>Expand the grey "How to" box for that step. It has the exact clicks.</li>
-<li>Check the formula bar of the cell you think is wrong. Does it reference the range you meant?</li>
-<li>Use the hint button on the checkpoint. It is not a penalty, it is part of the lab.</li>
-<li>Ask a neighbour. Then raise your hand.</li>
-</ol></div></div>
+<div class="ailight r">
+  <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
+  <div class="lighttext"><strong>Red &middot; No attack tooling, ever</strong>
+  <p>Never ask an AI to write malware, working exploit code, or a phishing message aimed at a real person
+  or organization. That is the hard red light from Chapter 9, it stays red after this course ends, and
+  outside a classroom it is a crime. Studying the two fake emails printed below is the entire point;
+  manufacturing new ones is not.</p></div>
+</div>
 
+<h2><span class="num">Sandbox</span>The Cascadia database, live</h2>
+<div id="sqlbox" style="border:1px solid var(--rule);background:var(--paper);border-radius:2px;padding:1rem 1.15rem;margin:1.2rem 0">
+  <p id="sqlstatus" style="font-family:var(--sans);font-size:.85rem;color:var(--muted);margin:0 0 .6rem">Loading database&hellip;</p>
+  <textarea id="sqlin" rows="5" spellcheck="false" style="width:100%;font-family:ui-monospace,Menlo,monospace;font-size:.92rem;padding:.6rem;border:1px solid var(--rule);border-radius:2px" aria-label="SQL query" placeholder="SELECT COUNT(*) FROM members;"></textarea>
+  <br><button onclick="runSQL()" style="font-family:var(--display);font-size:14px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--magenta);color:#fff;border:none;padding:.5rem 1.1rem;cursor:pointer;margin-top:.5rem">Run query</button>
+  <div id="sqlout" style="overflow-x:auto;margin-top:.8rem;font-family:var(--sans);font-size:.85rem"></div>
+</div>
+
+<div id="inventory"></div>
+<h2><span class="num">Part 1</span>The inventory: know what you hold</h2>
+
+<p>Every security framework on earth begins with the same unglamorous step: you cannot protect what you
+have not listed. Chapter 9 put it as a manager's question, "do we have a current inventory?", and the
+honest answer at most companies is no. Yours is about to be yes, because the co-op's inventory is eight
+tables and you can read all of them.</p>
+
+<p>Not all tables are equal, and the chapter's CIA triad is the sorting tool. For each table, ask which
+property matters most: who must <em>not</em> read it (confidentiality), what breaks if it is silently
+altered (integrity), and what stops if it is unavailable (availability).</p>
+
+<table class="lab">
+<thead><tr><th>Table</th><th>What it really is</th><th>Which property dominates</th></tr></thead>
+<tbody>
+<tr><td><code class="inline">members</code></td><td>Real people's names, cities, and membership history. The only table with PII.</td><td>Confidentiality. This is the table a breach notification is about.</td></tr>
+<tr><td><code class="inline">sales</code></td><td>The financial record of the business.</td><td>Integrity first, availability a close second. Quietly altered sales hide fraud; frozen sales stop the stores.</td></tr>
+<tr><td><code class="inline">suppliers</code></td><td>Who the co-op pays, and where.</td><td>Integrity. An attacker who edits a bank detail here gets paid instead of the supplier.</td></tr>
+<tr><td><code class="inline">inventory</code>, <code class="inline">products</code>, <code class="inline">stores</code>, <code class="inline">used_gear</code></td><td>Operating data.</td><td>Availability. Registers and reorder decisions read these all day.</td></tr>
+</tbody>
+</table>
+
+<p>Checkpoints 1 and 2 make the confidentiality row concrete: how many people, and how many states'
+breach laws are standing behind them. Run the queries, then sit with the second number for a moment,
+because it is the one that surprises new security leads. A breach is not one legal event; it is one per
+jurisdiction.</p>
+
+<div id="verify"></div>
+<h2><span class="num">Part 2</span>Verification beats vibes: two emails from this morning</h2>
+
+<p>Chapter 9's breach began with a stolen password, but most breaches begin one step earlier, with a
+message that persuades someone to hand access over. The defense you are about to practice is the one
+that scales: do not judge a message by its tone, its urgency, or its logo. Judge it by whether its
+claims survive contact with your system of record. You have the system of record open in the sandbox
+above.</p>
+
+<div class="callout callout-caution"><strong>Email one &middot; to accounts payable</strong>
+<p style="font-family:var(--sans);font-size:.92rem"><em>From: billing@nordvik-outdoor-payments.com<br>
+Subject: URGENT: Updated remittance details, action required before Friday</em></p>
+<p style="font-family:var(--sans);font-size:.92rem">"Hello, this is the finance team at Nordvik Outdoor,
+your US-based climbing hardware supplier. Due to a banking migration we require all invoice payments to
+be sent to our new account, details attached. Please update before Friday's payment run to avoid
+disruption to your spring orders."</p></div>
+
+<p>Plausible. Nordvik Outdoor is a real supplier; you joined to it in Lab 7. The urgency is realistic
+and the ask is routine. Now verify the one factual claim the email makes about itself. Checkpoint 3.</p>
+
+<div class="callout callout-caution"><strong>Email two &middot; to member services</strong>
+<p style="font-family:var(--sans);font-size:.92rem"><em>From: privacy-request@mail-cascadia-coop.net<br>
+Subject: Formal complaint from member #1287, records required</em></p>
+<p style="font-family:var(--sans);font-size:.92rem">"Member 1287 has filed a formal complaint regarding
+billing errors on their account. Under our review procedure, please reply with the member's full record,
+including name, address, and complete purchase history, so we can begin the investigation today."</p></div>
+
+<p>Notice what this one is really asking for: not money, but a record. Verify that the member exists at
+all. Checkpoint 4, and it is one line.</p>
+
+<div class="callout callout-good"><strong>The habit, stated once</strong>
+<p>Both emails die to a query that takes ten seconds. The professionals' version of this habit has a
+name, out-of-band verification: confirm the request through a channel the requester does not control.
+Call the supplier at the number in <em>your</em> records, not the one in the email. The database is your
+first out-of-band channel, and you have had it since Week 7.</p></div>
+
+<div id="blast"></div>
+<h2><span class="num">Part 3</span>Blast radius: least privilege in numbers</h2>
+
+<p>Chapter 9 said the attackers had nine days of lateral movement, which meant one stolen credential
+became access to everything. The design rules against that, least privilege and segmentation, tend to
+get taught as slogans. You are going to compute them instead.</p>
+
+<p>The co-op's registers log in to record sales. Question: what should a register's credential be able
+to <em>read</em>? Today, the honest answer at Cascadia is "everything," because nobody ever decided
+otherwise, and security failures are mostly decisions that went unmade. Your proposal: scope each
+register to its own store. Checkpoints 5 and 6 measure exactly how much that one decision shrinks the
+blast radius of one stolen password.</p>
+
+<p>Keep the resulting percentage for your memo. It is the rare security argument that fits in one
+sentence with a number in it, which is the kind boards actually act on.</p>
+
+<div id="controls"></div>
+<h2><span class="num">Part 4</span>The control numbers: integrity and availability, priced</h2>
+
+<p>Two more numbers finish the audit, one for each remaining letter of the triad.</p>
+
+<p><strong>Integrity.</strong> An attacker with write access does not always lock your data; sometimes
+they quietly change it, and the fraud hides inside numbers nobody rechecks. The defense is a control
+number: a total you can recompute from source at will. You have one already. Total revenue has followed
+you since Lab 2, and Checkpoint 7 asks for it one more time, now wearing its security hat: if this
+number ever disagrees with itself, someone has been in your tables.</p>
+
+<p><strong>Availability.</strong> Ransomware's real product is the dark day: registers down, inventory
+unreadable, stores effectively closed. Checkpoint 8 computes what one such day costs the co-op in
+revenue alone, before a single record leaks and before a lawyer is hired. Multiply it across the ten
+days Change Healthcare was down and you understand why the chapter insisted the business disruption was
+the disaster and the data breach was the aftermath.</p>
+
+<div id="map"></div>
+<h2><span class="num">Part 5</span>The access map: who should see what</h2>
+
+<p>Now the part with no checkpoint, because it is the part that is actually your job. Least privilege
+says every role gets the minimum it needs. Someone has to decide what that minimum is, role by role and
+table by table, and that someone is never the database; it is a manager who understands the work. Copy
+this grid into your submission document and fill every cell with <strong>R</strong> (read),
+<strong>W</strong> (read and write), or a dash (no access).</p>
+
+<table class="lab">
+<thead><tr><th>Role</th><th>sales</th><th>members</th><th>products</th><th>suppliers</th><th>inventory</th><th>used_gear</th></tr></thead>
+<tbody>
+<tr><td>Register clerk</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>Store manager (one store)</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>Buyer (procurement)</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>Member services</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>Marketing intern</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>The board</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+</tbody>
+</table>
+
+<p>There is no single right map, but there are defensible and indefensible cells, and your memo must
+defend three of your choices in a sentence each. Two prompts to pressure-test yourself: does the
+marketing intern really need member <em>names</em>, or would an anonymized extract serve the campaign?
+And does the board need write access to anything at all? (Chapter 10 has opinions about that one.)</p>
+
+<div class="callout"><strong>If you finish early: the $10,000 question</strong>
+<p>The board approves a $10,000 security budget for the year, and only one of these fits inside it: MFA
+on every account, an automated offline backup of the database, or a yearly phishing training with test
+emails for all staff. Pick one, and write the three sentences you would say to the board: what it
+prevents, what you are consciously leaving unprotected, and why that trade is right for a company this
+size. There is no checkpoint; your pick and the three sentences go in your submission note.</p></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
+<script>
+var CASCADIA_DB=null;
+initSqlJs({locateFile:function(f){return 'https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/'+f}})
+.then(function(SQL){return fetch('cascadia.db').then(function(r){if(!r.ok)throw new Error('db fetch '+r.status);return r.arrayBuffer()}).then(function(buf){
+  CASCADIA_DB=new SQL.Database(new Uint8Array(buf));
+  document.getElementById('sqlstatus').textContent='Database loaded. The co-op's eight tables, same as Lab 7. Type a query and press Run.';
+})}).catch(function(e){
+  document.getElementById('sqlstatus').innerHTML='Could not load the database ('+e.message+'). The sandbox has to be served over http, so it works on the course site but not from a file you opened locally. You can also run these queries at <a href="https://sqliteonline.com">sqliteonline.com</a> by uploading <a href="cascadia.db">cascadia.db</a>.';
+});
+function runSQL(){
+  var out=document.getElementById('sqlout');
+  if(!CASCADIA_DB){out.textContent='Database still loading, give it a second.';return}
+  var q=document.getElementById('sqlin').value;
+  try{
+    var res=CASCADIA_DB.exec(q);
+    if(!res.length){out.textContent='Query ran, no rows returned.';return}
+    var r=res[0],h='<table style="border-collapse:collapse"><tr>';
+    r.columns.forEach(function(c){h+='<th style="border:1px solid var(--rule);padding:.35rem .65rem;background:var(--off-white);text-align:left">'+c+'</th>'});
+    h+='</tr>';
+    r.values.slice(0,50).forEach(function(row){h+='<tr>';row.forEach(function(v){h+='<td style="border:1px solid var(--rule);padding:.35rem .65rem">'+(v===null?'<em style="color:#a03434">NULL</em>':String(v).replace(/</g,'&lt;'))+'</td>'});h+='</tr>'});
+    h+='</table>';
+    if(r.values.length>50)h+='<p style="color:var(--muted)">Showing 50 of '+r.values.length+' rows.</p>';
+    out.innerHTML=h;
+  }catch(e){out.innerHTML='<span style="color:#a03434">SQL error: '+String(e.message).replace(/</g,'&lt;')+'</span><br><span style="color:var(--muted)">Read it closely. The word right before the error is usually where the problem is.</span>'}
+}
+</script>
 <h2 id="checkpoints"><span class="num">Required</span>Checkpoints <span style="font-weight:400;color:var(--muted);font-size:.65em">, complete as you work</span></h2>
 <p style="font-family:var(--sans);font-size:.95rem">Here is how this works. Each checkpoint matches a
 step above. You do the actual work in your own file, then paste the answer here. Get it right and the
@@ -442,11 +559,11 @@ you get stuck. That is what it is there for.</p>
 <p style="font-family:var(--sans);font-size:.95rem">Once you have cleared them all, write your reflection
 and download your certificate for Canvas. One warning worth taking seriously: <strong>your progress lives
 only on this page.</strong> Close the tab or refresh before you download, and you start over.</p>
-<div class="progress" id="prog">Checkpoint progress: 0 / 7</div>
+<div class="progress" id="prog">Checkpoint progress: 0 / 8</div>
 <div id="cps"></div>
 <div class="certbox" id="reflectbox">
   <h3>One last thing before your certificate</h3>
-  <p style="font-family:var(--sans);font-size:.88rem">Dirty data is the fingerprint of a broken process. Describe where dirty data would most likely appear in the industry you want to work in, what upstream process failure would cause it, and what it would cost the business if nobody cleaned it before a decision was made from it.</p>
+  <p style="font-family:var(--sans);font-size:.88rem">This lab asked you to make security decisions with a business degree's tools: an inventory, a verification habit, an access map, and a handful of numbers. Think of an organization you know from the inside, a job, a club, a team. Name the data it holds that would hurt most if it leaked or locked up, who can currently reach it, and the one control from this lab you would put in place there first. Why that one?</p>
   <p style="font-family:var(--sans);font-size:.88rem;color:var(--muted)">Fifty words is the minimum, but
   do not write to the counter. This prints as page 2 of your certificate, so it is the part your lab
   professor actually reads. Answer it like someone asked you the question out loud.</p>
@@ -463,18 +580,21 @@ only on this page.</strong> Close the tab or refresh before you download, and yo
   <p class="codebox" id="codeout" style="font-family:var(--sans);font-size:.85rem"></p>
 </div>
 
+
 <h2 id="submit"><span class="num">Canvas</span>What to submit</h2>
-<p style="font-family:var(--sans);font-size:.92rem">Your cleaned workbook as LAB3_Last_First.xlsx including your helper columns, a three-sentence note to the controller quantifying what was wrong, plus your completion certificate PDF (your reflection is page 2 of it).</p>
+<p style="font-family:var(--sans);font-size:.92rem">One document containing: your completed access map
+with three defended cells, your one-paragraph security memo to the board opening with the blast-radius
+percentage and the dark-day number, your $10,000 pick if you got to it, plus your completion certificate
+PDF (your reflection is page 2 of it).</p>
 </main></div>
 <script>
 (function(){var b=document.querySelector('.railtoggle'),n=document.getElementById('chapnav');
 if(!b||!n)return;b.addEventListener('click',function(){var o=n.classList.toggle('open');
 b.setAttribute('aria-expanded',o?'true':'false');});})();
 </script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-const LAB="LAB3", QS=[{"q": "Checkpoint 1 \u00b7 Open cascadia-sales-2025-RAW.xlsx. How many data rows does it contain?", "t": "num", "a": "MjkyMw==", "tol": 0, "h": "Ctrl+End again. It is NOT the same as the clean file. That difference is the point."}, {"q": "Checkpoint 2 \u00b7 Use Remove Duplicates (Data tab) across all columns. How many duplicate rows does Excel report removing?", "t": "num", "a": "MjQ=", "tol": 0, "h": "Select the whole table first. Excel tells you the count in a dialog. That number is your answer."}, {"q": "Checkpoint 3 \u00b7 After removing duplicates, how many data rows remain?", "t": "num", "a": "Mjg5OQ==", "tol": 0, "h": "If this matches the clean file's row count from Lab 2, your dedupe worked."}, {"q": "Checkpoint 4 \u00b7 Some quantity cells are blank. Use COUNTBLANK on the quantity column: how many?", "t": "num", "a": "NTU=", "tol": 0, "h": "=COUNTBLANK(range). Run it on the deduplicated data."}, {"q": "Checkpoint 5 \u00b7 Some unit_price values were stored as text with a leading $. Count them. How many?", "t": "num", "a": "MTA5", "tol": 0, "h": "Text-formatted numbers left-align. One approach: =SUMPRODUCT(--ISTEXT(range)) on unit_price after dedupe. Another: filter for cells beginning with \"$\" using =COUNTIF(range,\"$*\")."}, {"q": "Checkpoint 6 \u00b7 Build the supplier lookup table from this page, then use VLOOKUP to add lead times. What is the lead time, in days, for the supplier of the Dynamic Rope 60m?", "t": "num", "a": "NTY=", "tol": 0, "h": "Find the rope's supplier first (it's in the supplier column), then VLOOKUP that name against the lead-time table."}, {"q": "Checkpoint 7 \u00b7 Fully clean the file: dedupe, TRIM store names, fix dates to one format, convert text prices to numbers, resolve blanks per the instructions. Recompute total revenue. What do you get?", "t": "num", "a": "NzEyOTcxLjU=", "tol": 1, "h": "If your cleaned total matches Lab 2's total exactly, you have reconstructed the clean dataset. That agreement is the whole test. If you are close but not exact, run this checklist before redoing anything: (1) your row count should still be 2,899; lower means you deleted rows that only needed fixing. (2) All 109 dollar-sign prices must be true numbers; =COUNT on the price column equals 2,899 only when they are, because COUNT skips text. (3) Every blank quantity must use the controller's rule exactly: revenue divided by unit price, rounded to a whole number. A decimal quantity anywhere is the miss."}];
+const LAB="LAB8", QS=[{"q": "Part 1 \u00b7 The confidentiality inventory. Start where every audit starts, with a count of what you are protecting: SELECT COUNT(*) FROM members; How many people's personal information does the co-op hold?", "t": "num", "a": "NjA=", "tol": 0, "h": "One line in the sandbox above. Each row is a real person's name, city, and membership history. Change Healthcare's number was 190 million; the co-op's is smaller, but the shape of the obligation is identical."}, {"q": "Part 1 \u00b7 Breach notification is state law, and every state writes its own. SELECT COUNT(DISTINCT state) FROM members; If member data leaked, how many different states' notification laws would the co-op be answering to?", "t": "num", "a": "Mw==", "tol": 0, "h": "COUNT(DISTINCT state) collapses the column to its unique values. Every distinct state is a separate legal clock that starts ticking the day you discover a breach."}, {"q": "Part 2 \u00b7 Email one claims to be from Nordvik Outdoor, \"your US-based climbing hardware supplier,\" announcing new bank details for invoice payments. Verify the claim against the system of record: SELECT country FROM suppliers WHERE supplier_name='Nordvik Outdoor'; What country is Nordvik Outdoor actually in?", "t": "txt", "a": "Tm9yd2F5", "h": "The query returns one word, and it is not the one the email used. A supplier that gets its own country wrong is not your supplier. This exact fraud, a real vendor name plus new bank details, is called business email compromise, and it costs companies billions a year."}, {"q": "Part 2 \u00b7 Email two says member 1287 has filed a complaint and demands you send their full record for review. SELECT COUNT(*) FROM members WHERE member_id=1287; What does the count return?", "t": "num", "a": "MA==", "tol": 0, "h": "Zero rows. There is no member 1287, so the request is a fishing trip for whatever record you might send back. The lesson generalizes: verify the claim, not the tone. Urgency is a technique, not evidence."}, {"q": "Part 3 \u00b7 Least privilege, measured. Suppose each register credential could read only its own store's sales. How many rows can a Bellingham-scoped account reach? SELECT COUNT(*) FROM sales s JOIN stores st ON st.store_id=s.store_id WHERE st.store_name='Bellingham';", "t": "num", "a": "MzQ3", "tol": 0, "h": "A JOIN and a WHERE, both from Lab 7. This number is the blast radius of one stolen register password in a least-privilege design."}, {"q": "Part 3 \u00b7 Now express the blast radius as a share: one hundred times your Checkpoint 5 answer, divided by the total number of sales rows (you have known that total since Lab 2). What percent of the co-op's sales does one scoped credential expose? One decimal.", "t": "num", "a": "MTIuMA==", "tol": 0.2, "h": "Roughly one eighth. The same stolen password against an unscoped, everything-access account exposes one hundred percent. That gap is the entire argument for least privilege, in one division."}, {"q": "Part 4 \u00b7 Integrity. You have computed total revenue in Excel twice this quarter. Compute it here in one line: SELECT ROUND(SUM(quantity*unit_price),2) FROM sales; What is it?", "t": "num", "a": "NzEyOTcxLjU=", "tol": 1, "h": "The point is not the arithmetic. A number you can recompute from source at any time is a control: if an attacker with write access quietly alters rows, this total moves, and you notice. Integrity monitoring is recomputing what you already know and checking that it still agrees."}, {"q": "Part 4 \u00b7 Availability. Ransomware does not steal a register; it stops it. SELECT ROUND(SUM(quantity*unit_price)/COUNT(DISTINCT sale_date),2) FROM sales; To the nearest dollar, what does one dark day cost the co-op in revenue alone?", "t": "num", "a": "MTk1OC43MQ==", "tol": 5, "h": "Total revenue over distinct selling days. Multiply by the ten days Change Healthcare's systems were down and you have the start of a board-ready number, before a single record leaks."}];
 const solved=new Set();
 const norm=s=>s.replace(/[$,\s]/g,'').toLowerCase();
 function render(){
@@ -530,7 +650,7 @@ function cert(){
  p.setFont('times','normal');p.setFontSize(13);
  p.text('completed all '+QS.length+' checkpoints of',280,198,{align:'center'});
  p.setFont('helvetica','bold');p.setFontSize(15);p.setTextColor(26,82,118);
- p.text('Lab 3 \u00B7 Data Preparation. The RAW File',280,222,{align:'center'});
+ p.text('Lab 8 \u00B7 Security & Data Governance: The Audit',280,222,{align:'center'});
  p.setFont('helvetica','normal');p.setFontSize(11);p.setTextColor(90,90,90);
  p.text(d,280,252,{align:'center'});
  p.setFont('courier','bold');p.setFontSize(12);p.setTextColor(17,120,100);
@@ -543,7 +663,7 @@ function cert(){
  p.setTextColor(26,82,118);p.setFont('helvetica','bold');p.setFontSize(10);
  p.text('LAB REFLECTION \u00B7 '+n+' \u00B7 '+code,280,44,{align:'center'});
  p.setTextColor(60,60,60);p.setFont('times','italic');p.setFontSize(9);
- const promptLines=p.splitTextToSize('Prompt: Dirty data is the fingerprint of a broken process. Describe where dirty data would most likely appear in the industry you want to work in, what upstream process failure would cause it, and what it would cost the business if nobody cleaned it before a decision was made from it.',480);
+ const promptLines=p.splitTextToSize('Prompt: This lab asked you to make security decisions with a business degree\'s tools: an inventory, a verification habit, an access map, and a handful of numbers. Think of an organization you know from the inside, a job, a club, a team. Name the data it holds that would hurt most if it leaked or locked up, who can currently reach it, and the one control from this lab you would put in place there first. Why that one?',480);
  p.text(promptLines,40,70);
  p.setFont('times','normal');p.setFontSize(11);p.setTextColor(26,26,26);
  const lines=p.splitTextToSize(r,480);
@@ -553,8 +673,6 @@ function cert(){
 }
 render();
 </script>
-
-<!--NAVJS-->
 <script>
 (function(){
   var btns=[].slice.call(document.querySelectorAll('.dd-btn'));

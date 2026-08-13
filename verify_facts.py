@@ -82,10 +82,17 @@ EXPECTED = {
                    TRUTH['dollar_prices'], TRUTH['nulls_qty'], TRUTH['raw_states'], 3, None,
                    q1("SELECT su.supplier_name FROM products p JOIN suppliers su ON su.supplier_id=p.supplier_id WHERE p.product_name='Avalanche Beacon'"),
                    TRUTH['worst_attach']],
+ 'lab8-security.html': [TRUTH['n_members'], q1("SELECT COUNT(DISTINCT state) FROM members"),
+                   q1("SELECT country FROM suppliers WHERE supplier_name='Nordvik Outdoor'"),
+                   q1("SELECT COUNT(*) FROM members WHERE member_id=1287"),
+                   q1("SELECT COUNT(*) FROM sales s JOIN stores st ON st.store_id=s.store_id WHERE st.store_name='Bellingham'"),
+                   round(100.0*q1("SELECT COUNT(*) FROM sales s JOIN stores st ON st.store_id=s.store_id WHERE st.store_name='Bellingham'")/TRUTH['total_rows'],1),
+                   TRUTH['total_revenue'],
+                   round(q1(f"SELECT SUM({R})/COUNT(DISTINCT sale_date) FROM sales"),2)],
 }
 
 for f, expected_list in EXPECTED.items():
-    path = f'out/{f}'
+    path = f'out/{f}' if os.path.exists(f'out/{f}') else f
     if not os.path.exists(path): continue
     src = open(path).read()
     m = re.search(r'QS=(\[.*?\]);', src, re.S)
@@ -107,7 +114,7 @@ PROSE = [
     ('second month',   r'SECOND-highest[^.?]{0,80}', None),
     ('lowest month',   r'(?:lowest|weakest|trough)[^.]{0,40}month[^.]{0,60}?\b(January|February|March|April|May|June|July|August|September|October|November|December)\b', TRUTH['low_month']),
 ]
-for f in glob.glob('out/lab*.html') + glob.glob('out/chapter*.html'):
+for f in (glob.glob('out/lab*.html') + glob.glob('out/chapter*.html')) or (glob.glob('lab*.html') + glob.glob('chapter*.html')):
     txt = re.sub(r'<[^>]+>', ' ', open(f).read())
     txt = re.sub(r'\s+', ' ', txt)
     for label, pat, expected in PROSE:
@@ -121,14 +128,14 @@ FIGURES = [
     (r'2,899', TRUTH['total_rows']), (r'2,923', TRUTH['raw_rows']),
     (r'eight stores', TRUTH['n_stores']), (r'35 products', TRUTH['n_products']),
 ]
-for f in glob.glob('out/*.html'):
+for f in glob.glob('out/*.html') or glob.glob('*.html'):
     txt = re.sub(r'<[^>]+>', ' ', open(f).read())
     for pat, val in FIGURES:
         if re.search(pat, txt):
             checks += 1   # presence confirms it matches the current dataset
 
 # ---------------------------------------------------------------- report
-print(f"ran {checks} checks across {len(glob.glob('out/*.html'))} pages")
+print(f"ran {checks} checks across {len(glob.glob('out/*.html') or glob.glob('*.html'))} pages")
 if fails:
     print(f"\n{len(fails)} FAILURES:")
     for x in fails: print("  ✗", x)
