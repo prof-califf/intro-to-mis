@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Chapter 10: IT Governance: Equifax | MIS 320</title>
-<meta name="description" content="The 2017 Equifax breach as a governance failure: every technical fix existed, and the decisions failed anyway.">
+<title>Chapter 12: The Cloud &amp; What Computing Costs: Netflix | MIS 320</title>
+<meta name="description" content="Netflix's seven-year move onto its rival's computers, the CDN it built anyway, the day us-east-1 blinked, and the planet-sized bill behind every stream and prompt.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -294,9 +294,9 @@ li{margin-bottom:.45rem}
       <a href="chapter7-moneyball.html"><span class="lbl">Chapter 7 &middot; Week 6</span>Business Intelligence &mdash; Moneyball</a>
       <a href="chapter8-ai-ml.html"><span class="lbl">Chapter 8 &middot; Week 10</span>AI, Machine Learning &amp; Bias &mdash; TikTok &amp; Amazon</a>
       <a href="chapter9-changehealthcare.html"><span class="lbl">Chapter 9 &middot; Week 8</span>Cybersecurity &mdash; Change Healthcare</a>
-      <a class="current" href="chapter10-equifax.html"><span class="lbl">Chapter 10 &middot; Week 8</span>IT Governance &mdash; Equifax</a>
+      <a href="chapter10-equifax.html"><span class="lbl">Chapter 10 &middot; Week 8</span>IT Governance &mdash; Equifax</a>
       <a href="chapter11-software.html"><span class="lbl">Chapter 11 &middot; Week 9</span>Software Design &amp; Selection &mdash; Robles v. Domino's</a>
-      <a href="chapter12-cloud.html"><span class="lbl">Chapter 12 &middot; Week 10</span>The Cloud &amp; What Computing Costs &mdash; Netflix</a>
+      <a class="current" href="chapter12-cloud.html"><span class="lbl">Chapter 12 &middot; Week 10</span>The Cloud &amp; What Computing Costs &mdash; Netflix</a>
       </div>
     </div>
     <div class="dd">
@@ -330,240 +330,292 @@ li{margin-bottom:.45rem}
 <main class="chapwrap">
 
 <header class="chaphead">
-  <p class="eyebrow">Chapter 10 &middot; IT Governance</p>
-  <h1>IT Governance: When Everyone Was Responsible and No One Was</h1>
-  <p class="anchor">In 2017, Equifax lost the personal data of nearly 150 million people. There was a
-  patch that would have prevented it. The patch was known, available, and even ordered internally.
-  It was simply never applied to the right server, because no one owned the job. This chapter is
-  about governance: the structures that decide who is accountable, before the crisis makes it
-  obvious that no one was.</p>
-  <div class="concepts"><span class="clabel">IS concepts</span><span>IT governance</span><span>Accountability vs. responsibility</span><span>Patch &amp; vulnerability management</span><span>Frameworks (NIST, COBIT)</span><span>Compliance vs. security</span><span>Data stewardship</span><span>Audit</span></div>
+  <p class="eyebrow">Chapter 12 &middot; Cloud &amp; What Computing Costs</p>
+  <h1>The Cloud: Renting Computers, and the Bill the Planet Gets</h1>
+  <p class="anchor">In August 2008 a database corruption stopped Netflix from shipping DVDs for three
+  days, and the company drew a radical conclusion: stop owning computers. Seven years later it shut
+  its last data center and ran one of the world's biggest services on machines rented from its
+  fiercest competitor. This chapter is about what the cloud actually is, why renting won, what
+  Netflix deliberately built anyway, what happens on the day the cloud blinks, and the question
+  Chapter 8 left you holding: when computing feels free, who is paying, and in what currency?</p>
+  <div class="meta-row">
+    <span>Cases: Netflix / AWS &middot; IEA, Energy and AI</span>
+    <span class="alt">Week 10 &middot; Wednesday, the final lecture</span>
+    <span class="alt"><a href="schedule.html" style="color:inherit;text-decoration:none">Paired lab: Information Architecture (Lab 10) &#8594;</a></span>
+  </div>
 </header>
 
 <div class="statrow">
-  <div class="stat"><b>~147M</b><span>people's data exposed</span></div>
-  <div class="stat"><b>1</b><span>unpatched server</span></div>
-  <div class="stat"><b>76 days</b><span>attackers inside</span></div>
-  <div class="stat"><b>$700M+</b><span>settlement, 2019</span></div>
-  <div class="stat"><b>0</b><span>consent from those exposed</span></div>
+  <div class="stat"><b>3 days</b><span>DVDs stopped; the decision that started it</span></div>
+  <div class="stat"><b>7 yrs</b><span>to shut the last Netflix data center, 2016</span></div>
+  <div class="stat"><b>130+</b><span>countries switched on in a single day</span></div>
+  <div class="stat"><b>415 TWh</b><span>data centers' electricity in 2024, ~1.5% of the world's</span></div>
+  <div class="stat"><b>&times;2</b><span>projected by 2030, roughly Japan's annual usage</span></div>
 </div>
 
 <div class="toc"><strong>Contents</strong>
-<a href="#s1">1. A patch nobody applied</a>
-<a href="#s2">2. What governance is</a>
-<a href="#s3">3. Responsibility vs. accountability</a>
-<a href="#s4">4. The frameworks</a>
-<a href="#s5">5. Compliance is not security</a>
-<a href="#s6">6. The product was people</a>
-<a href="#s7">7. The other side: data about people who never agreed</a>
-<a href="#s8">8. The five components</a>
-<a href="#s9">9. Summary and vocabulary</a>
-<a href="#discussion">10. Discussion questions</a>
+<a href="#s1">1. Three days without DVDs</a>
+<a href="#s2">2. What the cloud actually is</a>
+<a href="#s3">3. Seven years to zero data centers</a>
+<a href="#s4">4. The part Netflix built anyway</a>
+<a href="#s5">5. When the cloud blinks</a>
+<a href="#s6">6. The bill the planet gets</a>
+<a href="#s7">7. What business people do with the cloud</a>
+<a href="#s8">8. The other side: the cloud's neighbors</a>
+<a href="#s9">9. The five components</a>
+<a href="#s10">10. Summary and vocabulary</a>
+<a href="#questions">11. Discussion questions</a>
 </div>
 
-<div class="plan"><div class="plan-head">Taught Week 8 Monday, combined with Chapter 9; the full 80-minute plan is in Chapter 9</div>
+<div class="plan">
+<div class="plan-head">Wednesday session plan &middot; 80 minutes &middot; the last lecture of the quarter</div>
 <table>
-<tr><td class="t">&mdash;</td><td class="w">Note</td><td>This chapter is the second half of the Week 8 Monday session. Chapter 9 (Change Healthcare) supplies the attack and the concepts; this chapter supplies the governance lens and the Equifax case. Wednesday is Veterans Day, so the lab carries the applied work.</td></tr>
+<tr><td class="t">0:00</td><td class="w">Open</td><td>Ask: where, physically, was the last thing you streamed? Collect guesses. Nobody knows, and by the end of the session everyone will, down to the box inside their internet provider.</td></tr>
+<tr><td class="t">0:05</td><td class="w">Lecture</td><td>The Netflix arc: the 2008 corruption, IaaS/PaaS/SaaS and capex to opex, seven years to zero data centers, 130 countries in a day, and Open Connect as the build-versus-buy rule from Chapter 11 at its limit.</td></tr>
+<tr><td class="t">0:35</td><td class="w">Lecture</td><td>The two bills: concentration risk, with the October 2025 us-east-1 morning as the fresh case, then the physical bill, walking the IEA numbers from 415 TWh to the doubling, the water, and who lives next to it.</td></tr>
+<tr><td class="t">0:55</td><td class="w">Think-pair-share</td><td>Where does the co-op's data live? See the activity below.</td></tr>
+<tr><td class="t">1:15</td><td class="w">Close</td><td>The course's last callback: trace one Spotify Wrapped play through all five components, from a phone through the pipeline to a rented GPU, and name each bill along the way. That trace is a fair preview of the final.</td></tr>
 </table></div>
 
-<h2 id="s1"><span class="num">01</span>A patch nobody applied</h2>
+<h2 id="s1"><span class="num">01</span>Three days without DVDs</h2>
 
-<p>In March 2017, a serious vulnerability was disclosed in Apache Struts, a piece of open-source
-software used inside countless corporate web applications. A fix was published the same week.
-Equifax, one of the three US credit bureaus, was told internally to apply it. The instruction went
-out. And then, on one internet-facing system that happened to run the vulnerable software, it did not
-get done. No alarm connected the order to the omission.</p>
+<p>By its own account, Netflix's road to the cloud began with a failure: in August 2008 a major
+database corruption meant that for three days the company could not ship DVDs to its members. The
+diagnosis went deeper than the incident. Netflix concluded it had to move away from vertically
+scaled single points of failure, big databases in its own data center, toward horizontally scalable,
+distributed systems it did not own, and it chose Amazon Web Services as the landlord. Pause on the
+strangeness of that sentence: Amazon, whose Prime Video competes directly with Netflix, would
+henceforth run the computers underneath Netflix. The logic was Chapter 11's rule pushed to its
+limit: computing infrastructure had become a commodity Netflix could rent better than build, even
+from a rival, freeing the company to spend its effort on what differentiates it.</p>
 
-<p>Beginning in May, attackers used that exact vulnerability to get in, and they stayed for about 76
-days, extracting the names, Social Security numbers, birth dates, and addresses of roughly 147
-million people, close to half the US population. A device meant to detect the exfiltration had been
-inactive for months because an expired security certificate had never been renewed. Two boring
-omissions, a missed patch and a lapsed certificate, and a firm whose entire business was holding
-sensitive data handed nearly half a country's identities to strangers.</p>
+<h2 id="s2"><span class="num">02</span>What the cloud actually is</h2>
 
-<div class="callout"><strong>Why this is the governance chapter</strong>
-<p>Nothing about Equifax required advanced attackers, and this is the point. Every technical
-safeguard that would have stopped it already existed and was already understood. What failed was
-governance: the structure that assigns who must do what, who checks that it was done, and who answers
-when it was not. Chapter 9 was about controls. This chapter is about who is accountable for the
-controls, which turns out to be the harder problem.</p></div>
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Cloud computing: IaaS, PaaS, SaaS, and capex to opex</span>
+<p>Strip the vapor from the word: <strong>the cloud is other people's data centers, rented over the
+network, usually by the hour</strong>. It comes in layers of pre-assembly.
+<strong>Infrastructure as a service (IaaS)</strong> rents raw computing: virtual machines, storage,
+networking, and you run everything above. <strong>Platform as a service (PaaS)</strong> rents a
+higher floor: databases, queues, and tools the provider operates for you. <strong>Software as a
+service (SaaS)</strong>, from Chapter 11, rents the finished application. Economically, the cloud
+converts <strong>capital expenditure</strong>, buying servers years ahead of need, into
+<strong>operating expenditure</strong>, paying for what you use as you use it. And technically it
+delivers <strong>elasticity</strong>: capacity that expands in minutes and, just as importantly,
+contracts, so nobody pays all year for the machines that only Thanksgiving weekend needs.</p></div>
 
-<h2 id="s2"><span class="num">02</span>What governance is</h2>
+<p>In five-components terms, the cloud is the hardware component becoming a utility, like power from
+a grid instead of a generator in the basement. That framing also tells you what does not change:
+renting the computers outsources none of the responsibility for the data on them, the software above
+them, or the decisions about both, a point Chapter 9's third-party-risk lesson already made in
+harder currency.</p>
 
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">IT governance</span>
-<p><strong>IT governance</strong> is the set of structures, policies, and decision rights that
-determine how an organization directs and controls its technology: who is allowed to decide what, who
-must do what, who verifies it was done, and who is answerable when it is not. Governance is not
-software you install; it is the answer to the question "who is in charge of this, specifically?" for
-every part of the technology that matters. When that answer is vague, work falls through the gaps
-between people who each assumed someone else had it, which is a fair one-sentence summary of the
-Equifax breach.</p></div>
+<h2 id="s3"><span class="num">03</span>Seven years to zero data centers</h2>
 
-<p>Governance sounds bureaucratic until you watch its absence. The Struts patch failed not because
-anyone refused to do it but because the task lived in the space between teams: the people who knew
-about the vulnerability, the people who owned the server, and the people responsible for verifying
-compliance were not connected by any structure that forced the loop to close. Good governance is
-mostly the unglamorous work of making sure every critical task has exactly one owner and one check.</p>
+<p>The migration took seven years, finishing in early January 2016 when Netflix shut down the last
+data-center pieces serving its streaming product. The company is candid about why it took so long:
+the easy path was to forklift existing systems into AWS unchanged, and Netflix refused it, because
+that moves your problems along with your servers. Instead it rebuilt nearly everything cloud-native,
+as distributed systems designed to expect failure. The payoff figures come from Netflix's own
+announcement: eight times the streaming members it had in 2008, overall viewing up three orders of
+magnitude, and elasticity that let engineers add thousands of virtual servers and petabytes of
+storage in minutes. The proof-of-concept moment came the same month the migration ended: on January
+6, 2016, Netflix switched on service in more than 130 additional countries at once, a launch its own
+racks could never have absorbed.</p>
 
-<h2 id="s3"><span class="num">03</span>Responsibility versus accountability</h2>
+<p>One more habit came out of the rebuild, and it belongs in your vocabulary as culture, not
+technology. Having been burned by a Christmas Eve 2012 outage in an AWS load-balancing service,
+Netflix institutionalized the assumption that everything fails: it built tools, famously including
+one called Chaos Monkey, that deliberately break pieces of its own production systems so engineers
+are forced to design for the failure before it happens for real. Chapter 9 called the rehearsed plan
+for the bad day business continuity. Netflix automated the rehearsal.</p>
 
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Responsibility and accountability</span>
-<p>These words are used loosely in conversation and precisely in governance.
-<strong>Responsibility</strong> is the obligation to do the work: the engineer who applies the patch.
-<strong>Accountability</strong> is the obligation to answer for the outcome, and it cannot be shared
-or delegated away: one named person is accountable that the patch got applied, whether or not they
-touched a keyboard. The classic governance failure is work where responsibility is spread across many
-people and accountability is assigned to none, so when it fails, everyone can truthfully say it was
-not their job. "Everyone was responsible" is how you get an outcome nobody owned.</p></div>
+<h2 id="s4"><span class="num">04</span>The part Netflix built anyway</h2>
 
-<p>Equifax is the textbook illustration. Afterward, no single person could be cleanly blamed for the
-missed patch, which sounds like exoneration and is actually the diagnosis. A system in which no one
-can be held accountable for a critical task is a system that has been designed, by accident, to fail
-quietly. The company's CEO, CIO, and CSO all departed, because accountability, when it has not been
-assigned in advance to someone specific, rolls upward to whoever sits at the top, which is exactly why
-executives should want it assigned in advance.</p>
+<p>Here is the detail that turns the case from a cloud advertisement into a strategy lesson.
+Everything that happens before you press Play, sign-in, search, recommendations, billing, runs on
+AWS. The video itself does not. Netflix built and owns <strong>Open Connect</strong>, its private
+<strong>content delivery network (CDN)</strong>: purpose-built appliances loaded with the catalog
+and installed inside internet service providers around the world, so the actual stream travels a few
+network hops from a Netflix-owned box near you, not across the planet from a rented one. Open
+Connect carries the entirety of Netflix's video traffic, tens of terabits per second at peak, one of
+the highest-volume networks in existence.</p>
 
-<h2 id="s4"><span class="num">04</span>The frameworks</h2>
+<p>Run Chapter 11's rule over the split and it resolves perfectly. Elastic, spiky, commodity
+computing: rent it, even from a rival. The predictable, colossal, quality-defining flow of bits that
+<em>is</em> the customer experience: own it, tune it, and let it become a moat. The lesson is not
+"use the cloud" or "avoid the cloud"; it is that build-versus-rent is decided capability by
+capability, by the same differentiator test, at every scale from Cascadia's registers to a third of
+the internet's evening traffic.</p>
 
-<p>Organizations do not invent governance from scratch. They adopt frameworks: shared checklists and
-vocabularies that encode what mature IT management looks like, so that "are we secure?" becomes a set
-of answerable questions rather than a feeling.</p>
+<h2 id="s5"><span class="num">05</span>When the cloud blinks</h2>
 
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Governance frameworks</span>
-<p>A <strong>framework</strong> is a structured, widely accepted set of practices an organization can
-adopt and be measured against. In security and IT governance the common ones include the
-<strong>NIST Cybersecurity Framework</strong> (organized around five functions: identify, protect,
-detect, respond, recover) and <strong>COBIT</strong> (aimed at aligning IT with business goals).
-Their value is not magic; it is that they turn vague intentions into specific, auditable
-commitments, and they let an outsider, an auditor, a regulator, a board, check whether the
-commitments are being met. Frameworks are how an organization proves its governance exists rather
-than merely claiming it does.</p></div>
+<p>Concentration risk, Chapter 9's word for a third of US medical claims flowing through one
+company, has a computing version, and it demonstrated itself recently. In October 2025 a failure in
+AWS's largest region, US-East-1 in Northern Virginia, rooted in a DNS fault involving its DynamoDB
+database service, cascaded for the better part of a day. Thousands of services stumbled at once:
+social apps, games, banks, airlines, smart-home devices, companies whose customers had no idea AWS
+existed until the morning it mattered. Nothing was hacked. One landlord had a bad day, and a
+noticeable slice of the internet had it too.</p>
 
-<p>Map Equifax onto the NIST functions and the failure is easy to locate: identify (they knew about
-the vulnerability), protect (they failed to patch), detect (the monitoring certificate had expired),
-respond (they were slow and their public response was widely criticized). A framework would not have
-applied the patch for them. But a framework, honestly audited, forces the question "show me that
-every internet-facing system got this patch," and that question is precisely the one no one at
-Equifax was structurally required to answer.</p>
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Lock-in, egress, and the cost of leaving</span>
+<p>The strategic mirror of concentration risk is <strong>vendor lock-in</strong>. Cloud providers
+price movement asymmetrically: data flows in free and pays <strong>egress fees</strong> on the way
+out, and every provider-specific service your engineers adopt deepens the rebuild required to leave.
+This is Chapter 2's <strong>switching costs</strong>, implemented in infrastructure. The remedies,
+spreading across regions or across providers, are real and expensive, which makes resilience what it
+has been all course: not a technical setting but a business decision about how much insurance to
+buy, made before the morning it is needed.</p></div>
 
-<h2 id="s5"><span class="num">05</span>Compliance is not security</h2>
+<h2 id="s6"><span class="num">06</span>The bill the planet gets</h2>
 
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Compliance versus security</span>
-<p><strong>Compliance</strong> means meeting the specific requirements of a standard or law.
-<strong>Security</strong> means actually being hard to breach. They overlap but are not the same, and
-the gap between them is where a lot of breaches live. An organization can pass its audits, hold its
-certifications, and check every box while a single unpatched server sits exposed, because compliance
-measures whether documented controls exist, not whether every real system is actually covered every
-day. Treating a passed audit as proof of safety is one of the most common and expensive mistakes in
-the field. Compliance is a floor, not a finish line.</p></div>
+<p>Chapter 8 ended with a promissory note: when the For You page or a chatbot answer feels free, who
+is paying, and in what currency? This section pays it, with the International Energy Agency's
+ledger. In 2024, the world's data centers consumed roughly <strong>415 terawatt-hours</strong> of
+electricity, about <strong>1.5 percent of all electricity on Earth</strong>, and the figure has grown
+around 12 percent a year since 2017, four times faster than electricity use overall. The IEA's base
+case projects consumption more than doubling to about <strong>945 TWh by 2030</strong>, roughly
+Japan's entire current annual usage, with AI-accelerated servers driving close to half of the
+increase. The United States hosts the largest share, around 45 percent, and data centers account for
+nearly half of all US electricity-demand growth between now and 2030.</p>
 
-<p>This is the trap that connects both cases in this pair. Target, a decade before Change Healthcare,
-was certified compliant with the payment-card security standard when it was breached. Equifax
-operated in a regulated industry with real requirements. Compliance regimes are valuable, they raise
-the floor for everyone, but a compliance mindset can actively harm security if it lets an organization
-mistake the paperwork for the protection. The job of good governance is to close that gap, not to
-celebrate the certificate.</p>
+<p>The global percentages stay small; the local ones do not, because the load clusters. Data centers
+already consume on the order of a fifth of Ireland's electricity and, by commonly cited estimates, a
+quarter of Virginia's, which is why siting fights, grid-upgrade bills, and moratorium debates now
+follow the industry around. Electricity is also only the headline line item. Cooling the machines
+consumes water, a sharpening issue where the cheap land and power happen to be dry. The accelerator
+arms race turns over hardware fast enough to make e-waste a growing stream. And the electricity mix
+matters as much as the amount: today it leans on coal and gas alongside renewables and nuclear,
+putting data-center emissions in the hundreds of millions of tonnes of CO2 per year. None of this is
+an argument that streaming a show is shameful; a single stream or prompt costs very little. It is an
+argument that <em>at scale, computing is industry</em>, with industry's bills, and that the people
+who plan, site, buy, and account for it, which is to say people with business degrees, decide how
+those bills get paid.</p>
 
-<h2 id="s6"><span class="num">06</span>The product was people</h2>
+<h2 id="s7"><span class="num">07</span>What business people do with the cloud</h2>
 
-<p>There is a fact about Equifax that makes its breach different in kind from a retailer losing card
-numbers, and it deserves to be stated plainly. The 147 million people whose data was exposed were
-never Equifax's customers. They never signed up, never agreed to terms, never chose to do business
-with the company at all. Equifax's customers are lenders. The people in its database are its
-<em>product</em>: their financial histories, collected without their direct involvement, packaged and
-sold to others.</p>
+<p><strong>Cloud cost management, now a discipline called FinOps.</strong> Elasticity cuts both
+ways: capacity that scales up in minutes generates bills that do too, and someone must own the
+question of what the company is paying for and why. Rightsizing, reservations, and the monthly
+argument about whose workload that is: analytical work, sitting exactly on Lab 5's skills.</p>
 
-<p>This inverts the usual accountability relationship and it is the deepest governance question in the
-chapter. A normal company that loses customer data faces those customers in the market: they can
-leave. The people harmed by the Equifax breach had no such lever, because they were never in a
-relationship they could exit. You cannot boycott a company you were never a customer of. When the
-people bearing the risk are not the people the company answers to, the market cannot govern the
-outcome by itself, and governance has to come from somewhere else: regulation, law, and the assignment
-of accountability by force rather than by choice.</p>
+<p><strong>Vendor strategy and negotiation.</strong> Section 5 made lock-in a business problem, so
+contracts, egress terms, exit plans, and multi-cloud trade-offs are procurement strategy with
+Chapter 2's switching-cost math at the center.</p>
 
-<h2 id="s7"><span class="num">07</span>The other side: data about people who never agreed</h2>
+<p><strong>Continuity planning.</strong> Deciding, before the next us-east-1 morning, which of the
+company's systems must survive a provider region failing, and what that insurance is worth: Chapter
+9's discipline, applied to the landlord.</p>
 
-<p>Chapter 9 argued that breach costs are an externality, exported to people outside the company's
-books. Equifax pushes that argument to its limit, because the people bearing the risk never entered
-into anything at all.</p>
+<p><strong>Sustainability accounting.</strong> Emissions from rented computing increasingly land in
+corporate climate reporting, and regulators and customers are learning to read it. Someone has to
+measure the footprint of systems the company does not own, negotiate greener regions and contracts,
+and answer for the trend line: Chapter 7's measurement-validity problem, with a planet attached.</p>
 
-<p>A Social Security number cannot be reissued. The 147 million people in the Equifax breach carry a
-lifetime exposure to identity theft that no settlement retires, and the roughly $700 million Equifax
-paid in 2019, split among restitution, credit monitoring, and penalties, works out to a few dollars
-of face value per person for a permanent risk. The company continues to operate and remains one of
-three firms that decide whether Americans can get a mortgage. The breach did not end the business,
-because the business does not depend on the goodwill of the people it holds data about.</p>
+<h2 id="s8"><span class="num">08</span>The other side: the cloud's neighbors</h2>
 
-<p>Hold this against the second question of the course. "Does the system work?" Equifax's data system
-worked extremely well, at collecting, matching, and selling. The question this course insists on
-adding, "for whom, and at whose expense?", is the entire content of the Equifax story, and it is why
-the answer to a governance failure this large is not only a better patch process but a public argument
-about who should be allowed to hold what data about whom, and under what obligations. That argument is
-where the next unit, on regulating technology, begins.</p>
+<p>The cloud's benefits disperse globally; its burdens concentrate locally, and the people carrying
+them rarely chose to. A data-center cluster arrives with jobs and tax revenue, and also with demand
+that can strain the local grid and, in some markets, shows up in residential electricity debates. In
+dry regions, its cooling competes for water with farms and towns. Its diesel backup generators and
+constant mechanical hum are a neighbor's daily reality, not an abstraction. Communities from
+Northern Virginia to Ireland to the Southwest are now negotiating, and sometimes fighting, over
+whether and how the next campus gets built.</p>
 
-<h2 id="s8"><span class="num">08</span>The five components at Equifax</h2>
+<p>You have seen this structure twice before: security costs exported to patients in Chapter 9, AI's
+costs exported to applicants and labelers in Chapter 8. Economists call it an externality all three
+times, and the governance answer is the same all three times: someone has to represent the people
+who are not in the room when the decision is made. This course keeps returning to that sentence
+because, in an economy that runs on information systems, the person in the room is increasingly
+someone with your degree.</p>
+
+<h2 id="s9"><span class="num">09</span>The five components of the cloud</h2>
 
 <table class="sumtable">
-<tr><th>Component</th><th>In the breach</th><th>The governance lesson</th></tr>
-<tr><td><strong>Hardware</strong></td><td>One internet-facing server running vulnerable software</td><td>Every critical box needs a named owner</td></tr>
-<tr><td><strong>Software</strong></td><td>The unpatched Apache Struts; the expired monitoring certificate</td><td>Known fixes are worthless if no process guarantees they land</td></tr>
-<tr><td><strong>Data</strong></td><td>147M identities: the product, not the customer</td><td>Holding data creates duties to people who never agreed</td></tr>
-<tr><td><strong>Networks</strong></td><td>76 days of extraction past a blinded monitor</td><td>Detection is a governance duty, not a one-time purchase</td></tr>
-<tr><td><strong>People</strong></td><td>Responsibility everywhere, accountability nowhere; three executives gone</td><td>Unassigned accountability rolls to the top</td></tr>
+<tr><th>Component</th><th>In the case</th><th>The lesson</th></tr>
+<tr><td><strong>Hardware</strong></td><td>Rented by the hour from a rival; owned where the stream lives</td><td>Hardware became a utility, and the bill became strategy</td></tr>
+<tr><td><strong>Software</strong></td><td>Rebuilt cloud-native; systems that assume their own failure</td><td>Moving unchanged moves your problems with you</td></tr>
+<tr><td><strong>Data</strong></td><td>Everything before Play on AWS; the catalog staged inside ISPs</td><td>Data has gravity: where it sits decides cost, speed, and risk</td></tr>
+<tr><td><strong>Networks</strong></td><td>Open Connect, tens of terabits per second of owned delivery</td><td>The network is not plumbing when it is the product</td></tr>
+<tr><td><strong>People</strong></td><td>Engineers who break things on purpose; FinOps; the neighbors</td><td>Every rented machine still has humans deciding, and absorbing</td></tr>
 </table>
 
-<h2 id="s9"><span class="num">09</span>Summary and vocabulary</h2>
+<h2 id="s10"><span class="num">10</span>Summary and vocabulary</h2>
 
 <table class="sumtable">
 <tr><th>Idea</th><th>This chapter's version</th><th>Where you meet it next</th></tr>
-<tr><td><strong>Governance</strong></td><td>A patch that failed in the gap between teams</td><td>Lab 8's access-and-ownership matrix</td></tr>
-<tr><td><strong>Accountability</strong></td><td>Everyone responsible, no one accountable, so it rolled to the CEO</td><td>Regulating technology (Wk 9&ndash;10)</td></tr>
-<tr><td><strong>Compliance vs. security</strong></td><td>Passing audits with an exposed server</td><td>AI governance, Wk 10</td></tr>
-<tr><td><strong>Frameworks</strong></td><td>NIST's five functions locate exactly where Equifax failed</td><td>Any GRC role, Ch 9 &sect;7</td></tr>
-<tr><td><strong>Product, not customer</strong></td><td>147M people who never signed up and cannot leave</td><td>The regulation unit's core question</td></tr>
+<tr><td><strong>Capex to opex</strong></td><td>Rent computing as you use it; three days of stopped DVDs bought the insight</td><td>Every startup you will ever join</td></tr>
+<tr><td><strong>Elasticity</strong></td><td>130 countries switched on in a day</td><td>The Wednesday activity's cost question</td></tr>
+<tr><td><strong>Build vs. rent, per capability</strong></td><td>AWS underneath, Open Connect on top</td><td><a href="chapter11-software.html">Ch 11's rule</a>, at its limit</td></tr>
+<tr><td><strong>Concentration risk</strong></td><td>One region's DNS fault, a slice of the internet's bad morning</td><td><a href="chapter9-changehealthcare.html">Ch 9's lesson</a>, in infrastructure</td></tr>
+<tr><td><strong>The physical bill</strong></td><td>415 TWh, doubling; water, waste, and neighbors</td><td><a href="chapter8-ai-ml.html">Ch 8's question</a>, answered</td></tr>
 </table>
 
 <dl class="vocab">
-<div><dt>IT governance</dt><dd>The structures and decision rights that determine who directs, does, checks, and answers for technology.</dd></div>
-<div><dt>Responsibility</dt><dd>The obligation to do the work.</dd></div>
-<div><dt>Accountability</dt><dd>The obligation to answer for the outcome; cannot be shared away.</dd></div>
-<div><dt>Patch management</dt><dd>The process ensuring known fixes actually reach every affected system.</dd></div>
-<div><dt>Vulnerability</dt><dd>A known weakness attackers can exploit; the Struts flaw was one.</dd></div>
-<div><dt>Framework</dt><dd>A structured, auditable set of accepted practices (e.g., NIST CSF, COBIT).</dd></div>
-<div><dt>Compliance</dt><dd>Meeting a standard's requirements; a floor, not proof of security.</dd></div>
-<div><dt>Audit</dt><dd>An independent check that controls exist and are followed.</dd></div>
-<div><dt>Data stewardship</dt><dd>The duty of care owed by whoever holds data, especially about people who did not consent.</dd></div>
-<div><dt>Externality</dt><dd>A cost borne by people outside the decision; central to both security chapters.</dd></div>
+<div><dt>Cloud computing</dt><dd>Other people's data centers, rented over the network, usually by the hour.</dd></div>
+<div><dt>IaaS / PaaS / SaaS</dt><dd>Renting raw machines, a managed platform, or the finished application.</dd></div>
+<div><dt>Capex vs. opex</dt><dd>Buying capacity years ahead versus paying for use as it happens.</dd></div>
+<div><dt>Elasticity</dt><dd>Capacity that grows and shrinks in minutes, so peak demand stops dictating year-round cost.</dd></div>
+<div><dt>Region / availability zone</dt><dd>The geographic units clouds are sold in; where your workload lives, fails, and is billed.</dd></div>
+<div><dt>Content delivery network (CDN)</dt><dd>Servers placed near users so heavy content travels a short distance; Netflix's is Open Connect.</dd></div>
+<div><dt>Chaos engineering</dt><dd>Breaking your own systems on purpose so failure is designed for before it is suffered.</dd></div>
+<div><dt>Vendor lock-in / egress fees</dt><dd>Switching costs implemented in infrastructure: free to arrive, priced to leave.</dd></div>
+<div><dt>Concentration risk</dt><dd>Chapter 9's word, computing edition: too much of the internet on one landlord's floor.</dd></div>
+<div><dt>FinOps</dt><dd>The discipline of managing cloud spend; elasticity's bill, owned by someone.</dd></div>
+<div><dt>Data gravity</dt><dd>Compute and services accumulate around where the data already sits, which is why the first region choice lasts.</dd></div>
+<div><dt>Data-center externalities</dt><dd>Energy, water, noise, and grid strain landing on neighbors of the buildout.</dd></div>
 </dl>
 
-<div class="ailight g">
-  <div class="light-housing"><span class="bulb r"></span><span class="bulb y"></span><span class="bulb g on"></span></div>
-  <div class="ailight-text"><strong>Green light for this chapter's questions.</strong> Use AI to test
-  your grasp of governance terms, or to argue the other side of the discussion questions once you have
-  taken a position, per the Lab 1 rules.</div>
+<div class="tps">
+  <div class="tps-head"><span>Wednesday activity &middot; Where does the co-op's data live?</span><span class="mins">20 minutes</span></div>
+  <div class="tps-body">
+    <p class="tps-setup">Cascadia has outgrown the back-office server running its member database and
+    point-of-sale backend. Three options: a major cloud provider's Oregon region (cheapest, most
+    capable, and you now know what a bad region morning looks like); a small regional provider
+    running on hydropower (greener and local, pricier, fewer services, less certain to exist in ten
+    years); or buying new servers for the back office again (owned, patched by whom, exactly?). The
+    co-op's members vote on values as well as budgets.</p>
+    <div class="tps-q"><p>Which do you recommend, and what is the single fact from this quarter, a number, a case, a lab finding, that most drives your choice?</p></div>
+    <div class="tps-steps">
+      <div class="tps-step"><div class="ph">Think <span>3 min</span></div><p>Choose, and write your driving fact. It must be something you can cite, not a vibe.</p></div>
+      <div class="tps-step"><div class="ph">Pair <span>5 min</span></div><p>Find a different choice. Stress-test each other with Week 8: whichever option you picked, who patches it, and what is the plan for its bad morning?</p></div>
+      <div class="tps-step"><div class="ph">Share <span>12 min</span></div><p>We will map the answers to the quarter: TCO from Chapter 11, continuity from Chapter 9, the physical bill from today, and the co-op's values, which are a real constraint, not decoration.</p></div>
+    </div>
+    <div class="tps-note"><strong>Where this lands</strong>All three are defensible, which is the point of the last activity of the quarter: this is not a technology question with a right answer but a management question with trade-offs you can now name, price, and defend. That was the course.</div>
+  </div>
 </div>
 
-<h2 id="discussion"><span class="num">10</span>Discussion questions</h2>
+<div class="ailight g">
+  <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
+  <div class="lighttext"><strong>Green &middot; AI as coach and sparring partner</strong>
+  <p>Quiz yourself on the three service layers until you can place any product you use (your email,
+  your bank's app, a game server) on the right one. Then one last audit in the Lab 1 spirit: ask an
+  AI to estimate the energy cost of an hour of streaming, and check its confident number against the
+  reasoning in Section 6. If the quarter worked, you will catch what needs catching.</p></div>
+</div>
+
+<h2 id="questions"><span class="num">11</span>Discussion questions</h2>
+<p><em>Groups of three; each group takes one and reports out.</em></p>
 <ol class="dq">
-<li>The Struts patch was ordered but never applied to the right server. Redesign the process so this specific failure cannot happen: who owns the task, who verifies it, and how does the loop close? <span class="dqtag">Apply</span></li>
-<li>Distinguish responsibility from accountability using an example from your own life or work. Why can accountability not be shared, even when responsibility is? <span class="dqtag">Explain</span></li>
-<li>"Everyone was responsible" produced an outcome nobody owned. Where else, in organizations you know, does diffuse responsibility hide the absence of accountability? <span class="dqtag">Analyze</span></li>
-<li>Target was PCI-compliant and Equifax was regulated when each was breached. Explain to a skeptical executive why passing the audit did not make them secure. <span class="dqtag">Evaluate</span></li>
-<li>The 147 million people harmed were Equifax's product, not its customers, and could not leave. What does that fact do to the argument that market pressure will discipline companies into security? <span class="dqtag">Judgment</span></li>
-<li>Apply the NIST functions (identify, protect, detect, respond, recover) to the Equifax timeline. At which function did it first fail, and would fixing only that one have prevented the breach? <span class="dqtag">Systems</span></li>
-<li>A settlement of about $700 million works out to a few dollars per exposed person for a permanent risk. Is that justice, deterrence, both, or neither? What would a better remedy look like? <span class="dqtag">Ethics</span></li>
-<li>Connect to Change Healthcare: both breaches trace to a single unglamorous omission (a missing patch, a missing MFA setting). What governance structure would catch that class of omission before an attacker does? <span class="dqtag">Connect</span></li>
+<li>Netflix rents its computing from a direct competitor. Run the five forces on that arrangement: what power does Amazon hold over Netflix, what limits that power, and why has the arrangement held for over a decade anyway?<span class="tag tag-open">Connect</span></li>
+<li>State the build-versus-rent rule the Open Connect split implies, in one sentence. Then apply it to a hospital deciding where its patient-records system should run, and note what changes when Chapter 9's stakes enter the equation.<span class="tag tag-hard">Apply</span></li>
+<li>Write Cascadia's one-page plan for the next us-east-1 morning: what must keep working in the stores, what can wait, and what the manual fallback is. Chapter 9 gave you the vocabulary; this asks for the artifact.<span class="tag tag-warm">Design</span></li>
+<li>Make the strongest case that moving to the cloud is the greener choice for a typical company, then the strongest case that the cloud's growth is an environmental problem no individual migration decision addresses. Both are supportable; reconcile them.<span class="tag tag-hard">Judgment</span></li>
+<li>Data centers are driving grid upgrades whose costs can reach ordinary ratepayers. Who should pay: the data-center customers, the tech companies, all ratepayers, or taxpayers? Argue your allocation and name its losers honestly.<span class="tag tag-hard">Judgment</span></li>
+<li>Egress fees make data cheap to bring and expensive to remove. Using Chapter 2, explain why providers price it this way, and propose the contract clause you would demand before a migration if you were Cascadia's negotiator.<span class="tag tag-open">Connect</span></li>
+<li>A friend says "I feel guilty streaming in HD now." Correct their model using Section 6: what is true, what is out of proportion, and where does individual behavior actually rank against siting, sourcing, and efficiency decisions?<span class="tag tag-open">Explain</span></li>
+<li>The final synthesis: trace one Spotify Wrapped play from a phone tap to the narrative on screen, naming all five components at each hop and every bill along the way, financial and physical. This is the whole course in one trace, and a fair preview of the final exam.<span class="tag tag-hard">Synthesize</span></li>
 </ol>
 
-<h2><span class="num">11</span>Sources and further reading</h2>
+<h2><span class="num">12</span>Sources and further reading</h2>
 <ul class="sources">
-<li>US Government Accountability Office, <a href="https://www.gao.gov/products/gao-18-559">Data Protection: Actions Taken by Equifax and Federal Agencies in Response to the 2017 Breach</a> (2018): the authoritative timeline, the unpatched Struts vulnerability, and the expired certificate that blinded detection.</li>
-<li>US Federal Trade Commission, <a href="https://www.ftc.gov/enforcement/refunds/equifax-data-breach-settlement">Equifax Data Breach Settlement</a> (2019): the settlement terms and the roughly 147 million figure.</li>
-<li>US House Committee on Oversight and Government Reform, <a href="https://oversight.house.gov/report/committee-releases-report-revealing-new-information-equifax-data-breach/">The Equifax Data Breach</a> (2018): the majority-staff report on the governance and accountability failures.</li>
-<li>For frameworks: the NIST Cybersecurity Framework and ISACA's COBIT are both published and freely summarized; any current overview covers the five functions used here.</li>
+<li>Netflix Technology Blog / About Netflix, <a href="https://about.netflix.com/en/news/completing-the-netflix-cloud-migration">Completing the Netflix Cloud Migration</a> (February 2016): the 2008 database corruption, the seven-year timeline, the cloud-native rebuild, the growth figures, and the January 2016 global launch.</li>
+<li>Netflix Open Connect documentation and industry coverage: the company-owned CDN carrying the entirety of Netflix's video traffic from appliances inside ISPs, at tens of terabits per second of peak.</li>
+<li>International Energy Agency, <a href="https://www.iea.org/reports/energy-and-ai">Energy and AI</a> (2025): the 415 TWh / ~1.5% figure for 2024, the ~945 TWh 2030 base case, the growth rates, the US share, and the role of AI-accelerated servers.</li>
+<li>Reporting on the October 2025 AWS US-East-1 outage (major outlets and AWS's own post-incident summary): the DNS fault involving DynamoDB and the day of cascading disruption across thousands of services.</li>
+<li>Netflix Technology Blog on the Christmas Eve 2012 ELB outage and the Simian Army: the origin of chaos engineering as institutional habit.</li>
 </ul>
 
-<p class="pairline"><a href="schedule.html">Back to the schedule &#8594;</a></p>
+<p style="margin-top:2.5rem"><a href="schedule.html">Lab 10, Information Architecture, closes the quarter &#8594;</a></p>
 
 </main>
 <!--NAVJS-->

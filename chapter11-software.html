@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Chapter 10: IT Governance: Equifax | MIS 320</title>
-<meta name="description" content="The 2017 Equifax breach as a governance failure: every technical fix existed, and the decisions failed anyway.">
+<title>Chapter 11: Software Design &amp; Selection: Robles v. Domino's | MIS 320</title>
+<meta name="description" content="A blind man, a screen reader, and a pizza he could not order: usability, accessibility, the ADA online, and how businesses actually choose software.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -294,8 +294,8 @@ li{margin-bottom:.45rem}
       <a href="chapter7-moneyball.html"><span class="lbl">Chapter 7 &middot; Week 6</span>Business Intelligence &mdash; Moneyball</a>
       <a href="chapter8-ai-ml.html"><span class="lbl">Chapter 8 &middot; Week 10</span>AI, Machine Learning &amp; Bias &mdash; TikTok &amp; Amazon</a>
       <a href="chapter9-changehealthcare.html"><span class="lbl">Chapter 9 &middot; Week 8</span>Cybersecurity &mdash; Change Healthcare</a>
-      <a class="current" href="chapter10-equifax.html"><span class="lbl">Chapter 10 &middot; Week 8</span>IT Governance &mdash; Equifax</a>
-      <a href="chapter11-software.html"><span class="lbl">Chapter 11 &middot; Week 9</span>Software Design &amp; Selection &mdash; Robles v. Domino's</a>
+      <a href="chapter10-equifax.html"><span class="lbl">Chapter 10 &middot; Week 8</span>IT Governance &mdash; Equifax</a>
+      <a class="current" href="chapter11-software.html"><span class="lbl">Chapter 11 &middot; Week 9</span>Software Design &amp; Selection &mdash; Robles v. Domino's</a>
       <a href="chapter12-cloud.html"><span class="lbl">Chapter 12 &middot; Week 10</span>The Cloud &amp; What Computing Costs &mdash; Netflix</a>
       </div>
     </div>
@@ -330,240 +330,298 @@ li{margin-bottom:.45rem}
 <main class="chapwrap">
 
 <header class="chaphead">
-  <p class="eyebrow">Chapter 10 &middot; IT Governance</p>
-  <h1>IT Governance: When Everyone Was Responsible and No One Was</h1>
-  <p class="anchor">In 2017, Equifax lost the personal data of nearly 150 million people. There was a
-  patch that would have prevented it. The patch was known, available, and even ordered internally.
-  It was simply never applied to the right server, because no one owned the job. This chapter is
-  about governance: the structures that decide who is accountable, before the crisis makes it
-  obvious that no one was.</p>
-  <div class="concepts"><span class="clabel">IS concepts</span><span>IT governance</span><span>Accountability vs. responsibility</span><span>Patch &amp; vulnerability management</span><span>Frameworks (NIST, COBIT)</span><span>Compliance vs. security</span><span>Data stewardship</span><span>Audit</span></div>
+  <p class="eyebrow">Chapter 11 &middot; Software Design &amp; Selection</p>
+  <h1>Software: The Pizza You Could Not Order</h1>
+  <p class="anchor">Guillermo Robles is blind and uses screen-reading software that speaks a website
+  aloud. At least twice, he tried to order a customized pizza from Domino's, on the website and in
+  the app, and could not, because neither was built to work with a screen reader. In 2016 he sued,
+  and the case climbed all the way to the Supreme Court's doorstep. This chapter is about the two
+  software decisions every business makes, how it is designed and how it is chosen, and why the
+  interface is not decoration: it is the part of the system that decides who gets to be a customer.</p>
+  <div class="meta-row">
+    <span>Case: Robles v. Domino's Pizza (2016&ndash;2022)</span>
+    <span class="alt">Week 9 &middot; Wednesday (Monday is Exam 2)</span>
+    <span class="alt"><a href="schedule.html" style="color:inherit;text-decoration:none">Paired lab: UX Design (Lab 9) &#8594;</a></span>
+  </div>
 </header>
 
 <div class="statrow">
-  <div class="stat"><b>~147M</b><span>people's data exposed</span></div>
-  <div class="stat"><b>1</b><span>unpatched server</span></div>
-  <div class="stat"><b>76 days</b><span>attackers inside</span></div>
-  <div class="stat"><b>$700M+</b><span>settlement, 2019</span></div>
-  <div class="stat"><b>0</b><span>consent from those exposed</span></div>
+  <div class="stat"><b>2</b><span>channels that failed him: website and app</span></div>
+  <div class="stat"><b>2016</b><span>the lawsuit, filed over an unorderable pizza</span></div>
+  <div class="stat"><b>2019</b><span>Ninth Circuit: the ADA applies online</span></div>
+  <div class="stat"><b>1990</b><span>the ADA, written before the web existed</span></div>
+  <div class="stat"><b>1,000s</b><span>of web-accessibility suits now filed each year</span></div>
 </div>
 
 <div class="toc"><strong>Contents</strong>
-<a href="#s1">1. A patch nobody applied</a>
-<a href="#s2">2. What governance is</a>
-<a href="#s3">3. Responsibility vs. accountability</a>
-<a href="#s4">4. The frameworks</a>
-<a href="#s5">5. Compliance is not security</a>
-<a href="#s6">6. The product was people</a>
-<a href="#s7">7. The other side: data about people who never agreed</a>
-<a href="#s8">8. The five components</a>
-<a href="#s9">9. Summary and vocabulary</a>
-<a href="#discussion">10. Discussion questions</a>
+<a href="#s1">1. The pizza that would not order</a>
+<a href="#s2">2. Software, sorted</a>
+<a href="#s3">3. The interface decides who gets in</a>
+<a href="#s4">4. Accessibility is not a feature request</a>
+<a href="#s5">5. The case: the ADA meets the web</a>
+<a href="#s6">6. How businesses choose software</a>
+<a href="#s7">7. Build, buy, or subscribe</a>
+<a href="#s8">8. The other side: who software forgets</a>
+<a href="#s9">9. The five components</a>
+<a href="#s10">10. Summary and vocabulary</a>
+<a href="#questions">11. Discussion questions</a>
 </div>
 
-<div class="plan"><div class="plan-head">Taught Week 8 Monday, combined with Chapter 9; the full 80-minute plan is in Chapter 9</div>
+<div class="plan">
+<div class="plan-head">Wednesday session plan &middot; 80 minutes &middot; the post-exam session, so it opens gently</div>
 <table>
-<tr><td class="t">&mdash;</td><td class="w">Note</td><td>This chapter is the second half of the Week 8 Monday session. Chapter 9 (Change Healthcare) supplies the attack and the concepts; this chapter supplies the governance lens and the Equifax case. Wednesday is Veterans Day, so the lab carries the applied work.</td></tr>
+<tr><td class="t">0:00</td><td class="w">Open</td><td>Ask everyone to close their eyes and order a pizza in their head using only what a screen reader would speak aloud. Then play or read thirty seconds of a screen reader on a cluttered site. The room understands the case before you state it.</td></tr>
+<tr><td class="t">0:05</td><td class="w">Lecture</td><td>The Robles story, then the sorting: system versus application software, custom versus packaged versus SaaS, and usability as measurable properties, not taste.</td></tr>
+<tr><td class="t">0:30</td><td class="w">Lecture</td><td>The legal arc: district court, Ninth Circuit, cert denied, and what "no regulations yet is not no obligation" means, an echo of the Chapter 8 governance principle. Then software selection: requirements, scripted demos, TCO, and accessibility as an RFP line.</td></tr>
+<tr><td class="t">0:55</td><td class="w">Think-pair-share</td><td>Pick a point-of-sale system for Cascadia. See the activity below.</td></tr>
+<tr><td class="t">1:15</td><td class="w">Close</td><td>Preview Lab 9: they will test real interfaces the way Robles experienced them, and redesign what fails.</td></tr>
 </table></div>
 
-<h2 id="s1"><span class="num">01</span>A patch nobody applied</h2>
+<h2 id="s1"><span class="num">01</span>The pizza that would not order</h2>
 
-<p>In March 2017, a serious vulnerability was disclosed in Apache Struts, a piece of open-source
-software used inside countless corporate web applications. A fix was published the same week.
-Equifax, one of the three US credit bureaus, was told internally to apply it. The instruction went
-out. And then, on one internet-facing system that happened to run the vulnerable software, it did not
-get done. No alarm connected the order to the omission.</p>
+<p>Domino's, the company from Chapter 3, rebuilt itself as "a tech company that happens to sell
+pizza," and by the mid-2010s a large share of its orders arrived through its website and app. That is
+the front door Guillermo Robles walked up to. His screen reader converts on-screen text and controls
+into speech, and it works only when software is built with the underlying labels and structure the
+reader needs. Domino's site and app were not. On at least two occasions he could not complete an
+order or claim an online-only discount, which meant the company's digital front door, its proudest
+system, was closed to him. In September 2016 he sued under the Americans with Disabilities Act.</p>
 
-<p>Beginning in May, attackers used that exact vulnerability to get in, and they stayed for about 76
-days, extracting the names, Social Security numbers, birth dates, and addresses of roughly 147
-million people, close to half the US population. A device meant to detect the exfiltration had been
-inactive for months because an expired security certificate had never been renewed. Two boring
-omissions, a missed patch and a lapsed certificate, and a firm whose entire business was holding
-sensitive data handed nearly half a country's identities to strangers.</p>
+<p>Domino's defense is worth stating fairly, because your discussion questions will ask you to weigh
+it. The company argued that the ADA, a 1990 law about physical places of public accommodation, does
+not reach websites and apps at all, that no federal regulations existed telling businesses what an
+accessible website even is, and that Mr. Robles was not shut out of Domino's because he could always
+order by phone. Keep those three arguments in mind; a federal appeals court is going to answer each
+one, and the answers now bind every business with a website. But first, the concepts the case sits
+on.</p>
 
-<div class="callout"><strong>Why this is the governance chapter</strong>
-<p>Nothing about Equifax required advanced attackers, and this is the point. Every technical
-safeguard that would have stopped it already existed and was already understood. What failed was
-governance: the structure that assigns who must do what, who checks that it was done, and who answers
-when it was not. Chapter 9 was about controls. This chapter is about who is accountable for the
-controls, which turns out to be the harder problem.</p></div>
+<h2 id="s2"><span class="num">02</span>Software, sorted</h2>
 
-<h2 id="s2"><span class="num">02</span>What governance is</h2>
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Kinds of software, and where software comes from</span>
+<p><strong>System software</strong>, the operating systems and utilities that run the machine, versus
+<strong>application software</strong>, the programs that do the business's actual work: a register, a
+payroll system, a pizza-ordering app. Applications arrive three ways. <strong>Custom</strong>
+software is built for you, fits exactly, and costs the most to create and maintain.
+<strong>Packaged</strong> (off-the-shelf) software is bought and installed, cheaper, and fits
+approximately, which is why Chapter 6 spent a whole case on the configure-versus-customize decision.
+<strong>Software as a service (SaaS)</strong> is rented: it runs on the vendor's computers, you reach
+it through a browser, and you pay by subscription. Most new business software today is SaaS, for
+reasons the next chapter prices out in full.</p></div>
 
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">IT governance</span>
-<p><strong>IT governance</strong> is the set of structures, policies, and decision rights that
-determine how an organization directs and controls its technology: who is allowed to decide what, who
-must do what, who verifies it was done, and who is answerable when it is not. Governance is not
-software you install; it is the answer to the question "who is in charge of this, specifically?" for
-every part of the technology that matters. When that answer is vague, work falls through the gaps
-between people who each assumed someone else had it, which is a fair one-sentence summary of the
-Equifax breach.</p></div>
+<p>Domino's ordering system sits at the expensive end: custom software, built and owned, because
+Chapter 3 established that the ordering pipeline <em>is</em> the business, exactly the situation
+where custom is worth it. Which makes the case sharper, not softer: this was not a neglected vendor
+product the company barely controlled. It was the software Domino's chose to build itself, and the
+gap in it was a gap in the company's own design decisions.</p>
 
-<p>Governance sounds bureaucratic until you watch its absence. The Struts patch failed not because
-anyone refused to do it but because the task lived in the space between teams: the people who knew
-about the vulnerability, the people who owned the server, and the people responsible for verifying
-compliance were not connected by any structure that forced the loop to close. Good governance is
-mostly the unglamorous work of making sure every critical task has exactly one owner and one check.</p>
+<h2 id="s3"><span class="num">03</span>The interface decides who gets in</h2>
 
-<h2 id="s3"><span class="num">03</span>Responsibility versus accountability</h2>
+<p>For the first decades of computing, the interface was a command line: a blinking cursor awaiting
+typed instructions in a syntax you had to already know. The population of people who could use a
+computer was, in effect, the population willing to memorize it. The graphical interface, windows,
+menus, a mouse, things you could recognize instead of recall, did not make computers more powerful.
+It made them <em>usable by more people</em>, and the personal-computing industry is the direct
+result. Hold that historical fact as a principle: every interface decision is a decision about who is
+in your market.</p>
 
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Responsibility and accountability</span>
-<p>These words are used loosely in conversation and precisely in governance.
-<strong>Responsibility</strong> is the obligation to do the work: the engineer who applies the patch.
-<strong>Accountability</strong> is the obligation to answer for the outcome, and it cannot be shared
-or delegated away: one named person is accountable that the patch got applied, whether or not they
-touched a keyboard. The classic governance failure is work where responsibility is spread across many
-people and accountability is assigned to none, so when it fails, everyone can truthfully say it was
-not their job. "Everyone was responsible" is how you get an outcome nobody owned.</p></div>
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Usability</span>
+<p><strong>Usability</strong> is not aesthetic preference; it is a set of measurable properties.
+<strong>Learnability</strong>: how quickly can a new user do the core task? <strong>Efficiency</strong>:
+how fast is the task once learned? <strong>Error tolerance</strong>: how easily do users make
+mistakes, and how gracefully can they recover? You can put numbers on each, by watching real users
+attempt real tasks, which is what Lab 9 will have you do. The business stakes compound quietly: a
+confusing checkout leaks customers one abandoned cart at a time, and inside the company, hard-to-use
+enterprise software taxes every employee every day, a cost that never appears on the invoice of the
+system that causes it.</p></div>
 
-<p>Equifax is the textbook illustration. Afterward, no single person could be cleanly blamed for the
-missed patch, which sounds like exoneration and is actually the diagnosis. A system in which no one
-can be held accountable for a critical task is a system that has been designed, by accident, to fail
-quietly. The company's CEO, CIO, and CSO all departed, because accountability, when it has not been
-assigned in advance to someone specific, rolls upward to whoever sits at the top, which is exactly why
-executives should want it assigned in advance.</p>
+<h2 id="s4"><span class="num">04</span>Accessibility is not a feature request</h2>
 
-<h2 id="s4"><span class="num">04</span>The frameworks</h2>
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Accessibility and WCAG</span>
+<p><strong>Accessibility</strong> is usability's widest circle: designing software that works for
+people with disabilities, including blind and low-vision users on screen readers, deaf users needing
+captions, and people navigating by keyboard or voice because they cannot use a mouse. The World Wide
+Web Consortium's <strong>Web Content Accessibility Guidelines (WCAG)</strong> are the de facto
+standard, organized around four properties: content must be <em>perceivable</em>, <em>operable</em>,
+<em>understandable</em>, and <em>robust</em>. In practice much of it is unglamorous discipline:
+labeling images and buttons so a screen reader has something to say, making every function reachable
+by keyboard, maintaining contrast a low-vision user can read.</p></div>
 
-<p>Organizations do not invent governance from scratch. They adopt frameworks: shared checklists and
-vocabularies that encode what mature IT management looks like, so that "are we secure?" becomes a set
-of answerable questions rather than a feeling.</p>
+<p>Two facts reframe accessibility from charity to strategy. First, scale: the World Health
+Organization estimates about one in six people worldwide live with a significant disability, a
+market no retailer would knowingly lock out. Second, the <strong>curb-cut effect</strong>: features
+built for disability keep turning out to serve everyone, the way sidewalk curb cuts built for
+wheelchairs now serve strollers, suitcases, and delivery carts. Captions serve the noisy gym;
+voice interfaces serve drivers; high contrast serves your phone in sunlight. Accessible design is,
+reliably, just better design under constraints, and building it in from the start costs a fraction of
+retrofitting it under a court deadline, which brings us back to the pizza.</p>
 
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Governance frameworks</span>
-<p>A <strong>framework</strong> is a structured, widely accepted set of practices an organization can
-adopt and be measured against. In security and IT governance the common ones include the
-<strong>NIST Cybersecurity Framework</strong> (organized around five functions: identify, protect,
-detect, respond, recover) and <strong>COBIT</strong> (aimed at aligning IT with business goals).
-Their value is not magic; it is that they turn vague intentions into specific, auditable
-commitments, and they let an outsider, an auditor, a regulator, a board, check whether the
-commitments are being met. Frameworks are how an organization proves its governance exists rather
-than merely claiming it does.</p></div>
+<h2 id="s5"><span class="num">05</span>The case: the ADA meets the web</h2>
 
-<p>Map Equifax onto the NIST functions and the failure is easy to locate: identify (they knew about
-the vulnerability), protect (they failed to patch), detect (the monitoring certificate had expired),
-respond (they were slow and their public response was widely criticized). A framework would not have
-applied the patch for them. But a framework, honestly audited, forces the question "show me that
-every internet-facing system got this patch," and that question is precisely the one no one at
-Equifax was structurally required to answer.</p>
+<p>The district court initially sided with Domino's on procedure, reasoning that without federal
+web-accessibility regulations, courts should wait for the Department of Justice to define the rules.
+In January 2019 the Ninth Circuit Court of Appeals reversed, and its two holdings are the ones that
+matter. First: Title III of the ADA applies to the websites and apps of a business where they connect
+customers to the goods and services of its physical locations, the nexus that Domino's, with
+thousands of stores, plainly had. The court put it directly: the website and app facilitate access to
+the goods and services of a place of public accommodation. Second: the absence of formal regulations
+is not a due-process escape hatch; the statute's obligation to communicate effectively with disabled
+customers was itself fair notice. In October 2019 the Supreme Court declined to hear Domino's appeal,
+leaving the ruling standing, and the case later ended in settlement.</p>
 
-<h2 id="s5"><span class="num">05</span>Compliance is not security</h2>
+<p>Notice the structure of the legal lesson, because you have seen it before. In Chapter 8,
+regulators' position on AI hiring tools was that existing discrimination law applies no matter how
+novel the technology; here, a 1990 statute written before the web reached the web anyway, because
+courts read laws by their purpose, not their era's technology. "There are no rules for this yet" is
+one of the most expensive sentences in business, and the aftermath proved it: with the precedent
+standing, web-accessibility suits, already climbing, now number in the thousands per year, and the
+practical standard companies are held to is the WCAG guidance that was freely available the whole
+time. The cheapest moment to meet it was before the lawsuit.</p>
 
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Compliance versus security</span>
-<p><strong>Compliance</strong> means meeting the specific requirements of a standard or law.
-<strong>Security</strong> means actually being hard to breach. They overlap but are not the same, and
-the gap between them is where a lot of breaches live. An organization can pass its audits, hold its
-certifications, and check every box while a single unpatched server sits exposed, because compliance
-measures whether documented controls exist, not whether every real system is actually covered every
-day. Treating a passed audit as proof of safety is one of the most common and expensive mistakes in
-the field. Compliance is a floor, not a finish line.</p></div>
+<div class="pull"><p>The interface is a legal surface. Domino's learned it from a pizza order; every business with a website inherited the lesson.</p></div>
 
-<p>This is the trap that connects both cases in this pair. Target, a decade before Change Healthcare,
-was certified compliant with the payment-card security standard when it was breached. Equifax
-operated in a regulated industry with real requirements. Compliance regimes are valuable, they raise
-the floor for everyone, but a compliance mindset can actively harm security if it lets an organization
-mistake the paperwork for the protection. The job of good governance is to close that gap, not to
-celebrate the certificate.</p>
+<h2 id="s6"><span class="num">06</span>How businesses choose software</h2>
 
-<h2 id="s6"><span class="num">06</span>The product was people</h2>
+<p>Design is one software decision; the other, far more common one is selection, because most
+companies buy far more software than they build. Selection done badly is how organizations end up
+with systems everyone hates, and Chapter 6 showed you the nine-figure version. The professional
+process is unglamorous and learnable:</p>
 
-<p>There is a fact about Equifax that makes its breach different in kind from a retailer losing card
-numbers, and it deserves to be stated plainly. The 147 million people whose data was exposed were
-never Equifax's customers. They never signed up, never agreed to terms, never chose to do business
-with the company at all. Equifax's customers are lenders. The people in its database are its
-<em>product</em>: their financial histories, collected without their direct involvement, packaged and
-sold to others.</p>
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Software selection and total cost of ownership</span>
+<p>Start with <strong>requirements</strong>, written before any vendor demo, split into must-have
+and nice-to-have, because a good demo will otherwise write your requirements for you. Shortlist, then
+run <strong>scripted demos</strong>: every vendor performs <em>your</em> tasks on <em>your</em>
+sample data, not their rehearsed happy path. Compute <strong>total cost of ownership (TCO)</strong>:
+the license or subscription is often the minority of the real cost once implementation, integration,
+training, support, and the eventual cost of leaving are added. Check references from companies your
+size, then <strong>pilot</strong> with real users before committing. And after this chapter, one line
+belongs in every requirements document: conformance with WCAG, verified in the demo with a screen
+reader running, because Section 5 just established what that line is worth.</p></div>
 
-<p>This inverts the usual accountability relationship and it is the deepest governance question in the
-chapter. A normal company that loses customer data faces those customers in the market: they can
-leave. The people harmed by the Equifax breach had no such lever, because they were never in a
-relationship they could exit. You cannot boycott a company you were never a customer of. When the
-people bearing the risk are not the people the company answers to, the market cannot govern the
-outcome by itself, and governance has to come from somewhere else: regulation, law, and the assignment
-of accountability by force rather than by choice.</p>
+<h2 id="s7"><span class="num">07</span>Build, buy, or subscribe</h2>
 
-<h2 id="s7"><span class="num">07</span>The other side: data about people who never agreed</h2>
+<p>The strategic layer of selection is the oldest question in corporate IT: build it, buy it, or
+rent it? The working rule falls straight out of Chapter 2. If the capability is a
+<strong>commodity</strong>, something every business does the same way, payroll, email, accounting,
+buy or subscribe, because custom-building it buys you no advantage and all the maintenance. If the
+capability is your <strong>differentiator</strong>, the thing customers choose you for, owning it can
+be worth the enormous cost, which is why Domino's built its ordering pipeline and why Chapter 3's
+whole story exists. The judgment call is knowing which is which, and the honest test is Porter's:
+would doing this better than rivals actually change what customers do?</p>
 
-<p>Chapter 9 argued that breach costs are an externality, exported to people outside the company's
-books. Equifax pushes that argument to its limit, because the people bearing the risk never entered
-into anything at all.</p>
+<p>Hold this rule for Wednesday-to-Monday continuity: the next chapter's case is a company that
+pushed it to the extreme, renting essentially all of its computing from its fiercest competitor
+while spending heavily to build the one piece that touches the customer experience most. The rule
+scales from a co-op's point-of-sale choice to a $100 billion streaming service without changing
+shape.</p>
 
-<p>A Social Security number cannot be reissued. The 147 million people in the Equifax breach carry a
-lifetime exposure to identity theft that no settlement retires, and the roughly $700 million Equifax
-paid in 2019, split among restitution, credit monitoring, and penalties, works out to a few dollars
-of face value per person for a permanent risk. The company continues to operate and remains one of
-three firms that decide whether Americans can get a mortgage. The breach did not end the business,
-because the business does not depend on the goodwill of the people it holds data about.</p>
+<h2 id="s8"><span class="num">08</span>The other side: who software forgets</h2>
 
-<p>Hold this against the second question of the course. "Does the system work?" Equifax's data system
-worked extremely well, at collecting, matching, and selling. The question this course insists on
-adding, "for whom, and at whose expense?", is the entire content of the Equifax story, and it is why
-the answer to a governance failure this large is not only a better patch process but a public argument
-about who should be allowed to hold what data about whom, and under what obligations. That argument is
-where the next unit, on regulating technology, begins.</p>
+<p>Robles is the visible case of a quiet, general pattern: software forgets the users its builders
+did not picture. Disabled users are the sharpest example, but the circle is wider. Older users meet
+interfaces tuned to reflexes trained by two decades of apps they never used. Low-income users meet
+sites built and tested on new phones over fast connections. Non-native speakers meet error messages
+written in idiom. None of this is malice; it is the default outcome of teams building for themselves,
+which is why deliberate practices, accessibility standards, usability testing with people unlike the
+builders, exist at all.</p>
 
-<h2 id="s8"><span class="num">08</span>The five components at Equifax</h2>
+<p>And one forgotten user lives inside the company: the employee. The person who selects enterprise
+software is almost never the person who will use it eight hours a day, and the gap shows. The
+warehouse worker fighting a fifteen-click process, the nurse clicking through screens designed by a
+billing department, pay daily for a selection decision they were never consulted on. Section 6's
+pilot step exists precisely to close that gap, and the best single question to ask about any software
+purchase is the one this chapter has been circling: <em>who was in the room when this was chosen, and
+who has to live with it?</em></p>
+
+<h2 id="s9"><span class="num">09</span>The five components of the Robles case</h2>
 
 <table class="sumtable">
-<tr><th>Component</th><th>In the breach</th><th>The governance lesson</th></tr>
-<tr><td><strong>Hardware</strong></td><td>One internet-facing server running vulnerable software</td><td>Every critical box needs a named owner</td></tr>
-<tr><td><strong>Software</strong></td><td>The unpatched Apache Struts; the expired monitoring certificate</td><td>Known fixes are worthless if no process guarantees they land</td></tr>
-<tr><td><strong>Data</strong></td><td>147M identities: the product, not the customer</td><td>Holding data creates duties to people who never agreed</td></tr>
-<tr><td><strong>Networks</strong></td><td>76 days of extraction past a blinded monitor</td><td>Detection is a governance duty, not a one-time purchase</td></tr>
-<tr><td><strong>People</strong></td><td>Responsibility everywhere, accountability nowhere; three executives gone</td><td>Unassigned accountability rolls to the top</td></tr>
+<tr><th>Component</th><th>In the case</th><th>The lesson</th></tr>
+<tr><td><strong>Hardware</strong></td><td>His phone and computer, standard equipment running assistive software</td><td>The barrier was never the device</td></tr>
+<tr><td><strong>Software</strong></td><td>A custom-built site and app without the labels a screen reader needs</td><td>Design decisions are market decisions, and legal ones</td></tr>
+<tr><td><strong>Data</strong></td><td>Menus, prices, and online-only coupons he could not reach</td><td>Information a customer cannot perceive may as well not exist</td></tr>
+<tr><td><strong>Networks</strong></td><td>The web, which a 1990 statute reached anyway</td><td>New channels inherit old obligations</td></tr>
+<tr><td><strong>People</strong></td><td>Builders who never tested with a screen reader; a customer who sued</td><td>The users you do not picture will find you eventually</td></tr>
 </table>
 
-<h2 id="s9"><span class="num">09</span>Summary and vocabulary</h2>
+<h2 id="s10"><span class="num">10</span>Summary and vocabulary</h2>
 
 <table class="sumtable">
 <tr><th>Idea</th><th>This chapter's version</th><th>Where you meet it next</th></tr>
-<tr><td><strong>Governance</strong></td><td>A patch that failed in the gap between teams</td><td>Lab 8's access-and-ownership matrix</td></tr>
-<tr><td><strong>Accountability</strong></td><td>Everyone responsible, no one accountable, so it rolled to the CEO</td><td>Regulating technology (Wk 9&ndash;10)</td></tr>
-<tr><td><strong>Compliance vs. security</strong></td><td>Passing audits with an exposed server</td><td>AI governance, Wk 10</td></tr>
-<tr><td><strong>Frameworks</strong></td><td>NIST's five functions locate exactly where Equifax failed</td><td>Any GRC role, Ch 9 &sect;7</td></tr>
-<tr><td><strong>Product, not customer</strong></td><td>147M people who never signed up and cannot leave</td><td>The regulation unit's core question</td></tr>
+<tr><td><strong>The interface as gatekeeper</strong></td><td>From command lines to Robles: design decides who is in the market</td><td>Lab 9's usability tests</td></tr>
+<tr><td><strong>Accessibility</strong></td><td>One in six people, the curb-cut effect, and WCAG as the working standard</td><td>Your RFP's newest required line</td></tr>
+<tr><td><strong>"No rules yet" is not "no obligation"</strong></td><td>A 1990 law reached the web; cert denied</td><td><a href="chapter8-ai-ml.html">Ch 8's AI governance</a>, same principle</td></tr>
+<tr><td><strong>Selection discipline</strong></td><td>Requirements first, scripted demos, TCO, pilot</td><td>The Wednesday activity</td></tr>
+<tr><td><strong>Build vs. buy vs. subscribe</strong></td><td>Own your differentiator, rent your commodities</td><td><a href="chapter12-cloud.html">Ch 12: Netflix takes it to the limit</a></td></tr>
 </table>
 
 <dl class="vocab">
-<div><dt>IT governance</dt><dd>The structures and decision rights that determine who directs, does, checks, and answers for technology.</dd></div>
-<div><dt>Responsibility</dt><dd>The obligation to do the work.</dd></div>
-<div><dt>Accountability</dt><dd>The obligation to answer for the outcome; cannot be shared away.</dd></div>
-<div><dt>Patch management</dt><dd>The process ensuring known fixes actually reach every affected system.</dd></div>
-<div><dt>Vulnerability</dt><dd>A known weakness attackers can exploit; the Struts flaw was one.</dd></div>
-<div><dt>Framework</dt><dd>A structured, auditable set of accepted practices (e.g., NIST CSF, COBIT).</dd></div>
-<div><dt>Compliance</dt><dd>Meeting a standard's requirements; a floor, not proof of security.</dd></div>
-<div><dt>Audit</dt><dd>An independent check that controls exist and are followed.</dd></div>
-<div><dt>Data stewardship</dt><dd>The duty of care owed by whoever holds data, especially about people who did not consent.</dd></div>
-<div><dt>Externality</dt><dd>A cost borne by people outside the decision; central to both security chapters.</dd></div>
+<div><dt>System vs. application software</dt><dd>What runs the machine vs. what does the business's work.</dd></div>
+<div><dt>Custom / packaged / SaaS</dt><dd>Built for you, bought off the shelf, or rented by subscription on the vendor's computers.</dd></div>
+<div><dt>Usability</dt><dd>Measurable properties of an interface: learnability, efficiency, error tolerance.</dd></div>
+<div><dt>Accessibility</dt><dd>Design that works for people with disabilities; usability's widest circle.</dd></div>
+<div><dt>Screen reader</dt><dd>Assistive software that speaks an interface aloud, if the interface was built with the structure it needs.</dd></div>
+<div><dt>WCAG</dt><dd>The Web Content Accessibility Guidelines: perceivable, operable, understandable, robust; the working legal standard.</dd></div>
+<div><dt>Curb-cut effect</dt><dd>Features built for disability that end up serving everyone.</dd></div>
+<div><dt>Public accommodation nexus</dt><dd>The Ninth Circuit's rule: the ADA reaches a site or app that connects customers to a physical business's goods and services.</dd></div>
+<div><dt>Requirements / RFP</dt><dd>What the software must do, written down before any vendor demo can write it for you.</dd></div>
+<div><dt>Scripted demo</dt><dd>Vendors performing your tasks on your data, not their rehearsed path.</dd></div>
+<div><dt>Total cost of ownership</dt><dd>License plus implementation, integration, training, support, and the cost of leaving.</dd></div>
+<div><dt>Build vs. buy vs. subscribe</dt><dd>Own your differentiator; rent your commodities.</dd></div>
 </dl>
 
-<div class="ailight g">
-  <div class="light-housing"><span class="bulb r"></span><span class="bulb y"></span><span class="bulb g on"></span></div>
-  <div class="ailight-text"><strong>Green light for this chapter's questions.</strong> Use AI to test
-  your grasp of governance terms, or to argue the other side of the discussion questions once you have
-  taken a position, per the Lab 1 rules.</div>
+<div class="tps">
+  <div class="tps-head"><span>Wednesday activity &middot; Pick a point-of-sale system for Cascadia</span><span class="mins">20 minutes</span></div>
+  <div class="tps-body">
+    <p class="tps-setup">The co-op's registers are aging out, and three finalists are on the table.
+    <strong>SwiftRegister</strong> (SaaS): $79 per store per month, slick, running tomorrow, but its
+    member-lookup screen fails basic screen-reader tests and it cannot talk to the membership
+    database without a custom bridge. <strong>CoopSuite</strong> (packaged): $60,000 up front plus
+    annual support, integrates natively with membership, WCAG-conformant, six-month implementation.
+    <strong>OpenTill</strong> (open source): free license, fully flexible, accessible if configured
+    correctly, but the co-op would own every problem and has no developer on staff.</p>
+    <div class="tps-q"><p>Which do you recommend to the board? Commit before discussing, and name the requirement you are knowingly sacrificing.</p></div>
+    <div class="tps-steps">
+      <div class="tps-step"><div class="ph">Think <span>3 min</span></div><p>Choose, and write your sacrificed requirement honestly. "Nothing" is not available.</p></div>
+      <div class="tps-step"><div class="ph">Pair <span>5 min</span></div><p>Find a different choice. Attack each other's pick with TCO first, then with the Robles test.</p></div>
+      <div class="tps-step"><div class="ph">Share <span>12 min</span></div><p>We will build the comparison table on the board and watch the cheap option get expensive: the bridge, the retrofit, the lawsuit exposure, the staff time.</p></div>
+    </div>
+    <div class="tps-note"><strong>Where this lands</strong>There is a defensible case for two of the three, and the argument is the point: every software selection is a trade made explicit or a trade made by accident. The one indefensible move after this chapter is treating the accessibility failure as a footnote, because Section 5 priced that footnote. Sticker price is the smallest number in the decision.</div>
+  </div>
 </div>
 
-<h2 id="discussion"><span class="num">10</span>Discussion questions</h2>
+<div class="ailight g">
+  <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
+  <div class="lighttext"><strong>Green &middot; AI as coach and sparring partner</strong>
+  <p>Two good uses this week. Have an AI play the vendor: give it one of the activity's three systems
+  and run a mock scripted demo, pressing it on integration and accessibility until it squirms. And
+  draft your own requirements list first, then ask an AI what you missed; its additions will be
+  generic, and deciding which generic requirements actually apply to a member co-op is exactly the
+  selection judgment this chapter is teaching.</p></div>
+</div>
+
+<h2 id="questions"><span class="num">11</span>Discussion questions</h2>
+<p><em>Groups of three; each group takes one and reports out.</em></p>
 <ol class="dq">
-<li>The Struts patch was ordered but never applied to the right server. Redesign the process so this specific failure cannot happen: who owns the task, who verifies it, and how does the loop close? <span class="dqtag">Apply</span></li>
-<li>Distinguish responsibility from accountability using an example from your own life or work. Why can accountability not be shared, even when responsibility is? <span class="dqtag">Explain</span></li>
-<li>"Everyone was responsible" produced an outcome nobody owned. Where else, in organizations you know, does diffuse responsibility hide the absence of accountability? <span class="dqtag">Analyze</span></li>
-<li>Target was PCI-compliant and Equifax was regulated when each was breached. Explain to a skeptical executive why passing the audit did not make them secure. <span class="dqtag">Evaluate</span></li>
-<li>The 147 million people harmed were Equifax's product, not its customers, and could not leave. What does that fact do to the argument that market pressure will discipline companies into security? <span class="dqtag">Judgment</span></li>
-<li>Apply the NIST functions (identify, protect, detect, respond, recover) to the Equifax timeline. At which function did it first fail, and would fixing only that one have prevented the breach? <span class="dqtag">Systems</span></li>
-<li>A settlement of about $700 million works out to a few dollars per exposed person for a permanent risk. Is that justice, deterrence, both, or neither? What would a better remedy look like? <span class="dqtag">Ethics</span></li>
-<li>Connect to Change Healthcare: both breaches trace to a single unglamorous omission (a missing patch, a missing MFA setting). What governance structure would catch that class of omission before an attacker does? <span class="dqtag">Connect</span></li>
+<li>Domino's argued Robles could always order by phone. Steelman that argument, then explain why the Ninth Circuit's "full and equal enjoyment" framing defeats it. What would the phone-only rule imply for every other digital-first business?<span class="tag tag-open">Evaluate</span></li>
+<li>The nexus rule covers sites connected to physical locations. Should the ADA reach web-only businesses with no storefront at all? Argue both sides, then say where you would draw the line and why.<span class="tag tag-hard">Judgment</span></li>
+<li>Write the accessibility clause you would put in Cascadia's point-of-sale RFP: what must be true, how it will be verified in the demo, and what happens at contract time if the vendor falls short.<span class="tag tag-warm">Design</span></li>
+<li>Give two curb-cut-effect examples from software you use daily: features that plausibly began as accessibility work and now serve you. What does the pattern suggest about how design constraints work?<span class="tag tag-open">Apply</span></li>
+<li>Domino's chose to litigate for three years rather than remediate. Reconstruct that decision as its executives might have seen it in 2017, then judge it with hindsight. What did fighting actually buy, and what did it cost beyond legal fees?<span class="tag tag-hard">Judgment</span></li>
+<li>Apply the build-buy-subscribe rule to three of Cascadia's needs: payroll, the member database, and the used-gear trade-in workflow from Lab 7's tables. Defend each placement.<span class="tag tag-warm">Apply</span></li>
+<li>Section 8 argues the selector of enterprise software is rarely its daily user. Propose one governance mechanism, in the Chapter 10 sense, that would force selection decisions to answer to the people who live with them.<span class="tag tag-open">Connect</span></li>
+<li>The GUI expanded who could use a computer; Section 3 called every interface decision a market decision. Name a group that current mainstream interfaces still exclude, and describe the interface change that would let them in.<span class="tag tag-hard">Design</span></li>
 </ol>
 
-<h2><span class="num">11</span>Sources and further reading</h2>
+<h2><span class="num">12</span>Sources and further reading</h2>
 <ul class="sources">
-<li>US Government Accountability Office, <a href="https://www.gao.gov/products/gao-18-559">Data Protection: Actions Taken by Equifax and Federal Agencies in Response to the 2017 Breach</a> (2018): the authoritative timeline, the unpatched Struts vulnerability, and the expired certificate that blinded detection.</li>
-<li>US Federal Trade Commission, <a href="https://www.ftc.gov/enforcement/refunds/equifax-data-breach-settlement">Equifax Data Breach Settlement</a> (2019): the settlement terms and the roughly 147 million figure.</li>
-<li>US House Committee on Oversight and Government Reform, <a href="https://oversight.house.gov/report/committee-releases-report-revealing-new-information-equifax-data-breach/">The Equifax Data Breach</a> (2018): the majority-staff report on the governance and accountability failures.</li>
-<li>For frameworks: the NIST Cybersecurity Framework and ISACA's COBIT are both published and freely summarized; any current overview covers the five functions used here.</li>
+<li><em>Robles v. Domino's Pizza LLC</em>, 913 F.3d 898 (9th Cir. 2019): the holdings that Title III of the ADA applies to a website and app with a nexus to physical locations, and that the absence of regulations raises no due-process bar.</li>
+<li>Reporting on the Supreme Court's denial of certiorari, October 7, 2019 (ABA Journal and others): the ruling left standing, and the anticipated rise in web-accessibility litigation that followed.</li>
+<li>W3C, Web Content Accessibility Guidelines (WCAG): the perceivable, operable, understandable, robust framework that functions as the practical compliance standard.</li>
+<li>World Health Organization, World Report on Disability estimates: roughly one in six people worldwide live with significant disability, the market-scale figure in Section 4.</li>
+<li>Coverage of the case's 2022 settlement (accessibility-industry reporting): the quiet ending, after the expensive route.</li>
 </ul>
 
-<p class="pairline"><a href="schedule.html">Back to the schedule &#8594;</a></p>
+<p style="margin-top:2.5rem"><a href="schedule.html">Lab 9, UX Design, runs this week &#8594;</a></p>
 
 </main>
 <!--NAVJS-->
