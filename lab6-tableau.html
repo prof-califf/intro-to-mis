@@ -387,23 +387,67 @@ you what is possible, not what is right.</p></div>
 
 <h2><span class="num">Part 2</span>Build five worksheets</h2>
 
+<p><strong>Same rhythm as the Excel labs: the first worksheet we build together, click by click; the
+other four you build from explicit instructions.</strong> Tableau is new to most of you, so nothing
+in Part A assumes you have seen it before.</p>
+
+<h3>Follow along: connect, then your first worksheet</h3>
 <ol>
-<li><strong>Connect and check.</strong> Open the CSV as a data source. Confirm the row count, and that
-Tableau read revenue as a number and sale_date as a date rather than text. Fixing types here is much
-easier than fixing them after you have built six charts on top of them.</li>
-<li><strong>Sorted bar: revenue by store.</strong> Store to Rows, revenue to Columns, sort descending
-with the toolbar button. Notice how much faster this is than the Excel version.</li>
-<li><strong>Line: revenue by month.</strong> Drag sale_date to Columns and set it to Month. Watch the
-shape of the year.</li>
-<li><strong>Calculated field: margin rate by category.</strong> Analysis, then Create Calculated Field.
-This is the Moneyball move, building a ratio the raw data does not contain and making it something you
-can chart.</li>
-<li><strong>Highlight table: store by month.</strong> Store in Rows, month in Columns, revenue on
-Color. The co-op's whole year on one screen. Click cells rather than judging colour by eye, because
-colour is genuinely hard to read precisely and that is a limitation worth knowing about the chart type
-you just chose.</li>
-<li><strong>Attach rate by store.</strong> The view Cascadia never built. You know what you found in
-Lab 5; watch what happens when it is drawn instead of tabulated.</li>
+<li><strong>Step 1 · Connect.</strong> Open Tableau. On the left, under Connect &#8594; To a File,
+click <strong>Text file</strong> and pick <code class="inline">cascadia-sales-2025.csv</code>. The
+Data Source screen opens with the data in a grid.</li>
+<li><strong>Step 2 · Check what Tableau read.</strong> Look at the column headers: revenue should
+show a <strong>#</strong> (number) and sale_date a calendar icon (date). If either shows
+<strong>Abc</strong> (text), click that icon and change the data type now; fixing types here is much
+easier than fixing them under six charts. Then read the row count at the bottom left of the grid.
+<em>Checkpoint 1.</em></li>
+<li><strong>Step 3 · Open a worksheet.</strong> Click <strong>Sheet 1</strong> at the bottom of the
+window. The layout you are looking at: your columns are listed in the <strong>Data pane</strong> on
+the left, and the empty <strong>Rows</strong> and <strong>Columns</strong> shelves run across the
+top. Building a chart in Tableau is dragging fields from the pane onto the shelves. That is the whole
+mechanism.</li>
+<li><strong>Step 4 · Build the bar chart.</strong> Drag <code class="inline">store</code> from the
+Data pane onto the <strong>Rows</strong> shelf. Drag <code class="inline">revenue</code> onto the
+<strong>Columns</strong> shelf; Tableau wraps it as SUM(revenue) automatically and bars appear, one
+per store.</li>
+<li><strong>Step 5 · Sort it.</strong> Click the <strong>sort descending</strong> button in the
+toolbar (bars with a down arrow). The stores fall into revenue order. Notice how much faster this was
+than the Excel version. Read the chart for the second-place store. <em>Checkpoint 2.</em></li>
+<li><strong>Step 6 · Name the sheet.</strong> Double-click the Sheet 1 tab at the bottom and rename
+it <code class="inline">Revenue by Store</code>. Do this for every sheet you make today; the
+dashboard step will thank you.</li>
+</ol>
+
+<h3>Now you: four more worksheets</h3>
+<p>Each task tells you the fields, the shelves, and the clicks. Make a new sheet for each (the
+new-sheet button sits beside the sheet tabs), and name each one.</p>
+<ol>
+<li><strong>Build the line chart: revenue by month.</strong> Drag <code class="inline">sale_date</code>
+to Columns, then right-click the sale_date pill on the shelf and choose <strong>Month</strong> (the
+one in the continuous, green section). Drag <code class="inline">revenue</code> to Rows. Twelve
+points, connected: the shape of the co-op's year. Read the highest month. <em>Checkpoint 3.</em></li>
+<li><strong>Build the calculated field: margin rate by category.</strong> Open the
+<strong>Analysis</strong> menu &#8594; <strong>Create Calculated Field</strong>. Name it
+<code class="inline">margin_rate</code> and type exactly:
+<code class="inline">SUM([gross_margin]) / SUM([revenue])</code>, then OK. Drag
+<code class="inline">category</code> to Rows and your new <code class="inline">margin_rate</code> to
+Columns. To show it as a percent: right-click margin_rate in the Data pane &#8594; Default Properties
+&#8594; Number Format &#8594; Percentage. This is the Moneyball move, charting a ratio the raw data
+does not contain. <em>Checkpoint 4.</em></li>
+<li><strong>Build the highlight table: store by month.</strong> Drag <code class="inline">store</code>
+to Rows and <code class="inline">sale_date</code> to Columns (set to Month, discrete this time, the
+blue section). Drag <code class="inline">revenue</code> onto <strong>Color</strong> on the Marks card,
+and set the Marks dropdown to <strong>Square</strong>. The co-op's whole year on one screen. Click the
+single darkest cell rather than judging by eye, because color is genuinely hard to read precisely, and
+read its value and location from the tooltip. <em>Checkpoints 5 and 6.</em></li>
+<li><strong>Build the attach-rate view, the one Cascadia never built.</strong> Create another
+calculated field (Analysis &#8594; Create Calculated Field), name it
+<code class="inline">attach_rate</code>, and type exactly:
+<code class="inline">COUNT(IF [is_member] = 'Y' THEN 1 END) / COUNT([sale_id])</code>. Format it as a
+percentage the same way as before. Drag <code class="inline">store</code> to Rows,
+<code class="inline">attach_rate</code> to Columns, and sort ascending. You know from Lab 5 what you
+are about to see; watch what happens when it is drawn instead of tabulated. One bar will not look like
+the others. <em>Checkpoint 7.</em></li>
 </ol>
 
 <h2><span class="num">Part 3</span>Assemble the dashboard</h2>
