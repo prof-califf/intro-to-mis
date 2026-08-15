@@ -300,7 +300,7 @@ li{margin-bottom:.45rem}
       <div class="dd-menu" id="ddl">
       <a href="lab1-genai.html"><span class="lbl">Lab 1 &middot; Week 1</span>GenAI for Thinking</a>
       <a class="current" href="lab2-excel-basics.html"><span class="lbl">Lab 2 &middot; Week 2</span>Excel Basics: Meeting the Client</a>
-      <a href="lab3-excel-dataprep.html"><span class="lbl">Lab 3 &middot; Week 3</span>Data Preparation: The RAW File</a>
+      <a href="lab3-excel-dataprep.html"><span class="lbl">Lab 3 &middot; Week 3</span>Excel Functions: One Question, One Formula</a>
       <a href="lab4-excel-dataviz.html"><span class="lbl">Lab 4 &middot; Week 4</span>Data Visualization: Charts That Tell the Truth</a>
       <a href="lab5-excel-analysis.html"><span class="lbl">Lab 5 &middot; Week 5</span>Data Analysis &amp; Mini Project</a>
       <a href="lab6-tableau.html"><span class="lbl">Lab 6 &middot; Week 6</span>Tableau: Worksheets to a Dashboard</a>
@@ -314,7 +314,7 @@ li{margin-bottom:.45rem}
       <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddd">Data<span class="caret">&#9660;</span></button>
       <div class="dd-menu" id="ddd">
       <a href="cascadia-sales-2025.xlsx"><span class="lbl">Workbook</span>Cascadia sales, clean (.xlsx)</a>
-      <a href="cascadia-sales-2025-RAW.xlsx"><span class="lbl">Workbook</span>Cascadia sales, RAW for Lab 3 (.xlsx)</a>
+      <a href="cascadia-sales-2025-RAW.xlsx"><span class="lbl">Workbook</span>Cascadia sales, RAW export for Lab 7 (.xlsx)</a>
       <a href="cascadia-sales-2025.csv"><span class="lbl">Data</span>Flat CSV for Tableau</a>
       <a href="cascadia.db"><span class="lbl">Database</span>SQLite database for the SQL lab</a>
       </div>
@@ -328,9 +328,10 @@ li{margin-bottom:.45rem}
   <p class="book">MIS 320</p><p class="course">Introduction to Information Systems</p>
   <button class="railtoggle" aria-expanded="false" aria-controls="chapnav">Lab contents</button>
   <nav id="chapnav">
-    <a href="#top">Overview</a><a href="#steps">The work</a>
-    <a href="#checkpoints">Checkpoints</a><a href="#submit">What to submit</a>
-    <a href="chapter1-starbucks.html">↳ Chapter 1 · The Value of Information</a>
+    <a href="#top">Overview</a><a href="#parta">Part A · Follow along</a>
+    <a href="#partb">Part B · Now you</a><a href="#checkpoints">Checkpoints</a>
+    <a href="#submit">What to submit</a>
+    <a href="chapter1-starbucks.html">↳ Chapter 1 · Value of Information</a>
   </nav>
   <a class="back" href="index.html">← All chapters &amp; labs</a>
 </aside>
@@ -340,67 +341,100 @@ li{margin-bottom:.45rem}
   <h1>Excel Basics: Meeting the Client</h1>
   <div class="meta-row"><span>Lab session · 80 min</span><span class="alt"><a href="chapter1-starbucks.html" style="color:inherit;text-decoration:none">Pairs with Chapter 1 · The Value of Information &#8594;</a></span></div>
 </header>
-<p class="lede">Meet your client. Cascadia Outfitters is a member-owned gear co-op with eight stores
-  from Boise to Bellingham, 35 products, and a business model that lives or dies on its members. For the
-  next month, you are their analyst.</p>
-  <p>Today is the gentle one, and that is deliberate. Before you can find anything interesting in a
-  company's data, you have to know what is actually in it. Every analyst you will ever work with starts
-  a new engagement exactly this way.</p>
-  <p>Download <a href="cascadia-sales-2025.xlsx"><strong>cascadia-sales-2025.xlsx</strong></a>, and read
-  the Read Me tab before you touch anything else. I know that sounds like routine advice. Analysts who
-  skip the data dictionary are the ones who confidently present the wrong number.</p>
-<div class="callout callout-bridge"><strong>From lecture to lab</strong><p><strong>Lab professor's intro (10 min):</strong> Introduce the client: Cascadia
-  Outfitters, a member-owned outdoor co-op with eight PNW stores, whose 2025 sales data the class
-  will work in Excel, Tableau, and SQL all quarter. Show the workbook's Read Me tab on the projector
-  and define <em>member attach</em>, a sale linked to a member number, because the co-op's dividend
-  and demand planning both depend on it. Then let them work. This lab is deliberately gentle;
-  DataCamp's Introduction to Excel is its companion. Do not preview later labs' findings.</p></div>
-<div id="steps">
 
-<div class="ailight g">
+<p class="lede">Meet your client. Cascadia Outfitters is a member-owned gear co-op with eight stores
+from Boise to Bellingham, 35 products, and a business model that lives or dies on its members. For
+the next month, you are their analyst. This lab is built as a tutorial: <strong>Part A walks you
+through every click and keystroke</strong>, and once your hands know the moves,
+<strong>Part B hands you the same moves to make alone</strong>. If you have used Excel before, this
+will be comfortable; if you have not, you cannot get lost, because nothing here is left for you to
+guess.</p>
+
+<div class="callout"><strong>Download</strong>
+<p style="font-family:var(--sans);font-size:.9rem"><a href="cascadia-sales-2025.xlsx">cascadia-sales-2025.xlsx</a>,
+one sheet, one year of sales. Columns you will use today: <code class="inline">C</code> store,
+<code class="inline">H</code> quantity, <code class="inline">K</code> revenue.</p></div>
+
+<div class="callout callout-bridge"><strong>From lecture to lab</strong><p><strong>Lab professor's intro (10 min):</strong>
+First, announce the rule for the Excel month, plainly: AI is off for Labs 2 through 5, and here is
+why, these four labs put Excel in your hands the way scales put a piano in a musician's, and anything
+an AI types for you never becomes yours. It comes back in Week 6. Then run Part A live at half speed,
+Steps 1 through 5, narrating every click, with the room following along on their own machines. Say
+the lab's rhythm out loud: watch it, do it, own it. Nobody starts Part B until their Checkpoint 2 is
+green. Early finishers: the stretch callout at the end seeds next week.</p></div>
+
+<div class="ailight r">
   <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
-  <div class="lighttext"><strong>Green &middot; AI as coach</strong>
-  <p>Stuck on what SUMIF does or why a formula errors? Ask an AI to explain it, then write the formula yourself. Do not paste the checkpoint questions in and ask for answers; the checkpoint measures whether your workbook is right, and the workbook is yours.</p></div>
+  <div class="lighttext"><strong>Red &middot; No AI in the Excel labs</strong>
+  <p>For Labs 2 through 5, AI tools stay closed entirely: no formula help, no error explanations, no
+  checking your work. These four weeks build hand skills, and an AI can produce everything in this lab
+  in seconds, which is exactly why it is off: whatever it does for you never becomes yours.
+  This week that means typing every formula with your own fingers; the goal is that =SUM comes out of them without thought by Friday. If you are stuck, that is what the walkthrough steps, the hints, and your lab professor
+  are for. AI returns as a coach in Lab 6, under the Lab 1 lights.</p></div>
 </div>
 
-<h2><span class="num">Skills</span>Navigation, SUM, AVERAGE, sort, filter, SUMIF</h2>
+<h2 id="parta"><span class="num">Part A</span>Follow along: five steps, together</h2>
+
+<p>Do these in order, exactly as written. Checkpoints 1 and 2 simply confirm your workbook matches
+the walkthrough.</p>
+
 <ol>
-<li><strong>Get oriented first.</strong> Press Ctrl+End (Cmd+Fn+Right on a Mac) to jump to the far
-corner of the data. Now you know how big the dataset is. Scroll around a bit. I have already frozen the
-header row for you, so watch what that does as you go down.</li>
-<li><strong>Get your totals.</strong> Find some empty space to the right of the data and build
-yourself a scratch area. Total revenue, total units, average revenue per line, using SUM and
-AVERAGE. Keep these visible, because you will be checking later work against them.</li>
-<li><strong>Poke around.</strong> Sort by revenue, highest first. What is the single biggest sale of
-the year, and does it surprise you? Then filter down to whichever store you like best and read a
-week of its sales. Building familiarity with a dataset is part of the analysis, not a delay before it.</li>
-<details class="howto"><summary>How to make a pivot table</summary><div class="howto-body">
-<ol>
-<li>Click any single cell inside the data.</li>
-<li><strong>Insert</strong> tab, then <strong>PivotTable</strong>. <span class="mac">Mac</span> same menu, but the button may read <strong>Summarize with PivotTable</strong>.</li>
-<li>Excel guesses the data range. Check that it covers all the rows, then choose <strong>New Worksheet</strong> and click OK.</li>
-<li>A panel appears on the right with your column names. Drag a field into <strong>Rows</strong> to group by it, and drag a number into <strong>Values</strong> to total it.</li>
-<li>If Values shows a count instead of a sum, click it, choose <strong>Value Field Settings</strong>, and pick <strong>Sum</strong>. This catches almost everyone once.</li>
+<li><strong>Step 1 · Save it properly.</strong> Open the download, then File &#8594; Save As, and name
+it <code class="inline">LAB2_Last_First.xlsx</code>. Naming files like an analyst is a habit, not a
+nicety; you are about to make fourteen of these this quarter.</li>
+<li><strong>Step 2 · Make it readable.</strong> Click the triangle above row 1 and left of column A
+to select everything, then double-click any boundary between two column letters. Every column snaps
+to fit its contents.</li>
+<li><strong>Step 3 · Freeze the header and size up the data.</strong> View tab &#8594; Freeze Panes
+&#8594; Freeze Top Row, so the column names stay visible while you scroll. Now press Ctrl+End
+(<span class="mac">Mac</span> Cmd+Fn+&#8594; then &#8595;) to jump to the data's far corner and note
+the row number. <em>Checkpoint 1.</em></li>
+<li><strong>Step 4 · Your first formula.</strong> Press Ctrl+Home to return to the top. Click cell
+<code class="inline">P1</code> and type the label <code class="inline">Total revenue</code>. Click
+<code class="inline">P2</code>, type <code class="inline">=SUM(K:K)</code> exactly, and press Enter.
+The cell shows one number; the formula bar still shows your formula. Read the formula as a sentence:
+add up everything in column K. <em>Checkpoint 2.</em></li>
+<li><strong>Step 5 · The free answers in the status bar.</strong> Click column K's header letter to
+select the whole column, then look at the bar along the bottom of the window: Excel is already
+showing you Average, Count, and Sum without being asked. Remember this trick; Part B uses it.</li>
 </ol>
-<p><strong>If your pivot is empty:</strong> you probably selected a single cell outside the data before inserting. Undo and click inside the table first.</p>
+
+<details class="howto"><summary>If a step misbehaves</summary><div class="howto-body">
+<ol>
+<li><strong>Freeze Panes is grayed out:</strong> you are in a cell-editing state; press Esc first.</li>
+<li><strong>=SUM shows 0:</strong> you are probably on a different sheet, or typed a letter other than K. Click the cell and read the formula bar.</li>
+<li><strong>#NAME? error:</strong> the function name is misspelled. Delete and retype.</li>
+<li><strong>The status bar shows nothing:</strong> right-click the status bar itself and check Sum, Average, and Count.</li>
+</ol>
 </div></details>
-<li><strong>Now make Excel answer a question.</strong> SUMIF revenue by store name. COUNTIF rows where
-<code class="inline">is_member</code> is "N": you'll meet that number again later in the course.</li>
-</ol>
-<div class="callout"><strong>Why a co-op cares about attach</strong>
-<p>Every sale without a member number is a customer the co-op cannot send a dividend to, cannot
-survey, and cannot see in its demand planning. Keep that in the back of your mind. Just the back,
-for now.</p></div>
-<div class="stuck"><strong>When you get stuck</strong>
-<p>Before raising your hand, try these in order. Most problems in this lab are one of them.</p>
+
+<h2 id="partb"><span class="num">Part B</span>Now you: the same moves, alone</h2>
+
+<p>Everything below uses only Steps 4 and 5's moves with different targets. The hints tell you the
+pattern; your fingers do the rest.</p>
+
 <ol>
-<li>Re-read the checkpoint question. Is it asking for a count, a total, or an average? Those are three different numbers.</li>
-<li>Check whether your number is plausible. If total revenue comes out as 12 or as 40 million, something is off by a lot and you can usually see where.</li>
-<li>Expand the grey "How to" box for that step. It has the exact clicks.</li>
-<li>Check the formula bar of the cell you think is wrong. Does it reference the range you meant?</li>
-<li>Use the hint button on the checkpoint. It is not a penalty, it is part of the lab.</li>
-<li>Ask a neighbour. Then raise your hand.</li>
-</ol></div></div>
+<li><strong>Total units sold.</strong> One formula, one new column letter. <em>Checkpoint 3.</em></li>
+<li><strong>Average revenue per line.</strong> New verb, same shape. <em>Checkpoint 4.</em></li>
+<li><strong>The leading store.</strong> Put a filter on (click any cell in the data, Data tab &#8594;
+Filter), use column C's dropdown to show one store at a time, and read column K's Sum in the status
+bar, the Step 5 trick. Work through the stores until you are sure of the winner, then clear the
+filter. <em>Checkpoint 5.</em></li>
+<li><strong>The biggest single sale.</strong> Sort by revenue if you like the drama, but confirm it
+with a formula: MAX works exactly like SUM. <em>Checkpoint 6.</em></li>
+</ol>
+
+<div class="callout"><strong>Why a co-op cares about members (a seed for later)</strong>
+<p>Column N marks whether each sale had a member attached. Every "N" is a customer the co-op earned
+nothing durable from: no relationship, no dividend, no reason to come back. Nobody is asking you to
+compute anything with it today, but scroll past it once and remember it exists. You will meet that
+column again, and when you do, it will matter more than revenue.</p></div>
+
+<div class="callout callout-good"><strong>Finished early? One stretch</strong>
+<p>Select the whole data range and Insert &#8594; Table (Ctrl+T). Notice the filter arrows appear on
+their own and formulas start reading like sentences. Then just explore: filter to your favorite
+store, read a week of its sales. Familiarity with a dataset is part of analysis, not a delay before
+it.</p></div>
 
 <h2 id="checkpoints"><span class="num">Required</span>Checkpoints <span style="font-weight:400;color:var(--muted);font-size:.65em">, complete as you work</span></h2>
 <p style="font-family:var(--sans);font-size:.95rem">Here is how this works. Each checkpoint matches a
@@ -431,9 +465,11 @@ only on this page.</strong> Close the tab or refresh before you download, and yo
   <p class="codebox" id="codeout" style="font-family:var(--sans);font-size:.85rem"></p>
 </div>
 
+
 <h2 id="submit"><span class="num">Canvas</span>What to submit</h2>
-<p style="font-family:var(--sans);font-size:.92rem">Your workbook saved as LAB2_Last_First.xlsx with your scratch calculations visible, plus your completion certificate PDF (your reflection is page 2 of it).</p>
-</main></div>
+<p style="font-family:var(--sans);font-size:.92rem">Your workbook as LAB2_Last_First.xlsx with your
+labeled formulas, plus your completion certificate PDF (your reflection is page 2 of it).</p>
+</main></main></div>
 <script>
 (function(){var b=document.querySelector('.railtoggle'),n=document.getElementById('chapnav');
 if(!b||!n)return;b.addEventListener('click',function(){var o=n.classList.toggle('open');
@@ -442,7 +478,7 @@ b.setAttribute('aria-expanded',o?'true':'false');});})();
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-const LAB="LAB2", QS=[{"q": "Checkpoint 1 \u00b7 How many rows of sales data are in the Sales2025 sheet? (Count data rows, not the header.)", "t": "num", "a": "Mjg5OQ==", "tol": 0, "h": "Click any cell in the data, press Ctrl+End, and read the row number, then subtract 1 for the header."}, {"q": "Checkpoint 2 \u00b7 Use SUM on the revenue column. Total revenue for 2025, in dollars?", "t": "num", "a": "NzEyOTcxLjU=", "tol": 1, "h": "=SUM(K:K) if revenue is column K. Enter the number with or without cents."}, {"q": "Checkpoint 3 \u00b7 Use SUM on quantity. How many total units did the co-op sell?", "t": "num", "a": "NDI0Ng==", "tol": 0, "h": "Same idea as Checkpoint 2, different column."}, {"q": "Checkpoint 4 \u00b7 Use AVERAGE on revenue. Average revenue per line, to the cent?", "t": "num", "a": "MjQ1Ljk0", "tol": 0.05, "h": "=AVERAGE(revenue column). Give two decimals."}, {"q": "Checkpoint 5 \u00b7 Sort or filter by store. Which store produced the most revenue in 2025?", "t": "txt", "a": "U2VhdHRsZSBGbGFnc2hpcA==", "h": "Sort descending on revenue won't answer this alone. You need revenue BY store. A quick way: select the data, Insert \u2192 PivotTable, or just sort by store and eyeball the SUBTOTALs. The answer is a store name."}, {"q": "Checkpoint 6 \u00b7 Use SUMIF: revenue for the Seattle Flagship store only?", "t": "num", "a": "MTQ4NDcxLjc1", "tol": 1, "h": "=SUMIF(store_column,\"Seattle Flagship\",revenue_column)"}];
+const LAB="LAB2", QS=[{"q": "Part A \u00b7 After Step 3: how many rows of sales data are in the sheet? (Data rows, not the header.)", "t": "num", "a": "Mjg5OQ==", "tol": 0, "h": "Ctrl+End (Cmd+Fn+\u2192 then \u2193 on a Mac) lands on the last row. The header row takes one, so subtract it from the row number you see."}, {"q": "Part A \u00b7 Your P2 cell after Step 4: total revenue for 2025, in dollars?", "t": "num", "a": "NzEyOTcxLjU=", "tol": 1, "h": "=SUM(K:K) exactly as typed in Step 4. If you got 0, check that you are on the data sheet and that you pressed Enter."}, {"q": "Part B \u00b7 Same move, new column: how many total units did the co-op sell? (Sum the quantity column.)", "t": "num", "a": "NDI0Ng==", "tol": 0, "h": "The pattern is =SUM(column:column), and quantity lives in column H. You wrote this formula five minutes ago with a different letter."}, {"q": "Part B \u00b7 Average revenue per sales line, to the cent?", "t": "num", "a": "MjQ1Ljk0", "tol": 0.05, "h": "The verb changes, the shape does not: =AVERAGE( ) pointed at the revenue column."}, {"q": "Part B \u00b7 Use the filter and status-bar method: which store produced the most revenue in 2025?", "t": "txt", "a": "U2VhdHRsZSBGbGFnc2hpcA==", "tol": 0, "h": "Filter column C to one store, click column K's header, and read Sum in the status bar at the bottom. Eight stores, eight reads, one clear winner. Clear the filter when done."}, {"q": "Part B \u00b7 Confirm the year's biggest single sale with =MAX on the revenue column. Dollars?", "t": "num", "a": "OTQ5LjA=", "tol": 0, "h": "=MAX(K:K). Trivia for the curious: three different stores tie for it."}];
 const solved=new Set();
 const norm=s=>s.replace(/[$,\s]/g,'').toLowerCase();
 function render(){

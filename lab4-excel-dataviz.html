@@ -300,7 +300,7 @@ li{margin-bottom:.45rem}
       <div class="dd-menu" id="ddl">
       <a href="lab1-genai.html"><span class="lbl">Lab 1 &middot; Week 1</span>GenAI for Thinking</a>
       <a href="lab2-excel-basics.html"><span class="lbl">Lab 2 &middot; Week 2</span>Excel Basics: Meeting the Client</a>
-      <a href="lab3-excel-dataprep.html"><span class="lbl">Lab 3 &middot; Week 3</span>Data Preparation: The RAW File</a>
+      <a href="lab3-excel-dataprep.html"><span class="lbl">Lab 3 &middot; Week 3</span>Excel Functions: One Question, One Formula</a>
       <a class="current" href="lab4-excel-dataviz.html"><span class="lbl">Lab 4 &middot; Week 4</span>Data Visualization: Charts That Tell the Truth</a>
       <a href="lab5-excel-analysis.html"><span class="lbl">Lab 5 &middot; Week 5</span>Data Analysis &amp; Mini Project</a>
       <a href="lab6-tableau.html"><span class="lbl">Lab 6 &middot; Week 6</span>Tableau: Worksheets to a Dashboard</a>
@@ -314,7 +314,7 @@ li{margin-bottom:.45rem}
       <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddd">Data<span class="caret">&#9660;</span></button>
       <div class="dd-menu" id="ddd">
       <a href="cascadia-sales-2025.xlsx"><span class="lbl">Workbook</span>Cascadia sales, clean (.xlsx)</a>
-      <a href="cascadia-sales-2025-RAW.xlsx"><span class="lbl">Workbook</span>Cascadia sales, RAW for Lab 3 (.xlsx)</a>
+      <a href="cascadia-sales-2025-RAW.xlsx"><span class="lbl">Workbook</span>Cascadia sales, RAW export for Lab 7 (.xlsx)</a>
       <a href="cascadia-sales-2025.csv"><span class="lbl">Data</span>Flat CSV for Tableau</a>
       <a href="cascadia.db"><span class="lbl">Database</span>SQLite database for the SQL lab</a>
       </div>
@@ -388,12 +388,29 @@ the year?" is a line. "Does bigger mean richer?" is a scatter. If you cannot say
 sentence, you are not ready to chart yet.</p></div>
 
 <h2><span class="num">Part 2</span>Build two, properly</h2>
+<p><strong>The first chart we build together, the second is yours.</strong> Same rhythm as Labs 2
+and 3: follow Part A's steps exactly, then repeat the moves alone.</p>
+
+<h3>Follow along: revenue by store, as a sorted bar</h3>
 <ol>
-<li><strong>Revenue by store, sorted bar.</strong> Pivot, chart, sort descending, axis at zero, title
-that states the finding rather than the topic.</li>
-<li><strong>Revenue by month, line.</strong> Twelve points, time on the horizontal. Look at the shape
-of the co-op's year before you move on, because you will need it later.</li>
+<li><strong>Step 1.</strong> Click any single cell inside the data, then Insert &#8594; PivotTable
+(the how-to below has every click if this is your first pivot). Put <code class="inline">store</code>
+in Rows and <code class="inline">revenue</code> in Values.</li>
+<li><strong>Step 2.</strong> Click inside the pivot, then Insert &#8594; Recommended Charts &#8594;
+Bar (or Column). A chart appears wired to the pivot.</li>
+<li><strong>Step 3.</strong> Sort it: right-click any revenue value in the pivot &#8594; Sort &#8594;
+Largest to Smallest. The bars fall into order.</li>
+<li><strong>Step 4.</strong> Check the axis starts at zero (it will by default; Part 3 shows you why
+that matters), then click the title and replace it with a sentence that states the finding, not the
+topic: "Seattle Flagship leads; the gap to last place is wide," not "Revenue by Store."
+<em>Checkpoints 1 and 2.</em></li>
 </ol>
+
+<h3>Now you: revenue by month, as a line</h3>
+<p>Repeat the four steps alone with <code class="inline">month</code> in Rows instead of store, and
+choose the chart type yourself; Part 1 told you which shape time takes. Twelve points, time on the
+horizontal, title that states what the year did. Look at the shape of the co-op's year before moving
+on, because you will need it later. <em>Checkpoints 3 and 4.</em></p>
 
 <details class="howto"><summary>How to make a pivot table</summary><div class="howto-body">
 <ol>
@@ -417,16 +434,39 @@ of the co-op's year before you move on, because you will need it later.</li>
 
 <div class="ailight r">
   <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
-  <div class="lighttext"><strong>Red &middot; this part is you alone</strong>
-  <p>Do not ask an AI what is wrong with these charts. Diagnosing a misleading chart with your own eyes
-  is the skill this lab exists to build, and it is the one you will need in a meeting where no AI is
-  open and a vendor's slide looks a little too convincing.</p></div>
+  <div class="lighttext"><strong>Red &middot; No AI in the Excel labs</strong>
+  <p>For Labs 2 through 5, AI tools stay closed entirely: no formula help, no error explanations, no
+  checking your work. These four weeks build hand skills, and an AI can produce everything in this lab
+  in seconds, which is exactly why it is off: whatever it does for you never becomes yours.
+  And diagnosing a misleading chart with your own eyes is the skill this lab exists to build: the one you will need in a meeting where no AI is open and a vendor's slide looks a little too convincing. If you are stuck, that is what the walkthrough steps, the hints, and your lab professor
+  are for. AI returns as a coach in Lab 6, under the Lab 1 lights.</p></div>
 </div>
 <h2><span class="num">Part 3</span>Four charts that lie</h2>
 
 <p>Here is the part that matters. Each of the four charts below is built from Cascadia's real 2025 data.
 Every number in them is correct. Every one of them misleads. Build each one yourself so you can see how
 easy it is, then answer the checkpoint that exposes it.</p>
+
+<h3>Follow along: diagnosing Chart A, together</h3>
+<p>Diagnosis is a routine, not a talent. Run these four steps on Chart A with me; then Charts B, C,
+and D are yours to run it on alone.</p>
+<ol>
+<li><strong>Step 1 · Read the axis before the bars.</strong> Look at the vertical axis's bottom
+number. It is $80,000, not zero. Any bar chart whose axis starts above zero is showing you
+differences, not sizes, while your eye reads sizes.</li>
+<li><strong>Step 2 · Get the real numbers.</strong> Ignore the picture. From your own store pivot
+(you built it in Part 2), read Bellevue's revenue and Bellingham's revenue as digits.</li>
+<li><strong>Step 3 · Compute the honest gap.</strong> In any cell:
+<code class="inline">=(Bellevue - Bellingham)/Bellingham*100</code>, using the two numbers from Step
+2. That percentage is the truth. <em>Checkpoint 5.</em></li>
+<li><strong>Step 4 · Name the trick.</strong> Compare your Step 3 number to what the picture implied
+(Bellevue's bar looks roughly six times taller). The gap between those two is entirely manufactured
+by the axis. Say the mechanism in words: a truncated axis turns a small difference into a dramatic
+one. That sentence, mechanism named plainly, is what a diagnosis is.</li>
+</ol>
+<p><strong>Now you: Charts B, C, and D.</strong> Same routine, three charts, checkpoints 6 through 8.
+Step 1 changes shape each time, the thing to read first might be the chart type, the slice count, or
+the title, but the discipline is identical: picture last, numbers first, mechanism named.</p>
 
 <h3>Chart A: the truncated axis</h3>
 <p>Bar chart of Bellevue, Tacoma, and Bellingham revenue, with the vertical axis starting at $80,000
@@ -467,6 +507,18 @@ this part of the lab is a small version of that.</p></div>
 <p>Pick whichever of the four you find most misleading and rebuild it honestly: right chart type, axis
 from zero, readable number of items, and a title that states what the data actually supports. Put the
 before and after side by side on one sheet.</p>
+<details class="howto"><summary>How to actually fix a chart (the clicks)</summary><div class="howto-body">
+<ol>
+<li><strong>Fix a truncated axis:</strong> right-click the vertical axis &#8594; Format Axis &#8594;
+under Bounds, set Minimum to 0. <span class="mac">Mac</span> same right-click path.</li>
+<li><strong>Fix a wrong chart type:</strong> click the chart &#8594; Chart Design tab &#8594; Change
+Chart Type &#8594; pick the shape Part 1 says the question needs.</li>
+<li><strong>Fix an unreadable pie:</strong> change it to a sorted bar (previous step), or group the
+small products into an "All others" row in the pivot first.</li>
+<li><strong>Fix a spun title:</strong> click the title once, select the text, and type a sentence the
+whole chart supports, not just one segment of it.</li>
+</ol>
+</div></details>
 <p>Then write one sentence naming who would benefit from the misleading version. Sometimes the answer is
 nobody and it was carelessness. Often it is not, and being able to say so plainly is part of the job you
 are training for.</p>
