@@ -71,14 +71,14 @@ def check(label, expected, found, tol=0):
 # ---------------------------------------------------------------- 1. checkpoint answers
 # maps lab file -> list of (query or literal) in checkpoint order
 EXPECTED = {
- 'lab2-excel-basics.html': [TRUTH['total_rows'], TRUTH['total_revenue'], TRUTH['total_units'],
-                            TRUTH['avg_line'], TRUTH['top_store'], round(q1(f"SELECT MAX({R}) FROM sales"),2)],
+ 'lab2-excel-basics.html': [TRUTH['total_rows'], TRUTH['total_revenue'], TRUTH['avg_line'],
+                            TRUTH['total_units'], TRUTH['top_store'], round(q1(f"SELECT MAX({R}) FROM sales"),2)],
  'lab3-excel-dataprep.html': [q1("SELECT COUNT(*) FROM sales s JOIN stores st ON st.store_id=s.store_id WHERE st.store_name='Bellingham'"),
                    round(q1(f"SELECT SUM({R}) FROM sales s JOIN stores st ON st.store_id=s.store_id WHERE st.store_name='Portland Pearl'"),2),
                    q1("SELECT COUNT(*) FROM sales s JOIN products p ON p.product_id=s.product_id WHERE p.category='Snow'"),
                    round(q1(f"SELECT AVG({R}) FROM sales s JOIN products p ON p.product_id=s.product_id WHERE p.category='Snow'"),2),
-                   q1("SELECT COUNT(*) FROM sales s JOIN stores st ON st.store_id=s.store_id WHERE st.store_name='Tacoma' AND s.member_id IS NOT NULL"),
                    round(q1(f"SELECT SUM({R}) FROM sales s JOIN products p ON p.product_id=s.product_id JOIN stores st ON st.store_id=s.store_id WHERE p.category='Snow' AND st.store_name='Seattle Flagship'"),2),
+                   q1("SELECT COUNT(*) FROM sales s JOIN stores st ON st.store_id=s.store_id WHERE st.store_name='Tacoma' AND s.member_id IS NOT NULL"),
                    round(100*q1(f"SELECT SUM({R}) FROM sales s JOIN stores st ON st.store_id=s.store_id WHERE st.store_name='Portland Pearl'")/TRUTH['total_revenue'],1)],
  'lab4-excel-dataviz.html': ['bar', TRUTH['second_store'], 'line', TRUTH['top_month'],
                              None, 'trend', TRUTH['n_products'], TRUTH['second_month']],
