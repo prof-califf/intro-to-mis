@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chapter 9: AI &amp; Machine Learning: TikTok to the Hiring Desk | MIS 320</title>
+<meta name="description" content="From the For You page that knows you in an evening to the hiring model Amazon had to kill: what machine learning is, why one idea produces both, and who decides which you get.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0e0e0d; --off-black:#1a1a18;
+  --magenta:#e8197d; --magenta-dark:#c0146a; --magenta-pale:#fdeaf3;
+  --white:#ffffff; --off-white:#f6f4f1;
+  --text-dark:#0e0e0d; --text-muted:#3a3a38; --text-light:#6b6b68;
+  --border:#e0ddd8;
+  --warn:#b3261e; --warn-pale:#fdeceb;
+  --good:#1f7a53; --good-pale:#e8f4ee;
+  --sans:'Space Grotesk',sans-serif; --display:'Oswald',sans-serif;
+  --wrap:1180px; --col:46rem;
+  /* legacy aliases so existing markup keeps working */
+  --navy:#0e0e0d; --navy-soft:#1a1a18; --accent:#e8197d; --accent-deep:#c0146a;
+  --accent-pale:#fdeaf3; --cream:#ffffff; --cream-deep:#f6f4f1; --paper:#ffffff;
+  --ink:#0e0e0d; --muted:#6b6b68; --rule:#e0ddd8; --serif:'Space Grotesk',sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--white);color:var(--text-dark);
+  font-family:var(--sans);font-size:18.5px;line-height:1.7;-webkit-font-smoothing:antialiased}
+
+/* ---------- shell ---------- */
+.shell{max-width:var(--wrap);margin:0 auto;display:grid;grid-template-columns:15rem minmax(0,1fr);gap:3.5rem;padding:0 1.5rem 6rem}
+main{margin-left:auto;margin-right:auto;max-width:var(--col);padding-top:2.5rem}
+
+/* ---------- sidebar ---------- */
+.rail{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:2.5rem 0 3rem;border-right:1px solid var(--border)}
+.rail .book{font-family:var(--display);font-size:15px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--magenta);margin:0 0 .2rem}
+.rail .course{font-size:13.5px;color:var(--text-light);margin:0 0 1.75rem}
+.rail nav a{display:block;font-size:15px;line-height:1.35;color:var(--text-muted);text-decoration:none;padding:.42rem .8rem .42rem .85rem;border-left:2px solid transparent;margin-left:-.85rem}
+.rail nav a:hover{color:var(--magenta);border-left-color:var(--magenta)}
+.rail nav a.sub{font-size:14px;color:var(--text-light);padding-left:1.7rem}
+.rail .back{display:inline-block;margin-top:2rem;font-size:14px;color:var(--text-light);text-decoration:none}
+.rail .back:hover{color:var(--magenta)}
+.railtoggle{display:none}
+
+/* ---------- chapter head ---------- */
+.chaphead{border-bottom:3px solid var(--black);padding-bottom:1.6rem;margin-bottom:2.5rem}
+.eyebrow{font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--magenta);margin:0 0 .7rem}
+.chaphead h1{font-family:var(--display);font-weight:600;font-size:clamp(1.9rem,4.4vw,2.7rem);line-height:1.12;text-transform:uppercase;letter-spacing:.01em;margin:0 0 .6rem;color:var(--black)}
+.chaphead .anchor{font-size:16px;color:var(--text-light);margin:0}
+.chaphead .anchor strong{color:var(--text-muted);font-weight:500}
+.meta-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.2rem}
+.meta-row span{font-size:13px;letter-spacing:.03em;background:var(--off-white);border:1px solid var(--border);padding:.32rem .65rem;color:var(--text-muted)}
+.meta-row span.alt{background:var(--magenta-pale);border-color:#f6cfe1;color:var(--magenta-dark)}
+
+/* ---------- type ---------- */
+h2{font-family:var(--display);font-weight:600;font-size:1.72rem;line-height:1.22;text-transform:uppercase;letter-spacing:.01em;color:var(--black);margin:3.2rem 0 .9rem}
+h2 .num{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;color:var(--magenta);display:block;margin-bottom:.4rem;text-transform:uppercase}
+h3{font-family:var(--display);font-weight:600;font-size:1.18rem;text-transform:uppercase;letter-spacing:.03em;color:var(--off-black);margin:2rem 0 .55rem}
+p{margin:0 0 1.05rem}
+a{color:var(--magenta-dark)}
+strong{font-weight:600;color:var(--black)}
+.lede{font-size:1.24rem;line-height:1.55;color:var(--text-muted)}
+code.inline{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--off-white);padding:.1em .35em;border:1px solid var(--border)}
+ul,ol{margin:0 0 1.15rem;padding-left:1.3rem}
+li{margin-bottom:.45rem}
+
+/* ---------- pull quote ---------- */
+.pull{margin:2.2rem 0;padding:0 0 0 1.4rem;border-left:3px solid var(--magenta)}
+.pull p{font-family:var(--display);font-weight:400;font-size:1.32rem;line-height:1.3;color:var(--black);margin:0 0 .5rem}
+.pull cite{font-style:normal;font-size:12.5px;color:var(--text-light)}
+
+/* ---------- callouts ---------- */
+.callout{border:1px solid var(--border);border-left:4px solid var(--magenta);background:var(--off-white);padding:1.15rem 1.3rem;margin:1.9rem 0}
+.callout strong:first-child{display:block;font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--magenta);margin-bottom:.5rem}
+.callout p:last-child{margin-bottom:0}
+.callout-caution{border-left-color:var(--warn);background:var(--warn-pale)}
+.callout-caution strong:first-child{color:var(--warn)}
+.callout-bridge{border-left-color:var(--black);background:var(--off-white)}
+.callout-bridge strong:first-child{color:var(--black)}
+.callout-good{border-left-color:var(--good);background:var(--good-pale)}
+.callout-good strong:first-child{color:var(--good)}
+
+/* ---------- signature: value chain rail ---------- */
+.vc{margin:2.4rem 0;border:1px solid var(--border);background:var(--white);overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,.07)}
+.vc-head{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#fff;background:var(--black);padding:.7rem 1rem}
+.vc-strip{display:grid;grid-template-columns:repeat(5,1fr)}
+.vc-cell{padding:.85rem .7rem;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+.vc-cell:last-child{border-right:none}
+.vc-stage{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-light);display:block;margin-bottom:.3rem}
+.vc-cell p{font-size:14px;line-height:1.4;margin:0;color:var(--text-muted)}
+.vc-cell.broke{background:var(--magenta-pale)}
+.vc-cell.broke .vc-stage{color:var(--magenta)}
+.vc-cell.broke p{color:#8a1450}
+.vc-note{padding:.8rem 1rem;font-size:14px;color:var(--text-light);background:var(--off-white);border-top:1px solid var(--border)}
+.vc-note b{color:var(--magenta);font-weight:600}
+
+/* ---------- stat band ---------- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(8.5rem,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin:2rem 0}
+.stat{background:var(--white);padding:1rem .9rem}
+.stat b{display:block;font-family:var(--display);font-weight:700;font-size:1.8rem;color:var(--magenta);line-height:1.1}
+.stat span{display:block;font-size:13px;line-height:1.3;color:var(--text-light);margin-top:.3rem}
+
+/* ---------- timeline ---------- */
+.tl{list-style:none;padding:0;margin:1.8rem 0;border-left:2px solid var(--border)}
+.tl li{position:relative;padding:0 0 1.1rem 1.3rem;margin:0}
+.tl li:before{content:"";position:absolute;left:-5px;top:.55em;width:8px;height:8px;border-radius:50%;background:var(--magenta)}
+.tl li.bad:before{background:var(--warn)}
+.tl .when{font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--magenta);display:block}
+.tl li.bad .when{color:var(--warn)}
+
+/* ---------- vocabulary ---------- */
+.vocab{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin:1.8rem 0}
+.vocab div{background:var(--white);padding:.95rem 1rem}
+.vocab dt{font-family:var(--display);font-weight:600;font-size:15px;text-transform:uppercase;letter-spacing:.03em;color:var(--black);margin-bottom:.3rem}
+.vocab dd{margin:0;font-size:15px;line-height:1.5;color:var(--text-muted)}
+
+/* ---------- discussion questions ---------- */
+.dq{counter-reset:dq;margin:1.6rem 0 0;padding:0;list-style:none}
+.dq li{counter-increment:dq;position:relative;padding:1rem 0 1rem 2.6rem;border-top:1px solid var(--border)}
+.dq li:last-child{border-bottom:1px solid var(--border)}
+.dq li:before{content:counter(dq,decimal-leading-zero);position:absolute;left:0;top:1.05rem;font-family:var(--display);font-size:14.5px;font-weight:600;color:var(--magenta)}
+.tag{display:inline-block;font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:.2rem .5rem;margin-left:.5rem;vertical-align:.12em}
+.tag-hard{background:var(--warn);color:#fff}
+.tag-open{background:var(--black);color:#fff}
+.tag-warm{background:var(--magenta-pale);color:var(--magenta-dark)}
+
+/* ---------- sources ---------- */
+.sources{margin-top:3.5rem;padding-top:1.2rem;border-top:1px solid var(--border);font-size:14.5px;color:var(--text-light)}
+.sources h3{font-family:var(--display);font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin:0 0 .6rem}
+.sources li{margin-bottom:.35rem;line-height:1.5}
+
+/* ---------- responsive ---------- */
+@media (max-width:860px){
+  .shell{grid-template-columns:1fr;gap:0;padding:0 1.15rem 4rem}
+  .rail{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);padding:1.5rem 0 1rem;margin-bottom:.5rem}
+  .rail nav{display:none}
+  .rail nav.open{display:block;margin-top:.8rem}
+  .railtoggle{display:inline-block;font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--magenta);background:none;border:1px solid var(--border);padding:.4rem .7rem;cursor:pointer}
+  main{padding-top:1.2rem}
+  .vc-strip{grid-template-columns:repeat(2,1fr)}
+}
+:focus-visible{outline:2px solid var(--magenta);outline-offset:2px}
+
+/* ---------- prominent lab link ---------- */
+.lablink{display:inline-block;margin-top:.9rem;font-family:var(--display);font-size:14.5px;font-weight:600;
+  letter-spacing:.06em;text-transform:uppercase;text-decoration:none;background:var(--magenta);color:#fff;
+  padding:.6rem 1.15rem;border:none}
+.lablink:hover{background:var(--magenta-dark);color:#fff}
+.callout .lablink{margin-top:1rem}
+
+/* ---------- global top navigation with dropdowns ---------- */
+.topnav{position:sticky;top:0;z-index:100;background:var(--black);border-bottom:1px solid rgba(255,255,255,.14)}
+.topnav-in{max-width:var(--wrap);margin:0 auto;padding:.7rem 1.5rem;display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap}
+.topnav-brand{font-family:var(--display);font-size:16px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--magenta);text-decoration:none;margin-right:auto}
+.topnav-brand:hover{color:#fff}
+.dd{position:relative}
+.dd-btn{font-family:var(--display);font-size:14.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:#fff;background:none;border:1px solid rgba(255,255,255,.3);padding:.42rem .85rem;cursor:pointer}
+.dd-btn:hover,.dd-btn[aria-expanded="true"]{background:var(--magenta);border-color:var(--magenta)}
+.dd-btn .caret{font-size:11px;margin-left:.35rem}
+.dd-menu{display:none;position:absolute;right:0;top:calc(100% + .4rem);min-width:20rem;background:#fff;
+  border:1px solid var(--border);box-shadow:0 8px 30px rgba(0,0,0,.22);padding:.4rem 0;max-height:75vh;overflow-y:auto}
+.dd-menu.open{display:block}
+.dd-menu a{display:block;padding:.55rem 1rem;text-decoration:none;color:var(--text-dark);font-size:14.5px;line-height:1.35}
+.dd-menu a:hover{background:var(--magenta-pale);color:var(--magenta-dark)}
+.dd-menu a .lbl{display:block;font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--magenta);margin-bottom:.1rem}
+.dd-menu a.current{background:var(--off-white);border-left:3px solid var(--magenta)}
+.dd-menu a.soon{color:var(--text-light);pointer-events:none}
+.dd-menu a.soon .lbl{color:var(--text-light)}
+.dd-sep{margin:.35rem 0;border-top:1px solid var(--border)}
+@media (max-width:700px){
+  .topnav-in{padding:.6rem 1.15rem;gap:.6rem}
+  .topnav-brand{font-size:13.5px;width:100%;margin-right:0}
+  .dd{flex:1}
+  .dd-btn{width:100%;font-size:13px;padding:.4rem .5rem}
+  .dd-menu{right:auto;left:0;min-width:min(92vw,22rem)}
+}
+
+/* ---------- collapsible step-by-step help ---------- */
+.howto{margin:.7rem 0 1.1rem;border:1px solid var(--border);background:var(--off-white)}
+.howto>summary{cursor:pointer;padding:.6rem .9rem;font-family:var(--display);font-size:13px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--magenta-dark);list-style:none}
+.howto>summary::-webkit-details-marker{display:none}
+.howto>summary:before{content:"\25B8  ";font-size:11px}
+.howto[open]>summary:before{content:"\25BE  "}
+.howto>summary:hover{background:var(--magenta-pale)}
+.howto-body{padding:.3rem 1.1rem 1rem;border-top:1px solid var(--border);background:#fff}
+.howto-body ol{margin:.7rem 0;padding-left:1.3rem}
+.howto-body li{margin-bottom:.45rem;font-size:15px;line-height:1.5}
+.howto-body p{font-size:15px;margin:.6rem 0}
+.kbd{font-family:ui-monospace,Menlo,monospace;font-size:.85em;background:var(--off-white);
+  border:1px solid var(--border);border-radius:2px;padding:.1em .35em;white-space:nowrap}
+.mac{display:inline-block;font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;background:var(--black);color:#fff;padding:.1rem .4rem;margin-right:.35rem}
+.stuck{border:1px solid var(--border);border-left:4px solid var(--black);background:var(--off-white);
+  padding:1rem 1.2rem;margin:2rem 0 0}
+.stuck strong:first-child{display:block;font-family:var(--display);font-size:12.5px;font-weight:600;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--black);margin-bottom:.5rem}
+.stuck ol{margin:.5rem 0 0;padding-left:1.3rem}
+.stuck li{font-size:15px;margin-bottom:.35rem}
+
+/* ---------- AI traffic lights ---------- */
+.ailight{display:flex;gap:1rem;align-items:flex-start;border:1px solid var(--border);background:#fff;
+  padding:1rem 1.2rem;margin:1rem 0}
+.ailight .lamp{flex:0 0 auto;width:34px;background:#1c1c1a;border-radius:8px;padding:7px 0;
+  display:flex;flex-direction:column;align-items:center;gap:5px}
+.ailight .bulb{width:20px;height:20px;border-radius:50%;background:#2e2e2b;box-shadow:inset 0 2px 4px rgba(0,0,0,.6)}
+.ailight.g .bulb.b3{background:#2fae5f;box-shadow:0 0 10px rgba(47,174,95,.8),inset 0 -2px 3px rgba(0,0,0,.25)}
+.ailight.y .bulb.b2{background:#e6b93c;box-shadow:0 0 10px rgba(230,185,60,.8),inset 0 -2px 3px rgba(0,0,0,.25)}
+.ailight.r .bulb.b1{background:#d5453a;box-shadow:0 0 10px rgba(213,69,58,.8),inset 0 -2px 3px rgba(0,0,0,.25)}
+.ailight .lighttext{flex:1;min-width:0}
+.ailight .lighttext strong:first-child{display:block;font-family:var(--display);font-size:13px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;margin-bottom:.3rem}
+.ailight.g .lighttext strong:first-child{color:#1e7c43}
+.ailight.y .lighttext strong:first-child{color:#a07a10}
+.ailight.r .lighttext strong:first-child{color:#a03434}
+.ailight p{margin:.2rem 0 0;font-size:15px;line-height:1.55}
+
+/* ---------- think-pair-share block ---------- */
+.tps{border:1px solid var(--black);background:#fff;margin:2.2rem 0}
+.tps-head{background:var(--black);color:#fff;padding:.6rem 1.1rem;font-family:var(--display);font-size:12.5px;
+  font-weight:600;letter-spacing:.2em;text-transform:uppercase;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.tps-head .mins{color:rgba(255,255,255,.7);letter-spacing:.1em}
+.tps-body{padding:1.1rem 1.25rem}
+.tps-setup{font-size:16px;line-height:1.6;margin:0 0 1rem}
+.tps-q{border-left:4px solid var(--magenta);background:var(--magenta-pale);padding:.8rem 1rem;margin:0 0 1.1rem}
+.tps-q p{margin:0;font-size:17px;line-height:1.5;font-weight:500}
+.tps-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border)}
+.tps-step{background:#fff;padding:.75rem .9rem}
+.tps-step .ph{font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--magenta);margin-bottom:.3rem;display:flex;justify-content:space-between}
+.tps-step .ph span{color:var(--text-light)}
+.tps-step p{margin:0;font-size:14px;line-height:1.45;color:var(--text-muted)}
+.tps-note{border-top:1px solid var(--border);margin-top:1.1rem;padding-top:.9rem;font-size:14.5px;color:var(--text-muted)}
+.tps-note strong{font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--black);display:block;margin-bottom:.35rem}
+@media(max-width:700px){.tps-steps{grid-template-columns:1fr}}
+
+/* ---------- Monday session plan (instructor-facing) ---------- */
+.plan{border:1px solid var(--border);background:var(--off-white);margin:2rem 0}
+.plan-head{background:var(--off-white);border-bottom:1px solid var(--border);padding:.55rem 1.05rem;
+  font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted)}
+.plan table{width:100%;border-collapse:collapse;background:#fff}
+.plan td{border-bottom:1px solid var(--border);padding:.6rem .9rem;font-size:14.5px;vertical-align:top;line-height:1.45}
+.plan tr:last-child td{border-bottom:none}
+.plan td.t{width:5.5rem;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--magenta);white-space:nowrap}
+.plan td.w{width:8rem;font-weight:600}
+@media(max-width:640px){.plan td.w{width:auto}}
+
+/* ---------- chapter depth: stat strip, TOC, key concept, summary table ---------- */
+.statrow{display:flex;flex-wrap:wrap;gap:1px;background:var(--border);border:1px solid var(--border);margin:1.6rem 0}
+.stat{flex:1 1 8rem;background:#fff;padding:.85rem 1rem;text-align:center}
+.stat b{display:block;font-family:var(--display);font-size:22px;font-weight:600;color:var(--magenta);line-height:1.1}
+.stat span{font-size:12.5px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;font-family:var(--display)}
+.toc{border:1px solid var(--border);background:var(--off-white);padding:1rem 1.25rem;margin:1.6rem 0;font-family:var(--sans);font-size:14.5px;line-height:2}
+.toc strong{display:block;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.3rem}
+.toc a{color:var(--text-dark);text-decoration:none;border-bottom:1px solid var(--border);margin-right:1rem;white-space:nowrap}
+.toc a:hover{color:var(--magenta-dark);border-bottom-color:var(--magenta)}
+.kc{border:1px solid var(--border);border-left:4px solid var(--magenta);background:#fff;margin:1.4rem 0;padding:1rem 1.2rem}
+.kc .kc-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.15rem}
+.kc .kc-term{font-family:var(--display);font-size:17px;font-weight:600;display:block;margin-bottom:.45rem}
+.kc p{margin:0;font-size:15.5px;line-height:1.62}
+.sumtable{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:14.5px}
+.sumtable th{background:var(--black);color:#fff;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.55rem .8rem;text-align:left}
+.sumtable td{border:1px solid var(--border);padding:.6rem .8rem;vertical-align:top;line-height:1.5}
+.sumtable tr:nth-child(even) td{background:var(--off-white)}
+
+/* ---------- IS concepts chip strip ---------- */
+.concepts{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;margin:1.1rem 0 0}
+.concepts .clabel{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-right:.3rem}
+.concepts span:not(.clabel){font-family:var(--display);font-size:12.5px;font-weight:500;letter-spacing:.04em;border:1px solid var(--border);background:var(--off-white);padding:.22rem .6rem;color:var(--text-dark)}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <div class="topnav-in">
+    <a class="topnav-brand" href="index.html">MIS 320 &middot; Intro to Information Systems</a>
+    <a class="dd-btn" href="schedule.html" style="text-decoration:none">Schedule</a>
+    <div class="dd">
+      <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddc">Chapters<span class="caret">&#9660;</span></button>
+      <div class="dd-menu" id="ddc">
+      <a href="chapter1-what-is-mis.html"><span class="lbl">Chapter 1 &middot; Week 1</span>What Is MIS? &mdash; Spotify Wrapped</a>
+      <a href="chapter2-starbucks.html"><span class="lbl">Chapter 2 &middot; Week 2</span>The Value of Information &mdash; Starbucks</a>
+      <a href="chapter3-competitive-advantage.html"><span class="lbl">Chapter 3 &middot; Week 3</span>Technology &amp; Competitive Advantage &mdash; Zara</a>
+      <a href="chapter4-dominos.html"><span class="lbl">Chapter 4 &middot; Week 4</span>Business Processes &mdash; Domino's</a>
+      <a href="chapter5-healthcaregov.html"><span class="lbl">Chapter 5 &middot; Week 5</span>Systems Analysis &amp; the SDLC &mdash; Healthcare.gov</a>
+      <a href="chapter6-walmart.html"><span class="lbl">Chapter 6 &middot; Week 7</span>What Data Is: Databases &mdash; Walmart</a>
+      <a href="chapter7-nike-sap.html"><span class="lbl">Chapter 7 &middot; Week 7</span>Enterprise Systems &mdash; Nike/SAP</a>
+      <a href="chapter8-moneyball.html"><span class="lbl">Chapter 8 &middot; Week 6</span>Business Intelligence &mdash; Moneyball</a>
+      <a class="current" href="chapter9-ai-ml.html"><span class="lbl">Chapter 9 &middot; Week 10</span>AI, Machine Learning &amp; Bias &mdash; TikTok &amp; Amazon</a>
+      <a href="chapter10-changehealthcare.html"><span class="lbl">Chapter 10 &middot; Week 8</span>Cybersecurity &mdash; Change Healthcare</a>
+      <a href="chapter11-equifax.html"><span class="lbl">Chapter 11 &middot; Week 8</span>IT Governance &mdash; Equifax</a>
+      <a href="chapter12-software.html"><span class="lbl">Chapter 12 &middot; Week 9</span>Software Design &amp; Selection &mdash; Robles v. Domino's</a>
+      <a href="chapter13-cloud.html"><span class="lbl">Chapter 13 &middot; Week 10</span>The Cloud &amp; What Computing Costs &mdash; Netflix</a>
+      </div>
+    </div>
+    <div class="dd">
+      <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddl">Labs<span class="caret">&#9660;</span></button>
+      <div class="dd-menu" id="ddl">
+      <a href="lab1-genai.html"><span class="lbl">Lab 1 &middot; Week 1</span>GenAI for Thinking</a>
+      <a href="lab2-excel-basics.html"><span class="lbl">Lab 2 &middot; Week 2</span>Excel Basics: Meeting the Client</a>
+      <a href="lab3-excel-dataprep.html"><span class="lbl">Lab 3 &middot; Week 3</span>Excel Functions: One Question, One Formula</a>
+      <a href="lab4-excel-dataviz.html"><span class="lbl">Lab 4 &middot; Week 4</span>Data Visualization: Charts That Tell the Truth</a>
+      <a href="lab5-excel-analysis.html"><span class="lbl">Lab 5 &middot; Week 5</span>Data Analysis &amp; Mini Project</a>
+      <a href="lab6-tableau.html"><span class="lbl">Lab 6 &middot; Week 6</span>Tableau: Worksheets to a Dashboard</a>
+      <a href="lab7-sql.html"><span class="lbl">Lab 7 &middot; Week 7</span>SQL Fundamentals</a>
+      <a href="lab8-security.html"><span class="lbl">Lab 8 &middot; Week 8</span>Security &amp; Data Governance: The Audit</a>
+      <div class="dd-sep"></div>
+      <a class="soon" href="#"><span class="lbl">Labs 9&ndash;10</span>UX Design, Information Architecture (in progress)</a>
+      </div>
+    </div>
+    <div class="dd">
+      <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddd">Data<span class="caret">&#9660;</span></button>
+      <div class="dd-menu" id="ddd">
+      <a href="cascadia-sales-2025.xlsx"><span class="lbl">Workbook</span>Cascadia sales, clean (.xlsx)</a>
+      <a href="cascadia-sales-2025-RAW.xlsx"><span class="lbl">Workbook</span>Cascadia sales, RAW export for Lab 7 (.xlsx)</a>
+      <a href="cascadia-sales-2025.csv"><span class="lbl">Data</span>Flat CSV for Tableau</a>
+      <a href="cascadia.db"><span class="lbl">Database</span>SQLite database for the SQL lab</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+<main class="chapwrap">
+
+<header class="chaphead">
+  <p class="eyebrow">Chapter 9 &middot; AI, Machine Learning &amp; Bias</p>
+  <h1>AI and Machine Learning: From the For You Page to the Hiring Desk</h1>
+  <p class="anchor">Open TikTok on a brand-new account and the feed is generic. Within an evening it
+  knows you: your humor, your sport, the niche you did not know had a name. That uncanny accuracy is
+  machine learning, the most consequential business technology of your working lifetime, and the same
+  idea flags fraud before your card clears, folds proteins that won a Nobel Prize, and wrote 1.4
+  billion Wrapped stories last year. It is also the idea that, pointed at a decade of resumes, taught
+  an Amazon hiring engine to prefer men. One kind of math, both outcomes. This chapter is about how
+  that is possible, and why the people running these systems, not the systems, decide which one you
+  get.</p>
+  <div class="meta-row">
+    <span>Cases: TikTok &middot; Amazon (2014&ndash;18) &middot; Spotify Wrapped Archive (2025)</span>
+    <span class="alt">Week 10 &middot; Monday</span>
+    <span class="alt"><a href="chapter13-cloud.html" style="color:inherit;text-decoration:none">Wednesday: what computing costs &#8594;</a></span>
+  </div>
+</header>
+
+<div class="statrow">
+  <div class="stat"><b>1B+</b><span>users teaching TikTok's model, every swipe</span></div>
+  <div class="stat"><b>10 yrs</b><span>of resumes as Amazon's training data</span></div>
+  <div class="stat"><b>1&ndash;5</b><span>stars per applicant, like a product</span></div>
+  <div class="stat"><b>1.4B</b><span>LLM-written Wrapped reports</span></div>
+  <div class="stat"><b>1</b><span>idea behind all of it: learn from examples</span></div>
+</div>
+
+<div class="toc"><strong>Contents</strong>
+<a href="#s1">1. The machine that knows you by bedtime</a>
+<a href="#s2">2. What AI actually is</a>
+<a href="#s3">3. How a model learns, and what learning buys</a>
+<a href="#s4">4. The turn: the model that scored people</a>
+<a href="#s5">5. Bias in, bias out</a>
+<a href="#s6">6. The feedback loop</a>
+<a href="#s7">7. What can be done: governance and regulation</a>
+<a href="#s8">8. Generative AI at 1.4 billion</a>
+<a href="#s9">9. What business people do with AI</a>
+<a href="#s10">10. The other side: the people in the data</a>
+<a href="#s11">11. The five components</a>
+<a href="#s12">12. Summary and vocabulary</a>
+<a href="#questions">13. Discussion questions</a>
+</div>
+
+<div class="plan">
+<div class="plan-head">Monday session plan &middot; 80 minutes &middot; Week 10 (Wednesday is cloud and what computing costs)</div>
+<table>
+<tr><td class="t">0:00</td><td class="w">Open</td><td>Ask the room: how long did it take TikTok's For You page to figure you out, and what did it figure out that you never typed anywhere? Collect a few answers. Everyone has one, and every answer is a machine-learning system report from a user's chair.</td></tr>
+<tr><td class="t">0:05</td><td class="w">Lecture</td><td>What ML is: patterns learned from data, not rules written by hand. Walk the For You page as the anatomy of supervised learning, then widen the ledger: fraud flags, folded proteins, a third of Amazon's sales. Students should be genuinely impressed before the turn.</td></tr>
+<tr><td class="t">0:30</td><td class="w">Lecture</td><td>The turn: the identical math, pointed at ten years of resumes, and the "women's" penalty nobody wrote. Bias in, bias out, why editing terms could not fix it, then the feedback loop: the For You rabbit hole as the gentle version, predictive policing as the consequential one.</td></tr>
+<tr><td class="t">0:50</td><td class="w">Think-pair-share</td><td>The tool works; now what? See the activity below.</td></tr>
+<tr><td class="t">1:10</td><td class="w">Close</td><td>Wrapped Archive in five minutes: 1.4 billion grounded LLM reports, and Spotify's own engineers saying the model call was the easy part. It bridges directly to Wednesday: all of this runs on hardware somebody pays for.</td></tr>
+</table></div>
+
+<h2 id="s1"><span class="num">01</span>The machine that knows you by bedtime</h2>
+
+<p>TikTok's For You page is the most personally familiar machine-learning system on earth, which
+makes it the right place to start. There is no channel to subscribe to and no search you must run;
+the feed simply decides, video by video, what you see next. Its raw material is your behavior: what
+you watched to the end, what you rewatched, what you skipped in under a second, what you liked,
+shared, or lingered on at two in the morning. TikTok's own description of the system lists exactly
+these signals, weighted by how strongly each predicts your interest, with a full watch counting for
+far more than a casual like. Every swipe is a training example, which is why a feed that starts
+generic is uncannily yours within an evening.</p>
+
+<p>Treat it as a business case for a moment, because it is a spectacular one. Short video was not a
+new idea; the recommender was the product. Incumbents with vastly more money and data cloned the
+format, and TikTok still grew past a billion monthly users, because the differentiator was not the
+video player anyone could copy but the learned model no one could. When Washington later moved to
+force a sale of TikTok's US operations, the hardest question in the negotiation was who would control
+the algorithm, which tells you what everyone involved understood the company to actually be. A
+learned model as the core asset of a hundred-billion-dollar business: that is what this chapter's
+technology can do, and your generation's companies will be full of attempts to repeat it.</p>
+
+<p>Hold one Chapter 8 thought as we go: the model does not optimize for your wellbeing or even your
+taste. It optimizes for <strong>engagement</strong>, watch time and return visits, because those are
+measurable proxies for satisfaction. You know from the Moneyball chapter what eventually happens when
+a proxy becomes the target. Pin that; Section 6 comes back for it.</p>
+
+<h2 id="s2"><span class="num">02</span>What AI actually is</h2>
+
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">AI, machine learning, and generative AI</span>
+<p><strong>Artificial intelligence</strong> is the broad project of making computers do things that
+seem to require intelligence. For decades the main approach was writing explicit rules. <strong>Machine
+learning (ML)</strong>, the approach behind nearly everything now called AI, inverts that: instead of
+writing rules, you show the system many examples and it finds the patterns itself. <strong>Generative
+AI</strong>, including the <strong>large language models (LLMs)</strong> you have used all quarter
+under the Lab 1 rules, is machine learning trained on so much text that the learned patterns can
+produce new text, not just score or sort existing things. One family, three generations, and one
+constant: the system's behavior comes from its training data, not from anyone's stated intentions.</p></div>
+
+<p>The distinction between rules and learning matters for business because it relocates
+responsibility. A rule-based system does what someone wrote, and a bad outcome traces to a bad rule
+someone can find and fix. Nobody at TikTok wrote a rule that says "show this person otter videos";
+the preference was learned from behavior, and it lives in millions of model parameters no manager can
+read. That opacity is harmless when the stakes are otters. The rest of this chapter is about what
+happens as the stakes rise, which is why it is mostly about data, not algorithms.</p>
+
+<h2 id="s3"><span class="num">03</span>How a model learns, and what learning buys</h2>
+
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Training data, labels, and supervised learning</span>
+<p>The workhorse of business ML is <strong>supervised learning</strong>: assemble
+<strong>training data</strong>, historical examples, each carrying a <strong>label</strong>, the
+outcome you want predicted, and the model adjusts itself until its predictions match the labels. Then
+comes <strong>inference</strong>: applying the trained model to new cases. The For You page is a
+clean specimen. Examples: videos, described by their content and by who engaged with them. Label: did
+this user keep watching? Inference: run that prediction over candidate videos every time you swipe,
+and serve the winner. Its sibling, <strong>unsupervised learning</strong>, finds structure with no
+labels at all, like clustering the co-op's members into segments nobody predefined.</p></div>
+
+<p>The lineage of the For You page runs straight through this course's other retail giant. Amazon's
+"customers who bought this also bought" machinery works the same way, learning from millions of past
+purchases via <strong>collaborative filtering</strong>; its engineers published the core item-to-item
+method back in 2003, and a widely cited McKinsey estimate has put roughly 35 percent of Amazon's
+sales behind its recommendations. The same learned-pattern machinery drives the demand forecasts that
+place inventory in warehouses before you order.</p>
+
+<p>And retail is one entry in a long ledger. The same machinery flags credit-card fraud in the
+milliseconds between swipe and approval, which is why your bank texts you about a suspicious charge
+before you have left the store. In medicine, models trained on labeled scans have matched specialist
+performance at detecting diabetic retinopathy and certain cancers in published studies, extending
+screening to clinics that have no specialist. DeepMind's AlphaFold predicted the three-dimensional
+structure of essentially every known protein, work that earned a share of the 2024 Nobel Prize in
+Chemistry and compressed months of laboratory effort per protein into minutes. Machine translation
+and speech recognition have quietly become accessibility infrastructure for hundreds of millions of
+people. None of this is hype; it is deployed, audited, and paying for itself, and it is why every
+serious company is asking where learned prediction fits its own operations, a question someone with
+your degree will be in the room for.</p>
+
+<p>Before the turn, compress the mechanism into one sentence and keep it: <em>a supervised model is
+a machine for making the future resemble the labeled past.</em> When the past is what you want more
+of, that is a superpower. The next two sections are about when it is not.</p>
+
+<h2 id="s4"><span class="num">04</span>The turn: the model that scored people</h2>
+
+<p>Now the same idea, aimed one domain too far. Beginning in 2014, a team at Amazon built
+experimental models to do for recruiting what the company had done for retail: read each incoming
+resume and score the applicant from one to five stars, the way shoppers score products. One insider
+described the dream to Reuters: give the engine one hundred resumes, it spits out the top five, you
+hire those. This was not a rogue project by people who misunderstood the company; it was the
+company's most proven idea, prediction from history, applied to its own front door.</p>
+
+<p>To learn what a strong applicant looked like, the models trained on ten years of the company's
+past resumes and how those candidacies had turned out. Here is the whole story in one sentence:
+<strong>the tech industry's past applicants were mostly men, so the model learned that resumes
+resembling men's resumes were what success looked like.</strong> By 2015 the team found the system
+penalizing resumes containing the word "women's", as in "women's chess club captain", and downgrading
+graduates of two all-women's colleges, while favoring verbs that happened to be more common on male
+engineers' resumes, like "executed" and "captured".</p>
+
+<p>Amazon edited the model to neutralize those terms, then confronted the harder truth: with tens of
+thousands of terms in play, there was no way to be confident it had not found other, subtler proxies
+for gender. The company lost confidence and shut the project down, telling Reuters the tool was never
+used by recruiters to evaluate candidates. Note the shape of the failure before the next section
+names it: nobody wrote a biased rule. Nobody wrote any rule. The system did exactly what Section 3
+said supervised learning does, faithfully. The labels were the problem, because the labels were
+history, and history had a skew.</p>
+
+<div class="pull"><p>The model that found your niche by bedtime and the model that rejected her resume are the same idea. Only the training data, and the stakes, differ.</p></div>
+
+<h2 id="s5"><span class="num">05</span>Bias in, bias out</h2>
+
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Training-data bias and proxy discrimination</span>
+<p><strong>Training-data bias</strong> is a skew in the examples that the model faithfully learns and
+reproduces; the model is not malfunctioning, which is what makes it dangerous. <strong>Proxy
+discrimination</strong> is the sequel: remove the forbidden attribute, here gender, and the model
+finds stand-ins that correlate with it, a word, a college, a verb, a zip code. Amazon could delete
+the "women's" penalty, but could never certify the absence of every subtler proxy in fifty thousand
+terms, and that impossibility, not the one embarrassing term, is why the project died.</p></div>
+
+<p>Two management lessons hide in the ending. First, "the algorithm decided" is never an explanation:
+a model's decisions are its training data's decisions, laundered through math, and accountability for
+them belongs to the people who chose the data and shipped the system, a direct echo of Chapter 11's
+responsibility-versus-accountability distinction. Second, Amazon's least celebrated act here was its
+best one: it tested its own system, found the failure, and killed a project it had wanted badly. The
+discussion questions will ask whether you would have had the nerve.</p>
+
+<h2 id="s6"><span class="num">06</span>The feedback loop</h2>
+
+<p>Now collect the pin from Section 1. The For You page does not just learn from your behavior; it
+shapes the behavior it will learn from next. Serve what held your attention, attention becomes the
+data, the data narrows what gets served. In 2021 the Wall Street Journal ran automated accounts
+through TikTok and showed that watch time alone steered fresh feeds into narrow tunnels within hours,
+including, for accounts that lingered on sad content, feeds that drifted toward ever darker variants
+of whatever held attention. Engagement is a proxy for satisfaction, the proxy became the target, and
+Chapter 8 told you the rest. For an individual user this is rabbit holes and lost evenings, worth
+taking seriously and mostly recoverable.</p>
+
+<p>Raise the stakes and the same structure stops being recoverable. <strong>Predictive
+policing</strong> systems forecast where crime is likeliest and route patrols there. More patrols in
+a neighborhood observe more offenses there, which enters the data as more recorded crime, which
+raises the forecast, which sends more patrols. The model's prediction manufactures its own
+confirmation, and historical over-policing hardens into mathematically laundered permanent policy,
+applied to people who cannot log off.</p>
+
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Feedback loops</span>
+<p>A <strong>feedback loop</strong> exists when a system's outputs alter the inputs it will learn
+from next. Recommendation engines have gentle ones; predictive systems that direct real-world action,
+patrols, loans, audits, hiring, have consequential ones, because the model changes the world that
+generates its evidence. The test to carry into any AI deployment: <em>does acting on this prediction
+change the data that will judge the prediction?</em> If yes, the model can be confidently,
+self-certifyingly wrong, and the gap between a rabbit hole and a patrol pattern is only the stakes.</p></div>
+
+
+<h2 id="s7"><span class="num">07</span>What can be done: governance and regulation</h2>
+
+<p>A chapter that stopped at the last section would leave you with diagnosis and no treatment, and
+that would be a lie by omission, because the treatments exist, they are increasingly required by law,
+and administering them is a business job. They come in two layers: what a company can do to govern
+its own models, and what the law now demands.</p>
+
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">AI governance</span>
+<p><strong>AI governance</strong> is Chapter 11's discipline applied to models: the accountability
+structure that decides which AI systems exist, what they may decide, and who answers when they fail.
+Its working parts are concrete. A <strong>model inventory</strong> with a named owner for every
+deployed model, because Equifax taught you what "everyone was responsible" means. <strong>Bias
+audits</strong> before deployment: testing whether outcomes differ across groups, the exact test that
+caught Amazon's tool. <strong>Documentation</strong>, in industry practice called model cards and
+datasheets: what the model was trained on, what it is for, and where it must not be used.
+<strong>Human-in-the-loop rules</strong> stating which decisions a model may never make alone. And
+<strong>ongoing monitoring</strong>, because Section 6 showed you that a model can quietly change the
+world it is being graded on. None of these require writing code. All of them require someone with
+the authority to say no, which is why the last mechanism is the one Amazon actually used: a kill
+decision, made by management, against a system the company wanted.</p></div>
+
+<p>You have been running a miniature version of this all quarter. The Lab 1 traffic lights are an AI
+use policy: an inventory of uses, a rule for which ones require your own judgment in the loop, and a
+red tier that is simply banned. Scale that reasoning to an organization and you have written the
+first page of a real governance program.</p>
+
+<p>The law has begun demanding the same mechanisms, and the clearest example descends directly from
+this chapter's case. New York City's Local Law 144, in force since 2023, requires that automated
+hiring tools used on city candidates undergo an annual independent <strong>bias audit</strong>, with
+the results published and candidates notified that an algorithm is screening them. Read that against
+Section 4: the measurable-condition habit from the Monday activity, written into municipal law.
+Illinois requires consent before AI analyzes video interviews. Federal regulators have made the
+broader point bluntly: existing employment-discrimination law applies regardless of whether a human
+or a model does the discriminating, so "the algorithm did it" is not a legal defense any more than it
+was an ethical one. And in Europe, the GDPR has long given individuals rights against consequential
+decisions made solely by machine.</p>
+
+<p>The most comprehensive attempt is the European Union's <strong>AI Act</strong>, adopted in 2024,
+which regulates by <strong>risk tier</strong> rather than by technology. Some uses are banned
+outright, such as social scoring of citizens. High-risk uses, and hiring sits explicitly on that
+list alongside credit and law enforcement, are permitted only with documentation, human oversight,
+and accuracy and bias testing: roughly the governance checklist above, made mandatory. Lower tiers
+carry lighter duties, like disclosing that a customer is talking to a chatbot. The United States has
+so far taken the opposite architecture: no comprehensive federal law, a voluntary framework from
+NIST that many companies adopt, sector-by-sector enforcement, and a growing patchwork of state laws,
+with Colorado the first state to pass a broad statute targeting algorithmic discrimination in
+consequential decisions.</p>
+
+<p>Which architecture is right is a live design debate, and it is worth having with Chapter 3's
+vocabulary. The European approach buys protection up front and is criticized for slowing deployment
+and burdening small firms; the American approach preserves speed and is criticized for arriving only
+after the harm, one lawsuit at a time. Underneath both sit two honest open problems. The
+<strong>pacing problem</strong>: legislation moves in years while model generations move in months,
+so any specific technical rule is born aging. And audit quality: a bias audit is only as good as its
+auditor and its access, and a rubber-stamp industry would launder exactly the harms it was created
+to catch. The durable answer, in both architectures, is the pair of skills this course keeps handing
+you: measurement that is valid, from Chapter 8, and accountability that has a name attached, from
+Chapter 11. Regulation, at its best, is those two things with legal force.</p>
+
+<h2 id="s8"><span class="num">08</span>Generative AI at 1.4 billion</h2>
+
+<p>Now the current generation, at industrial scale, through a system you have been studying all
+quarter. In Week 1 Spotify Wrapped was your "what is MIS" specimen; in Lab 7 you learned its core is
+a GROUP BY. For Wrapped 2025, Spotify added an <strong>Archive</strong>: for each of roughly 350
+million eligible users, heuristics scanned the year's listening for up to five "remarkable days",
+your biggest discovery day, your most nostalgic day, and a language model wrote a short personalized
+narrative about each. About 1.4 billion reports, all pre-generated before launch day, each one a call
+to a model Spotify fine-tuned and distilled to make the cost survivable.</p>
+
+<p>Two engineering choices carry the lesson. First, <strong>grounding</strong>: every narrative was
+generated from the user's actual listening records, passed into the prompt, because an ungrounded
+LLM will cheerfully invent a touching day you never had. That failure mode has a name you met in Lab
+1, <strong>hallucination</strong>, and the calculator test you passed there, the confident wrong
+total, is the same phenomenon at desk scale. Second, evaluation at volume: no human can read 1.4
+billion reports, so Spotify used an LLM as an automated judge on a sample of about 165,000, which is
+how they caught, among other things, a timezone bug attributing plays to the wrong day, before users
+saw it. Their engineers' own summary of the project is the chapter's thesis in one line: at this
+scale, <em>the LLM call is the easy part</em>. The system around it, the data pipeline, the
+grounding, the evaluation, the capacity planning, is the achievement, and every word of that sentence
+describes MIS work, not model-building work.</p>
+
+<h2 id="s9"><span class="num">09</span>What business people do with AI</h2>
+
+<p>As with security in Chapter 10, students assume AI jobs are engineering jobs they are unqualified
+for, and as with security, the decisions that determine outcomes are mostly business decisions. The
+roles a business graduate actually fills:</p>
+
+<p><strong>Evaluation and audit.</strong> Somebody decided to test whether the resume tool was
+gender-neutral, and somebody designed Spotify's judge-and-sample scheme. Deciding what "working
+correctly" means for a model, and how you would know, is analytical work built on exactly the
+measurement-validity thinking of Chapter 8: an unmeasured model is an unmanaged one.</p>
+
+<p><strong>Human-in-the-loop design.</strong> Deciding which decisions a model may make alone, which
+require a human to confirm, and which a model may only inform. You have run this discipline on
+yourself since Lab 1; designing it for an organization is the same three lights, drawn as policy.</p>
+
+<p><strong>AI governance and compliance.</strong> Someone has to run Section 7's machinery: keep the
+model inventory current, commission and read the bias audits, map each deployment against the EU's
+risk tiers and the state-law patchwork, and hold the kill authority. It is compliance work with a
+hard legal edge, not a philosophy seminar, and it is hiring now.</p>
+
+<p><strong>Vendor and use-case selection.</strong> Most companies will buy AI, not build it, which
+makes "which model, whose cloud, at what cost, for which process" a procurement-and-strategy question,
+one Wednesday's chapter prices out in detail.</p>
+
+<h2 id="s10"><span class="num">10</span>The other side: the people in the data</h2>
+
+<p>Every system in this chapter runs on data generated by people who never signed up to be training
+examples, and one of them, the feed, pays for itself with the attention it harvests. The applicants in Amazon's ten years of resumes were job-seekers, not volunteers for an
+experiment that would score people like them. The residents of a heavily patrolled neighborhood never
+agreed to have their arrest records forecast their children's police coverage. Spotify's Archive drew
+on years of retained listening history, and thoughtful engineering coverage of the launch raised
+exactly that question: delight built on how much a platform remembers about you. This is Chapter 11's
+"data about people who never agreed", resurfacing one layer up the stack.</p>
+
+<p>Behind the models sits labor the demos never show: data-labeling workers, often contractors in
+lower-wage countries, tagging the examples supervised learning requires, including the disturbing
+content that moderation models train on. And generative AI produces its own pollution for other
+people to absorb: Spotify itself reported removing some 75 million spam and AI-generated tracks in
+2025 to protect artists and royalties, the same company using LLMs as a feature while fighting them
+as an infestation. When a company weighs an AI deployment, most of these costs sit off its books, an
+externality, which is the same reason Chapter 10 gave for why security cannot be left to private
+cost-benefit math alone.</p>
+
+<p>One more cost sits behind every system in this chapter, and it is physical. Training a large model
+and then serving it to hundreds of millions of people consumes serious electricity, and the data
+centers doing the work drink water to stay cool; the AI boom is a major force behind the current wave
+of data-center construction, with the bills, the emissions, and the siting fights that come with it.
+This chapter names the cost and deliberately stops there, because Wednesday's session exists to price
+it properly: energy, water, emissions, and e-waste, from Netflix's cloud to the model calls you made
+this quarter. Carry one question across the two days: when the For You page or a chatbot answer feels
+free, who is paying, and in what currency?</p>
+
+<h2 id="s11"><span class="num">11</span>The five components of a machine-learning system</h2>
+
+<table class="sumtable">
+<tr><th>Component</th><th>In these cases</th><th>The lesson</th></tr>
+<tr><td><strong>Hardware</strong></td><td>The compute behind training and 1.4 billion generations</td><td>Model appetite is a hardware bill; Wednesday prices it</td></tr>
+<tr><td><strong>Software</strong></td><td>The models, and the pipelines that ground and evaluate them</td><td>The model is a component; the system is the achievement</td></tr>
+<tr><td><strong>Data</strong></td><td>Every swipe; ten years of resumes; a year of listening; arrest records</td><td>Training data is the system's memory of the past, skew included</td></tr>
+<tr><td><strong>Networks</strong></td><td>Serving 350 million users in one coordinated launch</td><td>Scale is a distribution problem before it is an AI problem</td></tr>
+<tr><td><strong>People</strong></td><td>Choosing the training data, testing for bias, killing the tool</td><td>Every consequential choice in this chapter was a human one</td></tr>
+</table>
+
+<h2 id="s12"><span class="num">12</span>Summary and vocabulary</h2>
+
+<table class="sumtable">
+<tr><th>Idea</th><th>This chapter's version</th><th>Where you meet it next</th></tr>
+<tr><td><strong>The upside is real</strong></td><td>The feed that knows you, fraud flags, folded proteins</td><td>The AI decisions your first employer is making now</td></tr>
+<tr><td><strong>Learning vs. rules</strong></td><td>Behavior comes from training data, not stated intentions</td><td>Every AI headline you read after this course</td></tr>
+<tr><td><strong>Bias in, bias out</strong></td><td>The "women's" penalty nobody wrote</td><td><a href="chapter11-equifax.html">Ch 11's accountability question</a></td></tr>
+<tr><td><strong>Feedback loops</strong></td><td>Predictions that manufacture their own confirmation</td><td>The Monday activity's hardest cases</td></tr>
+<tr><td><strong>Grounding vs. hallucination</strong></td><td>1.4 billion reports tied to real listening data</td><td><a href="lab1-genai.html">Lab 1's calculator test</a>, which you already passed</td></tr>
+<tr><td><strong>Governance has teeth now</strong></td><td>Bias audits and risk tiers: the Monday activity's measurable condition, written into law</td><td><a href="chapter11-equifax.html">Ch 11's accountability</a>, with statutes attached</td></tr>
+<tr><td><strong>The system, not the model</strong></td><td>"The LLM call is the easy part"</td><td>Wednesday: the cloud it all runs on</td></tr>
+</table>
+
+<dl class="vocab">
+<div><dt>Artificial intelligence</dt><dd>Computers doing tasks that seem to require intelligence; today, mostly via machine learning.</dd></div>
+<div><dt>Machine learning</dt><dd>Learning patterns from examples instead of following hand-written rules.</dd></div>
+<div><dt>Training data / label</dt><dd>The historical examples a model learns from, and the outcome attached to each.</dd></div>
+<div><dt>Supervised / unsupervised</dt><dd>Learning from labeled outcomes vs. finding structure with no labels.</dd></div>
+<div><dt>Inference</dt><dd>Using the trained model on new cases; where models earn their keep.</dd></div>
+<div><dt>Collaborative filtering</dt><dd>Predicting what you will want from patterns across everyone's past behavior; the recommendation engine's core.</dd></div>
+<div><dt>Training-data bias</dt><dd>A skew in the examples, faithfully learned and reproduced.</dd></div>
+<div><dt>Proxy discrimination</dt><dd>The model rediscovering a removed attribute through its correlates.</dd></div>
+<div><dt>Feedback loop</dt><dd>Outputs that shape the future training data, letting a model confirm itself.</dd></div>
+<div><dt>Generative AI / LLM</dt><dd>Models that produce new content; large language models are the text-generating kind.</dd></div>
+<div><dt>Fine-tuning / distillation</dt><dd>Adapting a model to a task, and compressing a large one into a cheaper one that keeps what matters.</dd></div>
+<div><dt>Grounding</dt><dd>Tying generated output to verified data so the model narrates reality instead of inventing it.</dd></div>
+<div><dt>Hallucination</dt><dd>Fluent, confident output that is simply wrong; Lab 1's calculator test at scale.</dd></div>
+<div><dt>AI governance</dt><dd>The accountability structure for models: inventory, audits, documentation, oversight rules, and a named owner with kill authority.</dd></div>
+<div><dt>Bias audit</dt><dd>Testing whether a model's outcomes differ across groups; annual and independent by law for NYC hiring tools.</dd></div>
+<div><dt>Risk-tier regulation</dt><dd>The EU AI Act's architecture: obligations scale with the stakes of the use, from banned to barely regulated.</dd></div>
+<div><dt>Human-in-the-loop</dt><dd>Deciding which model outputs require a person's judgment before they act on the world.</dd></div>
+</dl>
+
+<div class="tps">
+  <div class="tps-head"><span>Monday activity &middot; The tool works. Now what?</span><span class="mins">20 minutes</span></div>
+  <div class="tps-body">
+    <p class="tps-setup">It is 2015 and you run recruiting technology at Amazon. The engine is fast,
+    the top-five lists look plausible, and it would save thousands of screening hours a year. Your ML
+    team has just shown you the finding: it penalizes the word "women's", and they can edit that term
+    out but cannot promise there are no subtler proxies among fifty thousand others.</p>
+    <div class="tps-q"><p>Kill it, fix it, or keep it with a human reviewing every recommendation? Commit to one, and name the single condition that would have to be true for a model to ever touch a hiring decision.</p></div>
+    <div class="tps-steps">
+      <div class="tps-step"><div class="ph">Think <span>3 min</span></div><p>Choose, and write your condition as a testable sentence, something an auditor could check, not a vibe.</p></div>
+      <div class="tps-step"><div class="ph">Pair <span>5 min</span></div><p>Find someone who chose differently. Attack each other's condition: what failure slips through it?</p></div>
+      <div class="tps-step"><div class="ph">Share <span>12 min</span></div><p>We will sort the conditions on the board into measurable ones and unmeasurable ones, and notice which pile "a human reviews it" lands in once you ask what the human actually checks.</p></div>
+    </div>
+    <div class="tps-note"><strong>Where this lands</strong>Amazon chose kill, and the reasoning generalizes: a model you cannot evaluate is a model you cannot deploy, whatever it saves. "Human in the loop" is a real answer only when the human has the information, time, and authority to overrule the machine, otherwise it is a rubber stamp with a pulse. The measurable-condition habit is the one to keep; it is Chapter 8's validity question, aimed at AI.</div>
+  </div>
+</div>
+
+<div class="ailight g">
+  <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
+  <div class="lighttext"><strong>Green &middot; AI as coach and sparring partner</strong>
+  <p>Fitting week for it: have an AI quiz you on this vocabulary, then run one live experiment on the
+  chapter's own subject. Ask it a question about your hometown or a hobby you know deeply, and audit
+  the answer for confident errors. You are performing evaluation, Section 9's first job, on the tool
+  itself. One standing rule extends the red light from Lab 1: never paste real people's personal or
+  identifying data, resumes included, into an AI tool. You would be adding them to somebody's
+  training data, which after this chapter needs no further explanation.</p></div>
+</div>
+
+<h2 id="questions"><span class="num">13</span>Discussion questions</h2>
+<p><em>Groups of three; each group takes one and reports out.</em></p>
+<ol class="dq">
+<li>An executive says: "We should trust the model precisely because it has no prejudices; it is just math." Using the resume case, explain what this gets right and where it fatally goes wrong.<span class="tag tag-open">Explain</span></li>
+<li>Watch time is engagement's batting average: measurable, and not the thing anyone actually cares about. Propose the OBP: a feed metric that better tracks whether users are glad they opened the app, and say why no platform reports it.<span class="tag tag-warm">Connect</span></li>
+<li>Design the audit that would have caught the resume tool before launch: what would you test, against what data, and what result would trigger a kill decision? Be concrete enough that an engineer could run it.<span class="tag tag-hard">Design</span></li>
+<li>Amazon scrapped the tool. Argue the opposite case, that fixing and shipping it with safeguards was the better call, then say which argument wins and why.<span class="tag tag-open">Evaluate</span></li>
+<li>Find a feedback loop in a domain other than policing or your own feed, somewhere a prediction changes the data that will later judge it. Loan approvals, school rankings, and content moderation are all candidates. Trace one full lap of your loop.<span class="tag tag-warm">Apply</span></li>
+<li>What stops Wrapped Archive from telling you about a moving listening day you never had? Name the engineering choice, connect it to Lab 1's calculator test, and say what the equivalent safeguard would be for an AI that answers customer-service questions.<span class="tag tag-open">Connect</span></li>
+<li>This chapter passed along a widely cited estimate that recommendations drive roughly 35 percent of Amazon's sales. Treat that number with Chapter 8's skepticism: what would you need to know before repeating it in a board memo?<span class="tag tag-warm">Analyze</span></li>
+<li>Section 10 argues AI's costs, scored applicants, labeling labor, AI-generated spam, largely sit off the deploying company's books. Make the strongest case that market pressure will discipline AI use without regulation, then the strongest case that it will not, and note where you saw this exact argument before.<span class="tag tag-hard">Judgment</span></li>
+<li>You are drafting your state's first algorithmic-hiring law and may impose exactly one requirement. NYC chose annual independent bias audits with candidate notice. Keep that choice, or replace it with a better single requirement, and defend your pick against the pacing problem and the rubber-stamp problem.<span class="tag tag-hard">Design</span></li>
+<li>Write the one-sentence rule for when a human must stay in the loop of an automated decision, then stress-test your sentence against three cases: a product recommendation, a resume screen, and a medical triage suggestion. Does it survive all three?<span class="tag tag-hard">Design</span></li>
+</ol>
+
+<h2><span class="num">14</span>Sources and further reading</h2>
+<ul class="sources">
+<li>Jeffrey Dastin, Reuters, <em>Amazon scraps secret AI recruiting tool that showed bias against women</em> (October 2018): the original report; the training data, the "women's" penalty, the two colleges, the favored verbs, and Amazon's statement that the tool never evaluated real candidates.</li>
+<li>MIT Technology Review, <em>Amazon ditched AI recruitment software because it was biased against women</em> (October 2018): a concise account of why term-level fixes could not restore confidence in neutrality.</li>
+<li>Greg Linden, Brent Smith, and Jeremy York, <em>Amazon.com Recommendations: Item-to-Item Collaborative Filtering</em>, IEEE Internet Computing (2003): the recommendation engine's core method, published by its builders.</li>
+<li>Spotify Engineering, <a href="https://engineering.atspotify.com/2026/3/inside-the-archive-2025-wrapped">Inside the Archive: The Tech Behind Your 2025 Wrapped Highlights</a> (2026): the remarkable-days heuristics, the ~1.4 billion pre-generated reports for ~350 million users, the fine-tuned and distilled model, and the LLM-as-judge evaluation on a ~165,000-report sample.</li>
+<li>TikTok Newsroom, <em>How TikTok recommends videos #ForYou</em> (2020): the company's own description of the For You system and its ranked engagement signals.</li>
+<li>Wall Street Journal, <em>Inside TikTok's Algorithm</em> video investigation (2021): the bot experiment showing watch time alone steering fresh accounts into narrow content tunnels within hours.</li>
+<li>Regulation (EU) 2024/1689, the EU Artificial Intelligence Act: the risk-tier architecture, with employment-related AI designated high-risk and subject to documentation, human-oversight, and testing duties.</li>
+<li>New York City Local Law 144 of 2021 (enforced from 2023): annual independent bias audits and candidate notification for automated employment decision tools.</li>
+<li>NIST AI Risk Management Framework 1.0 (2023): the voluntary US framework many organizations use to structure the governance program Section 7 describes.</li>
+<li>The McKinsey figure attributing roughly 35 percent of Amazon's sales to recommendations is a widely circulated 2013 estimate, not an Amazon disclosure; Discussion question 6 asks you to treat it accordingly.</li>
+</ul>
+
+<p style="margin-top:2.5rem"><a href="chapter13-cloud.html">Wednesday: cloud, data centers, and what computing costs &#8594;</a></p>
+
+</main>
+<!--NAVJS-->
+<script>
+(function(){
+  var btns=[].slice.call(document.querySelectorAll('.dd-btn'));
+  function closeAll(except){
+    btns.forEach(function(b){
+      var m=document.getElementById(b.getAttribute('data-dd'));
+      if(m&&m!==except){m.classList.remove('open');b.setAttribute('aria-expanded','false');}
+    });
+  }
+  btns.forEach(function(b){
+    b.addEventListener('click',function(e){
+      e.stopPropagation();
+      var m=document.getElementById(b.getAttribute('data-dd'));
+      var open=m.classList.contains('open');
+      closeAll();
+      if(!open){m.classList.add('open');b.setAttribute('aria-expanded','true');}
+    });
+  });
+  document.addEventListener('click',function(){closeAll();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeAll();});
+  document.querySelectorAll('.dd-menu').forEach(function(m){
+    m.addEventListener('click',function(e){e.stopPropagation();});
+  });
+})();
+</script>
+</body>
+</html>

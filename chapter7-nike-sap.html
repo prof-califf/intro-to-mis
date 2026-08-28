@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chapter 7 · Enterprise Systems: Nike/SAP | MIS 320</title>
+<meta name="description" content="MIS 320 Chapter 7: ERP, CRM, and SCM systems, anchored on Nike's 2000-2001 i2/SAP failure, with a modern coda on Lamb Weston and Zimmer Biomet.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0e0e0d; --off-black:#1a1a18;
+  --magenta:#e8197d; --magenta-dark:#c0146a; --magenta-pale:#fdeaf3;
+  --white:#ffffff; --off-white:#f6f4f1;
+  --text-dark:#0e0e0d; --text-muted:#3a3a38; --text-light:#6b6b68;
+  --border:#e0ddd8;
+  --warn:#b3261e; --warn-pale:#fdeceb;
+  --good:#1f7a53; --good-pale:#e8f4ee;
+  --sans:'Space Grotesk',sans-serif; --display:'Oswald',sans-serif;
+  --wrap:1180px; --col:46rem;
+  /* legacy aliases so existing markup keeps working */
+  --navy:#0e0e0d; --navy-soft:#1a1a18; --accent:#e8197d; --accent-deep:#c0146a;
+  --accent-pale:#fdeaf3; --cream:#ffffff; --cream-deep:#f6f4f1; --paper:#ffffff;
+  --ink:#0e0e0d; --muted:#6b6b68; --rule:#e0ddd8; --serif:'Space Grotesk',sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--white);color:var(--text-dark);
+  font-family:var(--sans);font-size:18.5px;line-height:1.7;-webkit-font-smoothing:antialiased}
+
+/* ---------- shell ---------- */
+.shell{max-width:var(--wrap);margin:0 auto;display:grid;grid-template-columns:15rem minmax(0,1fr);gap:3.5rem;padding:0 1.5rem 6rem}
+main{max-width:var(--col);padding-top:2.5rem}
+
+/* ---------- sidebar ---------- */
+.rail{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:2.5rem 0 3rem;border-right:1px solid var(--border)}
+.rail .book{font-family:var(--display);font-size:15px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--magenta);margin:0 0 .2rem}
+.rail .course{font-size:13.5px;color:var(--text-light);margin:0 0 1.75rem}
+.rail nav a{display:block;font-size:15px;line-height:1.35;color:var(--text-muted);text-decoration:none;padding:.42rem .8rem .42rem .85rem;border-left:2px solid transparent;margin-left:-.85rem}
+.rail nav a:hover{color:var(--magenta);border-left-color:var(--magenta)}
+.rail nav a.sub{font-size:14px;color:var(--text-light);padding-left:1.7rem}
+.rail .back{display:inline-block;margin-top:2rem;font-size:14px;color:var(--text-light);text-decoration:none}
+.rail .back:hover{color:var(--magenta)}
+.railtoggle{display:none}
+
+/* ---------- chapter head ---------- */
+.chaphead{border-bottom:3px solid var(--black);padding-bottom:1.6rem;margin-bottom:2.5rem}
+.eyebrow{font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--magenta);margin:0 0 .7rem}
+.chaphead h1{font-family:var(--display);font-weight:600;font-size:clamp(1.9rem,4.4vw,2.7rem);line-height:1.12;text-transform:uppercase;letter-spacing:.01em;margin:0 0 .6rem;color:var(--black)}
+.chaphead .anchor{font-size:16px;color:var(--text-light);margin:0}
+.chaphead .anchor strong{color:var(--text-muted);font-weight:500}
+.meta-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.2rem}
+.meta-row span{font-size:13px;letter-spacing:.03em;background:var(--off-white);border:1px solid var(--border);padding:.32rem .65rem;color:var(--text-muted)}
+.meta-row span.alt{background:var(--magenta-pale);border-color:#f6cfe1;color:var(--magenta-dark)}
+
+/* ---------- type ---------- */
+h2{font-family:var(--display);font-weight:600;font-size:1.72rem;line-height:1.22;text-transform:uppercase;letter-spacing:.01em;color:var(--black);margin:3.2rem 0 .9rem}
+h2 .num{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;color:var(--magenta);display:block;margin-bottom:.4rem;text-transform:uppercase}
+h3{font-family:var(--display);font-weight:600;font-size:1.18rem;text-transform:uppercase;letter-spacing:.03em;color:var(--off-black);margin:2rem 0 .55rem}
+p{margin:0 0 1.05rem}
+a{color:var(--magenta-dark)}
+strong{font-weight:600;color:var(--black)}
+.lede{font-size:1.24rem;line-height:1.55;color:var(--text-muted)}
+code.inline{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--off-white);padding:.1em .35em;border:1px solid var(--border)}
+ul,ol{margin:0 0 1.15rem;padding-left:1.3rem}
+li{margin-bottom:.45rem}
+
+/* ---------- pull quote ---------- */
+.pull{margin:2.2rem 0;padding:0 0 0 1.4rem;border-left:3px solid var(--magenta)}
+.pull p{font-family:var(--display);font-weight:400;font-size:1.32rem;line-height:1.3;color:var(--black);margin:0 0 .5rem}
+.pull cite{font-style:normal;font-size:12.5px;color:var(--text-light)}
+
+/* ---------- callouts ---------- */
+.callout{border:1px solid var(--border);border-left:4px solid var(--magenta);background:var(--off-white);padding:1.15rem 1.3rem;margin:1.9rem 0}
+.callout strong:first-child{display:block;font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--magenta);margin-bottom:.5rem}
+.callout p:last-child{margin-bottom:0}
+.callout-caution{border-left-color:var(--warn);background:var(--warn-pale)}
+.callout-caution strong:first-child{color:var(--warn)}
+.callout-bridge{border-left-color:var(--black);background:var(--off-white)}
+.callout-bridge strong:first-child{color:var(--black)}
+.callout-good{border-left-color:var(--good);background:var(--good-pale)}
+.callout-good strong:first-child{color:var(--good)}
+
+/* ---------- signature: value chain rail ---------- */
+.vc{margin:2.4rem 0;border:1px solid var(--border);background:var(--white);overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,.07)}
+.vc-head{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#fff;background:var(--black);padding:.7rem 1rem}
+.vc-strip{display:grid;grid-template-columns:repeat(5,1fr)}
+.vc-cell{padding:.85rem .7rem;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+.vc-cell:last-child{border-right:none}
+.vc-stage{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-light);display:block;margin-bottom:.3rem}
+.vc-cell p{font-size:14px;line-height:1.4;margin:0;color:var(--text-muted)}
+.vc-cell.broke{background:var(--magenta-pale)}
+.vc-cell.broke .vc-stage{color:var(--magenta)}
+.vc-cell.broke p{color:#8a1450}
+.vc-note{padding:.8rem 1rem;font-size:14px;color:var(--text-light);background:var(--off-white);border-top:1px solid var(--border)}
+.vc-note b{color:var(--magenta);font-weight:600}
+
+/* ---------- stat band ---------- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(8.5rem,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin:2rem 0}
+.stat{background:var(--white);padding:1rem .9rem}
+.stat b{display:block;font-family:var(--display);font-weight:700;font-size:1.8rem;color:var(--magenta);line-height:1.1}
+.stat span{display:block;font-size:13px;line-height:1.3;color:var(--text-light);margin-top:.3rem}
+
+/* ---------- timeline ---------- */
+.tl{list-style:none;padding:0;margin:1.8rem 0;border-left:2px solid var(--border)}
+.tl li{position:relative;padding:0 0 1.1rem 1.3rem;margin:0}
+.tl li:before{content:"";position:absolute;left:-5px;top:.55em;width:8px;height:8px;border-radius:50%;background:var(--magenta)}
+.tl li.bad:before{background:var(--warn)}
+.tl .when{font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--magenta);display:block}
+.tl li.bad .when{color:var(--warn)}
+
+/* ---------- vocabulary ---------- */
+.vocab{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin:1.8rem 0}
+.vocab div{background:var(--white);padding:.95rem 1rem}
+.vocab dt{font-family:var(--display);font-weight:600;font-size:15px;text-transform:uppercase;letter-spacing:.03em;color:var(--black);margin-bottom:.3rem}
+.vocab dd{margin:0;font-size:15px;line-height:1.5;color:var(--text-muted)}
+
+/* ---------- discussion questions ---------- */
+.dq{counter-reset:dq;margin:1.6rem 0 0;padding:0;list-style:none}
+.dq li{counter-increment:dq;position:relative;padding:1rem 0 1rem 2.6rem;border-top:1px solid var(--border)}
+.dq li:last-child{border-bottom:1px solid var(--border)}
+.dq li:before{content:counter(dq,decimal-leading-zero);position:absolute;left:0;top:1.05rem;font-family:var(--display);font-size:14.5px;font-weight:600;color:var(--magenta)}
+.tag{display:inline-block;font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:.2rem .5rem;margin-left:.5rem;vertical-align:.12em}
+.tag-hard{background:var(--warn);color:#fff}
+.tag-open{background:var(--black);color:#fff}
+.tag-warm{background:var(--magenta-pale);color:var(--magenta-dark)}
+
+/* ---------- sources ---------- */
+.sources{margin-top:3.5rem;padding-top:1.2rem;border-top:1px solid var(--border);font-size:14.5px;color:var(--text-light)}
+.sources h3{font-family:var(--display);font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin:0 0 .6rem}
+.sources li{margin-bottom:.35rem;line-height:1.5}
+
+/* ---------- responsive ---------- */
+@media (max-width:860px){
+  .shell{grid-template-columns:1fr;gap:0;padding:0 1.15rem 4rem}
+  .rail{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);padding:1.5rem 0 1rem;margin-bottom:.5rem}
+  .rail nav{display:none}
+  .rail nav.open{display:block;margin-top:.8rem}
+  .railtoggle{display:inline-block;font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--magenta);background:none;border:1px solid var(--border);padding:.4rem .7rem;cursor:pointer}
+  main{padding-top:1.2rem}
+  .vc-strip{grid-template-columns:repeat(2,1fr)}
+}
+:focus-visible{outline:2px solid var(--magenta);outline-offset:2px}
+
+/* ---------- prominent lab link ---------- */
+.lablink{display:inline-block;margin-top:.9rem;font-family:var(--display);font-size:14.5px;font-weight:600;
+  letter-spacing:.06em;text-transform:uppercase;text-decoration:none;background:var(--magenta);color:#fff;
+  padding:.6rem 1.15rem;border:none}
+.lablink:hover{background:var(--magenta-dark);color:#fff}
+.callout .lablink{margin-top:1rem}
+
+/* ---------- global top navigation with dropdowns ---------- */
+.topnav{position:sticky;top:0;z-index:100;background:var(--black);border-bottom:1px solid rgba(255,255,255,.14)}
+.topnav-in{max-width:var(--wrap);margin:0 auto;padding:.7rem 1.5rem;display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap}
+.topnav-brand{font-family:var(--display);font-size:16px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--magenta);text-decoration:none;margin-right:auto}
+.topnav-brand:hover{color:#fff}
+.dd{position:relative}
+.dd-btn{font-family:var(--display);font-size:14.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:#fff;background:none;border:1px solid rgba(255,255,255,.3);padding:.42rem .85rem;cursor:pointer}
+.dd-btn:hover,.dd-btn[aria-expanded="true"]{background:var(--magenta);border-color:var(--magenta)}
+.dd-btn .caret{font-size:11px;margin-left:.35rem}
+.dd-menu{display:none;position:absolute;right:0;top:calc(100% + .4rem);min-width:20rem;background:#fff;
+  border:1px solid var(--border);box-shadow:0 8px 30px rgba(0,0,0,.22);padding:.4rem 0;max-height:75vh;overflow-y:auto}
+.dd-menu.open{display:block}
+.dd-menu a{display:block;padding:.55rem 1rem;text-decoration:none;color:var(--text-dark);font-size:14.5px;line-height:1.35}
+.dd-menu a:hover{background:var(--magenta-pale);color:var(--magenta-dark)}
+.dd-menu a .lbl{display:block;font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--magenta);margin-bottom:.1rem}
+.dd-menu a.current{background:var(--off-white);border-left:3px solid var(--magenta)}
+.dd-menu a.soon{color:var(--text-light);pointer-events:none}
+.dd-menu a.soon .lbl{color:var(--text-light)}
+.dd-sep{margin:.35rem 0;border-top:1px solid var(--border)}
+@media (max-width:700px){
+  .topnav-in{padding:.6rem 1.15rem;gap:.6rem}
+  .topnav-brand{font-size:13.5px;width:100%;margin-right:0}
+  .dd{flex:1}
+  .dd-btn{width:100%;font-size:13px;padding:.4rem .5rem}
+  .dd-menu{right:auto;left:0;min-width:min(92vw,22rem)}
+}
+
+/* ---------- collapsible step-by-step help ---------- */
+.howto{margin:.7rem 0 1.1rem;border:1px solid var(--border);background:var(--off-white)}
+.howto>summary{cursor:pointer;padding:.6rem .9rem;font-family:var(--display);font-size:13px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--magenta-dark);list-style:none}
+.howto>summary::-webkit-details-marker{display:none}
+.howto>summary:before{content:"\25B8  ";font-size:11px}
+.howto[open]>summary:before{content:"\25BE  "}
+.howto>summary:hover{background:var(--magenta-pale)}
+.howto-body{padding:.3rem 1.1rem 1rem;border-top:1px solid var(--border);background:#fff}
+.howto-body ol{margin:.7rem 0;padding-left:1.3rem}
+.howto-body li{margin-bottom:.45rem;font-size:15px;line-height:1.5}
+.howto-body p{font-size:15px;margin:.6rem 0}
+.kbd{font-family:ui-monospace,Menlo,monospace;font-size:.85em;background:var(--off-white);
+  border:1px solid var(--border);border-radius:2px;padding:.1em .35em;white-space:nowrap}
+.mac{display:inline-block;font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;background:var(--black);color:#fff;padding:.1rem .4rem;margin-right:.35rem}
+.stuck{border:1px solid var(--border);border-left:4px solid var(--black);background:var(--off-white);
+  padding:1rem 1.2rem;margin:2rem 0 0}
+.stuck strong:first-child{display:block;font-family:var(--display);font-size:12.5px;font-weight:600;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--black);margin-bottom:.5rem}
+.stuck ol{margin:.5rem 0 0;padding-left:1.3rem}
+.stuck li{font-size:15px;margin-bottom:.35rem}
+
+/* ---------- AI traffic lights ---------- */
+.ailight{display:flex;gap:1rem;align-items:flex-start;border:1px solid var(--border);background:#fff;
+  padding:1rem 1.2rem;margin:1rem 0}
+.ailight .lamp{flex:0 0 auto;width:34px;background:#1c1c1a;border-radius:8px;padding:7px 0;
+  display:flex;flex-direction:column;align-items:center;gap:5px}
+.ailight .bulb{width:20px;height:20px;border-radius:50%;background:#2e2e2b;box-shadow:inset 0 2px 4px rgba(0,0,0,.6)}
+.ailight.g .bulb.b3{background:#2fae5f;box-shadow:0 0 10px rgba(47,174,95,.8),inset 0 -2px 3px rgba(0,0,0,.25)}
+.ailight.y .bulb.b2{background:#e6b93c;box-shadow:0 0 10px rgba(230,185,60,.8),inset 0 -2px 3px rgba(0,0,0,.25)}
+.ailight.r .bulb.b1{background:#d5453a;box-shadow:0 0 10px rgba(213,69,58,.8),inset 0 -2px 3px rgba(0,0,0,.25)}
+.ailight .lighttext{flex:1;min-width:0}
+.ailight .lighttext strong:first-child{display:block;font-family:var(--display);font-size:13px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;margin-bottom:.3rem}
+.ailight.g .lighttext strong:first-child{color:#1e7c43}
+.ailight.y .lighttext strong:first-child{color:#a07a10}
+.ailight.r .lighttext strong:first-child{color:#a03434}
+.ailight p{margin:.2rem 0 0;font-size:15px;line-height:1.55}
+
+/* ---------- think-pair-share block ---------- */
+.tps{border:1px solid var(--black);background:#fff;margin:2.2rem 0}
+.tps-head{background:var(--black);color:#fff;padding:.6rem 1.1rem;font-family:var(--display);font-size:12.5px;
+  font-weight:600;letter-spacing:.2em;text-transform:uppercase;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.tps-head .mins{color:rgba(255,255,255,.7);letter-spacing:.1em}
+.tps-body{padding:1.1rem 1.25rem}
+.tps-setup{font-size:16px;line-height:1.6;margin:0 0 1rem}
+.tps-q{border-left:4px solid var(--magenta);background:var(--magenta-pale);padding:.8rem 1rem;margin:0 0 1.1rem}
+.tps-q p{margin:0;font-size:17px;line-height:1.5;font-weight:500}
+.tps-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border)}
+.tps-step{background:#fff;padding:.75rem .9rem}
+.tps-step .ph{font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--magenta);margin-bottom:.3rem;display:flex;justify-content:space-between}
+.tps-step .ph span{color:var(--text-light)}
+.tps-step p{margin:0;font-size:14px;line-height:1.45;color:var(--text-muted)}
+.tps-note{border-top:1px solid var(--border);margin-top:1.1rem;padding-top:.9rem;font-size:14.5px;color:var(--text-muted)}
+.tps-note strong{font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--black);display:block;margin-bottom:.35rem}
+@media(max-width:700px){.tps-steps{grid-template-columns:1fr}}
+
+/* ---------- Monday session plan (instructor-facing) ---------- */
+.plan{border:1px solid var(--border);background:var(--off-white);margin:2rem 0}
+.plan-head{background:var(--off-white);border-bottom:1px solid var(--border);padding:.55rem 1.05rem;
+  font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted)}
+.plan table{width:100%;border-collapse:collapse;background:#fff}
+.plan td{border-bottom:1px solid var(--border);padding:.6rem .9rem;font-size:14.5px;vertical-align:top;line-height:1.45}
+.plan tr:last-child td{border-bottom:none}
+.plan td.t{width:5.5rem;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--magenta);white-space:nowrap}
+.plan td.w{width:8rem;font-weight:600}
+@media(max-width:640px){.plan td.w{width:auto}}
+
+/* ---------- chapter depth: stat strip, TOC, key concept, summary table ---------- */
+.statrow{display:flex;flex-wrap:wrap;gap:1px;background:var(--border);border:1px solid var(--border);margin:1.6rem 0}
+.stat{flex:1 1 8rem;background:#fff;padding:.85rem 1rem;text-align:center}
+.stat b{display:block;font-family:var(--display);font-size:22px;font-weight:600;color:var(--magenta);line-height:1.1}
+.stat span{font-size:12.5px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;font-family:var(--display)}
+.toc{border:1px solid var(--border);background:var(--off-white);padding:1rem 1.25rem;margin:1.6rem 0;font-family:var(--sans);font-size:14.5px;line-height:2}
+.toc strong{display:block;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.3rem}
+.toc a{color:var(--text-dark);text-decoration:none;border-bottom:1px solid var(--border);margin-right:1rem;white-space:nowrap}
+.toc a:hover{color:var(--magenta-dark);border-bottom-color:var(--magenta)}
+.kc{border:1px solid var(--border);border-left:4px solid var(--magenta);background:#fff;margin:1.4rem 0;padding:1rem 1.2rem}
+.kc .kc-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.15rem}
+.kc .kc-term{font-family:var(--display);font-size:17px;font-weight:600;display:block;margin-bottom:.45rem}
+.kc p{margin:0;font-size:15.5px;line-height:1.62}
+.sumtable{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:14.5px}
+.sumtable th{background:var(--black);color:#fff;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.55rem .8rem;text-align:left}
+.sumtable td{border:1px solid var(--border);padding:.6rem .8rem;vertical-align:top;line-height:1.5}
+.sumtable tr:nth-child(even) td{background:var(--off-white)}
+
+/* ---------- IS concepts chip strip ---------- */
+.concepts{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;margin:1.1rem 0 0}
+.concepts .clabel{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-right:.3rem}
+.concepts span:not(.clabel){font-family:var(--display);font-size:12.5px;font-weight:500;letter-spacing:.04em;border:1px solid var(--border);background:var(--off-white);padding:.22rem .6rem;color:var(--text-dark)}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <div class="topnav-in">
+    <a class="topnav-brand" href="index.html">MIS 320 &middot; Intro to Information Systems</a>
+    <a class="dd-btn" href="schedule.html" style="text-decoration:none">Schedule</a>
+    <div class="dd">
+      <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddc">Chapters<span class="caret">&#9660;</span></button>
+      <div class="dd-menu" id="ddc">
+      <a href="chapter1-what-is-mis.html"><span class="lbl">Chapter 1 &middot; Week 1</span>What Is MIS? &mdash; Spotify Wrapped</a>
+      <a href="chapter2-starbucks.html"><span class="lbl">Chapter 2 &middot; Week 2</span>The Value of Information &mdash; Starbucks</a>
+      <a href="chapter3-competitive-advantage.html"><span class="lbl">Chapter 3 &middot; Week 3</span>Technology &amp; Competitive Advantage &mdash; Zara</a>
+      <a href="chapter4-dominos.html"><span class="lbl">Chapter 4 &middot; Week 4</span>Business Processes &mdash; Domino's</a>
+      <a href="chapter5-healthcaregov.html"><span class="lbl">Chapter 5 &middot; Week 5</span>Systems Analysis &amp; the SDLC &mdash; Healthcare.gov</a>
+      <a href="chapter6-walmart.html"><span class="lbl">Chapter 6 &middot; Week 7</span>What Data Is: Databases &mdash; Walmart</a>
+      <a class="current" href="chapter7-nike-sap.html"><span class="lbl">Chapter 7 &middot; Week 7</span>Enterprise Systems &mdash; Nike/SAP</a>
+      <a href="chapter8-moneyball.html"><span class="lbl">Chapter 8 &middot; Week 6</span>Business Intelligence &mdash; Moneyball</a>
+      <a href="chapter9-ai-ml.html"><span class="lbl">Chapter 9 &middot; Week 10</span>AI, Machine Learning &amp; Bias &mdash; TikTok &amp; Amazon</a>
+      <a href="chapter10-changehealthcare.html"><span class="lbl">Chapter 10 &middot; Week 8</span>Cybersecurity &mdash; Change Healthcare</a>
+      <a href="chapter11-equifax.html"><span class="lbl">Chapter 11 &middot; Week 8</span>IT Governance &mdash; Equifax</a>
+      <a href="chapter12-software.html"><span class="lbl">Chapter 12 &middot; Week 9</span>Software Design &amp; Selection &mdash; Robles v. Domino's</a>
+      <a href="chapter13-cloud.html"><span class="lbl">Chapter 13 &middot; Week 10</span>The Cloud &amp; What Computing Costs &mdash; Netflix</a>
+      </div>
+    </div>
+    <div class="dd">
+      <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddl">Labs<span class="caret">&#9660;</span></button>
+      <div class="dd-menu" id="ddl">
+      <a href="lab1-genai.html"><span class="lbl">Lab 1 &middot; Week 1</span>GenAI for Thinking</a>
+      <a href="lab2-excel-basics.html"><span class="lbl">Lab 2 &middot; Week 2</span>Excel Basics: Meeting the Client</a>
+      <a href="lab3-excel-dataprep.html"><span class="lbl">Lab 3 &middot; Week 3</span>Excel Functions: One Question, One Formula</a>
+      <a href="lab4-excel-dataviz.html"><span class="lbl">Lab 4 &middot; Week 4</span>Data Visualization: Charts That Tell the Truth</a>
+      <a href="lab5-excel-analysis.html"><span class="lbl">Lab 5 &middot; Week 5</span>Data Analysis &amp; Mini Project</a>
+      <a href="lab6-tableau.html"><span class="lbl">Lab 6 &middot; Week 6</span>Tableau: Worksheets to a Dashboard</a>
+      <a href="lab7-sql.html"><span class="lbl">Lab 7 &middot; Week 7</span>SQL Fundamentals</a>
+      <a href="lab8-security.html"><span class="lbl">Lab 8 &middot; Week 8</span>Security &amp; Data Governance: The Audit</a>
+      <div class="dd-sep"></div>
+      <a class="soon" href="#"><span class="lbl">Labs 9&ndash;10</span>UX Design, Information Architecture (in progress)</a>
+      </div>
+    </div>
+    <div class="dd">
+      <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddd">Data<span class="caret">&#9660;</span></button>
+      <div class="dd-menu" id="ddd">
+      <a href="cascadia-sales-2025.xlsx"><span class="lbl">Workbook</span>Cascadia sales, clean (.xlsx)</a>
+      <a href="cascadia-sales-2025-RAW.xlsx"><span class="lbl">Workbook</span>Cascadia sales, RAW export for Lab 7 (.xlsx)</a>
+      <a href="cascadia-sales-2025.csv"><span class="lbl">Data</span>Flat CSV for Tableau</a>
+      <a href="cascadia.db"><span class="lbl">Database</span>SQLite database for the SQL lab</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+<div class="shell">
+
+<aside class="rail">
+  <p class="book">MIS 320</p>
+  <p class="course">Introduction to Information Systems</p>
+  <button class="railtoggle" aria-expanded="false" aria-controls="chapnav">Chapter contents</button>
+  <nav id="chapnav">
+    <a href="#open">$400 million, huh?</a>
+    <a href="#what">What enterprise systems are</a>
+    <a href="#promise">The promise</a>
+    <a href="#failure">Where it broke</a>
+    <a href="#aftermath">The aftermath</a>
+    <a href="#recovery">The recovery</a>
+    <a href="#coda">Modern coda: it still happens</a>
+    <a href="#chain">The five components</a>
+    <a href="#vocab">Vocabulary</a>
+    <a href="#discussion">Discussion questions</a>
+    <a href="#lab">From lecture to lab</a>
+  </nav>
+  <a class="back" href="index.html">← All chapters &amp; labs</a>
+</aside>
+
+<main>
+
+<header class="chaphead">
+  <p class="eyebrow">Chapter 7</p>
+  <h1>Enterprise Systems</h1>
+  <p class="anchor">Anchor case: <strong>Nike &amp; i2/SAP, 2000–2001</strong> · Coda: <strong>Lamb Weston, 2023–2024</strong></p>
+  <div class="meta-row">
+    <span>Week 5 · Wednesday</span>
+    <span class="alt">Two days after Exam 1</span>
+    <span>Pairs with Lab 5</span>
+  </div>
+  
+<div class="concepts"><span class="clabel">IS concepts</span><span>ERP, CRM, SCM</span><span>Information silos</span><span>The bullwhip effect</span><span>Integration</span><span>Legacy systems</span><span>Customize vs. configure</span><span>Big-bang vs. phased rollout</span></div>
+</header>
+<div class="statrow"><div class="stat"><b>$400M</b><span>the project budget</span></div><div class="stat"><b>27</b><span>ordering systems it replaced</span></div><div class="stat"><b>$100M</b><span>sales lost, 2001</span></div><div class="stat"><b>20%</b><span>stock drop on the news</span></div><div class="stat"><b>$135M</b><span>Lamb Weston, 2023: same story</span></div></div>
+<div class="toc"><strong>Contents</strong>
+<a href="#open">The setup</a>
+<a href="#what">What enterprise systems are</a>
+<a href="#promise">The promise, and the shortcuts</a>
+<a href="#failure">Where it broke</a>
+<a href="#aftermath">The aftermath</a>
+<a href="#recovery">The recovery</a>
+<a href="#coda">Modern coda: it still happens: close to home</a>
+<a href="#other">The other side: who absorbs a failed rollout</a>
+<a href="#chain">The case on the five components</a>
+<a href="#vocab">Vocabulary</a>
+<a href="#discussion">Discussion questions</a>
+<a href="#lab">From lecture to lab</a>
+</div>
+
+
+<p class="lede">Days before announcing that quarterly earnings would miss by at least a quarter, Nike's
+chairman Phil Knight summed up his company's new supply chain software on a conference call:
+<em>"This is what you get for $400 million, huh?"</em> What Nike got was a warehouse arrangement of too
+many of the wrong sneakers, too few of the right ones, and a nine-figure lesson in what an enterprise
+system actually is.</p>
+
+<h2 id="open"><span class="num">01</span>The setup</h2>
+
+<p>By the late 1990s Nike was a global company still running on systems it had outgrown. The company
+had 27 different ordering systems scattered around the world, planning cycles of nine months or longer, and
+product that reached stores too early or too late: rarely on time. The answer was the
+$400 million Nike Supply Chain project: SAP for ERP, Siebel for customer tools, and  first out of the gate, predictive demand-planning software from i2 Technologies, with a goal of cutting
+lead times from nine months to six.</p>
+
+<p>Note the ambition's shape. Nike was not buying a program. It was replacing the systems that
+connected the whole company: how orders, forecasts, factories, and finances talk to each other. That is what this
+chapter's vocabulary is for.</p>
+
+<h2 id="what"><span class="num">02</span>What enterprise systems are</h2>
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">ERP, CRM, and SCM</span>
+<p>An ERP (enterprise resource planning) system is one shared database and one set of processes for the whole company: finance, orders, inventory, and manufacturing reading the same numbers. CRM (customer relationship management) does the same for everything customer-facing; SCM (supply chain management) for the flow of materials from suppliers to shelves. The point of all three is the same: replace departmental versions of the truth with one version, so decisions in one corner of the company are visible in every other.</p></div>
+
+
+<p>An <strong>enterprise system</strong> is software that runs a company's core operations on a single
+shared database, so that a sale, a purchase, and a paycheck are all facts in one place instead of
+copies in twenty. Three families dominate:</p>
+
+<ul>
+  <li><strong>ERP (Enterprise Resource Planning)</strong>, the spine: finance, inventory, orders,
+  manufacturing, HR. SAP and Oracle are the giants.</li>
+  <li><strong>CRM (Customer Relationship Management)</strong>, everything about customers: contacts,
+  pipeline, service history. Salesforce is the archetype.</li>
+  <li><strong>SCM (Supply Chain Management)</strong>, demand forecasting, procurement, logistics; the
+  category i2 led in 2000.</li>
+</ul>
+
+<p>Why do these systems exist at all? Because organizations grow into <strong>information
+silos</strong>: each department buys or builds its own system, each with its own copy of the truth, and
+soon the same customer exists three times with three addresses and the same product has two prices.
+Nike's 27 ordering systems were 27 silos. An ERP's whole premise is the demolition of silos into one
+shared database, which is also why implementing one is so violent: it forces every department to
+surrender its private version of reality.</p>
+<p>Two ideas explain most enterprise-system grief. First, <strong>configuration versus
+customization</strong>: configuring means setting the switches the vendor built; customizing means
+rewriting the software to match your habits. Customization feels reasonable and compounds forever. Every
+upgrade, patch, and integration now has to survive your modifications. Second, <strong>process fit</strong>:
+an ERP embeds a definition of how ordering, invoicing, and fulfillment <em>should</em> work. Either you
+change your process to match the software, or the software to match your process. Both are expensive; only
+one is expensive forever.</p>
+
+<div class="callout">
+  <strong>Why "big bang" keeps appearing in this course</strong>
+  <p>You met the rollout taxonomy in Chapter 5: direct cutover, parallel, phased, pilot. Enterprise
+  systems raise the stakes on that choice, because the system being replaced is the one currently running
+  the company. A failed website launch loses enrollments. A failed ERP cutover can mean the company
+  temporarily cannot ship, bill, or plan, while the old system it might have fallen back to is already
+  gone.</p>
+</div>
+
+<h2 id="promise"><span class="num">03</span>The promise, and the shortcuts</h2>
+
+<p>i2's demand planner promised something very appealing: feed it history, and it predicts what to make.
+Nike wanted the prediction fine-grained, forecasts by style, color, and size, which
+meant thousands of forecasts generated quickly against shifting consumer preferences, and pushed
+the product past its design. i2 had warned Nike to keep customization within 10–15%;
+Nike, having spent $400 million, felt entitled to modify the software to accommodate its own messy data.
+The application was never designed for that. It became unstable, deleted orders, slowed down, and the
+custom features made bugs harder to trace. A Gartner analyst noted Nike stood up
+the system in about a year: roughly half the customary time for a deployment of that scale.</p>
+
+<p>And the rollout? A big-bang cutover across the U.S. and European divisions,
+replacing the spreadsheets and legacy tools at once. Compressed timeline, deep customization,
+single-instance data problems, no staged fallback. Every element of the Chapter 5 pattern, now aimed at a
+system that decides what physically gets manufactured.</p>
+
+<h2 id="failure"><span class="num">04</span>Where it broke</h2>
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">The bullwhip effect</span>
+<p>Small changes in real demand amplify as they travel up a supply chain, because each link adds its own safety margin to a number that was already padded. A store that sells 100 orders 110 to be safe; the distributor orders 125; the factory tools for 150. Sharing actual demand data across links is the only cure, which is what enterprise systems promise. Nike’s failure ran the amplifier in software: bad forecasts propagated across every store and factory at once, at machine speed. Automation did not create the bullwhip. It removed the humans who would have questioned it.</p></div>
+
+
+<p>The system went live and began quietly corrupting the one thing it existed to produce: the demand
+signal. Forecasts for products and locations came out overestimated or
+underestimated. Orders duplicated. Orders vanished. Factories in Asia built to those numbers
+anyway. The result arrived in warehouses months later as physical fact: too much of
+the slow-selling models the system had over-ordered, and too little of the high-demand product it had
+under-ordered. Revenue took the hit from both directions at once.</p>
+
+<p>Supply chain theory has a name for what happened next: the <strong>bullwhip effect</strong>. Small
+errors in the demand signal amplify as they travel upstream: a store over-orders slightly, the
+distributor over-orders more to be safe, the factory over-produces more still, each layer adding its own
+safety margin to a number that was already wrong. It happens with humans and fax machines. Nike ran it
+with software, across every store and factory at once, at machine speed. Automation did not create the bullwhip. It cracked the whip
+harder.</p>
+<p>Sit with the mechanism, because it is the chapter's core. Nothing <em>looked</em> broken. The software
+produced numbers; the numbers were plausible; planners planned. The failure was invisible at decision time
+and undeniable only at delivery time: months of manufacturing lead later, when the mistake was already
+cast in rubber and foam. Information systems that feed <em>physical</em> processes have this property:
+the feedback loop is as long as the supply chain.</p>
+
+<h2 id="aftermath"><span class="num">05</span>The aftermath</h2>
+
+<div class="stats">
+  <div class="stat"><b>$100M</b><span>lost sales, one quarter</span></div>
+  <div class="stat"><b>−20%</b><span>Nike stock, one session</span></div>
+  <div class="stat"><b>~$4B</b><span>market cap erased</span></div>
+  <div class="stat"><b>$400M</b><span>project budget</span></div>
+</div>
+
+<p>Nike went public on February 27, 2001, and the market's verdict was
+immediate: the stock fell 20% in a single trading session, erasing roughly $4 billion
+in market capitalization, with the CFO stating plainly that the demand-planning system was the primary
+cause of the miss. Class-action lawsuits followed, and Nike and i2 blamed each
+other, i2's own stock dropped over 22% on the news. A useful detail for
+your careers: the announcement happened partly because it had to. Nike was obligated to
+report the shortfall to stakeholders to avoid SEC repercussions, material system failures at
+public companies become disclosure events, which is why CFOs and general counsels now sit in ERP steering
+meetings.</p>
+
+<h2 id="recovery"><span class="num">06</span>The recovery</h2>
+
+<p>The fix was not sophisticated. Nike built manual workarounds: programmers downloaded
+data from i2's demand predictor and reloaded it into the supply chain planner weekly, and by fall the
+software glitches were resolved. i2 was folded into the larger SAP ERP
+system by spring 2001, repointed at orders and invoices rather than predictive modeling. And
+here is the part most retellings skip: Nike did not abandon the project. The company
+held to its single-instance strategy, kept the same project leadership in place, and pressed on, because
+the business case for the overall supply chain program still cleared the cost of the disaster.
+Pre-building of shoes fell from about 30% of manufacturing units toward 3%, and lead
+times moved from nine months toward six. The failure was real and so, eventually, was the
+return. Both facts belong in your analysis.</p>
+
+<h2 id="coda"><span class="num">07</span>Modern coda: it still happens: close to home</h2>
+
+<p>It would be comforting to file Nike under "early-2000s growing pains." The record refuses. Consider a
+company you can drive to from Bellingham in four hours: Lamb Weston, the frozen-potato giant whose
+Columbia Basin plants process more than 11 billion potatoes a year into french
+fries for restaurants worldwide.</p>
+
+<ul class="tl">
+  <li><span class="when">Nov 2023</span>Lamb Weston takes SAP S/4HANA live across its North American operations, replacing a decades-old legacy system, warehouse integrations included.</li>
+  <li class="bad"><span class="when">Jan 2024</span>The CFO characterizes the issues as "usual bumps" with no expected material impact: a statement later central to securities litigation.</li>
+  <li class="bad"><span class="when">Apr 2024</span>Q3 results reveal the damage: $135 million in lost sales in a single quarter. The stock collapses 19.4%.</li>
+  <li class="bad"><span class="when">Jun 2024</span>Securities class actions filed, alleging misrepresentations about ERP readiness.</li>
+  <li><span class="when">Oct 2024</span>A new CIO is appointed, and the strategy is revised from simultaneous multi-site deployment to sequential, plant-by-plant rollout: nearly a year after go-live.</li>
+</ul>
+
+<p>Read that last line against Chapter 5's rollout taxonomy. The remediation for a failed big bang was to
+adopt, retroactively, the phased rollout that was available all along. Twenty-three years after Nike, with
+the pattern taught in every business school on earth.</p>
+
+<p>Nor is Lamb Weston alone in its cohort. Zimmer Biomet, an $8 billion medical-device
+maker, sued its implementation partner Deloitte for $172 million over an SAP S/4HANA rollout that
+consolidated nine legacy ERPs and went live on July 4, 2024 after repeated postponements, a suit filed in September 2025 calling the rollout a "disaster," after the company had
+told investors in 2024 that the impact was roughly 1% of revenue. The pattern
+the litigation record shows (operational failure, underplayed disclosure, stock drop, securities suit) also ran through Revlon's 2018 SAP disaster and Lamb Weston itself. The technology has improved
+beyond recognition since 2001. The organizational failure modes have not moved an inch, which tells you
+where the failure actually lives.</p>
+
+<div class="callout callout-caution">
+  <strong>The pattern</strong>
+  <p>Nike, Lamb Weston, Zimmer Biomet, Revlon: different decades, industries, and vendors, and the
+  same failure each time. Compressed timelines. Big-bang cutovers. Master data not ready. Optimistic status reporting
+  right up until the quarter that couldn't be reported optimistically. When a pattern survives 25 years of
+  better software, the software was never the variable.</p>
+</div>
+
+
+<h2 id="other"><span class="num">08</span>The other side: who absorbs a failed rollout</h2>
+<p>The $100 million Nike lost is the number the case is named for, and it is the shallowest measure of
+the damage. Follow the failure outward. Factories in Asia received orders for shoes nobody wanted and
+cancellations for shoes they had already made; the workers on those lines absorbed the whiplash as
+overtime followed by idled shifts. Retailers were shipped the wrong mix and marked down the excess.
+Inside Nike, planners spent a year manually overriding a system they had been told to trust, doing two
+jobs for one salary. When Lamb Weston’s rollout stumbled in 2023, the shortfalls landed on restaurant
+customers and on warehouse crews reconciling inventory by hand. ERP failures are always narrated as
+money and stock price, because those are the measurable components. The five components framework
+insists on the fifth: somewhere under every failed implementation is a person doing manually, under
+pressure, what the software was supposed to do, and they are rarely in the case study.</p>
+<h2 id="chain"><span class="num">09</span>The case on the five components</h2>
+
+<div class="vc">
+  <div class="vc-head">The Five Components · Nike, 2000–2001</div>
+  <div class="vc-strip">
+    <div class="vc-cell"><span class="vc-stage">Hardware</span><p>Servers and factory systems performed exactly as specified.</p></div>
+    <div class="vc-cell broke"><span class="vc-stage">Software</span><p>i2 was capable inside its design envelope, and customized far past it: unstable, dropping orders.</p></div>
+    <div class="vc-cell broke"><span class="vc-stage">Data</span><p>Messy legacy data fed in raw; the demand signal corrupted at the source.</p></div>
+    <div class="vc-cell"><span class="vc-stage">Networks</span><p>Factory links across Asia delivered the bad numbers flawlessly, which made it worse.</p></div>
+    <div class="vc-cell broke"><span class="vc-stage">People</span><p>Planners trusted plausible numbers; training and adoption an afterthought on a one-year timeline.</p></div>
+  </div>
+  <div class="vc-note">Breaks at <b>Software</b>, <b>Data</b>, and <b>People</b>, and note the contrast with Healthcare.gov: here the data itself was rotten, and automation amplified it.</div>
+</div>
+
+
+<table class="sumtable"><tr><th>Idea</th><th>This chapter’s version</th><th>Where you meet it next</th></tr><tr><td><strong>One shared truth</strong></td><td>27 ordering systems collapsed into one, and why that is dangerous mid-flight</td><td>Databases (same week)</td></tr><tr><td><strong>The bullwhip</strong></td><td>Padded forecasts amplifying at machine speed</td><td>Lab 5’s hidden problem</td></tr><tr><td><strong>Big-bang vs phased rollout</strong></td><td>Everything at once, on a schedule</td><td>Healthcare.gov (Wk 5), NomadGo (Ch 2)</td></tr><tr><td><strong>Scar tissue</strong></td><td>Nike 2000, Lamb Weston 2023, Zimmer Biomet 2025: organisations do not inherit it</td><td>Software selection (Wk 9)</td></tr></table>
+<h2 id="vocab"><span class="num">10</span>Vocabulary</h2>
+
+<dl class="vocab">
+  <div><dt>Enterprise system</dt><dd>Software running core operations on one shared database across the whole firm.</dd></div>
+  <div><dt>ERP / CRM / SCM</dt><dd>The resource-planning spine; the customer system; the supply chain system.</dd></div>
+  <div><dt>Configuration vs. customization</dt><dd>Setting the vendor's switches vs. rewriting the vendor's software. The second compounds forever.</dd></div>
+  <div><dt>Process fit</dt><dd>The degree to which the software's embedded processes match the organization's real ones.</dd></div>
+  <div><dt>Information silo</dt><dd>A department-level system holding its own copy of the truth; ERP exists to demolish them.</dd></div>
+<div><dt>Bullwhip effect</dt><dd>Small demand-signal errors amplifying upstream as each layer adds safety margin.</dd></div>
+<div><dt>Master data</dt><dd>The reference facts (products, prices, customers, locations) every module depends on. Garbage here propagates everywhere.</dd></div>
+  <div><dt>Single instance</dt><dd>One global system of record instead of regional copies; Nike's strategic bet, kept even after the failure.</dd></div>
+  <div><dt>Go-live / big bang</dt><dd>The cutover moment; moving everyone at once, with no fallback.</dd></div>
+  <div><dt>Change management</dt><dd>The people side of implementation: training, adoption, and trust. The line item that gets cut first and billed last.</dd></div>
+  <div><dt>Demand planning</dt><dd>Forecasting what to make and stock; the module that failed at Nike.</dd></div>
+  <div><dt>Material disclosure</dt><dd>The obligation of public companies to report events, including system failures, that investors would consider significant.</dd></div>
+</dl>
+
+
+
+
+<div class="plan"><div class="plan-head">Taught Week 7 Monday, combined with Chapter 6; the full 80-minute plan is in Chapter 6</div>
+<table><tr><td class="t">0:00</td><td class="w">Open</td><td>Ask what an ERP system is before defining it. The wrong answers are useful.</td></tr><tr><td class="t">0:05</td><td class="w">Lecture</td><td>ERP, CRM, SCM, information silos, and the bullwhip effect. Run the bullwhip as a quick chain demonstration across five students.</td></tr><tr><td class="t">0:40</td><td class="w">Video</td><td>Any short ERP or supply chain explainer. Ask students to note who has to change their daily work for the system to succeed.</td></tr><tr><td class="t">0:48</td><td class="w">Think-pair-share</td><td>Twenty-three years apart. See the activity above.</td></tr><tr><td class="t">1:08</td><td class="w">Close</td><td>Preview Wednesday: Nike in detail, plus the two recent failures that show nothing has been learned.</td></tr></table></div>
+<div class="tps">
+  <div class="tps-head"><span>Monday activity &middot; Twenty-three years apart</span><span class="mins">20 minutes</span></div>
+  <div class="tps-body">
+    <p class="tps-setup">Nike lost roughly $100 million to a demand-planning rollout in 2000. Lamb Weston lost around $135 million to an S/4HANA rollout in 2023. Zimmer Biomet sued Deloitte over a failed implementation in 2025. Different decades, different vendors, different industries.</p>
+    <div class="tps-q"><p>Every one of these companies could read about the previous failure. Why does this keep happening?</p></div>
+    <div class="tps-steps">
+      <div class="tps-step"><div class="ph">Think <span>3 min</span></div><p>Write the single reason you find most convincing. “They were careless” is not allowed; assume everyone involved was competent and trying.</p></div>
+      <div class="tps-step"><div class="ph">Pair <span>5 min</span></div><p>Pair up and test each other’s reason against this question: would that reason still apply at a company that had read every case study?</p></div>
+      <div class="tps-step"><div class="ph">Share <span>12 min</span></div><p>We will hear the reasons that survived the test.</p></div>
+    </div>
+    <div class="tps-note"><strong>Where this lands</strong>The competence constraint is what makes this work, because it blocks the easy answer. What survives is structural: the people who authorise these projects are rarely the people who ran the last one, vendors sell timelines that assume nothing goes wrong, and the cost of stopping midway is visible while the cost of continuing is not. Land on the idea that organisations do not inherit each other’s scar tissue.</div>
+  </div>
+</div>
+<div class="ailight g">
+  <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
+  <div class="lighttext"><strong>AI and these questions</strong>
+  <p>Green: after drafting your own answer, ask an AI to argue against it and press on your weakest
+  claim, sparring partner mode, before you present. Red: submitting or reading out an AI-written answer.
+  The Wednesday discussion grades your reasoning, and everyone in the room can tell the difference.</p></div>
+</div>
+<h2 id="discussion"><span class="num">11</span>Discussion questions</h2>
+
+<ol class="dq">
+  <li>Map Nike's failure onto the SDLC phases from Chapter 5. Which phase does "customize past the
+  vendor's 10–15% guidance" belong to, and who should have stopped it? <span class="tag tag-warm">Warm-up</span></li>
+
+  <li>Nothing looked broken until warehouses filled with the wrong sneakers. Explain, using the concept of
+  feedback-loop length, why supply chain systems fail differently than websites.</li>
+
+  <li>Nike and i2 blamed each other; Zimmer Biomet sued Deloitte. When a customized system fails, how
+  should responsibility divide between the vendor who warned against customization and the customer who
+  paid for it anyway? Take a side and defend it.</li>
+
+  <li>Lamb Weston's CFO called the problems "usual bumps" three months before disclosing $135 million in
+  lost sales. Reconstruct the pressures that produce that sentence, then propose the reporting structure
+  that would have produced a different one. <span class="tag tag-hard">Hard</span></li>
+
+  <li>Nike kept the same project leaders and the same strategy after losing $100 million, and the program
+  eventually paid off. Was that discipline or sunk-cost fallacy? What evidence would distinguish the
+  two? <span class="tag tag-hard">Hard</span></li>
+
+  <li>You are an implementation consultant assigned to Lamb Weston in October 2023, one month before
+  go-live. You suspect the warehouse integration is not ready. Write the three sentences you say in the
+  steering committee meeting, knowing the go-live date has been announced to Wall Street.
+  <span class="tag tag-open">Open judgment</span></li>
+</ol>
+
+<h2 id="lab"><span class="num">12</span>From lecture to lab</h2>
+
+<div class="callout callout-bridge">
+  <strong>Week 5 · Lab 5</strong>
+  <p>Nike's planners trusted numbers that looked fine while the signal underneath was corrupted. This
+  week's lab, <a href="lab5-excel-analysis.html"><strong>Lab 5: Data Analysis: Why Are Members
+  Disappearing?</strong></a>, hands you the same situation at co-op scale: Cascadia's board says revenue
+  is on plan and something is still very wrong. It is the hardest Excel assignment of the quarter, and
+  the point of the whole Excel month: an analyst's job is to find the healthy-looking sick store before
+  the quarter that can't be reported optimistically.</p>
+
+  <a class="lablink" href="lab5-excel-analysis.html">Go to Lab 5 &#8594;</a>
+</div>
+
+<div class="sources">
+  <h3>Sources and further reading</h3>
+  <ul>
+    <li>Christopher Koch, "Nike Rebounds: How (and Why) Nike Recovered from Its Supply Chain Disaster," <em>CIO</em>, 2004. The definitive account.</li>
+    <li>Henrico Dolfing, <em>Case Study 16: Nike's $100 Million Supply Chain "Speed Bump"</em>.</li>
+    <li>Lamb Weston Holdings, Q3 FY2024 earnings materials and subsequent securities filings, 2024.</li>
+    <li>Zimmer Biomet v. Deloitte complaint, S.D.N.Y. filed September 2025; UpperEdge analysis.</li>
+    <li>"18 Famous ERP Disasters, Dustups, and Disappointments," <em>CIO</em>.</li>
+  </ul>
+</div>
+
+</main>
+</div>
+
+<script>
+(function(){
+  var b=document.querySelector('.railtoggle'), n=document.getElementById('chapnav');
+  if(!b||!n)return;
+  b.addEventListener('click',function(){
+    var open=n.classList.toggle('open');
+    b.setAttribute('aria-expanded',open?'true':'false');
+  });
+  n.addEventListener('click',function(e){
+    if(e.target.tagName==='A'&&window.innerWidth<=860){
+      n.classList.remove('open');b.setAttribute('aria-expanded','false');
+    }
+  });
+})();
+</script>
+<!--NAVJS-->
+<script>
+(function(){
+  var btns=[].slice.call(document.querySelectorAll('.dd-btn'));
+  function closeAll(except){
+    btns.forEach(function(b){
+      var m=document.getElementById(b.getAttribute('data-dd'));
+      if(m&&m!==except){m.classList.remove('open');b.setAttribute('aria-expanded','false');}
+    });
+  }
+  btns.forEach(function(b){
+    b.addEventListener('click',function(e){
+      e.stopPropagation();
+      var m=document.getElementById(b.getAttribute('data-dd'));
+      var open=m.classList.contains('open');
+      closeAll();
+      if(!open){m.classList.add('open');b.setAttribute('aria-expanded','true');}
+    });
+  });
+  document.addEventListener('click',function(){closeAll();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeAll();});
+  document.querySelectorAll('.dd-menu').forEach(function(m){
+    m.addEventListener('click',function(e){e.stopPropagation();});
+  });
+})();
+</script>
+</body>
+</html>

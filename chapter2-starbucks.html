@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chapter 2: The Value of Information: Starbucks | MIS 320</title>
+<meta name="description" content="What makes information worth money? Starbucks, Deep Brew, decision levels, and the NomadGo failure.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0e0e0d; --off-black:#1a1a18;
+  --magenta:#e8197d; --magenta-dark:#c0146a; --magenta-pale:#fdeaf3;
+  --white:#ffffff; --off-white:#f6f4f1;
+  --text-dark:#0e0e0d; --text-muted:#3a3a38; --text-light:#6b6b68;
+  --border:#e0ddd8;
+  --warn:#b3261e; --warn-pale:#fdeceb;
+  --good:#1f7a53; --good-pale:#e8f4ee;
+  --sans:'Space Grotesk',sans-serif; --display:'Oswald',sans-serif;
+  --wrap:1180px; --col:46rem;
+  /* legacy aliases so existing markup keeps working */
+  --navy:#0e0e0d; --navy-soft:#1a1a18; --accent:#e8197d; --accent-deep:#c0146a;
+  --accent-pale:#fdeaf3; --cream:#ffffff; --cream-deep:#f6f4f1; --paper:#ffffff;
+  --ink:#0e0e0d; --muted:#6b6b68; --rule:#e0ddd8; --serif:'Space Grotesk',sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--white);color:var(--text-dark);
+  font-family:var(--sans);font-size:18.5px;line-height:1.7;-webkit-font-smoothing:antialiased}
+
+/* ---------- shell ---------- */
+.shell{max-width:var(--wrap);margin:0 auto;display:grid;grid-template-columns:15rem minmax(0,1fr);gap:3.5rem;padding:0 1.5rem 6rem}
+main{margin-left:auto;margin-right:auto;max-width:var(--col);padding-top:2.5rem}
+
+/* ---------- sidebar ---------- */
+.rail{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:2.5rem 0 3rem;border-right:1px solid var(--border)}
+.rail .book{font-family:var(--display);font-size:15px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--magenta);margin:0 0 .2rem}
+.rail .course{font-size:13.5px;color:var(--text-light);margin:0 0 1.75rem}
+.rail nav a{display:block;font-size:15px;line-height:1.35;color:var(--text-muted);text-decoration:none;padding:.42rem .8rem .42rem .85rem;border-left:2px solid transparent;margin-left:-.85rem}
+.rail nav a:hover{color:var(--magenta);border-left-color:var(--magenta)}
+.rail nav a.sub{font-size:14px;color:var(--text-light);padding-left:1.7rem}
+.rail .back{display:inline-block;margin-top:2rem;font-size:14px;color:var(--text-light);text-decoration:none}
+.rail .back:hover{color:var(--magenta)}
+.railtoggle{display:none}
+
+/* ---------- chapter head ---------- */
+.chaphead{border-bottom:3px solid var(--black);padding-bottom:1.6rem;margin-bottom:2.5rem}
+.eyebrow{font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--magenta);margin:0 0 .7rem}
+.chaphead h1{font-family:var(--display);font-weight:600;font-size:clamp(1.9rem,4.4vw,2.7rem);line-height:1.12;text-transform:uppercase;letter-spacing:.01em;margin:0 0 .6rem;color:var(--black)}
+.chaphead .anchor{font-size:16px;color:var(--text-light);margin:0}
+.chaphead .anchor strong{color:var(--text-muted);font-weight:500}
+.meta-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.2rem}
+.meta-row span{font-size:13px;letter-spacing:.03em;background:var(--off-white);border:1px solid var(--border);padding:.32rem .65rem;color:var(--text-muted)}
+.meta-row span.alt{background:var(--magenta-pale);border-color:#f6cfe1;color:var(--magenta-dark)}
+
+/* ---------- type ---------- */
+h2{font-family:var(--display);font-weight:600;font-size:1.72rem;line-height:1.22;text-transform:uppercase;letter-spacing:.01em;color:var(--black);margin:3.2rem 0 .9rem}
+h2 .num{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;color:var(--magenta);display:block;margin-bottom:.4rem;text-transform:uppercase}
+h3{font-family:var(--display);font-weight:600;font-size:1.18rem;text-transform:uppercase;letter-spacing:.03em;color:var(--off-black);margin:2rem 0 .55rem}
+p{margin:0 0 1.05rem}
+a{color:var(--magenta-dark)}
+strong{font-weight:600;color:var(--black)}
+.lede{font-size:1.24rem;line-height:1.55;color:var(--text-muted)}
+code.inline{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--off-white);padding:.1em .35em;border:1px solid var(--border)}
+ul,ol{margin:0 0 1.15rem;padding-left:1.3rem}
+li{margin-bottom:.45rem}
+
+/* ---------- pull quote ---------- */
+.pull{margin:2.2rem 0;padding:0 0 0 1.4rem;border-left:3px solid var(--magenta)}
+.pull p{font-family:var(--display);font-weight:400;font-size:1.32rem;line-height:1.3;color:var(--black);margin:0 0 .5rem}
+.pull cite{font-style:normal;font-size:12.5px;color:var(--text-light)}
+
+/* ---------- callouts ---------- */
+.callout{border:1px solid var(--border);border-left:4px solid var(--magenta);background:var(--off-white);padding:1.15rem 1.3rem;margin:1.9rem 0}
+.callout strong:first-child{display:block;font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--magenta);margin-bottom:.5rem}
+.callout p:last-child{margin-bottom:0}
+.callout-caution{border-left-color:var(--warn);background:var(--warn-pale)}
+.callout-caution strong:first-child{color:var(--warn)}
+.callout-bridge{border-left-color:var(--black);background:var(--off-white)}
+.callout-bridge strong:first-child{color:var(--black)}
+.callout-good{border-left-color:var(--good);background:var(--good-pale)}
+.callout-good strong:first-child{color:var(--good)}
+
+/* ---------- signature: value chain rail ---------- */
+.vc{margin:2.4rem 0;border:1px solid var(--border);background:var(--white);overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,.07)}
+.vc-head{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#fff;background:var(--black);padding:.7rem 1rem}
+.vc-strip{display:grid;grid-template-columns:repeat(5,1fr)}
+.vc-cell{padding:.85rem .7rem;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+.vc-cell:last-child{border-right:none}
+.vc-stage{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-light);display:block;margin-bottom:.3rem}
+.vc-cell p{font-size:14px;line-height:1.4;margin:0;color:var(--text-muted)}
+.vc-cell.broke{background:var(--magenta-pale)}
+.vc-cell.broke .vc-stage{color:var(--magenta)}
+.vc-cell.broke p{color:#8a1450}
+.vc-note{padding:.8rem 1rem;font-size:14px;color:var(--text-light);background:var(--off-white);border-top:1px solid var(--border)}
+.vc-note b{color:var(--magenta);font-weight:600}
+
+/* ---------- stat band ---------- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(8.5rem,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin:2rem 0}
+.stat{background:var(--white);padding:1rem .9rem}
+.stat b{display:block;font-family:var(--display);font-weight:700;font-size:1.8rem;color:var(--magenta);line-height:1.1}
+.stat span{display:block;font-size:13px;line-height:1.3;color:var(--text-light);margin-top:.3rem}
+
+/* ---------- timeline ---------- */
+.tl{list-style:none;padding:0;margin:1.8rem 0;border-left:2px solid var(--border)}
+.tl li{position:relative;padding:0 0 1.1rem 1.3rem;margin:0}
+.tl li:before{content:"";position:absolute;left:-5px;top:.55em;width:8px;height:8px;border-radius:50%;background:var(--magenta)}
+.tl li.bad:before{background:var(--warn)}
+.tl .when{font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--magenta);display:block}
+.tl li.bad .when{color:var(--warn)}
+
+/* ---------- vocabulary ---------- */
+.vocab{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin:1.8rem 0}
+.vocab div{background:var(--white);padding:.95rem 1rem}
+.vocab dt{font-family:var(--display);font-weight:600;font-size:15px;text-transform:uppercase;letter-spacing:.03em;color:var(--black);margin-bottom:.3rem}
+.vocab dd{margin:0;font-size:15px;line-height:1.5;color:var(--text-muted)}
+
+/* ---------- discussion questions ---------- */
+.dq{counter-reset:dq;margin:1.6rem 0 0;padding:0;list-style:none}
+.dq li{counter-increment:dq;position:relative;padding:1rem 0 1rem 2.6rem;border-top:1px solid var(--border)}
+.dq li:last-child{border-bottom:1px solid var(--border)}
+.dq li:before{content:counter(dq,decimal-leading-zero);position:absolute;left:0;top:1.05rem;font-family:var(--display);font-size:14.5px;font-weight:600;color:var(--magenta)}
+.tag{display:inline-block;font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:.2rem .5rem;margin-left:.5rem;vertical-align:.12em}
+.tag-hard{background:var(--warn);color:#fff}
+.tag-open{background:var(--black);color:#fff}
+.tag-warm{background:var(--magenta-pale);color:var(--magenta-dark)}
+
+/* ---------- sources ---------- */
+.sources{margin-top:3.5rem;padding-top:1.2rem;border-top:1px solid var(--border);font-size:14.5px;color:var(--text-light)}
+.sources h3{font-family:var(--display);font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin:0 0 .6rem}
+.sources li{margin-bottom:.35rem;line-height:1.5}
+
+/* ---------- responsive ---------- */
+@media (max-width:860px){
+  .shell{grid-template-columns:1fr;gap:0;padding:0 1.15rem 4rem}
+  .rail{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);padding:1.5rem 0 1rem;margin-bottom:.5rem}
+  .rail nav{display:none}
+  .rail nav.open{display:block;margin-top:.8rem}
+  .railtoggle{display:inline-block;font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--magenta);background:none;border:1px solid var(--border);padding:.4rem .7rem;cursor:pointer}
+  main{padding-top:1.2rem}
+  .vc-strip{grid-template-columns:repeat(2,1fr)}
+}
+:focus-visible{outline:2px solid var(--magenta);outline-offset:2px}
+
+/* ---------- prominent lab link ---------- */
+.lablink{display:inline-block;margin-top:.9rem;font-family:var(--display);font-size:14.5px;font-weight:600;
+  letter-spacing:.06em;text-transform:uppercase;text-decoration:none;background:var(--magenta);color:#fff;
+  padding:.6rem 1.15rem;border:none}
+.lablink:hover{background:var(--magenta-dark);color:#fff}
+.callout .lablink{margin-top:1rem}
+
+/* ---------- global top navigation with dropdowns ---------- */
+.topnav{position:sticky;top:0;z-index:100;background:var(--black);border-bottom:1px solid rgba(255,255,255,.14)}
+.topnav-in{max-width:var(--wrap);margin:0 auto;padding:.7rem 1.5rem;display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap}
+.topnav-brand{font-family:var(--display);font-size:16px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--magenta);text-decoration:none;margin-right:auto}
+.topnav-brand:hover{color:#fff}
+.dd{position:relative}
+.dd-btn{font-family:var(--display);font-size:14.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:#fff;background:none;border:1px solid rgba(255,255,255,.3);padding:.42rem .85rem;cursor:pointer}
+.dd-btn:hover,.dd-btn[aria-expanded="true"]{background:var(--magenta);border-color:var(--magenta)}
+.dd-btn .caret{font-size:11px;margin-left:.35rem}
+.dd-menu{display:none;position:absolute;right:0;top:calc(100% + .4rem);min-width:20rem;background:#fff;
+  border:1px solid var(--border);box-shadow:0 8px 30px rgba(0,0,0,.22);padding:.4rem 0;max-height:75vh;overflow-y:auto}
+.dd-menu.open{display:block}
+.dd-menu a{display:block;padding:.55rem 1rem;text-decoration:none;color:var(--text-dark);font-size:14.5px;line-height:1.35}
+.dd-menu a:hover{background:var(--magenta-pale);color:var(--magenta-dark)}
+.dd-menu a .lbl{display:block;font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--magenta);margin-bottom:.1rem}
+.dd-menu a.current{background:var(--off-white);border-left:3px solid var(--magenta)}
+.dd-menu a.soon{color:var(--text-light);pointer-events:none}
+.dd-menu a.soon .lbl{color:var(--text-light)}
+.dd-sep{margin:.35rem 0;border-top:1px solid var(--border)}
+@media (max-width:700px){
+  .topnav-in{padding:.6rem 1.15rem;gap:.6rem}
+  .topnav-brand{font-size:13.5px;width:100%;margin-right:0}
+  .dd{flex:1}
+  .dd-btn{width:100%;font-size:13px;padding:.4rem .5rem}
+  .dd-menu{right:auto;left:0;min-width:min(92vw,22rem)}
+}
+
+/* ---------- collapsible step-by-step help ---------- */
+.howto{margin:.7rem 0 1.1rem;border:1px solid var(--border);background:var(--off-white)}
+.howto>summary{cursor:pointer;padding:.6rem .9rem;font-family:var(--display);font-size:13px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--magenta-dark);list-style:none}
+.howto>summary::-webkit-details-marker{display:none}
+.howto>summary:before{content:"\25B8  ";font-size:11px}
+.howto[open]>summary:before{content:"\25BE  "}
+.howto>summary:hover{background:var(--magenta-pale)}
+.howto-body{padding:.3rem 1.1rem 1rem;border-top:1px solid var(--border);background:#fff}
+.howto-body ol{margin:.7rem 0;padding-left:1.3rem}
+.howto-body li{margin-bottom:.45rem;font-size:15px;line-height:1.5}
+.howto-body p{font-size:15px;margin:.6rem 0}
+.kbd{font-family:ui-monospace,Menlo,monospace;font-size:.85em;background:var(--off-white);
+  border:1px solid var(--border);border-radius:2px;padding:.1em .35em;white-space:nowrap}
+.mac{display:inline-block;font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;background:var(--black);color:#fff;padding:.1rem .4rem;margin-right:.35rem}
+.stuck{border:1px solid var(--border);border-left:4px solid var(--black);background:var(--off-white);
+  padding:1rem 1.2rem;margin:2rem 0 0}
+.stuck strong:first-child{display:block;font-family:var(--display);font-size:12.5px;font-weight:600;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--black);margin-bottom:.5rem}
+.stuck ol{margin:.5rem 0 0;padding-left:1.3rem}
+.stuck li{font-size:15px;margin-bottom:.35rem}
+
+/* ---------- AI traffic lights ---------- */
+.ailight{display:flex;gap:1rem;align-items:flex-start;border:1px solid var(--border);background:#fff;
+  padding:1rem 1.2rem;margin:1rem 0}
+.ailight .lamp{flex:0 0 auto;width:34px;background:#1c1c1a;border-radius:8px;padding:7px 0;
+  display:flex;flex-direction:column;align-items:center;gap:5px}
+.ailight .bulb{width:20px;height:20px;border-radius:50%;background:#2e2e2b;box-shadow:inset 0 2px 4px rgba(0,0,0,.6)}
+.ailight.g .bulb.b3{background:#2fae5f;box-shadow:0 0 10px rgba(47,174,95,.8),inset 0 -2px 3px rgba(0,0,0,.25)}
+.ailight.y .bulb.b2{background:#e6b93c;box-shadow:0 0 10px rgba(230,185,60,.8),inset 0 -2px 3px rgba(0,0,0,.25)}
+.ailight.r .bulb.b1{background:#d5453a;box-shadow:0 0 10px rgba(213,69,58,.8),inset 0 -2px 3px rgba(0,0,0,.25)}
+.ailight .lighttext{flex:1;min-width:0}
+.ailight .lighttext strong:first-child{display:block;font-family:var(--display);font-size:13px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;margin-bottom:.3rem}
+.ailight.g .lighttext strong:first-child{color:#1e7c43}
+.ailight.y .lighttext strong:first-child{color:#a07a10}
+.ailight.r .lighttext strong:first-child{color:#a03434}
+.ailight p{margin:.2rem 0 0;font-size:15px;line-height:1.55}
+
+/* ---------- think-pair-share block ---------- */
+.tps{border:1px solid var(--black);background:#fff;margin:2.2rem 0}
+.tps-head{background:var(--black);color:#fff;padding:.6rem 1.1rem;font-family:var(--display);font-size:12.5px;
+  font-weight:600;letter-spacing:.2em;text-transform:uppercase;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.tps-head .mins{color:rgba(255,255,255,.7);letter-spacing:.1em}
+.tps-body{padding:1.1rem 1.25rem}
+.tps-setup{font-size:16px;line-height:1.6;margin:0 0 1rem}
+.tps-q{border-left:4px solid var(--magenta);background:var(--magenta-pale);padding:.8rem 1rem;margin:0 0 1.1rem}
+.tps-q p{margin:0;font-size:17px;line-height:1.5;font-weight:500}
+.tps-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border)}
+.tps-step{background:#fff;padding:.75rem .9rem}
+.tps-step .ph{font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--magenta);margin-bottom:.3rem;display:flex;justify-content:space-between}
+.tps-step .ph span{color:var(--text-light)}
+.tps-step p{margin:0;font-size:14px;line-height:1.45;color:var(--text-muted)}
+.tps-note{border-top:1px solid var(--border);margin-top:1.1rem;padding-top:.9rem;font-size:14.5px;color:var(--text-muted)}
+.tps-note strong{font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--black);display:block;margin-bottom:.35rem}
+@media(max-width:700px){.tps-steps{grid-template-columns:1fr}}
+
+/* ---------- Monday session plan (instructor-facing) ---------- */
+.plan{border:1px solid var(--border);background:var(--off-white);margin:2rem 0}
+.plan-head{background:var(--off-white);border-bottom:1px solid var(--border);padding:.55rem 1.05rem;
+  font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted)}
+.plan table{width:100%;border-collapse:collapse;background:#fff}
+.plan td{border-bottom:1px solid var(--border);padding:.6rem .9rem;font-size:14.5px;vertical-align:top;line-height:1.45}
+.plan tr:last-child td{border-bottom:none}
+.plan td.t{width:5.5rem;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--magenta);white-space:nowrap}
+.plan td.w{width:8rem;font-weight:600}
+@media(max-width:640px){.plan td.w{width:auto}}
+
+/* ---------- chapter depth: stat strip, TOC, key concept, summary table ---------- */
+.statrow{display:flex;flex-wrap:wrap;gap:1px;background:var(--border);border:1px solid var(--border);margin:1.6rem 0}
+.stat{flex:1 1 8rem;background:#fff;padding:.85rem 1rem;text-align:center}
+.stat b{display:block;font-family:var(--display);font-size:22px;font-weight:600;color:var(--magenta);line-height:1.1}
+.stat span{font-size:12.5px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;font-family:var(--display)}
+.toc{border:1px solid var(--border);background:var(--off-white);padding:1rem 1.25rem;margin:1.6rem 0;font-family:var(--sans);font-size:14.5px;line-height:2}
+.toc strong{display:block;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.3rem}
+.toc a{color:var(--text-dark);text-decoration:none;border-bottom:1px solid var(--border);margin-right:1rem;white-space:nowrap}
+.toc a:hover{color:var(--magenta-dark);border-bottom-color:var(--magenta)}
+.kc{border:1px solid var(--border);border-left:4px solid var(--magenta);background:#fff;margin:1.4rem 0;padding:1rem 1.2rem}
+.kc .kc-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.15rem}
+.kc .kc-term{font-family:var(--display);font-size:17px;font-weight:600;display:block;margin-bottom:.45rem}
+.kc p{margin:0;font-size:15.5px;line-height:1.62}
+.sumtable{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:14.5px}
+.sumtable th{background:var(--black);color:#fff;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.55rem .8rem;text-align:left}
+.sumtable td{border:1px solid var(--border);padding:.6rem .8rem;vertical-align:top;line-height:1.5}
+.sumtable tr:nth-child(even) td{background:var(--off-white)}
+
+/* ---------- IS concepts chip strip ---------- */
+.concepts{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;margin:1.1rem 0 0}
+.concepts .clabel{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-right:.3rem}
+.concepts span:not(.clabel){font-family:var(--display);font-size:12.5px;font-weight:500;letter-spacing:.04em;border:1px solid var(--border);background:var(--off-white);padding:.22rem .6rem;color:var(--text-dark)}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <div class="topnav-in">
+    <a class="topnav-brand" href="index.html">MIS 320 &middot; Intro to Information Systems</a>
+    <a class="dd-btn" href="schedule.html" style="text-decoration:none">Schedule</a>
+    <div class="dd">
+      <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddc">Chapters<span class="caret">&#9660;</span></button>
+      <div class="dd-menu" id="ddc">
+      <a href="chapter1-what-is-mis.html"><span class="lbl">Chapter 1 &middot; Week 1</span>What Is MIS? &mdash; Spotify Wrapped</a>
+      <a class="current" href="chapter2-starbucks.html"><span class="lbl">Chapter 2 &middot; Week 2</span>The Value of Information &mdash; Starbucks</a>
+      <a href="chapter3-competitive-advantage.html"><span class="lbl">Chapter 3 &middot; Week 3</span>Technology &amp; Competitive Advantage &mdash; Zara</a>
+      <a href="chapter4-dominos.html"><span class="lbl">Chapter 4 &middot; Week 4</span>Business Processes &mdash; Domino's</a>
+      <a href="chapter5-healthcaregov.html"><span class="lbl">Chapter 5 &middot; Week 5</span>Systems Analysis &amp; the SDLC &mdash; Healthcare.gov</a>
+      <a href="chapter6-walmart.html"><span class="lbl">Chapter 6 &middot; Week 7</span>What Data Is: Databases &mdash; Walmart</a>
+      <a href="chapter7-nike-sap.html"><span class="lbl">Chapter 7 &middot; Week 7</span>Enterprise Systems &mdash; Nike/SAP</a>
+      <a href="chapter8-moneyball.html"><span class="lbl">Chapter 8 &middot; Week 6</span>Business Intelligence &mdash; Moneyball</a>
+      <a href="chapter9-ai-ml.html"><span class="lbl">Chapter 9 &middot; Week 10</span>AI, Machine Learning &amp; Bias &mdash; TikTok &amp; Amazon</a>
+      <a href="chapter10-changehealthcare.html"><span class="lbl">Chapter 10 &middot; Week 8</span>Cybersecurity &mdash; Change Healthcare</a>
+      <a href="chapter11-equifax.html"><span class="lbl">Chapter 11 &middot; Week 8</span>IT Governance &mdash; Equifax</a>
+      <a href="chapter12-software.html"><span class="lbl">Chapter 12 &middot; Week 9</span>Software Design &amp; Selection &mdash; Robles v. Domino's</a>
+      <a href="chapter13-cloud.html"><span class="lbl">Chapter 13 &middot; Week 10</span>The Cloud &amp; What Computing Costs &mdash; Netflix</a>
+      </div>
+    </div>
+    <div class="dd">
+      <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddl">Labs<span class="caret">&#9660;</span></button>
+      <div class="dd-menu" id="ddl">
+      <a href="lab1-genai.html"><span class="lbl">Lab 1 &middot; Week 1</span>GenAI for Thinking</a>
+      <a href="lab2-excel-basics.html"><span class="lbl">Lab 2 &middot; Week 2</span>Excel Basics: Meeting the Client</a>
+      <a href="lab3-excel-dataprep.html"><span class="lbl">Lab 3 &middot; Week 3</span>Excel Functions: One Question, One Formula</a>
+      <a href="lab4-excel-dataviz.html"><span class="lbl">Lab 4 &middot; Week 4</span>Data Visualization: Charts That Tell the Truth</a>
+      <a href="lab5-excel-analysis.html"><span class="lbl">Lab 5 &middot; Week 5</span>Data Analysis &amp; Mini Project</a>
+      <a href="lab6-tableau.html"><span class="lbl">Lab 6 &middot; Week 6</span>Tableau: Worksheets to a Dashboard</a>
+      <a href="lab7-sql.html"><span class="lbl">Lab 7 &middot; Week 7</span>SQL Fundamentals</a>
+      <a href="lab8-security.html"><span class="lbl">Lab 8 &middot; Week 8</span>Security &amp; Data Governance: The Audit</a>
+      <div class="dd-sep"></div>
+      <a class="soon" href="#"><span class="lbl">Labs 9&ndash;10</span>UX Design, Information Architecture (in progress)</a>
+      </div>
+    </div>
+    <div class="dd">
+      <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddd">Data<span class="caret">&#9660;</span></button>
+      <div class="dd-menu" id="ddd">
+      <a href="cascadia-sales-2025.xlsx"><span class="lbl">Workbook</span>Cascadia sales, clean (.xlsx)</a>
+      <a href="cascadia-sales-2025-RAW.xlsx"><span class="lbl">Workbook</span>Cascadia sales, RAW export for Lab 7 (.xlsx)</a>
+      <a href="cascadia-sales-2025.csv"><span class="lbl">Data</span>Flat CSV for Tableau</a>
+      <a href="cascadia.db"><span class="lbl">Database</span>SQLite database for the SQL lab</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+
+<main class="chapwrap">
+
+<header class="chaphead">
+  <p class="eyebrow">Chapter 2 &middot; The Value of Information</p>
+  <h1>The Value of Information: How Starbucks Turned Coffee Into a Data Business</h1>
+  <p class="anchor">A company that sells a four-dollar drink built one of the most valuable customer
+  datasets in retail. This chapter asks the question the whole course rests on: when is information
+  actually worth money, and when is it just expensive?</p>
+  
+<div class="concepts"><span class="clabel">IS concepts</span><span>Data vs. information vs. knowledge</span><span>The value test</span><span>Decision levels</span><span>Structured vs. unstructured decisions</span><span>Information quality</span><span>By-product data</span><span>Data visualization</span></div>
+</header>
+
+<div class="statrow">
+  <div class="stat"><b>~40,000</b><span>stores worldwide</span></div>
+  <div class="stat"><b>80+</b><span>markets</span></div>
+  <div class="stat"><b>34.2M</b><span>active U.S. Rewards members</span></div>
+  <div class="stat"><b>~60%</b><span>of U.S. revenue via members</span></div>
+  <div class="stat"><b>100M+</b><span>transactions analyzed weekly</span></div>
+</div>
+
+<div class="toc"><strong>Contents</strong>
+<a href="#s1">Company background</a>
+<a href="#s2">What makes information valuable</a>
+<a href="#history">Before computers: two maps that moved the world</a>
+<a href="#s3">Decision levels: who needs to know what</a>
+<a href="#s4">The app: how the data gets made</a>
+<a href="#s5">Deep Brew: what the data does</a>
+<a href="#s6">The five components at Starbucks</a>
+<a href="#s7">The failure worth studying: NomadGo</a>
+<a href="#s8">The other side: what personalization costs</a>
+<a href="#s9">Summary and vocabulary</a>
+<a href="#discussion">Discussion questions</a>
+</div>
+
+<div class="plan"><div class="plan-head">Monday session plan &middot; 80 minutes</div>
+<table><tr><td class="t">0:00</td><td class="w">Open</td><td>Recap the five components in two minutes, then the question this chapter answers: what makes information worth money?</td></tr><tr><td class="t">0:05</td><td class="w">Lecture</td><td>The value test (what decision changes?), decision levels, structured versus unstructured decisions, Deep Brew as the illustration.</td></tr><tr><td class="t">0:40</td><td class="w">Video</td><td>A short Starbucks technology or Deep Brew segment. Ask students to note every decision the system is making on someone’s behalf.</td></tr><tr><td class="t">0:48</td><td class="w">Think-pair-share</td><td>Killing NomadGo. See the activity above.</td></tr><tr><td class="t">1:08</td><td class="w">Close</td><td>Preview Wednesday and remind groups which discussion questions they have.</td></tr></table></div>
+
+<h2 id="s1"><span class="num">01</span>Company background</h2>
+
+<p>Starbucks opened as a single Seattle coffee bean shop in 1971 and now operates roughly 40,000 stores
+across more than 80 markets. For most of its history, the company's story was about the product and the
+place: good coffee, and a "third place" between home and work where people wanted to sit. That story is
+still on the cups. It is no longer the story of the business.</p>
+
+<p>The modern Starbucks runs on a different asset. Its Rewards program counts about 34.2 million active
+U.S. members as of late 2025, and those members account for roughly 60 percent of company-operated U.S.
+revenue, more than $13 billion in annual spend. Mobile Order &amp; Pay handles over 35 percent of U.S.
+transactions. Behind that sits an analytics platform the company calls Deep Brew, which processes on
+the order of 100 million transactions a week.</p>
+
+<p>Read those numbers again as an exchange. Members hand Starbucks a complete record of what they buy,
+when, where, and how often. In return they get free drinks, shorter lines, and offers built for them
+personally. Starbucks is not unusually generous; it has concluded that the information is worth more
+than the free coffee costs. Whether that conclusion is right, and how a company could possibly know, is
+this chapter.</p>
+
+<div class="callout"><strong>Why this is the first case</strong>
+<p>Every system you will study this quarter, from Zara's logistics to Target's breach, exists because
+some company decided certain information was worth acquiring, storing, and acting on. Starbucks is the
+cleanest version of that decision: a physical product with thin margins, where the information layer on
+top of it became the growth engine. If you can explain why a coffee company employs data scientists,
+you understand what this course is about.</p></div>
+
+<h2 id="s2"><span class="num">02</span>What makes information valuable</h2>
+
+<p>Start with the distinction everything else builds on. <strong>Data</strong> is raw recorded fact: a
+transaction line saying store 412 sold one grande latte at 8:14 a.m. to member 88213.
+<strong>Information</strong> is data arranged so it means something: member 88213 buys a latte every
+weekday morning but has not visited in nine days. The first is a record. The second is a reason to send
+a coupon.</p>
+
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">The value test</span>
+<p>Information has business value only when it could change a decision. Not when it is interesting, not
+when it is accurate, not when it took effort to collect: when some person or system would act
+differently because of it. A dashboard nobody acts on is a cost. A single number that redirects an
+order is an asset. Throughout this course, when you meet any information system, ask the same question
+first: what decision does this change? If the honest answer is none, the system is expensive
+decoration, and companies build expensive decoration constantly.</p></div>
+
+
+
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">The DIKW ladder: data, information, knowledge</span>
+<p>The three terms form a ladder, and this course will hold you to the distinctions.
+<strong>Data</strong> is the raw recorded fact: store 412 sold one grande latte at 8:14 a.m. to
+member 88213. <strong>Information</strong> is data arranged in context until it means something:
+member 88213 buys a latte every weekday but has not visited in nine days. <strong>Knowledge</strong>
+is information joined with experience about what works: lapsed morning regulars respond to a
+free-drink offer about a third of the time, so send one now. Each rung costs more to produce and is
+worth more once you have it. (Some versions add a fourth rung, wisdom, knowing whether to act at all;
+you will meet that rung in the ethics discussions.) A company can drown in data, skim information,
+and still possess no knowledge, which is a fair description of most dashboards.</p></div>
+
+<p>The value test explains things about Starbucks that otherwise look strange. The company knows the
+weather at every store, because weather changes what people drink, which changes staffing and
+inventory decisions that morning. It logs every espresso shot its Mastrena machines pull, because shot
+data predicts machine failure, and a machine that dies mid-rush changes the store's whole day. It does
+not, so far as anyone can tell, track which customers wear hats. Hat data would be easy to collect and
+would change nothing.</p>
+
+<p>The test also has a harder edge, which Section 7 will sharpen: information that <em>could</em>
+change a decision still has to be worth what it costs to produce. Collecting, cleaning, storing, and
+acting on data all cost money, and the value of a slightly better decision can be smaller than the
+price of the system that enables it.</p>
+
+
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Information quality</span>
+<p>Information changes decisions only if it can be trusted, and trust decomposes into measurable dimensions: <strong>accuracy</strong> (is it correct?), <strong>completeness</strong> (is anything missing?), <strong>timeliness</strong> (does it arrive while the decision is still open?), <strong>consistency</strong> (does it agree with itself across systems?), and <strong>relevance</strong> (does it bear on this decision at all?). A failure on any dimension can zero out the value of the rest. NomadGo, later in this chapter, is an accuracy failure; a report that lands the day after the order deadline is a timeliness failure with perfectly accurate numbers.</p></div>
+
+<h2 id="history"><span class="num">03</span>Before computers: two maps that moved the world</h2>
+
+<p>It would be easy to leave this chapter believing the value of information is a software-era idea,
+something that arrived with databases and loyalty apps. It is older than electricity, and the two most
+famous proofs involve no machines at all: a hand-drawn map and a hand-drawn chart, each of which
+changed a decision that saved lives. They are worth knowing both as history and as the cleanest
+existing demonstrations of what this chapter is claiming.</p>
+
+<h3>1854: the pump on Broad Street</h3>
+
+<p>In the late summer of 1854, cholera tore through the Soho district of London, killing hundreds of
+people in a few square blocks. The era's medical consensus blamed miasma, bad air rising from filth,
+and against bad air there is not much a neighborhood can decide to do. A physician named John Snow
+suspected the disease traveled in water, and he did something that now looks obvious and then was
+radical: he collected the addresses of the dead and drew them on a street map, each death a black
+mark.</p>
+
+<p>The marks piled up around a single public water pump on Broad Street. Data became information: not
+"many people are dying," which everyone knew, but "the deaths cluster around this pump," which nobody
+could see until it was drawn. Snow took the map to the parish board and persuaded them to remove the
+pump's handle. The decision was cheap, specific, and only possible because the information existed in
+a form a committee could grasp in one look.</p>
+
+<p>The detail worth carrying into your labs is what Snow did with the exceptions. A brewery sat near
+the pump, and its workers were mysteriously spared; it turned out they drank the beer, brewed with its
+own water supply. A widow in Hampstead, miles away, died of the same outbreak; it turned out she had
+liked the Broad Street water's taste so much she had it delivered. The anomalies did not weaken the
+pattern. Investigated honestly, they confirmed it, because each exception had the water, not the air,
+running through it. Learning to chase the observation that does not fit, rather than discard it, is
+the single most transferable habit in this book, and it is precisely what Lab 5 will ask of you.</p>
+
+<h3>1858: the chart that shamed an army</h3>
+
+<p>Four years later, Florence Nightingale faced a different obstacle: she had the information and the
+decision-makers would not look at it. Serving as a nurse administrator in the Crimean War, she had
+documented that vastly more British soldiers were dying of preventable disease in filthy hospitals
+than of battlefield wounds. The evidence sat in mortality tables, and mortality tables do not move
+parliaments.</p>
+
+<p>So she redrew the tables as a picture: a polar area diagram, wedges of a circle month by month,
+with deaths from preventable disease dwarfing deaths from wounds in a way no one could unsee. The
+chart circulated among officials and the public, sanitary reform followed, and death rates fell. In
+1858 she became the first woman elected to the Royal Statistical Society. Her insight was not
+statistical; the numbers were already known. It was that <strong>a chart is an argument</strong>,
+engineered to make a decision-maker see a conclusion in seconds that they had successfully avoided in
+tables for years.</p>
+
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Data visualization</span>
+<p>Data visualization is the practice of encoding information visually so that patterns, comparisons,
+and outliers become perceivable at a glance. It matters for a blunt reason: decision-makers act on
+what they can see, and the same numbers can be invisible in a table and undeniable in a picture. That
+power cuts both ways. Snow's map and Nightingale's wedges made true things visible; a chart can make
+false things visible with equal force, and Lab 4 is an entire session on telling the difference. When
+you build a chart in this course you are not decorating a report. You are making a claim.</p></div>
+
+<p>Hold these two cases against Starbucks and notice that nothing essential has changed. Deep Brew is
+Snow's map with the marks arriving 100 million times a week: observations, placed in context, until a
+pattern demands a decision. The technology multiplied the volume and the speed. The logic of why the
+information is worth anything, that it changed what someone did next, is the same logic that took the
+handle off a pump.</p>
+
+<h2 id="s3"><span class="num">04</span>Decision levels: who needs to know what</h2>
+
+<p>"Better decisions" is too vague to build a system around, because a company makes very different
+kinds of decisions at different altitudes. The classic way to sort them:</p>
+
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Operational, managerial, and strategic decisions</span>
+<p><strong>Operational</strong> decisions run the day: how many baristas on Tuesday morning, when to
+reorder oat milk, which order to make next. They recur constantly, follow rules, and are made by
+frontline staff or by software. <strong>Managerial</strong> decisions run the quarter: which stores are
+underperforming, whether a promotion earned its cost, where labor hours should shift. They recur on a
+cycle and are made by managers reading summaries. <strong>Strategic</strong> decisions set the
+company's direction: whether to enter a market, what the menu should become, whether to build an AI
+platform at all. They are rare, expensive to reverse, and made at the top. Each level needs different
+information at a different grain, which is why one report cannot serve everyone.</p></div>
+
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Structured and unstructured decisions</span>
+<p>A <strong>structured</strong> decision has a known procedure: given the sales forecast, the
+scheduling formula produces the staffing plan, and software can make it without a human. An
+<strong>unstructured</strong> decision has no formula: should Starbucks bet on cold beverages as the
+future of the menu? Information can inform it, but judgment decides it. Most real decisions sit in
+between, semi-structured, which is why most information systems are built to support a human rather
+than replace one. Matching the system to the structure of the decision is a recurring design problem
+you will see again in the systems analysis and AI chapters.</p></div>
+
+<p>Map Starbucks onto the ladder. At the operational level, algorithms sequence drink production and
+schedule staff against predicted demand; the company's SmartQueue system, in test locations, got about
+80 percent of cafe orders handed off in under four minutes. At the managerial level, store comparisons
+and promotion analyses decide where attention goes. At the strategic level, the data changed the menu
+itself: cold beverages reached about 78 percent of U.S. beverage sales in 2025, a fact visible only in
+aggregate, and in February 2025 the company cut roughly 30 percent of menu items to simplify
+operations around what the data said people actually buy.</p>
+
+<p>Notice what that last example means: the same underlying transaction records served all three
+levels. The barista's queue, the district manager's store report, and the CEO's menu decision drew on
+one shared pool of data, summarized at three different grains. That is what "management information
+system" means in practice, and it is why data quality problems at the bottom poison decisions all the
+way up.</p>
+
+<h2 id="s4"><span class="num">05</span>The app: how the data gets made</h2>
+
+<p>None of this works without a way to know <em>who</em> is buying. A cash transaction at a register
+tells Starbucks that a latte was sold. It does not say to whom, whether they came yesterday, or whether
+they will come tomorrow. The individual, the unit that personalization needs, is invisible in cash
+data.</p>
+
+<p>The mobile app, launched in 2009, and the loyalty program attached to it in 2011, solved exactly
+that. When payment, ordering, and rewards all flow through an identified account, every purchase
+carries a name. The convenience features people love, order ahead, skip the line, earn stars, are, from
+the company's side, the mechanism that attaches identity to transactions. By 2011 a meaningful share of
+transactions already ran through the app; today, with Mobile Order &amp; Pay above 35 percent of U.S.
+transactions and members driving about 60 percent of revenue, most of the money arrives pre-labeled.</p>
+
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">By-product data</span>
+<p>The richest business data is usually generated as a side effect of an activity done for other
+reasons. Nobody at Starbucks fills out a survey about their coffee habits; the habits record themselves
+in the act of ordering. Data produced this way is cheap, honest (people lie on surveys, not at
+checkout), and continuous. When you evaluate any digital product this quarter, ask what by-product data
+it generates and who captures it. Free products, in particular, are usually paid for this way.</p></div>
+
+<p>This is the pattern worth generalizing: <strong>the interface that serves the customer is the
+instrument that collects the data.</strong> Domino's order tracker (Chapter 4) and Amazon's
+recommendation engine (Chapter 9) are the same move in different industries. The service and the
+sensor are one object.</p>
+
+<h2 id="s5"><span class="num">06</span>Deep Brew: what the data does</h2>
+
+<p>Deep Brew is Starbucks' name for the AI and analytics platform that turns the transaction stream
+into action. It is not one model but a family of applications sharing the same data foundation, which
+makes it a useful tour of what "AI in a business" concretely means:</p>
+
+<p><strong>Personalized offers.</strong> The core application. Deep Brew analyzes purchase histories,
+app behavior, location, time of day, and weather to decide which offer each member sees. Reporting on
+the program credits it with tripling spending among targeted Rewards members and roughly a 30 percent
+return on the investment. Treat vendor-adjacent numbers like those with a raised eyebrow, a habit
+Chapter 8 will formalize, but the direction is not in dispute: the offers work, which is why the
+program keeps growing.</p>
+
+<p><strong>Machines that report on themselves.</strong> The Mastrena espresso machines are fitted with
+sensors that log every shot pulled and stream the data centrally, so Starbucks can tune machines and
+schedule maintenance before failures instead of after them. A broken espresso machine is an
+information problem twice over: it was predictable, and every minute it is down corrupts the demand
+data for that store.</p>
+
+<p><strong>Operations.</strong> SmartQueue sequences incoming orders so that cafe, drive-through, and
+mobile orders share the espresso bar sensibly. Green Dot Assist, an in-store assistant built on Azure
+OpenAI, answers baristas' procedural questions in more than 20 languages; it piloted at 35 U.S. stores
+with a 2026 roadmap toward more than a thousand. FlavorGPT, on the product side, is credited with
+compressing new-drink development from roughly 18 months to 6.</p>
+
+<p>The numbers suggest the system as a whole is doing its job: in the second quarter of fiscal 2026
+the company reported global comparable sales up 6.2 percent on a 3.8 percent rise in transactions,
+reversing a multi-year decline in foot traffic. No single algorithm produced that. The point of the
+platform is that the same data asset feeds many decisions at once.</p>
+
+<h2 id="s6"><span class="num">07</span>The five components at Starbucks</h2>
+
+<p>Run the framework from Chapter 1 over everything above and each component is load-bearing:</p>
+
+<table class="sumtable">
+<tr><th>Component</th><th>At Starbucks</th><th>What breaks if it fails</th></tr>
+<tr><td><strong>Hardware</strong></td><td>Registers, phones, Mastrena machines with shot sensors, store networks' physical gear</td><td>A dead machine mid-rush; no transactions, no data, no coffee</td></tr>
+<tr><td><strong>Software</strong></td><td>The app, Deep Brew models, SmartQueue, scheduling systems</td><td>Wrong offers, missequenced orders, staffing that misses the rush</td></tr>
+<tr><td><strong>Data</strong></td><td>100M+ weekly transactions, member histories, shot logs, weather</td><td>Garbage in: every level of decision inherits the error</td></tr>
+<tr><td><strong>Networks</strong></td><td>Store connectivity, cloud platforms carrying orders and telemetry</td><td>Mobile ordering dies; a third of U.S. transactions with it</td></tr>
+<tr><td><strong>People</strong></td><td>Baristas working the queue, analysts reading the output, executives betting the menu</td><td>See the next section</td></tr>
+</table>
+
+<p>The weakest component rule from Chapter 1 applies with no modification: the sophistication of Deep
+Brew buys nothing if the store's network is down, and perfect uptime buys nothing if the model behind
+the offers is learning from corrupted data. Now watch the rule operate on a real failure.</p>
+
+<h2 id="s7"><span class="num">08</span>The failure worth studying: NomadGo</h2>
+
+<p>In September 2025, Starbucks announced it had deployed an AI inventory system across every
+company-operated store in North America. Built with the Seattle startup NomadGo, it used computer
+vision, 3D spatial mapping, and augmented reality: a worker points a device at a shelf and the system
+counts the stock. The company's press release described counts running eight times more frequently
+than manual counting, saving stores two to three hours of labor a week. It was, on announcement day, a
+textbook case of the value test passing: better inventory information, cheaper, more often.</p>
+
+<p>On May 19, 2026, nine months later, Starbucks retired it. The system frequently miscounted and
+mislabeled products, with a failure mode that is almost poetic: it confused similar-looking milks. A
+count that might be wrong is worse than no count, because baristas had to recheck shelves the system
+had already counted, which meant the company was now paying for the counting twice.</p>
+
+<div class="callout callout-caution"><strong>Read the failure with the value test</strong>
+<p>The information NomadGo produced could absolutely have changed decisions; accurate real-time
+inventory is genuinely valuable. It failed the other half of the test: the information was not reliable
+enough to act on, so it changed no decisions, so its value was zero, while its cost, hardware,
+integration, training, and the re-checking labor, was very real. Killing it was not a technology
+embarrassment. It was the value test applied honestly, nine months and one deployment too late. The
+sharper question, the one your Monday activity takes up, is whether a pilot could have failed it
+cheaper.</p></div>
+
+<p>Note which component failed. The cameras worked. The network moved the data. The software ran as
+designed; it was simply wrong about milk, and, more importantly, <strong>people</strong>, the ones who
+approved a continent-wide rollout before the accuracy was proven, and the baristas whose distrust of
+the counts was itself accurate information the company was slow to use. When you meet Healthcare.gov
+in Week 5, you will see this same shape at 100 times the stakes: a system deployed everywhere at once,
+on a schedule, before anyone had proven it worked.</p>
+
+<h2 id="s8"><span class="num">09</span>The other side: what personalization costs</h2>
+
+<p>Everything above is the company's view of the exchange. Before leaving the case, turn it around and
+look at it from the other side of the counter, because a habit this course wants to build is asking
+who a system works for and what it optimizes.</p>
+
+<p><strong>The surveillance question.</strong> A record of everything a person buys, where, and when,
+is intimate data, and 34 million people have traded it for roughly the price of a free drink every few
+weeks. The trade is voluntary and disclosed, but it is worth being precise about its shape: the member
+gets convenience now, and the company gets a permanent behavioral asset that compounds. Chapter 10 will
+show what happens when assets like this leak.</p>
+
+<p><strong>The habit question.</strong> Deep Brew's offers are optimized to increase visit frequency
+and order size. That is the program working as designed, and it is also, described plainly, a system
+that studies your routine in order to intensify it. For coffee the stakes are low. The identical
+machinery pointed at gambling apps or short video is the same design with different stakes, and the
+Week 10 material on engagement optimization will ask where the line is.</p>
+
+<p><strong>The labor question.</strong> The same platform that predicts demand also schedules the
+people who meet it. Algorithmic scheduling can match staffing to traffic with impressive precision,
+and precision, from the worker's side, can mean volatile hours assembled by a model that does not know
+about their childcare. Starbucks is hardly unique here, but any honest accounting of "the system
+works" has to say for whom the optimization runs. The barista is one of the five components too, and
+this course will keep insisting on that.</p>
+
+<p>None of this is an argument that the system is wrong. It is the second question this course asks of
+every system after "does it work": <em>what does it make easier, for whom, and at whose expense?</em>
+You met that question in Chapter 3's fast-fashion section, and it does not stop appearing.</p>
+
+<h2 id="s9"><span class="num">10</span>Summary and vocabulary</h2>
+
+<table class="sumtable">
+<tr><th>Idea</th><th>The Starbucks version</th><th>Where you meet it next</th></tr>
+<tr><td>The value test</td><td>Weather data yes, hat data no; NomadGo killed when its numbers could not be acted on</td><td>Every chapter; explicitly in Lab 2</td></tr>
+<tr><td>Decision levels</td><td>One transaction pool serving the barista's queue, the manager's report, and the menu strategy</td><td>Databases (Wk 7), BI (Wk 6)</td></tr>
+<tr><td>By-product data</td><td>The app that serves the customer is the instrument that collects the data</td><td>Domino's (Wk 4), Amazon (Wk 10)</td></tr>
+<tr><td>Weakest component</td><td>A continent-wide rollout undone by unproven accuracy and unheeded users</td><td>Healthcare.gov (Wk 5)</td></tr>
+<tr><td>The second question</td><td>Personalization as surveillance, habit engineering, and algorithmic scheduling</td><td>Security (Wk 8), AI &amp; bias (Wk 10)</td></tr>
+</table>
+
+<dl class="vocab">
+<div><dt>Data</dt><dd>Raw recorded facts; a transaction line.</dd></div>
+<div><dt>Information</dt><dd>Data arranged so it can change what someone does.</dd></div>
+<div><dt>The value test</dt><dd>Information has value only when it could change a decision, and only if that change is worth the system's cost.</dd></div>
+<div><dt>Operational decision</dt><dd>Runs the day; frequent, rule-following, often automated.</dd></div>
+<div><dt>Managerial decision</dt><dd>Runs the quarter; cyclical, made from summaries.</dd></div>
+<div><dt>Strategic decision</dt><dd>Sets direction; rare, hard to reverse, judgment-heavy.</dd></div>
+<div><dt>Structured decision</dt><dd>Has a known procedure a system can execute.</dd></div>
+<div><dt>Unstructured decision</dt><dd>No formula; information supports but judgment decides.</dd></div>
+<div><dt>Knowledge</dt><dd>Information joined with the experience to act on it well.</dd></div>
+<div><dt>Information quality</dt><dd>Accuracy, completeness, timeliness, consistency, relevance; failure on one dimension can zero the rest.</dd></div>
+<div><dt>By-product data</dt><dd>Data generated as a side effect of ordinary activity, often more valuable than the activity itself.</dd></div>
+<div><dt>Data visualization</dt><dd>Encoding information visually so patterns and outliers become perceivable; a chart is a claim, not decoration.</dd></div>
+<div><dt>Predictive maintenance</dt><dd>Using equipment telemetry to fix machines before they fail.</dd></div>
+<div><dt>Personalization</dt><dd>Using an individual's history to tailor what a system shows or offers them.</dd></div>
+<div><dt>Cannibalization</dt><dd>New capacity taking demand from your own existing capacity, invisible without shared data.</dd></div>
+</dl>
+
+<div class="tps">
+  <div class="tps-head"><span>Monday activity &middot; Killing the fix</span><span class="mins">20 minutes</span></div>
+  <div class="tps-body">
+    <p class="tps-setup">Starbucks knew its inventory counts were unreliable, so in 2025 it piloted NomadGo, a phone-based system that scanned shelves and counted stock automatically. The pilot ran about eight months. In May 2026 Starbucks killed it.</p>
+    <div class="tps-q"><p>Was cancelling NomadGo a technology failure, or a correct decision that the information was not worth what it cost?</p></div>
+    <div class="tps-steps">
+      <div class="tps-step"><div class="ph">Think <span>3 min</span></div><p>Pick one and write the strongest single reason for it. Consider what decision a better inventory count would actually have changed.</p></div>
+      <div class="tps-step"><div class="ph">Pair <span>5 min</span></div><p>Find someone who picked the other one. Each of you gets ninety seconds to make your case without interruption.</p></div>
+      <div class="tps-step"><div class="ph">Share <span>12 min</span></div><p>We will hear one pair who disagreed and see whether either moved.</p></div>
+    </div>
+    <div class="tps-note"><strong>Where this lands</strong>Both positions are defensible, which is why it works as a discussion. Push the room toward the chapter’s test: information has value only when it changes a decision. Ask what a store manager would have done differently with a perfect count, and whether that difference was worth the cost of the system, the training, and the process change around it.</div>
+  </div>
+</div>
+
+
+<div class="ailight g">
+  <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
+  <div class="lighttext"><strong>AI and these questions</strong>
+  <p>Green: after drafting your own answer, ask an AI to argue against it and press on your weakest
+  claim, sparring partner mode, before you present. Red: submitting or reading out an AI-written answer.
+  The Wednesday discussion grades your reasoning, and everyone in the room can tell the difference.</p></div>
+</div>
+
+
+<h2 id="discussion"><span class="num">11</span>Discussion questions</h2>
+<ol class="dq">
+<li>Apply the &#8220;what decision changes?&#8221; test to Starbucks logging every espresso shot its machines pull. Which decisions, at which level, does shot data change? <span class="dqtag">Apply</span></li>
+<li>Members generate about 60 percent of U.S. revenue and hand over complete purchase histories to do it. Describe the exchange from both sides. Who gets the better deal, and what would change your answer? <span class="dqtag">Evaluate</span></li>
+<li>Pick one operational, one managerial, and one strategic decision at a company you know, and name the information each would need. Would one dataset serve all three, the way transactions do at Starbucks? <span class="dqtag">Apply</span></li>
+<li>The February 2025 menu cut removed roughly 30 percent of items based on what aggregate data showed people buy. What can that data not see? Make the best case that the cut destroyed something the numbers could not measure. <span class="dqtag">Judgment</span></li>
+<li>NomadGo passed the value test on paper and failed it in stores. Design the pilot that would have caught the milk-counting problem before a continent-wide rollout. What would you measure, and what result would kill the project? <span class="dqtag">Systems</span></li>
+<li>The press release said the system saved two to three hours of counting per store per week. The retirement said baristas were rechecking its counts. Reconcile those two facts: what was the <em>real</em> labor cost of unreliable information? <span class="dqtag">Analyze</span></li>
+<li>Section 8 argues the same personalization machinery has different stakes pointed at coffee than at gambling. Where is the line, and who should draw it: the company, the user, or a regulator? <span class="dqtag">Ethics</span></li>
+<li>Connect to Chapter 1: which of the five components failed in the NomadGo case, and how does your answer compare to the Wrapped timezone bug? What do the two failures have in common? <span class="dqtag">Connect</span></li>
+<li>Snow’s brewery workers and Hampstead widow were exceptions that confirmed the pattern once investigated. Why is the instinct to discard outliers dangerous, and what should an analyst do with an observation that does not fit? <span class="dqtag">Systems</span></li>
+</ol>
+
+<h2><span class="num">12</span>Sources and further reading</h2>
+<ul class="sources">
+<li>Starbucks Stories &amp; News, <a href="https://about.starbucks.com/press/2025/how-ai-powered-automated-counting-is-brewing-a-better-experience-at-starbucks/">How AI-powered automated counting is brewing a better experience at Starbucks</a> (September 2025): the deployment announcement, count frequency, and labor savings claims.</li>
+<li>Canopy, <a href="https://www.gocanopy.com/news-insights/starbucks-deep-brew-ai">Starbucks Deep Brew AI: How Technology Makes Coffee Human</a> (updated May 2026): the May 19, 2026 NomadGo retirement, the milk miscounting failure mode, and Q2 FY2026 comparable sales figures.</li>
+<li>AI Plus Info, <a href="https://www.aiplusinfo.com/blog/ai-data-driven-starbucks-deep-brew/">AI &amp; Data-Driven Starbucks: Deep Brew</a>: SmartQueue, Green Dot Assist, and FlavorGPT program details.</li>
+<li>Deep Research Global, <a href="https://www.deepresearchglobal.com/p/starbucks-swot-analysis-report">Starbucks SWOT Analysis</a> (2026): Rewards membership and revenue-share figures.</li>
+<li>Companies History, <a href="https://www.companieshistory.com/starbucks-target-market/">Starbucks Target Market 2026</a>: Mobile Order &amp; Pay share, cold beverage mix, and the February 2025 menu reduction.</li>
+<li>Future Stores / WBR, <a href="https://futurestores.wbresearch.com/blog/starbucks-ai-serve-customers-strategy">How Starbucks Is Using AI to Better Serve Its Customers</a>: Mastrena machine telemetry and predictive maintenance.</li>
+<li>The AI Report, <a href="https://www.theaireport.ai/articles/how-starbucks-uses-ai-to-make-a-30-roi">How Starbucks uses AI to make a 30% ROI</a>: program ROI and member-spend claims (read with the skepticism Section 5 recommends).</li>
+<li>Snow’s 1854 map and Nightingale’s 1858 diagrams are reproduced and discussed in most histories of epidemiology and statistics; good starting points are the John Snow Archive (Michigan State University) and the Royal Statistical Society’s materials on Nightingale.</li>
+</ul>
+
+<p class="pairline"><a href="lab2-excel-basics.html">Go to Lab 2: Excel Basics &#8594;</a></p>
+
+</main>
+<!--NAVJS-->
+<script>
+(function(){
+  var btns=[].slice.call(document.querySelectorAll('.dd-btn'));
+  function closeAll(except){
+    btns.forEach(function(b){
+      var m=document.getElementById(b.getAttribute('data-dd'));
+      if(m&&m!==except){m.classList.remove('open');b.setAttribute('aria-expanded','false');}
+    });
+  }
+  btns.forEach(function(b){
+    b.addEventListener('click',function(e){
+      e.stopPropagation();
+      var m=document.getElementById(b.getAttribute('data-dd'));
+      var open=m.classList.contains('open');
+      closeAll();
+      if(!open){m.classList.add('open');b.setAttribute('aria-expanded','true');}
+    });
+  });
+  document.addEventListener('click',function(){closeAll();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeAll();});
+  document.querySelectorAll('.dd-menu').forEach(function(m){
+    m.addEventListener('click',function(e){e.stopPropagation();});
+  });
+})();
+</script>
+</body>
+</html>
