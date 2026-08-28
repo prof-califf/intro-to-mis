@@ -271,7 +271,7 @@ li{margin-bottom:.45rem}
 .concepts{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;margin:1.1rem 0 0}
 .concepts .clabel{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-right:.3rem}
 .concepts span:not(.clabel){font-family:var(--display);font-size:12.5px;font-weight:500;letter-spacing:.04em;border:1px solid var(--border);background:var(--off-white);padding:.22rem .6rem;color:var(--text-dark)}
-.cp{border:1px solid var(--rule);background:var(--paper);border-radius:2px;margin:1rem 0;padding:1rem 1.15rem}.cp.locked{opacity:.45;pointer-events:none}.cp.done{border-left:4px solid var(--good);background:var(--good-pale)}.cp.q{font-family:var(--sans);font-size:.92rem;color:var(--navy);margin:0 0.6rem;font-weight:500}.cp input[type=text]{font-family:var(--sans);font-size:.9rem;padding:.45rem.6rem;border:1px solid var(--rule);border-radius:2px;width:14rem;max-width:100%}.cp button{font-family:var(--sans);font-size:.8rem;font-weight:600;letter-spacing:.04em;background:var(--accent-deep);color:#fff;border:none;border-radius:2px;padding:.5rem.9rem;cursor:pointer;margin-left:.4rem}.cp button.hintb{background:none;color:var(--accent-deep);border:1px solid var(--rule)}.cp.msg{font-family:var(--sans);font-size:.8rem;margin:.5rem 0 0}.cp.hint{font-family:var(--sans);font-size:.8rem;color:var(--muted);margin:.5rem 0 0;display:none;border-top:1px dashed var(--rule);padding-top:.5rem}.progress{position:sticky;top:0;z-index:5;background:var(--black);color:#fff;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:.6rem 1rem;margin:1.5rem 0}.certbox{border:2px solid var(--black);background:var(--paper);padding:1.2rem 1.3rem;margin:1.5rem 0;display:none}.certbox.show{display:block}.certbox h3{margin-top:0}.codebox code{font-family:ui-monospace,Menlo,monospace;background:var(--cream-deep);padding:.15em.45em;border-radius:2px}
+.cp{border:1px solid var(--rule);background:var(--paper);border-radius:2px;margin:1rem 0;padding:1rem 1.15rem}.cp.locked{opacity:.45;pointer-events:none}.cp.done{border-left:4px solid var(--good);background:var(--good-pale)}.cp .q{font-family:var(--sans);font-size:.92rem;color:var(--navy);margin:0 0.6rem;font-weight:500}.cp input[type=text]{font-family:var(--sans);font-size:.9rem;padding:.45rem.6rem;border:1px solid var(--rule);border-radius:2px;width:14rem;max-width:100%}.cp button{font-family:var(--sans);font-size:.8rem;font-weight:600;letter-spacing:.04em;background:var(--accent-deep);color:#fff;border:none;border-radius:2px;padding:.5rem.9rem;cursor:pointer;margin-left:.4rem}.cp button.hintb{background:none;color:var(--accent-deep);border:1px solid var(--rule)}.cp .msg{font-family:var(--sans);font-size:.8rem;margin:.5rem 0 0}.cp .hint{font-family:var(--sans);font-size:.8rem;color:var(--muted);margin:.5rem 0 0;display:none;border-top:1px dashed var(--rule);padding-top:.5rem}.progress{position:sticky;top:0;z-index:5;background:var(--black);color:#fff;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:.6rem 1rem;margin:1.5rem 0}.certbox{border:2px solid var(--black);background:var(--paper);padding:1.2rem 1.3rem;margin:1.5rem 0;display:none}.certbox.show{display:block}.certbox h3{margin-top:0}.codebox code{font-family:ui-monospace,Menlo,monospace;background:var(--cream-deep);padding:.15em.45em;border-radius:2px}
 </style></head><body>
 <nav class="topnav">
   <div class="topnav-in">
@@ -322,7 +322,6 @@ li{margin-bottom:.45rem}
   </div>
 </nav>
 
-
 <div class="shell">
 <aside class="rail">
   <p class="book">MIS 320</p><p class="course">Introduction to Information Systems</p>
@@ -362,15 +361,6 @@ whose data you know better than anyone.</p>
 <code class="inline">sales</code>(sale_id, sale_date, store_id, product_id, member_id, quantity, unit_price) &#183;
 <code class="inline">inventory</code>(store_id, product_id, quantity_on_hand, reorder_point) &#183;
 <code class="inline">used_gear</code>(item_id, product_id, store_id, condition, listed_price, date_listed, date_sold)</p></div>
-
-<div class="callout callout-bridge"><strong>From lecture to lab</strong><p><strong>Lab professor's intro (10 min):</strong>
-One sentence of recap: Change Healthcare, one portal without MFA, a third of US claims frozen. Then the
-reframe: today students stop reading about a breach and start preventing one, as Cascadia's security
-lead. Emphasize that every checkpoint uses only Lab 7 SQL, so nobody should feel behind. Demo Part 2 on
-the projector: read the Nordvik email aloud in your best urgent voice, let the room feel how plausible it
-is, then run the one-line query that kills it. Say the phrase out loud: verify the claim, not the tone.
-Point out that Part 5, the access map, has no checkpoint because it is judgment, and judgment is what the
-memo is for. Students who finish early: give them the $10,000 question from the callout at the end.</p></div>
 
 <div class="ailight g">
   <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
@@ -532,7 +522,7 @@ var CASCADIA_DB=null;
 initSqlJs({locateFile:function(f){return 'https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/'+f}})
 .then(function(SQL){return fetch('cascadia.db').then(function(r){if(!r.ok)throw new Error('db fetch '+r.status);return r.arrayBuffer()}).then(function(buf){
   CASCADIA_DB=new SQL.Database(new Uint8Array(buf));
-  document.getElementById('sqlstatus').textContent='Database loaded. The co-op's eight tables, same as Lab 7. Type a query and press Run.';
+  document.getElementById('sqlstatus').textContent='Database loaded. The co-op has eight tables, same as Lab 7. Type a query and press Run.';
 })}).catch(function(e){
   document.getElementById('sqlstatus').innerHTML='Could not load the database ('+e.message+'). The sandbox has to be served over http, so it works on the course site but not from a file you opened locally. You can also run these queries at <a href="https://sqliteonline.com">sqliteonline.com</a> by uploading <a href="cascadia.db">cascadia.db</a>.';
 });
@@ -559,8 +549,7 @@ step above. You do the actual work in your own file, then paste the answer here.
 next question opens up. There is no penalty for a wrong answer, so guess, check, and lean on the hint if
 you get stuck. That is what it is there for.</p>
 <p style="font-family:var(--sans);font-size:.95rem">Once you have cleared them all, write your reflection
-and download your certificate for Canvas. One warning worth taking seriously: <strong>your progress lives
-only on this page.</strong> Close the tab or refresh before you download, and you start over.</p>
+and download your certificate for Canvas. Your progress saves automatically in this browser, so you can close the tab and pick up where you left off. It does not follow you to a different computer or a private window, and clearing your browser data clears it. If you need to start this lab over, use the <button type="button" class="hintb" onclick="resetLab()">Reset this lab</button> button.</p>
 <div class="progress" id="prog">Checkpoint progress: 0 / 8</div>
 <div id="cps"></div>
 <div class="certbox" id="reflectbox">
@@ -582,12 +571,13 @@ only on this page.</strong> Close the tab or refresh before you download, and yo
   <p class="codebox" id="codeout" style="font-family:var(--sans);font-size:.85rem"></p>
 </div>
 
-
 <h2 id="submit"><span class="num">Canvas</span>What to submit</h2>
-<p style="font-family:var(--sans);font-size:.92rem">One document containing: your completed access map
-with three defended cells, your one-paragraph security memo to the board opening with the blast-radius
-percentage and the dark-day number, your $10,000 pick if you got to it, plus your completion certificate
-PDF (your reflection is page 2 of it).</p>
+<p style="font-family:var(--sans);font-size:.92rem">Go to the <strong>Lab 8</strong> assignment in Canvas and upload two files.</p>
+<p style="font-family:var(--sans);font-size:.92rem"><strong>File 1: your audit document.</strong> One Word doc or PDF named
+<code class="inline">LAB8_Last_First</code>, containing your completed access map with three defended
+cells, your one-paragraph security memo to the board opening with the blast-radius percentage and the
+dark-day number, and your $10,000 pick if you got to it.</p>
+<p style="font-family:var(--sans);font-size:.92rem"><strong>File 2: your completion certificate PDF.</strong> Clear all the checkpoints above, write your reflection, and click Download certificate. Your reflection prints as page 2, so you do not submit it separately.</p>
 </main></div>
 <script>
 (function(){var b=document.querySelector('.railtoggle'),n=document.getElementById('chapnav');
@@ -597,7 +587,16 @@ b.setAttribute('aria-expanded',o?'true':'false');});})();
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 const LAB="LAB8", QS=[{"q": "Part 1 \u00b7 The confidentiality inventory. Start where every audit starts, with a count of what you are protecting: SELECT COUNT(*) FROM members; How many people's personal information does the co-op hold?", "t": "num", "a": "NjA=", "tol": 0, "h": "One line in the sandbox above. Each row is a real person's name, city, and membership history. Change Healthcare's number was 190 million; the co-op's is smaller, but the shape of the obligation is identical."}, {"q": "Part 1 \u00b7 Breach notification is state law, and every state writes its own. SELECT COUNT(DISTINCT state) FROM members; If member data leaked, how many different states' notification laws would the co-op be answering to?", "t": "num", "a": "Mw==", "tol": 0, "h": "COUNT(DISTINCT state) collapses the column to its unique values. Every distinct state is a separate legal clock that starts ticking the day you discover a breach."}, {"q": "Part 2 \u00b7 Email one claims to be from Nordvik Outdoor, \"your US-based climbing hardware supplier,\" announcing new bank details for invoice payments. Verify the claim against the system of record: SELECT country FROM suppliers WHERE supplier_name='Nordvik Outdoor'; What country is Nordvik Outdoor actually in?", "t": "txt", "a": "Tm9yd2F5", "h": "The query returns one word, and it is not the one the email used. A supplier that gets its own country wrong is not your supplier. This exact fraud, a real vendor name plus new bank details, is called business email compromise, and it costs companies billions a year."}, {"q": "Part 2 \u00b7 Email two says member 1287 has filed a complaint and demands you send their full record for review. SELECT COUNT(*) FROM members WHERE member_id=1287; What does the count return?", "t": "num", "a": "MA==", "tol": 0, "h": "Zero rows. There is no member 1287, so the request is a fishing trip for whatever record you might send back. The lesson generalizes: verify the claim, not the tone. Urgency is a technique, not evidence."}, {"q": "Part 3 \u00b7 Least privilege, measured. Suppose each register credential could read only its own store's sales. How many rows can a Bellingham-scoped account reach? SELECT COUNT(*) FROM sales s JOIN stores st ON st.store_id=s.store_id WHERE st.store_name='Bellingham';", "t": "num", "a": "MzQ3", "tol": 0, "h": "A JOIN and a WHERE, both from Lab 7. This number is the blast radius of one stolen register password in a least-privilege design."}, {"q": "Part 3 \u00b7 Now express the blast radius as a share: one hundred times your Checkpoint 5 answer, divided by the total number of sales rows (you have known that total since Lab 2). What percent of the co-op's sales does one scoped credential expose? One decimal.", "t": "num", "a": "MTIuMA==", "tol": 0.2, "h": "Roughly one eighth. The same stolen password against an unscoped, everything-access account exposes one hundred percent. That gap is the entire argument for least privilege, in one division."}, {"q": "Part 4 \u00b7 Integrity. You have computed total revenue in Excel twice this quarter. Compute it here in one line: SELECT ROUND(SUM(quantity*unit_price),2) FROM sales; What is it?", "t": "num", "a": "NzEyOTcxLjU=", "tol": 1, "h": "The point is not the arithmetic. A number you can recompute from source at any time is a control: if an attacker with write access quietly alters rows, this total moves, and you notice. Integrity monitoring is recomputing what you already know and checking that it still agrees."}, {"q": "Part 4 \u00b7 Availability. Ransomware does not steal a register; it stops it. SELECT ROUND(SUM(quantity*unit_price)/COUNT(DISTINCT sale_date),2) FROM sales; To the nearest dollar, what does one dark day cost the co-op in revenue alone?", "t": "num", "a": "MTk1OC43MQ==", "tol": 5, "h": "Total revenue over distinct selling days. Multiply by the ten days Change Healthcare's systems were down and you have the start of a board-ready number, before a single record leaks."}];
-const solved=new Set();
+const SKEY='mis320_'+LAB;
+let solved=new Set();
+function load(){try{const raw=localStorage.getItem(SKEY);if(!raw)return null;const s=JSON.parse(raw);
+ if(Array.isArray(s.solved))solved=new Set(s.solved.filter(i=>Number.isInteger(i)&&i<QS.length));return s}catch(e){return null}}
+function save(){try{const r=document.getElementById('refl'),n=document.getElementById('nm');
+ localStorage.setItem(SKEY,JSON.stringify({solved:[...solved],refl:r?r.value:'',nm:n?n.value:''}))}catch(e){}}
+function resetLab(){if(!confirm('Clear your saved progress for this lab and start over?'))return;
+ try{localStorage.removeItem(SKEY)}catch(e){}solved=new Set();
+ const r=document.getElementById('refl'),n=document.getElementById('nm');if(r)r.value='';if(n)n.value='';
+ render();if(r)r.dispatchEvent(new Event('input',{bubbles:true}));}
 const norm=s=>s.replace(/[$,\s]/g,'').toLowerCase();
 function render(){
  const c=document.getElementById('cps');c.innerHTML='';
@@ -619,7 +618,7 @@ function wc(){const t=document.getElementById('refl');return t?t.value.trim().sp
 document.addEventListener('input',function(e){
  if(e.target&&e.target.id==='refl'){
   const n=wc();document.getElementById('reflcount').textContent=n+' words'+(n<50?': '+(50-n)+' more to unlock your certificate':': certificate unlocked below');
-  document.getElementById('certbox').className='certbox'+(solved.size===QS.length&&n>=50?' show':'');
+  document.getElementById('certbox').className='certbox'+(solved.size===QS.length&&n>=50?' show':'');save();
  }
 });
 function hint(i){const h=document.getElementById('h'+i);h.style.display=h.style.display==='block'?'none':'block'}
@@ -629,7 +628,7 @@ function chk(i){
  const ans=atob(QS[i].a);let ok=false;
  if(QS[i].t==='num'){const g=parseFloat(norm(v)),a=parseFloat(ans);ok=!isNaN(g)&&Math.abs(g-a)<=QS[i].tol}
  else ok=norm(v)===norm(ans);
- if(ok){solved.add(i);render()}
+ if(ok){solved.add(i);save();render()}
  else{m.textContent='Not yet: check the hint, or re-read the step above.';m.style.color='#a03434'}
 }
 function h32(s){let h=5381;for(const c of s)h=((h<<5)+h+c.charCodeAt(0))|0;return(h>>>0).toString(36).toUpperCase()}
@@ -673,7 +672,11 @@ function cert(){
  p.save(LAB+'_certificate_'+n.replace(/[^a-z0-9]/gi,'_')+'.pdf');
  document.getElementById('codeout').innerHTML='Certificate downloaded (reflection on page 2). Your code: <code>'+code+'</code>';
 }
-render();
+(function(){const s=load();render();
+ if(s){const r=document.getElementById('refl'),n=document.getElementById('nm');
+  if(r&&s.refl){r.value=s.refl;r.dispatchEvent(new Event('input',{bubbles:true}))}
+  if(n&&s.nm)n.value=s.nm;}
+ const nm=document.getElementById('nm');if(nm)nm.addEventListener('input',save);})();
 </script>
 <script>
 (function(){
