@@ -59,7 +59,7 @@ main{margin-left:auto;margin-right:auto;max-width:var(--col);padding-top:2.5rem}
 h2{font-family:var(--display);font-weight:600;font-size:1.72rem;line-height:1.22;text-transform:uppercase;letter-spacing:.01em;color:var(--black);margin:3.2rem 0 .9rem}
 h2 .num::before{content:"Section "}
 h2 .num{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;color:var(--magenta);display:block;margin-bottom:.4rem;text-transform:uppercase}
-h3{font-family:var(--display);font-weight:600;font-size:1.18rem;text-transform:uppercase;letter-spacing:.03em;color:var(--off-black);margin:2rem 0 .55rem}
+main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transform:none;letter-spacing:0;color:var(--off-black);margin:2.1rem 0 .55rem;padding-left:.7rem;border-left:3px solid var(--magenta)}
 p{margin:0 0 1.05rem}
 a{color:var(--magenta-dark)}
 strong{font-weight:600;color:var(--black)}
@@ -135,7 +135,7 @@ li{margin-bottom:.45rem}
 
 /* ---------- responsive ---------- */
 @media (max-width:860px){
-  .shell{grid-template-columns:1fr;gap:0;padding:0 1.15rem 4rem}
+  .shell{grid-template-columns:minmax(0,1fr);gap:0;padding:0 1.15rem 4rem}
   .rail{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);padding:1.5rem 0 1rem;margin-bottom:.5rem}
   .rail nav{display:none}
   .rail nav.open{display:block;margin-top:.8rem}
@@ -499,16 +499,29 @@ decision it was.</p>
 <p>Companies make three kinds, and they need different information:</p>
 
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Three levels of decision</span>
-<p><strong>Operational</strong> decisions run the day. They repeat constantly, follow rules, and are made
-by frontline staff or by software: how many people on shift Tuesday morning, when to reorder supplies.
-They need current, detailed information about right now. <strong>Managerial</strong> decisions run the
-quarter. They recur on a cycle and are made by managers reading summaries: which locations are
-underperforming, whether a promotion earned back its cost. They need comparisons over time.
-<strong>Strategic</strong> decisions set direction. They are rare, expensive to reverse, and made at the
-top: what business to be in, whether to build something new. They need aggregated information about
-years and markets, and they are never decided by information alone.</p></div>
+<p>A company decides at three altitudes. Each level needs different information at a different amount of
+detail, which is why one report cannot serve everyone.</p></div>
 
-<p>The same fact is worth different amounts at each level. Yesterday&#8217;s sales at one store is
+<ul>
+<li><strong>Level 1, operational.</strong> Runs the day. These repeat constantly, follow rules, and are
+made by frontline staff or by software: how many people on shift Tuesday morning, when to reorder
+supplies. They need current, detailed information about right now.</li>
+<li><strong>Level 2, managerial.</strong> Runs the quarter. These recur on a cycle and are made by
+managers reading summaries: which locations are underperforming, whether a promotion earned back its
+cost. They need comparisons over time.</li>
+<li><strong>Level 3, strategic.</strong> Sets direction. These are rare, expensive to reverse, and made
+at the top: what business to be in, whether to build something new. They need broad information about
+years and markets, and they are never decided by information alone.</li>
+</ul>
+
+<p>They are called levels because they sit at different altitudes in the organization, not because one
+is built from the one below it. That is worth keeping separate from the DIKW hierarchy, where each level
+genuinely is made out of the last. Decision levels are three vantage points on the same business.
+What moves between them runs both ways. Data flows up, getting summarized at every step. Decisions flow
+down: a strategic choice sets the boundaries the managerial level works inside, and those set the
+boundaries the operational level works inside.</p>
+
+<p>The same fact is also worth different amounts at each level. Yesterday&#8217;s sales at one store is
 essential to the store manager and meaningless to the executive; five years of category trends is the
 reverse. One report cannot serve everyone, which is the practical reason companies build more than one
 system.</p>
@@ -524,20 +537,30 @@ Information can inform that decision; judgment has to make it.</li>
 most systems are built to support a person rather than replace one.</li>
 </ul>
 
-<p>That last category is where the current argument about AI actually lives. Software has handled
-structured decisions for decades. What is new is that AI systems now take on semi-structured ones, and
-increasingly act on their own: an <strong>agentic system</strong> is given a goal rather than a script,
-decides which steps to take, pulls information from wherever it can reach, and acts. Chapter 4 and
-Chapter 9 go into how that works.</p>
+<p>Run one situation through all three to see the difference. A store is short-staffed on Thursday
+afternoon. <strong>Structured:</strong> the scheduling system finds who is available, ranks them by
+hours already worked this week, and sends the shift offer. No human needed, and no judgment involved.
+<strong>Semi-structured:</strong> nobody accepts, so a manager decides whether to close the drive-through
+for two hours or run the floor short. The system can show her yesterday&#8217;s traffic by hour and what
+each choice cost the last three times; she picks. <strong>Unstructured:</strong> this is the fourth
+Thursday in a row it has happened, and the real question is whether this store is understaffed by design,
+which is a question about pay, scheduling policy, and what the company wants its stores to feel like. No
+report answers that one.</p>
 
-<p>What belongs here is what it does to the value of information. When a person makes a decision, bad
-information usually gets caught, because people notice when a number looks wrong. When a system decides
-and acts in the same second, nothing pauses to notice, and a wrong number becomes a wrong action at the
-speed of the network. The more decisions a company automates, the more its outcomes depend on
-information nobody checked. That is why the phrase <strong>human in the loop</strong> keeps appearing:
+<p>Semi-structured decisions are where the current argument about AI is happening. Software has handled
+structured decisions for decades; the scheduling formula is not new. What is new is that AI systems now
+take on the middle category, and increasingly act on their own. An <strong>agentic system</strong> is
+given a goal rather than a script. It decides which steps to take, pulls information from wherever it can
+reach, and acts. Chapter 4 and Chapter 9 go into how that works.</p>
+
+<p>For this chapter, what matters is what automation does to the value of information. When a person
+decides, bad information usually gets caught, because people notice when a number looks wrong. When a
+system decides and acts in the same second, nothing pauses to notice, and a wrong number becomes a wrong
+action at the speed of the network. The more decisions a company automates, the more its outcomes rest on
+information nobody checked. That is why the phrase <strong>human in the loop</strong> keeps coming up:
 somebody has to stay in a position to catch what the system cannot. Deciding where that person stands,
-and which decisions never get automated at all, is a management decision, and it is one you will be
-asked to make.</p>
+and which decisions never get automated at all, is a management decision, and one you will be asked to
+make.</p>
 
 <h2 id="value"><span class="num">03</span>The value test</h2>
 
@@ -770,7 +793,7 @@ building site at Giza. Two or three round trips per ten-day week. Dates, cargo, 
 is a shipping manifest.</p>
 
 <figure class="diagram" style="margin:1.7rem 0">
-<img src="merer-papyrus.jpg" style="width:100%;height:auto;display:block;border:1px solid var(--rule)"
+<img src="merer-papyrus.jpg" style="max-height:300px;width:auto;max-width:100%;height:auto;display:block;margin:0 auto;border:1px solid var(--rule)"
  alt="A fragment of the diary of Merer in a museum display case, labeled B. The papyrus is brown and
  torn at the edges. The writing is arranged in a grid: a horizontal band across the top, then ruled
  vertical columns beneath it, each holding short entries in black hieratic script. A second fragment is
@@ -783,7 +806,7 @@ reason yours will be: somebody upstream needed to find one day&#8217;s answer qu
 <br><br>
 The diary of Merer, days 19 to 25, read right to left, at the Wadi al-Jarf exhibition, Egyptian Museum,
 Cairo, 2016. Via History Today,
-<a href="https://www.historytoday.com/archive/history-matters/monumental-record">Monumental Record</a>.
+<a href="https://www.historytoday.com/archive/history-matters/monumental-record" target="_blank" rel="noopener">Monumental Record</a>.
 </figcaption>
 </figure>
 
@@ -818,7 +841,7 @@ pump's handle. The decision was cheap, specific, and only possible because the i
 a form a committee could grasp in one look.</p>
 
 <figure class="diagram" style="margin:1.7rem 0">
-<img src="snow-cholera-map-1854.jpg" style="width:100%;height:auto;display:block;border:1px solid var(--rule)"
+<img src="snow-cholera-map-1854.jpg" style="max-height:420px;width:auto;max-width:100%;height:auto;display:block;margin:0 auto;border:1px solid var(--rule)"
  alt="John Snow's 1854 map of Soho, London. A street plan drawn in fine line work, with cholera deaths
  marked as short black bars stacked outward from the buildings where they occurred, and public water
  pumps marked and labeled. Across most of the map the bars are sparse and scattered. Toward the center,
@@ -865,8 +888,8 @@ over the streets he knew, updated as new information came in. Red meant leave no
 to. Everything else meant stay put and stop refreshing. And a blue dot showed him where he was standing
 relative to all of it.</p>
 
-<figure class="diagram" style="margin:1.7rem auto;max-width:340px">
-<img src="hawk-fire-perimeter-map.png" style="width:100%;height:auto;display:block;border:1px solid var(--rule);border-radius:3px"
+<figure class="diagram" style="margin:1.7rem 0">
+<img src="hawk-fire-perimeter-map.png" style="max-height:380px;width:auto;max-width:100%;height:auto;display:block;margin:0 auto;border:1px solid var(--rule)"
  alt="A phone screenshot of an evacuation map during the Hawk Fire, taken at 10:54 at night. The burned
  area is a solid red shape near the center. Around it, a large region is shaded red and labeled
  repeatedly Evacuation Area, GO NOW. Beyond that, a band of yellow zones is labeled Evacuation Warning,
@@ -874,9 +897,9 @@ relative to all of it.</p>
  right, outside both bands. A blue dot marking the viewer's own location sits south east of the shaded
  areas, near Caughlin Ranch, outside every zone.">
 <figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--muted);margin-top:.55rem;line-height:1.55">
-Three states, not one. Red is go, yellow is get ready, unshaded is stay. The blue dot is you. That single
-dot is the difference between a map about a fire and a map about your decision, and it is why anybody
-bothered to build this instead of publishing a list of street names.
+Three levels, not one. Red is GO NOW, yellow is GET SET, and unshaded means stay put. The blue dot is
+you. That single dot is the difference between a map about a fire and a map about your decision, and it
+is why anybody bothered to build this instead of publishing a list of street names.
 <br><br>
 Screenshot taken during the Hawk Fire, August 2026. Perimeter Map, base map by Mapbox.
 </figcaption>
@@ -905,11 +928,11 @@ only helps the people who have the phone, the signal, and the habit of checking.
 of a much harder question that this course comes back to in Week 9: who does a system reach, and who
 does it quietly leave out?</p>
 
-<p>Hold both cases against Starbucks and notice that nothing essential has changed. Deep Brew is
-Snow's map with the marks arriving 100 million times a week: observations, placed in context, until a
-pattern demands a decision. The technology multiplied the volume and the speed. The logic of why the
-information is worth anything, that it changed what someone did next, is the same logic that took the
-handle off a pump.</p>
+<p>Hold all three against the case that follows and notice that nothing essential has changed. What
+Starbucks runs is Snow&#8217;s map with the marks arriving a hundred million times a week: observations,
+placed in context, until a pattern demands a decision. The technology multiplied the volume and the
+speed. The logic of why the information is worth anything, that it changed what someone did next, is the
+same logic that took the handle off a pump.</p>
 
 <div class="mcq"><b>Check yourself</b>The orange glow on the ridge and the map on the phone describe the
 same fire. One of them is data and one is information. Explain the difference using the words
@@ -924,7 +947,7 @@ place: good coffee, and a "third place" between home and work where people wante
 still on the cups. It is no longer the story of the business.</p>
 
 <figure class="diagram" style="margin:1.7rem 0">
-<img src="starbucks-pike-place.jpg" style="width:100%;height:auto;display:block;border:1px solid var(--rule)"
+<img src="starbucks-pike-place.jpg" style="max-height:300px;width:auto;max-width:100%;height:auto;display:block;margin:0 auto;border:1px solid var(--rule)"
  alt="The Pike Place Market Starbucks storefront in Seattle. A cream brick building with a green painted
  front, large windows, and the word STARBUCKS in white block letters across a sign above the awning. The
  original brown logo, reading Starbucks Coffee Tea Spices, is painted on the right-hand window. Hand
@@ -952,7 +975,7 @@ personally. Starbucks is not unusually generous; it has concluded that the infor
 than the free coffee costs. Whether that conclusion is right, and how a company could possibly know, is
 this chapter.</p>
 
-<div class="callout"><strong>Why this is the first case</strong>
+<div class="callout"><strong>Why Starbucks is the first case study in this course</strong>
 <p>Every system you will study this quarter, from Zara's logistics to Target's breach, exists because
 some company decided certain information was worth acquiring, storing, and acting on. Starbucks is the
 cleanest version of that decision: a physical product with thin margins, where the information layer on
@@ -961,24 +984,29 @@ you understand what this course is about.</p></div>
 
 <h3>Three levels, one pool of data</h3>
 
-<p>Map Starbucks onto the three levels. At the <strong>operational</strong> level, algorithms sequence
-drink production and schedule staff against predicted demand; the company&#8217;s SmartQueue system, in
-test locations, got about 80 percent of cafe orders handed off in under four minutes. At the
-<strong>managerial</strong> level, store comparisons and promotion analyses decide where attention goes.
-At the <strong>strategic</strong> level, the data changed the menu itself: cold beverages reached about
+<p>Map Starbucks onto the three levels.</p>
+
+<ul>
+<li><strong>Level 1, operational.</strong> Software decides what order drinks get made in and how many
+people to put on shift, based on how busy the store is predicted to be. The company&#8217;s SmartQueue
+system, in test locations, got about 80 percent of cafe orders handed off in under four minutes.</li>
+<li><strong>Level 2, managerial.</strong> Store comparisons and promotion analyses decide where
+attention goes: which locations are underperforming, whether an offer earned back what it cost.</li>
+<li><strong>Level 3, strategic.</strong> The data changed the menu itself. Cold beverages reached about
 78 percent of U.S. beverage sales in 2025, a fact visible only in aggregate, and in February 2025 the
-company cut roughly 30 percent of menu items to simplify operations around what the data said people
-actually buy.</p>
+company cut roughly 30 percent of menu items to simplify operations around what people actually
+buy.</li>
+</ul>
 
 <p>Notice what that last example means: the same underlying transaction records served all three
 levels. The barista's queue, the district manager's store report, and the CEO's menu decision drew on
-one shared pool of data, summarized at three different grains. That is what "management information
+one shared pool of data, summarized in three different amounts of detail. That is what "management information
 system" means in practice, and it is why data quality problems at the bottom poison decisions all the
 way up. Note which word does the work there. Nothing in that arrangement is a technical achievement. It
 is a set of management decisions about what to measure, who sees which version of it, and what each
 level is allowed to decide on the strength of it.</p>
 
-<h3>What the app is actually for</h3>
+<h3>What the app is actually for: data</h3>
 
 <p>None of this works without knowing <em>who</em> is buying. Here is a cash sale at the register, as
 the system records it.</p>
@@ -1026,8 +1054,8 @@ game: it lets every other column be connected across visits, and without it none
 arrive Sunday night rather than Tuesday at noon, and store 412 should be staffed for her and the several
 hundred people like her. <em>Customization</em> is the difference between knowing she bought a latte and
 knowing she buys oat milk every time, which decides what that store keeps in the fridge and makes any
-promotion involving dairy irrelevant to her. <em>Channel</em> says she orders ahead, so the queue can be
-sequenced before she arrives. <em>Price</em> says she reliably spends about a dollar above the base
+promotion involving dairy irrelevant to her. <em>Channel</em> says she orders ahead, so her drink can be slotted into the
+queue before she arrives. <em>Price</em> says she reliably spends about a dollar above the base
 drink, which is worth knowing before anyone offers her a discount she did not need. And Saturday
 afternoon at a different store on a cold brew is the row that says her weekday pattern is a routine
 rather than a preference, which is the sort of distinction that separates a useful offer from an
@@ -1069,6 +1097,17 @@ own recorded history to point a model at. A company with no data asset cannot bu
 is why "we will use AI" is usually a question about the last ten years of data collection rather than
 about the next twelve months of software.</p>
 
+<p>Be careful with the word AI here, because it probably means something different from what you are
+picturing. Ask most people in 2026 what AI is and they describe a chatbot: you type a question, it writes
+an answer. Almost none of Deep Brew is that. It is <strong>prediction from historical data</strong>: a
+model looks at what happened before and estimates what happens next, then something acts on the estimate.
+Which offer is this member most likely to use. How many people will walk in Tuesday at eight. Which
+machine is about to fail. No conversation, no writing, no one asking it anything.</p>
+
+<p>That is what most AI in business still looks like, and Chapter 9 takes it apart properly. The chatbot
+kind exists at Starbucks too, and it is the exception rather than the rule: Green Dot Assist, which you
+will meet in a moment, is the one you could actually talk to.</p>
+
 <p>Deep Brew is not one model. It is a family of applications sharing the same data foundation, which
 makes it a useful tour of what AI in a business concretely means.</p>
 
@@ -1083,8 +1122,8 @@ pulled and stream it centrally, so Starbucks can schedule maintenance before fai
 them. A broken espresso machine is an information problem twice over: it was predictable, and every
 minute it is down corrupts the demand data for that store.</p>
 
-<p><strong>Operations.</strong> SmartQueue sequences incoming orders so cafe, drive-through, and mobile
-orders share the espresso bar sensibly. Green Dot Assist, built on Azure OpenAI, answers baristas&#8217;
+<p><strong>Operations.</strong> SmartQueue decides what order to make drinks in, so cafe, drive-through,
+and mobile orders share the espresso bar sensibly. Green Dot Assist, built on Azure OpenAI, answers baristas&#8217;
 procedural questions in more than 20 languages; it piloted at 35 U.S. stores with a 2026 roadmap toward
 more than a thousand. FlavorGPT, on the product side, is credited with compressing new-drink development
 from roughly 18 months to 6.</p>
@@ -1097,14 +1136,14 @@ building toward. In the second quarter of fiscal 2026 the company reported globa
 single algorithm produced that.</p>
 
 <h3>The five components at Starbucks</h3>
-<p>Run the framework from Chapter 1 over everything above and each component is load-bearing:</p>
+<p>Run the framework from Chapter 1 over everything above. Take any one of the five away and the whole thing stops:</p>
 
 <table class="sumtable">
 <tr><th>Component</th><th>At Starbucks</th><th>What breaks if it fails</th></tr>
 <tr><td><strong>Hardware</strong></td><td>Registers, phones, Mastrena machines with shot sensors, store networks' physical gear</td><td>A dead machine mid-rush; no transactions, no data, no coffee</td></tr>
-<tr><td><strong>Software</strong></td><td>The app, Deep Brew models, SmartQueue, scheduling systems</td><td>Wrong offers, missequenced orders, staffing that misses the rush</td></tr>
+<tr><td><strong>Software</strong></td><td>The app, Deep Brew models, SmartQueue, scheduling systems</td><td>Wrong offers, drinks made in the wrong order, staffing that misses the rush</td></tr>
 <tr><td><strong>Data</strong></td><td>100M+ weekly transactions, member histories, shot logs, weather</td><td>Garbage in: every level of decision inherits the error</td></tr>
-<tr><td><strong>Networks</strong></td><td>Store connectivity, cloud platforms carrying orders and telemetry</td><td>Mobile ordering dies; a third of U.S. transactions with it</td></tr>
+<tr><td><strong>Networks</strong></td><td>Store connectivity, and the rented computing that carries orders and machine readings</td><td>Mobile ordering dies; a third of U.S. transactions with it</td></tr>
 <tr><td><strong>People</strong></td><td>Baristas working the queue, analysts reading the output, executives betting the menu</td><td>See the next section</td></tr>
 </table>
 
@@ -1118,14 +1157,15 @@ the offers is learning from corrupted data. Now watch the rule operate on a real
 and get the reach wrong.</p>
 
 <p>In September 2025, Starbucks announced it had deployed an AI inventory system across more than
-11,000 company-operated stores in North America. Built with the Seattle-area startup NomadGo, it used
-computer vision, 3D spatial mapping, and augmented reality: point a tablet at a shelf and the system
-counts the stock. The announcement claimed counts up to eight times faster than manual counting and 99
-percent accuracy, and said the technology had been tested for several years in a sandbox before general
-deployment.</p>
+11,000 company-operated stores in North America. Built with the Seattle-area startup NomadGo, it used a
+camera and software trained to recognize products, plus a screen that draws the counts on top of the
+live camera view: point a tablet at a shelf and the system counts the stock and shows you the numbers
+hovering over each item. The announcement claimed counts up to eight times faster than manual counting and 99
+percent accuracy, and said the technology had been tested for several years in a sandbox, meaning a controlled
+setting the company builds for testing, before general deployment.</p>
 
-<figure class="diagram" style="margin:1.7rem auto;max-width:560px">
-<img src="nomadgo-count.jpg" style="width:100%;height:auto;display:block;border:1px solid var(--rule)"
+<figure class="diagram" style="margin:1.7rem 0">
+<img src="nomadgo-count.jpg" style="max-height:300px;width:auto;max-width:100%;height:auto;display:block;margin:0 auto;border:1px solid var(--rule)"
  alt="A person holding a tablet up to an open refrigerator shelf. On the tablet screen, the camera view
  of the shelf is overlaid with three green circles reading 3, 2 and 3, each sitting above a small
  thumbnail of the bottle it is counting. Behind the tablet, the real shelf holds rows of similar looking
@@ -1422,13 +1462,13 @@ computing at all, and what decision does each one change?</p>
 <li>Reuters reporting, May 2026, on the retirement of automated counting, the reported miscounting and mislabeling, the shortages and overstocking, and the peppermint syrup bottle in the launch video.</li>
 <li>IDC and Statista data volume estimates (149 zettabytes created in 2024, roughly 181 in 2025, with global volume doubling about every four years) and the widely cited estimate that only two to three percent of collected data is ever analyzed.</li>
 <li>Gartner worldwide data center systems spending forecasts, and JLL, <em>2026 Global Data Center Market Outlook</em>, for the buildout figures and the AI share of data center workloads.</li>
-<li>Starbucks Stories &amp; News, <a href="https://about.starbucks.com/press/2025/how-ai-powered-automated-counting-is-brewing-a-better-experience-at-starbucks/">How AI-powered automated counting is brewing a better experience at Starbucks</a> (September 2025): the deployment announcement, count frequency, and labor savings claims.</li>
-<li>Canopy, <a href="https://www.gocanopy.com/news-insights/starbucks-deep-brew-ai">Starbucks Deep Brew AI: How Technology Makes Coffee Human</a> (updated May 2026): the May 19, 2026 NomadGo retirement, the milk miscounting failure mode, and Q2 FY2026 comparable sales figures.</li>
-<li>AI Plus Info, <a href="https://www.aiplusinfo.com/blog/ai-data-driven-starbucks-deep-brew/">AI &amp; Data-Driven Starbucks: Deep Brew</a>: SmartQueue, Green Dot Assist, and FlavorGPT program details.</li>
-<li>Deep Research Global, <a href="https://www.deepresearchglobal.com/p/starbucks-swot-analysis-report">Starbucks SWOT Analysis</a> (2026): Rewards membership and revenue-share figures.</li>
-<li>Companies History, <a href="https://www.companieshistory.com/starbucks-target-market/">Starbucks Target Market 2026</a>: Mobile Order &amp; Pay share, cold beverage mix, and the February 2025 menu reduction.</li>
-<li>Future Stores / WBR, <a href="https://futurestores.wbresearch.com/blog/starbucks-ai-serve-customers-strategy">How Starbucks Is Using AI to Better Serve Its Customers</a>: Mastrena machine telemetry and predictive maintenance.</li>
-<li>The AI Report, <a href="https://www.theaireport.ai/articles/how-starbucks-uses-ai-to-make-a-30-roi">How Starbucks uses AI to make a 30% ROI</a>: program ROI and member-spend claims (read with the skepticism the value test recommends).</li>
+<li>Starbucks Stories &amp; News, <a href="https://about.starbucks.com/press/2025/how-ai-powered-automated-counting-is-brewing-a-better-experience-at-starbucks/" target="_blank" rel="noopener">How AI-powered automated counting is brewing a better experience at Starbucks</a> (September 2025): the deployment announcement, count frequency, and labor savings claims.</li>
+<li>Canopy, <a href="https://www.gocanopy.com/news-insights/starbucks-deep-brew-ai" target="_blank" rel="noopener">Starbucks Deep Brew AI: How Technology Makes Coffee Human</a> (updated May 2026): the May 19, 2026 NomadGo retirement, the milk miscounting failure mode, and Q2 FY2026 comparable sales figures.</li>
+<li>AI Plus Info, <a href="https://www.aiplusinfo.com/blog/ai-data-driven-starbucks-deep-brew/" target="_blank" rel="noopener">AI &amp; Data-Driven Starbucks: Deep Brew</a>: SmartQueue, Green Dot Assist, and FlavorGPT program details.</li>
+<li>Deep Research Global, <a href="https://www.deepresearchglobal.com/p/starbucks-swot-analysis-report" target="_blank" rel="noopener">Starbucks SWOT Analysis</a> (2026): Rewards membership and revenue-share figures.</li>
+<li>Companies History, <a href="https://www.companieshistory.com/starbucks-target-market/" target="_blank" rel="noopener">Starbucks Target Market 2026</a>: Mobile Order &amp; Pay share, cold beverage mix, and the February 2025 menu reduction.</li>
+<li>Future Stores / WBR, <a href="https://futurestores.wbresearch.com/blog/starbucks-ai-serve-customers-strategy" target="_blank" rel="noopener">How Starbucks Is Using AI to Better Serve Its Customers</a>: Mastrena machine telemetry and predictive maintenance.</li>
+<li>The AI Report, <a href="https://www.theaireport.ai/articles/how-starbucks-uses-ai-to-make-a-30-roi" target="_blank" rel="noopener">How Starbucks uses AI to make a 30% ROI</a>: program ROI and member-spend claims (read with the skepticism the value test recommends).</li>
 <li>Snow’s 1854 map is reproduced and discussed in most histories of epidemiology; a good starting point is the John Snow Archive at Michigan State University.</li>
     <li>Pierre Tallet and Gregory Marouard led the Wadi al-Jarf excavation; Tallet and Mark Lehner’s <em>The Red Sea Scrolls</em> (2021) is the accessible account of the Merer papyri and what they show about the logistics behind the Great Pyramid.</li>
 </ul>
