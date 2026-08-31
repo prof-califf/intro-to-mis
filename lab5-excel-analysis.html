@@ -64,6 +64,31 @@ code.inline{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.8
 ul,ol{margin:0 0 1.15rem;padding-left:1.3rem}
 li{margin-bottom:.45rem}
 
+/* ---------- numbered step headings ---------- */
+.sh{margin:3rem 0 .7rem;padding-top:.9rem;border-top:2px solid var(--black)}
+.sh .badge{display:inline-block;background:var(--magenta);color:#fff;font-family:var(--display);
+  font-size:12.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  padding:.24rem .62rem;margin-right:.55rem;vertical-align:.17em;white-space:nowrap}
+.sh .ttl{display:inline;font-family:var(--display);font-weight:600;font-size:1.18rem;
+  text-transform:uppercase;letter-spacing:.03em;color:var(--off-black);line-height:1.35}
+.sh .cpx{display:block;clear:both;font-family:var(--sans);font-size:13.5px;line-height:1.4;
+  color:var(--text-light);margin-top:.12rem}
+.sh .cpx b{font-weight:600;color:var(--magenta-dark)}
+@media (max-width:520px){
+  .sh .badge{font-size:11.5px;padding:.2rem .5rem;margin-right:.45rem;vertical-align:.14em}
+  .sh .ttl{font-size:1.05rem}
+}
+
+/* ---------- inline checkpoint slots ---------- */
+.cpslot{margin:1.1rem 0 0}
+.cpslot .cp{margin:0}
+.cp .cphead{display:block;font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--magenta);margin-bottom:.4rem}
+.cp.done .cphead{color:var(--good)}
+.cp.locked .cphead{color:var(--text-light)}
+.progress{border:none}
+.lockmsg{font-family:var(--sans);font-size:.82rem;color:var(--text-light);margin:.4rem 0 0}
+
 /* ---------- pull quote ---------- */
 .pull{margin:2.2rem 0;padding:0 0 0 1.4rem;border-left:3px solid var(--magenta)}
 .pull p{font-family:var(--display);font-weight:400;font-size:1.32rem;line-height:1.3;color:var(--black);margin:0 0 .5rem}
@@ -328,7 +353,7 @@ li{margin-bottom:.45rem}
   <button class="railtoggle" aria-expanded="false" aria-controls="chapnav">Lab contents</button>
   <nav id="chapnav">
     <a href="#top">Overview</a><a href="#steps">The work</a>
-    <a href="#checkpoints">Checkpoints</a><a href="#submit">What to submit</a>
+    <a href="#finish">Reflection &amp; certificate</a><a href="#submit">What to submit</a>
     <a href="chapter5-healthcaregov.html">↳ Chapter 5 · Systems Analysis</a>
   </nav>
   <a class="back" href="index.html">← All chapters &amp; labs</a>
@@ -376,18 +401,39 @@ revenue could not answer the board's question and choosing a measure that could.
   <p>AI comes back in Lab 6, where you will use it as a coach under the three lights from Lab 1.</p></div>
 </div>
 
+<div class="callout callout-bridge"><strong>How the checkpoints work</strong>
+<p style="font-family:var(--sans);font-size:.95rem">Here is how this works. Each checkpoint sits directly under the work that produces it. You do the actual work in your own file, then paste the answer here. Get it right and the
+next question opens up. There is no penalty for a wrong answer, so guess, check, and lean on the hint if
+you get stuck. That is what it is there for.</p>
+<p style="font-family:var(--sans);font-size:.95rem">Once you have cleared them all, write your reflection
+and download your certificate for Canvas. Your progress saves automatically in this browser, so you can close the tab and pick up where you left off. It does not follow you to a different computer or a private window, and clearing your browser data clears it. If you need to start this lab over, use the <button type="button" class="hintb" onclick="resetLab()">Reset this lab</button> button.</p>
+<div class="progress" id="prog">Checkpoint progress: 0 / 8</div>
+</div>
+
 <h2><span class="num">Part A</span>Follow along, skills: pivots as instruments, what-if, forecasting</h2>
 <h3>Follow along: the member pivot, click by click</h3>
 <ol>
-<li><strong>Step 1.</strong> Click any cell in the data, Insert &#8594; PivotTable, new worksheet.</li>
-<li><strong>Step 2.</strong> Drag <code class="inline">is_member</code> to Rows and
+<div class="sh" id="step1"><span class="badge">Step 1</span><span class="ttl">Build the pivot</span></div>
+<p>Click any cell in the data, Insert &#8594; PivotTable, new worksheet.</p>
+
+<div class="sh" id="step2"><span class="badge">Step 2</span><span class="ttl">Revenue by member status</span><span class="cpx">Answer goes in <b>Checkpoint 1</b></span></div>
+<p>Drag <code class="inline">is_member</code> to Rows and
 <code class="inline">revenue</code> to Values. Two rows appear, Y and N, with revenue beside each.
-The Y row is <em>Checkpoint 1</em>.</li>
-<li><strong>Step 3.</strong> Now measure lines instead of dollars: drag <code class="inline">sale_id</code>
+The Y row is <em>Checkpoint 1</em>.</p>
+
+<div class="cpslot" data-cp="1"></div>
+
+<div class="sh" id="step3"><span class="badge">Step 3</span><span class="ttl">Switch from dollars to share of lines</span><span class="cpx">Answer goes in <b>Checkpoint 2</b></span></div>
+<p>Now measure lines instead of dollars: drag <code class="inline">sale_id</code>
 to Values (it lands as Count). Right-click a count value &#8594; Show Values As &#8594; % of Column
-Total. The Y row's percentage is <em>Checkpoint 2</em>.</li>
-<li><strong>Step 4.</strong> Note what you just built: the share of the co-op's business that has a member
-attached. Keep this pivot; you will use it in the mini project.</li>
+Total. The Y row's percentage is <em>Checkpoint 2</em>.</p>
+
+<div class="cpslot" data-cp="2"></div>
+
+<div class="sh" id="step4"><span class="badge">Step 4</span><span class="ttl">Name what you just built</span></div>
+<p>Note what you just built: the share of the co-op's business that has a member
+attached. Keep this pivot; you will use it in the mini project.</p>
+
 </ol>
 
 <ol>
@@ -451,6 +497,13 @@ deliberate breadcrumb trail if you're lost. Three rules:</p>
 <li>Your deliverable is a one-page memo back to the board: the finding, its size, why their existing
 reports missed it, and one costed recommendation.</li>
 </ul>
+<div class="cpslot" data-cp="3"></div>
+<div class="cpslot" data-cp="4"></div>
+<div class="cpslot" data-cp="5"></div>
+<div class="cpslot" data-cp="6"></div>
+<div class="cpslot" data-cp="7"></div>
+<div class="cpslot" data-cp="8"></div>
+
 <div class="callout callout-bridge"><strong>Why this pairs with Nike</strong>
 <p>Nike's planners trusted a system whose numbers looked plausible while its demand signal was
 corrupted, and the gap between looked-fine and was-fine cost $100 million. Cascadia's board has the
@@ -468,15 +521,8 @@ is the analyst's version of the audit Nike never ran.</p></div>
 <li>Ask a neighbour. Then raise your hand.</li>
 </ol></div></div>
 
-<h2 id="checkpoints"><span class="num">Required</span>Checkpoints <span style="font-weight:400;color:var(--muted);font-size:.65em">, complete as you work</span></h2>
-<p style="font-family:var(--sans);font-size:.95rem">Here is how this works. Each checkpoint matches a
-step above. You do the actual work in your own file, then paste the answer here. Get it right and the
-next question opens up. There is no penalty for a wrong answer, so guess, check, and lean on the hint if
-you get stuck. That is what it is there for.</p>
-<p style="font-family:var(--sans);font-size:.95rem">Once you have cleared them all, write your reflection
-and download your certificate for Canvas. Your progress saves automatically in this browser, so you can close the tab and pick up where you left off. It does not follow you to a different computer or a private window, and clearing your browser data clears it. If you need to start this lab over, use the <button type="button" class="hintb" onclick="resetLab()">Reset this lab</button> button.</p>
-<div class="progress" id="prog">Checkpoint progress: 0 / 8</div>
-<div id="cps"></div>
+<h2 id="finish"><span class="num">Finish</span>Reflection &amp; certificate</h2>
+
 <div class="certbox" id="reflectbox">
   <h3>One last thing before your certificate</h3>
   <p style="font-family:var(--sans);font-size:.88rem">You just found a problem that every standard report concealed. In the career you are heading toward, what is one 'healthy-looking sick store': a metric that could look fine while something underneath it fails? What would you have to break out, segment, or cross-tab to catch it early?</p>
@@ -528,16 +574,20 @@ function resetLab(){if(!confirm('Clear your saved progress for this lab and star
  render();if(r)r.dispatchEvent(new Event('input',{bubbles:true}));}
 const norm=s=>s.replace(/[$,\s]/g,'').toLowerCase();
 function render(){
- const c=document.getElementById('cps');c.innerHTML='';
  QS.forEach((q,i)=>{
+  const c=document.querySelector('.cpslot[data-cp="'+(i+1)+'"]');
+  if(!c)return; c.innerHTML='';
+  const lock=i>0&&!solved.has(i-1);
   const d=document.createElement('div');
-  d.className='cp'+(solved.has(i)?' done':(i>0&&!solved.has(i-1)?' locked':''));
-  d.innerHTML='<p class="q">'+q.q+'</p>'
+  d.className='cp'+(solved.has(i)?' done':(lock?' locked':''));
+  d.innerHTML='<span class="cphead">Checkpoint '+(i+1)+' of '+QS.length+(solved.has(i)?' \u00b7 cleared':'')+'</span>'
+   +'<p class="q">'+q.q+'</p>'
    +(solved.has(i)?'<p class="msg" style="color:var(--good)">Correct.</p>':'<input type="text" id="in'+i+'" aria-label="Answer '+(i+1)+'">'
    +'<button onclick="chk('+i+')">Check</button>'
    +'<button class="hintb" onclick="hint('+i+')">Hint</button>'
    +'<p class="msg" id="m'+i+'"></p><p class="hint" id="h'+i+'">'+q.h+'</p>');
-  c.appendChild(d);});
+  c.appendChild(d);
+  if(lock)c.insertAdjacentHTML('beforeend','<p class="lockmsg">Clear Checkpoint '+i+' first.</p>');});
  document.getElementById('prog').textContent='Checkpoint progress: '+solved.size+' / '+QS.length;
  const done=solved.size===QS.length;
  document.getElementById('reflectbox').className='certbox'+(done?' show':'');

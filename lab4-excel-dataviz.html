@@ -64,6 +64,31 @@ code.inline{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.8
 ul,ol{margin:0 0 1.15rem;padding-left:1.3rem}
 li{margin-bottom:.45rem}
 
+/* ---------- numbered step headings ---------- */
+.sh{margin:3rem 0 .7rem;padding-top:.9rem;border-top:2px solid var(--black)}
+.sh .badge{display:inline-block;background:var(--magenta);color:#fff;font-family:var(--display);
+  font-size:12.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  padding:.24rem .62rem;margin-right:.55rem;vertical-align:.17em;white-space:nowrap}
+.sh .ttl{display:inline;font-family:var(--display);font-weight:600;font-size:1.18rem;
+  text-transform:uppercase;letter-spacing:.03em;color:var(--off-black);line-height:1.35}
+.sh .cpx{display:block;clear:both;font-family:var(--sans);font-size:13.5px;line-height:1.4;
+  color:var(--text-light);margin-top:.12rem}
+.sh .cpx b{font-weight:600;color:var(--magenta-dark)}
+@media (max-width:520px){
+  .sh .badge{font-size:11.5px;padding:.2rem .5rem;margin-right:.45rem;vertical-align:.14em}
+  .sh .ttl{font-size:1.05rem}
+}
+
+/* ---------- inline checkpoint slots ---------- */
+.cpslot{margin:1.1rem 0 0}
+.cpslot .cp{margin:0}
+.cp .cphead{display:block;font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--magenta);margin-bottom:.4rem}
+.cp.done .cphead{color:var(--good)}
+.cp.locked .cphead{color:var(--text-light)}
+.progress{border:none}
+.lockmsg{font-family:var(--sans);font-size:.82rem;color:var(--text-light);margin:.4rem 0 0}
+
 /* ---------- pull quote ---------- */
 .pull{margin:2.2rem 0;padding:0 0 0 1.4rem;border-left:3px solid var(--magenta)}
 .pull p{font-family:var(--display);font-weight:400;font-size:1.32rem;line-height:1.3;color:var(--black);margin:0 0 .5rem}
@@ -328,7 +353,7 @@ li{margin-bottom:.45rem}
   <button class="railtoggle" aria-expanded="false" aria-controls="chapnav">Lab contents</button>
   <nav id="chapnav">
     <a href="#top">Overview</a><a href="#steps">The work</a>
-    <a href="#checkpoints">Checkpoints</a><a href="#submit">What to submit</a>
+    <a href="#finish">Reflection &amp; certificate</a><a href="#submit">What to submit</a>
     <a href="chapter4-dominos.html">↳ Chapter 4 · Business Processes</a>
   </nav>
   <a class="back" href="index.html">← All chapters &amp; labs</a>
@@ -348,6 +373,15 @@ li{margin-bottom:.45rem}
   build everything from pivot tables, so this is also good pivot practice before Exam 1.</p>
 
 <div id="steps">
+
+<div class="callout callout-bridge"><strong>How the checkpoints work</strong>
+<p style="font-family:var(--sans);font-size:.95rem">Here is how this works. Each checkpoint sits directly under the work that produces it. You do the actual work in your own file, then paste the answer here. Get it right and the
+next question opens up. There is no penalty for a wrong answer, so guess, check, and lean on the hint if
+you get stuck. That is what it is there for.</p>
+<p style="font-family:var(--sans);font-size:.95rem">Once you have cleared them all, write your reflection
+and download your certificate for Canvas. Your progress saves automatically in this browser, so you can close the tab and pick up where you left off. It does not follow you to a different computer or a private window, and clearing your browser data clears it. If you need to start this lab over, use the <button type="button" class="hintb" onclick="resetLab()">Reset this lab</button> button.</p>
+<div class="progress" id="prog">Checkpoint progress: 0 / 9</div>
+</div>
 
 <h2><span class="num">Part 1</span>The question decides the chart</h2>
 
@@ -381,6 +415,8 @@ been bar charts.</p>
 the year?" is a line. "Does bigger mean richer?" is a scatter. If you cannot say the question in a
 sentence, you are not ready to chart yet.</p></div>
 
+<div class="cpslot" data-cp="1"></div>
+
 <h2><span class="num">Part 2</span>Build two, properly</h2>
 <div class="callout"><strong>Email 1 &middot; Monday, 9:20 AM</strong>
 <p style="font-family:var(--sans);font-size:.9rem"><strong>From:</strong> General Manager &middot;
@@ -393,24 +429,38 @@ this lab.</p>
 
 <h3>Follow along: revenue by store, as a sorted bar</h3>
 <ol>
-<li><strong>Step 1.</strong> Click any single cell inside the data, then Insert &#8594; PivotTable
+<div class="sh" id="step1"><span class="badge">Step 1</span><span class="ttl">Build the pivot</span></div>
+<p>Click any single cell inside the data, then Insert &#8594; PivotTable
 (the how-to below has every click if this is your first pivot). Put <code class="inline">store</code>
-in Rows and <code class="inline">revenue</code> in Values.</li>
-<li><strong>Step 2.</strong> Click inside the pivot, then Insert &#8594; Recommended Charts &#8594;
-Bar (or Column). A chart appears wired to the pivot.</li>
-<li><strong>Step 3.</strong> Sort it: right-click any revenue value in the pivot &#8594; Sort &#8594;
-Largest to Smallest.</li>
-<li><strong>Step 4 &middot; Make the numbers readable.</strong> The pivot is showing raw values like
+in Rows and <code class="inline">revenue</code> in Values.</p>
+
+<div class="sh" id="step2"><span class="badge">Step 2</span><span class="ttl">Insert the chart</span></div>
+<p>Click inside the pivot, then Insert &#8594; Recommended Charts &#8594;
+Bar (or Column). A chart appears wired to the pivot.</p>
+
+<div class="sh" id="step3"><span class="badge">Step 3</span><span class="ttl">Sort it, largest to smallest</span><span class="cpx">Answer goes in <b>Checkpoint 2</b></span></div>
+<p>Sort it: right-click any revenue value in the pivot &#8594; Sort &#8594;
+Largest to Smallest.</p>
+
+<div class="cpslot" data-cp="2"></div>
+
+<div class="sh" id="step4"><span class="badge">Step 4</span><span class="ttl">Make the numbers readable</span><span class="cpx">Answer goes in <b>Checkpoint 3</b></span></div>
+<p>The pivot is showing raw values like
 148471.75. Right-click any revenue value in the pivot &#8594; Number Format &#8594; Number, set Decimal
 places to <code class="inline">0</code>, and tick Use 1000 Separator. Every value in the field reformats
 at once, because you formatted the field and not one cell. Note what did not happen: the underlying
-numbers did not change. Formatting controls what a reader sees, which is the whole subject of this lab.
-<em>Checkpoint 3.</em></li>
-<li><strong>Step 5.</strong> Check the axis starts at zero (it will by default; Part 3 shows you why
+numbers did not change. Formatting controls what a reader sees, which is the whole subject of this lab.</p>
+
+<div class="cpslot" data-cp="3"></div>
+
+<div class="sh" id="step5"><span class="badge">Step 5</span><span class="ttl">Zero the axis, then write a real title</span></div>
+<p>Check the axis starts at zero (it will by default; Part 3 shows you why
 that matters), then click the title and replace it with a sentence that states the finding, not the
-topic: "Seattle Flagship leads; the gap to last place is wide," not "Revenue by Store."
-<em>Checkpoints 1 and 2.</em></li>
+topic: "Seattle Flagship leads; the gap to last place is wide," not "Revenue by Store."</p>
+
 </ol>
+
+<div class="cpslot" data-cp="4"></div>
 
 <h3>Now you: revenue by month, as a line</h3>
 <p>Repeat the five steps on your own, with these changes: build a new pivot with
@@ -420,6 +470,8 @@ chart from the pivot, format the revenue field the way you did in Step 4, and gi
 states what the year actually did. Read the finished chart to find the co-op's highest month; that is
 Checkpoint 5. Look at the shape of the year before
 moving on, because you will need it later.</p>
+
+<div class="cpslot" data-cp="5"></div>
 
 <details class="howto"><summary>How to make a pivot table</summary><div class="howto-body">
 <ol>
@@ -460,25 +512,32 @@ Every number in them is correct. Every one of them misleads. Build each one your
 easy it is, then answer the checkpoint that exposes it.</p>
 
 <h3>Follow along: diagnosing Chart A, together</h3>
-<p>Diagnosis is a routine, not a talent. Run these four steps on Chart A with me; then Charts B, C,
+<p>Diagnosis is a routine, not a talent. Run Steps 6 through 9 on Chart A with me; then Charts B, C,
 and D are yours to run it on alone.</p>
 <ol>
-<li><strong>Step 1 · Read the axis before the bars.</strong> Look at the vertical axis's bottom
+<div class="sh" id="step6"><span class="badge">Step 6</span><span class="ttl">Read the axis before the bars</span></div>
+<p>Look at the vertical axis's bottom
 number. It is $80,000, not zero. Any bar chart whose axis starts above zero is showing you
-differences, not sizes, while your eye reads sizes.</li>
-<li><strong>Step 2 · Get the real numbers.</strong> Ignore the picture. From your own store pivot
-(you built it in Part 2), read Bellevue's revenue and Bellingham's revenue as digits.</li>
-<li><strong>Step 3 · Compute the honest gap.</strong> In any cell:
-<code class="inline">=(Bellevue - Bellingham)/Bellingham*100</code>, using the two numbers from Step
-2. That percentage is the truth. <em>Checkpoint 6.</em></li>
-<li><strong>Step 4 · Name the trick.</strong> Compare your Step 3 number to what the picture implied
+differences, not sizes, while your eye reads sizes.</p>
+
+<div class="sh" id="step7"><span class="badge">Step 7</span><span class="ttl">Get the real numbers</span></div>
+<p>Ignore the picture. From your own store pivot
+(you built it in Part 2), read Bellevue's revenue and Bellingham's revenue as digits.</p>
+
+<div class="sh" id="step8"><span class="badge">Step 8</span><span class="ttl">Compute the honest gap</span><span class="cpx">Answer goes in <b>Checkpoint 6</b></span></div>
+<p>In any cell:
+<code class="inline">=(Bellevue - Bellingham)/Bellingham*100</code>, using the two numbers from Step 7. That percentage is the truth.</p>
+
+<div class="sh" id="step9"><span class="badge">Step 9</span><span class="ttl">Name the trick</span></div>
+<p>Compare your Step 8 number to what the picture implied
 (Bellevue's bar looks roughly six times taller). The gap between those two is entirely manufactured
 by the axis. Say the mechanism in words: a truncated axis turns a small difference into a dramatic
-one. That sentence, mechanism named plainly, is what a diagnosis is.</li>
+one. That sentence, mechanism named plainly, is what a diagnosis is.</p>
+
 </ol>
-<p><strong>Now you: Charts B, C, and D.</strong> Same routine, three charts, checkpoints 6 through 8.
-Step 1 changes shape each time, the thing to read first might be the chart type, the slice count, or
-the title, but the discipline is identical: picture last, numbers first, mechanism named.</p>
+<p><strong>Now you: Charts B, C, and D.</strong> Same routine, three charts, checkpoints 7 through 9.
+The first step changes shape each time, since the thing to read first might be the chart type, the
+slice count, or the title, but the discipline is identical: picture last, numbers first, mechanism named.</p>
 
 <h3>Chart A: the truncated axis</h3>
 <p>Bar chart of Bellevue, Tacoma, and Bellingham revenue, with the vertical axis starting at $80,000
@@ -487,6 +546,8 @@ instead of zero. Build it. Bellevue's bar towers over Bellingham's, looking seve
 arithmetic says is the whole lesson, and this is the single most common way charts mislead in business,
 usually without anyone intending it.</p>
 
+<div class="cpslot" data-cp="6"></div>
+
 <h3>Chart B: the line that invents a trend</h3>
 <p>Put the eight stores on a line chart, left to right, revenue on the vertical. The line slopes
 downward and looks like decline.</p>
@@ -494,11 +555,15 @@ downward and looks like decline.</p>
 The proof: reorder the stores alphabetically and the "trend" changes shape entirely. Any pattern that
 depends on the order you happened to type things in was never a pattern.</p>
 
+<div class="cpslot" data-cp="7"></div>
+
 <h3>Chart C: the unreadable pie</h3>
 <p>Pie chart of revenue by individual product. Build it and try to answer a simple question from it, such
 as which product is fourth largest. You cannot, and neither can anyone in your audience.</p>
 <p>The chart is accurate and useless, which is its own category of failure. A chart that cannot be read
 is not a neutral choice; it consumes attention and returns nothing.</p>
+
+<div class="cpslot" data-cp="8"></div>
 
 <h3>Chart D: the honest chart with the dishonest title</h3>
 <p>A clean line chart of monthly revenue, correctly built, titled <em>"Revenue Collapsing After
@@ -507,6 +572,8 @@ the number is accurate, and the conclusion is false.</p>
 <p>Look at the full year and you will see why. This is the most dangerous of the four, because there is
 nothing to catch by inspecting the chart itself. The lie lives in the framing, and the only defence is
 knowing enough about the business to notice that a seasonal dip has been renamed a collapse.</p>
+
+<div class="cpslot" data-cp="9"></div>
 
 <div class="callout callout-caution"><strong>Where this connects to Monday</strong>
 <p>Healthcare.gov's leadership was not lied to. They received status reports that were accurate about
@@ -545,15 +612,8 @@ are training for.</p>
 <li>Ask a neighbour. Then raise your hand.</li>
 </ol></div></div>
 
-<h2 id="checkpoints"><span class="num">Required</span>Checkpoints <span style="font-weight:400;color:var(--muted);font-size:.65em">, complete as you work</span></h2>
-<p style="font-family:var(--sans);font-size:.95rem">Here is how this works. Each checkpoint matches a
-step above. You do the actual work in your own file, then paste the answer here. Get it right and the
-next question opens up. There is no penalty for a wrong answer, so guess, check, and lean on the hint if
-you get stuck. That is what it is there for.</p>
-<p style="font-family:var(--sans);font-size:.95rem">Once you have cleared them all, write your reflection
-and download your certificate for Canvas. Your progress saves automatically in this browser, so you can close the tab and pick up where you left off. It does not follow you to a different computer or a private window, and clearing your browser data clears it. If you need to start this lab over, use the <button type="button" class="hintb" onclick="resetLab()">Reset this lab</button> button.</p>
-<div class="progress" id="prog">Checkpoint progress: 0 / 9</div>
-<div id="cps"></div>
+<h2 id="finish"><span class="num">Finish</span>Reflection &amp; certificate</h2>
+
 <div class="certbox" id="reflectbox">
   <h3>One last thing before your certificate</h3>
   <p style="font-family:var(--sans);font-size:.88rem">Every chart in Part 3 was built from accurate data and every one of them misled. In the field you plan to enter, describe a situation where someone would have an incentive to present true numbers in a misleading shape. What would you look at first to catch it?</p>
@@ -604,16 +664,20 @@ function resetLab(){if(!confirm('Clear your saved progress for this lab and star
  render();if(r)r.dispatchEvent(new Event('input',{bubbles:true}));}
 const norm=s=>s.replace(/[$,\s]/g,'').toLowerCase();
 function render(){
- const c=document.getElementById('cps');c.innerHTML='';
  QS.forEach((q,i)=>{
+  const c=document.querySelector('.cpslot[data-cp="'+(i+1)+'"]');
+  if(!c)return; c.innerHTML='';
+  const lock=i>0&&!solved.has(i-1);
   const d=document.createElement('div');
-  d.className='cp'+(solved.has(i)?' done':(i>0&&!solved.has(i-1)?' locked':''));
-  d.innerHTML='<p class="q">'+q.q+'</p>'
+  d.className='cp'+(solved.has(i)?' done':(lock?' locked':''));
+  d.innerHTML='<span class="cphead">Checkpoint '+(i+1)+' of '+QS.length+(solved.has(i)?' \u00b7 cleared':'')+'</span>'
+   +'<p class="q">'+q.q+'</p>'
    +(solved.has(i)?'<p class="msg" style="color:var(--good)">Correct.</p>':'<input type="text" id="in'+i+'" aria-label="Answer '+(i+1)+'">'
    +'<button onclick="chk('+i+')">Check</button>'
    +'<button class="hintb" onclick="hint('+i+')">Hint</button>'
    +'<p class="msg" id="m'+i+'"></p><p class="hint" id="h'+i+'">'+q.h+'</p>');
-  c.appendChild(d);});
+  c.appendChild(d);
+  if(lock)c.insertAdjacentHTML('beforeend','<p class="lockmsg">Clear Checkpoint '+i+' first.</p>');});
  document.getElementById('prog').textContent='Checkpoint progress: '+solved.size+' / '+QS.length;
  const done=solved.size===QS.length;
  document.getElementById('reflectbox').className='certbox'+(done?' show':'');
