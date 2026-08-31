@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lab 2 · Excel Basics: Meeting the Client | MIS 320</title>
+<title>Lab 3 · Excel Functions: One Question, One Formula | MIS 320</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -29,7 +29,7 @@ body{margin:0;background:var(--white);color:var(--text-dark);
 
 /* ---------- shell ---------- */
 .shell{max-width:var(--wrap);margin:0 auto;display:grid;grid-template-columns:15rem minmax(0,1fr);gap:3.5rem;padding:0 1.5rem 6rem}
-main{max-width:var(--col);padding-top:2.5rem}
+main{max-width:var(--col);min-width:0;padding-top:2.5rem}
 
 /* ---------- sidebar ---------- */
 .rail{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:2.5rem 0 3rem;border-right:1px solid var(--border)}
@@ -60,7 +60,15 @@ p{margin:0 0 1.05rem}
 a{color:var(--magenta-dark)}
 strong{font-weight:600;color:var(--black)}
 .lede{font-size:1.24rem;line-height:1.55;color:var(--text-muted)}
-code.inline{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--off-white);padding:.1em .35em;border:1px solid var(--border)}
+code.inline{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--off-white);padding:.1em .35em;border:1px solid var(--border);overflow-wrap:anywhere}
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:1.2rem 0}
+.tablewrap .sumtable{margin:0;min-width:32rem}
+.steplist{list-style:none;padding:0;margin:1.4rem 0;border:1px solid var(--border);background:var(--off-white)}
+.steplist li{margin:0;border-bottom:1px solid var(--border)}
+.steplist li:last-child{border-bottom:none}
+.steplist a{display:block;padding:.5rem .9rem;text-decoration:none;color:var(--text-dark);font-size:15.5px}
+.steplist a:hover{background:var(--magenta-pale);color:var(--magenta-dark)}
+.steplist b{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--magenta);margin-right:.6rem}
 ul,ol{margin:0 0 1.15rem;padding-left:1.3rem}
 li{margin-bottom:.45rem}
 
@@ -131,7 +139,7 @@ li{margin-bottom:.45rem}
 
 /* ---------- responsive ---------- */
 @media (max-width:860px){
-  .shell{grid-template-columns:1fr;gap:0;padding:0 1.15rem 4rem}
+  .shell{grid-template-columns:minmax(0,1fr);gap:0;padding:0 1.15rem 4rem}
   .rail{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);padding:1.5rem 0 1rem;margin-bottom:.5rem}
   .rail nav{display:none}
   .rail nav.open{display:block;margin-top:.8rem}
@@ -271,7 +279,7 @@ li{margin-bottom:.45rem}
 .concepts{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;margin:1.1rem 0 0}
 .concepts .clabel{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-right:.3rem}
 .concepts span:not(.clabel){font-family:var(--display);font-size:12.5px;font-weight:500;letter-spacing:.04em;border:1px solid var(--border);background:var(--off-white);padding:.22rem .6rem;color:var(--text-dark)}
-.cp{border:1px solid var(--rule);background:var(--paper);border-radius:2px;margin:1rem 0;padding:1rem 1.15rem}.cp.locked{opacity:.45;pointer-events:none}.cp.done{border-left:4px solid var(--good);background:var(--good-pale)}.cp .q{font-family:var(--sans);font-size:.92rem;color:var(--navy);margin:0 0.6rem;font-weight:500}.cp input[type=text]{font-family:var(--sans);font-size:.9rem;padding:.45rem.6rem;border:1px solid var(--rule);border-radius:2px;width:14rem;max-width:100%}.cp button{font-family:var(--sans);font-size:.8rem;font-weight:600;letter-spacing:.04em;background:var(--accent-deep);color:#fff;border:none;border-radius:2px;padding:.5rem.9rem;cursor:pointer;margin-left:.4rem}.cp button.hintb{background:none;color:var(--accent-deep);border:1px solid var(--rule)}.cp .msg{font-family:var(--sans);font-size:.8rem;margin:.5rem 0 0}.cp .hint{font-family:var(--sans);font-size:.8rem;color:var(--muted);margin:.5rem 0 0;display:none;border-top:1px dashed var(--rule);padding-top:.5rem}.progress{position:sticky;top:0;z-index:5;background:var(--black);color:#fff;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:.6rem 1rem;margin:1.5rem 0}.certbox{border:2px solid var(--black);background:var(--paper);padding:1.2rem 1.3rem;margin:1.5rem 0;display:none}.certbox.show{display:block}.certbox h3{margin-top:0}.codebox code{font-family:ui-monospace,Menlo,monospace;background:var(--cream-deep);padding:.15em.45em;border-radius:2px}
+.cp{border:1px solid var(--rule);background:var(--paper);border-radius:2px;margin:1rem 0;padding:1rem 1.15rem}.cp.locked{opacity:.45;pointer-events:none}.cp.done{border-left:4px solid var(--good);background:var(--good-pale)}.cp .q{font-family:var(--sans);font-size:.92rem;color:var(--navy);margin:0 0 .6rem;font-weight:500}.cp input[type=text]{font-family:var(--sans);font-size:.9rem;padding:.45rem .6rem;border:1px solid var(--rule);border-radius:2px;width:14rem;max-width:100%}.cp button{font-family:var(--sans);font-size:.8rem;font-weight:600;letter-spacing:.04em;background:var(--accent-deep);color:#fff;border:none;border-radius:2px;padding:.5rem .9rem;cursor:pointer;margin-left:.4rem}.cp button.hintb{background:none;color:var(--accent-deep);border:1px solid var(--rule)}.cp .msg{font-family:var(--sans);font-size:.8rem;margin:.5rem 0 0}.cp .hint{font-family:var(--sans);font-size:.8rem;color:var(--muted);margin:.5rem 0 0;display:none;border-top:1px dashed var(--rule);padding-top:.5rem}.progress{position:sticky;top:0;z-index:5;background:var(--black);color:#fff;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:.6rem 1rem;margin:1.5rem 0}.certbox{border:2px solid var(--black);background:var(--paper);padding:1.2rem 1.3rem;margin:1.5rem 0;display:none}.certbox.show{display:block}.certbox h3{margin-top:0}.codebox code{font-family:ui-monospace,Menlo,monospace;background:var(--cream-deep);padding:.15em.45em;border-radius:2px}
 </style></head><body>
 <nav class="topnav">
   <div class="topnav-in">
@@ -351,8 +359,10 @@ match. <strong>Part A answers the first email together, keystroke by keystroke.<
 
 <div class="callout"><strong>Download</strong>
 <p style="font-family:var(--sans);font-size:.9rem">Same workbook as last week:
-<a href="cascadia-sales-2025.xlsx">cascadia-sales-2025.xlsx</a>. If you kept your Lab 2 file, work
-there and add a sheet. Columns for today: <code class="inline">C</code> store,
+<a href="cascadia-sales-2025.xlsx">cascadia-sales-2025.xlsx</a>. Download a fresh copy so your tabs
+match the ones named below. It opens on three tabs: <strong>Analyst</strong>, where your answers go;
+<strong>Sales2025</strong>, the data; and <strong>Read Me</strong>, which explains what every column
+holds. Columns you will use today are all on Sales2025: <code class="inline">C</code> store,
 <code class="inline">F</code> category, <code class="inline">K</code> revenue,
 <code class="inline">N</code> is_member.</p></div>
 
@@ -378,38 +388,126 @@ Portland Pearl's total revenue was. Exact figures, please."</p></div>
 
 <h2 id="parta"><span class="num">Part A</span>Follow along: answering her, together</h2>
 
-<ol>
-<li><strong>Step 1 · Find your answers area.</strong> Open the Analyst tab. It is laid out the same
-way as last week: one numbered row per checkpoint, your answer in column B. The data is on the
-Sales2025_RAW tab.</li>
-<li><strong>Step 2 · Her first number: COUNTIF.</strong> In <code class="inline">B5</code>, type
-<code class="inline">=COUNTIF(Sales2025_RAW!C:C,"Bellingham")</code> and press Enter. Read it the way Excel does:
-COUNTIF is the verb, count; C:C is where to look, the store column; "Bellingham" is what to match, in
-quotes because it is text. <em>Checkpoint 1.</em></li>
-<li><strong>Step 3 · Her second number: SUMIF.</strong> In <code class="inline">B6</code> type
-<code class="inline">=SUMIF(Sales2025_RAW!C:C,"Portland Pearl",Sales2025_RAW!K:K)</code>. The same sentence with a third clause:
-look in C, match the store, <em>add up the matching rows of K</em>. Her email is answered.
-<em>Checkpoint 2.</em></li>
+<p>This lab runs on ten numbered steps, and every step has a checkpoint with the same number. Step 4
+fills in Checkpoint 4, which goes in the row labeled 4 on the Analyst tab. If you lose your place, the
+numbers will tell you where you are.</p>
+
+<ol class="steplist">
+<li><a href="#step1"><b>Step 1</b>Find your two tabs</a></li>
+<li><a href="#step2"><b>Step 2</b>Her first number, with COUNTIF</a></li>
+<li><a href="#step3"><b>Step 3</b>What a typo looks like</a></li>
+<li><a href="#step4"><b>Step 4</b>Her second number, with SUMIF</a></li>
+<li><a href="#step5"><b>Steps 5&ndash;10</b>Part B, on your own</a></li>
 </ol>
 
-<p>That is the entire mechanism, and every function this month's remaining emails need is one of
-those two sentences with a different verb or an extra clause:</p>
+<h3 id="step1">Step 1 (Checkpoint 1) &middot; Find your two tabs</h3>
+<p>Open the workbook and look at the tabs along the bottom of the window. The <strong>Analyst</strong>
+tab is where your answers go, laid out the same way as last week: a numbered row for each checkpoint,
+your answer in column B, room for a note in column C. Checkpoint 1 goes in
+<code class="inline">B5</code>, Checkpoint 2 in <code class="inline">B6</code>, and so on down to
+Checkpoint 10 in <code class="inline">B14</code>.</p>
+<p>The <strong>Sales2025</strong> tab holds the data: every 2025 sale line, one per row. Click that tab
+now. Press <span class="kbd">Ctrl</span> + <span class="kbd">End</span> on Windows, or
+<span class="kbd">&#8984;</span> + <span class="kbd">Fn</span> + <span class="kbd">&rarr;</span> on a
+Mac. Excel jumps you to the last cell that holds anything, and the Name Box in the top left tells you
+where you landed.</p>
+<p><strong>What you just learned:</strong> the sheet ends at row 2900, and row 1 is the header, so
+there are 2,899 sales in front of you. Knowing that number is how you will catch a formula that
+quietly went wrong later. If a count comes back larger than 2,899, the formula is counting something
+it should not be.</p>
+<p><strong>Checkpoint 1:</strong> how many rows of sales data are on the Sales2025 tab? Put it in
+<code class="inline">B5</code>.</p>
 
-<table class="lab">
-<thead><tr><th>Function</th><th>The question it answers</th><th>Shape</th></tr></thead>
+<h3 id="step2">Step 2 (Checkpoint 2) &middot; Her first number, with COUNTIF</h3>
+<p>The manager wants a count of Bellingham's sales. Build this formula by clicking rather than typing
+the whole thing. Clicking is how you will write formulas once tab names get long, and it is how you
+avoid misspelling a sheet reference.</p>
+<ol>
+<li>Go to the <strong>Analyst</strong> tab and click cell <code class="inline">B6</code>.</li>
+<li>Type <code class="inline">=COUNTIF(</code> and stop. Do not press Enter yet.</li>
+<li>Click the <strong>Sales2025</strong> tab at the bottom of the window. Excel follows you there and
+holds your formula open.</li>
+<li>Click the letter <strong>C</strong> at the top of the store column. The whole column highlights,
+and Excel writes the reference for you: <code class="inline">Sales2025!C:C</code>.</li>
+<li>Type <code class="inline">,"Bellingham")</code> and press Enter. Excel returns you to the Analyst
+tab with the answer sitting in B6.</li>
+</ol>
+<p>Your finished formula reads
+<code class="inline">=COUNTIF(Sales2025!C:C,"Bellingham")</code>.</p>
+<p><strong>What the formula is doing:</strong> COUNTIF reads down column C of the Sales2025 tab one
+row at a time. Each time a cell says exactly Bellingham, it adds one to a running count, and every
+other row is skipped. Bellingham is inside quotation marks because it is text rather than a number.
+Notice what COUNTIF does <em>not</em> do: it never looks at revenue or any other column. It only
+counts rows.</p>
+<p>The <code class="inline">Sales2025!</code> in front of <code class="inline">C:C</code> is the tab
+name. It is there because your formula lives on the Analyst tab and the data lives somewhere else, so
+Excel has to be told which sheet to read. Clicking the tab put it there for you.</p>
+<p><strong>Checkpoint 2:</strong> the number now in B6.</p>
+
+<h3 id="step3">Step 3 (Checkpoint 3) &middot; What a typo looks like</h3>
+<p>Before you trust a formula, find out how it fails. In <code class="inline">B7</code>, type this
+exactly as printed, misspelling and all:</p>
+<p><code class="inline">=COUNTIF(Sales2025!C:C,"Portland Parl")</code></p>
+<p>Press Enter. Excel does not warn you. Nothing turns red, no error code appears. You get a number
+back, and the number is wrong.</p>
+<p><strong>What the formula is doing:</strong> COUNTIF matches text exactly. There is no store called
+Portland Parl, so no row matches, so the count is zero. A misspelled word, a trailing space, or
+Bellingham typed as Bellingahm all produce the same quiet result. This is the most common error in
+this lab and the hardest to notice, because a zero looks like a real answer instead of a broken
+formula.</p>
+<p>Fix the spelling to <code class="inline">"Portland Pearl"</code> for a moment and watch the number
+change, then put the misspelling back. Row 7 is the one place in this workbook where a wrong formula
+is the right answer. In <code class="inline">C7</code>, write a few words about what happened.</p>
+<p><strong>Checkpoint 3:</strong> the number the misspelled formula returned.</p>
+
+<h3 id="step4">Step 4 (Checkpoint 4) &middot; Her second number, with SUMIF</h3>
+<p>Her second question is not <em>how many</em>, it is <em>how much</em>: total revenue at Portland
+Pearl. Counting rows will not answer that. You need to add up a column, but only for the rows that
+match.</p>
+<ol>
+<li>On the Analyst tab, click cell <code class="inline">B8</code>.</li>
+<li>Type <code class="inline">=SUMIF(</code>.</li>
+<li>Click the <strong>Sales2025</strong> tab, then click the letter <strong>C</strong> to select the
+store column.</li>
+<li>Type <code class="inline">,"Portland Pearl",</code> and include both commas.</li>
+<li>Click the letter <strong>K</strong> to select the revenue column.</li>
+<li>Type <code class="inline">)</code> and press Enter.</li>
+</ol>
+<p>Your finished formula reads
+<code class="inline">=SUMIF(Sales2025!C:C,"Portland Pearl",Sales2025!K:K)</code>.</p>
+<p><strong>What the formula is doing:</strong> SUMIF needs three pieces of information where COUNTIF
+needed two. Column C is where to look. "Portland Pearl" is what to look for. Column K is what to add
+up. For every row where column C says Portland Pearl, Excel takes that row's revenue out of column K
+and adds it to a running total. Rows belonging to other stores contribute nothing at all. Her email is
+now answered.</p>
+<p><strong>Checkpoint 4:</strong> the number now in B8.</p>
+
+<p>Those two formulas are the pattern for the rest of the lab. Every function below changes one thing
+at a time: what happens to the matching rows, or how many conditions a row has to meet before it
+counts.</p>
+
+<div class="tablewrap">
+<table class="sumtable">
+<thead><tr><th>Function</th><th>The question it answers</th><th>What goes inside the parentheses</th></tr></thead>
 <tbody>
-<tr><td><code class="inline">COUNTIF</code></td><td>How many rows match?</td><td>=COUNTIF(where, what)</td></tr>
-<tr><td><code class="inline">SUMIF</code></td><td>Add a column, only for matching rows</td><td>=SUMIF(where, what, add-this)</td></tr>
-<tr><td><code class="inline">AVERAGEIF</code></td><td>Average a column, only for matching rows</td><td>=AVERAGEIF(where, what, average-this)</td></tr>
-<tr><td><code class="inline">COUNTIFS / SUMIFS</code></td><td>Same, with two or more conditions</td><td>pairs of (where, what); SUMIFS puts add-this first</td></tr>
+<tr><td><code class="inline">COUNTIF</code></td><td>How many rows match?</td><td>where to look, what to match</td></tr>
+<tr><td><code class="inline">SUMIF</code></td><td>Add up a column, only for matching rows</td><td>where to look, what to match, what to add up</td></tr>
+<tr><td><code class="inline">AVERAGEIF</code></td><td>Average a column, only for matching rows</td><td>where to look, what to match, what to average</td></tr>
+<tr><td><code class="inline">COUNTIFS</code></td><td>How many rows meet two or more conditions?</td><td>where to look, what to match &mdash; repeated for each condition</td></tr>
+<tr><td><code class="inline">SUMIFS</code></td><td>Add up a column, for rows meeting two or more conditions</td><td>what to add up <em>first</em>, then where to look and what to match for each condition</td></tr>
 </tbody>
 </table>
+</div>
+
+<p>Read the last row of that table twice. SUMIFS moves the column you are adding up from last position
+to first. It is the single most common place students lose ten minutes in this lab.</p>
 
 <details class="howto"><summary>If a formula misbehaves</summary><div class="howto-body">
 <ol>
-<li><code class="inline">#NAME?</code>: the function name is misspelled. Retype it.</li>
-<li><strong>Unexpected 0:</strong> the text does not match the data exactly. Check spelling and that the quotes are straight ("), not curly.</li>
-<li><strong>#VALUE? in SUMIFS:</strong> the sum column probably is not first. The S versions reorder the arguments; the table above shows where things go.</li>
+<li><strong>A zero you did not expect:</strong> the text you typed does not match the data exactly. Check the spelling against the Sales2025 tab, and check that your quotation marks are straight (") rather than curly. This is Step 3 happening to you for real.</li>
+<li><code class="inline">#NAME?</code>: the function name is misspelled, or the tab name in front of the column is wrong. It is <code class="inline">Sales2025</code>, with no space and no underscore. Click the tab instead of typing it.</li>
+<li><code class="inline">#VALUE!</code> in SUMIFS: the column you are adding up is probably not first. The S versions reorder the arguments; the table above shows where everything goes.</li>
+<li><strong>A count larger than 2,899:</strong> your formula is matching more than it should, or is pointed at the wrong column.</li>
 </ol>
 </div></details>
 
@@ -428,29 +526,63 @@ inventory."</p></div>
 different one, the board keeps asking how concentrated we are: what percent of our total revenue comes
 from Portland Pearl alone?"</p></div>
 
-<h2 id="partb"><span class="num">Part B</span>Now you: two emails, five formulas, alone</h2>
+<h2 id="partb"><span class="num">Part B</span>Now you: two emails, six formulas, on your own</h2>
 
-<p>Each task tells you the function to use, the column to look in, and the text to match. You write
-the formula yourself; that is the skill. Answer the planner first (Checkpoints 3 through 5), then the
-coordinator (Checkpoints 6 and 7), building each reply as a labeled block.</p>
+<p>The numbering keeps going. Steps 5 through 10, checkpoints 5 through 10, rows 9 through 14 on the
+Analyst tab. Each task names the function to use, the column to look in, and the text to match. You
+write the formula. Build them by clicking the way you did in Part A; the tab reference is far easier to
+get right that way than by typing it.</p>
 
-<ol>
-<li><strong>Planner, question 1: count the Snow-category sales lines.</strong> Write a COUNTIF that
-looks in the category column (F) and matches "Snow", the same shape as Step 2. <em>Checkpoint 3.</em></li>
-<li><strong>Planner, question 2: the average revenue per Snow line.</strong> Write an AVERAGEIF that
-looks in the category column (F) for "Snow" and averages the revenue column (K). Same three parts as
-Step 3's SUMIF, different verb. <em>Checkpoint 4.</em></li>
-<li><strong>Planner, question 3: Snow revenue at the Seattle Flagship.</strong> Write a SUMIFS. Put
-the revenue column (K) first, then two condition pairs: category (F) matching "Snow", store (C)
-matching "Seattle Flagship". <em>Checkpoint 5.</em></li>
-<li><strong>Coordinator, question 1: count Tacoma's member sales.</strong> Write a COUNTIFS with two
-condition pairs: the store column (C) matching "Tacoma", and the is_member column (N) matching "Y".
-<em>Checkpoint 6.</em></li>
-<li><strong>Coordinator, question 2: Portland Pearl's share of total revenue.</strong> In one cell,
-divide a SUMIF for Portland Pearl's revenue (like Step 3) by a plain SUM of the whole revenue column
-(K), then multiply by 100. One measured thing divided by another: that is how most business metrics
-are made. <em>Checkpoint 7.</em></li>
-</ol>
+<h3 id="step5">Step 5 (Checkpoint 5) &middot; Planner: how many Snow sales?</h3>
+<p>In <code class="inline">B9</code>, write a COUNTIF that looks in the category column (F) and matches
+<code class="inline">"Snow"</code>. Same shape as Step 2, different column and different text.</p>
+
+<h3 id="step6">Step 6 (Checkpoint 6) &middot; Planner: average revenue on a Snow sale</h3>
+<p>In <code class="inline">B10</code>, write an AVERAGEIF that looks in the category column (F) for
+<code class="inline">"Snow"</code> and averages the revenue column (K). Three pieces of information, in
+the same order as Step 4's SUMIF. The only change is what Excel does with the rows that match: it
+averages them instead of adding them.</p>
+
+<h3 id="step7">Step 7 (Checkpoint 7) &middot; Planner: Snow revenue at the Seattle Flagship</h3>
+<p>Two conditions this time, so the function gains an S. In <code class="inline">B11</code>, write a
+SUMIFS with the revenue column (K) <em>first</em>, then category (F) matching
+<code class="inline">"Snow"</code>, then store (C) matching
+<code class="inline">"Seattle Flagship"</code>. A row has to satisfy both conditions to be included.
+Your answer should be smaller than Step 6's total for all Snow sales everywhere; if it is not,
+check your argument order.</p>
+
+<h3 id="step8">Step 8 (Checkpoint 8) &middot; Coordinator: Tacoma's member sales</h3>
+<p>In <code class="inline">B12</code>, write a COUNTIFS with two conditions: the store column (C)
+matching <code class="inline">"Tacoma"</code>, and the is_member column (N) matching
+<code class="inline">"Y"</code>. COUNTIFS has nothing to add up, so it is only pairs of where-to-look
+and what-to-match.</p>
+
+<h3 id="step9">Step 9 (Checkpoint 9) &middot; Coordinator: total revenue, every store</h3>
+<p>The coordinator's second question asks for a share: Portland Pearl's revenue as a percentage of the
+whole co-op's. A share is one number divided by another, so build the second number first and give it
+a cell of its own.</p>
+<p>In <code class="inline">B13</code>, write a plain <code class="inline">=SUM</code> of the entire
+revenue column (K) on the Sales2025 tab. No condition and no matching; every row counts.</p>
+<p><strong>Why this gets its own cell:</strong> you now have a total you can look at and sanity check
+on its own, and one you can point other formulas at. When the next email asks for a different store's
+share, you reuse this cell instead of rebuilding the total inside a longer formula. Long formulas that
+compute several things at once are hard to check and harder to fix.</p>
+
+<h3 id="step10">Step 10 (Checkpoint 10) &middot; Coordinator: Portland Pearl's share</h3>
+<p>In <code class="inline">B14</code>, divide your Step 4 answer by your Step 9 answer by pointing at
+the two cells: <code class="inline">=B8/B13</code>. Click the cells rather than retyping the formulas
+inside them.</p>
+<p>The result arrives as a decimal, something like 0.175. <strong>Do not multiply it by 100.</strong>
+Format the cell as a percentage instead. With B14 selected, go to the <strong>Home</strong> tab, click
+the <strong>%</strong> button in the Number group, then click <strong>Increase Decimal</strong> once so
+one decimal place shows.</p>
+<p><strong>Why formatting instead of arithmetic:</strong> the cell still holds the true ratio.
+Formatting changes how the number is displayed, not what it is. Multiplying by 100 changes the value
+itself into something you can no longer safely divide, average, or chart alongside other ratios, and
+anyone who later builds on your cell inherits the error. Getting the number right and getting it
+readable are two separate jobs, and formatting is how a spreadsheet does the second one without
+breaking the first.</p>
+<p><strong>Checkpoint 10:</strong> the percentage as B14 now displays it, to one decimal place.</p>
 
 <div class="callout callout-good"><strong>Finished early? Get ahead of next week's email</strong>
 <p>In a blank area, list the eight store names down a column. Beside each, a COUNTIF for its lines, a
@@ -459,13 +591,14 @@ you have just hand-built the table that dashboards are made from. Keep it; next 
 exactly this block into charts.</p></div>
 
 <h2 id="checkpoints"><span class="num">Required</span>Checkpoints <span style="font-weight:400;color:var(--muted);font-size:.65em">, complete as you work</span></h2>
-<p style="font-family:var(--sans);font-size:.95rem">Here is how this works. Each checkpoint matches a
-step above. You do the actual work in your own file, then paste the answer here. Get it right and the
-next question opens up. There is no penalty for a wrong answer, so guess, check, and lean on the hint if
+<p style="font-family:var(--sans);font-size:.95rem">Here is how this works. Checkpoint 1 matches Step
+1, Checkpoint 2 matches Step 2, all the way down. You do the actual work in your own workbook, in the
+row with the same number on the Analyst tab, then paste the answer here. Get it right and the next
+question opens up. There is no penalty for a wrong answer, so guess, check, and lean on the hint if
 you get stuck. That is what it is there for.</p>
 <p style="font-family:var(--sans);font-size:.95rem">Once you have cleared them all, write your reflection
 and download your certificate for Canvas. Your progress saves automatically in this browser, so you can close the tab and pick up where you left off. It does not follow you to a different computer or a private window, and clearing your browser data clears it. If you need to start this lab over, use the <button type="button" class="hintb" onclick="resetLab()">Reset this lab</button> button.</p>
-<div class="progress" id="prog">Checkpoint progress: 0 / 7</div>
+<div class="progress" id="prog">Checkpoint progress: 0 / 10</div>
 <div id="cps"></div>
 <div class="certbox" id="reflectbox">
   <h3>One last thing before your certificate</h3>
@@ -489,13 +622,27 @@ and download your certificate for Canvas. Your progress saves automatically in t
 <h2 id="submit"><span class="num">Canvas</span>What to submit</h2>
 <p style="font-family:var(--sans);font-size:.92rem">Go to the <strong>Lab 3</strong> assignment in Canvas and upload two files.</p>
 <p style="font-family:var(--sans);font-size:.92rem"><strong>File 1: your workbook</strong>, saved as
-<code class="inline">LAB3_Last_First.xlsx</code>. Your answers go on the Analyst tab, one per numbered
-row in column B, with a short note beside each. Formulas must be live in the cells; a typed-in number
-does not count.</p>
+<code class="inline">LAB3_Last_First.xlsx</code>. Your answers go on the Analyst tab in column B, on
+the row matching each checkpoint number, with a short note in column C where it helps. Formulas must
+be live in the cells; a typed-in number does not count.</p>
+
+<div class="callout callout-caution"><strong>Before you save: turn on Show Formulas</strong>
+<p>Once every checkpoint is cleared and the workbook is finished, switch it to formula view so your
+work is visible to whoever grades it. Go to the <strong>Formulas</strong> tab on the ribbon and click
+<strong>Show Formulas</strong> in the Formula Auditing group. The shortcut is
+<span class="kbd">Ctrl</span> + <span class="kbd">`</span> on Windows and
+<span class="kbd">&#8984;</span> + <span class="kbd">`</span> on a Mac; the ` key sits just above Tab,
+sharing a key with ~.</p>
+<p>Every cell switches from showing its answer to showing the formula behind it, and the columns widen
+to fit. That is expected. Leave it on, save, and upload. Do this <strong>last</strong>: while Show
+Formulas is on you cannot read your answers off the sheet, so finish all ten checkpoints first.</p>
+<p>A cell showing a number instead of a formula is a typed-in answer and earns no credit. A correct
+formula that returns a wrong answer earns partial credit. A correct number with nothing behind it
+earns none.</p></div>
 <p style="font-family:var(--sans);font-size:.92rem"><strong>File 2: your completion certificate PDF.</strong> Clear all the checkpoints above, write
 your reflection, and click Download certificate. Your reflection prints as page 2, so you do not submit
 it separately.</p>
-</main></main></main></main></div>
+</main></div>
 <script>
 (function(){var b=document.querySelector('.railtoggle'),n=document.getElementById('chapnav');
 if(!b||!n)return;b.addEventListener('click',function(){var o=n.classList.toggle('open');
@@ -504,7 +651,7 @@ b.setAttribute('aria-expanded',o?'true':'false');});})();
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-const LAB="LAB3", QS=[{"q": "Part A \u00b7 The regional manager's first number: how many sales lines came from the Bellingham store?", "t": "num", "a": "MzQ3", "tol": 0, "h": "Step 2's formula, exactly as walked: =COUNTIF(C:C,\"Bellingham\"). Where to look, what to match."}, {"q": "Part A \u00b7 Her second number: total revenue from the Portland Pearl store, in dollars?", "t": "num", "a": "MTI1MDQ2LjA1", "tol": 1, "h": "Step 3's formula: =SUMIF(C:C,\"Portland Pearl\",K:K). Look in C, match the store, add up K."}, {"q": "Part B \u00b7 Winter-buy email, question 1: how many sales lines are in the Snow category?", "t": "num", "a": "MzU3", "tol": 0, "h": "A COUNTIF on the category column (F) matching \"Snow\", the same shape as Step 2."}, {"q": "Part B \u00b7 Winter-buy email, question 2: the average revenue per Snow-category line, to the cent?", "t": "num", "a": "NDgyLjc=", "tol": 0.05, "h": "An AVERAGEIF: look in the category column (F) for \"Snow\", average the revenue column (K). Snow gear is expensive; expect a big number."}, {"q": "Part B \u00b7 Winter-buy email, question 3: revenue from Snow-category sales at the Seattle Flagship, in dollars?", "t": "num", "a": "Mzk1MzEuOA==", "tol": 1, "h": "A SUMIFS. The revenue column (K) goes first, then two condition pairs: category (F) matching \"Snow\", store (C) matching \"Seattle Flagship\"."}, {"q": "Part B \u00b7 Membership email, question 1: how many sales lines at the Tacoma store were member sales (is_member = Y)?", "t": "num", "a": "Mjg2", "tol": 0, "h": "A COUNTIFS with two condition pairs: the store column (C) matching \"Tacoma\", and the is_member column (N) matching \"Y\"."}, {"q": "Part B \u00b7 Membership email, question 2: what percent of the co-op's total revenue came from Portland Pearl, to one decimal?", "t": "num", "a": "MTcuNQ==", "tol": 0.1, "h": "In one cell: a SUMIF for Portland Pearl's revenue (like Step 3) divided by a plain SUM of column K, times 100."}];
+const LAB="LAB3", QS=[{"q": "Step 1 \u00b7 How many rows of sales data are on the Sales2025 tab (not counting the header row)?", "t": "num", "a": "Mjg5OQ==", "tol": 0, "h": "Click the Sales2025 tab, press Ctrl+End (Windows) or Cmd+Fn+Right (Mac). The Name Box top left tells you the last row. Row 1 is the header, so subtract one."}, {"q": "Step 2 \u00b7 The regional manager's first number: how many sales lines came from the Bellingham store?", "t": "num", "a": "MzQ3", "tol": 0, "h": "Step 2's formula, built by clicking: =COUNTIF(Sales2025!C:C,\"Bellingham\"). Where to look, then what to match."}, {"q": "Step 3 \u00b7 The deliberate typo: what did =COUNTIF(Sales2025!C:C,\"Portland Parl\") return?", "t": "num", "a": "MA==", "tol": 0, "h": "No store is spelled that way, so nothing matched. COUNTIF does not warn you; it just reports what it found."}, {"q": "Step 4 \u00b7 Her second number: total revenue from the Portland Pearl store, in dollars?", "t": "num", "a": "MTI1MDQ2LjA1", "tol": 1, "h": "Step 4's formula: =SUMIF(Sales2025!C:C,\"Portland Pearl\",Sales2025!K:K). Where to look, what to match, what to add up."}, {"q": "Step 5 \u00b7 Winter-buy email, question 1: how many sales lines are in the Snow category?", "t": "num", "a": "MzU3", "tol": 0, "h": "A COUNTIF on the category column (F) matching \"Snow\", the same shape as Step 2."}, {"q": "Step 6 \u00b7 Winter-buy email, question 2: the average revenue per Snow-category line, to the cent?", "t": "num", "a": "NDgyLjc=", "tol": 0.05, "h": "An AVERAGEIF: look in the category column (F) for \"Snow\", average the revenue column (K). Snow gear is expensive, so expect a large number."}, {"q": "Step 7 \u00b7 Winter-buy email, question 3: revenue from Snow-category sales at the Seattle Flagship, in dollars?", "t": "num", "a": "Mzk1MzEuOA==", "tol": 1, "h": "A SUMIFS. The revenue column (K) goes first, then two condition pairs: category (F) matching \"Snow\", store (C) matching \"Seattle Flagship\"."}, {"q": "Step 8 \u00b7 Membership email, question 1: how many sales lines at the Tacoma store were member sales (is_member = Y)?", "t": "num", "a": "Mjg2", "tol": 0, "h": "A COUNTIFS with two condition pairs: the store column (C) matching \"Tacoma\", and the is_member column (N) matching \"Y\"."}, {"q": "Step 9 \u00b7 Total revenue across every store in 2025, in dollars?", "t": "num", "a": "NzEyOTcxLjU=", "tol": 1, "h": "A plain =SUM of the whole revenue column: =SUM(Sales2025!K:K). No condition, no matching."}, {"q": "Step 10 \u00b7 Portland Pearl's share of total revenue, as your formatted cell shows it (one decimal place)?", "t": "num", "a": "MTcuNQ==", "tol": 0.1, "m": 100, "h": "=B8/B13, then format the cell as a percentage with one decimal. Do not multiply by 100. Either 17.5% or 0.175 will be accepted here."}];
 const SKEY='mis320_'+LAB;
 let solved=new Set();
 function load(){try{const raw=localStorage.getItem(SKEY);if(!raw)return null;const s=JSON.parse(raw);
@@ -515,7 +662,7 @@ function resetLab(){if(!confirm('Clear your saved progress for this lab and star
  try{localStorage.removeItem(SKEY)}catch(e){}solved=new Set();
  const r=document.getElementById('refl'),n=document.getElementById('nm');if(r)r.value='';if(n)n.value='';
  render();if(r)r.dispatchEvent(new Event('input',{bubbles:true}));}
-const norm=s=>s.replace(/[$,\s]/g,'').toLowerCase();
+const norm=s=>s.replace(/[$,%\s]/g,'').toLowerCase();
 function render(){
  const c=document.getElementById('cps');c.innerHTML='';
  QS.forEach((q,i)=>{
@@ -544,7 +691,8 @@ function chk(i){
  const v=document.getElementById('in'+i).value,m=document.getElementById('m'+i);
  if(!v.trim()){m.textContent='Enter an answer first.';m.style.color='#7d6608';return}
  const ans=atob(QS[i].a);let ok=false;
- if(QS[i].t==='num'){const g=parseFloat(norm(v)),a=parseFloat(ans);ok=!isNaN(g)&&Math.abs(g-a)<=QS[i].tol}
+ if(QS[i].t==='num'){const g=parseFloat(norm(v)),a=parseFloat(ans);
+  ok=!isNaN(g)&&(Math.abs(g-a)<=QS[i].tol||(QS[i].m?Math.abs(g*QS[i].m-a)<=QS[i].tol:false))}
  else ok=norm(v)===norm(ans);
  if(ok){solved.add(i);save();render()}
  else{m.textContent='Not yet: check the hint, or re-read the step above.';m.style.color='#a03434'}
