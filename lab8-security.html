@@ -29,7 +29,7 @@ body{margin:0;background:var(--white);color:var(--text-dark);
 
 /* ---------- shell ---------- */
 .shell{max-width:var(--wrap);margin:0 auto;display:grid;grid-template-columns:15rem minmax(0,1fr);gap:3.5rem;padding:0 1.5rem 6rem}
-main{max-width:var(--col);padding-top:2.5rem}
+main{max-width:var(--col);min-width:0;padding-top:2.5rem}
 
 /* ---------- sidebar ---------- */
 .rail{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:2.5rem 0 3rem;border-right:1px solid var(--border)}
@@ -63,6 +63,43 @@ strong{font-weight:600;color:var(--black)}
 code.inline{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--off-white);padding:.1em .35em;border:1px solid var(--border)}
 ul,ol{margin:0 0 1.15rem;padding-left:1.3rem}
 li{margin-bottom:.45rem}
+
+/* ---------- numbered step headings ---------- */
+.sh{margin:3rem 0 .7rem;padding-top:.9rem;border-top:2px solid var(--black)}
+.sh .badge{display:inline-block;background:var(--magenta);color:#fff;font-family:var(--display);
+  font-size:12.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  padding:.24rem .62rem;margin-right:.55rem;vertical-align:.17em;white-space:nowrap}
+.sh .ttl{display:inline;font-family:var(--display);font-weight:600;font-size:1.18rem;
+  text-transform:uppercase;letter-spacing:.03em;color:var(--off-black);line-height:1.35}
+.sh .cpx{display:block;clear:both;font-family:var(--sans);font-size:13.5px;line-height:1.4;
+  color:var(--text-light);margin-top:.12rem}
+.sh .cpx b{font-weight:600;color:var(--magenta-dark)}
+@media (max-width:520px){
+  .sh .badge{font-size:11.5px;padding:.2rem .5rem;margin-right:.45rem;vertical-align:.14em}
+  .sh .ttl{font-size:1.05rem}
+}
+
+/* ---------- inline checkpoint slots ---------- */
+.cpslot{margin:1.1rem 0 0}
+.cpslot .cp{margin:0}
+.cp .cphead{display:block;font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--magenta);margin-bottom:.4rem}
+.cp.done .cphead{color:var(--good)}
+.cp.locked .cphead{color:var(--text-light)}
+.progress{border:none}
+.lockmsg{font-family:var(--sans);font-size:.82rem;color:var(--text-light);margin:.4rem 0 0}
+.cp .q,.cp .hint,.cp .msg{overflow-wrap:anywhere}
+
+/* ---------- narrow-screen overflow guards ---------- */
+.tablewrap{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;margin:1.2rem 0}
+.tablewrap>table{margin:0}
+table.lab{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:15.5px}
+table.lab th{background:var(--black);color:#fff;font-family:var(--display);font-size:12px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;padding:.55rem .8rem;text-align:left}
+table.lab td{border:1px solid var(--border);padding:.6rem .8rem;vertical-align:top;line-height:1.5}
+table.lab tr:nth-child(even) td{background:var(--off-white)}
+main a{overflow-wrap:anywhere}
+code.inline{overflow-wrap:anywhere}
 
 /* ---------- pull quote ---------- */
 .pull{margin:2.2rem 0;padding:0 0 0 1.4rem;border-left:3px solid var(--magenta)}
@@ -131,7 +168,7 @@ li{margin-bottom:.45rem}
 
 /* ---------- responsive ---------- */
 @media (max-width:860px){
-  .shell{grid-template-columns:1fr;gap:0;padding:0 1.15rem 4rem}
+  .shell{grid-template-columns:minmax(0,1fr);gap:0;padding:0 1.15rem 4rem}
   .rail{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);padding:1.5rem 0 1rem;margin-bottom:.5rem}
   .rail nav{display:none}
   .rail nav.open{display:block;margin-top:.8rem}
@@ -256,7 +293,7 @@ li{margin-bottom:.45rem}
 .stat span{font-size:12.5px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;font-family:var(--display)}
 .toc{border:1px solid var(--border);background:var(--off-white);padding:1rem 1.25rem;margin:1.6rem 0;font-family:var(--sans);font-size:14.5px;line-height:2}
 .toc strong{display:block;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.3rem}
-.toc a{color:var(--text-dark);text-decoration:none;border-bottom:1px solid var(--border);margin-right:1rem;white-space:nowrap}
+.toc a{color:var(--text-dark);text-decoration:none;border-bottom:1px solid var(--border);margin-right:1rem;white-space:normal}
 .toc a:hover{color:var(--magenta-dark);border-bottom-color:var(--magenta)}
 .kc{border:1px solid var(--border);border-left:4px solid var(--magenta);background:#fff;margin:1.4rem 0;padding:1rem 1.2rem}
 .kc .kc-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.15rem}
@@ -330,7 +367,7 @@ li{margin-bottom:.45rem}
     <a href="#top">Overview</a><a href="#inventory">Part 1 · The inventory</a>
     <a href="#verify">Part 2 · Verification</a><a href="#blast">Part 3 · Blast radius</a>
     <a href="#controls">Part 4 · Control numbers</a><a href="#map">Part 5 · The access map</a>
-    <a href="#checkpoints">Checkpoints</a><a href="#submit">What to submit</a>
+    <a href="#finish">Reflection &amp; certificate</a><a href="#submit">What to submit</a>
     <a href="chapter10-changehealthcare.html">↳ Chapter 10 · Cybersecurity</a>
   </nav>
   <a class="back" href="index.html">← All chapters &amp; labs</a>
@@ -388,6 +425,15 @@ whose data you know better than anyone.</p>
 </div>
 
 <div id="inventory"></div>
+<div class="callout callout-bridge"><strong>How the checkpoints work</strong>
+<p style="font-family:var(--sans);font-size:.95rem">Here is how this works. Each checkpoint sits directly under the work that produces it. You do the actual work in your own file, then paste the answer here. Get it right and the
+next question opens up. There is no penalty for a wrong answer, so guess, check, and lean on the hint if
+you get stuck. That is what it is there for.</p>
+<p style="font-family:var(--sans);font-size:.95rem">Once you have cleared them all, write your reflection
+and download your certificate for Canvas. Your progress saves automatically in this browser, so you can close the tab and pick up where you left off. It does not follow you to a different computer or a private window, and clearing your browser data clears it. If you need to start this lab over, use the <button type="button" class="hintb" onclick="resetLab()">Reset this lab</button> button.</p>
+<div class="progress" id="prog">Checkpoint progress: 0 / 8</div>
+</div>
+
 <h2><span class="num">Part 1</span>The inventory: know what you hold</h2>
 
 <p>Every security framework on earth begins with the same unglamorous step: you cannot protect what you
@@ -399,7 +445,7 @@ tables and you can read all of them.</p>
 property matters most: who must <em>not</em> read it (confidentiality), what breaks if it is silently
 altered (integrity), and what stops if it is unavailable (availability).</p>
 
-<table class="lab">
+<div class="tablewrap"><table class="lab">
 <thead><tr><th>Table</th><th>What it really is</th><th>Which property dominates</th></tr></thead>
 <tbody>
 <tr><td><code class="inline">members</code></td><td>Real people's names, cities, and membership history. The only table with PII.</td><td>Confidentiality. This is the table a breach notification is about.</td></tr>
@@ -407,7 +453,7 @@ altered (integrity), and what stops if it is unavailable (availability).</p>
 <tr><td><code class="inline">suppliers</code></td><td>Who the co-op pays, and where.</td><td>Integrity. An attacker who edits a bank detail here gets paid instead of the supplier.</td></tr>
 <tr><td><code class="inline">inventory</code>, <code class="inline">products</code>, <code class="inline">stores</code>, <code class="inline">used_gear</code></td><td>Operating data.</td><td>Availability. Registers and reorder decisions read these all day.</td></tr>
 </tbody>
-</table>
+</table></div>
 
 <p>Checkpoints 1 and 2 make the confidentiality row concrete: how many people, and how many states'
 breach laws are standing behind them. Run the queries, then sit with the second number for a moment,
@@ -415,6 +461,9 @@ because it is the one that surprises new security leads. A breach is not one leg
 jurisdiction.</p>
 
 <div id="verify"></div>
+<div class="cpslot" data-cp="1"></div>
+<div class="cpslot" data-cp="2"></div>
+
 <h2><span class="num">Part 2</span>Verification beats vibes: two emails from this morning</h2>
 
 <p>Chapter 10's breach began with a stolen password, but most breaches begin one step earlier, with a
@@ -444,6 +493,9 @@ including name, address, and complete purchase history, so we can begin the inve
 <p>Notice what this one is really asking for: not money, but a record. Verify that the member exists at
 all. Checkpoint 4, and it is one line.</p>
 
+<div class="cpslot" data-cp="3"></div>
+<div class="cpslot" data-cp="4"></div>
+
 <div class="callout callout-good"><strong>The habit, stated once</strong>
 <p>Both emails die to a query that takes ten seconds. The professionals' version of this habit has a
 name, out-of-band verification: confirm the request through a channel the requester does not control.
@@ -467,6 +519,9 @@ blast radius of one stolen password.</p>
 sentence with a number in it, which is the kind boards actually act on.</p>
 
 <div id="controls"></div>
+<div class="cpslot" data-cp="5"></div>
+<div class="cpslot" data-cp="6"></div>
+
 <h2><span class="num">Part 4</span>The control numbers: integrity and availability, priced</h2>
 
 <p>Two more numbers finish the audit, one for each remaining letter of the triad.</p>
@@ -484,6 +539,9 @@ days Change Healthcare was down and you understand why the chapter insisted the 
 the disaster and the data breach was the aftermath.</p>
 
 <div id="map"></div>
+<div class="cpslot" data-cp="7"></div>
+<div class="cpslot" data-cp="8"></div>
+
 <h2><span class="num">Part 5</span>The access map: who should see what</h2>
 
 <p>Now the part with no checkpoint, because it is the part that is actually your job. Least privilege
@@ -492,7 +550,7 @@ table by table, and that someone is never the database; it is a manager who unde
 this grid into your submission document and fill every cell with <strong>R</strong> (read),
 <strong>W</strong> (read and write), or a dash (no access).</p>
 
-<table class="lab">
+<div class="tablewrap"><table class="lab">
 <thead><tr><th>Role</th><th>sales</th><th>members</th><th>products</th><th>suppliers</th><th>inventory</th><th>used_gear</th></tr></thead>
 <tbody>
 <tr><td>Register clerk</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
@@ -502,7 +560,7 @@ this grid into your submission document and fill every cell with <strong>R</stro
 <tr><td>Marketing intern</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
 <tr><td>The board</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
 </tbody>
-</table>
+</table></div>
 
 <p>There is no single right map, but there are defensible and indefensible cells, and your memo must
 defend three of your choices in a sentence each. Two prompts to pressure-test yourself: does the
@@ -533,25 +591,18 @@ function runSQL(){
   try{
     var res=CASCADIA_DB.exec(q);
     if(!res.length){out.textContent='Query ran, no rows returned.';return}
-    var r=res[0],h='<table style="border-collapse:collapse"><tr>';
+    var r=res[0],h='<div class="tablewrap"><table style="border-collapse:collapse"><tr>';
     r.columns.forEach(function(c){h+='<th style="border:1px solid var(--rule);padding:.35rem .65rem;background:var(--off-white);text-align:left">'+c+'</th>'});
     h+='</tr>';
     r.values.slice(0,50).forEach(function(row){h+='<tr>';row.forEach(function(v){h+='<td style="border:1px solid var(--rule);padding:.35rem .65rem">'+(v===null?'<em style="color:#a03434">NULL</em>':String(v).replace(/</g,'&lt;'))+'</td>'});h+='</tr>'});
-    h+='</table>';
+    h+='</table></div>';
     if(r.values.length>50)h+='<p style="color:var(--muted)">Showing 50 of '+r.values.length+' rows.</p>';
     out.innerHTML=h;
   }catch(e){out.innerHTML='<span style="color:#a03434">SQL error: '+String(e.message).replace(/</g,'&lt;')+'</span><br><span style="color:var(--muted)">Read it closely. The word right before the error is usually where the problem is.</span>'}
 }
 </script>
-<h2 id="checkpoints"><span class="num">Required</span>Checkpoints <span style="font-weight:400;color:var(--muted);font-size:.65em">, complete as you work</span></h2>
-<p style="font-family:var(--sans);font-size:.95rem">Here is how this works. Each checkpoint matches a
-step above. You do the actual work in your own file, then paste the answer here. Get it right and the
-next question opens up. There is no penalty for a wrong answer, so guess, check, and lean on the hint if
-you get stuck. That is what it is there for.</p>
-<p style="font-family:var(--sans);font-size:.95rem">Once you have cleared them all, write your reflection
-and download your certificate for Canvas. Your progress saves automatically in this browser, so you can close the tab and pick up where you left off. It does not follow you to a different computer or a private window, and clearing your browser data clears it. If you need to start this lab over, use the <button type="button" class="hintb" onclick="resetLab()">Reset this lab</button> button.</p>
-<div class="progress" id="prog">Checkpoint progress: 0 / 8</div>
-<div id="cps"></div>
+<h2 id="finish"><span class="num">Finish</span>Reflection &amp; certificate</h2>
+
 <div class="certbox" id="reflectbox">
   <h3>One last thing before your certificate</h3>
   <p style="font-family:var(--sans);font-size:.88rem">This lab asked you to make security decisions with a business degree's tools: an inventory, a verification habit, an access map, and a handful of numbers. Think of an organization you know from the inside, a job, a club, a team. Name the data it holds that would hurt most if it leaked or locked up, who can currently reach it, and the one control from this lab you would put in place there first. Why that one?</p>
@@ -599,16 +650,20 @@ function resetLab(){if(!confirm('Clear your saved progress for this lab and star
  render();if(r)r.dispatchEvent(new Event('input',{bubbles:true}));}
 const norm=s=>s.replace(/[$,\s]/g,'').toLowerCase();
 function render(){
- const c=document.getElementById('cps');c.innerHTML='';
  QS.forEach((q,i)=>{
+  const c=document.querySelector('.cpslot[data-cp="'+(i+1)+'"]');
+  if(!c)return; c.innerHTML='';
+  const lock=i>0&&!solved.has(i-1);
   const d=document.createElement('div');
-  d.className='cp'+(solved.has(i)?' done':(i>0&&!solved.has(i-1)?' locked':''));
-  d.innerHTML='<p class="q">'+q.q+'</p>'
+  d.className='cp'+(solved.has(i)?' done':(lock?' locked':''));
+  d.innerHTML='<span class="cphead">Checkpoint '+(i+1)+' of '+QS.length+(solved.has(i)?' \u00b7 cleared':'')+'</span>'
+   +'<p class="q">'+q.q+'</p>'
    +(solved.has(i)?'<p class="msg" style="color:var(--good)">Correct.</p>':'<input type="text" id="in'+i+'" aria-label="Answer '+(i+1)+'">'
    +'<button onclick="chk('+i+')">Check</button>'
    +'<button class="hintb" onclick="hint('+i+')">Hint</button>'
    +'<p class="msg" id="m'+i+'"></p><p class="hint" id="h'+i+'">'+q.h+'</p>');
-  c.appendChild(d);});
+  c.appendChild(d);
+  if(lock)c.insertAdjacentHTML('beforeend','<p class="lockmsg">Clear Checkpoint '+i+' first.</p>');});
  document.getElementById('prog').textContent='Checkpoint progress: '+solved.size+' / '+QS.length;
  const done=solved.size===QS.length;
  document.getElementById('reflectbox').className='certbox'+(done?' show':'');

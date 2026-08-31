@@ -29,7 +29,7 @@ body{margin:0;background:var(--white);color:var(--text-dark);
 
 /* ---------- shell ---------- */
 .shell{max-width:var(--wrap);margin:0 auto;display:grid;grid-template-columns:15rem minmax(0,1fr);gap:3.5rem;padding:0 1.5rem 6rem}
-main{max-width:var(--col);padding-top:2.5rem}
+main{max-width:var(--col);min-width:0;padding-top:2.5rem}
 
 /* ---------- sidebar ---------- */
 .rail{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:2.5rem 0 3rem;border-right:1px solid var(--border)}
@@ -63,6 +63,32 @@ strong{font-weight:600;color:var(--black)}
 code.inline{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--off-white);padding:.1em .35em;border:1px solid var(--border)}
 ul,ol{margin:0 0 1.15rem;padding-left:1.3rem}
 li{margin-bottom:.45rem}
+
+/* ---------- numbered step headings ---------- */
+.sh{margin:3rem 0 .7rem;padding-top:.9rem;border-top:2px solid var(--black)}
+.sh .badge{display:inline-block;background:var(--magenta);color:#fff;font-family:var(--display);
+  font-size:12.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  padding:.24rem .62rem;margin-right:.55rem;vertical-align:.17em;white-space:nowrap}
+.sh .ttl{display:inline;font-family:var(--display);font-weight:600;font-size:1.18rem;
+  text-transform:uppercase;letter-spacing:.03em;color:var(--off-black);line-height:1.35}
+.sh .cpx{display:block;clear:both;font-family:var(--sans);font-size:13.5px;line-height:1.4;
+  color:var(--text-light);margin-top:.12rem}
+.sh .cpx b{font-weight:600;color:var(--magenta-dark)}
+@media (max-width:520px){
+  .sh .badge{font-size:11.5px;padding:.2rem .5rem;margin-right:.45rem;vertical-align:.14em}
+  .sh .ttl{font-size:1.05rem}
+}
+
+/* ---------- inline checkpoint slots ---------- */
+.cpslot{margin:1.1rem 0 0}
+.cpslot .cp{margin:0}
+.cp .cphead{display:block;font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--magenta);margin-bottom:.4rem}
+.cp.done .cphead{color:var(--good)}
+.cp.locked .cphead{color:var(--text-light)}
+.progress{border:none}
+.lockmsg{font-family:var(--sans);font-size:.82rem;color:var(--text-light);margin:.4rem 0 0}
+.cp .q,.cp .hint,.cp .msg{overflow-wrap:anywhere}
 
 /* ---------- pull quote ---------- */
 .pull{margin:2.2rem 0;padding:0 0 0 1.4rem;border-left:3px solid var(--magenta)}
@@ -131,7 +157,7 @@ li{margin-bottom:.45rem}
 
 /* ---------- responsive ---------- */
 @media (max-width:860px){
-  .shell{grid-template-columns:1fr;gap:0;padding:0 1.15rem 4rem}
+  .shell{grid-template-columns:minmax(0,1fr);gap:0;padding:0 1.15rem 4rem}
   .rail{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);padding:1.5rem 0 1rem;margin-bottom:.5rem}
   .rail nav{display:none}
   .rail nav.open{display:block;margin-top:.8rem}
@@ -256,7 +282,7 @@ li{margin-bottom:.45rem}
 .stat span{font-size:12.5px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;font-family:var(--display)}
 .toc{border:1px solid var(--border);background:var(--off-white);padding:1rem 1.25rem;margin:1.6rem 0;font-family:var(--sans);font-size:14.5px;line-height:2}
 .toc strong{display:block;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.3rem}
-.toc a{color:var(--text-dark);text-decoration:none;border-bottom:1px solid var(--border);margin-right:1rem;white-space:nowrap}
+.toc a{color:var(--text-dark);text-decoration:none;border-bottom:1px solid var(--border);margin-right:1rem;white-space:normal}
 .toc a:hover{color:var(--magenta-dark);border-bottom-color:var(--magenta)}
 .kc{border:1px solid var(--border);border-left:4px solid var(--magenta);background:#fff;margin:1.4rem 0;padding:1rem 1.2rem}
 .kc .kc-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.15rem}
@@ -328,7 +354,7 @@ li{margin-bottom:.45rem}
   <button class="railtoggle" aria-expanded="false" aria-controls="chapnav">Lab contents</button>
   <nav id="chapnav">
     <a href="#top">Overview</a><a href="#steps">The work</a>
-    <a href="#checkpoints">Checkpoints</a><a href="#submit">What to submit</a>
+    <a href="#finish">Reflection &amp; certificate</a><a href="#submit">What to submit</a>
     <a href="index.html">↳ Chapter 8 · BI &amp; Analytics (coming)</a>
   </nav>
   <a class="back" href="index.html">← All chapters &amp; labs</a>
@@ -352,6 +378,15 @@ li{margin-bottom:.45rem}
   <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
   <div class="lighttext"><strong>Green &middot; AI as coach</strong>
   <p>Tableau questions are perfect coach material: ask an AI where a setting lives or why your chart shows SUM when you wanted a percentage, then make the change yourself. The dashboard you submit must be assembled by you.</p></div>
+</div>
+
+<div class="callout callout-bridge"><strong>How the checkpoints work</strong>
+<p style="font-family:var(--sans);font-size:.95rem">Here is how this works. Each checkpoint sits directly under the work that produces it. You do the actual work in your own file, then paste the answer here. Get it right and the
+next question opens up. There is no penalty for a wrong answer, so guess, check, and lean on the hint if
+you get stuck. That is what it is there for.</p>
+<p style="font-family:var(--sans);font-size:.95rem">Once you have cleared them all, write your reflection
+and download your certificate for Canvas. Your progress saves automatically in this browser, so you can close the tab and pick up where you left off. It does not follow you to a different computer or a private window, and clearing your browser data clears it. If you need to start this lab over, use the <button type="button" class="hintb" onclick="resetLab()">Reset this lab</button> button.</p>
+<div class="progress" id="prog">Checkpoint progress: 0 / 8</div>
 </div>
 
 <h2><span class="num">Part 1</span>Worksheets and dashboards are different things</h2>
@@ -392,30 +427,45 @@ in Part A assumes you have seen it before.</p>
 
 <h3>Follow along: connect, then your first worksheet</h3>
 <ol>
-<li><strong>Step 1 · Connect.</strong> Open Tableau. On the left, under Connect &#8594; To a File,
+<div class="sh" id="step1"><span class="badge">Step 1</span><span class="ttl">Connect</span></div>
+<p>Open Tableau. On the left, under Connect &#8594; To a File,
 click <strong>Text file</strong> and pick <code class="inline">cascadia-sales-2025.csv</code>. The
-Data Source screen opens with the data in a grid.</li>
-<li><strong>Step 2 · Check what Tableau read.</strong> Look at the column headers: revenue should
+Data Source screen opens with the data in a grid.</p>
+
+<div class="sh" id="step2"><span class="badge">Step 2</span><span class="ttl">Check what Tableau read</span><span class="cpx">Answer goes in <b>Checkpoint 1</b></span></div>
+<p>Look at the column headers: revenue should
 show a <strong>#</strong> (number) and sale_date a calendar icon (date). If either shows
 <strong>Abc</strong> (text), click that icon and change the data type now; fixing types here is much
-easier than fixing them under six charts. Then read the row count at the bottom left of the grid.
-<em>Checkpoint 1.</em></li>
-<li><strong>Step 3 · Open a worksheet.</strong> Click <strong>Sheet 1</strong> at the bottom of the
+easier than fixing them under six charts. Then read the row count at the bottom left of the grid.</p>
+
+<div class="cpslot" data-cp="1"></div>
+
+<div class="sh" id="step3"><span class="badge">Step 3</span><span class="ttl">Open a worksheet</span></div>
+<p>Click <strong>Sheet 1</strong> at the bottom of the
 window. The layout you are looking at: your columns are listed in the <strong>Data pane</strong> on
 the left, and the empty <strong>Rows</strong> and <strong>Columns</strong> shelves run across the
 top. Building a chart in Tableau is dragging fields from the pane onto the shelves. That is the whole
-mechanism.</li>
-<li><strong>Step 4 · Build the bar chart.</strong> Drag <code class="inline">store</code> from the
+mechanism.</p>
+
+<div class="sh" id="step4"><span class="badge">Step 4</span><span class="ttl">Build the bar chart</span></div>
+<p>Drag <code class="inline">store</code> from the
 Data pane onto the <strong>Rows</strong> shelf. Drag <code class="inline">revenue</code> onto the
 <strong>Columns</strong> shelf; Tableau wraps it as SUM(revenue) automatically and bars appear, one
-per store.</li>
-<li><strong>Step 5 · Sort it.</strong> Click the <strong>sort descending</strong> button in the
+per store.</p>
+
+<div class="sh" id="step5"><span class="badge">Step 5</span><span class="ttl">Sort it</span></div>
+<p>Click the <strong>sort descending</strong> button in the
 toolbar (bars with a down arrow). The stores fall into revenue order. Notice how much faster this was
-than the Excel version. Read the chart for the second-place store. <em>Checkpoint 2.</em></li>
-<li><strong>Step 6 · Name the sheet.</strong> Double-click the Sheet 1 tab at the bottom and rename
+than the Excel version. Read the chart for the second-place store.</p>
+
+<div class="sh" id="step6"><span class="badge">Step 6</span><span class="ttl">Name the sheet</span><span class="cpx">Answer goes in <b>Checkpoint 2</b></span></div>
+<p>Double-click the Sheet 1 tab at the bottom and rename
 it <code class="inline">Revenue by Store</code>. Do this for every sheet you make today; the
-dashboard step will thank you.</li>
+dashboard step will thank you.</p>
+
 </ol>
+
+<div class="cpslot" data-cp="2"></div>
 
 <h3>Now you: four more worksheets</h3>
 <p>Each task tells you the fields, the shelves, and the clicks. Make a new sheet for each (the
@@ -449,6 +499,12 @@ are about to see; watch what happens when it is drawn instead of tabulated. One 
 the others. <em>Checkpoint 7.</em></li>
 </ol>
 
+<div class="cpslot" data-cp="3"></div>
+<div class="cpslot" data-cp="4"></div>
+<div class="cpslot" data-cp="5"></div>
+<div class="cpslot" data-cp="6"></div>
+<div class="cpslot" data-cp="7"></div>
+
 <h2><span class="num">Part 3</span>Assemble the dashboard</h2>
 
 <ol>
@@ -466,6 +522,8 @@ Flagship and watch the rest of the screen answer a new question. Nothing in Exce
 on.</li>
 </ol>
 
+<div class="cpslot" data-cp="8"></div>
+
 <div class="callout callout-caution"><strong>The honest question, again</strong>
 <p>Your dashboard is built mostly on revenue, and revenue at this co-op looks fine. In Lab 5 you found
 something that revenue never showed you. Look at your finished screen and ask what else it would fail to
@@ -478,15 +536,8 @@ players the market underpriced. A merchant looks for categories earning a high r
 Which category would you tell Cascadia to promote harder? There is no checkpoint for this and more than
 one defensible answer; your pick and one sentence of reasoning go in the submission note.</p></div></div>
 
-<h2 id="checkpoints"><span class="num">Required</span>Checkpoints <span style="font-weight:400;color:var(--muted);font-size:.65em">, complete as you work</span></h2>
-<p style="font-family:var(--sans);font-size:.95rem">Here is how this works. Each checkpoint matches a
-step above. You do the actual work in your own file, then paste the answer here. Get it right and the
-next question opens up. There is no penalty for a wrong answer, so guess, check, and lean on the hint if
-you get stuck. That is what it is there for.</p>
-<p style="font-family:var(--sans);font-size:.95rem">Once you have cleared them all, write your reflection
-and download your certificate for Canvas. Your progress saves automatically in this browser, so you can close the tab and pick up where you left off. It does not follow you to a different computer or a private window, and clearing your browser data clears it. If you need to start this lab over, use the <button type="button" class="hintb" onclick="resetLab()">Reset this lab</button> button.</p>
-<div class="progress" id="prog">Checkpoint progress: 0 / 8</div>
-<div id="cps"></div>
+<h2 id="finish"><span class="num">Finish</span>Reflection &amp; certificate</h2>
+
 <div class="certbox" id="reflectbox">
   <h3>One last thing before your certificate</h3>
   <p style="font-family:var(--sans);font-size:.88rem">You built a dashboard that shows revenue, and revenue at this co-op looks healthy. In the field you plan to enter, name one dashboard you have seen or can imagine that would show green while something serious was going wrong underneath. What single chart would you add to catch it?</p>
@@ -535,16 +586,20 @@ function resetLab(){if(!confirm('Clear your saved progress for this lab and star
  render();if(r)r.dispatchEvent(new Event('input',{bubbles:true}));}
 const norm=s=>s.replace(/[$,\s]/g,'').toLowerCase();
 function render(){
- const c=document.getElementById('cps');c.innerHTML='';
  QS.forEach((q,i)=>{
+  const c=document.querySelector('.cpslot[data-cp="'+(i+1)+'"]');
+  if(!c)return; c.innerHTML='';
+  const lock=i>0&&!solved.has(i-1);
   const d=document.createElement('div');
-  d.className='cp'+(solved.has(i)?' done':(i>0&&!solved.has(i-1)?' locked':''));
-  d.innerHTML='<p class="q">'+q.q+'</p>'
+  d.className='cp'+(solved.has(i)?' done':(lock?' locked':''));
+  d.innerHTML='<span class="cphead">Checkpoint '+(i+1)+' of '+QS.length+(solved.has(i)?' \u00b7 cleared':'')+'</span>'
+   +'<p class="q">'+q.q+'</p>'
    +(solved.has(i)?'<p class="msg" style="color:var(--good)">Correct.</p>':'<input type="text" id="in'+i+'" aria-label="Answer '+(i+1)+'">'
    +'<button onclick="chk('+i+')">Check</button>'
    +'<button class="hintb" onclick="hint('+i+')">Hint</button>'
    +'<p class="msg" id="m'+i+'"></p><p class="hint" id="h'+i+'">'+q.h+'</p>');
-  c.appendChild(d);});
+  c.appendChild(d);
+  if(lock)c.insertAdjacentHTML('beforeend','<p class="lockmsg">Clear Checkpoint '+i+' first.</p>');});
  document.getElementById('prog').textContent='Checkpoint progress: '+solved.size+' / '+QS.length;
  const done=solved.size===QS.length;
  document.getElementById('reflectbox').className='certbox'+(done?' show':'');
