@@ -128,7 +128,9 @@ li{margin-bottom:.45rem}
 
 /* ---------- responsive ---------- */
 @media (max-width:860px){
-  .shell{grid-template-columns:1fr;gap:0;padding:0 1.15rem 4rem}
+  .shell{grid-template-columns:minmax(0,1fr);gap:0;padding:0 1.15rem 4rem}
+  .toc a{white-space:normal}
+  main table{display:block;overflow-x:auto;max-width:100%}
   .rail{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);padding:1.5rem 0 1rem;margin-bottom:.5rem}
   .rail nav{display:none}
   .rail nav.open{display:block;margin-top:.8rem}
@@ -268,6 +270,67 @@ li{margin-bottom:.45rem}
 .concepts{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;margin:1.1rem 0 0}
 .concepts .clabel{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-right:.3rem}
 .concepts span:not(.clabel){font-family:var(--display);font-size:12.5px;font-weight:500;letter-spacing:.04em;border:1px solid var(--border);background:var(--off-white);padding:.22rem .6rem;color:var(--text-dark)}
+
+/* ---------- five-component simulator ---------- */
+.sim5{border:1px solid var(--border);background:var(--white);margin:2.4rem 0;box-shadow:0 2px 16px rgba(0,0,0,.07)}
+.sim5-head{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#fff;background:var(--black);padding:.7rem 1rem;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.sim5-head span:last-child{color:rgba(255,255,255,.65);letter-spacing:.1em}
+.sim5-body{display:grid;grid-template-columns:minmax(0,1fr) 15.5rem;gap:1.6rem;padding:1.2rem 1.3rem 1.4rem}
+.sim5-intro{grid-column:1/-1;font-size:16.5px;color:var(--text-muted);margin:0}
+.sim5-row{display:grid;grid-template-columns:6.2rem minmax(0,1fr) 2.2rem;align-items:center;gap:.7rem;margin:.55rem 0}
+.sim5 input[type=range]{min-width:0}
+.sim5-row label{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted)}
+.sim5-row.weak label{color:var(--magenta)}
+.sim5-row output{font-family:var(--display);font-size:14px;font-weight:600;text-align:right;color:var(--text-muted)}
+.sim5-row.weak output{color:var(--magenta)}
+.sim5 input[type=range]{width:100%;accent-color:var(--magenta);height:22px;cursor:pointer}
+.sim5-meter{display:flex;align-items:flex-end;gap:6px;height:74px;position:relative;margin:1rem 0 .3rem;border-bottom:1.4px solid var(--ink);padding:0 2px}
+.sim5-bar{flex:1;background:var(--off-white);border:1px solid var(--border);min-height:2px}
+.sim5-bar.weak{background:var(--magenta-pale);border-color:var(--magenta)}
+.sim5-ceil{position:absolute;left:0;right:0;border-top:1.6px dashed var(--magenta);pointer-events:none}
+.sim5-read{font-size:15px;color:var(--text-muted);margin:.4rem 0 0;min-height:3.2em}
+.sim5-read b{color:var(--magenta)}
+.sim5-hint{font-size:14px;color:var(--text-light);margin:.35rem 0 0;min-height:1.5em;font-style:normal}
+.sim5-presets{display:flex;flex-wrap:wrap;gap:.45rem;margin:.9rem 0 0}
+.sim5-presets button{font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:var(--off-white);border:1px solid var(--border);padding:.4rem .7rem;cursor:pointer;color:var(--text-dark)}
+.sim5-presets button:hover{background:var(--magenta-pale);border-color:var(--magenta);color:var(--magenta-dark)}
+.sim5-phone{background:#0b0b0a;border:1px solid var(--black);border-radius:18px;padding:1rem .95rem 1.1rem;color:#fff;min-height:19rem;display:flex;flex-direction:column;align-self:start;width:100%}
+.sim5-phone .ph-eyebrow{font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--magenta);margin:0 0 .55rem}
+.sim5-phone .ph-big{font-family:var(--display);font-size:1.5rem;font-weight:700;line-height:1.12;margin:0 0 .7rem;text-transform:uppercase}
+.sim5-phone .ph-stat{border-top:1px solid rgba(255,255,255,.18);padding:.5rem 0}
+.sim5-phone .ph-stat span{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55);font-family:var(--display);font-weight:600}
+.sim5-phone .ph-stat b{font-size:16px;font-weight:600;color:#fff;line-height:1.3}
+.sim5-phone .ph-note{margin-top:auto;padding-top:.7rem;font-size:12.5px;line-height:1.45;color:rgba(255,255,255,.62)}
+.sim5-phone.dim .ph-big,.sim5-phone.dim .ph-stat{opacity:.45}
+.sim5-phone .ph-err{font-family:ui-monospace,Menlo,monospace;font-size:12.5px;color:#ff8f8f;background:rgba(213,69,58,.12);border:1px solid rgba(213,69,58,.5);padding:.5rem .6rem;margin:.4rem 0 0}
+.sim5-phone .ph-spin{width:26px;height:26px;border:3px solid rgba(255,255,255,.2);border-top-color:var(--magenta);border-radius:50%;margin:2.2rem auto 1rem;animation:sim5spin 1s linear infinite}
+@keyframes sim5spin{to{transform:rotate(360deg)}}
+.sim5-caption{grid-column:1/-1;font-size:14.5px;color:var(--text-light);border-top:1px solid var(--border);padding-top:.8rem;margin:0}
+@media (max-width:860px){.sim5-body{grid-template-columns:minmax(0,1fr)}.sim5-phone{max-width:19rem;margin:0 auto}}
+
+@media (max-width:860px){.toc a{white-space:normal}main table{display:block;overflow-x:auto;max-width:100%}}
+
+/* ---------- remarkable-day simulator ---------- */
+.s6ctl{margin:.75rem 0;display:grid;grid-template-columns:9.5rem minmax(0,1fr);gap:.7rem;align-items:center}
+.s6ctl>span{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted)}
+.s6btns{display:flex;flex-wrap:wrap;gap:.4rem}
+.s6btns button{font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--off-white);border:1px solid var(--border);padding:.4rem .65rem;cursor:pointer;color:var(--text-dark)}
+.s6btns button[aria-pressed="true"]{background:var(--magenta);border-color:var(--magenta);color:#fff}
+.s6btns button:not([aria-pressed="true"]):hover{background:var(--magenta-pale);border-color:var(--magenta);color:var(--magenta-dark)}
+.s6thr{display:flex;align-items:center;gap:.7rem}
+.s6thr input{flex:1;min-width:0;accent-color:var(--magenta);height:22px;cursor:pointer}
+.s6thr output{font-family:var(--display);font-size:14px;font-weight:600;color:var(--magenta);white-space:nowrap;min-width:4.2rem}
+.s6days{display:flex;gap:6px;align-items:flex-end;margin:1.1rem 0 .2rem;border-bottom:1.4px solid var(--ink);padding:0 2px;height:78px}
+.s6day{flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%}
+.s6day i{display:block;background:var(--off-white);border:1px solid var(--border);font-style:normal}
+.s6day.win i{background:var(--magenta-pale);border-color:var(--magenta)}
+.s6daylbl{display:flex;gap:6px;padding:0 2px;margin-bottom:.4rem}
+.s6daylbl span{flex:1;text-align:center;font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.04em;color:var(--text-light)}
+.s6daylbl span.win{color:var(--magenta)}
+@media (max-width:860px){.s6ctl{grid-template-columns:1fr;gap:.3rem}}
+#s6table table{display:block;overflow-x:auto;max-width:100%;border-collapse:collapse;font-size:13px;white-space:nowrap}
+#s6table th,#s6table td{border:1px solid var(--border);padding:.28rem .55rem;text-align:left}
+#s6table th{background:var(--off-white);font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted)}
 </style></head><body>
 <nav class="topnav">
   <div class="topnav-in">
@@ -636,10 +699,44 @@ is just the one people check last.
 </figure>
 
 
+
+<div class="sim5" id="sim">
+  <div class="sim5-head"><span>Try it &middot; Ship Wrapped yourself</span><span>The weakest component rule, live</span></div>
+  <div class="sim5-body">
+    <p class="sim5-intro">You run the five components behind Wrapped Archive, the system the next section takes
+    apart. Each slider is how well one component works today, from 0 to 100. The phone shows what listener
+    u_4471 receives. Drag anything. Then try to raise output quality without touching the weakest slider,
+    and watch what the diagram above already told you.</p>
+    <div>
+      <div class="sim5-row" data-c="Hardware"><label for="s5hw">Hardware</label><input type="range" id="s5hw" min="0" max="100" value="92" aria-describedby="s5read"><output>92</output></div>
+      <div class="sim5-row" data-c="Software"><label for="s5sw">Software</label><input type="range" id="s5sw" min="0" max="100" value="90" aria-describedby="s5read"><output>90</output></div>
+      <div class="sim5-row" data-c="Data"><label for="s5da">Data</label><input type="range" id="s5da" min="0" max="100" value="94" aria-describedby="s5read"><output>94</output></div>
+      <div class="sim5-row" data-c="Networks"><label for="s5ne">Networks</label><input type="range" id="s5ne" min="0" max="100" value="91" aria-describedby="s5read"><output>91</output></div>
+      <div class="sim5-row" data-c="People"><label for="s5pe">People</label><input type="range" id="s5pe" min="0" max="100" value="88" aria-describedby="s5read"><output>88</output></div>
+      <div class="sim5-meter" id="s5meter" aria-hidden="true"></div>
+      <p class="sim5-read" id="s5read" aria-live="polite"></p>
+      <p class="sim5-hint" id="s5hint" aria-live="polite"></p>
+      <div class="sim5-presets">
+        <button type="button" data-p="35,90,95,92,90">Launch day crash</button>
+        <button type="button" data-p="93,91,30,90,89">Dirty data</button>
+        <button type="button" data-p="95,94,96,93,25">Nobody runs it</button>
+        <button type="button" data-p="92,90,94,91,88">All strong</button>
+      </div>
+    </div>
+    <div class="sim5-phone" id="s5phone" role="img" aria-label="Preview of the Wrapped card your users receive"></div>
+    <p class="sim5-caption">Notice which failures look like failures and which look fine. A hardware crash announces
+    itself. A data problem or a people problem ships a convincing card that happens to be wrong, which is why the
+    chapter told you to walk all five before assigning blame. Every failure you just caused is a real decision from
+    the next section: the catalog join, the pre-computed math, the warm-up traffic, the 165,000-story quality check.
+    As you read, match each subsection to the slider that protects it. And bring your answer to Wednesday: which
+    component would you cut budget from first, and what would you watch for afterward?</p>
+  </div>
+</div>
+
 <p>The rest of this chapter is one worked example. Spotify Wrapped is a good first system to take apart
 because you have seen what it produces and never once seen the thing that produces it, which is true of
 nearly every system you will ever meet. You are about to locate all five components inside it and watch what each one had to do
-for the thing to arrive on your phone in December.</p>
+for the thing to arrive on your phone in December. Each subsection is also the repair manual for one of the sliders you just broke.</p>
 
 <p>Next week you meet a company running the same five on coffee. By Week 4 you meet companies where a
 component is broken, and you practice locating which one.</p>
@@ -782,6 +879,47 @@ turned into arithmetic a machine can run. That is translation, the thing named a
 its actual day job. It is most of what data work is, and you will do a smaller version of it in every
 lab this quarter: someone hands you a question in English and you have to decide what it means in
 columns and formulas before you can answer it.</p>
+
+<div class="sim5" id="remarkable">
+  <div class="sim5-head"><span>Try it &middot; You define remarkable</span><span>Translation, live</span></div>
+  <div class="sim5-body">
+    <p class="sim5-intro">These are u_4471's play events for one week in November, the school-run rows included.
+    They never change. You make the three decisions Spotify's team made, and the card shows which day the
+    arithmetic finds. Change one decision at a time and watch what the same rows say.</p>
+    <div>
+      <div class="s6ctl"><span>Remarkable means</span>
+        <div class="s6btns" id="s6heur">
+          <button type="button" data-h="mins" aria-pressed="true">Most minutes</button>
+          <button type="button" data-h="disc" aria-pressed="false">Most new artists</button>
+          <button type="button" data-h="unus" aria-pressed="false">Furthest from usual taste</button>
+        </div>
+      </div>
+      <div class="s6ctl"><span>A play counts after</span>
+        <div class="s6thr"><input type="range" id="s6thr" min="5" max="60" value="30" step="1" aria-describedby="s6read"><output id="s6thrv">30 seconds</output></div>
+      </div>
+      <div class="s6ctl"><span>A day ends at</span>
+        <div class="s6btns" id="s6clock">
+          <button type="button" data-c="local" aria-pressed="true">Midnight in Seattle</button>
+          <button type="button" data-c="utc" aria-pressed="false">Midnight UTC</button>
+        </div>
+      </div>
+      <div class="s6days" id="s6days" aria-hidden="true"></div>
+      <div class="s6daylbl" id="s6daylbl" aria-hidden="true"></div>
+      <p class="sim5-read" id="s6read" aria-live="polite"></p>
+      <p class="sim5-hint" id="s6hint" aria-live="polite"></p>
+      <details class="howto"><summary>See the 45 play events (the raw data)</summary>
+        <div class="howto-body" id="s6table"></div>
+      </details>
+    </div>
+    <div class="sim5-phone" id="s6phone" role="img" aria-label="The Wrapped card produced by your current definitions"></div>
+    <p class="sim5-caption">The rows never changed. Only your definitions did, and every card this thing produced was
+    correct. That is translation doing its day job: an English question became a threshold, a clock, and a ranking
+    rule, and the answer inherited all three choices. Every lab this quarter hands you the same job, and in Week 6
+    you will meet a baseball team that won by making these definitions better than everyone else. When someone shows
+    you a number this quarter, your first question now has to be: counted how?</p>
+  </div>
+</div>
+
 
 <p>At the end of all that, the data component has done its job. Out of a year of raw rows, each
 listener now has a handful of candidate days and the numbers that describe them. Nothing has been
@@ -1007,21 +1145,24 @@ for your own thinking, or during exams, is never fine.</p></div>
 <table>
 <tr><td class="t">0:00</td><td class="w">Open</td><td>Short course overview: what the weeks look like, Monday concepts and Wednesday cases, where the exams fall. Skip lab mechanics entirely; the lab session handles all of that on Thursday.</td></tr>
 <tr><td class="t">0:10</td><td class="w">Share</td><td>Everyone pulls up their own Wrapped and shows the person next to them. Then take four or five out loud. Prompts that work: whose is most embarrassing, whose is flat wrong about them, and who has somebody else's listening in theirs. Somebody always does, and that is the account-versus-person point handed to you for free.</td></tr>
-<tr><td class="t">0:22</td><td class="w">Lecture</td><td>The five components, built up through Wrapped rather than defined abstractly. Every card in the room is the output of the system you are describing, which is the whole reason to do the sharing first.</td></tr>
-<tr><td class="t">1:00</td><td class="w">Activity</td><td>Groups form and work the four discussion questions. See below.</td></tr>
-<tr><td class="t">1:17</td><td class="w">Close</td><td>Preview next Monday: Starbucks, and what makes information worth paying for. Tell them to sort themselves into discussion groups before Wednesday of Week 2.</td></tr>
+<tr><td class="t">0:22</td><td class="w">Lecture</td><td>The five components, built up through Wrapped rather than defined abstractly. Every card in the room is the output of the system you are describing, which is the whole reason to do the sharing first. If the room has a screen, the Ship Wrapped simulator in the chapter is built to be projected: break one component live and let them watch the card degrade, then ask which failures they would have caught from the outside.</td></tr>
+<tr><td class="t">0:55</td><td class="w">Activity</td><td>Groups form, work the four discussion questions, then run the definitions task on the You define remarkable simulator. See below.</td></tr>
+<tr><td class="t">1:16</td><td class="w">Close</td><td>Preview next Monday: Starbucks, and what makes information worth paying for. Tell them to sort themselves into discussion groups before Wednesday of Week 2.</td></tr>
 </table></div>
 
 <div class="tps">
-  <div class="tps-head"><span>Wednesday activity &middot; The discussion questions</span><span class="mins">17 minutes</span></div>
+  <div class="tps-head"><span>Wednesday activity &middot; The questions, then the definitions</span><span class="mins">21 minutes</span></div>
   <div class="tps-body">
-    <p class="tps-setup">You will work the four discussion questions from this chapter in small groups. Start with question one, because it gets you comparing phones with people you have not met yet, and because it is a social question with a technical answer.</p>
+    <p class="tps-setup">You will work the four discussion questions from this chapter in small groups, then
+    settle a question with the <a href="#remarkable">You define remarkable simulator</a>. Have one phone or laptop
+    per group open to it. Start with question one, because it gets you comparing phones with people you have not
+    met yet, and because it is a social question with a technical answer.</p>
     <div class="tps-steps">
       <div class="tps-step"><div class="ph">Get into groups <span>2 min</span></div><p>Pick your own, three or four of you. Sit with people you do not already know if you can stand it.</p></div>
       <div class="tps-step"><div class="ph">Work the questions <span>10 min</span></div><p>All four. Write one sentence for each answer. If your group has nothing written down, your group has not finished.</p></div>
-      <div class="tps-step"><div class="ph">Share <span>5 min</span></div><p>A few groups take question one out loud, then one takes question two. Three and four are the ones worth arguing about on the way out.</p></div>
+      <div class="tps-step"><div class="ph">The definitions task <span>9 min</span></div><p>On the simulator, produce two cards from the same 45 rows that name two different remarkable days. Write down the settings that did it. Then agree on one sentence: which card should Spotify ship, and why? We will hear a few sentences out loud, and questions three and four are the ones worth arguing about on the way out.</p></div>
     </div>
-    <div class="tps-note"><strong>Where this usually lands</strong>On question one, somebody in your group almost certainly has a sibling, a roommate, or a partner in their listening history, and most groups blame the data. Push on that before you settle. The data recorded exactly what happened, play by play, and it was right about every one of those plays. What the system never had was any way to tell one listener from another, and that was not an accident in the data. It was a decision somebody made, or never got around to making. Question four is the one that sticks. Most people can name the component they would notice failing tonight. Almost nobody guesses the one that could be broken for months, and that is usually data.</div>
+    <div class="tps-note"><strong>Where this usually lands</strong>On question one, somebody in your group almost certainly has a sibling, a roommate, or a partner in their listening history, and most groups blame the data. Push on that before you settle. The data recorded exactly what happened, play by play, and it was right about every one of those plays. What the system never had was any way to tell one listener from another, and that was not an accident in the data. It was a decision somebody made, or never got around to making. Question four is the one that sticks. Most people can name the component they would notice failing tonight. Almost nobody guesses the one that could be broken for months, and that is usually data. The definitions task closes the loop: every sentence a group defends is a definition, and whichever card they pick, the rows never changed. That is also the answer to the broken-for-months question. A bad definition ships correct-looking cards forever, and the groups just operated one by hand.</div>
   </div>
 </div>
 <div class="ailight g">
@@ -1097,6 +1238,238 @@ b.setAttribute('aria-expanded',o?'true':'false');});})();</script><!--NAVJS-->
   document.querySelectorAll('.dd-menu').forEach(function(m){
     m.addEventListener('click',function(e){e.stopPropagation();});
   });
+})();
+</script>
+
+<script>
+(function(){
+  var ids=['s5hw','s5sw','s5da','s5ne','s5pe'];
+  var names=['Hardware','Software','Data','Networks','People'];
+  var rows=[].slice.call(document.querySelectorAll('.sim5-row'));
+  var sliders=ids.map(function(i){return document.getElementById(i);});
+  if(sliders.some(function(s){return !s;}))return;
+  var meter=document.getElementById('s5meter'), read=document.getElementById('s5read'),
+      hint=document.getElementById('s5hint'), phone=document.getElementById('s5phone');
+
+  function stat(l,v){return '<div class="ph-stat"><span>'+l+'</span><b>'+v+'</b></div>';}
+  function card(top,mins,song,note,cls){
+    return '<p class="ph-eyebrow">Wrapped 2025</p><p class="ph-big">Your year in listening</p>'
+      +stat('Minutes listened',mins)+stat('Top artist',top)+stat('Top song',song)
+      +(note?'<p class="ph-note">'+note+'</p>':'');
+  }
+  function render(){
+    var vals=sliders.map(function(s){return +s.value;});
+    var min=Math.min.apply(null,vals);
+    var wi=vals.indexOf(min);
+    rows.forEach(function(r,i){
+      r.classList.toggle('weak',i===wi);
+      r.querySelector('output').textContent=vals[i];
+    });
+    meter.innerHTML='';
+    vals.forEach(function(v,i){
+      var b=document.createElement('div');
+      b.className='sim5-bar'+(i===wi?' weak':'');
+      b.style.height=Math.max(2,v*0.72)+'px';
+      b.title=names[i]+' '+v;
+      meter.appendChild(b);
+    });
+    var line=document.createElement('div');
+    line.className='sim5-ceil'; line.style.bottom=Math.max(2,min*0.72)+'px';
+    meter.appendChild(line);
+    read.innerHTML='System quality: <b>'+min+'%</b>. Ceiling set by: <b>'+names[wi]+'</b>. The other four cannot lift it.';
+    phone.className='sim5-phone';
+    var n=names[wi], html='';
+    if(min>=85){
+      html=card('Sum 41','43,682','In Too Deep','Five remarkable days found, your story written and checked before launch. When every component works, you never see any of this.');
+    }else if(n==='Hardware'){
+      if(min>=60){phone.className+=' dim';html=card('Sum 41','43,682','In Too Deep','Loaded in 9 seconds. Wrapped does not climb, it spikes, and nothing was warmed up in time.');}
+      else if(min>=35){html='<p class="ph-eyebrow">Wrapped 2025</p><div class="ph-spin"></div><p class="ph-note">Still generating. Nobody ran the fake traffic ahead of launch, so when real traffic arrived, everything was cold.</p>';}
+      else{html='<p class="ph-eyebrow">Wrapped 2025</p><p class="ph-big">503</p><p class="ph-note">The capacity request never got approved in that meeting weeks ago. The servers you have are the servers you budgeted, and launch morning only happens once.</p>';}
+    }else if(n==='Software'){
+      if(min>=60){html=card('Sum 41','43,682, which is 14 hours every day','In Too Deep','The model was asked to do its own arithmetic. Language models are bad at math, which is exactly why the real build sent pre-computed numbers.');}
+      else if(min>=35){html=card('{artist.name}','43,682','In Too Deep','A template variable leaked into 1.4 billion stories. The three months of daily prompt work got cut to three days.');}
+      else{html='<p class="ph-eyebrow">Wrapped 2025</p><p class="ph-big">Something went wrong</p><div class="ph-err">TypeError: undefined is not a function</div><p class="ph-note">The pipeline crashed on listener one. 1.4 billion stories owed, zero written.</p>';}
+    }else if(n==='Data'){
+      if(min>=60){html=card('Auli\u2019i Cravalho','43,682','Beyond','Not wrong about the data, wrong about the person. Three morning plays on a car speaker was the school run. The system has an account, not a family.');}
+      else if(min>=35){html=card('Sum 41','1,440,000','In Too Deep','More minutes than the year contains. Play events got double-counted overnight, and the biggest-day pick used UTC instead of your local day. Small steps, easy to get wrong, invisible when you do.');}
+      else{html=card('track_id 8c19af','NaN','track_id 22d0b1','The join to the song catalog failed, so there are IDs where names should be. You will run this exact join yourself in Week 7.');}
+    }else if(n==='Networks'){
+      if(min>=60){html=card('Sum 41','43,682','(did not arrive)','One request in three failed, and nobody decided in advance what should happen to the ones that fail. The card shipped with a hole in it.');}
+      else if(min>=35){phone.className+=' dim';html=card('Sum 41','(still loading)','(still loading)','You notice a network exactly once, and that is when it stops. It stopped.');}
+      else{html='<p class="ph-eyebrow">Wrapped 2025</p><p class="ph-big">You are offline</p><p class="ph-note">1.4 billion finished stories are sitting in storage. Not one of them can reach a phone, so for every listener on earth, none of them exist.</p>';}
+    }else{
+      if(min>=60){html=card('Sum 41','43,682','In Too Deep','Made for Jordan P. The 165,000-story quality check was cut to save a week, and this shipped with someone else\u2019s year in it. It looked right.');}
+      else if(min>=35){html=card('Sum 41','0','In Too Deep','Zero minutes. A rushed edit broke the link to your account, and the evaluation dashboard that would have caught it had nobody assigned to read it.');}
+      else{html='<p class="ph-eyebrow">Wrapped 2025</p><p class="ph-big">&nbsp;</p><p class="ph-note">The team behind Wrapped was reassigned in June. The hardware still runs and the data still collects. A system with no people in it is not a system. It is equipment.</p>';}
+    }
+    phone.innerHTML=html;
+    return {vals:vals,min:min,wi:wi};
+  }
+  var last=render(); hint.textContent='';
+  sliders.forEach(function(s,i){
+    s.addEventListener('input',function(){
+      var prev=last, cur=render();
+      if(i!==prev.wi && +s.value>prev.vals[i] && cur.min===prev.min){
+        hint.textContent='You raised '+names[i]+' and system quality did not move. That was not the weakest component.';
+      }else if(cur.min>prev.min){
+        hint.textContent='Quality rose. The only move that raises the ceiling is fixing the short bar.';
+      }else if(cur.min<prev.min && i===cur.wi){
+        hint.textContent=names[i]+' is now the weakest component, so it sets what everyone receives.';
+      }
+      last=cur;
+    });
+  });
+  [].slice.call(document.querySelectorAll('.sim5-presets button')).forEach(function(b){
+    b.addEventListener('click',function(){
+      b.getAttribute('data-p').split(',').forEach(function(v,i){sliders[i].value=v;});
+      last=render();
+      hint.textContent='';
+    });
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var E=[
+["2025-11-03T15:07","Auli\u2019i Cravalho","Beyond","kids",184.0,"car speaker"],
+["2025-11-03T15:09","Auli\u2019i Cravalho","Beyond","kids",25.0,"car speaker"],
+["2025-11-03T15:10","Auli\u2019i Cravalho","Beyond","kids",25.0,"car speaker"],
+["2025-11-03T15:11","Auli\u2019i Cravalho","Beyond","kids",25.0,"car speaker"],
+["2025-11-03T16:41","Sum 41","Fat Lip","rock",176.0,"phone"],
+["2025-11-03T16:44","Sum 41","In Too Deep","rock",209.0,"phone"],
+["2025-11-04T15:07","Auli\u2019i Cravalho","Beyond","kids",184.3,"car speaker"],
+["2025-11-04T15:10","Auli\u2019i Cravalho","Beyond","kids",184.3,"car speaker"],
+["2025-11-04T15:13","Auli\u2019i Cravalho","Beyond","kids",21.88,"car speaker"],
+["2025-11-04T16:41","Sum 41","Fat Lip","rock",176.12,"phone"],
+["2025-11-04T16:44","Sum 41","In Too Deep","rock",208.94,"phone"],
+["2025-11-05T15:07","Auli\u2019i Cravalho","Beyond","kids",184.0,"car speaker"],
+["2025-11-05T15:09","Auli\u2019i Cravalho","Beyond","kids",25.0,"car speaker"],
+["2025-11-05T15:10","Auli\u2019i Cravalho","Beyond","kids",25.0,"car speaker"],
+["2025-11-05T15:11","Auli\u2019i Cravalho","Beyond","kids",25.0,"car speaker"],
+["2025-11-05T16:42","blink-182","All the Small Things","rock",167.0,"phone"],
+["2025-11-05T16:45","blink-182","Dammit","rock",165.0,"phone"],
+["2025-11-06T15:07","Auli\u2019i Cravalho","Beyond","kids",184.0,"car speaker"],
+["2025-11-06T15:09","Auli\u2019i Cravalho","Beyond","kids",25.0,"car speaker"],
+["2025-11-06T15:10","Auli\u2019i Cravalho","Beyond","kids",25.0,"car speaker"],
+["2025-11-06T17:00","The Beaches","Blame Brett","rock",205.0,"phone"],
+["2025-11-06T17:12","Momma","Speeding 72","rock",198.0,"phone"],
+["2025-11-06T17:25","Wet Leg","Chaise Longue","rock",210.0,"phone"],
+["2025-11-06T17:40","Beach Bunny","Prom Queen","rock",190.0,"phone"],
+["2025-11-06T17:55","Hot Mulligan","Drink Milk and Run","rock",202.0,"phone"],
+["2025-11-07T15:07","Auli\u2019i Cravalho","Beyond","kids",184.0,"car speaker"],
+["2025-11-07T15:09","Auli\u2019i Cravalho","Beyond","kids",25.0,"car speaker"],
+["2025-11-07T15:10","Auli\u2019i Cravalho","Beyond","kids",25.0,"car speaker"],
+["2025-11-07T15:11","Auli\u2019i Cravalho","Beyond","kids",25.0,"car speaker"],
+["2025-11-08T04:00","Green Day","American Idiot","rock",210.0,"headphones"],
+["2025-11-08T04:25","Green Day","Holiday","rock",190.0,"headphones"],
+["2025-11-08T04:50","Green Day","Boulevard of Broken Dreams","rock",200.0,"headphones"],
+["2025-11-08T05:15","Green Day","Basket Case","rock",195.0,"headphones"],
+["2025-11-08T05:40","blink-182","What\u2019s My Age Again?","rock",180.0,"headphones"],
+["2025-11-08T06:05","blink-182","Adam\u2019s Song","rock",220.0,"headphones"],
+["2025-11-08T06:30","blink-182","Feeling This","rock",167.0,"headphones"],
+["2025-11-08T06:55","Sum 41","Still Waiting","rock",195.0,"headphones"],
+["2025-11-08T07:20","Sum 41","The Hell Song","rock",198.0,"headphones"],
+["2025-11-08T07:45","Sum 41","Motivation","rock",155.0,"headphones"],
+["2025-11-09T17:00","John Coltrane","Naima","jazz",212.0,"kitchen speaker"],
+["2025-11-09T17:05","John Coltrane","Equinox","jazz",215.0,"kitchen speaker"],
+["2025-11-09T17:12","Bill Evans","Peace Piece","jazz",204.0,"kitchen speaker"],
+["2025-11-09T17:20","Bill Evans","Waltz for Debby","jazz",210.0,"kitchen speaker"],
+["2025-11-09T17:28","Miles Davis","Blue in Green","jazz",208.0,"kitchen speaker"],
+["2025-11-09T17:36","Miles Davis","So What","jazz",211.0,"kitchen speaker"]];
+  var phone=document.getElementById('s6phone');
+  if(!phone)return;
+  var read=document.getElementById('s6read'), hint=document.getElementById('s6hint'),
+      daysEl=document.getElementById('s6days'), lblEl=document.getElementById('s6daylbl'),
+      thr=document.getElementById('s6thr'), thrv=document.getElementById('s6thrv'),
+      heurBtns=[].slice.call(document.querySelectorAll('#s6heur button')),
+      clockBtns=[].slice.call(document.querySelectorAll('#s6clock button'));
+  var state={h:'mins',c:'local',t:30};
+  var WD=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+  var tbl=document.getElementById('s6table');
+  var rowsHtml='<table><tr><th>listener</th><th>track</th><th>artist</th><th>started at (UTC)</th><th>milliseconds played</th><th>device</th></tr>';
+  E.forEach(function(r){
+    rowsHtml+='<tr><td>u_4471</td><td>'+r[2]+'</td><td>'+r[1]+'</td><td>'+r[0].replace('T',' ')+'</td><td>'+Math.round(r[4]*1000).toLocaleString('en-US')+'</td><td>'+r[5]+'</td></tr>';
+  });
+  tbl.innerHTML=rowsHtml+'</table><p>Forty-five rows. A real listener produces this many before breakfast; Spotify records hundreds of billions a day. The point of the small table is that you can check the machine\u2019s answer by hand.</p>';
+
+  function dayKey(iso,c){
+    var ms=Date.parse(iso+':00Z');
+    if(c==='local')ms-=8*3600*1000;
+    return new Date(ms).toISOString().slice(0,10);
+  }
+  function fmt(d){
+    var dt=new Date(d+'T12:00:00Z');
+    return WD[dt.getUTCDay()]+', November '+ +d.slice(8);
+  }
+  function stat(l,v){return '<div class="ph-stat"><span>'+l+'</span><b>'+v+'</b></div>';}
+  function compute(){
+    var q=E.filter(function(r){return r[4]>=state.t;});
+    var days={},order=[];
+    q.forEach(function(r){
+      var d=dayKey(r[0],state.c);
+      if(!days[d]){days[d]={mins:0,off:0,firsts:0};order.push(d);}
+      days[d].mins+=r[4]/60;
+      if(r[3]!=='rock'&&r[3]!=='kids')days[d].off+=r[4]/60;
+    });
+    order.sort();
+    var seen={};
+    q.slice().sort(function(a,b){return a[0]<b[0]?-1:1;}).forEach(function(r){
+      if(!seen[r[1]]){seen[r[1]]=1;days[dayKey(r[0],state.c)].firsts++;}
+    });
+    function best(f){var w=order[0];order.forEach(function(d){if(f(days[d])>f(days[w]))w=d;});return w;}
+    var win = state.h==='mins'? best(function(x){return x.mins;})
+            : state.h==='disc'? best(function(x){return x.firsts;})
+            : best(function(x){return x.off/x.mins;});
+    var ac={};
+    q.forEach(function(r){ac[r[1]]=(ac[r[1]]||0)+1;});
+    var top=null;Object.keys(ac).sort().forEach(function(a){if(top===null||ac[a]>ac[top])top=a;});
+    return {days:days,order:order,win:win,top:top,counted:q.length,winStats:days[win]};
+  }
+  function render(){
+    thrv.textContent=state.t+' seconds';
+    var r=compute();
+    daysEl.innerHTML='';lblEl.innerHTML='';
+    var maxM=0;r.order.forEach(function(d){if(r.days[d].mins>maxM)maxM=r.days[d].mins;});
+    r.order.forEach(function(d){
+      var c=document.createElement('div');c.className='s6day'+(d===r.win?' win':'');
+      var bar=document.createElement('i');bar.style.height=Math.max(3,r.days[d].mins/maxM*70)+'px';
+      bar.title=fmt(d)+': '+Math.round(r.days[d].mins)+' min';
+      c.appendChild(bar);daysEl.appendChild(c);
+      var s=document.createElement('span');s.textContent='Nov '+ +d.slice(8);
+      if(d===r.win)s.className='win';lblEl.appendChild(s);
+    });
+    var story, label;
+    if(state.h==='mins'){label='Your biggest listening day';story=Math.round(r.winStats.mins)+' minutes of music in a single day. Nobody else came close, according to the definition you just wrote.';}
+    else if(state.h==='disc'){label='Your biggest discovery day';story=r.winStats.firsts+' artists you had never played before, all in one sitting. A taste in motion, says the arithmetic.';}
+    else{label='Your most unusual day';story=Math.round(100*r.winStats.off/r.winStats.mins)+'% of this day was nothing like your usual rotation. The algorithm calls that a departure. You might call it Sunday.';}
+    phone.innerHTML='<p class="ph-eyebrow">Wrapped 2025 &middot; A remarkable day</p><p class="ph-big">'+fmt(r.win)+'</p>'
+      +stat('The story',label)
+      +stat('Top artist, by plays that counted',r.top)
+      +stat('Plays that counted',r.counted+' of 45')
+      +'<p class="ph-note">'+story+'</p>';
+    read.innerHTML='Remarkable day: <b>'+fmt(r.win)+'</b>. Top artist: <b>'+r.top+'</b>. Both are downstream of your three definitions.';
+    return r;
+  }
+  var last=render();hint.textContent='';
+  function after(kind){
+    var cur=render();
+    if(kind==='clock'&&cur.win!==last.win){hint.textContent='Same rows. The remarkable day moved because you moved midnight.';}
+    else if(kind==='thr'&&cur.top!==last.top){hint.textContent='Same rows. The top artist changed because you changed what counts as listening.';}
+    else if(kind==='heur'&&cur.win!==last.win){hint.textContent='Same rows, different question, different remarkable day.';}
+    else{hint.textContent='Nothing moved this time. Not every definition changes every answer, which is exactly why the ones that do are easy to miss.';}
+    last=cur;
+  }
+  heurBtns.forEach(function(b){b.addEventListener('click',function(){
+    heurBtns.forEach(function(x){x.setAttribute('aria-pressed','false');});
+    b.setAttribute('aria-pressed','true');state.h=b.getAttribute('data-h');after('heur');
+  });});
+  clockBtns.forEach(function(b){b.addEventListener('click',function(){
+    clockBtns.forEach(function(x){x.setAttribute('aria-pressed','false');});
+    b.setAttribute('aria-pressed','true');state.c=b.getAttribute('data-c');after('clock');
+  });});
+  thr.addEventListener('input',function(){state.t=+thr.value;after('thr');});
 })();
 </script>
 </body></html>

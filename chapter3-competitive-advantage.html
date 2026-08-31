@@ -274,6 +274,40 @@ li{margin-bottom:.45rem}
 .concepts{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;margin:1.1rem 0 0}
 .concepts .clabel{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-right:.3rem}
 .concepts span:not(.clabel){font-family:var(--display);font-size:12.5px;font-weight:500;letter-spacing:.04em;border:1px solid var(--border);background:var(--off-white);padding:.22rem .6rem;color:var(--text-dark)}
+
+/* ---------- two-ledger loop simulator ---------- */
+.sim5{border:1px solid var(--border);background:var(--white);margin:2.4rem 0;box-shadow:0 2px 16px rgba(0,0,0,.07)}
+.sim5-head{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#fff;background:var(--black);padding:.7rem 1rem;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.sim5-head span:last-child{color:rgba(255,255,255,.65);letter-spacing:.1em}
+.sim5-body1{padding:1.2rem 1.3rem 1.4rem}
+.sim5-intro{font-size:16.5px;color:var(--text-muted);margin:0 0 1rem}
+.sim5-caption{font-size:14.5px;color:var(--text-light);border-top:1px solid var(--border);padding-top:.8rem;margin:1.1rem 0 0}
+.s8ctl{display:grid;grid-template-columns:11rem minmax(0,1fr);gap:.7rem;align-items:center;margin:.6rem 0}
+.s8ctl>span{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted)}
+.s8btns{display:flex;flex-wrap:wrap;gap:.4rem}
+.s8btns button{font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--off-white);border:1px solid var(--border);padding:.42rem .7rem;cursor:pointer;color:var(--text-dark)}
+.s8btns button[aria-pressed="true"]{background:var(--magenta);border-color:var(--magenta);color:#fff}
+.s8btns button:not([aria-pressed="true"]):hover{background:var(--magenta-pale);border-color:var(--magenta);color:var(--magenta-dark)}
+.s8thr{display:flex;align-items:center;gap:.7rem}
+.s8thr input{flex:1;min-width:0;accent-color:var(--magenta);height:22px;cursor:pointer}
+.s8thr output{font-family:var(--display);font-size:14px;font-weight:600;color:var(--magenta);white-space:nowrap;min-width:3.2rem}
+.s8grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.1rem 0 0}
+.s8led{border:1px solid var(--border);background:#fff;padding:.9rem 1rem 1rem}
+.s8led.biz{border-top:4px solid var(--magenta)}
+.s8led.pla{border-top:4px solid var(--good)}
+.s8led h4{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;margin:0 0 .55rem;color:var(--text-dark)}
+.s8row{display:flex;justify-content:space-between;gap:.8rem;font-size:14.5px;padding:.28rem 0;border-bottom:1px dashed var(--border)}
+.s8row span:last-child{font-family:var(--display);font-weight:600;white-space:nowrap}
+.s8row.hero{font-size:15.5px}
+.s8row.hero span:last-child{color:var(--magenta);font-size:17px}
+.s8led.pla .s8row.hero span:last-child{color:var(--good)}
+.s8row.bad span:last-child{color:var(--warn)}
+.s8note{font-size:13px;color:var(--text-light);margin:.5rem 0 0}
+.s8verdict{border:1px solid var(--border);border-left:4px solid var(--ink);background:var(--off-white);padding:.85rem 1rem;margin:1rem 0 0;font-size:15.5px;line-height:1.6}
+.s8verdict b{font-family:var(--display);font-size:12px;letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:.2rem}
+.s8verdict .kick{margin:.55rem 0 0;font-weight:600}
+@media (max-width:860px){.s8grid{grid-template-columns:1fr}.s8ctl{grid-template-columns:1fr;gap:.3rem}}
+@media (max-width:860px){.toc a{white-space:normal}main table{display:block;overflow-x:auto;max-width:100%}.shell{grid-template-columns:minmax(0,1fr)}}
 </style>
 </head>
 <body>
@@ -334,15 +368,12 @@ li{margin-bottom:.45rem}
   <p class="course">Principles of Information Systems</p>
   <button class="railtoggle" aria-expanded="false" aria-controls="chapnav">Chapter contents</button>
   <nav id="chapnav">
-    <a href="#open">The two-week dress</a>
     <a href="#what">What advantage is</a>
-    <a href="#how">How systems shift the game</a>
-    <a href="#inside">Inside the loop</a><a href="#evaporate">Why most IT advantage evaporates</a>
-    <a href="#chain">The five components</a>
-    <a href="#careers">Who builds this</a>
-    <a href="#vocab">Vocabulary</a>
+    <a href="#evaporate">Why most IT advantage evaporates</a>
+    <a href="#zara">The case: Zara</a>
+    <a href="#vocab">Summary and vocabulary</a>
     <a href="#discussion">Discussion questions</a>
-    <a href="#lab">From lecture to lab</a>
+    <a href="#sources">Sources and further reading</a>
   </nav>
   <a class="back" href="index.html">← All chapters &amp; labs</a>
 </aside>
@@ -362,17 +393,12 @@ li{margin-bottom:.45rem}
 </header>
 <div class="statrow"><div class="stat"><b>~2 wks</b><span>design to rack</span></div><div class="stat"><b>2016</b><span>RFID rollout complete</span></div><div class="stat"><b>low single digits</b><span>% unsold vs mid-teens industry</span></div><div class="stat"><b>&euro;2B</b><span>logistics investment 2024&ndash;25</span></div><div class="stat"><b>8&ndash;10%</b><span>of global emissions: textiles</span></div></div>
 <div class="toc"><strong>Contents</strong>
-<a href="#open">The two-week dress</a>
 <a href="#what">What competitive advantage actually is</a>
-<a href="#how">How information systems shift the game</a>
-<a href="#inside">What the loop is actually made of</a>
 <a href="#evaporate">Why most IT advantage evaporates</a>
-<a href="#chain">The case on the five components</a>
-<a href="#careers">Who builds this: a note on MIS careers</a>
-<a href="#vocab">Vocabulary</a>
-<a href="#cost">The cost of the advantage</a>
+<a href="#zara">Zara: the two-week dress</a>
+<a href="#vocab">Summary and vocabulary</a>
 <a href="#discussion">Discussion questions</a>
-<a href="#lab">From lecture to lab</a>
+<a href="#sources">Sources and further reading</a>
 </div>
 
 
@@ -382,27 +408,12 @@ it can hang on a rack in roughly two weeks. Same industry, same fabrics, same se
 difference is an information system, and it made Zara's parent company one of the most valuable
 retailers on earth.</p>
 
-<h2 id="open"><span class="num">01</span>The two-week dress</h2>
+<div class="plan"><div class="plan-head">Monday session plan &middot; 80 minutes</div>
+<table><tr><td class="t">0:00</td><td class="w">Open</td><td>A question to the room: name a company whose technology you think competitors cannot copy. Hold the answers.</td></tr><tr><td class="t">0:05</td><td class="w">Lecture</td><td>Competitive advantage, sustainable versus temporary, Porter’s Five Forces mapped onto Zara.</td></tr><tr><td class="t">0:40</td><td class="w">Video</td><td>Bloomberg Originals made a short documentary, Inside the Secret World of Zara, with footage of the Arteixo logistics operation. Ask students to count how many steps would have to be rebuilt to copy it.</td></tr><tr><td class="t">0:50</td><td class="w">Think-pair-share</td><td>Carr’s challenge. See the activity in Summary and vocabulary.</td></tr><tr><td class="t">1:10</td><td class="w">Close</td><td>Return to the opening answers and ask whether anyone has changed their mind.</td></tr></table></div>
 
-<p>Here is the loop, and notice how ordinary each piece is. Every evening, Zara store managers report
-what sold, what stalled, and  critically, what customers <em>asked for and didn't find</em>. Point-of-sale
-data flows to headquarters in Arteixo, Spain, alongside those human observations. Designers sitting next
-to production planners turn the signal into new designs within days. Factories, many nearby rather than
-across an ocean, produce in deliberately small batches. Twice-weekly deliveries put the result in stores,
-where scarcity is a feature: if you don't buy it now, it may never come back. Then the loop runs again.
-Thousands of new designs a year, each one a small, fast, cheap bet informed by last week's evidence.</p>
-
-<p>Compare the traditional model it beat: forecast a season's demand many months out, commit to huge
-orders from distant factories, then discount whatever the forecast got wrong. The traditional model bets
-big on a guess. Zara's system bets small on data, thousands of times, and lets the customers vote.</p>
-
-<div class="pull">
-  <p>Zara doesn't predict fashion better than its rivals. It built a system that makes prediction less necessary.</p>
-</div>
-
-<h2 id="what"><span class="num">02</span>What competitive advantage actually is</h2>
+<h2 id="what"><span class="num">01</span>What competitive advantage actually is</h2>
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Sustainable competitive advantage</span>
-<p>An advantage is sustainable only when rivals cannot copy it at a price worth paying. Technology alone rarely qualifies, because technology is for sale to everyone. What resists copying is technology fused with process, geography, and authority: who is allowed to decide what, and how fast the decision travels. Keep this test in hand as you read the Zara loop, and ask at each step what a rival with unlimited money would still find hard.</p></div>
+<p>An advantage is sustainable only when rivals cannot copy it at a price worth paying. Keep that test in hand for the whole chapter: at each step of the Zara case below, ask what a rival with unlimited money would still find hard.</p></div>
 
 
 <p><strong>Competitive advantage</strong> is the ability to create more value than rivals: by charging
@@ -427,7 +438,7 @@ rebuilding themselves, which is precisely why the advantage persists.</p>
   test every remaining case in this course against that sentence.</p>
 </div>
 
-<h2 id="how"><span class="num">03</span>How information systems shift the game</h2>
+
 
 <p>Beyond running the business better, information systems change the competitive structure of an
 industry itself. Four mechanisms recur, and you should learn to name them on sight:</p>
@@ -452,15 +463,64 @@ entrants</strong>, (3)&nbsp;the threat of <strong>substitutes</strong>, (4)&nbsp
 <strong>buyers</strong>, and (5)&nbsp;the bargaining power of <strong>suppliers</strong>. Profit drains
 toward whichever forces are strong; strategy is the work of weakening them in your favor, and
 information systems are one of the few tools that can move all five at once.</p>
-<p>Run Zara through it. Rivalry: the two-week loop turns a commodity fight over price into a fight over
-speed that rivals structurally lose. New entrants: replicating the factory-logistics-data web is a
-decade-scale barrier. Substitutes: fashion's substitute is "keep last year's clothes", freshness every
-two weeks attacks exactly that. Buyer power: scarcity flips it; the customer who waits loses the dress.
-Supplier power: owning and co-locating much of production keeps it low. One system, five forces, all
-leaning Zara's way, that is what "strategic" technology means, as opposed to merely useful
-technology.</p>
+<h2 id="evaporate"><span class="num">02</span>Why most IT advantage evaporates</h2>
+<p>A note on being early. <strong>First-mover advantage</strong> is the edge that comes from doing
+something before rivals: learning curves, brand association, and customers locked in by switching
+costs. It is real and it is routinely oversold, because being first also means paying to educate the
+market and making the mistakes later entrants get to skip. Zara’s RFID rollout, completed in 2016,
+was not especially early; the advantage came from what the company attached the tags to. Being first
+matters far less than being first to build something others find expensive to copy.</p>
 
-<h2 id="inside"><span class="num">04</span>What the loop is actually made of</h2>
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Commoditization</span>
+<p>When a capability becomes purchasable by anyone, it stops differentiating anyone. This is commoditization, and it is the engine of Carr’s 2003 argument that IT no longer matters strategically. The RFID tags Zara uses are a commodity. The twice-weekly delivery rhythm, the store-manager reorder authority, and the Arteixo logistics complex are not, because they are organizational commitments compounded over decades.</p></div>
+
+
+<p>History is littered with technology advantages that died. American Airlines' SABRE reservation system
+was such a weapon in the 1970s and 80s that regulators eventually forced changes to how it displayed
+rivals' flights. The first banks with ATMs won customers, until every bank had ATMs and the machines
+became a cost of doing business, not an edge. In 2003, Nicholas Carr scandalized the industry with an
+essay titled "IT Doesn't Matter," arguing that as technology becomes cheap and ubiquitous it becomes like
+electricity: essential, and strategically irrelevant, because everyone has it.</p>
+
+<p>Carr was right about a category and wrong about a boundary. He was right that <strong>commodity
+technology</strong>, the buyable kind: confers no advantage and quickly becomes <strong>table
+stakes</strong>: the ante required to play at all, worth nothing extra once paid. Online ordering was an
+edge for Domino's in 2008; today a restaurant without it simply loses. But the boundary matters:
+what commoditizes is the <em>components</em>. What resists commoditization is the <em>system</em>, the
+data only you have accumulated, the loop only your organization runs, the people trained to act on the
+signal. Nobody can buy Zara's twenty years of what-sold-yesterday, or the organizational reflexes built
+around it.</p>
+
+<div class="callout callout-caution">
+  <strong>The trap to watch for all quarter</strong>
+  <p>When executives say "we're investing in technology to gain an advantage," ask which side of Carr's
+  boundary the investment lands on. Buying what everyone can buy is defense: necessary, and worth zero
+  edge. In Week 7 you will watch Nike spend $400 million on buyable software and lose $100 million,
+  precisely because the un-buyable parts (clean data, fitted process, trained people) were treated as
+  afterthoughts.</p>
+</div>
+
+<h2 id="zara"><span class="num">03</span>Zara: the two-week dress</h2>
+
+<h3>The loop</h3>
+
+<p>Here is the loop, and notice how ordinary each piece is. Every evening, Zara store managers report
+what sold, what stalled, and  critically, what customers <em>asked for and didn't find</em>. Point-of-sale
+data flows to headquarters in Arteixo, Spain, alongside those human observations. Designers sitting next
+to production planners turn the signal into new designs within days. Factories, many nearby rather than
+across an ocean, produce in deliberately small batches. Twice-weekly deliveries put the result in stores,
+where scarcity is a feature: if you don't buy it now, it may never come back. Then the loop runs again.
+Thousands of new designs a year, each one a small, fast, cheap bet informed by last week's evidence.</p>
+
+<p>Compare the traditional model it beat: forecast a season's demand many months out, commit to huge
+orders from distant factories, then discount whatever the forecast got wrong. The traditional model bets
+big on a guess. Zara's system bets small on data, thousands of times, and lets the customers vote.</p>
+
+<div class="pull">
+  <p>Zara doesn't predict fashion better than its rivals. It built a system that makes prediction less necessary.</p>
+</div>
+
+
 
 <p>"Zara is fast" is a slogan. Here is how it actually works, because the specifics are what make the
 advantage hard to copy.</p>
@@ -504,53 +564,18 @@ does not publish it as a headline financial disclosure, but the direction is not
 mechanism is obvious: if you commit only a fraction of a season in advance and manufacture the rest
 against what actually sold last week, you make far less of what nobody wanted.</p>
 
-<div class="callout">
-<strong>Where the advantage actually lives</strong>
-<p>Notice that RFID is purchasable, warehouse software is purchasable, and handheld readers are
-purchasable. H&amp;M can buy all three tomorrow, and largely has. What cannot be purchased is the
-arrangement: production close enough to reorder quickly, designers seated with planners, store managers
-trained and trusted to report, and a company willing to leave most of a season uncommitted. That is the
-weave from the previous section, described in equipment and floor plans.</p>
-</div>
-
-<h2 id="evaporate"><span class="num">05</span>Why most IT advantage evaporates</h2>
-<p>A note on being early. <strong>First-mover advantage</strong> is the edge that comes from doing
-something before rivals: learning curves, brand association, and customers locked in by switching
-costs. It is real and it is routinely oversold, because being first also means paying to educate the
-market and making the mistakes later entrants get to skip. Zara’s RFID rollout, completed in 2016,
-was not especially early; the advantage came from what the company attached the tags to. Being first
-matters far less than being first to build something others find expensive to copy.</p>
-
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Commoditization</span>
-<p>When a capability becomes purchasable by anyone, it stops differentiating anyone. This is commoditization, and it is the engine of Carr’s 2003 argument that IT no longer matters strategically. The RFID tags Zara uses are a commodity. The twice-weekly delivery rhythm, the store-manager reorder authority, and the Arteixo logistics complex are not, because they are organizational commitments compounded over decades.</p></div>
 
 
-<p>History is littered with technology advantages that died. American Airlines' SABRE reservation system
-was such a weapon in the 1970s and 80s that regulators eventually forced changes to how it displayed
-rivals' flights. The first banks with ATMs won customers, until every bank had ATMs and the machines
-became a cost of doing business, not an edge. In 2003, Nicholas Carr scandalized the industry with an
-essay titled "IT Doesn't Matter," arguing that as technology becomes cheap and ubiquitous it becomes like
-electricity: essential, and strategically irrelevant, because everyone has it.</p>
+<h3>Five forces, all leaning one way</h3>
+<p>Run the case through Porter's five forces. Rivalry: the two-week loop turns a commodity fight over price into a fight over
+speed that rivals structurally lose. New entrants: replicating the factory-logistics-data web is a
+decade-scale barrier. Substitutes: fashion's substitute is "keep last year's clothes", freshness every
+two weeks attacks exactly that. Buyer power: scarcity flips it; the customer who waits loses the dress.
+Supplier power: owning and co-locating much of production keeps it low. One system, five forces, all
+leaning Zara's way, that is what "strategic" technology means, as opposed to merely useful
+technology.</p>
 
-<p>Carr was right about a category and wrong about a boundary. He was right that <strong>commodity
-technology</strong>, the buyable kind: confers no advantage and quickly becomes <strong>table
-stakes</strong>: the ante required to play at all, worth nothing extra once paid. Online ordering was an
-edge for Domino's in 2008; today a restaurant without it simply loses. But the boundary matters:
-what commoditizes is the <em>components</em>. What resists commoditization is the <em>system</em>, the
-data only you have accumulated, the loop only your organization runs, the people trained to act on the
-signal. Nobody can buy Zara's twenty years of what-sold-yesterday, or the organizational reflexes built
-around it.</p>
-
-<div class="callout callout-caution">
-  <strong>The trap to watch for all quarter</strong>
-  <p>When executives say "we're investing in technology to gain an advantage," ask which side of Carr's
-  boundary the investment lands on. Buying what everyone can buy is defense: necessary, and worth zero
-  edge. In Week 5 you will watch Nike spend $400 million on buyable software and lose $100 million,
-  precisely because the un-buyable parts (clean data, fitted process, trained people) were treated as
-  afterthoughts.</p>
-</div>
-
-<h2 id="chain"><span class="num">06</span>The case on the five components</h2>
+<h3>The five components at Zara</h3>
 
 <div class="vc">
   <div class="vc-head">The Five Components · Zara</div>
@@ -561,47 +586,10 @@ around it.</p>
     <div class="vc-cell"><span class="vc-stage">Networks</span><p>Every store to Arteixo nightly; a logistics web tuned to a twice-weekly heartbeat.</p></div>
     <div class="vc-cell"><span class="vc-stage">People</span><p>Store managers as trusted sensors; designers seated with planners so signal becomes product in days.</p></div>
   </div>
-  <div class="vc-note">No component is broken, and no single component is the advantage. The <b>weave</b> is. Hardware and software are table stakes; data, networks, and people combine into something rivals have watched for twenty years and cannot copy.</div>
+  <div class="vc-note">No component is broken, and no single component is the advantage. The <b>weave</b> is.</div>
 </div>
 
-<h2 id="careers"><span class="num">07</span>Who builds this: a note on MIS careers</h2>
-
-<div class="callout">
-  <strong>The seam is a job market</strong>
-  <p>Every system in this course was assembled by people who could sit between the business and the
-  technology and translate: business analysts, data analysts, consultants, product and project managers.
-  That seam is chronically understaffed, which is why firms like Accenture, Deloitte, and Slalom hire MIS
-  graduates in volume. What their interviews actually test is what this course practices: structure a
-  messy business situation (the discussion questions), handle data without fear (the labs), explain a
-  finding to someone senior in three sentences (every submission note), and use AI to multiply your work
-  without outsourcing your judgment (Lab 1's policy). The course is the portfolio; the certificates are
-  its receipts.</p>
-</div>
-
-
-<table class="sumtable"><tr><th>Idea</th><th>This chapter’s version</th><th>Where you meet it next</th></tr><tr><td><strong>Five Forces</strong></td><td>Buyer power, substitutes, and rivalry mapped onto fast fashion</td><td>Every case that follows</td></tr><tr><td><strong>The information loop</strong></td><td>Store observations to Arteixo to design to rack in about two weeks</td><td>Domino’s pipeline (Wk 4)</td></tr><tr><td><strong>Commoditization</strong></td><td>Tags are purchasable; the operating model is not</td><td>Cloud computing (Wk 10)</td></tr><tr><td><strong>The cost of the advantage</strong></td><td>The same speed that cuts inventory waste raises industry output</td><td>What computing costs (Wk 10)</td></tr></table>
-<h2 id="vocab"><span class="num">08</span>Vocabulary</h2>
-
-<dl class="vocab">
-  <div><dt>Competitive advantage</dt><dd>Creating more value than rivals through differentiation, cost, or speed.</dd></div>
-  <div><dt>Sustained advantage</dt><dd>An edge that persists because its source is valuable, rare, and hard to imitate.</dd></div>
-  <div><dt>Switching costs</dt><dd>What a customer gives up by leaving: history, data, learned habits.</dd></div>
-  <div><dt>Network effects</dt><dd>A system that grows more valuable to each user as more users join.</dd></div>
-  <div><dt>Barrier to entry</dt><dd>An upfront requirement, often a system, that keeps newcomers out.</dd></div>
-  <div><dt>Porter's Five Forces</dt><dd>Rivalry, new entrants, substitutes, buyer power, supplier power, the map of where industry profit drains.</dd></div>
-<div><dt>First-mover advantage</dt><dd>The edge from acting before rivals; real, and routinely oversold.</dd></div>
-<div><dt>Commoditization</dt><dd>The process by which a once-special technology becomes cheap, ubiquitous, and strategically neutral.</dd></div>
-  <div><dt>Table stakes</dt><dd>Capabilities required merely to compete, conferring no edge once everyone has them.</dd></div>
-  <div><dt>RFID</dt><dd>Radio tags that let a reader identify many items at once without line of sight; the basis of Zara's live inventory picture.</dd></div>
-<div><dt>Vertical integration</dt><dd>Owning successive stages of your own supply chain rather than buying them from others.</dd></div>
-<div><dt>Fast-fashion loop</dt><dd>Zara's cycle: daily store signal → design → small batch → shelf in weeks → repeat.</dd></div>
-</dl>
-
-
-
-
-
-<h2 id="cost"><span class="num">09</span>The cost of the advantage</h2>
+<h3>The cost of the advantage</h3>
 
 <p>Everything above is a story about an information system working. It would be dishonest to stop
 there, because the same capability that makes Zara efficient is the capability that makes fast fashion
@@ -624,16 +612,15 @@ ground.</p>
 
 <p>The pattern shows up in Inditex's own reporting. In 2024 the company's emissions rose about ten
 percent while its raw material volume rose about five, and the energy required to move materials to
-collection centres rose fifteen percent. Efficiency per garment can improve while total impact grows,
-because the system is optimised for throughput.</p>
+collection centers rose fifteen percent. Efficiency per garment can improve while total impact grows,
+because the system is optimized for throughput.</p>
 
-<h3>Where the labour cost lands</h3>
 <p>The environmental story has a human counterpart. Fast fashion's cost structure depends on
 manufacturing in countries with lower wages and weaker enforcement, and audits repeatedly find gaps
 between stated policy and factory reality. Zara makes more of its fashion-sensitive product close to headquarters than most competitors do,
 which is part of why it is fast. But its full supply chain still reaches into the same regions as
-everyone else's, and it has faced documented labour concerns along with the rest of the industry. Inditex has announced sustainability targets, including sustainable
-or recycled cotton, linen, and polyester, and has been criticised for the gap between announcement and
+everyone else's, and it has faced documented labor concerns along with the rest of the industry. Inditex has announced sustainability targets, including sustainable
+or recycled cotton, linen, and polyester, and has been criticized for the gap between announcement and
 verified outcome.</p>
 
 <div class="callout callout-caution"><strong>The point for this course</strong>
@@ -645,8 +632,87 @@ first question. The second is what it makes easier, and for whom, and at whose e
 this again in Week 4 with charts that are accurate and misleading, and again in Week 10 when a model
 learns from a biased past.</p></div>
 
-<div class="plan"><div class="plan-head">Monday session plan &middot; 80 minutes</div>
-<table><tr><td class="t">0:00</td><td class="w">Open</td><td>A question to the room: name a company whose technology you think competitors cannot copy. Hold the answers.</td></tr><tr><td class="t">0:05</td><td class="w">Lecture</td><td>Competitive advantage, sustainable versus temporary, Porter’s Five Forces mapped onto Zara.</td></tr><tr><td class="t">0:40</td><td class="w">Video</td><td>Bloomberg Originals made a short documentary, Inside the Secret World of Zara, with footage of the Arteixo logistics operation. Ask students to count how many steps would have to be rebuilt to copy it.</td></tr><tr><td class="t">0:50</td><td class="w">Think-pair-share</td><td>Carr’s challenge. See the activity above.</td></tr><tr><td class="t">1:10</td><td class="w">Close</td><td>Return to the opening answers and ask whether anyone has changed their mind.</td></tr></table></div>
+
+<div class="sim5" id="twoledgers">
+  <div class="sim5-head"><span>Try it &middot; The loop, read two ways</span><span>Same system, two ledgers</span></div>
+  <div class="sim5-body1">
+    <p class="sim5-intro">You run a fashion retailer for one year. Two decisions: how fast your loop turns, and how
+    much of the season you commit up front on a forecast. Mid-year, taste shifts, the same way for everyone. Below,
+    the same year lands on two ledgers at once. Try running it like 1990, then like Zara, then find your own settings.
+    There is a best business year in here. Whether there is a best year is Wednesday's fight.</p>
+    <div class="s8ctl"><span>Design to rack in</span>
+      <div class="s8btns" id="s8speed">
+        <button type="button" data-s="trad" aria-pressed="true">26 weeks</button>
+        <button type="button" data-s="fast" aria-pressed="false">8 weeks</button>
+        <button type="button" data-s="zara" aria-pressed="false">2 weeks</button>
+      </div>
+    </div>
+    <div class="s8ctl"><span>Committed up front</span>
+      <div class="s8thr"><input type="range" id="s8commit" min="20" max="100" value="100" step="5"><output id="s8cv">100%</output></div>
+    </div>
+    <div class="s8ctl"><span>Quick runs</span>
+      <div class="s8btns">
+        <button type="button" id="s8p90">Run it like 1990</button>
+        <button type="button" id="s8pz">Run it like Zara</button>
+      </div>
+    </div>
+    <div class="s8grid">
+      <div class="s8led biz"><h4>The business ledger</h4><div id="s8biz"></div></div>
+      <div class="s8led pla"><h4>The planet ledger</h4><div id="s8pla"></div></div>
+    </div>
+    <div class="s8verdict" id="s8verdict" aria-live="polite"></div>
+    <p class="sim5-caption">Same hardware, same software, same data, same networks, same people: one weave, two
+    readings, and both of them are true at once. Efficiency per garment and total impact moved in opposite
+    directions, which is the pattern in Inditex's own reporting. The numbers here are a teaching model tuned to
+    the real shape of the industry, not company data. Bring your settings to Wednesday and defend them: which
+    ledger is the report card, and who gets to decide?</p>
+  </div>
+</div>
+
+<h3>What to take away</h3>
+
+<p>Strip the case down to what you can reuse. Zara's hardware and software are ordinary and buyable,
+which is exactly why they are not the advantage. The advantage is the loop: data only Zara collects,
+moving over a network tuned to a twice-weekly heartbeat, into the hands of people trusted to act on
+it, through factories close enough to respond in days. Every piece has been visible for twenty years,
+and no rival has copied it, because copying it means rebuilding the company around it.</p>
+
+<p>Carry the second question with you too. The same system that makes Zara the most efficient firm in
+fast fashion is the system that made fast fashion possible at industrial scale. When you evaluate any
+system for the rest of this course, "does it work?" is where the evaluation starts, not where it
+ends.</p>
+
+<div class="callout">
+  <strong>The seam is a job market</strong>
+  <p>Every system in this course was assembled by people who could sit between the business and the
+  technology and translate: business analysts, data analysts, consultants, product and project managers.
+  That seam is chronically understaffed, which is why firms like Accenture, Deloitte, and Slalom hire MIS
+  graduates in volume. What their interviews actually test is what this course practices: structure a
+  messy business situation (the discussion questions), handle data without fear (the labs), explain a
+  finding to someone senior in three sentences (every submission note), and use AI to multiply your work
+  without outsourcing your judgment (Lab 1's policy). The course is the portfolio; the certificates are
+  its receipts.</p>
+</div>
+
+<h2 id="vocab"><span class="num">04</span>Summary and vocabulary</h2>
+
+<table class="sumtable"><tr><th>Idea</th><th>This chapter’s version</th><th>Where you meet it next</th></tr><tr><td><strong>Five Forces</strong></td><td>Buyer power, substitutes, and rivalry mapped onto fast fashion</td><td>Every case that follows</td></tr><tr><td><strong>The information loop</strong></td><td>Store observations to Arteixo to design to rack in about two weeks</td><td>Domino’s pipeline (Wk 4)</td></tr><tr><td><strong>Commoditization</strong></td><td>Tags are purchasable; the operating model is not</td><td>Cloud computing (Wk 10)</td></tr><tr><td><strong>The cost of the advantage</strong></td><td>The same speed that cuts inventory waste raises industry output</td><td>What computing costs (Wk 10)</td></tr></table>
+
+<dl class="vocab">
+  <div><dt>Competitive advantage</dt><dd>Creating more value than rivals through differentiation, cost, or speed.</dd></div>
+  <div><dt>Sustained advantage</dt><dd>An edge that persists because its source is valuable, rare, and hard to imitate.</dd></div>
+  <div><dt>Switching costs</dt><dd>What a customer gives up by leaving: history, data, learned habits.</dd></div>
+  <div><dt>Network effects</dt><dd>A system that grows more valuable to each user as more users join.</dd></div>
+  <div><dt>Barrier to entry</dt><dd>An upfront requirement, often a system, that keeps newcomers out.</dd></div>
+  <div><dt>Porter's Five Forces</dt><dd>Rivalry, new entrants, substitutes, buyer power, supplier power, the map of where industry profit drains.</dd></div>
+<div><dt>First-mover advantage</dt><dd>The edge from acting before rivals; real, and routinely oversold.</dd></div>
+<div><dt>Commoditization</dt><dd>The process by which a once-special technology becomes cheap, ubiquitous, and strategically neutral.</dd></div>
+  <div><dt>Table stakes</dt><dd>Capabilities required merely to compete, conferring no edge once everyone has them.</dd></div>
+  <div><dt>RFID</dt><dd>Radio tags that let a reader identify many items at once without line of sight; the basis of Zara's live inventory picture.</dd></div>
+<div><dt>Vertical integration</dt><dd>Owning successive stages of your own supply chain rather than buying them from others.</dd></div>
+<div><dt>Fast-fashion loop</dt><dd>Zara's cycle: daily store signal → design → small batch → shelf in weeks → repeat.</dd></div>
+</dl>
+
 <div class="tps">
   <div class="tps-head"><span>Monday activity &middot; Carr’s challenge</span><span class="mins">20 minutes</span></div>
   <div class="tps-body">
@@ -654,7 +720,7 @@ learns from a biased past.</p></div>
     <div class="tps-q"><p>So why has no fast-fashion rival copied Zara’s advantage in the decade since?</p></div>
     <div class="tps-steps">
       <div class="tps-step"><div class="ph">Think <span>3 min</span></div><p>List the one thing you think is hardest for a rival to copy. Be specific; “culture” is too vague to defend.</p></div>
-      <div class="tps-step"><div class="ph">Pair <span>5 min</span></div><p>Compare lists with a neighbour. Between you, rank your items from easiest to hardest to copy.</p></div>
+      <div class="tps-step"><div class="ph">Pair <span>5 min</span></div><p>Compare lists with a neighbor. Between you, rank your items from easiest to hardest to copy.</p></div>
       <div class="tps-step"><div class="ph">Share <span>12 min</span></div><p>We will collect the hardest-to-copy items on the board and test each one against a rival with unlimited money.</p></div>
     </div>
     <div class="tps-note"><strong>Where this lands</strong>Students reliably name technology first and then talk themselves out of it, which is the move you want. The tags are purchasable; the Arteixo logistics network, the twice-weekly delivery rhythm, and the store-manager reorder authority are organizational commitments built over decades. Carr was right that the technology is a commodity and wrong that the advantage is, which is a distinction worth making explicit before Wednesday.</div>
@@ -667,7 +733,8 @@ learns from a biased past.</p></div>
   claim, sparring partner mode, before you present. Red: submitting or reading out an AI-written answer.
   The Wednesday discussion grades your reasoning, and everyone in the room can tell the difference.</p></div>
 </div>
-<h2 id="discussion"><span class="num">10</span>Discussion questions</h2>
+
+<h2 id="discussion"><span class="num">05</span>Discussion questions</h2>
 <p>None of these get handed in. On Wednesday you run the discussion and I steer it, which means the
 class is only as good as what you walk in with. Read the chapter, pick the question you have the
 strongest opinion about, and be ready to say it first.</p>
@@ -680,12 +747,6 @@ strongest opinion about, and be ready to say it first.</p>
   does the person know that the tag cannot, and what would be lost if Inditex dropped the human half to
   save money?</li>
 
-  <li>Name a technology that was a competitive advantage within your lifetime and is table stakes today.
-  When did it cross the line, and what pushed it across?</li>
-
-  <li>Zara's store managers are sensors; a fully automated chain would replace them with cameras and
-  algorithms. What signal would be lost? Would you make that trade? Defend your answer.</li>
-
   <li>Carr argued firms should spend <em>less</em> on IT and follow rather than lead. Starbucks (Chapter 2)
   appears to do the opposite and win. Reconcile the two, or pick a side and argue Carr against
   Starbucks. <span class="tag tag-hard">Hard</span></li>
@@ -697,26 +758,22 @@ strongest opinion about, and be ready to say it first.</p>
   <li>Cascadia Outfitters is a member-owned co-op competing against giant online retailers with better
   prices and bigger catalogs. Using this chapter's concepts, what is the co-op's most defensible
   advantage, and which of the five components does it live in? <span class="tag tag-open">Open judgment</span></li>
-<li>Zara's speed reduces its own inventory waste and increases the total volume of clothing produced industry-wide. Are those two facts in tension, and does one of them matter more? <span class="dqtag">Judgment</span></li>
 </ol>
-
-<h2 id="lab"><span class="num">11</span>From lecture to lab</h2>
 
 <div class="callout callout-bridge">
   <strong>Week 2 · Lab 2</strong>
-  <p>Question 6 is not hypothetical. This week's lab, <a href="lab2-excel-basics.html"><strong>Lab 2:
+  <p>The Cascadia question above is not hypothetical. This week's lab, <a href="lab2-excel-basics.html"><strong>Lab 2:
   Excel Basics: Meeting the Client</strong></a>, opens the Cascadia engagement, and the co-op's answer
-  to question 6 is its membership: the data and relationship no online giant can buy. You'll compute the
+  to that question is its membership: the data and relationship no online giant can buy. You'll compute the
   numbers that advantage runs on, and spend the rest of the quarter discovering what happens when part
   of it quietly breaks.</p>
 
   <a class="lablink" href="lab2-excel-basics.html">Go to Lab 2 &#8594;</a>
 </div>
 
-<div class="sources">
-  <h3>Sources and further reading</h3>
-  <ul>
-    <li>Kasra Ferdows, Michael Lewis, and Jose Machuca, "Rapid-Fire Fulfillment," <em>Harvard Business Review</em>, 2004. The classic Zara analysis.</li>
+<h2 id="sources"><span class="num">06</span>Sources and further reading</h2>
+<ul class="sources">
+  <li>Kasra Ferdows, Michael Lewis, and Jose Machuca, "Rapid-Fire Fulfillment," <em>Harvard Business Review</em>, 2004. The classic Zara analysis.</li>
     <li>Nicholas Carr, "IT Doesn't Matter," <em>Harvard Business Review</em>, May 2003, and the responses it provoked.</li>
     <li>Michael Porter, "Strategy and the Internet," <em>Harvard Business Review</em>, 2001.</li>
     <li>Duncan Copeland and James McKenney on SABRE and airline reservation systems, <em>MIS Quarterly</em>.</li>
@@ -726,7 +783,6 @@ strongest opinion about, and be ready to say it first.</p>
 <li>nss magazine, <a href="https://www.nssmag.com/en/fashion/40359/fast-fashion-impact-inditex-co2-emissions">Inditex and CO2 emissions</a>, on the 2024 growth in emissions relative to material volume.</li>
 
   </ul>
-</div>
 
 </main>
 </div>
@@ -770,6 +826,87 @@ strongest opinion about, and be ready to say it first.</p>
   document.querySelectorAll('.dd-menu').forEach(function(m){
     m.addEventListener('click',function(e){e.stopPropagation();});
   });
+})();
+</script>
+
+<script>
+(function(){
+  var biz=document.getElementById('s8biz');
+  if(!biz)return;
+  var pla=document.getElementById('s8pla'), ver=document.getElementById('s8verdict'),
+      cm=document.getElementById('s8commit'), cv=document.getElementById('s8cv'),
+      btns=[].slice.call(document.querySelectorAll('#s8speed button'));
+  var SP={trad:{m:.62,r:.70,cap:.15,mult:1.0,cost:18,co2:8.0,name:'26-week loop'},
+          fast:{m:.78,r:.85,cap:.45,mult:1.25,cost:20,co2:8.5,name:'8-week loop'},
+          zara:{m:.93,r:.96,cap:.90,mult:1.6,cost:24,co2:9.5,name:'2-week loop'}};
+  var state={s:'trad',c:100};
+  var BASE=model('trad',100);
+  function model(s,cpct){
+    var p=SP[s], c=cpct/100, V=100000*p.mult;
+    var C=c*V, R=Math.min(1-c,p.cap)*V, L=Math.max(0,(1-c)-p.cap)*V;
+    var full=C*p.m+R*p.r, P=C+R, mm=P-full, md=.6*mm, U=.4*mm;
+    return {P:P,full:full,md:md,U:U,L:L,
+      rate:U/P, per100:100*U/(full+md),
+      profit:50*full+25*md-p.cost*P,
+      co2:P*p.co2/1000, name:p.name};
+  }
+  function n(x){return Math.round(x).toLocaleString('en-US');}
+  function money(x){return '$'+Math.round(x).toLocaleString('en-US');}
+  function pct(x){return (Math.round(x*10)/10)+'%';}
+  function row(l,v,cls){return '<div class="s8row'+(cls?' '+cls:'')+'"><span>'+l+'</span><span>'+v+'</span></div>';}
+  function render(){
+    cv.textContent=state.c+'%';
+    var M=model(state.s,state.c);
+    var co2d=Math.round(100*(M.co2-BASE.co2)/BASE.co2);
+    var perd=Math.round(100*(M.per100-BASE.per100)/BASE.per100);
+    biz.innerHTML=row('Garments produced',n(M.P))
+      +row('Sold at full price',n(M.full))
+      +row('Sold at markdown',n(M.md))
+      +row('Unsold, destroyed',n(M.U),'bad')
+      +(M.L>0?row('Demand you could not meet',n(M.L)+' garments','bad'):'')
+      +row('Unsold rate (industry: mid-teens)',pct(100*M.rate),'hero')
+      +row('Season profit',money(M.profit),'hero')
+      +'<p class="s8note">Full price $50, markdown $25, cost per garment rises with speed.</p>';
+    pla.innerHTML=row('Garments manufactured',n(M.P))
+      +row('Total emissions',n(M.co2)+' t CO2e','hero')
+      +row('vs the 1990 run',(co2d>=0?'+':'')+co2d+'%',co2d>10?'bad':'')
+      +row('Destroyed per 100 sold',(Math.round(M.per100*10)/10)+'','hero')
+      +row('vs the 1990 run',(perd>=0?'+':'')+perd+'%',perd>0?'bad':'')
+      +row('Garments to landfill or incinerator',n(M.U),M.U>8000?'bad':'')
+      +'<p class="s8note">Per-garment emissions rise with speed: smaller batches, faster freight.</p>';
+    var bv, pv;
+    if(M.L>0.05*100000*SP[state.s].mult){
+      bv='Empty racks. You committed little, and at this speed you cannot make more in season, so '+n(M.L)+' garments of demand walked out the door. This is why the slow loop forces the big bet: the guess is the only move it has.';
+    }else if(M.rate<=0.04){
+      bv='The number that proves it works: '+pct(100*M.rate)+' unsold against an industry that buries mid-teens. Almost everything you made, somebody wanted, because you bet small and read the tickets.';
+    }else if(M.rate<=0.09){
+      bv='Better than the industry, short of Arteixo: '+pct(100*M.rate)+' unsold. The loop is faster than your commitment lets it be.';
+    }else{
+      bv='You made the industry-average bet and got the industry-average pile: '+pct(100*M.rate)+' of everything you produced, nobody wanted at any price.';
+    }
+    if(co2d>30){
+      pv='Total emissions up '+co2d+'% on the 1990 run, while waste per garment fell '+Math.abs(perd)+'%. The loop that wastes less per garment makes far more garments, and the atmosphere counts totals, not percentages.';
+    }else if(co2d>5){
+      pv='Emissions up '+co2d+'% in total. Efficiency improved per garment and the footprint still grew, which is the pattern in the real reporting.';
+    }else{
+      pv='The smallest total footprint on offer, and the biggest pile of unsold garments per 100 sold. The planet ledger is not automatically the slow loop\u2019s friend either: everything in that pile was manufactured for nobody.';
+    }
+    ver.innerHTML='<b>The business reading</b>'+bv+'<b style="margin-top:.6rem">The planet reading</b>'+pv
+      +'<p class="kick">Same sliders. Both readings are true. Which ledger is the report card?</p>';
+  }
+  btns.forEach(function(b){b.addEventListener('click',function(){
+    btns.forEach(function(x){x.setAttribute('aria-pressed','false');});
+    b.setAttribute('aria-pressed','true');state.s=b.getAttribute('data-s');render();
+  });});
+  cm.addEventListener('input',function(){state.c=+cm.value;render();});
+  function preset(s,c){
+    state.s=s;state.c=c;cm.value=c;
+    btns.forEach(function(x){x.setAttribute('aria-pressed',x.getAttribute('data-s')===s?'true':'false');});
+    render();
+  }
+  document.getElementById('s8p90').addEventListener('click',function(){preset('trad',100);});
+  document.getElementById('s8pz').addEventListener('click',function(){preset('zara',25);});
+  render();
 })();
 </script>
 </body>
