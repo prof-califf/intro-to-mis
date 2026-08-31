@@ -72,6 +72,31 @@ code.inline{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.8
 ul,ol{margin:0 0 1.15rem;padding-left:1.3rem}
 li{margin-bottom:.45rem}
 
+/* ---------- numbered step headings ---------- */
+.sh{margin:3rem 0 .7rem;padding-top:.9rem;border-top:2px solid var(--black)}
+.sh .badge{display:inline-block;background:var(--magenta);color:#fff;font-family:var(--display);
+  font-size:12.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  padding:.24rem .62rem;margin-right:.55rem;vertical-align:.17em;white-space:nowrap}
+.sh .ttl{display:inline;font-family:var(--display);font-weight:600;font-size:1.18rem;
+  text-transform:uppercase;letter-spacing:.03em;color:var(--off-black);line-height:1.35}
+.sh .cpx{display:block;clear:both;font-family:var(--sans);font-size:13.5px;line-height:1.4;
+  color:var(--text-light);margin-top:.12rem}
+.sh .cpx b{font-weight:600;color:var(--magenta-dark)}
+@media (max-width:520px){
+  .sh .badge{font-size:11.5px;padding:.2rem .5rem;margin-right:.45rem;vertical-align:.14em}
+  .sh .ttl{font-size:1.05rem}
+}
+
+/* ---------- inline checkpoint slots ---------- */
+.cpslot{margin:1.1rem 0 0}
+.cpslot .cp{margin:0}
+.cp .cphead{display:block;font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--magenta);margin-bottom:.4rem}
+.cp.done .cphead{color:var(--good)}
+.cp.locked .cphead{color:var(--text-light)}
+.progress{border:none}
+.lockmsg{font-family:var(--sans);font-size:.82rem;color:var(--text-light);margin:.4rem 0 0}
+
 /* ---------- pull quote ---------- */
 .pull{margin:2.2rem 0;padding:0 0 0 1.4rem;border-left:3px solid var(--magenta)}
 .pull p{font-family:var(--display);font-weight:400;font-size:1.32rem;line-height:1.3;color:var(--black);margin:0 0 .5rem}
@@ -336,7 +361,7 @@ li{margin-bottom:.45rem}
   <button class="railtoggle" aria-expanded="false" aria-controls="chapnav">Lab contents</button>
   <nav id="chapnav">
     <a href="#top">Overview</a><a href="#parta">Part A · Follow along</a>
-    <a href="#partb">Part B · Now you</a><a href="#checkpoints">Checkpoints</a>
+    <a href="#partb">Part B · Now you</a><a href="#finish">Reflection &amp; certificate</a>
     <a href="#submit">What to submit</a>
     <a href="chapter4-dominos.html">↳ Chapter 4 · Business Processes</a>
   </nav>
@@ -386,6 +411,17 @@ holds. Columns you will use today are all on Sales2025: <code class="inline">C</
 calendar. Before I walk in I want two numbers: how many sales Bellingham rang up in 2025, and what
 Portland Pearl's total revenue was. Exact figures, please."</p></div>
 
+<div class="callout callout-bridge"><strong>How the checkpoints work</strong>
+<p style="font-family:var(--sans);font-size:.95rem">Here is how this works. Checkpoint 1 matches Step
+1, Checkpoint 2 matches Step 2, all the way down. You do the actual work in your own workbook, in the
+row with the same number on the Analyst tab, then paste the answer here. Get it right and the next
+question opens up. There is no penalty for a wrong answer, so guess, check, and lean on the hint if
+you get stuck. That is what it is there for.</p>
+<p style="font-family:var(--sans);font-size:.95rem">Once you have cleared them all, write your reflection
+and download your certificate for Canvas. Your progress saves automatically in this browser, so you can close the tab and pick up where you left off. It does not follow you to a different computer or a private window, and clearing your browser data clears it. If you need to start this lab over, use the <button type="button" class="hintb" onclick="resetLab()">Reset this lab</button> button.</p>
+<div class="progress" id="prog">Checkpoint progress: 0 / 10</div>
+</div>
+
 <h2 id="parta"><span class="num">Part A</span>Follow along: answering her, together</h2>
 
 <p>This lab runs on ten numbered steps, and every step has a checkpoint with the same number. Step 4
@@ -397,10 +433,10 @@ numbers will tell you where you are.</p>
 <li><a href="#step2"><b>Step 2</b>Her first number, with COUNTIF</a></li>
 <li><a href="#step3"><b>Step 3</b>What a typo looks like</a></li>
 <li><a href="#step4"><b>Step 4</b>Her second number, with SUMIF</a></li>
-<li><a href="#step5"><b>Steps 5&ndash;10</b>Part B, on your own</a></li>
+<li><a href="#step5"><b>Steps 5&ndash;10</b>Part B: the other two emails, on your own</a></li>
 </ol>
 
-<h3 id="step1">Step 1 (Checkpoint 1) &middot; Find your two tabs</h3>
+<div class="sh" id="step1"><span class="badge">Step 1</span><span class="ttl">Find your two tabs</span><span class="cpx">Answer goes in <b>Checkpoint 1</b> &middot; cell B5</span></div>
 <p>Open the workbook and look at the tabs along the bottom of the window. The <strong>Analyst</strong>
 tab is where your answers go, laid out the same way as last week: a numbered row for each checkpoint,
 your answer in column B, room for a note in column C. Checkpoint 1 goes in
@@ -415,10 +451,10 @@ where you landed.</p>
 there are 2,899 sales in front of you. Knowing that number is how you will catch a formula that
 quietly went wrong later. If a count comes back larger than 2,899, the formula is counting something
 it should not be.</p>
-<p><strong>Checkpoint 1:</strong> how many rows of sales data are on the Sales2025 tab? Put it in
-<code class="inline">B5</code>.</p>
 
-<h3 id="step2">Step 2 (Checkpoint 2) &middot; Her first number, with COUNTIF</h3>
+<div class="cpslot" data-cp="1"></div>
+
+<div class="sh" id="step2"><span class="badge">Step 2</span><span class="ttl">Her first number, with COUNTIF</span><span class="cpx">Answer goes in <b>Checkpoint 2</b> &middot; cell B6</span></div>
 <p>The manager wants a count of Bellingham's sales. Build this formula by clicking rather than typing
 the whole thing. Clicking is how you will write formulas once tab names get long, and it is how you
 avoid misspelling a sheet reference.</p>
@@ -442,9 +478,10 @@ counts rows.</p>
 <p>The <code class="inline">Sales2025!</code> in front of <code class="inline">C:C</code> is the tab
 name. It is there because your formula lives on the Analyst tab and the data lives somewhere else, so
 Excel has to be told which sheet to read. Clicking the tab put it there for you.</p>
-<p><strong>Checkpoint 2:</strong> the number now in B6.</p>
 
-<h3 id="step3">Step 3 (Checkpoint 3) &middot; What a typo looks like</h3>
+<div class="cpslot" data-cp="2"></div>
+
+<div class="sh" id="step3"><span class="badge">Step 3</span><span class="ttl">What a typo looks like</span><span class="cpx">Answer goes in <b>Checkpoint 3</b> &middot; cell B7</span></div>
 <p>Before you trust a formula, find out how it fails. In <code class="inline">B7</code>, type this
 exactly as printed, misspelling and all:</p>
 <p><code class="inline">=COUNTIF(Sales2025!C:C,"Portland Parl")</code></p>
@@ -458,9 +495,10 @@ formula.</p>
 <p>Fix the spelling to <code class="inline">"Portland Pearl"</code> for a moment and watch the number
 change, then put the misspelling back. Row 7 is the one place in this workbook where a wrong formula
 is the right answer. In <code class="inline">C7</code>, write a few words about what happened.</p>
-<p><strong>Checkpoint 3:</strong> the number the misspelled formula returned.</p>
 
-<h3 id="step4">Step 4 (Checkpoint 4) &middot; Her second number, with SUMIF</h3>
+<div class="cpslot" data-cp="3"></div>
+
+<div class="sh" id="step4"><span class="badge">Step 4</span><span class="ttl">Her second number, with SUMIF</span><span class="cpx">Answer goes in <b>Checkpoint 4</b> &middot; cell B8</span></div>
 <p>Her second question is not <em>how many</em>, it is <em>how much</em>: total revenue at Portland
 Pearl. Counting rows will not answer that. You need to add up a column, but only for the rows that
 match.</p>
@@ -480,7 +518,8 @@ needed two. Column C is where to look. "Portland Pearl" is what to look for. Col
 up. For every row where column C says Portland Pearl, Excel takes that row's revenue out of column K
 and adds it to a running total. Rows belonging to other stores contribute nothing at all. Her email is
 now answered.</p>
-<p><strong>Checkpoint 4:</strong> the number now in B8.</p>
+
+<div class="cpslot" data-cp="4"></div>
 
 <p>Those two formulas are the pattern for the rest of the lab. Every function below changes one thing
 at a time: what happens to the matching rows, or how many conditions a row has to meet before it
@@ -533,17 +572,21 @@ Analyst tab. Each task names the function to use, the column to look in, and the
 write the formula. Build them by clicking the way you did in Part A; the tab reference is far easier to
 get right that way than by typing it.</p>
 
-<h3 id="step5">Step 5 (Checkpoint 5) &middot; Planner: how many Snow sales?</h3>
+<div class="sh" id="step5"><span class="badge">Step 5</span><span class="ttl">Planner: how many Snow sales?</span><span class="cpx">Answer goes in <b>Checkpoint 5</b> &middot; cell B9</span></div>
 <p>In <code class="inline">B9</code>, write a COUNTIF that looks in the category column (F) and matches
 <code class="inline">"Snow"</code>. Same shape as Step 2, different column and different text.</p>
 
-<h3 id="step6">Step 6 (Checkpoint 6) &middot; Planner: average revenue on a Snow sale</h3>
+<div class="cpslot" data-cp="5"></div>
+
+<div class="sh" id="step6"><span class="badge">Step 6</span><span class="ttl">Planner: average revenue on a Snow sale</span><span class="cpx">Answer goes in <b>Checkpoint 6</b> &middot; cell B10</span></div>
 <p>In <code class="inline">B10</code>, write an AVERAGEIF that looks in the category column (F) for
 <code class="inline">"Snow"</code> and averages the revenue column (K). Three pieces of information, in
 the same order as Step 4's SUMIF. The only change is what Excel does with the rows that match: it
 averages them instead of adding them.</p>
 
-<h3 id="step7">Step 7 (Checkpoint 7) &middot; Planner: Snow revenue at the Seattle Flagship</h3>
+<div class="cpslot" data-cp="6"></div>
+
+<div class="sh" id="step7"><span class="badge">Step 7</span><span class="ttl">Planner: Snow revenue at the Seattle Flagship</span><span class="cpx">Answer goes in <b>Checkpoint 7</b> &middot; cell B11</span></div>
 <p>Two conditions this time, so the function gains an S. In <code class="inline">B11</code>, write a
 SUMIFS with the revenue column (K) <em>first</em>, then category (F) matching
 <code class="inline">"Snow"</code>, then store (C) matching
@@ -551,13 +594,17 @@ SUMIFS with the revenue column (K) <em>first</em>, then category (F) matching
 Your answer should be smaller than Step 6's total for all Snow sales everywhere; if it is not,
 check your argument order.</p>
 
-<h3 id="step8">Step 8 (Checkpoint 8) &middot; Coordinator: Tacoma's member sales</h3>
+<div class="cpslot" data-cp="7"></div>
+
+<div class="sh" id="step8"><span class="badge">Step 8</span><span class="ttl">Coordinator: Tacoma's member sales</span><span class="cpx">Answer goes in <b>Checkpoint 8</b> &middot; cell B12</span></div>
 <p>In <code class="inline">B12</code>, write a COUNTIFS with two conditions: the store column (C)
 matching <code class="inline">"Tacoma"</code>, and the is_member column (N) matching
 <code class="inline">"Y"</code>. COUNTIFS has nothing to add up, so it is only pairs of where-to-look
 and what-to-match.</p>
 
-<h3 id="step9">Step 9 (Checkpoint 9) &middot; Coordinator: total revenue, every store</h3>
+<div class="cpslot" data-cp="8"></div>
+
+<div class="sh" id="step9"><span class="badge">Step 9</span><span class="ttl">Coordinator: total revenue, every store</span><span class="cpx">Answer goes in <b>Checkpoint 9</b> &middot; cell B13</span></div>
 <p>The coordinator's second question asks for a share: Portland Pearl's revenue as a percentage of the
 whole co-op's. A share is one number divided by another, so build the second number first and give it
 a cell of its own.</p>
@@ -568,7 +615,9 @@ on its own, and one you can point other formulas at. When the next email asks fo
 share, you reuse this cell instead of rebuilding the total inside a longer formula. Long formulas that
 compute several things at once are hard to check and harder to fix.</p>
 
-<h3 id="step10">Step 10 (Checkpoint 10) &middot; Coordinator: Portland Pearl's share</h3>
+<div class="cpslot" data-cp="9"></div>
+
+<div class="sh" id="step10"><span class="badge">Step 10</span><span class="ttl">Coordinator: Portland Pearl's share</span><span class="cpx">Answer goes in <b>Checkpoint 10</b> &middot; cell B14</span></div>
 <p>In <code class="inline">B14</code>, divide your Step 4 answer by your Step 9 answer by pointing at
 the two cells: <code class="inline">=B8/B13</code>. Click the cells rather than retyping the formulas
 inside them.</p>
@@ -582,7 +631,8 @@ itself into something you can no longer safely divide, average, or chart alongsi
 anyone who later builds on your cell inherits the error. Getting the number right and getting it
 readable are two separate jobs, and formatting is how a spreadsheet does the second one without
 breaking the first.</p>
-<p><strong>Checkpoint 10:</strong> the percentage as B14 now displays it, to one decimal place.</p>
+
+<div class="cpslot" data-cp="10"></div>
 
 <div class="callout callout-good"><strong>Finished early? Get ahead of next week's email</strong>
 <p>In a blank area, list the eight store names down a column. Beside each, a COUNTIF for its lines, a
@@ -590,16 +640,8 @@ SUMIF for its revenue, and a COUNTIFS for its member lines, filled down. Eight r
 you have just hand-built the table that dashboards are made from. Keep it; next week's lab turns
 exactly this block into charts.</p></div>
 
-<h2 id="checkpoints"><span class="num">Required</span>Checkpoints <span style="font-weight:400;color:var(--muted);font-size:.65em">, complete as you work</span></h2>
-<p style="font-family:var(--sans);font-size:.95rem">Here is how this works. Checkpoint 1 matches Step
-1, Checkpoint 2 matches Step 2, all the way down. You do the actual work in your own workbook, in the
-row with the same number on the Analyst tab, then paste the answer here. Get it right and the next
-question opens up. There is no penalty for a wrong answer, so guess, check, and lean on the hint if
-you get stuck. That is what it is there for.</p>
-<p style="font-family:var(--sans);font-size:.95rem">Once you have cleared them all, write your reflection
-and download your certificate for Canvas. Your progress saves automatically in this browser, so you can close the tab and pick up where you left off. It does not follow you to a different computer or a private window, and clearing your browser data clears it. If you need to start this lab over, use the <button type="button" class="hintb" onclick="resetLab()">Reset this lab</button> button.</p>
-<div class="progress" id="prog">Checkpoint progress: 0 / 10</div>
-<div id="cps"></div>
+<h2 id="finish"><span class="num">Finish</span>Reflection &amp; certificate</h2>
+
 <div class="certbox" id="reflectbox">
   <h3>One last thing before your certificate</h3>
   <p style="font-family:var(--sans);font-size:.88rem">Think of a business, team, or club you know from the inside. If you had their data in a spreadsheet, write a question that could be answered with a COUNTIF or SUMIF formula, and name the decision that knowing the number would change. If the number would not change any decision, pick a better question.</p>
@@ -664,16 +706,20 @@ function resetLab(){if(!confirm('Clear your saved progress for this lab and star
  render();if(r)r.dispatchEvent(new Event('input',{bubbles:true}));}
 const norm=s=>s.replace(/[$,%\s]/g,'').toLowerCase();
 function render(){
- const c=document.getElementById('cps');c.innerHTML='';
  QS.forEach((q,i)=>{
+  const c=document.querySelector('.cpslot[data-cp="'+(i+1)+'"]');
+  if(!c)return; c.innerHTML='';
+  const lock=i>0&&!solved.has(i-1);
   const d=document.createElement('div');
-  d.className='cp'+(solved.has(i)?' done':(i>0&&!solved.has(i-1)?' locked':''));
-  d.innerHTML='<p class="q">'+q.q+'</p>'
+  d.className='cp'+(solved.has(i)?' done':(lock?' locked':''));
+  d.innerHTML='<span class="cphead">Checkpoint '+(i+1)+' of '+QS.length+(solved.has(i)?' \u00b7 cleared':'')+'</span>'
+   +'<p class="q">'+q.q+'</p>'
    +(solved.has(i)?'<p class="msg" style="color:var(--good)">Correct.</p>':'<input type="text" id="in'+i+'" aria-label="Answer '+(i+1)+'">'
    +'<button onclick="chk('+i+')">Check</button>'
    +'<button class="hintb" onclick="hint('+i+')">Hint</button>'
    +'<p class="msg" id="m'+i+'"></p><p class="hint" id="h'+i+'">'+q.h+'</p>');
-  c.appendChild(d);});
+  c.appendChild(d);
+  if(lock)c.insertAdjacentHTML('beforeend','<p class="lockmsg">Clear Checkpoint '+i+' first.</p>');});
  document.getElementById('prog').textContent='Checkpoint progress: '+solved.size+' / '+QS.length;
  const done=solved.size===QS.length;
  document.getElementById('reflectbox').className='certbox'+(done?' show':'');

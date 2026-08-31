@@ -64,6 +64,31 @@ code.inline{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.8
 ul,ol{margin:0 0 1.15rem;padding-left:1.3rem}
 li{margin-bottom:.45rem}
 
+/* ---------- numbered step headings ---------- */
+.sh{margin:3rem 0 .7rem;padding-top:.9rem;border-top:2px solid var(--black)}
+.sh .badge{display:inline-block;background:var(--magenta);color:#fff;font-family:var(--display);
+  font-size:12.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  padding:.24rem .62rem;margin-right:.55rem;vertical-align:.17em;white-space:nowrap}
+.sh .ttl{display:inline;font-family:var(--display);font-weight:600;font-size:1.18rem;
+  text-transform:uppercase;letter-spacing:.03em;color:var(--off-black);line-height:1.35}
+.sh .cpx{display:block;clear:both;font-family:var(--sans);font-size:13.5px;line-height:1.4;
+  color:var(--text-light);margin-top:.12rem}
+.sh .cpx b{font-weight:600;color:var(--magenta-dark)}
+@media (max-width:520px){
+  .sh .badge{font-size:11.5px;padding:.2rem .5rem;margin-right:.45rem;vertical-align:.14em}
+  .sh .ttl{font-size:1.05rem}
+}
+
+/* ---------- inline checkpoint slots ---------- */
+.cpslot{margin:1.1rem 0 0}
+.cpslot .cp{margin:0}
+.cp .cphead{display:block;font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--magenta);margin-bottom:.4rem}
+.cp.done .cphead{color:var(--good)}
+.cp.locked .cphead{color:var(--text-light)}
+.progress{border:none}
+.lockmsg{font-family:var(--sans);font-size:.82rem;color:var(--text-light);margin:.4rem 0 0}
+
 /* ---------- pull quote ---------- */
 .pull{margin:2.2rem 0;padding:0 0 0 1.4rem;border-left:3px solid var(--magenta)}
 .pull p{font-family:var(--display);font-weight:400;font-size:1.32rem;line-height:1.3;color:var(--black);margin:0 0 .5rem}
@@ -328,7 +353,7 @@ li{margin-bottom:.45rem}
   <button class="railtoggle" aria-expanded="false" aria-controls="chapnav">Lab contents</button>
   <nav id="chapnav">
     <a href="#top">Overview</a><a href="#parta">Part A · Follow along</a>
-    <a href="#partb">Part B · Now you</a><a href="#checkpoints">Checkpoints</a>
+    <a href="#partb">Part B · Now you</a><a href="#finish">Reflection &amp; certificate</a>
     <a href="#submit">What to submit</a>
     <a href="chapter2-starbucks.html">↳ Chapter 2 · Value of Information</a>
   </nav>
@@ -375,44 +400,73 @@ three numbers: how many sales we rang up in 2025, what they added up to, and wha
 looked like. Can you pull those from the sales export? Exact figures please, the members read
 closely."</p></div>
 
+<div class="callout callout-bridge"><strong>How the checkpoints work</strong>
+<p style="font-family:var(--sans);font-size:.95rem">Here is how this works. Each checkpoint sits directly under the step it belongs to. You do the actual work in your own file, then paste the answer here. Get it right and the
+next question opens up. There is no penalty for a wrong answer, so guess, check, and lean on the hint if
+you get stuck. That is what it is there for.</p>
+<p style="font-family:var(--sans);font-size:.95rem">Once you have cleared them all, write your reflection
+and download your certificate for Canvas. Your progress saves automatically in this browser, so you can close the tab and pick up where you left off. It does not follow you to a different computer or a private window, and clearing your browser data clears it. If you need to start this lab over, use the <button type="button" class="hintb" onclick="resetLab()">Reset this lab</button> button.</p>
+<div class="progress" id="prog">Checkpoint progress: 0 / 6</div>
+</div>
+
 <h2 id="parta"><span class="num">Part A</span>Follow along: answering the GM, together</h2>
 
 <p>Her three numbers are a count, a total, and an average. Do these steps in order, exactly as
 written; Checkpoints 1 through 3 are her three answers.</p>
 
 <ol>
-<li><strong>Step 1 · Save it properly.</strong> Open the download, then File &#8594; Save As, and name
+<div class="sh" id="step1"><span class="badge">Step 1</span><span class="ttl">Save it properly</span></div>
+<p>Open the download, then File &#8594; Save As, and name
 it <code class="inline">LAB2_Last_First.xlsx</code>. You will submit a file like this every week, so
 start the naming habit now. The workbook opens on a tab called <strong>Analyst</strong>. That is where
 every answer goes: checkpoint 1 in cell <code class="inline">B5</code>, checkpoint 2 in
 <code class="inline">B6</code>, and so on down the numbered rows. The sales data is on the
-<strong>Sales2025</strong> tab next to it.</li>
-<li><strong>Step 2 · Make it readable.</strong> Click the triangle above row 1 and left of column A to
+<strong>Sales2025</strong> tab next to it.</p>
+
+<div class="sh" id="step2"><span class="badge">Step 2</span><span class="ttl">Make it readable</span></div>
+<p>Click the triangle above row 1 and left of column A to
 select everything, then double-click any boundary between two column letters; every column snaps to
 fit. Then View tab &#8594; Freeze Panes &#8594; Freeze Top Row, so the headers stay put while you
-scroll.</li>
-<li><strong>Step 3 · Her first number: how many sales.</strong> Press Ctrl+End
+scroll.</p>
+
+<div class="sh" id="step3"><span class="badge">Step 3</span><span class="ttl">Her first number: how many sales</span><span class="cpx">Answer goes in <b>Checkpoint 1</b> &middot; cell B5</span></div>
+<p>Press Ctrl+End
 (<span class="mac">Mac</span> Cmd+Fn+&#8594; then &#8595;) to jump to the data's last corner and read
 the row number. The header row takes one of those rows, so the number of sales is that figure minus
-one. Type that number on the Analyst tab in <code class="inline">B5</code>. <em>Checkpoint 1.</em></li>
-<li><strong>Step 4 · Her second number: total revenue.</strong> Go to the Analyst tab and click
+one. Type that number on the Analyst tab in <code class="inline">B5</code>.</p>
+
+<div class="cpslot" data-cp="1"></div>
+
+<div class="sh" id="step4"><span class="badge">Step 4</span><span class="ttl">Her second number: total revenue</span><span class="cpx">Answer goes in <b>Checkpoint 2</b> &middot; cell B6</span></div>
+<p>Go to the Analyst tab and click
 cell <code class="inline">B6</code>. Type <code class="inline">=SUM(Sales2025!K:K)</code> exactly, and
-press Enter. Read the formula as a sentence: add up everything in column K of the Sales2025 tab. The
+press Enter. Read the formula left to right: add up everything in column K of the Sales2025 tab. The
 <code class="inline">Sales2025!</code> part is how a formula on one tab reaches data on another; you
-will use it all quarter. <em>Checkpoint 2.</em></li>
-<li><strong>Step 5 · Her third number: the typical sale.</strong> In <code class="inline">B7</code>
-on the Analyst tab, type <code class="inline">=AVERAGE(Sales2025!K:K)</code>. Same shape as Step 4,
-different verb. <em>Checkpoint 3.</em></li>
-<li><strong>Step 6 · Check yourself with the status bar.</strong> Click column K's header letter to
+will use it all quarter.</p>
+
+<div class="cpslot" data-cp="2"></div>
+
+<div class="sh" id="step5"><span class="badge">Step 5</span><span class="ttl">Her third number: the typical sale</span><span class="cpx">Answer goes in <b>Checkpoint 3</b> &middot; cell B7</span></div>
+<p>In <code class="inline">B7</code>
+on the Analyst tab, type <code class="inline">=AVERAGE(Sales2025!K:K)</code>. Same three parts as Step 4;
+the only change is what Excel does with the column, averaging it instead of adding it.</p>
+
+<div class="cpslot" data-cp="3"></div>
+
+<div class="sh" id="step6"><span class="badge">Step 6</span><span class="ttl">Check yourself with the status bar</span></div>
+<p>Click column K's header letter to
 select the whole column, then look at the bar along the bottom of the window: Excel shows Average,
 Count, and Sum for any selection automatically. All three of the GM's numbers are sitting there,
 confirming your formulas (the Count includes nothing extra because column K has one header cell and
-no stray values). Remember this; Part B uses it.</li>
-<li><strong>Step 7 · Write the reply.</strong> Your Analyst tab now holds three answers in
+no stray values). Remember this; Part B uses it.</p>
+
+<div class="sh" id="step7"><span class="badge">Step 7</span><span class="ttl">Write the reply</span></div>
+<p>Your Analyst tab now holds three answers in
 <code class="inline">B5:B7</code>. That block, tidy, numbered, checkable, is the actual deliverable of
 analyst work, and every lab this month ends with one. In the Notes column beside each answer, write one
 short line saying what the number is, the way you would if the GM opened this file. Her email is
-answered.</li>
+answered.</p>
+
 </ol>
 
 <details class="howto"><summary>If a step misbehaves</summary><div class="howto-body">
@@ -435,22 +489,33 @@ figures."</p></div>
 
 <h2 id="partb"><span class="num">Part B</span>Now you: the ops email, alone</h2>
 
-<p>Everything he asks for is a move you made in Part A, pointed at a new target. Each task below
-tells you exactly what to do; doing it with your own hands is the point. Build his answers as a
+<p>Everything he asks for is a move you made in Part A, pointed at a new target. Steps 8 through 10 each
+tell you exactly what to do; doing it with your own hands is the point. Build his answers as a
 labeled block, the Step 7 habit.</p>
 
 <ol>
-<li><strong>Question 1: total units moved.</strong> Click an empty cell and write a SUM formula on the
-quantity column, which is column H, the same way you wrote Step 4's formula on column K. Label it.
-<em>Checkpoint 4.</em></li>
-<li><strong>Question 2: the leading store.</strong> Put a filter on (click any cell in the data, Data
+<div class="sh" id="step8"><span class="badge">Step 8</span><span class="ttl">Ops email: total units moved</span><span class="cpx">Answer goes in <b>Checkpoint 4</b></span></div>
+<p>Click an empty cell and write a SUM formula on the
+quantity column, which is column H, the same way you wrote Step 4's formula on column K. Label it.</p>
+
+<div class="cpslot" data-cp="4"></div>
+
+<div class="sh" id="step9"><span class="badge">Step 9</span><span class="ttl">Ops email: the leading store</span><span class="cpx">Answer goes in <b>Checkpoint 5</b></span></div>
+<p>Put a filter on (click any cell in the data, Data
 tab &#8594; Filter), use column C's dropdown to show one store at a time, and read column K's Sum in
 the status bar, the Step 6 trick. Work through the stores until you are sure, then clear the filter
-and record the winner. <em>Checkpoint 5.</em></li>
-<li><strong>Question 3: the flagged transaction.</strong> Click another empty cell and write a MAX
+and record the winner.</p>
+
+<div class="cpslot" data-cp="5"></div>
+
+<div class="sh" id="step10"><span class="badge">Step 10</span><span class="ttl">Ops email: the flagged transaction</span><span class="cpx">Answer goes in <b>Checkpoint 6</b></span></div>
+<p>Click another empty cell and write a MAX
 formula on the revenue column (K). MAX works exactly like SUM: one column in, one number out. If you
-want to see the actual row, sort by revenue, largest to smallest. <em>Checkpoint 6.</em></li>
+want to see the actual row, sort by revenue, largest to smallest.</p>
+
 </ol>
+
+<div class="cpslot" data-cp="6"></div>
 
 <div class="callout"><strong>Why a co-op cares about members (a seed for later)</strong>
 <p>Column N marks whether each sale had a member attached. Every "N" is a customer the co-op earned
@@ -460,18 +525,11 @@ month, and it will matter more than revenue.</p></div>
 
 <div class="callout callout-good"><strong>Finished early? One stretch</strong>
 <p>Select the whole data range and Insert &#8594; Table (Ctrl+T). Notice the filter arrows appear on
-their own and formulas start reading like sentences. Then just explore: filter to your favorite store,
+their own and formulas start referring to columns by name. Then just explore: filter to your favorite store,
 read a week of its sales. Familiarity with a dataset is part of analysis, not a delay before it.</p></div>
 
-<h2 id="checkpoints"><span class="num">Required</span>Checkpoints <span style="font-weight:400;color:var(--muted);font-size:.65em">, complete as you work</span></h2>
-<p style="font-family:var(--sans);font-size:.95rem">Here is how this works. Each checkpoint matches a
-step above. You do the actual work in your own file, then paste the answer here. Get it right and the
-next question opens up. There is no penalty for a wrong answer, so guess, check, and lean on the hint if
-you get stuck. That is what it is there for.</p>
-<p style="font-family:var(--sans);font-size:.95rem">Once you have cleared them all, write your reflection
-and download your certificate for Canvas. Your progress saves automatically in this browser, so you can close the tab and pick up where you left off. It does not follow you to a different computer or a private window, and clearing your browser data clears it. If you need to start this lab over, use the <button type="button" class="hintb" onclick="resetLab()">Reset this lab</button> button.</p>
-<div class="progress" id="prog">Checkpoint progress: 0 / 6</div>
-<div id="cps"></div>
+<h2 id="finish"><span class="num">Finish</span>Reflection &amp; certificate</h2>
+
 <div class="certbox" id="reflectbox">
   <h3>One last thing before your certificate</h3>
   <p style="font-family:var(--sans);font-size:.88rem">Cascadia's leaders could not answer basic questions about their own business until someone computed these totals. In the field you plan to enter, what is one number that leadership probably cannot state off the top of their head but should be able to, and what decision would knowing it change?</p>
@@ -500,7 +558,7 @@ Formulas must be live in the cells; a typed-in number does not count.</p>
 <p style="font-family:var(--sans);font-size:.92rem"><strong>File 2: your completion certificate PDF.</strong> Clear all the checkpoints above, write
 your reflection, and click Download certificate. Your reflection prints as page 2, so you do not submit
 it separately.</p>
-</main></main></main></div>
+</main></div>
 <script>
 (function(){var b=document.querySelector('.railtoggle'),n=document.getElementById('chapnav');
 if(!b||!n)return;b.addEventListener('click',function(){var o=n.classList.toggle('open');
@@ -509,7 +567,7 @@ b.setAttribute('aria-expanded',o?'true':'false');});})();
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-const LAB="LAB2", QS=[{"q": "Part A \u00b7 The GM's first number: how many sales lines did the co-op record in 2025? (Data rows, not the header.)", "t": "num", "a": "Mjg5OQ==", "tol": 0, "h": "Step 3: Ctrl+End (Cmd+Fn+\u2192 then \u2193 on a Mac) lands on the last row; subtract 1 for the header."}, {"q": "Part A \u00b7 The GM's second number: total revenue for 2025, in dollars?", "t": "num", "a": "NzEyOTcxLjU=", "tol": 1, "h": "Step 4's formula: =SUM(K:K). If you got 0, check you are on the data sheet and pressed Enter."}, {"q": "Part A \u00b7 The GM's third number: the average sale, to the cent?", "t": "num", "a": "MjQ1Ljk0", "tol": 0.05, "h": "Step 5's formula: =AVERAGE(K:K). Same shape as SUM, different verb."}, {"q": "Part B \u00b7 Ops email, question 1: how many total units moved through the stores in 2025? (Sum the quantity column.)", "t": "num", "a": "NDI0Ng==", "tol": 0, "h": "Write =SUM on column H, exactly the way you wrote it on column K in Step 4."}, {"q": "Part B \u00b7 Ops email, question 2: which store produced the most revenue in 2025?", "t": "txt", "a": "U2VhdHRsZSBGbGFnc2hpcA==", "tol": 0, "h": "The Step 6 method: filter column C to one store, click column K's header, read Sum in the status bar. Eight stores, eight reads. Clear the filter when done."}, {"q": "Part B \u00b7 Ops email, question 3: the payment processor flagged the year's largest single sale. How much was it, in dollars?", "t": "num", "a": "OTQ5LjA=", "tol": 0, "h": "Write =MAX on the revenue column (K). It works exactly like SUM: one column in, one number out. Note: three different stores tie for this amount."}];
+const LAB="LAB2", QS=[{"q": "Part A \u00b7 The GM's first number: how many sales lines did the co-op record in 2025? (Data rows, not the header.)", "t": "num", "a": "Mjg5OQ==", "tol": 0, "h": "Step 3: Ctrl+End (Cmd+Fn+\u2192 then \u2193 on a Mac) lands on the last row; subtract 1 for the header."}, {"q": "Part A \u00b7 The GM's second number: total revenue for 2025, in dollars?", "t": "num", "a": "NzEyOTcxLjU=", "tol": 1, "h": "Step 4's formula: =SUM(K:K). If you got 0, check you are on the data sheet and pressed Enter."}, {"q": "Part A \u00b7 The GM's third number: the average sale, to the cent?", "t": "num", "a": "MjQ1Ljk0", "tol": 0.05, "h": "Step 5's formula: =AVERAGE(K:K). Same shape as SUM; it averages the column instead of adding it."}, {"q": "Part B \u00b7 Ops email, question 1: how many total units moved through the stores in 2025? (Sum the quantity column.)", "t": "num", "a": "NDI0Ng==", "tol": 0, "h": "Write =SUM on column H, exactly the way you wrote it on column K in Step 4."}, {"q": "Part B \u00b7 Ops email, question 2: which store produced the most revenue in 2025?", "t": "txt", "a": "U2VhdHRsZSBGbGFnc2hpcA==", "tol": 0, "h": "The Step 6 method: filter column C to one store, click column K's header, read Sum in the status bar. Eight stores, eight reads. Clear the filter when done."}, {"q": "Part B \u00b7 Ops email, question 3: the payment processor flagged the year's largest single sale. How much was it, in dollars?", "t": "num", "a": "OTQ5LjA=", "tol": 0, "h": "Write =MAX on the revenue column (K). It works exactly like SUM: one column in, one number out. Note: three different stores tie for this amount."}];
 const SKEY='mis320_'+LAB;
 let solved=new Set();
 function load(){try{const raw=localStorage.getItem(SKEY);if(!raw)return null;const s=JSON.parse(raw);
@@ -522,16 +580,20 @@ function resetLab(){if(!confirm('Clear your saved progress for this lab and star
  render();if(r)r.dispatchEvent(new Event('input',{bubbles:true}));}
 const norm=s=>s.replace(/[$,\s]/g,'').toLowerCase();
 function render(){
- const c=document.getElementById('cps');c.innerHTML='';
  QS.forEach((q,i)=>{
+  const c=document.querySelector('.cpslot[data-cp="'+(i+1)+'"]');
+  if(!c)return; c.innerHTML='';
+  const lock=i>0&&!solved.has(i-1);
   const d=document.createElement('div');
-  d.className='cp'+(solved.has(i)?' done':(i>0&&!solved.has(i-1)?' locked':''));
-  d.innerHTML='<p class="q">'+q.q+'</p>'
+  d.className='cp'+(solved.has(i)?' done':(lock?' locked':''));
+  d.innerHTML='<span class="cphead">Checkpoint '+(i+1)+' of '+QS.length+(solved.has(i)?' \u00b7 cleared':'')+'</span>'
+   +'<p class="q">'+q.q+'</p>'
    +(solved.has(i)?'<p class="msg" style="color:var(--good)">Correct.</p>':'<input type="text" id="in'+i+'" aria-label="Answer '+(i+1)+'">'
    +'<button onclick="chk('+i+')">Check</button>'
    +'<button class="hintb" onclick="hint('+i+')">Hint</button>'
    +'<p class="msg" id="m'+i+'"></p><p class="hint" id="h'+i+'">'+q.h+'</p>');
-  c.appendChild(d);});
+  c.appendChild(d);
+  if(lock)c.insertAdjacentHTML('beforeend','<p class="lockmsg">Clear Checkpoint '+i+' first.</p>');});
  document.getElementById('prog').textContent='Checkpoint progress: '+solved.size+' / '+QS.length;
  const done=solved.size===QS.length;
  document.getElementById('reflectbox').className='certbox'+(done?' show':'');
