@@ -26,7 +26,7 @@ body{margin:0;background:var(--white);color:var(--text-dark);
 
 /* ---------- shell ---------- */
 .shell{max-width:var(--wrap);margin:0 auto;display:grid;grid-template-columns:15rem minmax(0,1fr);gap:3.5rem;padding:0 1.5rem 6rem}
-main{max-width:var(--col);padding-top:2.5rem}
+main{margin-left:auto;margin-right:auto;max-width:var(--col);padding-top:2.5rem}
 
 /* ---------- sidebar ---------- */
 .rail{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:2.5rem 0 3rem;border-right:1px solid var(--border)}
@@ -302,6 +302,19 @@ li{margin-bottom:.45rem}
 .comptable tr.people td:first-child{color:var(--magenta-dark)}
 
 .acr{color:var(--magenta)}
+
+/* narrow screens: wide prose comparison tables stack into labelled cards. */
+@media (max-width:640px){
+  main table.stack-sm{display:block;width:100%;overflow-x:visible;border-collapse:separate;border-spacing:0}
+  table.stack-sm tr:first-child{display:none}
+  table.stack-sm tr{display:block;width:100%;border:1px solid var(--border);margin:0 0 .85rem;background:#fff}
+  table.stack-sm td{display:block;width:100%;border:none;border-bottom:1px solid var(--border);padding:.6rem .85rem;background:#fff!important}
+  table.stack-sm td:last-child{border-bottom:none}
+  table.stack-sm td::before{content:attr(data-label);display:block;font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--text-light);margin-bottom:.28rem}
+  table.stack-sm td:first-child{background:var(--black)!important;color:#fff;font-family:var(--display);letter-spacing:.06em;white-space:normal}
+  table.stack-sm td:first-child::before{content:none}
+  table.stack-sm td:first-child strong{color:#fff}
+}
 </style></head><body>
 <nav class="topnav">
   <div class="topnav-in">
@@ -399,20 +412,9 @@ li{margin-bottom:.45rem}
 
 
 
-<div class="shell">
-<aside class="rail"><p class="book">MIS 320</p><p class="course">Principles of Management Information Systems</p>
-<button class="railtoggle" aria-expanded="false" aria-controls="chapnav">Chapter contents</button>
-<nav id="chapnav">
-<a href="#intro">Introduction</a>
-    <a href="#defn">What MIS is</a>
-    <a href="#chain">The five components</a>
-    <a href="#wrapped">Spotify Wrapped as a system</a>
-<a href="#you">Where this leaves you</a>
-<a href="#you">Where this leaves you</a>
-    <a href="#course">How this course works</a><a href="#vocab">Vocabulary</a><a href="#discussion">Discussion questions</a><a href="#lab">From lecture to lab</a></nav><a class="back" href="index.html">&#8592; All chapters &amp; labs</a></aside><main>
+<main class="chapwrap">
 <header class="chaphead"><p class="eyebrow">Chapter 1</p><h1>What Is <span class="acr">M</span>anagement <span class="acr">I</span>nformation <span class="acr">S</span>ystems?</h1>
 <p class="anchor">Anchor case: <strong>Spotify Wrapped</strong></p>
-<div class="meta-row"><span>Week 1 &#183; Wednesday</span><span class="alt">First session of the course</span><span>Lab 1: GenAI for Thinking</span></div>  
 <div class="concepts"><span class="clabel">Key concepts</span><span>Management information systems</span><span>The five components</span><span>The weakest component rule</span><span>Data vs. information</span><span>Efficiency vs. effectiveness</span><span>Systems thinking</span></div>
 </header>
 <div class="toc"><strong>Contents</strong>
@@ -444,13 +446,13 @@ soundtrack. Spotify is confident, and wrong. It counted plays on an account as p
 </figcaption>
 </figure>
 
-<p>It is tempting to file Spotify Wrapped under marketing. The campaign is real, and it works. But it
+<p>It is tempting to treat Spotify Wrapped as marketing. The campaign is real, and it works. But it
 only exists because of what sits underneath it: an <strong>information system</strong>, and that is the
 part worth your attention.</p>
 
 <p>Somebody had to capture a year of listening play by play, store it so that any one listener could be
 found again, reduce hundreds of millions of listening years down to the few facts worth telling each
-person, and land all of it on the same morning without the whole thing falling over. Nobody writes 1.4
+person, and deliver all of it on the same morning without the whole system failing. Nobody writes 1.4
 billion stories by hand. No creative team, no agency, no amount of budget.</p>
 
 <p>Every information system is built from the same five parts: hardware, software, data, networks, and
@@ -473,7 +475,7 @@ being the skill.</p>
 
 <p>You will do a month of Excel in this course, and you should, because you will use it for the rest of
 your career. So will the accountants, the finance majors, the marketers, and everyone going into
-operations. Working with data is the floor in business now, not a specialization, roughly where writing
+operations. Working with data is a basic expectation in business now, not a specialization, roughly where writing
 a professional email sits.</p>
 
 <p>Which raises a fair question, since this college also offers business analytics: what is the
@@ -523,13 +525,13 @@ decision at all.</p>
 <em>worth building</em>, whether the organization around it will actually use it, and whether the
 decisions it feeds are better than the decisions it replaced. Most of the famous technology failures you
 will read about were systems that worked perfectly, inside organizations that did not. Somebody has to
-be able to hold the whole of it in their head at once: the data, the software, the network, the cost,
+be able to understand all of it at the same time: the data, the software, the network, the cost,
 and the people at both ends. That person is usually not the one who wrote the code.</p>
 
 <p>The two questions have names you will use all quarter. Whether a system does its thing well, fast,
 cheap, with less, is <strong>efficiency</strong>. Whether it is the right thing to be doing at all is
-<strong>effectiveness</strong>, and effectiveness is the harder test, because a system can hit every
-number it watches while answering a question nobody should have asked. Most of the famous failures were
+<strong>effectiveness</strong>, and effectiveness is the harder test, because a system can meet every
+target it measures while answering a question nobody should have asked. Most of the famous failures were
 efficient.</p>
 
 <p>This is true of AI too, and it is worth saying plainly in a year when everyone is being told
@@ -574,23 +576,23 @@ and fewer people are equipped to check it.</p>
 
 <p>Every information system, Spotify Wrapped, a hospital records system, the register at your coffee shop, is built from the same five components. Every case in this book gets mapped onto them. Learn to see the five and you can decompose any system you ever meet, including the ones you will be hired to fix.</p>
 <div class="vc"><div class="vc-head">The Five Components of MIS</div>
-<table class="comptable">
+<table class="comptable stack-sm">
 <tr><th>Component</th><th>What it is</th><th>In Spotify Wrapped</th></tr>
-<tr><td>Hardware</td><td>The physical machines: phones, laptops, servers, sensors, registers.</td>
-<td>Your phone capturing each play, and the servers warmed up before launch morning.</td></tr>
-<tr><td>Software</td><td>The instructions the hardware runs, from the operating system on your phone to the programs Spotify runs on its servers.</td>
-<td>The programs that sort and rank your year, and the model that writes 1.4 billion stories.</td></tr>
-<tr><td>Data</td><td>The raw facts captured about the world: plays, sales, clicks, temperatures.</td>
-<td>Every play, skip, and replay, timestamped and attached to your account.</td></tr>
-<tr><td>Networks</td><td>The connections underneath everything else, moving data between machines and between organizations. Nothing above reaches anything else without them.</td>
-<td>The trip each play makes to Spotify all year, and the trip your card makes back in December.</td></tr>
+<tr><td data-label="Component">Hardware</td><td data-label="What it is">The physical machines: phones, laptops, servers, sensors, registers.</td>
+<td data-label="In Spotify Wrapped">Your phone capturing each play, and the servers warmed up before launch morning.</td></tr>
+<tr><td data-label="Component">Software</td><td data-label="What it is">The instructions the hardware runs, from the operating system on your phone to the programs Spotify runs on its servers.</td>
+<td data-label="In Spotify Wrapped">The programs that sort and rank your year, and the model that writes 1.4 billion stories.</td></tr>
+<tr><td data-label="Component">Data</td><td data-label="What it is">The raw facts captured about the world: plays, sales, clicks, temperatures.</td>
+<td data-label="In Spotify Wrapped">Every play, skip, and replay, timestamped and attached to your account.</td></tr>
+<tr><td data-label="Component">Networks</td><td data-label="What it is">The connections underneath everything else, moving data between machines and between organizations. Nothing above reaches anything else without them.</td>
+<td data-label="In Spotify Wrapped">The trip each play makes to Spotify all year, and the trip your card makes back in December.</td></tr>
 <tr class="people"><td>People</td><td>Everyone who builds, operates, interprets, ignores, or works around the system.</td>
 <td>You at both ends, and the teams who decided what &#8220;remarkable&#8221; means and graded 165,000 stories before any shipped.</td></tr>
 </table>
 </div>
 
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">The weakest component rule</span>
-<p>A system is only as good as its weakest component. Four can be excellent and the fifth can still sink the whole thing, quietly, while the output still looks convincing. When a system fails, check all five before assigning blame. You will do exactly that on a real failure in every chapter of this book.</p></div>
+<p>A system is only as good as its weakest component. Four can be excellent and the fifth can still ruin the whole system, quietly, while the output still looks convincing. When a system fails, check all five before assigning blame. You will do exactly that on a real failure in every chapter of this book.</p></div>
 <figure class="diagram" style="margin:1.8rem 0">
 <svg viewBox="0 0 740 250" xmlns="http://www.w3.org/2000/svg" role="img"
      aria-labelledby="looptitle loopdesc" style="width:100%;height:auto;font-family:var(--sans)">
@@ -692,8 +694,7 @@ component is broken, and you practice locating which one.</p>
 
 <p>The 2025 edition was called <strong>Wrapped Archive</strong>. Rather than just handing you your top
 artist, it picked up to five <em>remarkable days</em> out of your listening year and wrote you a short
-story about each one: the day you found the artist that changed everything, the day your taste took a
-hard left turn. In March 2026, Spotify&#8217;s engineering team published
+story about each one: the day you found the artist that changed everything, the day your taste changed direction sharply. In March 2026, Spotify&#8217;s engineering team published
 <a href="https://engineering.atspotify.com/2026/3/inside-the-archive-2025-wrapped">an account of how
 they built it</a>. Here is the system they described.</p>
 
@@ -738,11 +739,11 @@ mean nothing. A play event is a row. Here are five of them, roughly as the syste
 
 <table class="sumtable">
 <tr><th>listener</th><th>track</th><th>artist</th><th>started at (UTC)</th><th>milliseconds played</th><th>device</th></tr>
-<tr><td>u_4471</td><td>Beyond</td><td>Auli&#8217;i Cravalho</td><td>2025-11-04 15:07:12</td><td>184,300</td><td>car speaker</td></tr>
-<tr><td>u_4471</td><td>Beyond</td><td>Auli&#8217;i Cravalho</td><td>2025-11-04 15:10:19</td><td>184,300</td><td>car speaker</td></tr>
-<tr><td>u_4471</td><td>Beyond</td><td>Auli&#8217;i Cravalho</td><td>2025-11-04 15:13:26</td><td>21,880</td><td>car speaker</td></tr>
-<tr><td>u_4471</td><td>Fat Lip</td><td>Sum 41</td><td>2025-11-04 16:41:55</td><td>176,120</td><td>phone</td></tr>
-<tr><td>u_4471</td><td>In Too Deep</td><td>Sum 41</td><td>2025-11-04 16:44:52</td><td>208,940</td><td>phone</td></tr>
+<tr><td data-label="listener">u_4471</td><td data-label="track">Beyond</td><td data-label="artist">Auli&#8217;i Cravalho</td><td data-label="started at (UTC)">2025-11-04 15:07:12</td><td data-label="milliseconds played">184,300</td><td data-label="device">car speaker</td></tr>
+<tr><td data-label="listener">u_4471</td><td data-label="track">Beyond</td><td data-label="artist">Auli&#8217;i Cravalho</td><td data-label="started at (UTC)">2025-11-04 15:10:19</td><td data-label="milliseconds played">184,300</td><td data-label="device">car speaker</td></tr>
+<tr><td data-label="listener">u_4471</td><td data-label="track">Beyond</td><td data-label="artist">Auli&#8217;i Cravalho</td><td data-label="started at (UTC)">2025-11-04 15:13:26</td><td data-label="milliseconds played">21,880</td><td data-label="device">car speaker</td></tr>
+<tr><td data-label="listener">u_4471</td><td data-label="track">Fat Lip</td><td data-label="artist">Sum 41</td><td data-label="started at (UTC)">2025-11-04 16:41:55</td><td data-label="milliseconds played">176,120</td><td data-label="device">phone</td></tr>
+<tr><td data-label="listener">u_4471</td><td data-label="track">In Too Deep</td><td data-label="artist">Sum 41</td><td data-label="started at (UTC)">2025-11-04 16:44:52</td><td data-label="milliseconds played">208,940</td><td data-label="device">phone</td></tr>
 </table>
 
 <p>That is <strong>data</strong>: recorded facts, one row at a time, with no opinion attached. What
@@ -770,10 +771,10 @@ somebody had to decide what &#8220;remarkable&#8221; means, precisely enough tha
 it, and that is not a technical question. No amount of engineering skill tells you which day of
 someone&#8217;s year mattered to them.</p>
 
-<p>The rules they landed on are called <strong>heuristics</strong>. Biggest listening day is the highest
+<p>The rules they settled on are called <strong>heuristics</strong>. Biggest listening day is the highest
 total minutes. Biggest discovery day is the day you heard the most first-time artists. Most unusual day
 is the day you strayed furthest from your normal taste. A fuzzy human idea, <em>what was memorable about
-your year</em>, became arithmetic a machine can run. That is translation doing its day job, and it is
+your year</em>, became arithmetic a machine can run. That is translation doing its ordinary work, and it is
 most of what data work is. You will do a smaller version in every lab this quarter.</p>
 
 <p>The data component has now done its job. Out of a year of raw rows, each listener has a handful of
@@ -787,12 +788,12 @@ what software even means here.</p>
 
 <p>Say &#8220;software&#8221; and most people picture the Spotify app: the green icon, the play button,
 the thing on your phone. That is software, and it is the smallest part of the software in this story.
-The app is the bit with a screen on it. Behind it sits code that records every play, rules that pick the
+The app is the part with a screen on it. Behind it sits code that records every play, rules that pick the
 remarkable days, a pipeline that assembles a packet for each one, something that talks to the model, and
 a system that files the finished stories where they can be found again. None of that has a screen.
 Neither does most software in most companies.</p>
 
-<p>The scale of the writing job is the first thing worth sitting with: around 350 million eligible
+<p>The scale of the writing job is the first thing worth pausing on: around 350 million eligible
 listeners, up to five stories each, comes to roughly
 <strong>1.4 billion reports</strong>. Every one had to be written before launch day.</p>
 
@@ -802,8 +803,7 @@ the model, they also sent a pre-computed block of statistics, because, in their 
 are bad at math. The system was built around a known weakness of one of its own components, which is
 most of what good design is.</p>
 
-<p>Getting the model to write well took more than three months of daily work. That is worth sitting
-with, because from the outside it looks like somebody asked a machine for a story and a story came out.</p>
+<p>Getting the model to write well took more than three months of daily work. That is worth pausing on, because from the outside it looks like somebody asked a machine for a story and a story came out.</p>
 
 <p>Then somebody had to do arithmetic. The best model available wrote lovely stories and would have cost
 an unthinkable amount to run 1.4 billion times, so they used it to teach a cheaper one to write the same
@@ -819,7 +819,7 @@ decision. That is the job.</p>
 <p>So: 1.4 billion stories, written and sitting there. Now every one of them has to appear on a
 different person&#8217;s phone, and they all have to appear on the same morning.</p>
 
-<p>That is a brutal thing to ask of a set of machines. The usual answer is to let a system add
+<p>That is a very hard thing to ask of a set of machines. The usual answer is to let a system add
 <strong>capacity</strong>, meaning more computers doing the work, as demand climbs through the day. That
 would have failed here, because Wrapped does not climb. It spikes.</p>
 
@@ -831,7 +831,7 @@ arrived, nothing was cold.</p>
 <p>None of which is possible if you own your machines. Most of the computers in this story do not
 belong to Spotify. The work runs on <strong>cloud infrastructure</strong>, rented by the hour in data
 centers somebody else owns, which is the only reason capacity can be turned up for one morning in
-December and turned back down afterwards. Nobody buys and racks servers for a single morning. What that
+December and turned back down afterwards. Nobody buys and installs servers for a single morning. What that
 arrangement costs, and what a company gives up in exchange, is Week 10.</p>
 
 <p>Somebody had to approve all of that, weeks ahead, in a meeting. Renting a large amount of computing
@@ -854,8 +854,8 @@ and they are not in one building.</p>
 
 <p>You notice a network exactly once, and that is when it stops. The rest of the time it is the
 component everybody forgets, which is also why it tends to be the one nobody planned for. Deciding how
-much traffic to expect, and what should happen to the requests that fail anyway, is a call somebody
-makes in advance with incomplete information. Same kind of call as the capacity one above, made by the
+much traffic to expect, and what should happen to the requests that fail anyway, is a decision somebody
+makes in advance with incomplete information. The same kind of decision as the capacity one above, made by the
 same kind of person.</p>
 
 <h3>People: the ones who use it, and the ones who built it</h3>
@@ -895,8 +895,8 @@ to: it was wrong in a consistent direction, and least reliable on exactly the ne
 wants to judge. Useful for screening out weak ideas early. Not a replacement for finding out.</p>
 
 <p>That is the pattern to watch for the rest of the quarter. AI did not remove the people from this
-system. It moved them: less time producing, more time deciding what good looks like and checking whether
-the machine got there.</p>
+system. It moved them: less time producing, more time deciding what a good result is and checking whether
+the machine produced one.</p>
 
 <h3>What to take away</h3>
 
@@ -1071,14 +1071,14 @@ strongest opinion about, and be ready to say it first.</p>
 <li>Compare your Wrapped with three or four people around you. Find one that is wrong about the person
 it belongs to, or at least a bit off, and work out which of the five components explains it. Somebody in
 the group will have a sibling, a roommate, or a partner in their listening.
-<span class="tag tag-warm">Warm-up</span></li>
+<span class="tag">Apply</span></li>
 <li>Invent a Wrapped for something that does not have one. Your gym, your degree, Western, the grocery
 store, your group chat. What data does that place already collect without anyone thinking about it, and
 what would it be able to tell you in December that you do not currently know?</li>
 <li>Now find the line. What is a Wrapped that nobody would want, that would take exactly the same five
 components to build? Where is the difference between a delightful one and a creepy one, and is it about
 the data, the people, or something else entirely?
-<span class="tag tag-open">Open judgment</span></li>
+<span class="tag tag-hard">Ethics</span></li>
 <li>Pick a system you used today that has nothing to do with music: registration, a self-checkout, your
 bank app, a food delivery order, the parking meters on campus. Name all five components in it, in your
 own words. Then, if one of them quietly failed tonight, which would you notice first, and which one
@@ -1115,9 +1115,7 @@ first checkpoint-and-certificate lab, so you learn the mechanics before they cou
   </ul>
 </div>
 
-</main></div><script>(function(){var b=document.querySelector('.railtoggle'),n=document.getElementById('chapnav');
-if(!b||!n)return;b.addEventListener('click',function(){var o=n.classList.toggle('open');
-b.setAttribute('aria-expanded',o?'true':'false');});})();</script><!--NAVJS-->
+</main><!--NAVJS-->
 <script>
 (function(){
   var btns=[].slice.call(document.querySelectorAll('.dd-btn'));
