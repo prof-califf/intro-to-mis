@@ -287,6 +287,19 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 .diagram{margin:1.6rem 0;text-align:center}
 .diagram img{border:1px solid var(--border)}
 .diagram figcaption{text-align:left}
+
+/* narrow screens: wide prose comparison tables stack into labelled cards. */
+@media (max-width:640px){
+  main table.stack-sm{display:block;width:100%;overflow-x:visible;border-collapse:separate;border-spacing:0}
+  table.stack-sm tr:first-child{display:none}
+  table.stack-sm tr{display:block;width:100%;border:1px solid var(--border);margin:0 0 .85rem;background:#fff}
+  table.stack-sm td{display:block;width:100%;border:none;border-bottom:1px solid var(--border);padding:.6rem .85rem;background:#fff!important}
+  table.stack-sm td:last-child{border-bottom:none}
+  table.stack-sm td::before{content:attr(data-label);display:block;font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--text-light);margin-bottom:.28rem}
+  table.stack-sm td:first-child{background:var(--black)!important;color:#fff;font-family:var(--display);letter-spacing:.06em;white-space:normal}
+  table.stack-sm td:first-child::before{content:none}
+  table.stack-sm td:first-child strong{color:#fff}
+}
 </style>
 </head>
 <body>
@@ -820,13 +833,13 @@ It is what databases are for.</p>
 <h3>The five components at Walmart</h3>
 
 
-<table class="sumtable">
+<table class="sumtable stack-sm">
 <tr><th>Component</th><th>At Walmart</th><th>What breaks if it fails</th></tr>
-<tr><td><strong>Hardware</strong></td><td>Registers and scanners in ~10,500 stores; the servers behind the Data Caf&eacute;</td><td>A store goes dark: no sales recorded, shelves restocked on guesswork</td></tr>
-<tr><td><strong>Software</strong></td><td>The transaction systems, Retail Link, the analytics platforms</td><td>Suppliers plan against stale numbers; the bullwhip returns</td></tr>
-<tr><td><strong>Data</strong></td><td>Structured transactions at continental scale; 40 PB of recent history</td><td>A type error or bad key propagates into every report downstream</td></tr>
-<tr><td><strong>Networks</strong></td><td>Every register streaming to the center; Retail Link reaching thousands of suppliers</td><td>The shared version of the truth stops being shared</td></tr>
-<tr><td><strong>People</strong></td><td>Analysts in the Data Caf&eacute;; the grocery team that chased the slump; suppliers reading Retail Link</td><td>Data nobody investigates is a cost, not an asset: the pricing error runs for months</td></tr>
+<tr><td data-label="Component"><strong>Hardware</strong></td><td data-label="At Walmart">Registers and scanners in ~10,500 stores; the servers behind the Data Caf&eacute;</td><td data-label="What breaks if it fails">A store goes dark: no sales recorded, shelves restocked on guesswork</td></tr>
+<tr><td data-label="Component"><strong>Software</strong></td><td data-label="At Walmart">The transaction systems, Retail Link, the analytics platforms</td><td data-label="What breaks if it fails">Suppliers plan against stale numbers; the bullwhip returns</td></tr>
+<tr><td data-label="Component"><strong>Data</strong></td><td data-label="At Walmart">Structured transactions at continental scale; 40 PB of recent history</td><td data-label="What breaks if it fails">A type error or bad key propagates into every report downstream</td></tr>
+<tr><td data-label="Component"><strong>Networks</strong></td><td data-label="At Walmart">Every register streaming to the center; Retail Link reaching thousands of suppliers</td><td data-label="What breaks if it fails">The shared version of the truth stops being shared</td></tr>
+<tr><td data-label="Component"><strong>People</strong></td><td data-label="At Walmart">Analysts in the Data Caf&eacute;; the grocery team that chased the slump; suppliers reading Retail Link</td><td data-label="What breaks if it fails">Data nobody investigates is a cost, not an asset: the pricing error runs for months</td></tr>
 </table>
 
 <h2 id="other"><span class="num">05</span>What the basket reveals</h2>
