@@ -365,26 +365,10 @@ li{margin-bottom:.45rem}
   <h1>Data Analysis: Why Are Members Disappearing?</h1>
   <div class="meta-row"><span>Lab session · 80 min</span><span class="alt"><a href="chapter5-healthcaregov.html" style="color:inherit;text-decoration:none">Pairs with Chapter 5 · Systems Analysis &#8594;</a></span></div>
 </header>
-<p class="lede">Cascadia's board sends the memo below. Every dashboard you built in Lab 4
-  says the co-op is healthy. Both of those things can be true at once, and finding out how is the
-  hardest, and most realistic, assignment of the Excel month.</p>
-  <div class="callout callout-caution"><strong>Memo from the board of directors</strong>
-  <p><em>"Annual dividend redemptions in our North Cascades region came in far below projection, and
-  member survey response rates there have fallen for three straight quarters. Yet regional revenue is on
-  plan and store traffic looks normal. Finance says nothing is wrong. Membership says something is very
-  wrong. You have the 2025 sales data. Tell us which of them is right, where, how bad it is, and what it
-  would take to fix it."</em></p></div>
-
-<details class="howto"><summary>Guided path, if you are stuck</summary><div class="howto-body">
-<p>The investigation is meant to be yours, but the tools are all things you own. If you are stuck, work through these steps in order, and stop as soon as you have identified the store:</p>
-<ol>
-<li>The board's worry is about <em>members</em>. Get one number per store that measures membership, not revenue: for each store, =COUNTIFS(store, name, is_member,"Y") divided by =COUNTIF(store, name). That ratio is the store's member attach rate. (Your Lab 3 summary block is this table, one column short.)</li>
-<li>Or the pivot version: rows = store, values = count of sale_id, columns = is_member, then compute the Y share per row in the cells beside the pivot.</li>
-<li>Now read the eight rates side by side. Seven of them will be similar. The eighth is your answer to Checkpoint 3, and everything after that is measuring how bad it is.</li>
-</ol>
-<p>Using these steps is not cheating; it is the method. The skill being graded is noticing that
-revenue could not answer the board's question and choosing a measure that could.</p>
-</div></details>
+<p class="lede">Every chart you built in Lab 4 says Cascadia is healthy. The board thinks
+  something is wrong anyway, and they have sent you a memo asking you to settle it. Part A rehearses the
+  three tools you will need. Part B hands you the memo and gets out of the way, which is the closest thing
+  in this course to the work itself.</p>
   <p>Work from the clean data: <a href="cascadia-sales-2025.xlsx">cascadia-sales-2025.xlsx</a>.</p>
 
 <div id="steps">
@@ -484,20 +468,60 @@ which is the lesson.)</li>
 </ol>
 <p><strong>"Cell must contain a value" error:</strong> you put the formula in the wrong box. Set cell must hold a formula, By changing cell must hold a plain number.</p>
 </div></details>
-<h2><span class="num">Part B</span>The mini project: open brief</h2>
-<p><strong>Everything in Part A was rehearsal. From here, the direction comes from you.</strong> The
-memo below is the entire brief, exactly as a board would send it, and choosing what to measure is the
-assignment. If you are stuck, the guided path below the memo exists for exactly that moment, and using it is
-part of the method, not a shortcut.</p>
-<p>Re-read the memo. There are no numbered steps for this part; the structure of the investigation is
-the assignment. The checkpoints below will confirm each finding as you reach it, and their order is a
-deliberate breadcrumb trail if you're lost. Three rules:</p>
-<ul>
+<h2><span class="num">Part B</span>The mini project: answer the board</h2>
+
+<p>Everything in Part A was rehearsal. From here the direction comes from you. Nobody will tell you which
+number to compute, and working that out is the assignment.</p>
+
+<div class="callout callout-caution"><strong>Memo from the board of directors</strong>
+<p><em>"Our membership office brought us two problems this quarter, both from our North Cascades region.
+Far fewer members there claimed their annual dividend than we expected, and fewer of them answered our
+member survey than in any of the last three quarters.</em></p>
+<p><em>Finance does not think anything is wrong. Revenue in that region is on plan and store traffic looks
+normal. Membership thinks something is badly wrong. We cannot tell which of them is right, because we do
+not own a system that connects the two.</em></p>
+<p><em>What we do own is every sale from 2025. Use it to answer four things. Is membership right? If they
+are, which store is it? How bad is it, in numbers? And what would it take to fix?"</em></p></div>
+
+<div class="callout"><strong>Two things the memo does not tell you</strong>
+<p><strong>You do not have the dividend or survey data.</strong> Those numbers came from the membership
+office's own systems, and you will not find them in your workbook. Do not go looking. They are the reason
+the board is asking, not the evidence you answer with.</p>
+<p><strong>The answer is in the sales file you already have.</strong> Every sale record says which store
+it happened at and whether a member was attached to it. That second column is the one nobody has been
+looking at.</p></div>
+
+<div class="callout callout-good"><strong>What you hand in</strong>
+<p>A one-page memo back to the board, with four parts:</p>
+<ol>
+<li><strong>The finding.</strong> Which store, and what is wrong there. (Checkpoint 3)</li>
+<li><strong>Its size.</strong> The numbers that show how bad it is and how it compares to the other
+seven stores. (Checkpoints 4, 5 and 6)</li>
+<li><strong>Why nobody caught it.</strong> One short paragraph on why the reports the co-op already runs
+would never have shown this.</li>
+<li><strong>One recommendation, costed.</strong> What would have to change, and by how much. (Checkpoint 8)</li>
+</ol>
+<p>The checkpoints below walk the same path in the same order, so if you clear them in sequence you will
+have every number the memo needs.</p></div>
+
+<div class="callout callout-bridge"><strong>Three rules</strong>
+<ol>
 <li>Everything you need is in the sales data you already have.</li>
 <li>"Revenue is on plan" is in the memo because it is true. Believe it, then ask what it hides.</li>
-<li>Your deliverable is a one-page memo back to the board: the finding, its size, why their existing
-reports missed it, and one costed recommendation.</li>
-</ul>
+<li>If you get stuck, open the guided path below. Using it is part of the method, not a shortcut.</li>
+</ol></div>
+
+<details class="howto"><summary>Guided path, if you are stuck</summary><div class="howto-body">
+<p>The investigation is meant to be yours, but every tool it needs is one you already own. Work through these steps in order and stop as soon as you have identified the store.</p>
+<ol>
+<li>The board's worry is about <em>members</em>. Get one number per store that measures membership, not revenue: for each store, =COUNTIFS(store, name, is_member,"Y") divided by =COUNTIF(store, name). That ratio is the store's member attach rate. (Your Lab 3 summary block is this table, one column short.)</li>
+<li>Or the pivot version: rows = store, values = count of sale_id, columns = is_member, then compute the Y share per row in the cells beside the pivot.</li>
+<li>Now read the eight rates side by side. Seven of them will be similar. The eighth is your answer to Checkpoint 3, and everything after that is measuring how bad it is.</li>
+</ol>
+<p>Using these steps is not cheating; it is the method. The skill being graded is noticing that
+revenue could not answer the board's question and choosing a measure that could.</p>
+</div></details>
+
 <div class="cpslot" data-cp="3"></div>
 <div class="cpslot" data-cp="4"></div>
 <div class="cpslot" data-cp="5"></div>
