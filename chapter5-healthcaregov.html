@@ -830,9 +830,9 @@ exactly when.
 <p>Now place the three failures from section 03 on that table. Mars Climate Orbiter passed unit testing
 twice, once on each team's software, and had no <strong>integration testing</strong> that would have compared the two
 across the boundary. London Ambulance had no realistic system testing under load and no <strong>user acceptance
-testing</strong> worth the name, because the operators met the system on the morning it went live. Knight Capital passed
-all four and was destroyed anyway, because the thing that failed was not the software but the procedure
-for installing it, and nobody tests the deployment.</p>
+testing</strong> worth the name, because the operators met the system on the morning it went live. CrowdStrike's update passed
+its testing and was destroyed by none of these four, because the thing that failed was not the software
+but the decision to give it to everyone at once, and nobody tests a rollout.</p>
 
 <p>Load testing deserves its own sentence, since it is the one that produces public humiliation.
 Non-functional requirements are only checkable by testing under the volume you expect, and if nobody
@@ -905,7 +905,7 @@ that factor, consistently, for nine months.</p>
 which unit crosses the boundary between one team's software and another team's software. That is a
 requirement, and it is the kind of requirement that feels too obvious to write down.</p>
 
-<p><strong>The phase it escaped: analysis.</strong> A single line in a specification, agreed in a meeting
+<p><strong>The phase it escaped: analysis. The component: data.</strong> A single line in a specification, agreed in a meeting
 years earlier, would have cost nothing. Instead the error survived design, coding, testing, launch, and
 nine months of flight, and was found by the planet.</p>
 
@@ -932,7 +932,7 @@ service over in one step, with no way to return to the old method. Press reports
 delays; the official inquiry did not establish a death toll, and you should be careful repeating the
 numbers that circulate.</p>
 
-<p><strong>The phase it escaped: implementation and deployment.</strong> The requirements were roughly
+<p><strong>The phase it escaped: implementation and deployment. The component: people.</strong> The requirements were roughly
 right. What was missing was testing under real conditions, training, and a rollout that would have let
 anyone stop it. One borough for a month would have found all of this.</p>
 
@@ -940,32 +940,33 @@ anyone stop it. One borough for a month would have found all of this.</p>
 choose, and which one would you have chosen? Name the specific cost of your choice, because every safer
 option costs something.</div>
 
-<h3>Mini-case 3 &middot; 2012: forty-five minutes and one server</h3>
+<h3>Mini-case 3 &middot; 2024: the update that went everywhere at once</h3>
 
-<p>Knight Capital was one of the largest traders of American shares. In July 2012 it prepared new
-software for its order-routing system and deployed it by hand to eight servers over several days. A
-technician did not copy the new code to one of the eight. Nobody reviewed the deployment, because the
-company had no written requirement that anyone should.</p>
+<p>CrowdStrike sells security software that runs deep inside Windows, which is what lets it stop
+attacks and also what makes it dangerous when it is wrong. On 19 July 2024 the company released a
+routine content update to that software. It went out to customers worldwide at essentially the same
+moment.</p>
 
-<p>The new code reused a marker in the order format that had belonged to an old feature, switched off in
-2003 but never deleted from the servers. On seven machines the new code read that marker correctly. On
-the eighth, the old feature woke up and began generating orders it believed were unfilled, over and
-over.</p>
+<p>The update contained a fault that caused Windows machines to crash on startup, and then crash again
+on the next startup, so the machines could not be repaired remotely. Microsoft later estimated that
+about 8.5 million devices were affected. Airlines grounded flights and reverted to handwritten boarding
+passes. Hospitals postponed procedures. Broadcasters went off air. Because the machines would not boot,
+much of the recovery had to be done by a person physically visiting each one.</p>
 
-<p>Markets opened at 9:30 in the morning on 1 August. In about forty-five minutes Knight sent millions
-of unintended orders, traded hundreds of millions of shares, and lost roughly $440 million, which was
-more cash than it had. The company's systems had generated 97 automated warning messages that morning,
-starting an hour and a half before the market opened. They were email, nobody treated them as alarms,
-and nobody read them. The firm was sold within months.</p>
+<p>The software had been through testing. What it had not been through was a rollout. Content updates
+of this kind went to everyone at once, which meant there was no group of customers who would have hit
+the fault first and no interval in which anyone could have noticed and stopped it. Among the changes the
+company committed to afterwards was releasing these updates in stages and letting customers choose when
+to take them.</p>
 
-<p><strong>The phase it escaped: deployment.</strong> The new code was correct and had passed its tests.
-What failed was the procedure for installing it and the absence of anyone required to check. A
-second person looking at a checklist would have cost ten minutes.</p>
+<p><strong>The phase it escaped: deployment. The component: software, released without a rollout.</strong>
+Every customer was, in effect, in the first wave. Read that against the four rollout strategies in
+section 02, and note that the remedy adopted afterwards was one of them, available all along.</p>
 
-<div class="mcq"><b>Check yourself</b>Knight's system sent 97 warnings and nobody acted on them. Explain
-why that is a design failure rather than a failure of attention, and describe what would have had to be
-different for those messages to reach someone who could stop trading.</div>
-
+<div class="mcq"><b>Check yourself</b>Security software is argued to be a special case, because a delayed
+update leaves customers exposed to a threat that is already circulating. Make the strongest version of
+that argument, then say what it would take to hold both things at once: fast protection and a staged
+release.</div>
 
 <div class="tryit" id="phasecheck">
   <div class="tryit-head">Try it &middot; Which phase did it escape?</div>
@@ -986,8 +987,8 @@ different for those messages to reach someone who could stop trading.</div>
   var R=[
    {t:'Two teams each write software that works. Nobody ever wrote down which unit of measurement crosses the boundary between them.',a:'Analysis',
     why:'An interface between two parties is a requirement, and requirements belong to analysis. Both teams tested their own code successfully, which is why testing could not save the Mars Climate Orbiter.'},
-   {t:'Correct, reviewed code is copied by hand to eight servers. One is missed, and no one is required to check.',a:'Deployment',
-    why:'Nothing was wrong with the software. What failed was the procedure for installing it, which is deployment. Knight Capital lost about $440 million to a missing checklist step.'},
+   {t:'A tested software update is released to every customer in the world at the same moment, with no group receiving it first.',a:'Deployment',
+    why:'Nothing was wrong with the software. What failed was the procedure for installing it, which is deployment. CrowdStrike shipped a tested update to every customer on earth in the same moment, with no first wave to catch it.'},
    {t:'A system goes live across an entire city on one Monday, with no pilot and no way to return to the old method.',a:'Deployment',
     why:'Choosing direct cutover is a rollout decision. The London Ambulance Service made it for the whole service at once, and had no way to reverse it when the day went wrong.'},
    {t:'A contract is signed to build a marketplace before anyone has specified how many people might use it at the same time.',a:'Planning',
@@ -1022,12 +1023,12 @@ different for those messages to reach someone who could stop trading.</div>
 <h3>What the three have in common</h3>
 
 <p>Look at what was working in each case. Two spacecraft teams whose software both passed its own tests.
-An ambulance dispatch system whose requirements were broadly correct. A trading firm whose new code was
-correct and reviewed. In none of the three was the failure a matter of somebody writing bad
-instructions.</p>
+An ambulance dispatch system whose requirements were broadly correct. A security update that had been
+tested and was correct on almost every machine that received it. In none of the three was the failure a
+matter of somebody writing bad instructions.</p>
 
 <p>What each of them lacked was a check that belonged to an earlier phase and would have been cheap
-there: an interface specification, a pilot, a second pair of eyes on a deployment. That is the arithmetic
+there: an interface specification, a pilot, a staged release. That is the arithmetic
 from section 01, shown three times. The mistake does not become expensive because it is serious. It
 becomes expensive because it survives.</p>
 
@@ -1152,15 +1153,14 @@ was expensive to prevent at the time and is nearly free to prevent now.</p>
   to one percent of users, watch what happens, and expand or switch it off within minutes. CMS was told a
   pilot would cost months it did not have. Today the pilot costs an afternoon, which removes the last
   respectable excuse for direct cutover.</li>
-  <li><strong>Deployment is automated and reviewed.</strong> Knight Capital's technician copied files to
-  eight servers by hand. Continuous integration and delivery pipelines now do that identically every
-  time, refuse to proceed when a step fails, and record who approved it.</li>
+  <li><strong>Releases go out in stages.</strong> The tooling to give an update to one percent of
+  customers, watch, and expand exists and is standard. CrowdStrike had it available and did not use it
+  for the class of update that failed, which is why its own remedy afterwards was to start.</li>
   <li><strong>Capacity is rented by the minute.</strong> Load testing against a realistic volume no
   longer requires buying the hardware to test with, which is Chapter 1's Spotify example and Week 10's
   subject.</li>
-  <li><strong>Systems watch themselves.</strong> Knight's 97 warning messages were email that nobody
-  read. Modern monitoring routes an alert to a named person who is on duty, and treats an unanswered
-  alert as its own failure.</li>
+  <li><strong>Systems watch themselves.</strong> Monitoring now routes an alert to a named person who is
+  on duty and treats an unanswered alert as its own failure, rather than sending mail nobody reads.</li>
 </ul>
 
 <p><strong>And projects still fail.</strong> Not as often at this scale, but often enough that the
@@ -1335,7 +1335,7 @@ strongest opinion about, and be ready to say it first.</p>
 <li>The Agile Manifesto (2001), agilemanifesto.org. Seventeen sentences; it takes two minutes to read.</li>
 <li>NASA, <em>Mars Climate Orbiter Mishap Investigation Board Phase I Report</em>, 10 November 1999: the pound-force seconds against newton-seconds mismatch between ground software and navigation software.</li>
 <li>Anthony Finkelstein, <em>Report of the Inquiry into the London Ambulance Service</em> (February 1993), for the 26 October 1992 launch, the failures in call handling and vehicle tracking, the reversion on 4 November, and the state of testing and training. Treat the death tolls that circulate about this case with care; the inquiry did not establish one.</li>
-<li>U.S. Securities and Exchange Commission, <em>In the Matter of Knight Capital Americas LLC</em>, Release No. 70694, 16 October 2013: the deployment to seven of eight servers, the absence of a required second reviewer, the 97 automated messages, and the losses of 1 August 2012.</li>
+<li>CrowdStrike's own post-incident materials and contemporary reporting on the 19 July 2024 outage, for the content update, the Windows boot failures, Microsoft's estimate of roughly 8.5 million affected devices, the sectors disrupted, and the company's commitment afterwards to staged deployment and customer control over update timing.</li>
 </ul>
 
 <h2 id="teaching"><span class="num">10</span>Teaching notes</h2>
@@ -1352,7 +1352,7 @@ strongest opinion about, and be ready to say it first.</p>
 <tr><td class="t">0:43</td><td class="w">Exercise</td><td>User stories. Put a bad one on the board with the "so that" clause missing, and make the room supply it. Then ask for acceptance criteria for "the site should be fast" and refuse every answer that cannot be passed or failed. Five minutes, and it is the most transferable skill in the session.</td></tr>
 <tr><td class="t">0:48</td><td class="w">Lecture</td><td>MoSCoW and the minimum viable product, then baseline and change request as the actual control on scope creep. Flag that Wednesday's recovery is this method applied under emergency conditions.</td></tr>
 <tr><td class="t">0:53</td><td class="w">Lecture</td><td>Rollout strategies: direct cutover, parallel, phased, pilot. Have the room rank them by risk and by cost before you do, and make the point that these two rankings are opposites.</td></tr>
-<tr><td class="t">0:58</td><td class="w">Cases 1&#8211;3</td><td>Mars Climate Orbiter, London Ambulance, Knight Capital, about two and a half minutes each. If the room is quick, run two or three rows of the "Which phase did it escape?" check on screen, hands up before revealing. The trap answer is testing, every time. Name the phase each one escaped and stop there. Do not draw the comparison; that is the activity. The detail worth landing on Knight is that the code was correct.</td></tr>
+<tr><td class="t">0:58</td><td class="w">Cases 1&#8211;3</td><td>Mars Climate Orbiter, London Ambulance, CrowdStrike, about two and a half minutes each. If the room is quick, run two or three rows of the "Which phase did it escape?" check on screen, hands up before revealing. The trap answer is testing, every time. Name the phase each one escaped and stop there. Do not draw the comparison; that is the activity. The detail worth landing on CrowdStrike is that the update had been tested and was correct for almost every machine that received it.</td></tr>
 <tr><td class="t">1:06</td><td class="w">Think-pair-share</td><td>Which check was missing? See the activity in section 06. Protect the silent three minutes.</td></tr>
 <tr><td class="t">1:18</td><td class="w">Close</td><td>Back to the opening board. For each project they named, ask which phase it failed in and whether the fix existed one phase earlier. Assign section 04, Healthcare.gov, and the discussion questions.</td></tr>
 </table></div>
@@ -1361,7 +1361,7 @@ strongest opinion about, and be ready to say it first.</p>
 <table>
 <tr><td class="t">0:00</td><td class="w">Open</td><td>Put up two numbers and nothing else: four million visitors, six enrollments. Ask what they think went wrong. Almost every room says the servers. Write that answer on the board and tell them you are coming back to it.</td></tr>
 <tr><td class="t">0:08</td><td class="w">Walk the case</td><td>The three years before the launch: enrollment volume never specified, 60 contracts and no lead integrator, the late requirement to create an account before browsing, direct cutover with no pilot. Keep naming which phase each decision belongs to. Then return to the board and retire the server answer: capacity was the symptom.</td></tr>
-<tr><td class="t">0:26</td><td class="w">Governance</td><td>The stage gates that existed to stop the launch, postponed because the launch was near. This is the andon cord from Chapter 4, and nobody was allowed to pull it. Ask who, on the org chart, could have.</td></tr>
+<tr><td class="t">0:26</td><td class="w">Governance</td><td>The stage gates that existed to stop the launch, postponed because the launch was near. This is Chapter 4's question about who is permitted to stop a process, and here nobody was. Ask who, on the org chart, could have.</td></tr>
 <tr><td class="t">0:36</td><td class="w">The recovery</td><td>Six weeks, one accountable leader, permission to ship less. Ask what the tiger team did that could not have been done in 2011. The answer is nothing, and that is the lesson.</td></tr>
 <tr><td class="t">0:46</td><td class="w">Think</td><td>All five discussion questions on screen. Silent individual work, one sentence on at least two. Protect this step.</td></tr>
 <tr><td class="t">0:52</td><td class="w">Pair</td><td>Groups of three or four settle on positions they can defend. Circulate for a group that landed somewhere unusual on the immovable-deadline question and call on them first.</td></tr>
