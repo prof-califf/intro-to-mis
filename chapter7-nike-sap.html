@@ -32,7 +32,7 @@ body{margin:0;background:var(--white);color:var(--text-dark);
 
 /* ---------- shell ---------- */
 .shell{max-width:var(--wrap);margin:0 auto;display:grid;grid-template-columns:15rem minmax(0,1fr);gap:3.5rem;padding:0 1.5rem 6rem}
-main{max-width:var(--col);padding-top:2.5rem}
+main{margin-left:auto;margin-right:auto;max-width:var(--col);padding-top:2.5rem}
 
 /* ---------- sidebar ---------- */
 .rail{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:2.5rem 0 3rem;border-right:1px solid var(--border)}
@@ -135,7 +135,7 @@ li{margin-bottom:.45rem}
 
 /* ---------- responsive ---------- */
 @media (max-width:860px){
-  .shell{grid-template-columns:1fr;gap:0;padding:0 1.15rem 4rem}
+  .shell{grid-template-columns:minmax(0,1fr);gap:0;padding:0 1.15rem 4rem}
   .rail{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);padding:1.5rem 0 1rem;margin-bottom:.5rem}
   .rail nav{display:none}
   .rail nav.open{display:block;margin-top:.8rem}
@@ -275,6 +275,25 @@ li{margin-bottom:.45rem}
 .concepts{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;margin:1.1rem 0 0}
 .concepts .clabel{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-right:.3rem}
 .concepts span:not(.clabel){font-family:var(--display);font-size:12.5px;font-weight:500;letter-spacing:.04em;border:1px solid var(--border);background:var(--off-white);padding:.22rem .6rem;color:var(--text-dark)}
+
+/* ported from ch3: check-yourself, subheads, jump buttons, stacking tables */
+.mcq{border-left:3px solid var(--magenta);background:var(--off-white);padding:.7rem 1rem;margin:1rem 0 1.6rem;font-family:var(--sans);font-size:.95rem}
+.mcq b{font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--magenta-dark);display:block;margin-bottom:.2rem}
+.jumprow{display:flex;flex-wrap:wrap;gap:.5rem;margin:.9rem 0 0}
+.jump{font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:var(--magenta);color:#fff;border:1px solid var(--magenta);padding:.5rem .9rem;text-decoration:none;display:inline-block}
+.jump:hover{background:var(--magenta-dark);border-color:var(--magenta-dark);color:#fff}
+main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transform:none;letter-spacing:0;color:var(--off-black);margin:2.1rem 0 .55rem;padding-left:.7rem;border-left:3px solid var(--magenta)}
+@media (max-width:640px){
+  main table.stack-sm{display:block;width:100%;overflow-x:visible;border-collapse:separate;border-spacing:0}
+  table.stack-sm tr:first-child{display:none}
+  table.stack-sm tr{display:block;width:100%;border:1px solid var(--border);margin:0 0 .85rem;background:#fff}
+  table.stack-sm td{display:block;width:100%;border:none;border-bottom:1px solid var(--border);padding:.6rem .85rem;background:#fff!important}
+  table.stack-sm td:last-child{border-bottom:none}
+  table.stack-sm td::before{content:attr(data-label);display:block;font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--text-light);margin-bottom:.28rem}
+  table.stack-sm td:first-child{background:var(--black)!important;color:#fff;font-family:var(--display);letter-spacing:.06em;white-space:normal}
+  table.stack-sm td:first-child::before{content:none}
+  table.stack-sm td:first-child strong{color:#fff}
+}
 </style>
 </head>
 <body>
@@ -328,78 +347,62 @@ li{margin-bottom:.45rem}
 </nav>
 
 
-<div class="shell">
-
-<aside class="rail">
-  <p class="book">MIS 320</p>
-  <p class="course">Principles of Management Information Systems</p>
-  <button class="railtoggle" aria-expanded="false" aria-controls="chapnav">Chapter contents</button>
-  <nav id="chapnav">
-    <a href="#open">$400 million, huh?</a>
-    <a href="#what">What enterprise systems are</a>
-    <a href="#promise">The promise</a>
-    <a href="#failure">Where it broke</a>
-    <a href="#aftermath">The aftermath</a>
-    <a href="#recovery">The recovery</a>
-    <a href="#coda">Modern coda: it still happens</a>
-    <a href="#chain">The five components</a>
-    <a href="#vocab">Vocabulary</a>
-    <a href="#discussion">Discussion questions</a>
-    <a href="#lab">From lecture to lab</a>
-  </nav>
-  <a class="back" href="index.html">← All chapters &amp; labs</a>
-</aside>
-
-<main>
+<main class="chapwrap">
 
 <header class="chaphead">
-  <p class="eyebrow">Chapter 7</p>
-  <h1>Enterprise Systems</h1>
-  <p class="anchor">Anchor case: <strong>Nike &amp; i2/SAP, 2000–2001</strong> · Coda: <strong>Lamb Weston, 2023–2024</strong></p>
-  <div class="meta-row">
-    <span>Week 5 · Wednesday</span>
-    <span class="alt">Two days after Exam 1</span>
-    <span>Pairs with Lab 5</span>
-  </div>
-  
-<div class="concepts"><span class="clabel">Key concepts</span><span>ERP, CRM, SCM</span><span>Information silos</span><span>The bullwhip effect</span><span>Integration</span><span>Legacy systems</span><span>Customize vs. configure</span><span>Big-bang vs. phased rollout</span></div>
+  <p class="eyebrow">Chapter 7 &middot; Enterprise Systems</p>
+  <h1>Enterprise Systems: How Nike Spent $400 Million to Make the Wrong Shoes</h1>
+  <p class="anchor">Nike replaced twenty-seven ordering systems with one, so that every part of the
+  company would finally read the same numbers. It worked. The numbers were wrong, factories in Asia built
+  to them anyway, and nobody found out until the shoes arrived. This chapter is about what an enterprise
+  system asks of a company, and what happens when the company says no.</p>
+  <div class="concepts"><span class="clabel">Key concepts</span><span>ERP, CRM, SCM</span><span>Information silos</span><span>The bullwhip effect</span><span>Integration</span><span>Legacy systems</span><span>Customize vs. configure</span><span>Big-bang vs. phased rollout</span></div>
 </header>
-<div class="statrow"><div class="stat"><b>$400M</b><span>the project budget</span></div><div class="stat"><b>27</b><span>ordering systems it replaced</span></div><div class="stat"><b>$100M</b><span>sales lost, 2001</span></div><div class="stat"><b>20%</b><span>stock drop on the news</span></div><div class="stat"><b>$135M</b><span>Lamb Weston, 2023: same story</span></div></div>
+
 <div class="toc"><strong>Contents</strong>
-<a href="#open">The setup</a>
 <a href="#what">What enterprise systems are</a>
-<a href="#promise">The promise, and the shortcuts</a>
-<a href="#failure">Where it broke</a>
-<a href="#aftermath">The aftermath</a>
-<a href="#recovery">The recovery</a>
-<a href="#coda">Modern coda: it still happens: close to home</a>
-<a href="#other">The other side: who absorbs a failed rollout</a>
-<a href="#chain">The case on the five components</a>
+<a href="#hard">Why they are hard to install</a>
+<a href="#cases">Three companies, three refusals</a>
+<a href="#nike">Nike: $400 million, huh?</a>
+<a href="#other">Who absorbs a failed rollout</a>
 <a href="#vocab">Vocabulary</a>
 <a href="#discussion">Discussion questions</a>
 <a href="#lab">From lecture to lab</a>
+<a href="#sources">Sources and further reading</a>
+<a href="#teaching">Teaching notes</a>
 </div>
 
-
 <p class="lede">Days before announcing that quarterly earnings would miss by at least a quarter, Nike's
-chairman Phil Knight summed up his company's new supply chain software on a conference call:
-<em>"This is what you get for $400 million, huh?"</em> What Nike got was a warehouse arrangement of too
-many of the wrong sneakers, too few of the right ones, and a nine-figure lesson in what an enterprise
-system actually is.</p>
+chairman Phil Knight summed up his company's new supply chain software on a conference call: "This is
+what you get for $400 million, huh?" What Nike got was a warehouse full of too many of the wrong sneakers
+and too few of the right ones.</p>
 
-<h2 id="open"><span class="num">01</span>The setup</h2>
+<div class="callout"><strong>How this chapter runs</strong>
+<p>Sections 01 and 02 are the concepts: what these systems are, and why installing one is so much harder
+than buying one. Section 03 puts them to work on three companies that each refused a different demand.
+Section 04 is the full case, Nike, and it runs forward to failures happening now. Section 05 asks who
+actually absorbs a failed rollout, and the discussion questions at the end come from both.</p>
+<p class="jumprow"><a class="jump" href="#nike">Jump to the Nike case &#8594;</a>
+<a class="jump" href="#cases">Jump to the three refusals &#8594;</a>
+<a class="jump" href="#discussion">Jump to the discussion questions &#8594;</a></p></div>
 
-<p>By the late 1990s Nike was a global company still running on systems it had outgrown. The company
-had 27 different ordering systems scattered around the world, planning cycles of nine months or longer, and
-product that reached stores too early or too late: rarely on time. The answer was the
-$400 million Nike Supply Chain project: SAP for ERP, Siebel for customer tools, and  first out of the gate, predictive demand-planning software from i2 Technologies, with a goal of cutting
-lead times from nine months to six.</p>
+<h2 id="what"><span class="num">01</span>What enterprise systems are</h2>
 
-<p>Note the ambition's shape. Nike was not buying a program. It was replacing the systems that
-connected the whole company: how orders, forecasts, factories, and finances talk to each other. That is what this
-chapter's vocabulary is for.</p>
+<p>Chapter 6 argued that the shape you store facts in decides which questions are cheap to ask. This
+chapter is about the largest version of that decision a company ever makes: whether every department
+will keep its own records, or whether the whole company will run on one.</p>
 
-<h2 id="what"><span class="num">02</span>What enterprise systems are</h2>
+<p>Put it in the five components before the vocabulary arrives. An enterprise system is mostly a
+<strong>data</strong> decision wearing a <strong>software</strong> costume. The software is bought, and
+what it actually does is impose one structure on records that used to live in twenty places. Which means
+the <strong>people</strong> component carries the whole cost: every department that had its own way of
+recording a customer, an order or a price now has to record it the way the system does. Nobody buys new
+hardware and calls it a transformation. They buy an ERP and call it one, and they are right, because
+what is being transformed is not the technology.</p>
+
+<p>Keep the weakest component rule from Chapter 1 in view, because this chapter is where it bites
+hardest. When one shared database feeds every decision in the company, a fault in the data component is
+no longer contained in one department. It reaches the factory.</p>
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">ERP, CRM, and SCM</span>
 <p>An ERP (enterprise resource planning) system is one shared database and one set of processes for the whole company: finance, orders, inventory, and manufacturing reading the same numbers. CRM (customer relationship management) does the same for everything customer-facing; SCM (supply chain management) for the flow of materials from suppliers to shelves. The point of all three is the same: replace departmental versions of the truth with one version, so decisions in one corner of the company are visible in every other.</p></div>
 
@@ -423,7 +426,7 @@ soon the same customer exists three times with three addresses and the same prod
 Nike's 27 ordering systems were 27 silos. An ERP's whole premise is the demolition of silos into one
 shared database, which is also why implementing one is so violent: it forces every department to
 surrender its private version of reality.</p>
-<p>Two ideas explain most enterprise-system grief. First, <strong>configuration versus
+<h2 id="hard"><span class="num">02</span>Why they are hard to install</h2><p>Two ideas explain most enterprise-system grief. First, <strong>configuration versus
 customization</strong>: configuring means setting the switches the vendor built; customizing means
 rewriting the software to match your habits. Customization feels reasonable and compounds forever. Every
 upgrade, patch, and integration now has to survive your modifications. Second, <strong>process fit</strong>:
@@ -440,7 +443,126 @@ one is expensive forever.</p>
   gone.</p>
 </div>
 
-<h2 id="promise"><span class="num">03</span>The promise, and the shortcuts</h2>
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">The bullwhip effect</span>
+<p>Small changes in real demand amplify as they travel up a supply chain, because each link adds its own safety margin to a number that was already padded. A store that sells 100 orders 110 to be safe; the distributor orders 125; the factory tools for 150. Sharing actual demand data across links is the only cure, which is what enterprise systems promise. Nike’s failure ran the amplifier in software: bad forecasts propagated across every store and factory at once, at machine speed. Automation did not create the bullwhip. It removed the humans who would have questioned it.</p></div>
+
+
+
+<h2 id="cases"><span class="num">03</span>Three companies, three refusals</h2>
+<p>Before the case, three companies that installed this class of system and were badly hurt by it. An
+enterprise system makes three demands of the organization that buys it, and each of these companies
+refused a different one. Read them with the Nike case coming, because Nike managed to refuse all three
+at once.</p>
+
+<h3>Mini-case 1 &middot; 1996: the distributor that could not process its own orders</h3>
+
+<p>FoxMeyer was the fourth-largest pharmaceutical distributor in the United States, moving medicines
+from manufacturers to pharmacies and hospitals at a scale of several billion dollars a year. In the
+early 1990s it committed to a new ERP system alongside a heavily automated warehouse, a project meant to
+cut costs enough to serve a very large new customer it had already signed.</p>
+
+<p>The system could not handle the volume. The operation it was replacing processed hundreds of
+thousands of orders a day, and the new one managed a fraction of that. Orders went unfilled, inventory
+went missing, and the savings the company had already promised never arrived. FoxMeyer filed for
+bankruptcy in 1996 and was sold for a small fraction of what it had been worth. It later sued both the
+software vendor and its implementation consultants, which is how these stories usually end and tells you
+less than the beginning does.</p>
+
+<p><strong>The demand it refused: be honest about scale. The component: hardware and software.</strong> Nobody proved the new system could
+carry the volume the old one was already carrying, and the company had committed the savings before it
+had them.</p>
+
+<div class="mcq"><b>Check yourself</b>FoxMeyer signed a large contract on the assumption that the new
+system would deliver savings. Name the phase from Chapter 5 where that assumption should have been
+tested, and say what specific number would have told them to renegotiate rather than proceed.</div>
+
+<h3>Mini-case 2 &middot; 2021 to 2026: eleven million items that did not match</h3>
+
+<p>Walmart sold the British supermarket chain Asda in 2021 and agreed to keep running its computer
+systems for three years while Asda built its own. Chapter 6 described what those Walmart systems are.
+Asda had been living inside them, and now had to move out.</p>
+
+<p>The programme was called Project Future, and the scale of it is worth stating: separating more than
+two and a half thousand systems and rebuilding the company's entire enterprise core on SAP. The initial
+budget was about &pound;189 million. By the end of 2023 the cost had reached about &pound;430 million.
+Reported figures since put the total well beyond &pound;1 billion.</p>
+
+<p>The delays were not really about the software. In 2024, part way through the move, the company found
+that around eleven million item records did not match between the systems it was leaving and the system
+it was building. Not eleven million wrong prices, and not a failure of one program: eleven million
+places where two databases disagreed about what a thing was. Every one of those had to be investigated
+by somebody before either system could be trusted to order stock or price a shelf.</p>
+
+<p>Cutover dates were cancelled in December 2024 and postponed again in January 2025. In late 2025 the
+chairman told reporters the problems were self-inflicted, said the disruption had set the company's
+turnaround back about six months, and the quarterly numbers showed revenue falling while it worked
+through them.</p>
+
+<p><strong>The demand it refused: know what your records actually contain. The component:
+data.</strong> Asda did the rollout carefully, in stages, over years, which is what Nike did not. It was still badly hurt, because a phased rollout protects you from a bad cutover and does nothing
+at all about records that disagree.</p>
+
+<div class="mcq"><b>Check yourself</b>Chapter 6 argued that a shared database is worth more than each
+department keeping its own. Asda's eleven million mismatches were discovered only when the records had
+to move. Say why the problem stayed invisible for years, and name one thing a company could do annually
+that would surface it earlier.</div>
+
+<h3>Mini-case 3 &middot; 2018: seven years, half a billion euros, and back to the old system</h3>
+
+<p>Lidl, the German discount grocery chain, began replacing its own merchandise management system with
+SAP in 2011. SAP publicly named Lidl among its notable customers along the way. In 2018, after seven
+years and roughly &euro;500 million, Lidl cancelled the project and returned to the system it had been
+trying to replace.</p>
+
+<p>The reported cause was not a defect. Lidl's business runs on its own way of handling stock and
+pricing, built up over decades and central to how it competes on cost. The standard software did it
+differently. Rather than change the practice, Lidl set about changing the software to match it, and the
+modifications spread into the core of the system until what they had was neither the standard product
+nor something they could maintain.</p>
+
+<p>That is the configuration-versus-customization decision from section 02, taken one reasonable
+concession at a time across seven years. Notice that no single decision along the way looks obviously
+wrong. Each one was a company protecting something it was genuinely good at.</p>
+
+<p><strong>The demand it refused: change yourself, not the software. The component: people.</strong> An enterprise system
+carries a definition of how the work ought to be done. You may reject that definition, but then you
+should not buy the system.</p>
+
+<div class="mcq"><b>Check yourself</b>Section 02 says only one of the two options is expensive forever.
+Say which, explain the mechanism, and then name a situation where customizing anyway would be the right
+business decision. There is one; be specific about what makes it so.</div>
+
+<h3>What the three have in common</h3>
+
+<p>Three demands, three refusals, and each one landed on a different component. Be honest about scale,
+which is hardware and software. Know what your records actually contain, which is data. Change yourself
+rather than the software, which is people. Not one of the three failures was caused by bad code, and in
+all three the vendor's software worked as designed for the customers who used it as designed.</p>
+
+<p>Notice something else about that list. Every one of the three demands is about the organization
+rather than the technology, and every one has to be met before the software is switched on. An
+enterprise system is unusual among purchases in that it requires you to change in order to use it, which
+is why buying one is a decision about the company rather than about the software, and why it is approved
+by people who will never log in to it.</p>
+
+<p>What follows is a company that refused all three at once, and added a fourth. Nike customized past the
+point its vendor had warned about, fed the result data from twenty-seven systems it had not cleaned up,
+and asked the software to work at a scale and speed nobody had tested. Then, on top of all that, it ran
+a big-bang cutover. Then it manufactured shoes based on what came out.</p>
+<h2 id="nike"><span class="num">04</span>Nike: $400 million, huh?</h2>
+
+<p>By the late 1990s Nike was a global company still running on systems it had outgrown. The company
+had 27 different ordering systems scattered around the world, planning cycles of nine months or longer, and
+product that reached stores too early or too late: rarely on time. The answer was the
+$400 million Nike Supply Chain project: SAP for ERP, Siebel for customer tools, and  first out of the gate, predictive demand-planning software from i2 Technologies, with a goal of cutting
+lead times from nine months to six.</p>
+
+<p>Note the ambition's shape. Nike was not buying a program. It was replacing the systems that
+connected the whole company: how orders, forecasts, factories, and finances talk to each other. That is what this
+chapter's vocabulary is for.</p>
+
+<h3>The promise, and the shortcuts</h3>
+
 
 <p>i2's demand planner promised something very appealing: feed it history, and it predicts what to make.
 Nike wanted the prediction fine-grained, forecasts by style, color, and size, which
@@ -456,10 +578,8 @@ replacing the spreadsheets and legacy tools at once. Compressed timeline, deep c
 single-instance data problems, no staged fallback. Every element of the Chapter 5 pattern, now aimed at a
 system that decides what physically gets manufactured.</p>
 
-<h2 id="failure"><span class="num">04</span>Where it broke</h2>
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">The bullwhip effect</span>
-<p>Small changes in real demand amplify as they travel up a supply chain, because each link adds its own safety margin to a number that was already padded. A store that sells 100 orders 110 to be safe; the distributor orders 125; the factory tools for 150. Sharing actual demand data across links is the only cure, which is what enterprise systems promise. Nike’s failure ran the amplifier in software: bad forecasts propagated across every store and factory at once, at machine speed. Automation did not create the bullwhip. It removed the humans who would have questioned it.</p></div>
 
+<h3>Where it broke</h3>
 
 <p>The system went live and began quietly corrupting the one thing it existed to produce: the demand
 signal. Forecasts for products and locations came out overestimated or
@@ -480,7 +600,9 @@ and undeniable only at delivery time: months of manufacturing lead later, when t
 cast in rubber and foam. Information systems that feed <em>physical</em> processes have this property:
 the feedback loop is as long as the supply chain.</p>
 
-<h2 id="aftermath"><span class="num">05</span>The aftermath</h2>
+
+<h3>The aftermath</h3>
+
 
 <div class="stats">
   <div class="stat"><b>$100M</b><span>lost sales, one quarter</span></div>
@@ -499,7 +621,9 @@ report the shortfall to stakeholders to avoid SEC repercussions, material system
 public companies become disclosure events, which is why CFOs and general counsels now sit in ERP steering
 meetings.</p>
 
-<h2 id="recovery"><span class="num">06</span>The recovery</h2>
+
+<h3>The recovery</h3>
+
 
 <p>The fix was not sophisticated. Nike built manual workarounds: programmers downloaded
 data from i2's demand predictor and reloaded it into the supply chain planner weekly, and by fall the
@@ -512,7 +636,9 @@ Pre-building of shoes fell from about 30% of manufacturing units toward 3%, and 
 times moved from nine months toward six. The failure was real and so, eventually, was the
 return. Both facts belong in your analysis.</p>
 
-<h2 id="coda"><span class="num">07</span>Modern coda: it still happens: close to home</h2>
+
+<h3>It still happens, and close to home</h3>
+
 
 <p>It would be comforting to file Nike under "early-2000s growing pains." The record refuses. Consider a
 company you can drive to from Bellingham in four hours: Lamb Weston, the frozen-potato giant whose
@@ -548,18 +674,9 @@ where the failure actually lives.</p>
 </div>
 
 
-<h2 id="other"><span class="num">08</span>The other side: who absorbs a failed rollout</h2>
-<p>The $100 million Nike lost is the number the case is named for, and it is the shallowest measure of
-the damage. Follow the failure outward. Factories in Asia received orders for shoes nobody wanted and
-cancellations for shoes they had already made; the workers on those lines absorbed the whiplash as
-overtime followed by idled shifts. Retailers were shipped the wrong mix and marked down the excess.
-Inside Nike, planners spent a year manually overriding a system they had been told to trust, doing two
-jobs for one salary. When Lamb Weston’s rollout stumbled in 2023, the shortfalls landed on restaurant
-customers and on warehouse crews reconciling inventory by hand. ERP failures are always narrated as
-money and stock price, because those are the measurable components. The five components framework
-insists on the fifth: somewhere under every failed implementation is a person doing manually, under
-pressure, what the software was supposed to do, and they are rarely in the case study.</p>
-<h2 id="chain"><span class="num">09</span>The case on the five components</h2>
+
+<h3>The five components at Nike</h3>
+
 
 <div class="vc">
   <div class="vc-head">The Five Components · Nike, 2000–2001</div>
@@ -572,31 +689,39 @@ pressure, what the software was supposed to do, and they are rarely in the case 
   </div>
   <div class="vc-note">Breaks at <b>Software</b>, <b>Data</b>, and <b>People</b>, and note the contrast with Healthcare.gov: here the data itself was rotten, and automation amplified it.</div>
 </div>
-
-
-<table class="sumtable"><tr><th>Idea</th><th>This chapter’s version</th><th>Where you meet it next</th></tr><tr><td><strong>One shared truth</strong></td><td>27 ordering systems collapsed into one, and why that is dangerous mid-flight</td><td>Databases (same week)</td></tr><tr><td><strong>The bullwhip</strong></td><td>Padded forecasts amplifying at machine speed</td><td>Lab 5’s hidden problem</td></tr><tr><td><strong>Big-bang vs phased rollout</strong></td><td>Everything at once, on a schedule</td><td>Healthcare.gov (Wk 5), NomadGo (Ch 2)</td></tr><tr><td><strong>Scar tissue</strong></td><td>Nike 2000, Lamb Weston 2023, Zimmer Biomet 2025: organisations do not inherit it</td><td>Software selection (Wk 9)</td></tr></table>
-<h2 id="vocab"><span class="num">10</span>Vocabulary</h2>
+<h2 id="other"><span class="num">05</span>Who absorbs a failed rollout</h2>
+<p>The $100 million Nike lost is the number the case is named for, and it is the shallowest measure of
+the damage. Follow the failure outward. Factories in Asia received orders for shoes nobody wanted and
+cancellations for shoes they had already made; the workers on those lines absorbed the whiplash as
+overtime followed by idled shifts. Retailers were shipped the wrong mix and marked down the excess.
+Inside Nike, planners spent a year manually overriding a system they had been told to trust, doing two
+jobs for one salary. That is <strong>change management</strong> arriving as a bill rather than a plan:
+the work of getting an organization to actually operate the new way, which is either budgeted for in
+advance or paid for afterwards in overtime by the people who had no say in it. When Lamb Weston’s rollout stumbled in 2023, the shortfalls landed on restaurant
+customers and on warehouse crews reconciling inventory by hand. ERP failures are always narrated as
+money and stock price, because those are the measurable components. The five components framework
+insists on the fifth: somewhere under every failed implementation is a person doing manually, under
+pressure, what the software was supposed to do, and they are rarely in the case study.</p>
+<h2 id="vocab"><span class="num">06</span>Vocabulary</h2>
 
 <dl class="vocab">
   <div><dt>Enterprise system</dt><dd>Software running core operations on one shared database across the whole firm.</dd></div>
   <div><dt>ERP / CRM / SCM</dt><dd>The resource-planning spine; the customer system; the supply chain system.</dd></div>
-  <div><dt>Configuration vs. customization</dt><dd>Setting the vendor's switches vs. rewriting the vendor's software. The second compounds forever.</dd></div>
+  <div><dt>Configuration versus customization</dt><dd>Setting the vendor's switches vs. rewriting the vendor's software. The second compounds forever.</dd></div>
   <div><dt>Process fit</dt><dd>The degree to which the software's embedded processes match the organization's real ones.</dd></div>
   <div><dt>Information silo</dt><dd>A department-level system holding its own copy of the truth; ERP exists to demolish them.</dd></div>
 <div><dt>Bullwhip effect</dt><dd>Small demand-signal errors amplifying upstream as each layer adds safety margin.</dd></div>
 <div><dt>Master data</dt><dd>The reference facts (products, prices, customers, locations) every module depends on. Garbage here propagates everywhere.</dd></div>
-  <div><dt>Single instance</dt><dd>One global system of record instead of regional copies; Nike's strategic bet, kept even after the failure.</dd></div>
+  <div><dt>Single-instance</dt><dd>One global system of record instead of regional copies; Nike's strategic bet, kept even after the failure.</dd></div>
   <div><dt>Go-live / big bang</dt><dd>The cutover moment; moving everyone at once, with no fallback.</dd></div>
   <div><dt>Change management</dt><dd>The people side of implementation: training, adoption, and trust. The line item that gets cut first and billed last.</dd></div>
-  <div><dt>Demand planning</dt><dd>Forecasting what to make and stock; the module that failed at Nike.</dd></div>
-  <div><dt>Material disclosure</dt><dd>The obligation of public companies to report events, including system failures, that investors would consider significant.</dd></div>
+  <div><dt>Demand-planning</dt><dd>Forecasting what to make and stock; the module that failed at Nike.</dd></div>
+  <div><dt>Disclosure</dt><dd>The obligation of public companies to report events, including system failures, that investors would consider significant.</dd></div>
 </dl>
 
 
 
 
-<div class="plan"><div class="plan-head">Taught Week 7 Monday, combined with Chapter 6; the full 80-minute plan is in Chapter 6</div>
-<table><tr><td class="t">0:00</td><td class="w">Open</td><td>Ask what an ERP system is before defining it. The wrong answers are useful.</td></tr><tr><td class="t">0:05</td><td class="w">Lecture</td><td>ERP, CRM, SCM, information silos, and the bullwhip effect. Run the bullwhip as a quick chain demonstration across five students.</td></tr><tr><td class="t">0:40</td><td class="w">Video</td><td>Any short ERP or supply chain explainer. Ask students to note who has to change their daily work for the system to succeed.</td></tr><tr><td class="t">0:48</td><td class="w">Think-pair-share</td><td>Twenty-three years apart. See the activity above.</td></tr><tr><td class="t">1:08</td><td class="w">Close</td><td>Preview Wednesday: Nike in detail, plus the two recent failures that show nothing has been learned.</td></tr></table></div>
 <div class="tps">
   <div class="tps-head"><span>Monday activity &middot; Twenty-three years apart</span><span class="mins">20 minutes</span></div>
   <div class="tps-body">
@@ -617,79 +742,86 @@ pressure, what the software was supposed to do, and they are rarely in the case 
   claim, sparring partner mode, before you present. Red: submitting or reading out an AI-written answer.
   The Wednesday discussion grades your reasoning, and everyone in the room can tell the difference.</p></div>
 </div>
-<h2 id="discussion"><span class="num">11</span>Discussion questions</h2>
+<h2 id="discussion"><span class="num">07</span>Discussion questions</h2>
 <p>None of these get handed in. On Wednesday you run the discussion and I steer it, which means the
 class is only as good as what you walk in with. Read the chapter, pick the question you have the
 strongest opinion about, and be ready to say it first.</p>
 
 <ol class="dq">
   <li>Map Nike's failure onto the SDLC phases from Chapter 5. Which phase does "customize past the
-  vendor's 10–15% guidance" belong to, and who should have stopped it? <span class="tag tag-warm">Warm-up</span></li>
+  vendor's guidance" belong to, which phase does the big-bang cutover belong to, and which of the two
+  would have been cheaper to reverse? <span class="tag">Apply</span></li>
 
-  <li>Nothing looked broken until warehouses filled with the wrong sneakers. Explain, using the concept of
-  feedback-loop length, why supply chain systems fail differently than websites.</li>
+  <li>Nothing looked broken until warehouses filled with the wrong sneakers. Using the idea of
+  feedback-loop length, explain why a system feeding a physical supply chain is more dangerous than one
+  feeding a screen, and name one other system in this course with the same property.
+  <span class="tag">Analyze</span></li>
 
-  <li>Nike and i2 blamed each other; Zimmer Biomet sued Deloitte. When a customized system fails, how
-  should responsibility divide between the vendor who warned against customization and the customer who
-  paid for it anyway? Take a side and defend it.</li>
+  <li>An enterprise system replaces every department's private version of the truth with one shared
+  record. Name a department that loses something real in that trade, say what it loses, and explain why
+  it might resist in ways that never appear as opposition in a project plan.
+  <span class="tag">Systems</span></li>
 
-  <li>Lamb Weston's CFO called the problems "usual bumps" three months before disclosing $135 million in
-  lost sales. Reconstruct the pressures that produce that sentence, then propose the reporting structure
-  that would have produced a different one. <span class="tag tag-hard">Hard</span></li>
+  <li>Nike kept the same project leadership and the same strategy after losing about $100 million, and
+  the programme eventually delivered shorter lead times and far less pre-building. Was that persistence
+  or sunk-cost reasoning? Argue one side, then say what evidence would have changed your mind at the
+  time rather than in hindsight. <span class="tag">Apply</span></li>
 
-  <li>Nike kept the same project leaders and the same strategy after losing $100 million, and the program
-  eventually paid off. Was that discipline or sunk-cost fallacy? What evidence would distinguish the
-  two? <span class="tag tag-hard">Hard</span></li>
-
-  <li>You are an implementation consultant assigned to Lamb Weston in October 2023, one month before
-  go-live. You suspect the warehouse integration is not ready. Write the three sentences you say in the
-  steering committee meeting, knowing the go-live date has been announced to Wall Street.
-  <span class="tag tag-open">Open judgment</span></li>
+  <li>Lamb Weston's CFO described the problems as usual bumps three months before disclosing $135
+  million in lost sales. Reconstruct how a status report reaches that point when nobody involved intends
+  to mislead anyone, then say what you would change about how status is reported so the truthful version
+  survives the trip upward. <span class="tag tag-hard">Ethics</span></li>
 </ol>
 
-<h2 id="lab"><span class="num">12</span>From lecture to lab</h2>
+<h2 id="lab"><span class="num">08</span>From lecture to lab</h2>
 
-<div class="callout callout-bridge">
-  <strong>Week 5 · Lab 5</strong>
-  <p>Nike's planners trusted numbers that looked fine while the signal underneath was corrupted. This
-  week's lab, <a href="lab5-excel-analysis.html"><strong>Lab 5: Data Analysis: Why Are Members
-  Disappearing?</strong></a>, hands you the same situation at co-op scale: Cascadia's board says revenue
-  is on plan and something is still very wrong. It is the hardest Excel assignment of the quarter, and
-  the point of the whole Excel month: an analyst's job is to find the healthy-looking sick store before
-  the quarter that can't be reported optimistically.</p>
-
-  <a class="lablink" href="lab5-excel-analysis.html">Go to Lab 5 &#8594;</a>
+<div class="callout callout-bridge"><strong>Week 7 &middot; Lab 7</strong>
+<p>Week 7 carries two chapters and one lab. Chapter 6 built the case for one shared database; this
+chapter is what happens when a company tries to install one. The lab is that same idea in your hands.</p>
+<p><a href="lab7-sql.html"><strong>Lab 7: SQL Fundamentals</strong></a> has you query the Cascadia
+database directly, joining tables that at Nike in 1999 would have been twenty-seven separate systems.
+Every join you write this week is the thing an enterprise system exists to make possible: a question
+that crosses departments and comes back with one answer. Nike spent $400 million to make those questions
+answerable, then fed the system data that made the answers wrong, which is the other half of the lesson
+and the half the lab makes concrete.</p>
+  <a class="lablink" href="lab7-sql.html">Go to Lab 7 &#8594;</a>
 </div>
 
-<div class="sources">
-  <h3>Sources and further reading</h3>
-  <ul>
-    <li>Christopher Koch, "Nike Rebounds: How (and Why) Nike Recovered from Its Supply Chain Disaster," <em>CIO</em>, 2004. The definitive account.</li>
-    <li>Henrico Dolfing, <em>Case Study 16: Nike's $100 Million Supply Chain "Speed Bump"</em>.</li>
-    <li>Lamb Weston Holdings, Q3 FY2024 earnings materials and subsequent securities filings, 2024.</li>
-    <li>Zimmer Biomet v. Deloitte complaint, S.D.N.Y. filed September 2025; UpperEdge analysis.</li>
-    <li>"18 Famous ERP Disasters, Dustups, and Disappointments," <em>CIO</em>.</li>
-  </ul>
-</div>
+<h2 id="sources"><span class="num">09</span>Sources and further reading</h2>
+<ul class="sources">
+<li>Contemporary trade and business reporting on Nike's i2 demand-planning rollout, 2000 and 2001, for the $400 million programme, the twenty-seven ordering systems, the vendor's guidance on customization limits, the February 2001 earnings announcement, the roughly $100 million in lost sales and the share price fall.</li>
+<li>Reporting on Asda's Project Future, 2021 to 2026, for the separation from Walmart's systems, the cost rising from an initial budget near &pound;189 million past &pound;1 billion, the eleven million mismatched item records found in 2024, the cancelled and postponed cutovers, and the chairman's later comments on the disruption. This is recent and still moving; check the figures before teaching them.</li>
+<li>Accounts of the FoxMeyer Drug bankruptcy in 1996 and the litigation that followed against the software vendor and the implementation consultants. Figures vary between retellings; treat the specific numbers with caution and the pattern as reliable.</li>
+<li>Reporting on Lidl's abandonment of its SAP programme in 2018, for the seven-year duration, the roughly &euro;500 million figure, the customization of core merchandise management and the return to the legacy system.</li>
+<li>Lamb Weston investor communications and the securities litigation that followed, 2023 to 2025, for the November 2023 go-live, the January 2024 characterization of the issues, the $135 million in lost sales, the share price fall and the later shift to a plant-by-plant rollout.</li>
+<li>Court filings and reporting in Zimmer Biomet's 2025 action against its implementation partner, and coverage of Revlon's 2018 implementation, for the pattern at the end of section 04. These matters are live; check their status before teaching them.</li>
+</ul>
+
+<h2 id="teaching"><span class="num">10</span>Teaching notes</h2>
+<p style="font-family:var(--sans);font-size:.95rem;color:var(--muted)">Written for whoever is running the sessions. Students are welcome to read them, but nothing here is required. Week 7 carries Chapters 6 and 7 together: Monday is the concepts for both, Wednesday is the double case.</p>
+
+<div class="plan"><div class="plan-head">Monday session plan &middot; the Chapter 7 half, following Chapter 6 in the same 80 minutes</div>
+<table>
+<tr><td class="t">0:52</td><td class="w">Lecture</td><td>ERP, CRM and SCM, and the single idea underneath all three: replace each department's private version of the truth with one shared record. Then information silos, with Nike's twenty-seven ordering systems as the concrete example. The bridge from Chapter 6 is one sentence, that an enterprise system is what happens when a company insists on one database instead of twenty-seven.</td></tr>
+<tr><td class="t">1:00</td><td class="w">Lecture</td><td>Why installing one is hard: configuration against customization, process fit, and the raised stakes on rollout, because the system being replaced is the one currently running the company. Then the bullwhip effect, which they need on Wednesday for both cases.</td></tr>
+<tr><td class="t">1:08</td><td class="w">Cases 1&#8211;3</td><td>FoxMeyer, Asda and Lidl, about two minutes each. Name the demand each one refused, then stop. Asda is the one to make vivid, and the one to connect back to Monday's Chapter 6 material: eleven million records that disagreed, discovered only because they finally had to move.</td></tr>
+<tr><td class="t">1:14</td><td class="w">Close</td><td>Set up Wednesday as a double bill: a company that gave its data away and won, and a company that spent $400 million to unify its data and made the wrong shoes. Assign section 04 in both chapters.</td></tr>
+</table></div>
+
+<div class="plan"><div class="plan-head">Wednesday session plan &middot; 80 minutes &middot; the Nike case, second half of the Week 7 double</div>
+<table>
+<tr><td class="t">0:00</td><td class="w">Open</td><td>Put Knight's line on the screen and nothing else: "This is what you get for $400 million, huh?" Ask what they think went wrong before anyone has read anything back to them. Most rooms say the software was bad. Write that on the board.</td></tr>
+<tr><td class="t">0:06</td><td class="w">Walk the case</td><td>The setup, the shortcuts, the break. Name the three refusals from Monday as each appears: the compressed timeline, the customization past the vendor's warning, the big bang. Then retire the opening answer, because the software worked inside the envelope it was designed for.</td></tr>
+<tr><td class="t">0:20</td><td class="w">The mechanism</td><td>The bullwhip, run in software. Slow down here. Nothing looked broken, the numbers were plausible, the planners planned, and the error was undeniable only at delivery time, months of manufacturing later. Ask how long the feedback loop was, and get to the answer that it was as long as the supply chain.</td></tr>
+<tr><td class="t">0:32</td><td class="w">The recovery</td><td>The part most retellings skip. Nike kept the strategy and the leadership, and the programme eventually delivered: pre-building fell sharply, lead times came down. Ask whether that makes the project a success and refuse to settle it for them.</td></tr>
+<tr><td class="t">0:40</td><td class="w">It still happens</td><td>Lamb Weston, four hours from here, in 2023. Walk the timeline and land the last line: the remediation for a failed big bang was to adopt, a year late, the phased rollout available from the start. Then the question that matters, which is why a pattern taught in every business school survives twenty-five years of better software.</td></tr>
+<tr><td class="t">0:50</td><td class="w">Think</td><td>All five discussion questions on screen. Silent individual work, one sentence on at least two. Protect this step.</td></tr>
+<tr><td class="t">0:56</td><td class="w">Pair</td><td>Groups of three or four settle on positions they can defend. Circulate for a group that landed somewhere unusual on the recovery question or on who absorbs the failure, and call on them first.</td></tr>
+<tr><td class="t">1:06</td><td class="w">Share</td><td>Groups take the questions in front of the room. Ask for disagreement rather than answers.</td></tr>
+<tr><td class="t">1:16</td><td class="w">Close and bridge</td><td>Back to the opening board: does anyone still think the software was the problem? Then the sentence to leave them with, that when a pattern survives twenty-five years of better software, the software was never the variable. Preview Chapter 8, where a team gets the numbers right and has to fight its own organization to act on them.</td></tr>
+</table></div>
 
 </main>
-</div>
-
-<script>
-(function(){
-  var b=document.querySelector('.railtoggle'), n=document.getElementById('chapnav');
-  if(!b||!n)return;
-  b.addEventListener('click',function(){
-    var open=n.classList.toggle('open');
-    b.setAttribute('aria-expanded',open?'true':'false');
-  });
-  n.addEventListener('click',function(e){
-    if(e.target.tagName==='A'&&window.innerWidth<=860){
-      n.classList.remove('open');b.setAttribute('aria-expanded','false');
-    }
-  });
-})();
-</script>
 <!--NAVJS-->
 <script>
 (function(){
