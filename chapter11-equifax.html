@@ -135,7 +135,7 @@ li{margin-bottom:.45rem}
 
 /* ---------- responsive ---------- */
 @media (max-width:860px){
-  .shell{grid-template-columns:1fr;gap:0;padding:0 1.15rem 4rem}
+  .shell{grid-template-columns:minmax(0,1fr);gap:0;padding:0 1.15rem 4rem}
   .rail{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);padding:1.5rem 0 1rem;margin-bottom:.5rem}
   .rail nav{display:none}
   .rail nav.open{display:block;margin-top:.8rem}
@@ -275,6 +275,32 @@ li{margin-bottom:.45rem}
 .concepts{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;margin:1.1rem 0 0}
 .concepts .clabel{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-right:.3rem}
 .concepts span:not(.clabel){font-family:var(--display);font-size:12.5px;font-weight:500;letter-spacing:.04em;border:1px solid var(--border);background:var(--off-white);padding:.22rem .6rem;color:var(--text-dark)}
+
+/* mobile: wide tables scroll, long TOC anchors wrap */
+@media (max-width:860px){.toc a{white-space:normal}main table{display:block;overflow-x:auto;max-width:100%}}
+
+/* narrow screens: wide prose comparison tables stack into labelled cards.
+   Narrow data tables keep their grid so rows stay comparable. */
+@media (max-width:640px){
+  main table.stack-sm{display:block;width:100%;overflow-x:visible;border-collapse:separate;border-spacing:0}
+  table.stack-sm tr:first-child{display:none}
+  table.stack-sm tr{display:block;width:100%;border:1px solid var(--border);margin:0 0 .85rem;background:#fff}
+  table.stack-sm td{display:block;width:100%;border:none;border-bottom:1px solid var(--border);padding:.6rem .85rem;background:#fff!important}
+  table.stack-sm td:last-child{border-bottom:none}
+  table.stack-sm td::before{content:attr(data-label);display:block;font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--text-light);margin-bottom:.28rem}
+  table.stack-sm td:first-child{background:var(--black)!important;color:#fff;font-family:var(--display);letter-spacing:.06em;white-space:normal}
+  table.stack-sm td:first-child::before{content:none}
+  table.stack-sm td:first-child strong{color:#fff}
+}
+
+/* ported from ch3 */
+.mcq{border-left:3px solid var(--magenta);background:var(--off-white);padding:.7rem 1rem;margin:1rem 0 1.6rem;font-family:var(--sans);font-size:.95rem}
+.mcq b{font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--magenta-dark);display:block;margin-bottom:.2rem}
+.jumprow{display:flex;flex-wrap:wrap;gap:.5rem;margin:.9rem 0 0}
+.jump{font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:var(--magenta);color:#fff;border:1px solid var(--magenta);padding:.5rem .9rem;text-decoration:none;display:inline-block}
+.jump:hover{background:var(--magenta-dark);border-color:var(--magenta-dark);color:#fff}
+main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transform:none;letter-spacing:0;color:var(--off-black);margin:2.1rem 0 .55rem;padding-left:.7rem;border-left:3px solid var(--magenta)}
+.pairline{font-family:var(--sans);font-size:.9rem;color:var(--text-light);margin:.4rem 0 0}
 </style>
 </head>
 <body>
@@ -333,63 +359,56 @@ li{margin-bottom:.45rem}
 <header class="chaphead">
   <p class="eyebrow">Chapter 11 &middot; IT Governance</p>
   <h1>IT Governance: When Everyone Was Responsible and No One Was</h1>
-  <p class="anchor">In 2017, Equifax lost the personal data of nearly 150 million people. There was a
-  patch that would have prevented it. The patch was known, available, and even ordered internally.
-  It was simply never applied to the right server, because no one owned the job. This chapter is
-  about governance: the structures that decide who is accountable, before the crisis makes it
-  obvious that no one was.</p>
-  <div class="concepts"><span class="clabel">Key concepts</span><span>IT governance</span><span>Accountability vs. responsibility</span><span>Patch &amp; vulnerability management</span><span>Frameworks (NIST, COBIT)</span><span>Compliance vs. security</span><span>Data stewardship</span><span>Audit</span></div>
+  <p class="anchor">In 2017 Equifax lost the personal data of nearly 150 million people. A fix existed,
+  was known, was available, and had even been ordered internally. It was never applied to the one server
+  that mattered, because no single person owned the job. This chapter is about the structures that decide
+  who answers, before a crisis reveals that nobody did.</p>
+  <div class="concepts"><span class="clabel">Key concepts</span><span>IT governance</span><span>Accountability vs. responsibility</span><span>Patch and vulnerability management</span><span>Frameworks: NIST, COBIT</span><span>Compliance vs. security</span><span>Data stewardship</span><span>Audit</span></div>
 </header>
 
-<div class="statrow">
-  <div class="stat"><b>~147M</b><span>people's data exposed</span></div>
-  <div class="stat"><b>1</b><span>unpatched server</span></div>
-  <div class="stat"><b>76 days</b><span>attackers inside</span></div>
-  <div class="stat"><b>$700M+</b><span>settlement, 2019</span></div>
-  <div class="stat"><b>0</b><span>consent from those exposed</span></div>
-</div>
-
 <div class="toc"><strong>Contents</strong>
-<a href="#s1">1. A patch nobody applied</a>
-<a href="#s2">2. What governance is</a>
-<a href="#s3">3. Responsibility vs. accountability</a>
-<a href="#s4">4. The frameworks</a>
-<a href="#s5">5. Compliance is not security</a>
-<a href="#s6">6. The product was people</a>
-<a href="#s7">7. The other side: data about people who never agreed</a>
-<a href="#s8">8. The five components</a>
-<a href="#s9">9. Summary and vocabulary</a>
-<a href="#discussion">10. Discussion questions</a>
+<a href="#what">What governance is</a>
+<a href="#tools">Frameworks, compliance, and their limits</a>
+<a href="#cases">Three failures, three broken links</a>
+<a href="#equifax">Equifax: a patch nobody applied</a>
+<a href="#other">Data about people who never agreed</a>
+<a href="#vocab">Vocabulary</a>
+<a href="#discussion">Discussion questions</a>
+<a href="#lab">From lecture to lab</a>
+<a href="#sources">Sources and further reading</a>
+<a href="#teaching">Teaching notes</a>
 </div>
 
-<div class="plan"><div class="plan-head">Taught Week 8 Monday, combined with Chapter 10; the full 80-minute plan is in Chapter 10</div>
-<table>
-<tr><td class="t">&mdash;</td><td class="w">Note</td><td>This chapter is the second half of the Week 8 Monday session. Chapter 10 (Change Healthcare) supplies the attack and the concepts; this chapter supplies the governance lens and the Equifax case. Wednesday is Veterans Day, so the lab carries the applied work.</td></tr>
-</table></div>
+<p class="lede">Chapter 10 was about controls: the locks, the segmentation, the second step at the door.
+This chapter is about who is accountable for the controls, which turns out to be the harder problem, and
+the one that actually decides whether the controls exist on the day they are needed.</p>
 
-<h2 id="s1"><span class="num">01</span>A patch nobody applied</h2>
+<div class="callout"><strong>How this chapter runs</strong>
+<p>Sections 01 and 02 are the concepts: what governance is, the difference between responsibility and
+accountability, and why passing an audit is not the same as being safe. Section 03 puts them to work on
+three failures where the technology behaved exactly as built. Section 04 is the full case, Equifax.
+Section 05 asks the question the case forces, which is what an organization owes to people who are its
+product rather than its customers.</p>
+<p class="jumprow"><a class="jump" href="#equifax">Jump to the Equifax case &#8594;</a>
+<a class="jump" href="#cases">Jump to the three failures &#8594;</a>
+<a class="jump" href="#discussion">Jump to the discussion questions &#8594;</a></p></div>
 
-<p>In March 2017, a serious vulnerability was disclosed in Apache Struts, a piece of open-source
-software used inside countless corporate web applications. A fix was published the same week.
-Equifax, one of the three US credit bureaus, was told internally to apply it. The instruction went
-out. And then, on one internet-facing system that happened to run the vulnerable software, it did not
-get done. No alarm connected the order to the omission.</p>
+<h2 id="what"><span class="num">01</span>What governance is</h2>
 
-<p>Beginning in May, attackers used that exact vulnerability to get in, and they stayed for about 76
-days, extracting the names, Social Security numbers, birth dates, and addresses of roughly 147
-million people, close to half the US population. A device meant to detect the exfiltration had been
-inactive for months because an expired security certificate had never been renewed. Two boring
-omissions, a missed patch and a lapsed certificate, and a firm whose entire business was holding
-sensitive data handed nearly half a country's identities to strangers.</p>
+<p>Chapter 10 ended on a hopeful note: nearly every breach is a failure to apply known controls, which
+means most security is a management problem. This chapter is about the management problem, and it is
+less comfortable than it sounds.</p>
 
-<div class="callout"><strong>Why this is the governance chapter</strong>
-<p>Nothing about Equifax required advanced attackers, and this is the point. Every technical
-safeguard that would have stopped it already existed and was already understood. What failed was
-governance: the structure that assigns who must do what, who checks that it was done, and who answers
-when it was not. Chapter 10 was about controls. This chapter is about who is accountable for the
-controls, which turns out to be the harder problem.</p></div>
+<p>Governance is what decides whether the five components are looked after at all. Somebody has to own
+each piece of <strong>hardware</strong>, or a server sits on the internet with nobody's name against it.
+Somebody has to own whether <strong>software</strong> is patched and whether the monitoring is still
+alive. Somebody has to own what <strong>data</strong> the organization holds and what it owes the people
+in it. Somebody has to own who may reach what across the <strong>networks</strong>. And all of those
+owners are <strong>people</strong>, which is why governance is not a technology at all.</p>
 
-<h2 id="s2"><span class="num">02</span>What governance is</h2>
+<p>Here is the version of the weakest component rule that this chapter adds. A control with no named
+owner is not a control. It is an intention, and intentions do not fail loudly. Everything below is about
+making sure that when something is nobody's job, you find out before an attacker does.</p>
 
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">IT governance</span>
 <p><strong>IT governance</strong> is the set of structures, policies, and decision rights that
@@ -406,7 +425,8 @@ about the vulnerability, the people who owned the server, and the people respons
 compliance were not connected by any structure that forced the loop to close. Good governance is
 mostly the unglamorous work of making sure every critical task has exactly one owner and one check.</p>
 
-<h2 id="s3"><span class="num">03</span>Responsibility versus accountability</h2>
+<h3>Responsibility versus accountability</h3>
+
 
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Responsibility and accountability</span>
 <p>These words are used loosely in conversation and precisely in governance.
@@ -424,7 +444,11 @@ quietly. The company's CEO, CIO, and CSO all departed, because accountability, w
 assigned in advance to someone specific, rolls upward to whoever sits at the top, which is exactly why
 executives should want it assigned in advance.</p>
 
-<h2 id="s4"><span class="num">04</span>The frameworks</h2>
+<h2 id="tools"><span class="num">02</span>Frameworks, compliance, and their limits</h2>
+
+<p>Organizations do not invent governance from scratch, and they are frequently required to prove it
+exists. Both of those facts produce useful machinery and a characteristic trap, and you should be able
+to see the difference from across a room.</p>
 
 <p>Organizations do not invent governance from scratch. They adopt frameworks: shared checklists and
 vocabularies that encode what mature IT management looks like, so that "are we secure?" becomes a set
@@ -447,7 +471,8 @@ applied the patch for them. But a framework, honestly audited, forces the questi
 every internet-facing system got this patch," and that question is precisely the one no one at
 Equifax was structurally required to answer.</p>
 
-<h2 id="s5"><span class="num">05</span>Compliance is not security</h2>
+<h3>Compliance is not security</h3>
+
 
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Compliance versus security</span>
 <p><strong>Compliance</strong> means meeting the specific requirements of a standard or law.
@@ -465,7 +490,159 @@ the floor for everyone, but a compliance mindset can actively harm security if i
 mistake the paperwork for the protection. The job of good governance is to close that gap, not to
 celebrate the certificate.</p>
 
-<h2 id="s6"><span class="num">06</span>The product was people</h2>
+<h2 id="cases"><span class="num">03</span>Three failures, three broken links</h2>
+<p>Section 02 defined governance as the answer to four questions: who decides, who does the work, who
+checks it was done, and who answers when it was not. Each of the three cases below broke a different one
+of those links, and in each the technology was working exactly as built.</p>
+
+<h3>Mini-case 1 &middot; 2003: the alarm that failed quietly</h3>
+
+<p>On the afternoon of 14 August 2003, a high-voltage line in northern Ohio sagged in the heat into
+overgrown trees and switched off. That is routine. Grids handle it constantly, and operators redistribute
+the load.</p>
+
+<p>The fault should have raised an alarm in FirstEnergy's control room. A software fault in the alarm
+system meant it did not, and, more importantly, the alarm system gave no indication that it had stopped
+working. Operators sat looking at a screen that appeared normal. Over the next ninety minutes three more
+lines sagged into trees and dropped out, each one loading the remaining lines further, and the operators
+had no alerts and no way of knowing their alerts had gone. By early evening the cascade had taken out
+much of the north-eastern grid: about 55 million people across eight states and Ontario lost power, some
+for days.</p>
+
+<p>The investigation afterwards found the trees, the inadequate planning and the training gaps. But the
+governance finding is the one that changed the industry: before 2003, the reliability standards utilities
+were supposed to follow were <em>voluntary</em>. Afterwards they were made mandatory and legally
+enforceable, because it had become clear that a rule nobody is obliged to follow and nobody verifies is
+not a rule.</p>
+
+<p><strong>The link that broke: nobody checked. The component: software.</strong> Note the specific
+shape, because it is the same as the expired certificate in section 04. The failure was not that a
+monitor broke. It was that a broken monitor looked exactly like a working one, and no person or process
+owned the question of whether it was still working.</p>
+
+<div class="mcq"><b>Check yourself</b>Name a check in your own life or work that would look identical
+whether it was running or not: a backup, an alert, a report you assume somebody reads. Then say how you
+would find out, today, whether it is actually working.</div>
+
+<h3>Mini-case 2 &middot; 2020: the grades nobody would own</h3>
+
+<p>When examinations were cancelled in England in 2020, the regulator had to award A-level grades
+without exams. It built a model. Teachers submitted predicted grades and rankings, and the model adjusted
+them using each school's historical results, on the reasoning that teacher predictions alone would inflate
+grades nationally.</p>
+
+<p>Read what that adjustment actually does. A bright student in a school that had historically done
+badly was marked down because of results achieved by people they had never met, some of whom had left
+years earlier. Roughly four in ten grades came out lower than the teacher had submitted, and the pattern
+fell hardest on large state schools while small classes, which the model treated differently, were
+largely protected. Students protested outside the department with placards, and within days the whole
+thing was withdrawn and teacher assessments used instead.</p>
+
+<p>The interesting question is not whether the model was well built. It is who decided it should be used
+at all to make a decision of that consequence about individuals, and who could have stopped it. Ministers
+pointed at the regulator, the regulator pointed at its instructions, and the phrase that entered the
+language that summer was people blaming "the algorithm", which is precisely the sentence section 03 tells
+you is never an explanation.</p>
+
+<p><strong>The link that broke: nobody decided, so nobody could stop it. The component: data.</strong>
+The model's inputs were a school's past performance, which is a fact about a building rather than about
+the student being graded. Chapter 8 would call that a validity failure. This chapter calls it a
+governance failure, because somebody should have had both the authority and the obligation to ask whether
+that input was acceptable before a single grade was issued.</p>
+
+<div class="mcq"><b>Check yourself</b>The model was trying to solve a real problem: teacher predictions
+would have inflated grades. Propose an approach that addresses that problem without judging individuals
+by their school's history, and then name what your approach costs.</div>
+
+<h3>Mini-case 3 &middot; 2021 to 2025: the convictions that had to be undone</h3>
+
+<p>Start at the end, because the end is happening now. From 2021 British courts began quashing the
+criminal convictions of subpostmasters, a statutory public inquiry was set up, and in 2025 that inquiry
+reported on the human damage. To understand why, go back to 1999, when the Post Office rolled out an
+accounting system called Horizon across thousands of branches, each run by a subpostmaster who was contractually liable for any shortfall in the
+accounts. The system reported shortfalls that were not real.</p>
+
+<p>What happened next is the reason this case is in a governance chapter rather than a software one. The
+Post Office maintained that the system was reliable, and used that position to pursue the people the
+system was failing. More than seven hundred subpostmasters were prosecuted, many for theft or false
+accounting. People lost their businesses, their homes and their reputations; some went to prison; some
+died before the record was corrected. The organisation had evidence of faults in the system and continued
+regardless.</p>
+
+<p>A television drama in 2024 turned it into a national political issue, decades after the first
+prosecutions and years after the faults were documented. The inquiry's 2025 report set out the human
+damage, including that a number of people are believed to have taken their own lives. Compensation
+schemes are still running as you read this, which is worth noticing: the failure began before most of
+you were born and is not finished.</p>
+
+<p><strong>The link that broke: who answers. The component: people.</strong> Accountability did exist
+here, and that is what makes it the most disturbing case in the book. It was assigned, formally and
+contractually, to the subpostmasters. When the system was wrong, the structure was already built to
+conclude that the people must be.</p>
+
+<div class="mcq"><b>Check yourself</b>Section 03 says accountability cannot be delegated away. The Post
+Office had delegated it, in writing, to the least powerful people in the chain. Say what test you would
+apply to an accountability arrangement to tell the difference between assigning it properly and
+offloading it.</div>
+
+<h3>What the three have in common</h3>
+
+<p>An alarm, a grading model, and a branch accounting system. In none of the three was the failure a
+mystery once anybody looked, and in all three the organisation had a governance structure on paper.</p>
+
+<p>What they share is that the structure did not answer one of the four questions. Nobody owned whether
+the alarm was alive. Nobody owned whether the model should be used. And in the third, the question of who
+answers had been settled in advance, in the organisation's favour, against the people with the least
+power to argue.</p>
+
+<p>Keep the third one especially close for the case that follows. Equifax is usually taught as a story
+about a missed patch, and it is. But it is also a story about a company holding data on a hundred and
+forty-seven million people who were never its customers and never agreed to anything, which means the
+question of who answers to whom had already been decided long before anyone forgot to patch a
+server.</p>
+<h2 id="equifax"><span class="num">04</span>Equifax: a patch nobody applied</h2>
+
+<p>In March 2017, a serious vulnerability was disclosed in Apache Struts, a piece of open-source
+software used inside countless corporate web applications. A fix was published the same week.
+Equifax, one of the three US credit bureaus, was told internally to apply it. The instruction went
+out. And then, on one internet-facing system that happened to run the vulnerable software, it did not
+get done. No alarm connected the order to the omission.</p>
+
+<p>Beginning in May, attackers used that exact vulnerability to get in, and they stayed for about 76
+days, extracting the names, Social Security numbers, birth dates, and addresses of roughly 147
+million people, close to half the US population. A device meant to detect the exfiltration had been
+inactive for months because an expired security certificate had never been renewed. Two boring
+omissions, a missed patch and a lapsed certificate, and a firm whose entire business was holding
+sensitive data handed nearly half a country's identities to strangers.</p>
+
+<div class="callout"><strong>Why this is the governance chapter</strong>
+<p>Nothing about Equifax required advanced attackers, and this is the point. Every technical
+safeguard that would have stopped it already existed and was already understood. What failed was
+governance: the structure that assigns who must do what, who checks that it was done, and who answers
+when it was not. Chapter 10 was about controls. This chapter is about who is accountable for the
+controls, which turns out to be the harder problem.</p></div>
+
+<div class="statrow">
+  <div class="stat"><b>~147M</b><span>people's data exposed</span></div>
+  <div class="stat"><b>1</b><span>unpatched server</span></div>
+  <div class="stat"><b>76 days</b><span>attackers inside</span></div>
+  <div class="stat"><b>$700M+</b><span>settlement, 2019</span></div>
+  <div class="stat"><b>0</b><span>consent from those exposed</span></div>
+</div>
+
+<h3>The five components at Equifax</h3>
+
+
+<table class="sumtable stack-sm">
+<tr><th>Component</th><th>In the breach</th><th>The governance lesson</th></tr>
+<tr><td data-label="Component"><strong>Hardware</strong></td><td data-label="In the breach">One internet-facing server running vulnerable software</td><td data-label="The governance lesson">Every critical box needs a named owner</td></tr>
+<tr><td data-label="Component"><strong>Software</strong></td><td data-label="In the breach">The unpatched Apache Struts; the expired monitoring certificate</td><td data-label="The governance lesson">Known fixes are worthless if no process guarantees they land</td></tr>
+<tr><td data-label="Component"><strong>Data</strong></td><td data-label="In the breach">147M identities: the product, not the customer</td><td data-label="The governance lesson">Holding data creates duties to people who never agreed</td></tr>
+<tr><td data-label="Component"><strong>Networks</strong></td><td data-label="In the breach">76 days of extraction past a blinded monitor</td><td data-label="The governance lesson">Detection is a governance duty, not a one-time purchase</td></tr>
+<tr><td data-label="Component"><strong>People</strong></td><td data-label="In the breach">Responsibility everywhere, accountability nowhere; three executives gone</td><td data-label="The governance lesson">Unassigned accountability rolls to the top</td></tr>
+</table>
+
+<h2 id="other"><span class="num">05</span>Data about people who never agreed</h2>
 
 <p>There is a fact about Equifax that makes its breach different in kind from a retailer losing card
 numbers, and it deserves to be stated plainly. The 147 million people whose data was exposed were
@@ -482,7 +659,8 @@ people bearing the risk are not the people the company answers to, the market ca
 outcome by itself, and governance has to come from somewhere else: regulation, law, and the assignment
 of accountability by force rather than by choice.</p>
 
-<h2 id="s7"><span class="num">07</span>The other side: data about people who never agreed</h2>
+<h3>The other side: data about people who never agreed</h3>
+
 
 <p>Chapter 10 argued that breach costs are an externality, exported to people outside the company's
 books. Equifax pushes that argument to its limit, because the people bearing the risk never entered
@@ -502,27 +680,7 @@ the answer to a governance failure this large is not only a better patch process
 about who should be allowed to hold what data about whom, and under what obligations. That argument is
 where the next unit, on regulating technology, begins.</p>
 
-<h2 id="s8"><span class="num">08</span>The five components at Equifax</h2>
-
-<table class="sumtable">
-<tr><th>Component</th><th>In the breach</th><th>The governance lesson</th></tr>
-<tr><td><strong>Hardware</strong></td><td>One internet-facing server running vulnerable software</td><td>Every critical box needs a named owner</td></tr>
-<tr><td><strong>Software</strong></td><td>The unpatched Apache Struts; the expired monitoring certificate</td><td>Known fixes are worthless if no process guarantees they land</td></tr>
-<tr><td><strong>Data</strong></td><td>147M identities: the product, not the customer</td><td>Holding data creates duties to people who never agreed</td></tr>
-<tr><td><strong>Networks</strong></td><td>76 days of extraction past a blinded monitor</td><td>Detection is a governance duty, not a one-time purchase</td></tr>
-<tr><td><strong>People</strong></td><td>Responsibility everywhere, accountability nowhere; three executives gone</td><td>Unassigned accountability rolls to the top</td></tr>
-</table>
-
-<h2 id="s9"><span class="num">09</span>Summary and vocabulary</h2>
-
-<table class="sumtable">
-<tr><th>Idea</th><th>This chapter's version</th><th>Where you meet it next</th></tr>
-<tr><td><strong>Governance</strong></td><td>A patch that failed in the gap between teams</td><td>Lab 8's access-and-ownership matrix</td></tr>
-<tr><td><strong>Accountability</strong></td><td>Everyone responsible, no one accountable, so it rolled to the CEO</td><td>Regulating technology (Wk 9&ndash;10)</td></tr>
-<tr><td><strong>Compliance vs. security</strong></td><td>Passing audits with an exposed server</td><td>AI governance, Wk 10</td></tr>
-<tr><td><strong>Frameworks</strong></td><td>NIST's five functions locate exactly where Equifax failed</td><td>Any GRC role, Ch 10 &sect;7</td></tr>
-<tr><td><strong>Product, not customer</strong></td><td>147M people who never signed up and cannot leave</td><td>The regulation unit's core question</td></tr>
-</table>
+<h2 id="vocab"><span class="num">06</span>Vocabulary</h2>
 
 <dl class="vocab">
 <div><dt>IT governance</dt><dd>The structures and decision rights that determine who directs, does, checks, and answers for technology.</dd></div>
@@ -538,26 +696,55 @@ where the next unit, on regulating technology, begins.</p>
 </dl>
 
 <div class="ailight g">
-  <div class="light-housing"><span class="bulb r"></span><span class="bulb y"></span><span class="bulb g on"></span></div>
-  <div class="ailight-text"><strong>Green light for this chapter's questions.</strong> Use AI to test
+  <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
+  <div class="lighttext"><strong>Green light for this chapter's questions.</strong> Use AI to test
   your grasp of governance terms, or to argue the other side of the discussion questions once you have
   taken a position, per the Lab 1 rules.</div>
 </div>
 
-<h2 id="discussion"><span class="num">10</span>Discussion questions</h2>
+
+<div class="tps">
+  <div class="tps-head"><span>Monday activity &middot; Who owns this?</span><span class="mins">12 minutes</span></div>
+  <div class="tps-body">
+    <p class="tps-setup">Equifax's patch failed in the space between the people who knew about the vulnerability, the people who owned the server, and the people responsible for verifying compliance. Nobody refused to do it. No structure forced the loop to close.</p>
+    <div class="tps-q"><p>Name one recurring task at a place you have worked, studied or volunteered where you genuinely do not know who is accountable. Then work out, from the outside, how you would find out.</p></div>
+    <div class="tps-steps">
+      <div class="tps-step"><div class="ph">Think <span>3 min</span></div><p>Write the task in one line. Then write the four answers from section 01, and leave blanks where you do not know.</p></div>
+      <div class="tps-step"><div class="ph">Pair <span>4 min</span></div><p>Swap. Your partner's job is to try to fill in your blanks by asking questions, and to notice which blank you cannot fill even with help.</p></div>
+      <div class="tps-step"><div class="ph">Share <span>5 min</span></div><p>We collect a few on the board, sorted by which of the four questions was blank.</p></div>
+    </div>
+    <div class="tps-note"><strong>Where this lands</strong>Two things come out reliably. The blank is almost always "who checks", because doing the work is visible and verifying it is not, which is exactly the shape of both the missed patch and the expired certificate. And students discover that finding the answer from outside is genuinely hard, which is the honest version of why these failures persist: the information needed to spot an ownership gap is itself ungoverned. Push on the second half of the question, because "ask my manager" is not an answer if the manager assumes somebody else has it. Carry the best example into the case and ask what it would look like if it failed for seventy-six days without anybody noticing.</div>
+  </div>
+</div>
+
+<h2 id="discussion"><span class="num">07</span>Discussion questions</h2>
 <p>None of these get handed in. On Wednesday you run the discussion and I steer it, which means the
 class is only as good as what you walk in with. Read the chapter, pick the question you have the
 strongest opinion about, and be ready to say it first.</p>
 
 <ol class="dq">
-<li>The Struts patch was ordered but never applied to the right server. Redesign the process so this specific failure cannot happen: who owns the task, who verifies it, and how does the loop close? <span class="dqtag">Apply</span></li>
-<li>Distinguish responsibility from accountability using an example from your own life or work. Why can accountability not be shared, even when responsibility is? <span class="dqtag">Explain</span></li>
-<li>"Everyone was responsible" produced an outcome nobody owned. Where else, in organizations you know, does diffuse responsibility hide the absence of accountability? <span class="dqtag">Analyze</span></li>
-<li>Target was PCI-compliant and Equifax was regulated when each was breached. Explain to a skeptical executive why passing the audit did not make them secure. <span class="dqtag">Evaluate</span></li>
-<li>The 147 million people harmed were Equifax's product, not its customers, and could not leave. What does that fact do to the argument that market pressure will discipline companies into security? <span class="dqtag">Judgment</span></li>
-<li>Apply the NIST functions (identify, protect, detect, respond, recover) to the Equifax timeline. At which function did it first fail, and would fixing only that one have prevented the breach? <span class="dqtag">Systems</span></li>
-<li>A settlement of about $700 million works out to a few dollars per exposed person for a permanent risk. Is that justice, deterrence, both, or neither? What would a better remedy look like? <span class="dqtag">Ethics</span></li>
-<li>Connect to Change Healthcare: both breaches trace to a single unglamorous omission (a missing patch, a missing MFA setting). What governance structure would catch that class of omission before an attacker does? <span class="dqtag">Connect</span></li>
+  <li>Take a critical recurring task at an organization you know: backups, software updates, access
+  reviews, key handovers. Answer section 01's four questions for it. If any answer is "I am not sure",
+  say what that tells you. <span class="tag">Apply</span></li>
+
+  <li>After the breach nobody could be cleanly blamed for the missed patch. Explain why that is the
+  diagnosis rather than the exoneration, and describe the smallest change to the structure that would
+  have produced a different outcome. <span class="tag">Analyze</span></li>
+
+  <li>Map the failure onto the five functions of the NIST framework and say which function failed
+  worst. Then say honestly whether adopting a framework would have prevented this, and what else would
+  have had to be true. <span class="tag">Systems</span></li>
+
+  <li>The Post Office had assigned accountability in writing to the least powerful people in the chain,
+  and Equifax had assigned it to nobody. Design an accountability arrangement for a system whose errors
+  fall on people outside the organization, and name who you would give the authority to stop it.
+  <span class="tag">Apply</span></li>
+
+  <li>The settlement worked out to a few dollars of face value per person for a permanent, unfixable
+  exposure, and the company still operates as one of three that decide whether Americans can get a
+  mortgage. Is that an acceptable outcome? Argue one side, state the strongest objection to your own
+  position, and say what a better remedy would actually look like.
+  <span class="tag tag-hard">Ethics</span></li>
 </ol>
 
 <h2><span class="num">11</span>Sources and further reading</h2>
@@ -569,6 +756,53 @@ strongest opinion about, and be ready to say it first.</p>
 </ul>
 
 <p class="pairline"><a href="schedule.html">Back to the schedule &#8594;</a></p>
+
+<h2 id="lab"><span class="num">08</span>From lecture to lab</h2>
+
+<div class="callout callout-bridge"><strong>Week 8 &middot; Lab 8</strong>
+<p>Chapter 10 gave you the controls. This chapter says a control with no named owner is not a control.
+<a href="lab8-security.html"><strong>Lab 8: Security and Data Governance: The Audit</strong></a> is where
+you find out whether that is easy to say and hard to do.</p>
+<p>The access-and-ownership matrix you build for Cascadia is a governance artefact, not a technical one.
+For every system, you are answering section 01's four questions: who decides, who does the work, who
+checks it was done, and who answers when it was not. When you find a system where one of those answers
+is blank, you have found the co-op's version of an unpatched server.</p>
+  <a class="lablink" href="lab8-security.html">Go to Lab 8 &#8594;</a>
+</div>
+
+<h2 id="sources"><span class="num">09</span>Sources and further reading</h2>
+<ul class="sources">
+<li>US House Committee on Oversight and Government Reform, <em>The Equifax Data Breach</em> (2018), and the Government Accountability Office's report on the same incident, for the unapplied Apache Struts patch, the expired certificate on the monitoring device, the duration of the intrusion and the number of people affected.</li>
+<li>The 2019 settlement with the Federal Trade Commission, the Consumer Financial Protection Bureau and the states, for the sums involved and what they were allocated to.</li>
+<li>US&ndash;Canada Power System Outage Task Force, <em>Final Report on the August 14, 2003 Blackout</em> (April 2004), for mini-case 1, including the alarm failure, the sequence of line trips, and the recommendation that reliability standards be made mandatory and enforceable.</li>
+<li>Contemporary reporting and the subsequent reviews of England's 2020 A-level grading, for mini-case 2, including the share of grades adjusted downward and the withdrawal of the model within days.</li>
+<li>The Post Office Horizon IT Inquiry, including its 2025 report on human impact, and the Court of Appeal judgments quashing convictions from 2021 onward, for mini-case 3. This matter is still live and compensation schemes are ongoing; check the current position before teaching it.</li>
+<li>NIST Cybersecurity Framework and ISACA's COBIT, for section 02. Both are freely readable and worth ten minutes each, because seeing how plain the language is removes most of the mystique.</li>
+</ul>
+
+<h2 id="teaching"><span class="num">10</span>Teaching notes</h2>
+<p style="font-family:var(--sans);font-size:.95rem;color:var(--muted)">Written for whoever is running the sessions. Students are welcome to read them, but nothing here is required. Week 8 carries Chapters 10 and 11 together and Wednesday is Veterans Day, so the Monday plan below is the Chapter 11 half of that session, and the second plan is written for whenever you teach the case.</p>
+
+<div class="plan"><div class="plan-head">Monday session plan &middot; the Chapter 11 half, following Chapter 10 in the same 80 minutes</div>
+<table>
+<tr><td class="t">0:47</td><td class="w">Lecture</td><td>Governance in one line: security is a set of decisions, not a set of tools. Then the four questions, who decides, who does, who checks, who answers, and write them on the board because everything after this hangs on them.</td></tr>
+<tr><td class="t">0:53</td><td class="w">Lecture</td><td>Responsibility against accountability, precisely. The sentence to land is that "everyone was responsible" is how you get an outcome nobody owned, and that unassigned accountability rolls upward to whoever sits at the top, which is why executives should want it assigned in advance.</td></tr>
+<tr><td class="t">1:00</td><td class="w">Cases 1&#8211;3</td><td>The 2003 blackout, the 2020 grading model, the Post Office, about two minutes each. Name which of the four links broke and stop. The blackout is the one to make vivid, because a broken alarm looked exactly like a working one, and that is the same shape as Equifax's expired certificate.</td></tr>
+<tr><td class="t">1:06</td><td class="w">Think-pair-share</td><td>Who owns this? See the activity in section 06. Protect the silent minutes; the useful examples come from their own workplaces and take a moment to surface.</td></tr>
+<tr><td class="t">1:18</td><td class="w">Close</td><td>Preview the lab: the access-and-ownership matrix is this chapter as an exercise. Assign section 04 in both chapters.</td></tr>
+</table></div>
+
+<div class="plan"><div class="plan-head">Case session plan &middot; 80 minutes &middot; Equifax, whenever you teach it</div>
+<table>
+<tr><td class="t">0:00</td><td class="w">Open</td><td>Ask the room who in this building is accountable for making sure the fire doors work. Take answers. Nobody knows, everybody assumes somebody does, and that is the chapter in ninety seconds.</td></tr>
+<tr><td class="t">0:07</td><td class="w">Walk the case</td><td>The patch, the instruction that went out, the one server it did not reach, the expired certificate, seventy-six days. Keep asking at each step: whose job was this, and who would have noticed it had not been done?</td></tr>
+<tr><td class="t">0:20</td><td class="w">The diagnosis</td><td>Afterwards nobody could be cleanly blamed, which sounds like exoneration and is actually the finding. Push on this until the room feels the difference between "no one is to blame" and "no one was accountable".</td></tr>
+<tr><td class="t">0:30</td><td class="w">Frameworks and compliance</td><td>Map the failure onto NIST's five functions and let the room locate it. Then compliance against security, with Target as the second example: certified compliant and breached. Compliance is a floor, not a finish line.</td></tr>
+<tr><td class="t">0:42</td><td class="w">The turn</td><td>Section 05. The 147 million were never customers and cannot leave. Ask what governs a company whose product is people who have no relationship with it, and let them arrive at the answer that the market cannot, so something else has to.</td></tr>
+<tr><td class="t">0:52</td><td class="w">Think</td><td>All five discussion questions on screen. Silent individual work, one sentence on at least two.</td></tr>
+<tr><td class="t">0:58</td><td class="w">Pair and share</td><td>Groups settle on positions they can defend, then take the questions in front of the room. Circulate for a group that landed somewhere unusual on the Post Office question or the settlement arithmetic.</td></tr>
+<tr><td class="t">1:16</td><td class="w">Close and bridge</td><td>Back to the fire doors. Then the line to leave them with: a system in which nobody can be held accountable for a critical task has been designed, by accident, to fail quietly. Bridge to the software chapter and the question of what we are owed by the things we did not choose.</td></tr>
+</table></div>
 
 </main>
 <!--NAVJS-->

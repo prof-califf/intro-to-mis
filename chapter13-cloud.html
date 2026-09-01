@@ -135,7 +135,7 @@ li{margin-bottom:.45rem}
 
 /* ---------- responsive ---------- */
 @media (max-width:860px){
-  .shell{grid-template-columns:1fr;gap:0;padding:0 1.15rem 4rem}
+  .shell{grid-template-columns:minmax(0,1fr);gap:0;padding:0 1.15rem 4rem}
   .rail{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);padding:1.5rem 0 1rem;margin-bottom:.5rem}
   .rail nav{display:none}
   .rail nav.open{display:block;margin-top:.8rem}
@@ -275,6 +275,32 @@ li{margin-bottom:.45rem}
 .concepts{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;margin:1.1rem 0 0}
 .concepts .clabel{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-right:.3rem}
 .concepts span:not(.clabel){font-family:var(--display);font-size:12.5px;font-weight:500;letter-spacing:.04em;border:1px solid var(--border);background:var(--off-white);padding:.22rem .6rem;color:var(--text-dark)}
+
+/* mobile: wide tables scroll, long TOC anchors wrap */
+@media (max-width:860px){.toc a{white-space:normal}main table{display:block;overflow-x:auto;max-width:100%}}
+
+/* narrow screens: wide prose comparison tables stack into labelled cards.
+   Narrow data tables keep their grid so rows stay comparable. */
+@media (max-width:640px){
+  main table.stack-sm{display:block;width:100%;overflow-x:visible;border-collapse:separate;border-spacing:0}
+  table.stack-sm tr:first-child{display:none}
+  table.stack-sm tr{display:block;width:100%;border:1px solid var(--border);margin:0 0 .85rem;background:#fff}
+  table.stack-sm td{display:block;width:100%;border:none;border-bottom:1px solid var(--border);padding:.6rem .85rem;background:#fff!important}
+  table.stack-sm td:last-child{border-bottom:none}
+  table.stack-sm td::before{content:attr(data-label);display:block;font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--text-light);margin-bottom:.28rem}
+  table.stack-sm td:first-child{background:var(--black)!important;color:#fff;font-family:var(--display);letter-spacing:.06em;white-space:normal}
+  table.stack-sm td:first-child::before{content:none}
+  table.stack-sm td:first-child strong{color:#fff}
+}
+
+/* ported from ch3 */
+.mcq{border-left:3px solid var(--magenta);background:var(--off-white);padding:.7rem 1rem;margin:1rem 0 1.6rem;font-family:var(--sans);font-size:.95rem}
+.mcq b{font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--magenta-dark);display:block;margin-bottom:.2rem}
+.jumprow{display:flex;flex-wrap:wrap;gap:.5rem;margin:.9rem 0 0}
+.jump{font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:var(--magenta);color:#fff;border:1px solid var(--magenta);padding:.5rem .9rem;text-decoration:none;display:inline-block}
+.jump:hover{background:var(--magenta-dark);border-color:var(--magenta-dark);color:#fff}
+main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transform:none;letter-spacing:0;color:var(--off-black);margin:2.1rem 0 .55rem;padding-left:.7rem;border-left:3px solid var(--magenta)}
+.pairline{font-family:var(--sans);font-size:.9rem;color:var(--text-light);margin:.4rem 0 0}
 </style>
 </head>
 <body>
@@ -331,66 +357,57 @@ li{margin-bottom:.45rem}
 <main class="chapwrap">
 
 <header class="chaphead">
-  <p class="eyebrow">Chapter 13 &middot; Cloud &amp; What Computing Costs</p>
+  <p class="eyebrow">Chapter 13 &middot; Cloud Computing and What Computing Costs</p>
   <h1>The Cloud: Renting Computers, and the Bill the Planet Gets</h1>
-  <p class="anchor">In August 2008 a database corruption stopped Netflix from shipping DVDs for three
-  days, and the company drew a radical conclusion: stop owning computers. Seven years later it shut
-  its last data center and ran one of the world's biggest services on machines rented from its
-  fiercest competitor. This chapter is about what the cloud actually is, why renting won, what
-  Netflix deliberately built anyway, what happens on the day the cloud blinks, and the question
-  Chapter 9 left you holding: when computing feels free, who is paying, and in what currency?</p>
-  <div class="meta-row">
-    <span>Cases: Netflix / AWS &middot; IEA, Energy and AI</span>
-    <span class="alt">Week 10 &middot; Wednesday, the final lecture</span>
-    <span class="alt"><a href="schedule.html" style="color:inherit;text-decoration:none">Paired lab: Information Architecture (Lab 10) &#8594;</a></span>
-  </div>
+  <p class="anchor">In August 2008 a database corruption stopped Netflix shipping DVDs for three days,
+  and the company drew a radical conclusion: stop owning computers. Seven years later it shut its last
+  data centre and ran one of the world's largest services on machines rented from its fiercest
+  competitor. This chapter is about what the cloud actually is, why renting won, what Netflix built
+  anyway, and the question Chapter 9 left you holding: when computing feels free, who is paying, and in
+  what currency?</p>
+  <div class="concepts"><span class="clabel">Key concepts</span><span>IaaS, PaaS, SaaS</span><span>Capex to opex</span><span>Elasticity</span><span>Content delivery networks</span><span>Concentration risk and lock-in</span><span>FinOps</span><span>The physical bill</span></div>
 </header>
 
-<div class="statrow">
-  <div class="stat"><b>3 days</b><span>DVDs stopped; the decision that started it</span></div>
-  <div class="stat"><b>7 yrs</b><span>to shut the last Netflix data center, 2016</span></div>
-  <div class="stat"><b>130+</b><span>countries switched on in a single day</span></div>
-  <div class="stat"><b>415 TWh</b><span>data centers' electricity in 2024, ~1.5% of the world's</span></div>
-  <div class="stat"><b>&times;2</b><span>projected by 2030, roughly Japan's annual usage</span></div>
-</div>
-
 <div class="toc"><strong>Contents</strong>
-<a href="#s1">1. Three days without DVDs</a>
-<a href="#s2">2. What the cloud actually is</a>
-<a href="#s3">3. Seven years to zero data centers</a>
-<a href="#s4">4. The part Netflix built anyway</a>
-<a href="#s5">5. When the cloud blinks</a>
-<a href="#s6">6. The bill the planet gets</a>
-<a href="#s7">7. What business people do with the cloud</a>
-<a href="#s8">8. The other side: the cloud's neighbors</a>
-<a href="#s9">9. The five components</a>
-<a href="#s10">10. Summary and vocabulary</a>
-<a href="#questions">11. Discussion questions</a>
+<a href="#what">What the cloud actually is</a>
+<a href="#risk">When the cloud blinks, and the bill the planet gets</a>
+<a href="#cases">Three answers to where the computers are</a>
+<a href="#netflix">Netflix: seven years to zero data centres</a>
+<a href="#other">The cloud's neighbours, and who does this work</a>
+<a href="#vocab">Vocabulary</a>
+<a href="#discussion">Discussion questions</a>
+<a href="#lab">From lecture to lab</a>
+<a href="#sources">Sources and further reading</a>
+<a href="#teaching">Teaching notes</a>
 </div>
 
-<div class="plan">
-<div class="plan-head">Wednesday session plan &middot; 80 minutes &middot; the last lecture of the quarter</div>
-<table>
-<tr><td class="t">0:00</td><td class="w">Open</td><td>Ask: where, physically, was the last thing you streamed? Collect guesses. Nobody knows, and by the end of the session everyone will, down to the box inside their internet provider.</td></tr>
-<tr><td class="t">0:05</td><td class="w">Lecture</td><td>The Netflix arc: the 2008 corruption, IaaS/PaaS/SaaS and capex to opex, seven years to zero data centers, 130 countries in a day, and Open Connect as the build-versus-buy rule from Chapter 12 at its limit.</td></tr>
-<tr><td class="t">0:35</td><td class="w">Lecture</td><td>The two bills: concentration risk, with the October 2025 us-east-1 morning as the fresh case, then the physical bill, walking the IEA numbers from 415 TWh to the doubling, the water, and who lives next to it.</td></tr>
-<tr><td class="t">0:55</td><td class="w">Think-pair-share</td><td>Where does the co-op's data live? See the activity below.</td></tr>
-<tr><td class="t">1:15</td><td class="w">Close</td><td>The course's last callback: trace one Spotify Wrapped play through all five components, from a phone through the pipeline to a rented GPU, and name each bill along the way. That trace is a fair preview of the final.</td></tr>
-</table></div>
+<p class="lede">Ask where, physically, the last thing you streamed was. Almost nobody knows. By the end
+of this chapter you will, down to the box inside your internet provider, and you will know what it
+cost to put it there.</p>
 
-<h2 id="s1"><span class="num">01</span>Three days without DVDs</h2>
+<div class="callout"><strong>How this chapter runs</strong>
+<p>Sections 01 and 02 are the concepts: what renting computers actually means, what it transfers and
+what it does not, and the two bills that come with it, one when the landlord has a bad day and one that
+the planet pays. Section 03 puts them to work on three moments the cloud became clearer to the people
+buying it. Section 04 is the full case, Netflix, which is the last one in the book. Section 05 asks who
+lives next to the data centre, and what a business graduate does in all of this.</p>
+<p class="jumprow"><a class="jump" href="#netflix">Jump to the Netflix case &#8594;</a>
+<a class="jump" href="#cases">Jump to the three answers &#8594;</a>
+<a class="jump" href="#discussion">Jump to the discussion questions &#8594;</a></p></div>
 
-<p>By its own account, Netflix's road to the cloud began with a failure: in August 2008 a major
-database corruption meant that for three days the company could not ship DVDs to its members. The
-diagnosis went deeper than the incident. Netflix concluded it had to move away from vertically
-scaled single points of failure, big databases in its own data center, toward horizontally scalable,
-distributed systems it did not own, and it chose Amazon Web Services as the landlord. Pause on the
-strangeness of that sentence: Amazon, whose Prime Video competes directly with Netflix, would
-henceforth run the computers underneath Netflix. The logic was Chapter 12's rule pushed to its
-limit: computing infrastructure had become a commodity Netflix could rent better than build, even
-from a rival, freeing the company to spend its effort on what differentiates it.</p>
+<h2 id="what"><span class="num">01</span>What the cloud actually is</h2>
 
-<h2 id="s2"><span class="num">02</span>What the cloud actually is</h2>
+<p>This is the last chapter, and it returns to the first component. Chapter 1 listed hardware first and
+then spent twelve chapters on the other four, because hardware was the part you could point at. This
+chapter is about what happened when it stopped being something you owned.</p>
+
+<p>Read it with the five components in view, because the cloud moves exactly one of them and leaves
+the other four exactly where they were. The <strong>hardware</strong> becomes somebody else's, rented by
+the hour. The <strong>data</strong> is still yours, and so is every obligation attached to it. The
+<strong>software</strong> above the rented layer is still yours to choose and run. The
+<strong>networks</strong> matter more, not less, because everything now travels over them. And the
+<strong>people</strong> making the decisions have not moved at all, which is why a chapter about renting
+computers is mostly a chapter about management.</p>
 
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Cloud computing: IaaS, PaaS, SaaS, and capex to opex</span>
 <p>Strip the vapor from the word: <strong>the cloud is other people's data centers, rented over the
@@ -410,45 +427,12 @@ renting the computers outsources none of the responsibility for the data on them
 them, or the decisions about both, a point Chapter 10's third-party-risk lesson already made in
 harder currency.</p>
 
-<h2 id="s3"><span class="num">03</span>Seven years to zero data centers</h2>
+<h2 id="risk"><span class="num">02</span>When the cloud blinks, and the bill the planet gets</h2>
 
-<p>The migration took seven years, finishing in early January 2016 when Netflix shut down the last
-data-center pieces serving its streaming product. The company is candid about why it took so long:
-the easy path was to forklift existing systems into AWS unchanged, and Netflix refused it, because
-that moves your problems along with your servers. Instead it rebuilt nearly everything cloud-native,
-as distributed systems designed to expect failure. The payoff figures come from Netflix's own
-announcement: eight times the streaming members it had in 2008, overall viewing up three orders of
-magnitude, and elasticity that let engineers add thousands of virtual servers and petabytes of
-storage in minutes. The proof-of-concept moment came the same month the migration ended: on January
-6, 2016, Netflix switched on service in more than 130 additional countries at once, a launch its own
-racks could never have absorbed.</p>
-
-<p>One more habit came out of the rebuild, and it belongs in your vocabulary as culture, not
-technology. Having been burned by a Christmas Eve 2012 outage in an AWS load-balancing service,
-Netflix institutionalized the assumption that everything fails: it built tools, famously including
-one called Chaos Monkey, that deliberately break pieces of its own production systems so engineers
-are forced to design for the failure before it happens for real. Chapter 10 called the rehearsed plan
-for the bad day business continuity. Netflix automated the rehearsal.</p>
-
-<h2 id="s4"><span class="num">04</span>The part Netflix built anyway</h2>
-
-<p>Here is the detail that turns the case from a cloud advertisement into a strategy lesson.
-Everything that happens before you press Play, sign-in, search, recommendations, billing, runs on
-AWS. The video itself does not. Netflix built and owns <strong>Open Connect</strong>, its private
-<strong>content delivery network (CDN)</strong>: purpose-built appliances loaded with the catalog
-and installed inside internet service providers around the world, so the actual stream travels a few
-network hops from a Netflix-owned box near you, not across the planet from a rented one. Open
-Connect carries the entirety of Netflix's video traffic, tens of terabits per second at peak, one of
-the highest-volume networks in existence.</p>
-
-<p>Run Chapter 12's rule over the split and it resolves perfectly. Elastic, spiky, commodity
-computing: rent it, even from a rival. The predictable, colossal, quality-defining flow of bits that
-<em>is</em> the customer experience: own it, tune it, and let it become a moat. The lesson is not
-"use the cloud" or "avoid the cloud"; it is that build-versus-rent is decided capability by
-capability, by the same differentiator test, at every scale from Cascadia's registers to a third of
-the internet's evening traffic.</p>
-
-<h2 id="s5"><span class="num">05</span>When the cloud blinks</h2>
+<p>Renting has two bills that never appear on the invoice. One arrives on the morning the landlord has
+a bad day, and the whole course's argument about concentration risk applies to it. The other arrives
+in electricity, water and land, and is paid by people who never signed the contract. This section is
+about both.</p>
 
 <p>Concentration risk, Chapter 10's word for a third of US medical claims flowing through one
 company, has a computing version, and it demonstrated itself recently. In October 2025 a failure in
@@ -467,7 +451,8 @@ spreading across regions or across providers, are real and expensive, which make
 has been all course: not a technical setting but a business decision about how much insurance to
 buy, made before the morning it is needed.</p></div>
 
-<h2 id="s6"><span class="num">06</span>The bill the planet gets</h2>
+<h3>The bill the planet gets</h3>
+
 
 <p>Chapter 9 ended with a promissory note: when the For You page or a chatbot answer feels free, who
 is paying, and in what currency? This section pays it, with the International Energy Agency's
@@ -492,7 +477,202 @@ argument that <em>at scale, computing is industry</em>, with industry's bills, a
 who plan, site, buy, and account for it, which is to say people with business degrees, decide how
 those bills get paid.</p>
 
-<h2 id="s7"><span class="num">07</span>What business people do with the cloud</h2>
+<h2 id="cases"><span class="num">03</span>Three answers to where the computers are</h2>
+<p>Before the case, three short ones. Each is a different answer to the same question, which is the
+question underneath this whole chapter: where are the computers, and whose problem is that? The first
+answer was that the customer no longer needs to know. The second was that everyone finds out at once.
+The third was that they are in a building, and buildings burn.</p>
+
+<h3>Mini-case 1 &middot; 1999: the software you did not have to install</h3>
+
+<p>In 1999 business software arrived in a box, or on a truck. A company bought it, installed it on its
+own servers, paid consultants to make it work, and paid again for every upgrade. Chapter 7 is a chapter
+about what that cost.</p>
+
+<p>Salesforce started that year with a different proposal: the customer-management software would run on
+Salesforce's computers, customers would reach it through a web browser, and they would pay a
+subscription. No servers to buy, no installation, no upgrade projects. The company's marketing showed
+the word "software" with a line through it, and the industry it was entering thought this was
+ridiculous. Businesses would never put their customer records on somebody else's machines.</p>
+
+<p>They did, and the model has a name now, software as a service, that Chapter 12 already gave you. The
+point of putting it here is the date. The decision to rent rather than own was being made, and winning,
+seven years before Amazon rented its first virtual machine to anybody. The cloud is usually told as a
+hardware story. It began as a decision about who should carry the burden of running software, and the
+answer was: not the customer.</p>
+
+<p><strong>The answer it gave: the customer stops needing to know where the computers are. The
+component: software.</strong> Notice what did not move. The customer still owned the data and still
+owned every decision about it, which is the point section 01 makes about what renting does and does
+not transfer.</p>
+
+<div class="mcq"><b>Check yourself</b>Name something a company gives up when its software runs on
+somebody else's computers, and something it gains. Then say which of the five components moved, and
+which stayed exactly where it was.</div>
+
+<h3>Mini-case 2 &middot; 2017: the mistyped command that took down half the web</h3>
+
+<p>On the morning of 28 February 2017, an engineer at Amazon Web Services was investigating a billing
+problem in the storage service that a large share of the internet uses to hold its images, files and
+data. Following an established procedure, the engineer ran a command to take a small number of servers
+offline. One parameter was typed incorrectly. The system accepted it and removed far more servers than
+intended, including ones that held the index of where everything was stored.</p>
+
+<p>For about four hours, a substantial portion of the web stopped working: news sites lost their
+images, apps could not load, services that had never mentioned Amazon to their customers went dark.
+The detail people still tell is that Amazon's own status dashboard, the page meant to tell customers
+what was wrong, could not update, because it stored its icons on the service that had failed. The
+company used a social media account instead. Restarting the affected subsystems took longer than
+anyone expected, because they had not been fully restarted in years and had grown enormously in the
+meantime.</p>
+
+<p>Amazon changed the tool so that it could no longer remove capacity that fast, audited similar tools,
+and moved its dashboard to run across several regions. All of that was sensible. None of it changes
+what the morning proved, which is that concentration is a property of the whole internet and not just
+of one company's architecture.</p>
+
+<p><strong>The answer it gave: everyone finds out at once. The component: people.</strong> One person,
+one typo, one region, and a slice of the world's commerce discovered it had a landlord. Section 01's
+point that renting transfers none of the responsibility for your own continuity arrived that day as a
+bill.</p>
+
+<div class="mcq"><b>Check yourself</b>The status page that was supposed to report the outage was itself
+taken down by the outage. Name the general principle that failure illustrates, then find one system you
+depend on whose backup lives in the same place as the thing it backs up.</div>
+
+<h3>Mini-case 3 &middot; 2021: the cloud that caught fire</h3>
+
+<p>In the early hours of 10 March 2021, a fire started in a data centre in Strasbourg belonging to
+OVHcloud, one of Europe's largest hosting providers. One building was destroyed and a neighbouring one
+damaged. The company shut down the whole site. Millions of websites went offline, including government
+services, news outlets and a large number of small businesses that had never thought about where their
+website physically was.</p>
+
+<p>Most came back within days. Some did not come back at all. A number of customers had chosen the
+cheapest hosting option, which did not include backups, or had their backups in the same building on
+the assumption that a building is a safe place. Their data was gone. The company's chief executive said
+publicly that the fire was a lesson about backups, and customers who had assumed the cloud <em>was</em>
+the backup learned the difference the expensive way.</p>
+
+<p>The chapter has been calling the cloud other people's data centres. This is what that sentence
+means when the metaphor is stripped off. It is a warehouse full of machines, with power, cooling, and
+a fire suppression system that on one night in 2021 was not enough.</p>
+
+<p><strong>The answer it gave: the computers are in a building, and buildings burn. The component:
+hardware.</strong> Renting the hardware from a professional does not exempt you from the physical
+world. It means you have outsourced your exposure to it, along with your ability to see it.</p>
+
+<div class="mcq"><b>Check yourself</b>Cascadia's data will live somewhere physical whichever option the
+co-op chooses. Name three questions about that building you would want answered before signing, and say
+which of them the cheapest provider would rather you did not ask.</div>
+
+<h3>What the three have in common</h3>
+
+<p>A subscription, a typo and a fire. In none of the three did the technology fail in a way that was
+hard to understand once it had happened. What each one changed was what people understood they were
+buying.</p>
+
+<p>In 1999 they were buying freedom from running software. By 2017 they discovered they had also bought
+a shared exposure to somebody else's mistakes. By 2021 they found out that the building the metaphor
+concealed could burn down with their business inside it. The cloud did not get worse across those
+years. It got clearer, and every one of those clarifications was a bill.</p>
+
+<p>Read the case with that in mind, because Netflix is a company that understood all three early, and
+made a decision that still surprises people: it rented nearly everything, including from a competitor,
+and built the one piece the fire and the typo could not be allowed to touch.</p>
+<h2 id="netflix"><span class="num">04</span>Netflix: seven years to zero data centres</h2>
+
+<p>By its own account, Netflix's road to the cloud began with a failure: in August 2008 a major
+database corruption meant that for three days the company could not ship DVDs to its members. The
+diagnosis went deeper than the incident. Netflix concluded it had to move away from vertically
+scaled single points of failure, big databases in its own data center, toward horizontally scalable,
+distributed systems it did not own, and it chose Amazon Web Services as the landlord. Pause on the
+strangeness of that sentence: Amazon, whose Prime Video competes directly with Netflix, would
+henceforth run the computers underneath Netflix. The logic was Chapter 12's rule pushed to its
+limit: computing infrastructure had become a commodity Netflix could rent better than build, even
+from a rival, freeing the company to spend its effort on what differentiates it.</p>
+
+<div class="statrow">
+  <div class="stat"><b>3 days</b><span>DVDs stopped; the decision that started it</span></div>
+  <div class="stat"><b>7 yrs</b><span>to shut the last Netflix data center, 2016</span></div>
+  <div class="stat"><b>130+</b><span>countries switched on in a single day</span></div>
+  <div class="stat"><b>415 TWh</b><span>data centers' electricity in 2024, ~1.5% of the world's</span></div>
+  <div class="stat"><b>&times;2</b><span>projected by 2030, roughly Japan's annual usage</span></div>
+</div>
+
+<h3>Seven years to zero data centres</h3>
+
+
+<p>The migration took seven years, finishing in early January 2016 when Netflix shut down the last
+data-center pieces serving its streaming product. The company is candid about why it took so long:
+the easy path was to forklift existing systems into AWS unchanged, and Netflix refused it, because
+that moves your problems along with your servers. Instead it rebuilt nearly everything cloud-native,
+as distributed systems designed to expect failure. The payoff figures come from Netflix's own
+announcement: eight times the streaming members it had in 2008, overall viewing up three orders of
+magnitude, and elasticity that let engineers add thousands of virtual servers and petabytes of
+storage in minutes. The proof-of-concept moment came the same month the migration ended: on January
+6, 2016, Netflix switched on service in more than 130 additional countries at once, a launch its own
+racks could never have absorbed.</p>
+
+<p>One more habit came out of the rebuild, and it belongs in your vocabulary as culture, not
+technology. Having been burned by a Christmas Eve 2012 outage in an AWS load-balancing service,
+Netflix institutionalized the assumption that everything fails: it built tools, famously including
+one called Chaos Monkey, that deliberately break pieces of its own production systems so engineers
+are forced to design for the failure before it happens for real. Chapter 10 called the rehearsed plan
+for the bad day business continuity. Netflix automated the rehearsal.</p>
+
+
+<h3>The part Netflix built anyway</h3>
+
+
+<p>Here is the detail that turns the case from a cloud advertisement into a strategy lesson.
+Everything that happens before you press Play, sign-in, search, recommendations, billing, runs on
+AWS. The video itself does not. Netflix built and owns <strong>Open Connect</strong>, its private
+<strong>content delivery network (CDN)</strong>: purpose-built appliances loaded with the catalog
+and installed inside internet service providers around the world, so the actual stream travels a few
+network hops from a Netflix-owned box near you, not across the planet from a rented one. Open
+Connect carries the entirety of Netflix's video traffic, tens of terabits per second at peak, one of
+the highest-volume networks in existence.</p>
+
+<p>Run Chapter 12's rule over the split and it resolves perfectly. Elastic, spiky, commodity
+computing: rent it, even from a rival. The predictable, colossal, quality-defining flow of bits that
+<em>is</em> the customer experience: own it, tune it, and let it become a moat. The lesson is not
+"use the cloud" or "avoid the cloud"; it is that build-versus-rent is decided capability by
+capability, by the same differentiator test, at every scale from Cascadia's registers to a third of
+the internet's evening traffic.</p>
+
+
+<h3>The five components at Netflix</h3>
+
+
+<table class="sumtable stack-sm">
+<tr><th>Component</th><th>In the case</th><th>The lesson</th></tr>
+<tr><td data-label="Component"><strong>Hardware</strong></td><td data-label="In the case">Rented by the hour from a rival; owned where the stream lives</td><td data-label="The lesson">Hardware became a utility, and the bill became strategy</td></tr>
+<tr><td data-label="Component"><strong>Software</strong></td><td data-label="In the case">Rebuilt cloud-native; systems that assume their own failure</td><td data-label="The lesson">Moving unchanged moves your problems with you</td></tr>
+<tr><td data-label="Component"><strong>Data</strong></td><td data-label="In the case">Everything before Play on AWS; the catalog staged inside ISPs</td><td data-label="The lesson">Data has gravity: where it sits decides cost, speed, and risk</td></tr>
+<tr><td data-label="Component"><strong>Networks</strong></td><td data-label="In the case">Open Connect, tens of terabits per second of owned delivery</td><td data-label="The lesson">The network is not plumbing when it is the product</td></tr>
+<tr><td data-label="Component"><strong>People</strong></td><td data-label="In the case">Engineers who break things on purpose; FinOps; the neighbors</td><td data-label="The lesson">Every rented machine still has humans deciding, and absorbing</td></tr>
+</table>
+
+<h2 id="other"><span class="num">05</span>The cloud's neighbours, and who does this work</h2>
+
+<p>The cloud's benefits disperse globally; its burdens concentrate locally, and the people carrying
+them rarely chose to. A data-center cluster arrives with jobs and tax revenue, and also with demand
+that can strain the local grid and, in some markets, shows up in residential electricity debates. In
+dry regions, its cooling competes for water with farms and towns. Its diesel backup generators and
+constant mechanical hum are a neighbor's daily reality, not an abstraction. Communities from
+Northern Virginia to Ireland to the Southwest are now negotiating, and sometimes fighting, over
+whether and how the next campus gets built.</p>
+
+<p>You have seen this structure twice before: security costs exported to patients in Chapter 10, AI's
+costs exported to applicants and labelers in Chapter 9. Economists call it an externality all three
+times, and the governance answer is the same all three times: someone has to represent the people
+who are not in the room when the decision is made. This course keeps returning to that sentence
+because, in an economy that runs on information systems, the person in the room is increasingly
+someone with your degree.</p>
+
+<h3>What business people do with the cloud</h3>
+
 
 <p><strong>Cloud cost management, now a discipline called FinOps.</strong> Elasticity cuts both
 ways: capacity that scales up in minutes generates bills that do too, and someone must own the
@@ -512,44 +692,7 @@ corporate climate reporting, and regulators and customers are learning to read i
 measure the footprint of systems the company does not own, negotiate greener regions and contracts,
 and answer for the trend line: Chapter 8's measurement-validity problem, with a planet attached.</p>
 
-<h2 id="s8"><span class="num">08</span>The other side: the cloud's neighbors</h2>
-
-<p>The cloud's benefits disperse globally; its burdens concentrate locally, and the people carrying
-them rarely chose to. A data-center cluster arrives with jobs and tax revenue, and also with demand
-that can strain the local grid and, in some markets, shows up in residential electricity debates. In
-dry regions, its cooling competes for water with farms and towns. Its diesel backup generators and
-constant mechanical hum are a neighbor's daily reality, not an abstraction. Communities from
-Northern Virginia to Ireland to the Southwest are now negotiating, and sometimes fighting, over
-whether and how the next campus gets built.</p>
-
-<p>You have seen this structure twice before: security costs exported to patients in Chapter 10, AI's
-costs exported to applicants and labelers in Chapter 9. Economists call it an externality all three
-times, and the governance answer is the same all three times: someone has to represent the people
-who are not in the room when the decision is made. This course keeps returning to that sentence
-because, in an economy that runs on information systems, the person in the room is increasingly
-someone with your degree.</p>
-
-<h2 id="s9"><span class="num">09</span>The five components of the cloud</h2>
-
-<table class="sumtable">
-<tr><th>Component</th><th>In the case</th><th>The lesson</th></tr>
-<tr><td><strong>Hardware</strong></td><td>Rented by the hour from a rival; owned where the stream lives</td><td>Hardware became a utility, and the bill became strategy</td></tr>
-<tr><td><strong>Software</strong></td><td>Rebuilt cloud-native; systems that assume their own failure</td><td>Moving unchanged moves your problems with you</td></tr>
-<tr><td><strong>Data</strong></td><td>Everything before Play on AWS; the catalog staged inside ISPs</td><td>Data has gravity: where it sits decides cost, speed, and risk</td></tr>
-<tr><td><strong>Networks</strong></td><td>Open Connect, tens of terabits per second of owned delivery</td><td>The network is not plumbing when it is the product</td></tr>
-<tr><td><strong>People</strong></td><td>Engineers who break things on purpose; FinOps; the neighbors</td><td>Every rented machine still has humans deciding, and absorbing</td></tr>
-</table>
-
-<h2 id="s10"><span class="num">10</span>Summary and vocabulary</h2>
-
-<table class="sumtable">
-<tr><th>Idea</th><th>This chapter's version</th><th>Where you meet it next</th></tr>
-<tr><td><strong>Capex to opex</strong></td><td>Rent computing as you use it; three days of stopped DVDs bought the insight</td><td>Every startup you will ever join</td></tr>
-<tr><td><strong>Elasticity</strong></td><td>130 countries switched on in a day</td><td>The Wednesday activity's cost question</td></tr>
-<tr><td><strong>Build vs. rent, per capability</strong></td><td>AWS underneath, Open Connect on top</td><td><a href="chapter12-software.html">Ch 12's rule</a>, at its limit</td></tr>
-<tr><td><strong>Concentration risk</strong></td><td>One region's DNS fault, a slice of the internet's bad morning</td><td><a href="chapter10-changehealthcare.html">Ch 10's lesson</a>, in infrastructure</td></tr>
-<tr><td><strong>The physical bill</strong></td><td>415 TWh, doubling; water, waste, and neighbors</td><td><a href="chapter9-ai-ml.html">Ch 9's question</a>, answered</td></tr>
-</table>
+<h2 id="vocab"><span class="num">06</span>Vocabulary</h2>
 
 <dl class="vocab">
 <div><dt>Cloud computing</dt><dd>Other people's data centers, rented over the network, usually by the hour.</dd></div>
@@ -594,20 +737,35 @@ someone with your degree.</p>
   reasoning in Section 6. If the quarter worked, you will catch what needs catching.</p></div>
 </div>
 
-<h2 id="questions"><span class="num">11</span>Discussion questions</h2>
+<h2 id="discussion"><span class="num">07</span>Discussion questions</h2>
 <p>None of these get handed in. On Wednesday you run the discussion and I steer it, which means the
 class is only as good as what you walk in with. Read the chapter, pick the question you have the
 strongest opinion about, and be ready to say it first.</p>
 
 <ol class="dq">
-<li>Netflix rents its computing from a direct competitor. Run the five forces on that arrangement: what power does Amazon hold over Netflix, what limits that power, and why has the arrangement held for over a decade anyway?<span class="tag tag-open">Connect</span></li>
-<li>State the build-versus-rent rule the Open Connect split implies, in one sentence. Then apply it to a hospital deciding where its patient-records system should run, and note what changes when Chapter 10's stakes enter the equation.<span class="tag tag-hard">Apply</span></li>
-<li>Write Cascadia's one-page plan for the next us-east-1 morning: what must keep working in the stores, what can wait, and what the manual fallback is. Chapter 10 gave you the vocabulary; this asks for the artifact.<span class="tag tag-warm">Design</span></li>
-<li>Make the strongest case that moving to the cloud is the greener choice for a typical company, then the strongest case that the cloud's growth is an environmental problem no individual migration decision addresses. Both are supportable; reconcile them.<span class="tag tag-hard">Judgment</span></li>
-<li>Data centers are driving grid upgrades whose costs can reach ordinary ratepayers. Who should pay: the data-center customers, the tech companies, all ratepayers, or taxpayers? Argue your allocation and name its losers honestly.<span class="tag tag-hard">Judgment</span></li>
-<li>Egress fees make data cheap to bring and expensive to remove. Using Chapter 3, explain why providers price it this way, and propose the contract clause you would demand before a migration if you were Cascadia's negotiator.<span class="tag tag-open">Connect</span></li>
-<li>A friend says "I feel guilty streaming in HD now." Correct their model using Section 6: what is true, what is out of proportion, and where does individual behavior actually rank against siting, sourcing, and efficiency decisions?<span class="tag tag-open">Explain</span></li>
-<li>The final synthesis: trace one Spotify Wrapped play from a phone tap to the narrative on screen, naming all five components at each hop and every bill along the way, financial and physical. This is the whole course in one trace, and a fair preview of the final exam.<span class="tag tag-hard">Synthesize</span></li>
+  <li>Netflix rents nearly everything from a company that competes with it and owns the one piece that
+  carries the video. Apply Chapter 12's build, buy or subscribe rule to that split and say whether you
+  would have drawn the line in the same place. Name one capability you would move to the other side.
+  <span class="tag">Apply</span></li>
+
+  <li>On the October 2025 morning, thousands of companies discovered they had a landlord. Explain the
+  difference between concentration risk as Chapter 10 described it and as this chapter does, and say
+  what a company can realistically do about the second kind without doubling its costs.
+  <span class="tag">Analyze</span></li>
+
+  <li>Renting the hardware transfers none of the responsibility for the data, the software, or the
+  decisions. List, for Cascadia, what the co-op would still own after moving to the cloud, and say which
+  of those five components it is least prepared to own. <span class="tag">Systems</span></li>
+
+  <li>A single stream or prompt costs almost nothing, and data centres used about 1.5 percent of the
+  world's electricity in 2024 with a doubling projected. Reconcile those two facts, then say who inside
+  a company should be accountable for its computing footprint and what number they should be reporting.
+  <span class="tag">Apply</span></li>
+
+  <li>Data centres cluster where land and power are cheap, and the people who live there did not choose
+  to host a fifth of a country's electricity demand. Is it acceptable for the convenience of everyone
+  else to be paid for locally by a few? Argue one side, state the strongest objection to your position,
+  and say what would change your mind. <span class="tag tag-hard">Ethics</span></li>
 </ol>
 
 <h2><span class="num">12</span>Sources and further reading</h2>
@@ -620,6 +778,55 @@ strongest opinion about, and be ready to say it first.</p>
 </ul>
 
 <p style="margin-top:2.5rem"><a href="schedule.html">Lab 10, Information Architecture, closes the quarter &#8594;</a></p>
+
+<h2 id="lab"><span class="num">08</span>From lecture to lab</h2>
+
+<div class="callout callout-bridge"><strong>Week 10</strong>
+<p>This is the last chapter, and the lab that goes with it is the one that ties the quarter together.
+You have built Cascadia's spreadsheets, queried its database, charted its problem, audited its
+security. This week you decide where all of it should live.</p>
+<p>Take the three questions from mini-case 3 into it. Wherever the co-op's data ends up, it is in a
+building somewhere, and somebody's typo away from being unavailable. The question the lab asks is not
+"cloud or not", which Chapter 12's rule already settled for a commodity like storage. It is which
+capabilities the co-op should rent, which it should own, and what it should be able to survive.</p>
+</div>
+
+<h2 id="sources"><span class="num">09</span>Sources and further reading</h2>
+<ul class="sources">
+<li>Netflix's own engineering blog posts on the migration, including the January 2016 announcement of completing the move to AWS and the earlier account of the 2008 database corruption, for the timeline, the scale figures, and the rebuild-rather-than-forklift decision.</li>
+<li>Netflix's published material on Open Connect, for the content delivery network and its traffic share.</li>
+<li>International Energy Agency, <em>Energy and AI</em> (2025), for the 2024 data-centre electricity figures, the 2030 projection, the national shares, and the growth rates. The IEA updates these annually; use the current edition.</li>
+<li>Amazon Web Services' own post-incident summary of the S3 disruption of 28 February 2017, for mini-case 2, and its October 2025 summary of the US-East-1 event for section 02.</li>
+<li>Contemporary reporting on the OVHcloud Strasbourg fire of 10 March 2021, including the company's statements on backups, for mini-case 3.</li>
+<li>Accounts of Salesforce's founding and its early "no software" positioning, for mini-case 1. Marc Benioff's <em>Behind the Cloud</em> (2009) is the insider version and should be read as one.</li>
+<li>Reporting on data-centre electricity and water use in Ireland and Virginia, and on local siting disputes, for section 05. These figures move quickly and vary by source; check before teaching them.</li>
+</ul>
+
+<h2 id="teaching"><span class="num">10</span>Teaching notes</h2>
+<p style="font-family:var(--sans);font-size:.95rem;color:var(--muted)">Written for whoever is running the sessions. Students are welcome to read them, but nothing here is required. This is the last lecture of the quarter; the Wednesday plan ends on the callback to Week 1.</p>
+
+<div class="plan"><div class="plan-head">Monday session plan &middot; 80 minutes &middot; concepts, with the three answers as illustrations</div>
+<table>
+<tr><td class="t">0:00</td><td class="w">Open</td><td>Ask where, physically, the last thing they streamed was. Collect guesses on the board. Nobody knows, and by Wednesday everyone will.</td></tr>
+<tr><td class="t">0:06</td><td class="w">Lecture</td><td>Strip the vapour from the word: other people's data centres, rented by the hour. IaaS, PaaS, SaaS as layers of pre-assembly, then capex to opex and elasticity. Land the five-components point that the hardware component just became a utility, and that renting transfers none of the responsibility for the data or the decisions.</td></tr>
+<tr><td class="t">0:20</td><td class="w">Lecture</td><td>Concentration risk in its computing version, with the October 2025 US-East-1 morning as the fresh example. Then lock-in and egress as Chapter 3's switching costs implemented in infrastructure. Ask who in the room noticed that morning, and what they were trying to do.</td></tr>
+<tr><td class="t">0:32</td><td class="w">Lecture</td><td>The physical bill. Walk the IEA numbers from 415 terawatt-hours to the projected doubling, then localize: a fifth of Ireland, a quarter of Virginia. Then water, then who lives next door. Be honest that a single stream costs very little; the argument is about scale.</td></tr>
+<tr><td class="t">0:46</td><td class="w">Cases 1&#8211;3</td><td>Salesforce, the S3 typo, the Strasbourg fire, about two and a half minutes each. Name the answer each gave and stop. The status dashboard that could not report its own outage is the detail to use.</td></tr>
+<tr><td class="t">0:54</td><td class="w">Think-pair-share</td><td>Where does the co-op's data live? See the activity in section 06.</td></tr>
+<tr><td class="t">1:14</td><td class="w">Close</td><td>Assign section 04. Tell them Wednesday is the last case and it ends where the course began.</td></tr>
+</table></div>
+
+<div class="plan"><div class="plan-head">Wednesday session plan &middot; 80 minutes &middot; the Netflix case, and the last session of the quarter</div>
+<table>
+<tr><td class="t">0:00</td><td class="w">Open</td><td>One sentence on the board: Netflix runs on computers owned by Amazon, which sells a competing streaming service. Ask why a company would do that. Hold the answers.</td></tr>
+<tr><td class="t">0:07</td><td class="w">Walk the case</td><td>The 2008 corruption, the conclusion, and the seven-year migration. The point to land is that Netflix refused the easy path of moving its systems unchanged, because that moves your problems along with your servers. Then the proof: 130 countries in a day.</td></tr>
+<tr><td class="t">0:22</td><td class="w">The part it built</td><td>Open Connect. Everything before Play is rented; the video itself is not. Run Chapter 12's build-buy-subscribe rule over the split and let the room see it resolve. This is the whole course's build-versus-rent argument in one company.</td></tr>
+<tr><td class="t">0:34</td><td class="w">Chaos Monkey</td><td>The tool that breaks production on purpose. Connect it to Chapter 10's business continuity: Netflix automated the rehearsal. Ask what it would take for their employer to deliberately break something to find out.</td></tr>
+<tr><td class="t">0:42</td><td class="w">The other side</td><td>Section 05. Who lives next to the data centre, and what a FinOps or vendor-strategy role actually does. Make the point that the people who plan, site, buy and account for computing are business graduates, and that the bills get paid the way they decide.</td></tr>
+<tr><td class="t">0:52</td><td class="w">Think, pair, share</td><td>The five discussion questions. Silent work, then groups, then the room. Circulate for a group that argued Netflix should never have rented from a rival and call on them first.</td></tr>
+<tr><td class="t">1:10</td><td class="w">The last callback</td><td>Trace one Spotify Wrapped play through all five components: from a phone, over a network, into a pipeline, onto a rented GPU, and back. Name each bill along the way. That is Week 1's specimen, seen with everything the quarter added, and it is a fair preview of the final.</td></tr>
+<tr><td class="t">1:18</td><td class="w">Close</td><td>Back to the opening sentence. Then the course's last line: every system in this book worked. The question was always for whom, at what cost, and who decided.</td></tr>
+</table></div>
 
 </main>
 <!--NAVJS-->
