@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lab 4 · Data Visualization: Charts That Tell the Truth | MIS 320</title>
+<title>Lab 4 · Data Visualization: What Each Chart Type Claims | MIS 320</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -362,16 +362,20 @@ li{margin-bottom:.45rem}
 <main id="top">
 <header class="chaphead">
   <p class="eyebrow">Lab 4 · Week 4</p>
-  <h1>Data Visualization: Charts That Tell the Truth</h1>
+  <h1>Data Visualization: What Each Chart Type Claims</h1>
   <div class="meta-row"><span>Lab session · 80 min</span><span class="alt"><a href="chapter4-dominos.html" style="color:inherit;text-decoration:none">Pairs with Chapter 4 · Business Processes &#8594;</a></span></div>
 </header>
-<p class="lede">A chart is an argument, not decoration. The wrong chart makes a true finding
-  unreadable, and a carefully wrong chart makes a false finding look obvious. Today you learn to pick
-  the right one, and then you practice catching charts that lie while telling the truth.</p>
-  <p>Open <a href="cascadia-sales-2025.xlsx"><strong>cascadia-sales-2025.xlsx</strong></a>, then File
-  &#8594; Save As and name it <code class="inline">LAB4_Last_First.xlsx</code>, the same habit as the
-  last two weeks. Checkpoint answers go on the Analyst tab, one per numbered row in column B. You will
-  build everything from pivot tables, so this is also good pivot practice before Exam 1.</p>
+<p class="lede">Every chart type is a claim about the shape of your data. A bar chart claims
+  your categories are separate things worth comparing. A line claims they follow one another in order. A
+  scatter claims two numbers were measured on the same things. A pie claims the parts add up to one whole.
+  Pick the wrong one and you have not just made an ugly chart, you have asserted something about your data
+  that is not true.</p>
+  <p>Today you build all four from Cascadia's 2025 sales, and for each one you name what it claims. Open
+  <a href="cascadia-sales-2025.xlsx"><strong>cascadia-sales-2025.xlsx</strong></a>, then File &#8594; Save
+  As and name it <code class="inline">LAB4_Last_First.xlsx</code>, the same habit as the last two weeks.
+  The data is on the <strong>Sales2025</strong> tab; checkpoint answers go on the <strong>Analyst</strong>
+  tab, in column B on the row matching each checkpoint number. You will build everything from pivot
+  tables, so this is also good pivot practice before Exam 1.</p>
 
 <div id="steps">
 
@@ -384,95 +388,76 @@ and download your certificate for Canvas. Your progress saves automatically in t
 <div class="progress" id="prog">Checkpoint progress: 0 / 9</div>
 </div>
 
-<h2><span class="num">Part 1</span>The question decides the chart</h2>
+<h2><span class="num">Part 1</span>Four chart types, four claims</h2>
 
-<p>Almost every chart mistake is really a question mistake: someone picked a shape before deciding what
-they were asking. Learn the mapping.</p>
+<p>Before you build anything, learn what each of the four says. This is the whole lab in one page: the
+chart type is not a style choice, it is a statement about how your data is structured. Read these now
+and you will spend the rest of the lab confirming them with your own hands.</p>
 
-<h3>Bar chart: comparing across categories</h3>
-<p>One number measured across separate named things. Revenue by store. Units by product. The bars sit
-apart because the categories are unrelated, and length is what your eye compares, which is why bars work.
-Humans read length accurately.</p>
-<p><strong>Sort by value</strong> unless the categories have a natural order, and <strong>start the axis
-at zero</strong>. Both rules come back to bite you in Part 3.</p>
+<h3>The bar chart claims: these are separate categories, and size is the point</h3>
+<p>A bar chart encodes one number as the length of a bar. Your eye compares lengths well, which is why
+bars are the safest default for comparing a measure across categories: stores, products, regions,
+suppliers.</p>
+<p>Two things follow from "length is the number." First, the axis has to start at zero, because a bar
+starting at $80,000 is drawing a difference while your eye reads a size. Second, the order of the
+categories carries no meaning, so you are free to sort by value, and you almost always should. Sorting
+is not decoration; an unsorted bar chart makes the reader do the ranking in their head.</p>
 
-<h3>Line chart: change over time</h3>
-<p>The horizontal axis is time and the points are steps in a sequence. Revenue by month. Enrollments by
-day. The connecting line is doing real work: it tells the reader these values belong to one continuous
-story, which is exactly why you must never use a line for categories.</p>
+<h3>The line chart claims: these points follow one another in order</h3>
+<p>A line connects one point to the next, and that connection is an assertion: the space between the
+points is real, and moving along the axis means moving through something. Time is the honest case.
+January really is followed by February, and the slope between them means a rate of change.</p>
+<p>The moment your horizontal axis holds things with no natural order, the line starts inventing. Put
+eight stores on a line chart and it will slope somewhere, and the slope means nothing, because the
+stores could have been typed in any order. Here is the test: if reordering the axis changes the shape,
+the shape was never a finding.</p>
 
-<h3>Scatter plot: the relationship between two numbers</h3>
-<p>Two measurements per thing, one dot each, position carrying both. Store size against store revenue.
-Scatter plots answer a question no other chart can: they show you the outlier sitting off the pattern,
-which is usually the most interesting item in the dataset.</p>
+<h3>The scatter plot claims: two numbers were measured on the same things</h3>
+<p>A scatter is the only one of the four that shows a relationship rather than a ranking. Each dot is
+one thing measured twice, once for its horizontal position and once for its vertical. You are not
+asking which is biggest. You are asking whether knowing one number tells you anything about the other.</p>
+<p>That is a different question from the other three charts, and it is the one businesses most often
+need. Does a higher price mean fewer units sold? Do bigger stores carry better margins? A bar chart
+cannot answer either, because a bar chart only knows one number per category.</p>
 
-<h3>Pie chart: parts of one whole</h3>
-<p>Only when the slices sum to a meaningful 100 percent, and only with a handful of them. Humans compare
-angles badly. If you are ranking things, use a bar chart. Most pie charts in business decks should have
-been bar charts.</p>
+<h3>The pie chart claims: these parts add up to one whole</h3>
+<p>A pie encodes each number as a share of 360 degrees, so it only makes sense when the slices are
+mutually exclusive and together they account for everything. Revenue by region works, because every
+sale happened in exactly one region and the four regions are the whole company.</p>
+<p>The famous problem with pies is that people read angles poorly, especially for slices of similar
+size. That gets worse with every slice you add. A rough working limit is five or six; past that the
+chart stops being a comparison and becomes a color legend with a circle attached. When you have more
+categories than that, a sorted bar chart says the same thing and can actually be read.</p>
 
-<div class="callout"><strong>The test before you chart anything</strong>
-<p>Say the question out loud in one sentence. "How do the stores compare?" is a bar. "What happened over
-the year?" is a line. "Does bigger mean richer?" is a scatter. If you cannot say the question in a
-sentence, you are not ready to chart yet.</p></div>
+<div class="callout"><strong>The test before you chart</strong>
+<p>Ask what your data is, not what looks good. Comparing a measure across separate categories is a bar.
+A measure moving along a real sequence is a line. Two measures on the same things is a scatter. Parts of
+one whole, and only a few of them, is a pie. If two chart types both fit, the data is probably telling
+you the question is not sharp enough yet.</p></div>
 
 <div class="cpslot" data-cp="1"></div>
 
-<h2><span class="num">Part 2</span>Build two, properly</h2>
+<h2><span class="num">Part 2</span>Build all four</h2>
+
 <div class="callout"><strong>Email 1 &middot; Monday, 9:20 AM</strong>
-<p style="font-family:var(--sans);font-size:.9rem"><strong>From:</strong> General Manager &middot;
-<strong>Subject:</strong> Two charts for the board packet<br><br>
-"The newsletter numbers landed well, so here is the next ask. The board packet needs two charts from the year: revenue by store and revenue by month, clean enough that nobody squints. One more thing while you are in there: a vendor sent me a deck last week full of charts that felt off, and I could not say why. I would like my analyst to be able to tell me when that is happening."</p></div>
+<p><em>From: General Manager &middot; Subject: Four charts for the board packet</em></p>
+<p>"The newsletter numbers landed well, so here is the next ask. The board packet needs four charts from
+the year. I want to see the stores compared, the year over time, whether our cheap products are really
+the ones moving, and how the regions split the revenue. Four different questions, so I assume four
+different kinds of chart. Build them clean enough that nobody squints."</p></div>
 
-<p><strong>The first chart we build together, the second is yours.</strong> Same rhythm as Labs 2
-and 3: follow the steps exactly, then repeat the moves alone. Her last sentence is Parts 3 and 4 of
-this lab.</p>
+<p>Her four requests are, in order, a comparison, a sequence, a relationship, and a set of parts. That is
+one of each chart type from Part 1, which is not a coincidence. The first chart we build together; the
+other three are yours.</p>
 
-<h3>Follow along: revenue by store, as a sorted bar</h3>
-<ol>
+<h3>Follow along: the comparison, as a sorted bar</h3>
+
 <div class="sh" id="step1"><span class="badge">Step 1</span><span class="ttl">Build the pivot</span></div>
-<p>Click any single cell inside the data, then Insert &#8594; PivotTable
-(the how-to below has every click if this is your first pivot). Put <code class="inline">store</code>
-in Rows and <code class="inline">revenue</code> in Values.</p>
-
-<div class="sh" id="step2"><span class="badge">Step 2</span><span class="ttl">Insert the chart</span></div>
-<p>Click inside the pivot, then Insert &#8594; Recommended Charts &#8594;
-Bar (or Column). A chart appears wired to the pivot.</p>
-
-<div class="sh" id="step3"><span class="badge">Step 3</span><span class="ttl">Sort it, largest to smallest</span><span class="cpx">Answer goes in <b>Checkpoint 2</b></span></div>
-<p>Sort it: right-click any revenue value in the pivot &#8594; Sort &#8594;
-Largest to Smallest.</p>
-
-<div class="cpslot" data-cp="2"></div>
-
-<div class="sh" id="step4"><span class="badge">Step 4</span><span class="ttl">Make the numbers readable</span><span class="cpx">Answer goes in <b>Checkpoint 3</b></span></div>
-<p>The pivot is showing raw values like
-148471.75. Right-click any revenue value in the pivot &#8594; Number Format &#8594; Number, set Decimal
-places to <code class="inline">0</code>, and tick Use 1000 Separator. Every value in the field reformats
-at once, because you formatted the field and not one cell. Note what did not happen: the underlying
-numbers did not change. Formatting controls what a reader sees, which is the whole subject of this lab.</p>
-
-<div class="cpslot" data-cp="3"></div>
-
-<div class="sh" id="step5"><span class="badge">Step 5</span><span class="ttl">Zero the axis, then write a real title</span></div>
-<p>Check the axis starts at zero (it will by default; Part 3 shows you why
-that matters), then click the title and replace it with a sentence that states the finding, not the
-topic: "Seattle Flagship leads; the gap to last place is wide," not "Revenue by Store."</p>
-
-</ol>
-
-<div class="cpslot" data-cp="4"></div>
-
-<h3>Now you: revenue by month, as a line</h3>
-<p>Repeat the five steps on your own, with these changes: build a new pivot with
-<code class="inline">month</code> in Rows and <code class="inline">revenue</code> in Values, decide
-which chart type fits change over time (Part 1 tells you; your answer is Checkpoint 4), insert that
-chart from the pivot, format the revenue field the way you did in Step 4, and give it a title that
-states what the year actually did. Read the finished chart to find the co-op's highest month; that is
-Checkpoint 5. Look at the shape of the year before
-moving on, because you will need it later.</p>
-
-<div class="cpslot" data-cp="5"></div>
+<p>Click the <strong>Sales2025</strong> tab, then click any single cell inside the data. Insert &#8594;
+PivotTable, and accept the default of a new worksheet. The how-to box below has every click if this is
+your first pivot. In the field list, drag <code class="inline">store</code> into Rows and
+<code class="inline">revenue</code> into Values. You now have eight rows and one number each, which is
+exactly the shape a bar chart wants.</p>
 
 <details class="howto"><summary>How to make a pivot table</summary><div class="howto-body">
 <ol>
@@ -483,135 +468,139 @@ moving on, because you will need it later.</p>
 <li>If Values shows a count instead of a sum, click it, choose <strong>Value Field Settings</strong>, and pick <strong>Sum</strong>. This catches almost everyone once.</li>
 </ol>
 <p><strong>If your pivot is empty:</strong> you probably selected a single cell outside the data before inserting. Undo and click inside the table first.</p>
-</div></details><details class="howto"><summary>How to insert and clean up a chart</summary><div class="howto-body">
-<ol>
-<li>Select the pivot table results, including the row labels.</li>
-<li><strong>Insert</strong> tab, then the chart type you want. Hover any icon to see its name before clicking.</li>
-<li>To sort a bar chart: sort the pivot table itself. Click the dropdown arrow on the Row Labels header, then <strong>More Sort Options</strong>, then sort by your value column, descending.</li>
-<li>To set the axis to zero: right-click the vertical axis, choose <strong>Format Axis</strong>, and set Minimum to 0.</li>
-<li>To retitle: click the chart title once, then type. To delete a legend you do not need, click it and press Delete.</li>
-</ol>
-<p><span class="mac">Mac</span> Chart tools live in the <strong>Chart Design</strong> and <strong>Format</strong> tabs that appear when a chart is selected.</p>
 </div></details>
 
-<div class="ailight r">
-  <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
-  <div class="lighttext"><strong>Red &middot; No AI in Labs 2 through 5</strong>
-  <p>AI use is not allowed in these four labs. That means no formula help, no error explanations, and
-  no AI checking your work. An AI tool can produce accurate responses to this lab in seconds, which is
-  exactly why it is not allowed: the AI's work never becomes your own.</p>
-  <p>These four labs build your Excel skills, which are critical in business settings. So, even though
-  it is tedious, this means typing every formula yourself. The goal is to be able to write a formula
-  like =SUM without thinking. If you get stuck, that is what the walkthrough steps, the hints, and your
-  lab professor are for.</p>
-  <p>AI comes back in Lab 6, where you will use it as a coach under the three lights from Lab 1.</p></div>
-</div>
-<h2><span class="num">Part 3</span>Four charts that lie</h2>
+<div class="sh" id="step2"><span class="badge">Step 2</span><span class="ttl">Insert the chart</span></div>
+<p>Click any cell inside the pivot, then Insert &#8594; Recommended Charts &#8594; Bar (or Column). A
+chart appears, wired to the pivot: change the pivot later and the chart follows.</p>
 
-<p>Here is the part that matters. Each of the four charts below is built from Cascadia's real 2025 data.
-Every number in them is correct. Every one of them misleads. Build each one yourself so you can see how
-easy it is, then answer the checkpoint that exposes it.</p>
+<div class="sh" id="step3"><span class="badge">Step 3</span><span class="ttl">Sort it, largest to smallest</span><span class="cpx">Answer goes in <b>Checkpoint 2</b></span></div>
+<p>Right-click any revenue value inside the pivot &#8594; Sort &#8594; Largest to Smallest. Watch the
+chart reorder itself.</p>
+<p><strong>Why this is allowed:</strong> store names have no natural order, so nothing is lost by
+sorting them and a ranking is gained. You could not do this to a line chart of months without destroying
+its meaning. That difference is the Part 1 lesson arriving in your hands.</p>
 
-<h3>Follow along: diagnosing Chart A, together</h3>
-<p>Diagnosis is a routine, not a talent. Run Steps 6 through 9 on Chart A with me; then Charts B, C,
-and D are yours to run it on alone.</p>
-<ol>
-<div class="sh" id="step6"><span class="badge">Step 6</span><span class="ttl">Read the axis before the bars</span></div>
-<p>Look at the vertical axis's bottom
-number. It is $80,000, not zero. Any bar chart whose axis starts above zero is showing you
-differences, not sizes, while your eye reads sizes.</p>
+<div class="cpslot" data-cp="2"></div>
+<div class="sh" id="step4"><span class="badge">Step 4</span><span class="ttl">Make the numbers readable</span><span class="cpx">Answer goes in <b>Checkpoint 3</b></span></div>
+<p>The pivot shows raw values like 148471.75. Right-click any revenue value &#8594; Number Format
+&#8594; Number, set Decimal places to 0, and tick Use 1000 Separator.</p>
+<p>Every value in the field reformats at once, because you formatted the field and not one cell. Note
+what did not happen: the underlying numbers did not change. Formatting controls what a reader sees,
+which is half of this lab's subject.</p>
 
-<div class="sh" id="step7"><span class="badge">Step 7</span><span class="ttl">Get the real numbers</span></div>
-<p>Ignore the picture. From your own store pivot
-(you built it in Part 2), read Bellevue's revenue and Bellingham's revenue as digits.</p>
+<div class="cpslot" data-cp="3"></div>
+<div class="sh" id="step5"><span class="badge">Step 5</span><span class="ttl">Zero the axis, then write a real title</span></div>
+<p>Click the vertical axis, and check that it starts at zero. In a bar chart it will by default, and it
+has to stay there, because bar length is the number. Then click the chart title and replace it with a
+sentence that states the finding rather than the topic: "Seattle Flagship leads; the gap to last place is
+wide," not "Revenue by Store."</p>
 
-<div class="sh" id="step8"><span class="badge">Step 8</span><span class="ttl">Compute the honest gap</span><span class="cpx">Answer goes in <b>Checkpoint 6</b></span></div>
-<p>In any cell:
-<code class="inline">=(Bellevue - Bellingham)/Bellingham*100</code>, using the two numbers from Step 7. That percentage is the truth.</p>
+<h3>Now you: the sequence, as a line</h3>
 
-<div class="sh" id="step9"><span class="badge">Step 9</span><span class="ttl">Name the trick</span></div>
-<p>Compare your Step 8 number to what the picture implied
-(Bellevue's bar looks roughly six times taller). The gap between those two is entirely manufactured
-by the axis. Say the mechanism in words: a truncated axis turns a small difference into a dramatic
-one. That sentence, mechanism named plainly, is what a diagnosis is.</p>
+<div class="sh" id="step6"><span class="badge">Step 6</span><span class="ttl">Revenue by month</span><span class="cpx">Answer goes in <b>Checkpoint 4 and 5</b></span></div>
+<p>Build a second pivot the same way. This time drag <code class="inline">month</code> into Rows and
+<code class="inline">revenue</code> into Values. The month column holds the month
+number, <code class="inline">1</code> for January through <code class="inline">12</code> for December,
+so the months line up in calendar order on their own. Insert &#8594; Recommended
+Charts &#8594; Line.</p>
+<p><strong>Do not sort this one by value.</strong> The whole claim of a line chart is that the horizontal
+axis is a sequence, and sorting months by revenue would put October next to January and draw a slope
+between them that means nothing. This is the one chart in the lab where the category order is not yours
+to change.</p>
+<p>Read the chart. Revenue falls sharply after the first month, and if you stopped there you would report
+a collapse. Look at the whole year before you do, and answer both checkpoints below. The second one is
+the reason the first is not a crisis: this is a seasonal business, and the strong months come back.</p>
 
-</ol>
-<p><strong>Now you: Charts B, C, and D.</strong> Same routine, three charts, checkpoints 7 through 9.
-The first step changes shape each time, since the thing to read first might be the chart type, the
-slice count, or the title, but the discipline is identical: picture last, numbers first, mechanism named.</p>
+<div class="cpslot" data-cp="4"></div>
+<div class="cpslot" data-cp="5"></div>
 
-<h3>Chart A: the truncated axis</h3>
-<p>Bar chart of Bellevue, Tacoma, and Bellingham revenue, with the vertical axis starting at $80,000
-instead of zero. Build it. Bellevue's bar towers over Bellingham's, looking several times taller.</p>
-<p>Then compute the actual gap between them. The distance between what the picture says and what the
-arithmetic says is the whole lesson, and this is the single most common way charts mislead in business,
-usually without anyone intending it.</p>
+<h3>Now you: the relationship, as a scatter</h3>
+
+<div class="sh" id="step7"><span class="badge">Step 7</span><span class="ttl">Price against units sold</span><span class="cpx">Answer goes in <b>Checkpoint 6 and 7</b></span></div>
+<p>This one needs a pivot with two numbers per row, which is new. Build a third pivot with
+<code class="inline">product</code> in Rows. Drag <code class="inline">quantity</code> into Values, then
+drag <code class="inline">unit_price</code> into Values as well, so the pivot has two value columns.</p>
+<p>The second column will say "Sum of unit_price," which is meaningless, since adding up prices tells you
+nothing. Click it &#8594; Value Field Settings &#8594; <strong>Average</strong>. Now each row is one
+product, with the total units it sold and its average price. That is thirty-five things measured twice,
+which is exactly what a scatter needs.</p>
+<p>Select the two number columns, then Insert &#8594; Scatter (the first option, markers only, no lines
+connecting them; a scatter has no sequence to connect). Put quantity on the horizontal axis and average
+price on the vertical.</p>
+<p><strong>What you are looking at:</strong> the cloud slopes down to the right. Cheap products sell in
+volume and expensive ones do not, which every retailer believes and this chart lets you check. No bar
+chart could have shown you this, because a bar chart holds one number per category and a relationship
+needs two.</p>
 
 <div class="cpslot" data-cp="6"></div>
-
-<h3>Chart B: the line that invents a trend</h3>
-<p>Put the eight stores on a line chart, left to right, revenue on the vertical. The line slopes
-downward and looks like decline.</p>
-<p>Nothing is declining. A line says these points are steps in a sequence, and stores are not a sequence.
-The proof: reorder the stores alphabetically and the "trend" changes shape entirely. Any pattern that
-depends on the order you happened to type things in was never a pattern.</p>
-
 <div class="cpslot" data-cp="7"></div>
 
-<h3>Chart C: the unreadable pie</h3>
-<p>Pie chart of revenue by individual product. Build it and try to answer a simple question from it, such
-as which product is fourth largest. You cannot, and neither can anyone in your audience.</p>
-<p>The chart is accurate and useless, which is its own category of failure. A chart that cannot be read
-is not a neutral choice; it consumes attention and returns nothing.</p>
+<h3>Now you: the parts, as a pie</h3>
+
+<div class="sh" id="step8"><span class="badge">Step 8</span><span class="ttl">Revenue share by region</span><span class="cpx">Answer goes in <b>Checkpoint 8</b></span></div>
+<p>Build a fourth pivot with <code class="inline">region</code> in Rows and
+<code class="inline">revenue</code> in Values. Insert &#8594; Pie.</p>
+<p>Four regions, every sale in exactly one of them, and together they are the whole company. That is the
+pie chart's claim satisfied, and it is why this is the only pie in the lab that should exist.</p>
+<p>To read a share rather than a dollar amount, right-click the pivot's revenue field &#8594; Show Values
+As &#8594; % of Grand Total. The pie does not change shape, because it was always showing shares. What
+changes is that you can now name the number instead of estimating the angle, which tells you something
+about how much work the picture was doing on its own.</p>
 
 <div class="cpslot" data-cp="8"></div>
 
-<h3>Chart D: the honest chart with the dishonest title</h3>
-<p>A clean line chart of monthly revenue, correctly built, titled <em>"Revenue Collapsing After
-January."</em> Revenue really does fall about 25 percent from January to February. The chart is accurate,
-the number is accurate, and the conclusion is false.</p>
-<p>Look at the full year and you will see why. This is the most dangerous of the four, because there is
-nothing to catch by inspecting the chart itself. The lie lives in the framing, and the only defence is
-knowing enough about the business to notice that a seasonal dip has been renamed a collapse.</p>
+<h2><span class="num">Part 3</span>When the chart type is wrong</h2>
+
+<p>You have now built one honest example of each type. The fastest way to fix the claims in your memory
+is to break them. Each of these takes about a minute, and each one fails for a different reason.</p>
+
+<h3>A line chart of stores</h3>
+<p>Go back to your first pivot, the one with stores in Rows, and change the chart type to Line. The line
+slopes downward and looks like decline. Nothing is declining; you are looking at eight separate places on
+one day of the year, drawn as though each one led to the next.</p>
+<p>Now sort the pivot alphabetically instead of by revenue and watch the shape change completely. Same
+numbers, same chart type, different story, which is the proof that the story was never in the data. A
+pattern that depends on the order you happened to type things in was not a pattern.</p>
+
+<h3>A pie chart of products</h3>
+<p>Build a pie from <code class="inline">product</code> in Rows and <code class="inline">revenue</code> in
+Values, then try to answer a simple question from it, such as which product is fourth largest. You cannot,
+and neither can anyone in your audience.</p>
+<p>The chart is accurate and useless, which is its own category of failure. A chart that cannot be read is
+not a neutral choice, because it consumes the reader's attention and returns nothing.</p>
 
 <div class="cpslot" data-cp="9"></div>
 
+<h3>A bar chart with a lifted floor</h3>
+<p>This last one is not a wrong chart type; it is the right type with its central rule broken, and it is
+the most common way business charts mislead. Build a bar chart of just three stores, Bellevue, Tacoma and
+Bellingham. Then click the vertical axis &#8594; Format Axis and set the Minimum to
+<code class="inline">80000</code>.</p>
+<p>Bellevue's bar now towers over Bellingham's, more than four times the height. Compute the real gap in
+any empty cell with <code class="inline">=(Bellevue-Bellingham)/Bellingham*100</code>, using the numbers
+from your pivot. It is about eight percent. The difference between what the picture said and what the
+arithmetic says was manufactured entirely by that one setting.</p>
+<p>Set the minimum back to zero. Then remember what the bar chart claims, from Part 1: bar length is the
+number. Lift the floor and the length stops being the number, and the chart is no longer telling you what
+it appears to.</p>
+
 <div class="callout callout-caution"><strong>Where this connects to Monday</strong>
-<p>Healthcare.gov's leadership was not lied to. They received status reports that were accurate about
-what they measured: contract deliverables completed, milestones marked green. Nothing in those reports
-was false. What none of them said was whether the assembled system could serve the number of people who
-would arrive on October 1st. Accurate information, wrong question, catastrophic outcome. Every chart in
-this part of the lab is a small version of that.</p></div>
+<p>Chapter 4 is about business processes, and about how a process can only manage what it records. A chart
+is the last step of that pipeline: the point where recorded data becomes a decision somebody makes. Every
+one of the failures above kept the data intact and broke it at the final step. Somebody would still have
+acted on it.</p></div>
 
 <h2><span class="num">Part 4</span>Fix one</h2>
-<p>Pick whichever of the four you find most misleading and rebuild it honestly: right chart type, axis
-from zero, readable number of items, and a title that states what the data actually supports. Put the
-before and after side by side on one sheet.</p>
-<details class="howto"><summary>How to actually fix a chart (the clicks)</summary><div class="howto-body">
-<ol>
-<li><strong>Fix a truncated axis:</strong> right-click the vertical axis &#8594; Format Axis &#8594;
-under Bounds, set Minimum to 0. <span class="mac">Mac</span> same right-click path.</li>
-<li><strong>Fix a wrong chart type:</strong> click the chart &#8594; Chart Design tab &#8594; Change
-Chart Type &#8594; pick the shape Part 1 says the question needs.</li>
-<li><strong>Fix an unreadable pie:</strong> change it to a sorted bar (previous step), or group the
-small products into an "All others" row in the pivot first.</li>
-<li><strong>Fix a spun title:</strong> click the title once, select the text, and type a sentence the
-whole chart supports, not just one segment of it.</li>
-</ol>
-</div></details>
-<p>Then write one sentence naming who would benefit from the misleading version. Sometimes the answer is
-nobody and it was carelessness. Often it is not, and being able to say so plainly is part of the job you
-are training for.</p>
-<div class="stuck"><strong>When you get stuck</strong>
-<p>Before raising your hand, try these in order. Most problems in this lab are one of them.</p>
-<ol>
-<li>Re-read the checkpoint question. Is it asking for a count, a total, or an average? Those are three different numbers.</li>
-<li>Check whether your number is plausible. If total revenue comes out as 12 or as 40 million, something is off by a lot and you can usually see where.</li>
-<li>Expand the grey "How to" box for that step. It has the exact clicks.</li>
-<li>Check the formula bar of the cell you think is wrong. Does it reference the range you meant?</li>
-<li>Use the hint button on the checkpoint. It is not a penalty, it is part of the lab.</li>
-<li>Ask a neighbour. Then raise your hand.</li>
-</ol></div></div>
+
+<p>Pick whichever of the three broken charts in Part 3 most surprised you. Rebuild it as the chart it
+should have been, and give it a title that states the finding in a sentence.</p>
+<p>Then write two sentences in a text box beside it: what the broken version claimed about the data, and
+why that claim was false. Naming the mechanism is the skill. "It looked wrong" is not a diagnosis;
+"a line chart asserts an order that stores do not have" is.</p>
+<p>Both charts stay in your workbook, side by side, and both get submitted.</p>
+
+</div>
 
 <h2 id="finish"><span class="num">Finish</span>Reflection &amp; certificate</h2>
 
@@ -652,7 +641,7 @@ b.setAttribute('aria-expanded',o?'true':'false');});})();
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-const LAB="LAB4", QS=[{"q": "Checkpoint 1 \u00b7 You want to compare total revenue across the eight stores. Which chart type is right: bar, line, scatter, or pie?", "t": "txt", "a": "YmFy", "h": "Eight stores are separate named things, not points in a sequence. Which chart type is built for comparing one number across separate categories?"}, {"q": "Checkpoint 2 \u00b7 Build it. Pivot revenue by store, insert a bar chart, sort highest to lowest. Which store is SECOND?", "t": "txt", "a": "UG9ydGxhbmQgUGVhcmw=", "h": "Sorting matters. An unsorted bar chart makes the reader do the ranking you should have done for them."}, {"q": "Checkpoint 3 \u00b7 Format it. A raw pivot shows revenue as 148471.75, which nobody reads comfortably. Right-click any revenue value in the pivot, choose Number Format, pick Number, set Decimal places to 0 and tick Use 1000 Separator. Every value reformats at once. What is Seattle Flagship's revenue now, as displayed?", "t": "num", "a": "MTQ4NDcy", "tol": 1, "h": "Number Format changes how a value is displayed, not the value itself. The underlying number still carries its cents; the cell just stops showing them. If you formatted the whole column and not one cell, you did it right."}, {"q": "Checkpoint 4 \u00b7 Different question: how did revenue move across the twelve months of 2025? Which chart type?", "t": "txt", "a": "bGluZQ==", "h": "Twelve months are ordered steps in one sequence, not separate categories. Which chart type connects its points to say so?"}, {"q": "Checkpoint 5 \u00b7 Build it. Which month was the co-op's highest?", "t": "txt", "a": "SmFudWFyeQ==", "h": "Group by month and chart it. Answer with the month name."}, {"q": "Checkpoint 6 \u00b7 Now the diagnosis work. Chart A (above) shows Bellevue, Tacoma, and Bellingham with a vertical axis starting at $80,000, and Bellevue's bar looks roughly six times taller than Bellingham's. What is the ACTUAL percentage gap between Bellevue and Bellingham? One decimal.", "t": "num", "a": "OC4x", "tol": 0.3, "h": "Compute it: (Bellevue minus Bellingham) divided by Bellingham, times 100. Then look at Chart A again. That is what a truncated axis does to a reader who trusts you."}, {"q": "Checkpoint 7 \u00b7 Chart B plots the eight stores on a LINE chart, left to right, and the line slopes downward. What is wrong with it? Answer with one word: the chart type implies something false about the relationship between the items on the horizontal axis. That false implication is a ______ (one word, starts with T).", "t": "txt", "a": "dHJlbmQ=", "h": "Connecting points claims they are steps in a sequence. Stores are not. Try reordering them alphabetically: whatever the slope appeared to show reverses, which proves it was never real. Name the thing the chart falsely implies."}, {"q": "Checkpoint 8 \u00b7 Chart C is a pie chart of revenue by individual product. How many slices does it have? (Count the products in the data.)", "t": "num", "a": "MzU=", "tol": 0, "h": "Humans compare angles badly, and a pie stops being readable at about five slices. This one is not a chart, it is a colour wheel."}, {"q": "Checkpoint 9 \u00b7 Chart D is an accurate line chart of monthly revenue titled 'Revenue Collapsing After January.' Revenue does fall 24.6% from January to February, so the number in the title is real. Now look at the whole year: which month is the co-op's SECOND-highest?", "t": "txt", "a": "T2N0b2Jlcg==", "h": "Sort the twelve months by revenue, highest first, and read off the second-place month. Note that nothing in this chart is factually wrong, which is what makes it the most dangerous of the four."}];
+const LAB="LAB4", QS=[{"q": "Part 1 \u00b7 The GM wants to compare total revenue across the eight stores. Which of the four chart types is right? (one word)", "t": "txt", "a": "YmFy", "h": "Separate categories with no natural order, one number each, and size is the point."}, {"q": "Step 3 \u00b7 In your sorted bar chart of revenue by store, which store is SECOND?", "t": "txt", "a": "UG9ydGxhbmQgUGVhcmw=", "h": "Sort the pivot largest to smallest and read the second row. It is not Seattle Flagship."}, {"q": "Step 4 \u00b7 After formatting the revenue field to 0 decimals with a thousands separator, what does the top store's revenue read?", "t": "num", "a": "MTQ4NDcy", "tol": 1, "h": "Seattle Flagship. The raw value is 148471.75, so the displayed number is that rounded to a whole dollar."}, {"q": "Step 6 \u00b7 In your line chart of revenue by month, which month number is highest?", "t": "num", "a": "MQ==", "tol": 0, "h": "Month 1. Holiday gear and the New Year rush both land in January."}, {"q": "Step 6 \u00b7 Now the reason the drop after that is not a collapse: which month number is SECOND highest?", "t": "num", "a": "MTA=", "tol": 0, "h": "Late in the year, when winter gear season begins. Revenue recovers, so the year is seasonal rather than declining."}, {"q": "Step 7 \u00b7 In your scatter, one product sits furthest to the right, meaning it sold the most units. Name it.", "t": "txt", "a": "Q2FzY2FkZSBDYW1wIFN0b3Zl", "h": "Sort your product pivot by the quantity column, largest to smallest, and read the top row."}, {"q": "Step 7 \u00b7 What is that product's AVERAGE unit price, to the nearest dollar?", "t": "num", "a": "ODM=", "tol": 1, "h": "Read the second value column of the same pivot row. If it looks far too large you left the field on Sum instead of Average."}, {"q": "Step 8 \u00b7 In your pie of revenue by region, what percent of total revenue does the LARGEST region hold? (one decimal place)", "t": "num", "a": "NDQuOA==", "tol": 0.2, "h": "Puget Sound. Use Show Values As \u2192 % of Grand Total rather than estimating the angle."}, {"q": "Part 3 \u00b7 You built a pie of revenue by product. How many slices does it have?", "t": "num", "a": "MzU=", "tol": 0, "h": "One slice per distinct product. Count the rows in that pivot. The working limit for a readable pie is about five or six."}];
 const SKEY='mis320_'+LAB;
 let solved=new Set();
 function load(){try{const raw=localStorage.getItem(SKEY);if(!raw)return null;const s=JSON.parse(raw);
@@ -697,7 +686,7 @@ function chk(i){
  if(!v.trim()){m.textContent='Enter an answer first.';m.style.color='#7d6608';return}
  const ans=atob(QS[i].a);let ok=false;
  if(QS[i].t==='num'){const g=parseFloat(norm(v)),a=parseFloat(ans);ok=!isNaN(g)&&Math.abs(g-a)<=QS[i].tol}
- else ok=norm(v)===norm(ans);
+ else ok=norm(v)===norm(ans)||(QS[i].alt||[]).some(x=>norm(v)===norm(x));
  if(ok){solved.add(i);save();render()}
  else{m.textContent='Not yet: check the hint, or re-read the step above.';m.style.color='#a03434'}
 }
