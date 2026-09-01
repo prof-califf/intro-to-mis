@@ -32,7 +32,7 @@ body{margin:0;background:var(--white);color:var(--text-dark);
 
 /* ---------- shell ---------- */
 .shell{max-width:var(--wrap);margin:0 auto;display:grid;grid-template-columns:15rem minmax(0,1fr);gap:3.5rem;padding:0 1.5rem 6rem}
-main{max-width:var(--col);padding-top:2.5rem}
+main{margin-left:auto;margin-right:auto;max-width:var(--col);padding-top:2.5rem}
 
 /* ---------- sidebar ---------- */
 .rail{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:2.5rem 0 3rem;border-right:1px solid var(--border)}
@@ -135,7 +135,7 @@ li{margin-bottom:.45rem}
 
 /* ---------- responsive ---------- */
 @media (max-width:860px){
-  .shell{grid-template-columns:1fr;gap:0;padding:0 1.15rem 4rem}
+  .shell{grid-template-columns:minmax(0,1fr);gap:0;padding:0 1.15rem 4rem}
   .rail{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);padding:1.5rem 0 1rem;margin-bottom:.5rem}
   .rail nav{display:none}
   .rail nav.open{display:block;margin-top:.8rem}
@@ -275,6 +275,28 @@ li{margin-bottom:.45rem}
 .concepts{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;margin:1.1rem 0 0}
 .concepts .clabel{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-right:.3rem}
 .concepts span:not(.clabel){font-family:var(--display);font-size:12.5px;font-weight:500;letter-spacing:.04em;border:1px solid var(--border);background:var(--off-white);padding:.22rem .6rem;color:var(--text-dark)}
+
+/* mobile: wide tables scroll, long TOC anchors wrap */
+@media (max-width:860px){.toc a{white-space:normal}main table{display:block;overflow-x:auto;max-width:100%}}
+
+/* narrow screens: wide prose comparison tables stack into labelled cards.
+   Narrow data tables keep their grid so rows stay comparable. */
+@media (max-width:640px){
+  main table.stack-sm{display:block;width:100%;overflow-x:visible;border-collapse:separate;border-spacing:0}
+  table.stack-sm tr:first-child{display:none}
+  table.stack-sm tr{display:block;width:100%;border:1px solid var(--border);margin:0 0 .85rem;background:#fff}
+  table.stack-sm td{display:block;width:100%;border:none;border-bottom:1px solid var(--border);padding:.6rem .85rem;background:#fff!important}
+  table.stack-sm td:last-child{border-bottom:none}
+  table.stack-sm td::before{content:attr(data-label);display:block;font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--text-light);margin-bottom:.28rem}
+  table.stack-sm td:first-child{background:var(--black)!important;color:#fff;font-family:var(--display);letter-spacing:.06em;white-space:normal}
+  table.stack-sm td:first-child::before{content:none}
+  table.stack-sm td:first-child strong{color:#fff}
+}
+
+/* check-yourself boxes and subheads, matching ch2/ch3 */
+.mcq{border-left:3px solid var(--magenta);background:var(--off-white);padding:.7rem 1rem;margin:1rem 0 1.6rem;font-family:var(--sans);font-size:.95rem}
+.mcq b{font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--magenta-dark);display:block;margin-bottom:.2rem}
+main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transform:none;letter-spacing:0;color:var(--off-black);margin:2.1rem 0 .55rem;padding-left:.7rem;border-left:3px solid var(--magenta)}
 </style>
 </head>
 <body>
@@ -328,89 +350,53 @@ li{margin-bottom:.45rem}
 </nav>
 
 
-<div class="shell">
-
-<aside class="rail">
-  <p class="book">MIS 320</p>
-  <p class="course">Principles of Management Information Systems</p>
-  <button class="railtoggle" aria-expanded="false" aria-controls="chapnav">Chapter contents</button>
-  <nav id="chapnav">
-    <a href="#open">A tracker on a broken pizza</a>
-    <a href="#what">What a process is</a>
-    <a href="#map">Mapping the as-is</a>
-    <a href="#measure" class="sub">Measuring a process</a>
-    <a href="#redesign">Redesigning the product</a>
-    <a href="#transparency">Operational transparency</a>
-    <a href="#results">What it was worth</a><a href="#anyware">AnyWare and after</a>
-    <a href="#chain">The five components</a>
-    <a href="#vocab">Vocabulary</a>
-    <a href="#discussion">Discussion questions</a>
-    <a href="#lab">From lecture to lab</a>
-  </nav>
-  <a class="back" href="index.html">← All chapters</a>
-</aside>
-
-<main>
+<main class="chapwrap">
 
 <header class="chaphead">
-  <p class="eyebrow">Chapter 4</p>
-  <h1>Business Processes</h1>
-  <p class="anchor">Anchor case: <strong>Domino's Pizza, 2008–2013</strong></p>
-  <div class="meta-row">
-    <span>Week 3</span>
-    <span class="alt">Monday: concepts · Wednesday: case</span>
-    <span>Returns in Week 8 (accessibility)</span>
-  </div>
-  
-<div class="concepts"><span class="clabel">Key concepts</span><span>Business process</span><span>As-is vs. to-be</span><span>Swimlane diagrams</span><span>Bottlenecks &amp; handoffs</span><span>Cycle time</span><span>Operational transparency</span><span>Reengineering vs. improvement</span><span>Process automation &amp; AI agents</span></div>
+  <p class="eyebrow">Chapter 4 &middot; Business Processes</p>
+  <h1>Business Processes: Why Domino's Best Software Could Not Fix Its Pizza</h1>
+  <p class="anchor">In 2008 Domino's shipped a piece of software that business schools still teach and
+  every industry has since copied. Over the following year its sales fell, its stores closed, and its
+  stock collapsed. This chapter is about the thing underneath the software that nobody had looked at.</p>
+<div class="concepts"><span class="clabel">Key concepts</span><span>Business process</span><span>As-is vs. to-be</span><span>Swimlane diagrams</span><span>Bottlenecks &amp; handoffs</span><span>Cycle time</span><span>Improvement vs. reengineering</span><span>Operational transparency</span><span>Process automation &amp; AI agents</span></div>
 </header>
-<div class="statrow"><div class="stat"><b>2008</b><span>the turnaround begins</span></div><div class="stat"><b>+14.3%</b><span>same-store sales, Q1 2010</span></div><div class="stat"><b>+130%</b><span>stock, Dec 2009&ndash;Dec 2010</span></div><div class="stat"><b>#4</b><span>U.S. e-retailer by 2010</span></div><div class="stat"><b>2016+</b><span>AnyWare: order from anything</span></div></div>
 <div class="toc"><strong>Contents</strong>
-<a href="#open">A tracker on a broken pizza</a>
 <a href="#what">What a business process is</a>
-<a href="#map">Mapping the as-is</a>
-<a href="#redesign">Redesigning the product, in public</a>
-<a href="#transparency">Operational transparency</a>
-<a href="#results">What it was worth</a>
-<a href="#anyware">What they built after the process worked</a>
-<a href="#other">The other side: transparency for whom</a>
-<a href="#chain">The case on the five components</a>
+<a href="#map">Mapping, measuring, redesigning</a>
+<a href="#cases">Three short cases, one old finding</a>
+<a href="#dominos">Domino's: the tracker on a broken pizza</a>
+<a href="#other">Transparency for whom</a>
 <a href="#vocab">Vocabulary</a>
 <a href="#discussion">Discussion questions</a>
 <a href="#lab">From lecture to lab</a>
+<a href="#sources">Sources and further reading</a>
+<a href="#teaching">Teaching notes</a>
 </div>
-
 
 <p class="lede">In 2008, Domino's launched a piece of software that is now taught in business schools
 worldwide and copied by every industry from banking to healthcare. Over the following year, the company's
-sales fell, its stores closed, and its stock collapsed. The Pizza Tracker did not save Domino's. Understanding
-why is the entire point of this chapter.</p>
+sales fell, its stores closed, and its stock collapsed. The Pizza Tracker did not save Domino's.
+Understanding why is the entire point of this chapter.</p>
 
-<h2 id="open"><span class="num">01</span>A tracker on a broken pizza</h2>
+<div class="callout"><strong>How this chapter runs</strong>
+<p>Sections 01 and 02 are the concepts: what a process is, and how to map, measure and redesign one.
+Section 03 puts them to work on three short cases, each with a question you can answer from the reading.
+Section 04 is the full case, Domino's. Section 05 is who pays for the transparency, and the discussion
+questions at the end come from both.</p>
+<p class="jumprow"><a class="jump" href="#dominos">Jump to the Domino's case &#8594;</a>
+<a class="jump" href="#cases">Jump to the three short cases &#8594;</a>
+<a class="jump" href="#discussion">Jump to the discussion questions &#8594;</a></p></div>
 
-<p>The Pizza Tracker showed customers a live bar: your order has been placed, it's being prepared, it's in
-the oven, it's out for delivery. It was genuinely novel, it delighted people, and it worked exactly as
-designed. It also arrived at a company whose product customers actively disliked.</p>
+<h2 id="what"><span class="num">01</span>What a business process is</h2>
 
-<p>The verdicts were not subtle. Focus groups described the crust as cardboard, the sauce
-as ketchup, and the cheese as processed-feeling. In industry taste tests, Domino's
-pizza tied for last place with Chuck E. Cheese. A video of employees contaminating food went viral.
-The market rendered its own verdict: a stock that had traded above $30 in 2007 was
-under $7 by late 2008, while Papa John's ran "Better Ingredients. Better Pizza." directly at the quality
-gap. The operating numbers matched, U.S. same-store sales fell 4.9% system-wide
-in 2008, roughly seven times worse than the industry average, and the company closed 120 domestic
-units between 2008 and 2009 while the pizza category itself was growing.</p>
+<p>Chapter 1 defined an information system as five components working together: hardware, software, data,
+networks and people. That definition answers what a system is made of. It does not answer what a system
+is <em>for</em>, and that turns out to be the harder question, because a system is never built for its
+own sake. It is built so that some work gets done.</p>
 
-<div class="pull">
-  <p>A pizza tracker is a system for watching a process. It cannot improve the process it is watching.</p>
-</div>
-
-<p>Domino's had built excellent information technology on top of a broken business process, and the
-technology faithfully reported the brokenness in real time. This is the most important lesson in the
-chapter and one of the most important in the course: <strong>technology applied to a bad process produces a
-faster, better-documented bad process.</strong></p>
-
-<h2 id="what"><span class="num">02</span>What a business process is</h2>
+<p>The work is the process. Every organization you will ever join runs on them, most of them undocumented,
+and the reason this chapter comes before the ones on databases and analytics is that a process is what
+those systems exist to serve.</p>
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Business process</span>
 <p>A business process is a repeatable sequence of steps that turns inputs into something a customer values, crossing departments as it goes. Processes are where strategy becomes physical: Zara’s two-week loop from last chapter is a process, and so is getting one pizza from order to door. The discipline of this chapter is learning to see the process as an object you can map, measure, and redesign, rather than as “just how we do things.”</p></div>
 
@@ -434,7 +420,40 @@ get either a blank look or four different names.</p>
   this course.</p>
 </div>
 
-<h2 id="map"><span class="num">03</span>Mapping the as-is</h2>
+<h3>Where a process lives in the system</h3>
+
+<p>It is worth being precise about how a process and an information system relate, because students
+often treat them as the same thing and they are not. A process is the work. An information system is the
+arrangement of five components that carries the work and makes it visible. Run the components over any
+process and each one has a specific job:</p>
+
+<ul>
+  <li><strong>Data</strong> is the process's memory. Every step that matters leaves a record, and the
+  steps that leave no record are the ones nobody can manage.</li>
+  <li><strong>Software</strong> encodes the rules: what may happen next, what is not allowed, what
+  triggers automatically.</li>
+  <li><strong>Networks</strong> carry the work between the people and places that perform it. Every
+  handoff on a map is a network crossing, whether that network is fiber or a person walking a docket to
+  the next desk.</li>
+  <li><strong>Hardware</strong> is where the process meets the physical world: the register, the oven,
+  the scanner, the phone.</li>
+  <li><strong>People</strong> perform the steps a machine cannot, decide the cases the rules do not
+  cover, and are the only component that can notice the process itself is wrong.</li>
+</ul>
+
+<p>Two consequences follow, and they run through the rest of this chapter. The first is that
+<strong>a system can only manage what the process records</strong>. Capturing a timestamped event at each
+step, so the process becomes measurable at all, is called <strong>process instrumentation</strong>. If nobody captures the moment a
+pizza leaves the oven, no software can tell you how long it sat. Deciding what a process records is
+therefore a design decision, made by people, usually years before anyone needs the answer.</p>
+
+<p>The second is the one this chapter's case is built on. Because the five components are the machinery
+and the process is the work, <strong>you can replace every component and still have the same bad
+process</strong>. New hardware, new software, faster networks, better data, and a broken sequence of
+steps produces a broken sequence of steps performed faster and recorded more precisely. That sentence is
+the entire Domino's case in advance.</p>
+
+<h2 id="map"><span class="num">02</span>Mapping, measuring, redesigning</h2>
 
 <p>You cannot improve a process you have not written down, and the written-down version is almost never what
 managers believe is happening. Process mapping produces two artifacts:</p>
@@ -574,7 +593,153 @@ safety.</p>
   with Moneyball, where an entire industry measured the wrong thing for a century.</p>
 </div>
 
-<h2 id="redesign"><span class="num">04</span>Redesigning the product, in public</h2>
+<h2 id="cases"><span class="num">03</span>Three short cases, one old finding</h2>
+<p>Before the case, three short ones. Process work has a long history and a stubbornly consistent
+finding, which is that the fix almost never turns out to be the equipment. Each case below fixed a
+process that was genuinely broken, and in each one the fix lived somewhere different: in the design, in
+the handoffs, or in who was allowed to stop the work. Notice what none of them is. None is a story about
+buying better technology, and two of the three happened before the computer arrived in business at all.</p>
+
+<h3>Mini-case 1 &middot; 1948: the kitchen drawn on a tennis court</h3>
+
+<p>Richard and Maurice McDonald ran a successful drive-in restaurant in San Bernardino, California.
+Carhops took orders at the car, food came out on real plates with real cutlery, and the menu ran to
+dozens of items. It made money. In 1948 they closed it for three months anyway.</p>
+
+<p>What they did during those three months is the reason this case opens the chapter. They went to the
+tennis court behind the house at night and drew the kitchen on it in chalk, full size, every piece of
+equipment measured out where they thought it should stand. Then they walked their staff through it, and
+had them mime making a hamburger, over and over, while the brothers watched where people collided, waited,
+or crossed each other's path. Then they rubbed out the chalk and drew it again. One night it rained
+before they had copied the layout onto paper and washed the whole thing away, so they drew it again.</p>
+
+<p>Only after the process worked on the tennis court did they build the kitchen. The result was the
+Speedee Service System: no carhops and no plates, a menu cut to a handful of high-volume items, and a
+kitchen laid out as an assembly line where each person did one step. Hamburgers at fifteen cents.</p>
+
+<p>It did not go well at first. Sales fell after the reopening, the carhops they had let go came back to
+laugh at them, and regular customers asked when they were going back to the old way. Then families started
+arriving, and the thing they had designed on a tennis court became the way most of the world eats
+lunch.</p>
+
+<p><strong>Where the fix lived: in the design.</strong> The brothers built a <em>to-be map</em>, tested
+it with people walking through it, and revised it several times before spending a dollar on equipment.
+Almost no company does this. The usual sequence is to buy the equipment and then discover the process.
+Notice also what they were optimizing: not the product, which barely changed, but <em>cycle time</em>,
+the minutes between an order and a hamburger. And notice which component they changed. The hardware was
+a kitchen either way. What they redesigned was the sequence and the people's place in it.</p>
+
+<div class="mcq"><b>Check yourself</b>The chalk cost nothing and the rehearsal cost three months of
+revenue. Name one thing the rehearsal could reveal that a drawing on paper could not, and say why that
+thing is usually discovered only after the equipment is installed.</div>
+
+<h3>Mini-case 2 &middot; 1988: five hundred clerks and a computer that would not have helped</h3>
+
+<p>Ford's accounts payable operation in North America employed more than five hundred people. Their job
+was matching: a purchase order from purchasing, a receiving document from the loading dock, and an invoice
+from the supplier. When all three agreed, the supplier got paid. When they disagreed, which was often, a
+clerk investigated until they agreed. Under the old procedure the accounting department had to match
+fourteen separate data items before it could release a payment.</p>
+
+<p>Ford did what most companies do. It planned to install a new computer system, tighten the procedures,
+and cut the department by about twenty percent, from five hundred people to four hundred. That is a
+respectable target and the project would have been counted a success.</p>
+
+<p>Then somebody looked at Mazda, in which Ford held a stake. Mazda's entire accounts payable
+organization was five people. Even adjusting for the fact that Mazda was a much smaller company, Ford
+concluded its own department was roughly five times the size it should be. The twenty percent target had
+not come from any analysis of what the work required. It had come from the shape of the process Ford
+already had.</p>
+
+<p>So Ford redesigned the shape. Under what it called invoiceless processing, purchasing enters an order
+into a shared database and sends a copy to nobody. When the goods reach the receiving dock, the receiving
+clerk checks the database, and if the delivery matches an outstanding order, accepts it and records it.
+The system pays from that. There is no invoice to match, because there is no invoice. Headcount fell by
+about seventy-five percent.</p>
+
+<p>This is the case that produced the most quoted line in process work. Michael Hammer, writing it up in
+<em>Harvard Business Review</em> in 1990, argued that companies were using computers to speed up work
+that should not have been happening at all, and told them: don't automate, obliterate.</p>
+
+<p><strong>Where the fix lived: in the handoffs.</strong> This is <strong>business process redesign</strong>
+in its purest form. Nothing was wrong with any individual clerk or
+any individual step. What was wrong was that three departments each produced a document about the same
+delivery, and reconciling their disagreements had become a job for five hundred people. Draw it in
+swimlanes and the problem is visible immediately: three lanes, three documents, and a bottleneck where
+they meet. This is also the cleanest example in the chapter of <em>reengineering</em> against
+<em>improvement</em>. The twenty percent plan was improvement. Deleting the invoice was reengineering.</p>
+
+<div class="mcq"><b>Check yourself</b>Ford's original plan, a new system and a twenty percent cut, would
+have been reported internally as a win. Explain precisely why that is the dangerous outcome, and say what
+question the team asked that turned a twenty percent target into a seventy-five percent one.</div>
+
+<h3>Mini-case 3 &middot; Toyota: the cord that stops the line</h3>
+
+<p>On a Toyota assembly line, any worker who sees something wrong can pull a cord and stop the line.
+Not report it to a supervisor, not write it down at the end of the shift. Stop the line, on
+their own authority, while everybody waits.</p>
+
+<p>To most manufacturers for most of the twentieth century this was close to unthinkable. The line is the
+most expensive thing a factory owns and stopping it is the most costly thing that can happen, so the
+authority to stop it belongs high up, if it belongs to anyone. The reasoning at Toyota ran the other
+way. A defect that passes down the line gets built into something bigger, then something bigger than
+that, and by the time anyone notices, the cost of fixing it has multiplied and the evidence of what
+caused it is gone. Stopping now is cheap. Stopping later is expensive. Not stopping is the most
+expensive of all.</p>
+
+<p>The person who can see the defect first is the person standing in front of it, so that is where the
+authority goes.</p>
+
+<p><strong>Where the fix lived: in who was allowed to stop the work.</strong> No new equipment, no new
+software, and nothing that would appear on a process map as a step. What changed was a permission. In the
+five-component terms of section 01, this is a <em>people</em> change with no hardware, software, data or
+network change at all, and it is the kind that never shows up in a technology budget. Permissions are
+invisible on an org chart and invisible on a flowchart, which is why they are the last place anybody
+looks.</p>
+
+<div class="mcq"><b>Check yourself</b>Domino's spent 2008 and 2009 watching sales fall while shipping a
+product its own customers described as cardboard. Who inside that company had both the information to
+know and the authority to stop the line? If your answer is "nobody," say what that tells you about the
+process rather than about the people.</div>
+
+<h3>What the three have in common</h3>
+
+<p>Put them side by side and the pattern is clear. A kitchen layout, a set of matching rules, and
+a piece of rope. Not one of the three fixes was a technology purchase, and the two that could have been
+solved by buying something, Ford's and Domino's, are the two where buying something was exactly the
+plan that would have failed.</p>
+
+<p>The other thing they share is harder to see and more useful. In every case the improvement was
+invisible until somebody described the process as a process, out loud, in a form other people could
+argue with: chalk on a court, a comparison with Mazda, a rule about who may pull a cord. That
+description is what the next two sections teach you to produce, and it is what the case at the end of
+this chapter went five years without.</p>
+<h2 id="dominos"><span class="num">04</span>Domino's: the tracker on a broken pizza</h2>
+
+<p>The Pizza Tracker showed customers a live bar: your order has been placed, it's being prepared, it's in
+the oven, it's out for delivery. It was genuinely novel, it delighted people, and it worked exactly as
+designed. It also arrived at a company whose product customers actively disliked.</p>
+
+<p>The verdicts were not subtle. Focus groups described the crust as cardboard, the sauce
+as ketchup, and the cheese as processed-feeling. In industry taste tests, Domino's
+pizza tied for last place with Chuck E. Cheese. A video of employees contaminating food went viral.
+The market rendered its own verdict: a stock that had traded above $30 in 2007 was
+under $7 by late 2008, while Papa John's ran "Better Ingredients. Better Pizza." directly at the quality
+gap. The operating numbers matched, U.S. same-store sales fell 4.9% system-wide
+in 2008, roughly seven times worse than the industry average, and the company closed 120 domestic
+units between 2008 and 2009 while the pizza category itself was growing.</p>
+
+<div class="pull">
+  <p>A pizza tracker is a system for watching a process. It cannot improve the process it is watching.</p>
+</div>
+
+<p>Domino's had built excellent information technology on top of a broken business process, and the
+technology faithfully reported the brokenness in real time. This is the most important lesson in the
+chapter and one of the most important in the course: <strong>technology applied to a bad process produces a
+faster, better-documented bad process.</strong></p>
+
+<h3>Redesigning the product, in public</h3>
+
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Improvement vs. reengineering</span>
 <p>There are two ways to change a process. <strong>Incremental improvement</strong> keeps the process shape and tunes the steps: faster ovens, better scripts, one fewer handoff. <strong>Business process reengineering (BPR)</strong> throws the shape away and asks what the process would look like if you designed it today, from zero, around the outcome. Michael Hammer’s 1990 formulation was blunt: don’t automate, obliterate. Domino’s did both, in order: the 2009 recipe-and-honesty campaign reengineered how the product and its process faced the public, and the years of tracker-driven tuning since have been incremental improvement on the new shape. Most companies only ever do the second, because the first requires admitting the current shape is wrong.</p></div>
 
@@ -598,7 +763,9 @@ something worth ordering. Second, the public admission was itself a process chan
 Customer criticism, previously an externality the company absorbed, became an input the company was
 contractually committed in public to respond to.</p>
 
-<h2 id="transparency"><span class="num">05</span>Operational transparency</h2>
+
+<h3>Operational transparency</h3>
+
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Operational transparency</span>
 <p>Showing customers the work being done on their behalf, rather than hiding it behind a spinner or a counter. Research by Ryan Buell and colleagues found that people value a service more when they can see the effort inside it. The Pizza Tracker is the canonical business example, and it carries a system truth: to show a customer each stage, the company must first timestamp each stage, and once every step is timestamped, every step can be measured and fixed.</p></div>
 
@@ -621,7 +788,9 @@ Domino's later reason about its operations at all.</p>
   collecting to render itself.</p>
 </div>
 
-<h2 id="results"><span class="num">06</span>What it was worth</h2>
+
+<h3>What it was worth</h3>
+
 
 <div class="stats">
   <div class="stat"><b>+14.3%</b><span>same-store sales, Q1 2010</span></div>
@@ -641,11 +810,13 @@ product its e-commerce software was selling. The digital ordering capability had
 throughout the collapse.</p>
 
 
-<h2 id="anyware"><span class="num">07</span>What they built after the process worked</h2>
+
+<h3>What they built after the process worked</h3>
+
 
 <p>The turnaround gets the headlines, but the decade after it is the part with the transferable lesson.
 Once the product was worth ordering, Domino's spent ten years making ordering the thing it was best at,
-and the results show what happens when technology lands on a process that is finally sound.</p>
+and the results show what happens when technology is applied to a process that is finally sound.</p>
 
 <h3>AnyWare: ordering as an interface problem</h3>
 
@@ -655,9 +826,11 @@ Apple Watch. A pizza emoji sent as a tweet or a text. Amazon's voice assistant. 
 Slack. The stated goal was to let people order using whatever they already had in their hand, and the
 company now supports well over a dozen such paths.</p>
 
-<p>Look past the novelty at the architectural claim underneath. Every one of those surfaces reaches the
+<p>Look past the novelty at the architectural claim underneath, which has a name: this is
+<strong>omnichannel</strong>, many customer-facing surfaces reaching one underlying process and one
+record of the order. Every one of those surfaces reaches the
 same ordering system, which reaches the same store, which triggers the same tracked fulfillment process
-from Section 05. Adding a new ordering surface is a small piece of work rather than a new company,
+from the transparency subsection above. Adding a new ordering surface is a small piece of work rather than a new company,
 because the process beneath is one process. That property has a name you will meet in Week 10, and it is
 what people mean when they say a system is well architected.</p>
 
@@ -680,7 +853,7 @@ stopped.</p>
 <p>In 2012 Domino's introduced a store format it calls pizza theater: an open view of food preparation
 from the lobby, seating, and a screen showing the status of carryout orders. Read that as a design
 decision rather than a decor decision. It is the Pizza Tracker implemented in architecture. The same
-principle from Section 05, expose the stages so waiting becomes legible, applied to a physical room
+principle from the transparency subsection, expose the stages so waiting becomes legible, applied to a physical room
 instead of a screen.</p>
 
 <p>By the late 2010s the company was reporting that a majority of United States sales arrived through
@@ -723,8 +896,9 @@ teaches. Nobody should hand a goal to an agent inside a process they cannot draw
 
 <div class="callout callout-caution"><strong>Hammer's warning, at machine speed</strong>
 <p>The oldest finding in process work is that automating a bad process gives you the same bad process,
-faster. Hammer's 1990 line, don't automate, obliterate, was aimed at companies paving the cowpath:
-pouring technology onto a process shape that should have been thrown away. AI agents make this
+faster. Hammer's 1990 line, don't automate, obliterate, was aimed at companies that pave the cowpath.
+A cowpath is the winding track cattle wear into a field, which everyone then follows only because it is
+already there. Paving it means pouring technology onto a process shape that should have been thrown away. AI agents make this
 temptation stronger than it has ever been, because automation is now cheap enough to skip the
 redesign entirely. An agent will execute a broken process with perfect diligence at machine speed,
 and the bullwhip chapter in Week 7 shows what automated diligence does to a bad number. The order of
@@ -732,21 +906,9 @@ operations this chapter argues for does not change with the technology: map it, 
 it. Domino's fixed the pizza before it built the empire of ordering surfaces, and the sequence is the
 lesson.</p></div>
 
-<h2 id="other"><span class="num">08</span>The other side: transparency for whom</h2>
-<p>Before mapping the components, turn the tracker around. Operational transparency runs one
-direction: the customer sees the store’s work, and the store, in turn, is seen. Every timestamp that
-delights a customer is also a performance record of the worker who produced it. A system that measures
-every stage of every order is a management instrument pointed at the kitchen, and the pressure of
-being continuously measured is part of what “the process improved” means from the inside. Chapter 2
-raised the same point about algorithmic scheduling, and it lands here in a second form.</p>
-<p>There is also a customer the system did not see. Domino’s built ordering into phones, watches,
-TVs, and cars, an ordering surface for practically everyone, and in 2016 a blind customer named
-Guillermo Robles could not order a pizza from the website or the app with his screen reader. The
-lawsuit that followed reached the Ninth Circuit and, in 2019, the Supreme Court declined to disturb
-the ruling against Domino’s. You will study the case properly in Week 9’s software design session;
-for now, hold the shape of it: the company that made ordering effortless from a Samsung TV had not
-made it possible from a screen reader. Reach and access are not the same achievement.</p>
-<h2 id="chain"><span class="num">09</span>The case on the five components</h2>
+
+<h3>The five components at Domino's</h3>
+
 
 <div class="vc">
   <div class="vc-head">The Five Components · Domino's, 2008 (before the turnaround)</div>
@@ -761,8 +923,58 @@ made it possible from a screen reader. Reach and access are not the same achieve
 </div>
 
 
-<table class="sumtable"><tr><th>Idea</th><th>This chapter’s version</th><th>Where you meet it next</th></tr><tr><td><strong>Process mapping</strong></td><td>The as-is pizza journey drawn in swimlanes, handoffs exposed</td><td>Systems analysis (Wk 5)</td></tr><tr><td><strong>Operational transparency</strong></td><td>The tracker as visible effort, and as instrumentation</td><td>Charts as visibility (Lab 4)</td></tr><tr><td><strong>By-product data</strong></td><td>Every displayed stage is a timestamp the company can analyze</td><td>Databases (Wk 7)</td></tr><tr><td><strong>Transparency’s other face</strong></td><td>Measured workers, and the customer the system missed</td><td>Software design + Robles (Wk 9)</td></tr></table>
-<h2 id="vocab"><span class="num">10</span>Vocabulary</h2>
+<table class="sumtable stack-sm"><tr><th>Idea</th><th>This chapter’s version</th><th>Where you meet it next</th></tr><tr><td data-label="Idea"><strong>Process mapping</strong></td><td data-label="This chapter’s version">The as-is pizza journey drawn in swimlanes, handoffs exposed</td><td data-label="Where you meet it next">Systems analysis (Wk 5)</td></tr><tr><td data-label="Idea"><strong>Operational transparency</strong></td><td data-label="This chapter’s version">The tracker as visible effort, and as instrumentation</td><td data-label="Where you meet it next">Charts as visibility (Lab 4)</td></tr><tr><td data-label="Idea"><strong>By-product data</strong></td><td data-label="This chapter’s version">Every displayed stage is a timestamp the company can analyze</td><td data-label="Where you meet it next">Databases (Wk 7)</td></tr><tr><td data-label="Idea"><strong>Transparency’s other face</strong></td><td data-label="This chapter’s version">Measured workers, and the customer the system missed</td><td data-label="Where you meet it next">Software design + Robles (Wk 9)</td></tr></table>
+<h3>What Domino's is doing now, and why it is the same argument</h3>
+
+<p>The turnaround is a decade old, so it is fair to ask whether the lesson survived. Two developments
+since are worth following, and both are process decisions dressed as technology decisions.</p>
+
+<p><strong>The aggregators.</strong> For years Domino's refused to appear on DoorDash or Uber Eats, and
+was almost alone among large chains in that. The stated reason was that delivery was the process it had
+spent forty years building, and handing it to a third party meant handing over the last mile, the
+timing, and the data. Then it joined Uber Eats in 2023 and DoorDash in 2024, with DoorDash fully rolled
+out across the system by the middle of 2025.</p>
+
+<p>Look closely at what they agreed to, because it is unusual. Domino's takes orders from the
+aggregators and <em>fulfills them with its own drivers</em>. The platform supplies demand; Domino's keeps
+the process. In the terms of section 01, they bought a new front door and refused to give up the
+machinery behind it. By the end of 2025 aggregator orders were around five percent of United States
+sales, which management describes as customers it would not otherwise have reached.</p>
+
+<p><strong>The agent.</strong> On its second-quarter 2026 earnings call, the company described an
+orchestration agent that optimizes delivery routing and timing. Put that beside the ladder earlier in
+this section. It is not deciding what a customer wants or changing the recipe. It is sequencing deliveries
+inside a process whose steps are already defined, already instrumented, and already understood, which is
+exactly the rung the chapter argued was safe.</p>
+
+<p>The results are ordinary in an instructive way. United States same-store sales grew about three
+percent in fiscal 2025, an eleventh consecutive year of market share gain, with the company at roughly
+23 percent of the United States pizza market. In the second quarter of 2026, order counts rose while the
+average ticket fell, because a premium product line underperformed. That is a product miss inside a
+process that is working, and it is worth naming the difference for students: 2008 was a product failure
+that no process could rescue, and 2026 is a product miss that the process absorbs.</p>
+
+<p>One more thing, and it is the part most likely to matter in ten years. More than sixty percent of the
+company's revenue comes from selling supplies to its own franchisees rather than from pizza. The dough
+and the trucks are a process nobody outside can duplicate, and no delivery platform can buy its way into
+it. That is the Chapter 3 argument arriving in a Chapter 4 case: the parts are for sale and the
+arrangement is not.</p>
+
+<h2 id="other"><span class="num">05</span>Transparency for whom</h2>
+<p>Before mapping the components, turn the tracker around. Operational transparency runs one
+direction: the customer sees the store’s work, and the store, in turn, is seen. Every timestamp that
+delights a customer is also a performance record of the worker who produced it. A system that measures
+every stage of every order is a management instrument pointed at the kitchen, and the pressure of
+being continuously measured is part of what “the process improved” means from the inside. Chapter 2
+raised the same point about algorithmic scheduling, and it lands here in a second form.</p>
+<p>There is also a customer the system did not see. Domino’s built ordering into phones, watches,
+TVs, and cars, an ordering surface for practically everyone, and in 2016 a blind customer named
+Guillermo Robles could not order a pizza from the website or the app with his screen reader. The
+lawsuit that followed reached the Ninth Circuit and, in 2019, the Supreme Court declined to disturb
+the ruling against Domino’s. You will study the case properly in Week 9’s software design session;
+for now, hold the shape of it: the company that made ordering effortless from a Samsung TV had not
+made it possible from a screen reader. Reach and access are not the same achievement.</p>
+<h2 id="vocab"><span class="num">06</span>Vocabulary</h2>
 
 <dl class="vocab">
   <div><dt>Business process</dt><dd>Structured activities converting inputs into an output a customer values.</dd></div>
@@ -787,19 +999,17 @@ made it possible from a screen reader. Reach and access are not the same achieve
 
 
 
-<div class="plan"><div class="plan-head">Monday session plan &middot; 80 minutes</div>
-<table><tr><td class="t">0:00</td><td class="w">Open</td><td>Ask who has ordered a pizza in the last month and what they remember about the ordering experience.</td></tr><tr><td class="t">0:05</td><td class="w">Lecture</td><td>Processes, handoffs, bottlenecks, cycle time, and swimlane notation. Draw one on the board with student input.</td></tr><tr><td class="t">0:40</td><td class="w">Video</td><td>A Domino’s AnyWare or turnaround segment. Ask students to track how many ordering channels exist and what each one has to connect to.</td></tr><tr><td class="t">0:48</td><td class="w">Think-pair-share</td><td>Is the tracker theatre? See the activity above.</td></tr><tr><td class="t">1:08</td><td class="w">Close</td><td>Preview Wednesday: the full turnaround, including the part where they admitted the pizza was bad.</td></tr></table></div>
 <div class="tps">
-  <div class="tps-head"><span>Monday activity &middot; Is the tracker theatre?</span><span class="mins">20 minutes</span></div>
+  <div class="tps-head"><span>Monday activity &middot; Where does the fix live?</span><span class="mins">12 minutes</span></div>
   <div class="tps-body">
-    <p class="tps-setup">The Domino’s Pizza Tracker shows a customer exactly where their order is: prep, bake, quality check, out for delivery. It made customers noticeably happier with their wait. It did not, by itself, make a single pizza arrive sooner.</p>
-    <div class="tps-q"><p>Is the Pizza Tracker a real operational improvement, or a customer-experience trick dressed up as one?</p></div>
+    <p class="tps-setup">Three processes, three fixes. McDonald's redesigned the kitchen before building it. Ford deleted the invoice instead of hiring a computer to match it faster. Toyota gave the person standing in front of the defect the authority to stop the line. Not one of the three was a technology purchase.</p>
+    <div class="tps-q"><p>Take a process you have worked inside, or been a customer of, that is visibly broken. Which of the three fixes does it need, and what is stopping that fix from happening?</p></div>
     <div class="tps-steps">
-      <div class="tps-step"><div class="ph">Think <span>3 min</span></div><p>Choose trick or improvement. Write one sentence naming what the tracker actually changed inside the business, if anything.</p></div>
-      <div class="tps-step"><div class="ph">Pair <span>5 min</span></div><p>Pair with someone and try to name a second thing the tracker changed that neither of you wrote down.</p></div>
-      <div class="tps-step"><div class="ph">Share <span>12 min</span></div><p>We will hear the best answer for each side, then look at what the tracker required Domino’s to build.</p></div>
+      <div class="tps-step"><div class="ph">Think <span>3 min</span></div><p>Name the process in one line, then pick one of the three. Be specific about the fix; "better communication" is not a fix, it is a complaint.</p></div>
+      <div class="tps-step"><div class="ph">Pair <span>4 min</span></div><p>Swap. Your partner's job is to argue that a different one of the three is the real fix for your process.</p></div>
+      <div class="tps-step"><div class="ph">Share <span>5 min</span></div><p>We collect a few on the board and sort them by which of the three they need.</p></div>
     </div>
-    <div class="tps-note"><strong>Where this lands</strong>The trap is treating this as either-or. The tracker is customer theatre and it is also the visible edge of a real change: to display a stage, the company had to timestamp each stage, and once every step is timestamped you can measure and fix them. Ask what the tracker made measurable that was invisible before, and the class arrives at process instrumentation on its own.</div>
+    <div class="tps-note"><strong>Where this lands</strong>Most rooms pile up on the handoffs, because handoffs are the easiest of the three to see once you have a swimlane. The authority answer is the one worth digging for, since it never appears on a process map: somebody could see the problem and could not stop the work, or could stop the work and never saw the problem. Push on the second half of the question too. The reason the fix has not happened is usually that the process crosses departments and no single person owns it, which is the definition from section 01 arriving as a practical obstacle. Carry the best example into Wednesday and ask who at Domino's could have pulled the cord in 2008.</div>
   </div>
 </div>
 <div class="ailight g">
@@ -809,56 +1019,51 @@ made it possible from a screen reader. Reach and access are not the same achieve
   claim, sparring partner mode, before you present. Red: submitting or reading out an AI-written answer.
   The Wednesday discussion grades your reasoning, and everyone in the room can tell the difference.</p></div>
 </div>
-<h2 id="discussion"><span class="num">11</span>Discussion questions</h2>
+<h2 id="discussion"><span class="num">07</span>Discussion questions</h2>
 <p>None of these get handed in. On Wednesday you run the discussion and I steer it, which means the
 class is only as good as what you walk in with. Read the chapter, pick the question you have the
 strongest opinion about, and be ready to say it first.</p>
 
 <ol class="dq">
-  <li>Map the Domino's order-to-delivery process as it stood in 2008. Mark every handoff and identify the
-  bottleneck. <span class="tag tag-warm">Warm-up</span></li>
+  <li>Map the Domino's order-to-delivery process as it stood in 2008, in swimlanes. Mark every handoff
+  and identify the bottleneck. Then say which of your handoffs the Pizza Tracker made visible, and which
+  it left exactly as it was. <span class="tag">Apply</span></li>
 
-  <li>The Pizza Tracker launched in 2008 and sales kept falling. State, in one sentence, the general principle
-  this illustrates about technology and process.</li>
+  <li>The thirty-minute guarantee made delivery time the one number the company managed to, and it
+  worked: Domino's got very good at minutes. Propose a replacement set of two or three measures that
+  would have caught the quality collapse, then explain what each of your measures would start to distort
+  if the company optimized against it for thirty years. <span class="tag">Analyze</span></li>
 
-  <li>What data must a store capture for the tracker to display a stage? List the events, then name one
-  management question that data could answer which has nothing to do with customers.</li>
+  <li>Suppose the recipe had never changed, and from 2009 to 2013 only the digital ordering improved.
+  Sketch the sales curve and justify its shape from the evidence in this chapter. Then say what that
+  curve implies about the order of operations for any technology investment.
+  <span class="tag">Systems</span></li>
 
-  <li>The thirty-minute guarantee made delivery time the one number the company managed to. Propose a replacement set of
-  two or three metrics that would have caught the quality collapse, and explain what each one would have
-  degraded instead, because every metric set has a blind spot.</li>
+  <li>Operational transparency reduces the perceived wait without reducing the actual wait, and every
+  timestamp that reassures a customer is also a performance record of the worker who produced it. Is the
+  tracker a service or a management instrument? Argue one side, then state the strongest objection to
+  your own position. <span class="tag tag-hard">Ethics</span></li>
 
-  <li>Domino's admitted publicly that its product was bad. Under what conditions is that a rational business
-  strategy rather than a reckless one? Name a company for which it would clearly be the wrong move.
-  <span class="tag tag-hard">Hard</span></li>
-
-  <li>Operational transparency reduces perceived wait without reducing actual wait. Is that manipulation or
-  service? Argue one side, then state the strongest objection to your own position.
-  <span class="tag tag-hard">Hard</span></li>
-
-  <li>Suppose the recipe had never changed and only the digital ordering had improved from 2009 to 2013. Sketch
-  what the sales curve looks like and justify your shape from the evidence in this chapter.
-  <span class="tag tag-open">Open judgment</span></li>
-
-  <li>AnyWare lets people order by tweeting a pizza emoji. Argue that this is a serious business
-  capability rather than a marketing stunt, using the idea that every surface reaches one process. Then
-  argue the opposite.</li>
-<li>An AI agent will execute a broken process with perfect diligence at machine speed. Using the as-is map you drew in this chapter, name one step in the 2008 Domino’s process you would never hand to an agent, and one step in the 2013 process you would. What changed? <span class="dqtag">Systems</span></li>
+  <li>An AI agent will execute a broken process with perfect diligence at machine speed. Using the as-is
+  map you drew for question 1, name one step in the 2008 process you would never hand to an agent and one
+  step in the 2013 process you would. What changed between them, and is it a property of the technology
+  or of the process? <span class="tag">Systems</span></li>
 </ol>
 
-<h2 id="lab"><span class="num">12</span>From lecture to lab</h2>
+<h2 id="lab"><span class="num">08</span>From lecture to lab</h2>
 
 <div class="callout callout-bridge">
-  <strong>Week 3</strong>
+  <strong>Week 4 &middot; Lab 4</strong>
   <p><strong>Monday</strong> covered processes, mapping, handoffs, and measurement. <strong>Wednesday</strong>
   is Domino's: bring your as-is map from question 1; groups will compare maps of the same process and we will
   look at what each map chose to leave out.</p>
-  <p>The lab this week, Lab 3: Excel Functions, continues the Cascadia Outfitters engagement, and the
-connection is direct: a swimlane tells you where a process runs, and a one-line formula tells you how
-it is performing. Domino's tracker is, underneath, a wall of exactly such single-question answers.
-This week you learn to write them.</p>
+  <p>This week's lab, <a href="lab4-excel-dataviz.html"><strong>Lab 4: Data Visualization</strong></a>,
+  continues the Cascadia Outfitters engagement, and the connection is direct. This chapter argues that a
+  process improves only once somebody describes it in a form other people can argue with. A chart is that
+  same move applied to a number: it either makes the shape of the data arguable or it hides it. The Pizza
+  Tracker is, underneath, a screen full of exactly such pictures.</p>
 
-  <a class="lablink" href="lab3-excel-dataprep.html">Go to Lab 3 &#8594;</a>
+  <a class="lablink" href="lab4-excel-dataviz.html">Go to Lab 4 &#8594;</a>
 </div>
 
 <div class="callout">
@@ -880,24 +1085,51 @@ This week you learn to write them.</p>
   </ul>
 </div>
 
-</main>
-</div>
+<h2 id="sources"><span class="num">09</span>Sources and further reading</h2>
+<ul class="sources">
+<li>Michael Hammer, "Reengineering Work: Don't Automate, Obliterate," <em>Harvard Business Review</em>, July&ndash;August 1990: the Ford accounts payable case, the five hundred against five comparison, the original twenty percent target, invoiceless processing, the fourteen matched data items, and the phrase itself.</li>
+<li>John F. Love, <em>McDonald's: Behind the Arches</em> (1986), and the McDonald's corporate history pages, for the 1948 Speedee Service System, the three-month closure, the chalk layout on the tennis court, and the fall in sales after reopening.</li>
+<li>Taiichi Ohno, <em>Toyota Production System</em> (English edition 1988), for jidoka and the authority to stop the line. Jeffrey Liker, <em>The Toyota Way</em> (2004), is the accessible account.</li>
+<li>Ryan W. Buell and Michael I. Norton, "The Labor Illusion," <em>Management Science</em> (2011), and Buell's later work on operational transparency, for the finding that visible effort raises perceived value.</li>
+<li>Domino's Pizza investor relations and annual reports, for same-store sales, the 2009 turnaround campaign, digital sales share, and the AnyWare ordering surfaces.</li>
+<li>Domino's quarterly earnings calls and trade coverage, 2025 and 2026, for the Uber Eats and DoorDash partnerships and the decision to fulfill aggregator orders with its own drivers, the roughly five percent aggregator share of U.S. sales, the delivery orchestration agent described on the Q2 2026 call, U.S. same-store sales and market share, and the share of revenue coming from supply chain sales to franchisees. These figures change every quarter; check them before teaching from them.</li>
+<li>Contemporary coverage of the 2009 &ldquo;Pizza Turnaround&rdquo; campaign and the 2010 results, including trade and business press reporting on the taste-test findings and the recipe relaunch.</li>
+<li>Domino's technical and conference material on its data platform and loyalty program, for the pipeline and warehouse description in section 04. Treat vendor-published figures with the caution Chapter 2 recommends.</li>
+</ul>
 
-<script>
-(function(){
-  var b=document.querySelector('.railtoggle'), n=document.getElementById('chapnav');
-  if(!b||!n)return;
-  b.addEventListener('click',function(){
-    var open=n.classList.toggle('open');
-    b.setAttribute('aria-expanded',open?'true':'false');
-  });
-  n.addEventListener('click',function(e){
-    if(e.target.tagName==='A'&&window.innerWidth<=860){
-      n.classList.remove('open');b.setAttribute('aria-expanded','false');
-    }
-  });
-})();
-</script>
+<h2 id="teaching"><span class="num">10</span>Teaching notes</h2>
+<p style="font-family:var(--sans);font-size:.95rem;color:var(--muted)">Written for whoever is running the sessions. Students are welcome to read them, but nothing here is required.</p>
+
+<div class="plan"><div class="plan-head">Monday session plan &middot; 80 minutes &middot; concepts, with the three short cases as illustrations</div>
+<table>
+<tr><td class="t">0:00</td><td class="w">Open</td><td>Put one question to the room and hold the answers: name a company whose app or website is better than the thing it actually sells. Take four or five, write them on the board, do not comment. You are coming back to the list at the end.</td></tr>
+<tr><td class="t">0:05</td><td class="w">Lecture</td><td>What a business process is. Push on the definition: a process is defined by its output to a customer, not by the department that performs it. Get them to say out loud who owns "the ordering process" at a company they have worked for, and let the silence do the teaching.</td></tr>
+<tr><td class="t">0:12</td><td class="w">Lecture</td><td>Where a process lives in the five components. Take one process the room knows and assign each component a job out loud: what does it record, what rules does the software hold, where are the network crossings. Land the two consequences, that a system can only manage what the process records, and that you can replace every component and still have the same bad process. That second sentence is Wednesday's case stated in advance, so say it slowly.</td></tr>
+<tr><td class="t">0:20</td><td class="w">Lecture</td><td>Functions versus processes. Draw a plain org chart on the board, then draw one customer's experience as a horizontal line straight across it. Every crossing is a handoff. This is the single image the rest of the session hangs on.</td></tr>
+<tr><td class="t">0:26</td><td class="w">Lecture</td><td>Mapping: as-is before to-be, and why teams skip the as-is. Then swimlane grammar, which takes five minutes: box, diamond, arrow, one lane per actor. Draw a three-lane example live and make them count the crossings.</td></tr>
+<tr><td class="t">0:36</td><td class="w">Exercise</td><td>In pairs, map one process they all know end to end, ordering coffee, registering for classes, returning something online. Five minutes to draw, then two pairs put theirs on the board. The point lands when two maps of the same process disagree.</td></tr>
+<tr><td class="t">0:46</td><td class="w">Lecture</td><td>Measurement: cycle time, throughput, defect rate, cost per transaction. Then the measurement trap. The thirty-minute guarantee is the hook, and it sets up Wednesday, so do not spend the whole case here.</td></tr>
+<tr><td class="t">0:54</td><td class="w">Lecture</td><td>Improvement versus reengineering, and who is permitted to stop a process, which mini-case 3 will land, and Hammer's line. Keep it short; mini-case 2 is about to make the argument better than you can.</td></tr>
+<tr><td class="t">0:59</td><td class="w">Cases 1&#8211;3</td><td>McDonald's, Ford, and Toyota, about three minutes each. Name where the fix lived in each one, then stop. Do not draw the comparison between them; that is the activity. Ford is the one to slow down on, because the twenty percent target is the trap students will set for themselves in their careers.</td></tr>
+<tr><td class="t">1:07</td><td class="w">Think-pair-share</td><td>Where does the fix live? See the activity in section 06. Protect the silent three minutes, and when you collect answers, sort them on the board by which of the three fixes they need rather than by who said them.</td></tr>
+<tr><td class="t">1:18</td><td class="w">Close</td><td>Back to the opening list. Ask whether anyone now thinks the app was the problem. Assign section 04, Domino's, plus the discussion questions, and tell them to arrive on Wednesday with the order-to-delivery process drawn in swimlanes.</td></tr>
+</table></div>
+
+<div class="plan"><div class="plan-head">Wednesday session plan &middot; 80 minutes &middot; the Domino's case</div>
+<table>
+<tr><td class="t">0:00</td><td class="w">Open</td><td>One question: it is 2008, you run Domino's, and you have a budget for exactly one thing. The Pizza Tracker or the recipe. Show of hands both ways before anyone explains themselves, then hold it.</td></tr>
+<tr><td class="t">0:06</td><td class="w">The maps</td><td>Three or four students put their swimlane maps on the board. Do not grade them. Count lane crossings and ask what each map left out. The disagreements are the lesson: a map is an argument about the process, not a photograph of it.</td></tr>
+<tr><td class="t">0:20</td><td class="w">Walk the case</td><td>2008 as it actually looked: the tracker shipping, the taste tests, the stock under seven dollars, sales down 4.9 percent while the category grew. Keep naming which concept from Monday each piece is an instance of. Land the sentence: a system for watching a process cannot improve the process it is watching.</td></tr>
+<tr><td class="t">0:32</td><td class="w">The turn</td><td>The 2009 campaign and the recipe launching together. Ask why the admission and the fix shipped on the same day rather than in sequence, and connect it back to the andon cord from Monday. Somebody finally stopped the line, and it was the CEO, five years late.</td></tr>
+<tr><td class="t">0:42</td><td class="w">Operational transparency</td><td>Now the tracker, on a process that works. Make the systems point rather than the marketing one: to display a stage you must capture the stage, so the customer feature is a by-product of instrumenting the process. Ask what data every status bar they have seen this week must be collecting to render itself.</td></tr>
+<tr><td class="t">0:52</td><td class="w">Think</td><td>All five discussion questions on screen. Silent individual work, one sentence on at least two. Protect this step.</td></tr>
+<tr><td class="t">0:58</td><td class="w">Pair</td><td>Groups of three or four settle on positions they can defend. Circulate for a group that landed somewhere unusual on the transparency question or the AI agent question and call on them first.</td></tr>
+<tr><td class="t">1:06</td><td class="w">Share</td><td>Groups take the questions in front of the room. Ask for disagreement rather than answers.</td></tr>
+<tr><td class="t">1:13</td><td class="w">Then and now</td><td>Four minutes on Domino's since. The aggregator decision is the one to run: they take DoorDash and Uber orders and still deliver with their own drivers. Ask what they bought and what they refused to give up. Then the 2026 quarter where orders rose and ticket fell on a premium miss, and the difference between a product failure the process cannot rescue and a product miss the process absorbs.</td></tr>
+<tr><td class="t">1:17</td><td class="w">Close and bridge</td><td>Return to the opening show of hands and ask who changed their mind. Then the sequence in one line: map it, fix it, then automate it. Preview Lab 4 and Chapter 5, where a government builds a system nobody was allowed to stop.</td></tr>
+</table></div>
+
+</main>
 <!--NAVJS-->
 <script>
 (function(){
