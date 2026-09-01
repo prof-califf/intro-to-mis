@@ -317,6 +317,20 @@ a.jump+a.jump:hover{background:var(--magenta-pale);border-color:var(--magenta);c
 .vidwide .frame{position:relative;width:100%;aspect-ratio:16/9;border:1px solid var(--rule);overflow:hidden;background:#000}
 .vidwide iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .vidwide figcaption{font-family:var(--sans);font-size:.95rem;color:var(--muted);margin-top:.6rem;line-height:1.5}
+
+/* narrow screens: wide prose comparison tables stack into labelled cards.
+   Narrow data tables keep their grid so rows stay comparable. */
+@media (max-width:640px){
+  main table.stack-sm{display:block;width:100%;overflow-x:visible;border-collapse:separate;border-spacing:0}
+  table.stack-sm tr:first-child{display:none}
+  table.stack-sm tr{display:block;width:100%;border:1px solid var(--border);margin:0 0 .85rem;background:#fff}
+  table.stack-sm td{display:block;width:100%;border:none;border-bottom:1px solid var(--border);padding:.6rem .85rem;background:#fff!important}
+  table.stack-sm td:last-child{border-bottom:none}
+  table.stack-sm td::before{content:attr(data-label);display:block;font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--text-light);margin-bottom:.28rem}
+  table.stack-sm td:first-child{background:var(--black)!important;color:#fff;font-family:var(--display);letter-spacing:.06em;white-space:normal}
+  table.stack-sm td:first-child::before{content:none}
+  table.stack-sm td:first-child strong{color:#fff}
+}
 </style>
 </head>
 <body>
@@ -471,15 +485,20 @@ apply in interviews and exams alike, is Michael Porter&#8217;s five forces. Prof
 forces are strong. Strategy is the work of weakening them in your favor, and information systems are one
 of the few tools that can move all five at once.</p>
 
-<table class="comptable">
-<caption>Porter&#8217;s five forces</caption>
-<tr><th>Force</th><th>The question it asks</th><th>Strong when</th></tr>
-<tr><td>Rivalry</td><td>How hard are existing competitors fighting each other?</td><td>Competitors are many, similar, and stuck competing on price</td></tr>
-<tr><td>New entrants</td><td>How easily can somebody new start competing with you?</td><td>Starting up is cheap and fast, so anyone can try</td></tr>
-<tr><td>Substitutes</td><td>What else could a customer do instead of buying from this industry at all?</td><td>An easy alternative exists, including doing nothing</td></tr>
-<tr><td>Buyer power</td><td>How much leverage do customers have over price and terms?</td><td>Buyers are few, large, or can walk away at no cost</td></tr>
-<tr><td>Supplier power</td><td>How much leverage do your suppliers have over you?</td><td>Few suppliers, or switching to another is expensive</td></tr>
+<table class="comptable stack-sm">
+<caption>Porter&#8217;s five forces, and where a system can push</caption>
+<tr><th>Force</th><th>The question it asks</th><th>Strong when</th><th>What a system can do about it</th></tr>
+<tr><td data-label="Force">Rivalry</td><td data-label="The question it asks">How hard are existing competitors fighting each other?</td><td data-label="Strong when">Competitors are many, similar, and stuck competing on price</td><td data-label="What a system can do about it">Let the company compete on speed, fit, or reliability instead of price, because a comparison website cannot display those</td></tr>
+<tr><td data-label="Force">New entrants</td><td data-label="The question it asks">How easily can somebody new start competing with you?</td><td data-label="Strong when">Starting up is cheap and fast, so anyone can try</td><td data-label="What a system can do about it">Make competing require something a new company does not have, such as ten years of collected customer data</td></tr>
+<tr><td data-label="Force">Substitutes</td><td data-label="The question it asks">What else could a customer do instead of buying from this industry at all?</td><td data-label="Strong when">An easy alternative exists, including doing nothing</td><td data-label="What a system can do about it">Remove whatever makes the alternative easier, so customers stop preferring it</td></tr>
+<tr><td data-label="Force">Buyer power</td><td data-label="The question it asks">How much leverage do customers have over price and terms?</td><td data-label="Strong when">Buyers are few, large, or can walk away at no cost</td><td data-label="What a system can do about it">Make leaving expensive for the customer, because they would lose saved history, settings, or a place in line</td></tr>
+<tr><td data-label="Force">Supplier power</td><td data-label="The question it asks">How much leverage do your suppliers have over you?</td><td data-label="Strong when">Few suppliers, or switching to another is expensive</td><td data-label="What a system can do about it">Give the company better information about supply than its suppliers have, so it can change supplier or produce the item itself</td></tr>
 </table>
+
+<p>Read the last column carefully. Every action in it is also available to your competitors, and most
+companies that try them gain only a temporary advantage, for the reasons section 02 is about to give.
+The column shows one thing only: a system is unusual because it can affect all five forces. A new factory
+affects one of them. Lowering your prices affects one of them, and not in your favor.</p>
 
 <p>Two things to keep straight. A strong force is bad for the companies in that industry, because it
 pulls profit away from them. And the forces describe an <em>industry</em>, not a company: every airline
@@ -495,7 +514,7 @@ for a business traveler who has to be in Denver Tuesday morning. <strong>Supplie
 enormous: two companies build almost all large passenger aircraft, jet fuel is priced by a market nobody
 controls, and unionized crews negotiate as a block.</p>
 
-<p>Now read the verdict. Four of the five forces are working against airlines, which is why the industry
+<p>Now look at the result. Four of the five forces are working against airlines, which is why the industry
 has famously struggled to make money across its history despite carrying more passengers every decade.
 That is the point of the framework. It explains why some industries are profitable and others are
 punishing, before any individual company&#8217;s strategy enters the picture.</p>
@@ -559,8 +578,8 @@ like.</p>
 <p>Start with the most common answer companies give, which is that they will simply get there first.</p>
 
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">First-mover advantage</span>
-<p>The edge from doing something before rivals do: learning curves, brand association, and customers
-locked in by switching costs before anyone else can reach them.</p></div>
+<p>The edge from doing something before rivals do. You learn the work sooner, customers connect the idea with your
+name, and some are held by switching costs before another company can reach them.</p></div>
 
 <p>It is real, and it is routinely oversold,
 because being first also means paying to educate the market and making the mistakes later entrants get to
@@ -631,14 +650,14 @@ was available to everyone. The ten years of data were not.</p>
 second question to ask about each one: can a competitor buy it? Run the five through that test and they
 sort into two groups very cleanly.</p>
 
-<table class="comptable">
+<table class="comptable stack-sm">
 <caption>The five components, sorted by whether a rival can buy them</caption>
 <tr><th>Component</th><th>Can a rival get this?</th><th>So what is it worth?</th></tr>
-<tr><td>Hardware</td><td>Yes, from the same manufacturers, at the same prices</td><td>Necessary, never an advantage. Everyone in your industry has roughly the same machines.</td></tr>
-<tr><td>Software</td><td>Yes, licensed by the seat, often from the same vendor you use</td><td>Necessary. If you can buy it, so can they, and usually by next quarter.</td></tr>
-<tr><td>Networks</td><td>Yes, rented from the same providers</td><td>Necessary. Connectivity stopped being a differentiator decades ago.</td></tr>
-<tr><td>Data</td><td>Some of it. Plenty of data is for sale, and anything you can buy your competitor can buy too.</td><td>Purchased data is a commodity like any other purchase. The data your own operation generates, about your customers and your work, is the part nobody can sell them.</td></tr>
-<tr><td>People</td><td>No. They can hire similar people; they cannot hire your organization.</td><td>The judgment about what to build, what it means, and what to do about it. The part that decides whether the other four were worth anything.</td></tr>
+<tr><td data-label="Component">Hardware</td><td data-label="Can a rival get this?">Yes, from the same manufacturers, at the same prices</td><td data-label="So what is it worth?">Necessary, never an advantage. Everyone in your industry has roughly the same machines.</td></tr>
+<tr><td data-label="Component">Software</td><td data-label="Can a rival get this?">Yes, licensed by the seat, often from the same vendor you use</td><td data-label="So what is it worth?">Necessary. If you can buy it, so can they, and usually by next quarter.</td></tr>
+<tr><td data-label="Component">Networks</td><td data-label="Can a rival get this?">Yes, rented from the same providers</td><td data-label="So what is it worth?">Necessary. Connectivity stopped being a differentiator decades ago.</td></tr>
+<tr><td data-label="Component">Data</td><td data-label="Can a rival get this?">Some of it. Plenty of data is for sale, and anything you can buy your competitor can buy too.</td><td data-label="So what is it worth?">Purchased data is a commodity like any other purchase. The data your own operation generates, about your customers and your work, is the part nobody can sell them.</td></tr>
+<tr><td data-label="Component">People</td><td data-label="Can a rival get this?">No. They can hire similar people; they cannot hire your organization.</td><td data-label="So what is it worth?">The judgment about what to build, what it means, and what to do about it. The part that decides whether the other four were worth anything.</td></tr>
 </table>
 
 <p>Hardware, software, and networks are things you buy, and none of them will ever separate you from a
@@ -676,7 +695,7 @@ excellent technology sitting on top of a process nobody had fixed.</p>
 <div class="callout callout-caution">
   <strong>The trap to watch for all quarter</strong>
   <p>When executives say "we're investing in technology to gain an advantage," ask which side of Carr's
-  boundary the investment lands on. Buying what everyone can buy is defense: necessary, and worth zero
+  boundary the investment falls on. Buying what everyone can buy is defense: necessary, and worth zero
   edge. In Week 7 you will watch Nike spend $400 million on buyable software and lose $100 million,
   precisely because the un-buyable parts (clean data, fitted process, trained people) were treated as
   afterthoughts.</p>
@@ -706,7 +725,7 @@ an advantage.</p>
   read in section 02.</li>
 </ul>
 
-<p>Sixty-seven years, one question, and no year in which anybody settled it. Sit with that, because you
+<p>Sixty-seven years, one question, and no year in which anybody settled it. That matters to you, because you
 are going to spend a career hearing that this time the technology is different. The three cases below are
 what the argument looks like when you check it against companies rather than against other arguments.
 Each one lost a different leg of Barney's test, and which leg it lost decided how the story ended.</p>
@@ -832,7 +851,7 @@ Wikimedia Commons, [licence].
 
 <p>This is the third way an advantage ends, and the most dangerous one. SABRE was regulated away. ATMs
 were copied. Blockbuster&#8217;s advantage was still hard to copy on the day it stopped mattering,
-because the game changed underneath it. Being hard to imitate is not the same as being worth
+because the industry itself changed while the asset stayed the same. Being hard to imitate is not the same as being worth
 imitating.</p>
 
 <p><strong>What it lost: valuable.</strong> The store network stayed rare, and it stayed extremely hard
@@ -982,7 +1001,7 @@ current inventory. A controlled pilot put the improvement at three to four perce
 researchers estimated at roughly 275 million dollars for 2007, along with fewer transfers between stores
 and more of each product's short life spent actually on display.</p>
 
-<p>Sit with that number, because it is Chapter 2's value test with a figure attached. The garments did
+<p>Look closely at that number, because it is Chapter 2's value test with a figure attached. The garments did
 not change. The stores did not change. The warehouse did not change. The only thing that changed was the
 decision about where the limited stock went, and better information changed it. Notice also which
 components did the work. Not the hardware, and not software anyone could license, but the data Zara
@@ -1136,7 +1155,7 @@ visit and every store, which is exactly what an online giant with far more traff
 </ul>
 
 <p>Now run that through the caution box in section 02, which told you to ask which side of Carr's
-boundary an investment falls on. Read honestly, most of the announcement lands on the buyable side. Every
+boundary an investment falls on. Read honestly, most of the announcement falls on the buyable side. Every
 rival can rent the same models from the same providers. Every rival can build a virtual try-on. A
 competitor who read that release and decided to match it would need a quarter, not a decade.</p>
 
@@ -1177,7 +1196,7 @@ both, and the second one produces a surprise.</p>
 customer who leaves loses nothing. <strong>Network effects</strong>: none, since the dress does not get
 better because more people bought it. <strong>Barriers to entry</strong>: anyone can start a clothing
 brand and thousands do, so the barrier is not to entering the industry but to running it at Zara's speed.
-Which leaves <strong>speed of learning</strong> carrying the entire load by itself.</p>
+Which leaves <strong>speed of learning</strong> to produce the entire advantage on its own.</p>
 
 <p>That is the finding worth keeping: one mechanism is enough when it compounds. The instinct is to reach
 for switching costs and network effects first, because those belong to the famous technology companies.
@@ -1215,13 +1234,13 @@ and the thing standing between the two is a system.</p>
 <h3>The five components at Zara</h3>
 <p>Run the framework from Chapter 1 over everything above. Notice how ordinary each component is on its own, and what stops if any one of them goes:</p>
 
-<table class="sumtable">
+<table class="sumtable stack-sm">
 <tr><th>Component</th><th>At Zara</th><th>What breaks if it fails</th></tr>
-<tr><td><strong>Hardware</strong></td><td>Registers, handheld RFID readers, factory machines, deliberately ordinary and buyable</td><td>A dead reader or a register down in a busy store: the count stops and the loop runs a day behind on that store</td></tr>
-<tr><td><strong>Software</strong></td><td>Point of sale, design, and logistics systems, capable but nothing a competitor could not license</td><td>The signal still arrives and nobody can route it fast enough to act on it</td></tr>
-<tr><td><strong>Data</strong></td><td>Daily sold, stalled, and asked-for signals from thousands of stores, compounding for decades</td><td>Designers go back to guessing a season ahead, like everyone else in the industry</td></tr>
-<tr><td><strong>Networks</strong></td><td>Every store reporting to Arteixo nightly, over a logistics web tuned to a twice-weekly delivery rhythm</td><td>Two weeks becomes two months, and the strategy is just a slower version of the traditional one</td></tr>
-<tr><td><strong>People</strong></td><td>Store managers trusted as sensors and given reorder authority; designers seated beside production planners</td><td>The tags keep counting, and nobody records what the customer asked for and could not find</td></tr>
+<tr><td data-label="Component"><strong>Hardware</strong></td><td data-label="At Zara">Registers, handheld RFID readers, factory machines, deliberately ordinary and buyable</td><td data-label="What breaks if it fails">A dead reader or a register down in a busy store: the count stops and the loop runs a day behind on that store</td></tr>
+<tr><td data-label="Component"><strong>Software</strong></td><td data-label="At Zara">Point of sale, design, and logistics systems, capable but nothing a competitor could not license</td><td data-label="What breaks if it fails">The signal still arrives and nobody can route it fast enough to act on it</td></tr>
+<tr><td data-label="Component"><strong>Data</strong></td><td data-label="At Zara">Daily sold, stalled, and asked-for signals from thousands of stores, compounding for decades</td><td data-label="What breaks if it fails">Designers go back to guessing a season ahead, like everyone else in the industry</td></tr>
+<tr><td data-label="Component"><strong>Networks</strong></td><td data-label="At Zara">Every store reporting to Arteixo nightly, over a logistics web tuned to a twice-weekly delivery rhythm</td><td data-label="What breaks if it fails">Two weeks becomes two months, and the strategy is just a slower version of the traditional one</td></tr>
+<tr><td data-label="Component"><strong>People</strong></td><td data-label="At Zara">Store managers trusted as sensors and given reorder authority; designers seated beside production planners</td><td data-label="What breaks if it fails">The tags keep counting, and nobody records what the customer asked for and could not find</td></tr>
 </table>
 
 <p>The weakest component rule from Chapter 1 applies here from an unusual direction. Zara has no weak
@@ -1413,7 +1432,7 @@ that still beats a competitor who never wanted to run that loop is the open ques
 to check.</p>
 
 <p>If you want the one-sentence version, you will be tempted to say the advantage is the people. That is
-nearly right and needs one more turn of the screw, because "good people" is not a strategy and a rival can
+nearly right, and it needs to be made more exact, because "good people" is not a strategy and a rival can
 hire Zara's analysts by Friday. What Zara has is not a roster. It is a short list of decisions people made
 years ago and then lived with: record what customers asked for and could not find, let a store manager
 reorder without asking, seat designers beside production planners, keep the factories close enough to

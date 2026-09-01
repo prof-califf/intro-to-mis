@@ -317,6 +317,20 @@ a.jump+a.jump{background:var(--off-white);color:var(--magenta-dark);border-color
 a.jump+a.jump:hover{background:var(--magenta-pale);border-color:var(--magenta);color:var(--magenta-dark)}
 
 .comptable caption{caption-side:top;text-align:left;font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--magenta-dark);padding:0 0 .45rem}
+
+/* narrow screens: wide prose comparison tables stack into labelled cards.
+   Narrow data tables keep their grid so rows stay comparable. */
+@media (max-width:640px){
+  main table.stack-sm{display:block;width:100%;overflow-x:visible;border-collapse:separate;border-spacing:0}
+  table.stack-sm tr:first-child{display:none}
+  table.stack-sm tr{display:block;width:100%;border:1px solid var(--border);margin:0 0 .85rem;background:#fff}
+  table.stack-sm td{display:block;width:100%;border:none;border-bottom:1px solid var(--border);padding:.6rem .85rem;background:#fff!important}
+  table.stack-sm td:last-child{border-bottom:none}
+  table.stack-sm td::before{content:attr(data-label);display:block;font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--text-light);margin-bottom:.28rem}
+  table.stack-sm td:first-child{background:var(--black)!important;color:#fff;font-family:var(--display);letter-spacing:.06em;white-space:normal}
+  table.stack-sm td:first-child::before{content:none}
+  table.stack-sm td:first-child strong{color:#fff}
+}
 </style>
 </head>
 <body>
@@ -485,7 +499,7 @@ being able to do something.</p>
 <p>It also runs backwards, which surprises people. Reaching the knowledge level usually reveals that you
 need data you do not have. You conclude that low midterm scores predict trouble, and immediately want to
 know which topics students missed, which sends you back down to collect more. Real analysis is a loop,
-not a climb.</p>
+not a straight climb upward.</p>
 
 <h2 id="uses"><span class="num">02</span>Information and decisions</h2>
 
@@ -541,7 +555,7 @@ most systems are built to support a person rather than replace one.</li>
 afternoon. <strong>Structured:</strong> the scheduling system finds who is available, ranks them by
 hours already worked this week, and sends the shift offer. No human needed, and no judgment involved.
 <strong>Semi-structured:</strong> nobody accepts, so a manager decides whether to close the drive-through
-for two hours or run the floor short. The system can show her yesterday&#8217;s traffic by hour and what
+for two hours or run the store with too few staff. The system can show her yesterday&#8217;s traffic by hour and what
 each choice cost the last three times; she picks. <strong>Unstructured:</strong> this is the fourth
 Thursday in a row it has happened, and the real question is whether this store is understaffed by design,
 which is a question about pay, scheduling policy, and what the company wants its stores to feel like. No
@@ -557,7 +571,7 @@ reach, and acts. Chapter 4 and Chapter 9 go into how that works.</p>
 decides, bad information usually gets caught, because people notice when a number looks wrong. When a
 system decides and acts in the same second, nothing pauses to notice, and a wrong number becomes a wrong
 action at the speed of the network. The more decisions a company automates, the more its outcomes rest on
-information nobody checked. That is why the phrase <strong>human in the loop</strong> keeps coming up:
+information nobody checked. That is why the phrase <strong>human in the loop</strong> keeps returning:
 somebody has to stay in a position to catch what the system cannot. Deciding where that person stands,
 and which decisions never get automated at all, is a management decision, and one you will be asked to
 make.</p>
@@ -565,7 +579,7 @@ make.</p>
 <h2 id="value"><span class="num">03</span>The value test</h2>
 
 <p>All of that leads to the question this chapter exists to answer. A company can collect almost
-anything. Storage is cheap, sensors are everywhere, and every system a business runs throws off records
+anything. Storage is cheap, sensors are everywhere, and every system a business runs produces records
 as it goes. So how does anyone decide what is worth collecting, keeping, and paying attention to?</p>
 
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">The value test</span>
@@ -587,7 +601,7 @@ it. You will meet all three of those again in section 06.</p>
 <div class="tryit" id="worth">
   <div class="tryit-head">Try it &middot; Worth collecting?</div>
   <p class="tryit-intro">Six things your university could record about you as a student. Every one is
-  easy to collect and would be perfectly accurate. Call each one before you see the answer.</p>
+  easy to collect and would be perfectly accurate. Decide about each one before you see the answer.</p>
   <div id="worthrows"></div>
   <p class="tryit-note" id="worthnote">Nothing here sorts by how easy or how accurate the data is. Every
   row is both. Work through all six and see what actually separates them.</p>
@@ -654,7 +668,7 @@ it generates and who captures it. Free products, in particular, are usually paid
 
 <h2 id="more"><span class="num">04</span>Too much, and not good enough</h2>
 
-<p>Everything so far assumes information is scarce and you are deciding what to go get. For most of
+<p>Everything so far assumes information is scarce and you are deciding what to go and collect. For most of
 business history that was true. It is not true now, and the reversal is recent enough that most
 organizations have not adjusted to it.</p>
 
@@ -663,7 +677,7 @@ maintained in a building you owned, collecting data had an obvious cost, and som
 Renting storage by the hour removed that check. It is now cheaper for most companies to keep everything
 than to spend a meeting deciding what to discard. So they keep everything.</p>
 
-<p>The numbers are hard to hold in your head. The world created and captured something like 149
+<p>The numbers are hard to picture. The world created and captured something like 149
 zettabytes of data in 2024 and roughly 181 zettabytes in 2025, and the total is forecast to more than
 double again within a few years. A zettabyte is a trillion gigabytes. Global volume has been doubling
 roughly every four years.</p>
@@ -691,7 +705,7 @@ Start with how much.</p>
 
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Too little, enough, too much</span>
 <p>Value does not rise forever with volume. <strong>Too little</strong> information leaves you unable to
-act: you can see a fire on the ridge and still not know whether to leave, which is mini-case 3 below. <strong>Too much</strong> looks like diligence and often is not. A dashboard with forty
+act: you can see a fire on the ridge and still not know whether to leave, which is mini-case 3 below. <strong>Too much</strong> looks like careful work and often is not. A dashboard with forty
 numbers hides the one that matters, and gathering more before deciding is itself a decision, usually the
 wrong one. Each additional piece costs something to collect, clean, store, and read, while the
 improvement it buys keeps shrinking. Past some point you are paying more for the information than the
@@ -703,16 +717,16 @@ you can check.</p>
 
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Information quality</span>
 <p>Information changes decisions only if the people who would act on it trust it, and trust breaks into
-five dimensions you can check one at a time. A failure on any single dimension can zero out the value of
+five dimensions you can check one at a time. A failure on any single dimension can cancel the value of
 the other four.</p></div>
 
-<table class="comptable">
+<table class="comptable stack-sm">
 <tr><th>Dimension</th><th>The question</th><th>What it looks like when it fails</th></tr>
-<tr><td>Accuracy</td><td>Is it correct?</td><td>A shelf count says twelve cartons and there are seven. Now somebody has to check every count by hand.</td></tr>
-<tr><td>Completeness</td><td>Is anything missing?</td><td>The survey went only to people still using the app, so the customers who left are invisible.</td></tr>
-<tr><td>Timeliness</td><td>Does it arrive while the decision is still open?</td><td>Tuesday&#8217;s staffing report lands Thursday. Every number in it is right and worth nothing.</td></tr>
-<tr><td>Consistency</td><td>Does it agree with itself across systems?</td><td>Sales says 4,812 orders, finance says 4,779. One may be right, nobody knows which, so neither gets used.</td></tr>
-<tr><td>Relevance</td><td>Does it bear on this decision at all?</td><td>A perfect report on how many customers wore hats. Four dimensions clean, and still worthless.</td></tr>
+<tr><td data-label="Dimension">Accuracy</td><td data-label="The question">Is it correct?</td><td data-label="What it looks like when it fails">A shelf count says twelve cartons and there are seven. Now somebody has to check every count by hand.</td></tr>
+<tr><td data-label="Dimension">Completeness</td><td data-label="The question">Is anything missing?</td><td data-label="What it looks like when it fails">The survey went only to people still using the app, so the customers who left are invisible.</td></tr>
+<tr><td data-label="Dimension">Timeliness</td><td data-label="The question">Does it arrive while the decision is still open?</td><td data-label="What it looks like when it fails">Tuesday&#8217;s staffing report lands Thursday. Every number in it is right and worth nothing.</td></tr>
+<tr><td data-label="Dimension">Consistency</td><td data-label="The question">Does it agree with itself across systems?</td><td data-label="What it looks like when it fails">Sales says 4,812 orders, finance says 4,779. One may be right, nobody knows which, so neither gets used.</td></tr>
+<tr><td data-label="Dimension">Relevance</td><td data-label="The question">Is it related to this decision at all?</td><td data-label="What it looks like when it fails">A perfect report on how many customers wore hats. Four dimensions clean, and still worthless.</td></tr>
 </table>
 
 <p>Notice that only the first one is about numbers being wrong. The other four leave the numbers
@@ -1013,7 +1027,7 @@ the system records it.</p>
 
 <table class="sumtable">
 <tr><th>store</th><th>time</th><th>item</th><th>size</th><th>price</th><th>customer</th></tr>
-<tr><td>412</td><td>2026-02-17 08:14</td><td>Latte</td><td>Grande</td><td>5.45</td><td>&#8212;</td></tr>
+<tr><td data-label="store">412</td><td data-label="time">2026-02-17 08:14</td><td data-label="item">Latte</td><td data-label="size">Grande</td><td data-label="price">5.45</td><td data-label="customer">&#8212;</td></tr>
 </table>
 
 <p>That row is worth something. It tells the company that store 412 sold a grande latte on a Tuesday
@@ -1034,11 +1048,11 @@ that compounds.</p>
 
 <table class="sumtable">
 <tr><th>member</th><th>store</th><th>time</th><th>item</th><th>customization</th><th>channel</th><th>price</th><th>stars</th></tr>
-<tr><td>m_88213</td><td>412</td><td>2026-02-17 08:14</td><td>Grande latte</td><td>oat milk, extra shot</td><td>mobile order</td><td>6.25</td><td>13</td></tr>
-<tr><td>m_88213</td><td>412</td><td>2026-02-18 08:09</td><td>Grande latte</td><td>oat milk, extra shot</td><td>mobile order</td><td>6.25</td><td>13</td></tr>
-<tr><td>m_88213</td><td>412</td><td>2026-02-19 08:11</td><td>Grande latte</td><td>oat milk, extra shot</td><td>mobile order</td><td>6.25</td><td>13</td></tr>
-<tr><td>m_88213</td><td>109</td><td>2026-02-21 14:32</td><td>Venti cold brew</td><td>&#8212;</td><td>in store</td><td>5.75</td><td>12</td></tr>
-<tr><td>m_88213</td><td>412</td><td>2026-02-24 08:07</td><td>Grande latte</td><td>oat milk, extra shot</td><td>mobile order</td><td>6.25</td><td>13</td></tr>
+<tr><td data-label="member">m_88213</td><td data-label="store">412</td><td data-label="time">2026-02-17 08:14</td><td data-label="item">Grande latte</td><td data-label="customization">oat milk, extra shot</td><td data-label="channel">mobile order</td><td data-label="price">6.25</td><td data-label="stars">13</td></tr>
+<tr><td data-label="member">m_88213</td><td data-label="store">412</td><td data-label="time">2026-02-18 08:09</td><td data-label="item">Grande latte</td><td data-label="customization">oat milk, extra shot</td><td data-label="channel">mobile order</td><td data-label="price">6.25</td><td data-label="stars">13</td></tr>
+<tr><td data-label="member">m_88213</td><td data-label="store">412</td><td data-label="time">2026-02-19 08:11</td><td data-label="item">Grande latte</td><td data-label="customization">oat milk, extra shot</td><td data-label="channel">mobile order</td><td data-label="price">6.25</td><td data-label="stars">13</td></tr>
+<tr><td data-label="member">m_88213</td><td data-label="store">109</td><td data-label="time">2026-02-21 14:32</td><td data-label="item">Venti cold brew</td><td data-label="customization">&#8212;</td><td data-label="channel">in store</td><td data-label="price">5.75</td><td data-label="stars">12</td></tr>
+<tr><td data-label="member">m_88213</td><td data-label="store">412</td><td data-label="time">2026-02-24 08:07</td><td data-label="item">Grande latte</td><td data-label="customization">oat milk, extra shot</td><td data-label="channel">mobile order</td><td data-label="price">6.25</td><td data-label="stars">13</td></tr>
 </table>
 
 <p>One column changed, and everything downstream of it changed with it. Any single row here is still
@@ -1138,13 +1152,13 @@ single algorithm produced that.</p>
 <h3>The five components at Starbucks</h3>
 <p>Run the framework from Chapter 1 over everything above. Take any one of the five away and the whole thing stops:</p>
 
-<table class="sumtable">
+<table class="sumtable stack-sm">
 <tr><th>Component</th><th>At Starbucks</th><th>What breaks if it fails</th></tr>
-<tr><td><strong>Hardware</strong></td><td>Registers, phones, Mastrena machines with shot sensors, store networks' physical gear</td><td>A dead machine mid-rush; no transactions, no data, no coffee</td></tr>
-<tr><td><strong>Software</strong></td><td>The app, Deep Brew models, SmartQueue, scheduling systems</td><td>Wrong offers, drinks made in the wrong order, staffing that misses the rush</td></tr>
-<tr><td><strong>Data</strong></td><td>100M+ weekly transactions, member histories, shot logs, weather</td><td>Garbage in: every level of decision inherits the error</td></tr>
-<tr><td><strong>Networks</strong></td><td>Store connectivity, and the rented computing that carries orders and machine readings</td><td>Mobile ordering dies; a third of U.S. transactions with it</td></tr>
-<tr><td><strong>People</strong></td><td>Baristas working the queue, analysts reading the output, executives betting the menu</td><td>See the next section</td></tr>
+<tr><td data-label="Component"><strong>Hardware</strong></td><td data-label="At Starbucks">Registers, phones, Mastrena machines with shot sensors, store networks' physical gear</td><td data-label="What breaks if it fails">A dead machine mid-rush; no transactions, no data, no coffee</td></tr>
+<tr><td data-label="Component"><strong>Software</strong></td><td data-label="At Starbucks">The app, Deep Brew models, SmartQueue, scheduling systems</td><td data-label="What breaks if it fails">Wrong offers, drinks made in the wrong order, staffing that misses the rush</td></tr>
+<tr><td data-label="Component"><strong>Data</strong></td><td data-label="At Starbucks">100M+ weekly transactions, member histories, shot logs, weather</td><td data-label="What breaks if it fails">Garbage in: every level of decision inherits the error</td></tr>
+<tr><td data-label="Component"><strong>Networks</strong></td><td data-label="At Starbucks">Store connectivity, and the rented computing that carries orders and machine readings</td><td data-label="What breaks if it fails">Mobile ordering dies; a third of U.S. transactions with it</td></tr>
+<tr><td data-label="Component"><strong>People</strong></td><td data-label="At Starbucks">Baristas working the queue, analysts reading the output, executives betting the menu</td><td data-label="What breaks if it fails">See the next section</td></tr>
 </table>
 
 <p>The weakest component rule from Chapter 1 applies with no modification: the sophistication of Deep
@@ -1199,12 +1213,12 @@ discontinued, effective immediately.</p>
 <p>Three ideas from the first half of this chapter explain what the counting system did, and the order
 matters, because each failure caused the next.</p>
 
-<table class="comptable">
+<table class="comptable stack-sm">
 <caption>How the NomadGo counting system failed, in order</caption>
 <tr><th>Failure</th><th>What the cameras and model did</th><th>Which idea it broke</th><th>What that looked like in a store</th></tr>
-<tr><td>1</td><td>Counted wrong often enough that nobody could rely on it.</td><td>Information quality, failing on <strong>accuracy</strong></td><td>Four cartons of oat milk and three of two percent get reported as seven oat and zero two percent, because they look nearly identical through a tablet camera in a cold, dim cooler.</td></tr>
-<tr><td>2</td><td>Produced eight times more counts than manual counting did, all of them suspect.</td><td><strong>Too much</strong> information</td><td>The replenishment order goes out on the wrong number, no two percent arrives, and instead of one weekly count somebody trusted, the store now has dozens of counts to verify by hand.</td></tr>
-<tr><td>3</td><td>Changed no decisions, while every part of it kept costing money.</td><td>The <strong>value test</strong>, failing on both halves</td><td>The shift supervisor stops opening the app. Cameras, software license, training, and rechecking labor keep billing every week until somebody in Seattle decides to stop.</td></tr>
+<tr><td data-label="Failure">1</td><td data-label="What the cameras and model did">Counted wrong often enough that nobody could rely on it.</td><td data-label="Which idea it broke">Information quality, failing on <strong>accuracy</strong></td><td data-label="What that looked like in a store">Four cartons of oat milk and three of two percent get reported as seven oat and zero two percent, because they look nearly identical through a tablet camera in a cold, dim cooler.</td></tr>
+<tr><td data-label="Failure">2</td><td data-label="What the cameras and model did">Produced eight times more counts than manual counting did, all of them suspect.</td><td data-label="Which idea it broke"><strong>Too much</strong> information</td><td data-label="What that looked like in a store">The replenishment order goes out on the wrong number, no two percent arrives, and instead of one weekly count somebody trusted, the store now has dozens of counts to verify by hand.</td></tr>
+<tr><td data-label="Failure">3</td><td data-label="What the cameras and model did">Changed no decisions, while every part of it kept costing money.</td><td data-label="Which idea it broke">The <strong>value test</strong>, failing on both halves</td><td data-label="What that looked like in a store">The shift supervisor stops opening the app. Cameras, software license, training, and rechecking labor keep billing every week until somebody in Seattle decides to stop.</td></tr>
 </table>
 
 <div class="callout callout-caution"><strong>The order is the lesson</strong>
@@ -1363,13 +1377,13 @@ changes no decision is not information. It is cost.</p>
 
 <h2 id="s9"><span class="num">07</span>Summary and vocabulary</h2>
 
-<table class="sumtable">
+<table class="sumtable stack-sm">
 <tr><th>Idea</th><th>The Starbucks version</th><th>Where you meet it next</th></tr>
-<tr><td>The value test</td><td>Weather data yes, hat data no; NomadGo killed when its numbers could not be acted on</td><td>Every chapter; explicitly in Lab 2</td></tr>
-<tr><td>Decision levels</td><td>One transaction pool serving the barista's queue, the manager's report, and the menu strategy</td><td>Databases (Wk 7), BI (Wk 6)</td></tr>
-<tr><td>By-product data</td><td>The app that serves the customer is the instrument that collects the data</td><td>Domino's (Wk 4), Amazon (Wk 10)</td></tr>
-<tr><td>Weakest component</td><td>Eleven thousand stores committed on a vendor&#8217;s accuracy number, and months of barista reports before anyone acted</td><td>Healthcare.gov (Wk 5)</td></tr>
-<tr><td>The second question</td><td>Personalization as surveillance, habit engineering, and algorithmic scheduling</td><td>Security (Wk 8), AI &amp; bias (Wk 10)</td></tr>
+<tr><td data-label="Idea">The value test</td><td data-label="The Starbucks version">Weather data yes, hat data no; NomadGo killed when its numbers could not be acted on</td><td data-label="Where you meet it next">Every chapter; explicitly in Lab 2</td></tr>
+<tr><td data-label="Idea">Decision levels</td><td data-label="The Starbucks version">One transaction pool serving the barista's queue, the manager's report, and the menu strategy</td><td data-label="Where you meet it next">Databases (Wk 7), BI (Wk 6)</td></tr>
+<tr><td data-label="Idea">By-product data</td><td data-label="The Starbucks version">The app that serves the customer is the instrument that collects the data</td><td data-label="Where you meet it next">Domino's (Wk 4), Amazon (Wk 10)</td></tr>
+<tr><td data-label="Idea">Weakest component</td><td data-label="The Starbucks version">Eleven thousand stores committed on a vendor&#8217;s accuracy number, and months of barista reports before anyone acted</td><td data-label="Where you meet it next">Healthcare.gov (Wk 5)</td></tr>
+<tr><td data-label="Idea">The second question</td><td data-label="The Starbucks version">Personalization as surveillance, habit engineering, and algorithmic scheduling</td><td data-label="Where you meet it next">Security (Wk 8), AI &amp; bias (Wk 10)</td></tr>
 </table>
 
 <dl class="vocab">
