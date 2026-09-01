@@ -135,7 +135,7 @@ li{margin-bottom:.45rem}
 
 /* ---------- responsive ---------- */
 @media (max-width:860px){
-  .shell{grid-template-columns:1fr;gap:0;padding:0 1.15rem 4rem}
+  .shell{grid-template-columns:minmax(0,1fr);gap:0;padding:0 1.15rem 4rem}
   .rail{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);padding:1.5rem 0 1rem;margin-bottom:.5rem}
   .rail nav{display:none}
   .rail nav.open{display:block;margin-top:.8rem}
@@ -275,6 +275,31 @@ li{margin-bottom:.45rem}
 .concepts{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;margin:1.1rem 0 0}
 .concepts .clabel{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-right:.3rem}
 .concepts span:not(.clabel){font-family:var(--display);font-size:12.5px;font-weight:500;letter-spacing:.04em;border:1px solid var(--border);background:var(--off-white);padding:.22rem .6rem;color:var(--text-dark)}
+
+/* mobile: wide tables scroll, long TOC anchors wrap */
+@media (max-width:860px){.toc a{white-space:normal}main table{display:block;overflow-x:auto;max-width:100%}}
+
+/* narrow screens: wide prose comparison tables stack into labelled cards.
+   Narrow data tables keep their grid so rows stay comparable. */
+@media (max-width:640px){
+  main table.stack-sm{display:block;width:100%;overflow-x:visible;border-collapse:separate;border-spacing:0}
+  table.stack-sm tr:first-child{display:none}
+  table.stack-sm tr{display:block;width:100%;border:1px solid var(--border);margin:0 0 .85rem;background:#fff}
+  table.stack-sm td{display:block;width:100%;border:none;border-bottom:1px solid var(--border);padding:.6rem .85rem;background:#fff!important}
+  table.stack-sm td:last-child{border-bottom:none}
+  table.stack-sm td::before{content:attr(data-label);display:block;font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--text-light);margin-bottom:.28rem}
+  table.stack-sm td:first-child{background:var(--black)!important;color:#fff;font-family:var(--display);letter-spacing:.06em;white-space:normal}
+  table.stack-sm td:first-child::before{content:none}
+  table.stack-sm td:first-child strong{color:#fff}
+}
+
+/* ported from ch3 */
+.mcq{border-left:3px solid var(--magenta);background:var(--off-white);padding:.7rem 1rem;margin:1rem 0 1.6rem;font-family:var(--sans);font-size:.95rem}
+.mcq b{font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--magenta-dark);display:block;margin-bottom:.2rem}
+.jumprow{display:flex;flex-wrap:wrap;gap:.5rem;margin:.9rem 0 0}
+.jump{font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:var(--magenta);color:#fff;border:1px solid var(--magenta);padding:.5rem .9rem;text-decoration:none;display:inline-block}
+.jump:hover{background:var(--magenta-dark);border-color:var(--magenta-dark);color:#fff}
+main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transform:none;letter-spacing:0;color:var(--off-black);margin:2.1rem 0 .55rem;padding-left:.7rem;border-left:3px solid var(--magenta)}
 </style>
 </head>
 <body>
@@ -331,76 +356,55 @@ li{margin-bottom:.45rem}
 <main class="chapwrap">
 
 <header class="chaphead">
-  <p class="eyebrow">Chapter 8 &middot; Business Intelligence &amp; Analytics</p>
-  <h1>Business Intelligence: The Team That Measured Differently</h1>
+  <p class="eyebrow">Chapter 8 &middot; Business Intelligence and Analytics</p>
+  <h1>Business Intelligence: How Oakland Won by Measuring a Different Thing</h1>
   <p class="anchor">In 2002 the Oakland Athletics lost their three best players, fielded one of the
-  cheapest rosters in baseball, and won 103 games, including twenty in a row, an American League record.
-  They did it by noticing that an entire industry had spent a century measuring the wrong thing. This
-  chapter is about what business intelligence actually is, why choosing the metric is the decision that
-  matters, and why you have already done this analysis yourself, on Cascadia, in Lab 5.</p>
-  <div class="meta-row">
-    <span>Case: Oakland Athletics, 2002</span>
-    <span class="alt">Week 6 &middot; Monday concepts, Wednesday case</span>
-    <span class="alt"><a href="lab6-tableau.html" style="color:inherit;text-decoration:none">Paired lab: Tableau (Lab 6) &#8594;</a></span>
-  </div>
+  cheapest rosters in baseball, and won 103 games. They did it with data everybody already had, in a
+  sport that had been recording it for a century. This chapter is about why choosing the measure is the
+  decision that matters, and why the advantage did not last.</p>
+  <div class="concepts"><span class="clabel">Key concepts</span><span>Business intelligence</span><span>Four kinds of analytics</span><span>Metrics and proxies</span><span>Measurement validity</span><span>Correlation and causation</span><span>Goodhart's law</span><span>Data warehouse and dashboards</span></div>
 </header>
 
-<div class="statrow">
-  <div class="stat"><b>~$41M</b><span>A's payroll, third lowest in MLB</span></div>
-  <div class="stat"><b>~$125M</b><span>Yankees payroll, the team they had to beat</span></div>
-  <div class="stat"><b>103&ndash;59</b><span>Oakland's record</span></div>
-  <div class="stat"><b>20</b><span>straight wins, an AL record</span></div>
-  <div class="stat"><b>1</b><span>question: what actually causes runs?</span></div>
-</div>
-
 <div class="toc"><strong>Contents</strong>
-<a href="#s1">1. Losing three stars</a>
-<a href="#s2">2. What business intelligence actually is</a>
-<a href="#s3">3. The wrong number on the scoreboard</a>
-<a href="#s4">4. Buying what the market mispriced</a>
-<a href="#s5">5. Correlation, causation, and small samples</a>
-<a href="#s6">6. When the metric becomes the target</a>
-<a href="#s7">7. From the dugout to the dashboard</a>
-<a href="#s8">8. The other side: being measured</a>
-<a href="#s9">9. The five components</a>
-<a href="#s10">10. Summary and vocabulary</a>
-<a href="#questions">11. Discussion questions</a>
+<a href="#bi">What business intelligence actually is</a>
+<a href="#traps">Reading numbers honestly</a>
+<a href="#cases">Three failures, three rungs</a>
+<a href="#oakland">Oakland: the team that measured differently</a>
+<a href="#other">The other side: being measured</a>
+<a href="#vocab">Vocabulary</a>
+<a href="#discussion">Discussion questions</a>
+<a href="#lab">From lecture to lab</a>
+<a href="#sources">Sources and further reading</a>
+<a href="#teaching">Teaching notes</a>
 </div>
 
-<div class="plan">
-<div class="plan-head">Monday session plan &middot; 80 minutes &middot; concepts (the case is Wednesday)</div>
-<table>
-<tr><td class="t">0:00</td><td class="w">Open</td><td>Put two payroll numbers on the board, $41 million and $125 million, and ask what a fair season between those two teams looks like. Then reveal that the cheap one won more games. Do not explain yet.</td></tr>
-<tr><td class="t">0:05</td><td class="w">Lecture</td><td>What BI is and is not: the four kinds of analytics walked on one example (last month's sales), then the batting average versus on-base percentage story as the anatomy of a proxy metric.</td></tr>
-<tr><td class="t">0:35</td><td class="w">Lecture</td><td>The BI stack: operational systems, the warehouse, the dashboard. Connect straight to Lab 5: their pivot tables were descriptive and diagnostic analytics, whether or not anyone said the words.</td></tr>
-<tr><td class="t">0:55</td><td class="w">Think-pair-share</td><td>A metric that made a business worse. See the activity below.</td></tr>
-<tr><td class="t">1:15</td><td class="w">Close</td><td>Point them at the chapter and the discussion questions for Wednesday. Preview: this week's lab builds the dashboard the A's front office would have wanted.</td></tr>
-</table></div>
+<p class="lede">Baseball has more data per event than almost any business on earth, and it has been
+collecting it since the 1870s. In 2001 an entire industry was using that mountain of numbers to measure
+the wrong thing, and the number that would have told them so had been sitting in the same box score the
+whole time.</p>
 
-<h2 id="s1"><span class="num">01</span>Losing three stars</h2>
+<div class="callout"><strong>How this chapter runs</strong>
+<p>Sections 01 and 02 are the concepts: what business intelligence is, the four kinds of analytics, and
+the traps that catch people reading numbers. Section 03 puts them to work on three failures, one at each
+level of ambition. Section 04 is the full case, Oakland, and it follows the story past 2002 to what
+happened once everyone caught up. Section 05 asks what it is like to be the thing being measured.</p>
+<p class="jumprow"><a class="jump" href="#oakland">Jump to the Oakland case &#8594;</a>
+<a class="jump" href="#cases">Jump to the three failures &#8594;</a>
+<a class="jump" href="#discussion">Jump to the discussion questions &#8594;</a></p></div>
 
-<p>After the 2001 season, the Oakland Athletics lost their best hitter, Jason Giambi, to the New York
-Yankees on a seven-year, $120 million contract, and lost outfielder Johnny Damon and closer Jason
-Isringhausen the same winter. Oakland could not outbid anyone: its payroll of roughly $41 million was
-the third lowest in Major League Baseball, against the Yankees' roughly $125 million. By every
-conventional measure, the 2002 A's were supposed to collapse.</p>
+<h2 id="bi"><span class="num">01</span>What business intelligence actually is</h2>
 
-<p>General manager Billy Beane and his assistant Paul DePodesta could not buy the players everyone
-agreed were good, so they asked a more basic question: is everyone right about who is good? Baseball
-had a century of meticulous statistics and a settled consensus about which ones mattered. Beane and
-DePodesta treated that consensus as a hypothesis rather than a fact, tested it against the data, and
-found it wrong in an exploitable way. Then they built a roster out of the players the market had
-mispriced: a catcher with a damaged arm converted to first base, a sidearm reliever nobody wanted, and
-hitters who looked wrong and walked constantly.</p>
+<p>Chapters 6 and 7 were about getting facts into one place and keeping them consistent. This chapter is
+about what happens next, which is somebody asking the records a question. That sounds like the easy
+half. It is not, and the reason is that a question has to be asked in numbers, and choosing which
+number is a decision most organizations make once, by accident, and then live with for decades.</p>
 
-<p>The result was 103 wins, a division title, and a twenty-game winning streak that set an American
-League record, capped by a walk-off home run from Scott Hatteberg, the converted catcher. The season
-became Michael Lewis's book <em>Moneyball</em> and later the film. But strip away the baseball and what
-remains is the cleanest business intelligence case ever documented: an organization that gained a
-competitive advantage not by having more data than its rivals, because everyone had the same data, but
-by <strong>measuring the right thing</strong> while everyone else measured the wrong one.</p>
-
-<h2 id="s2"><span class="num">02</span>What business intelligence actually is</h2>
+<p>In five-component terms, everything in this chapter sits on top of the data component and is decided
+by the people one. The hardware and software of business intelligence are ordinary and purchasable,
+which Chapter 3 already told you means they cannot be the advantage. What cannot be bought is a person
+who asks whether the number everybody is staring at measures the thing everybody assumes it measures.
+That question is the entire chapter, and the case at the end is an organization that asked it while an
+industry with identical data did not.</p>
 
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Business intelligence &amp; analytics</span>
 <p><strong>Business intelligence (BI)</strong> is the practice of turning an organization's data into
@@ -425,7 +429,8 @@ a night-shift statistician named Bill James had spent two decades publishing ana
 <strong>sabermetrics</strong>, showing that some of baseball's most cherished numbers barely predicted
 winning. The A's were simply the first team desperate enough to act on it.</p>
 
-<h2 id="s3"><span class="num">03</span>The wrong number on the scoreboard</h2>
+<h3>The wrong number on the scoreboard</h3>
+
 
 <p>For a century, the headline measure of a hitter was <strong>batting average</strong>: hits divided
 by at-bats. It is intuitive, traditional, and printed on the back of every card. It also has a design
@@ -451,24 +456,12 @@ the membership relationship, is healthy or quietly failing.</p>
 
 <div class="pull"><p>The scoreboard was fine. The industry was reading the wrong line of it.</p></div>
 
-<h2 id="s4"><span class="num">04</span>Buying what the market mispriced</h2>
+<h2 id="traps"><span class="num">02</span>Reading numbers honestly</h2>
 
-<p>A mismeasured quality becomes a mispriced asset. Because the market paid for batting average, home
-runs, and how an athlete looked in uniform, players who merely got on base relentlessly came cheap.
-Hatteberg, coming off a career-threatening injury and hitting for modest averages, was exactly that:
-his on-base skills made him a bargain, and in 2002 he posted a .374 OBP and hit the home run that won
-game twenty of the streak. Reliever Chad Bradford threw underhand, looked unorthodox, got outs, and
-cost almost nothing. The roster was an arbitrage portfolio.</p>
-
-<p>Connect this to Chapter 3. Porter would say the A's found a <strong>competitive advantage grounded
-in information</strong>: everyone had the same raw data, but Oakland converted it into a truer model of
-value than its rivals used, which let a $41 million payroll buy roughly as much real production as
-teams spending three times more. And, exactly as Chapter 3 predicts, the advantage decayed as the
-information spread. Boston hired sabermetric thinkers and won the 2004 World Series; within a decade
-every front office employed analysts; and once everyone measured correctly, the edge returned to the
-teams with the most money. An information advantage is real, and it is rented, not owned.</p>
-
-<h2 id="s5"><span class="num">05</span>Correlation, causation, and small samples</h2>
+<p>Choosing the right measure is the first job. Reading it without fooling yourself is the second, and
+there are three traps that catch people who are perfectly competent at the arithmetic. Two of them are
+about what the numbers can and cannot tell you. The third is about what happens to a number once people
+know they are being judged by it.</p>
 
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Correlation, causation, and sample size</span>
 <p>Two numbers are <strong>correlated</strong> when they move together; <strong>causation</strong>
@@ -487,7 +480,8 @@ of data, and the honest analyst's question, there and everywhere, is whether the
 pattern is large enough to bet on. A twenty-game winning streak is thrilling and it is also, as the
 A's themselves would tell you, partly a run of luck sitting on top of a genuinely good team.</p>
 
-<h2 id="s6"><span class="num">06</span>When the metric becomes the target</h2>
+<h3>When the metric becomes the target</h3>
+
 
 <p>There is a trap waiting inside every successful metric, and it has a name: <strong>Goodhart's
 law</strong>, usually stated as <em>when a measure becomes a target, it ceases to be a good
@@ -506,7 +500,9 @@ professional habit is to pair every target with a counter-metric that catches th
 with resolution rate, units shipped with returns. Keep this section in mind for the Monday activity,
 because your job there is to find one of these traps in the wild.</p>
 
-<h2 id="s7"><span class="num">07</span>From the dugout to the dashboard</h2>
+
+<h3>From the dugout to the dashboard</h3>
+
 
 <p>What did the A's revolution look like as an information system? Unremarkably modest: public
 statistics, DePodesta's laptop, and spreadsheet models. The lesson is not the technology; it is the
@@ -534,7 +530,190 @@ what a dashboard is for.</p>
 <p>BI is not having data. Everyone has data. BI is choosing the measure that tracks what you actually
 care about, and putting it where decisions get made.</p></div>
 
-<h2 id="s8"><span class="num">08</span>The other side: being measured</h2>
+<h2 id="cases"><span class="num">03</span>Three failures, three rungs</h2>
+<p>Before the case, three short ones, arranged up the ladder from section 01. The first is a
+descriptive failure, the second predictive, the third prescriptive. Read them in order and watch the
+cost of being wrong grow: a bad description produces a bad slide, a bad prediction produces a bad
+forecast, and a bad prescription produces a bad forecast that has already spent your money.</p>
+
+<h3>Mini-case 1 &middot; 1986: the chart that did not show the thing it contained</h3>
+
+<p>The night before the Challenger launch, engineers at the contractor that built the shuttle's rocket
+boosters argued against flying. It was going to be unusually cold in Florida, and they believed the
+rubber seals between booster sections would be less able to seal at low temperature. They had data.
+Seals had been damaged on previous flights, and the damage had been recorded.</p>
+
+<p>What they did not have was a picture that made the relationship visible. The charts taken into that
+teleconference presented the damaged flights, and did not plot damage against temperature across all
+the flights, including the ones with no damage at all. Read that way, the case looked like scattered
+incidents rather than a trend. The launch went ahead the next morning in near-freezing conditions and
+the shuttle was destroyed, killing all seven people aboard.</p>
+
+<p>Later analysis of those materials became a standard teaching example in how to display quantitative
+information, because the argument the engineers were making was <em>in</em> their data and was not
+<em>in</em> their charts. This is descriptive analytics failing at its only job.</p>
+
+<p><strong>The rung: descriptive. The component: software, meaning the tool that displayed
+it.</strong> Nobody lacked the numbers, and nobody miscalculated. The presentation decided what a room
+full of decision-makers could see, which is worth remembering in a week when you are choosing what to
+put on a dashboard.</p>
+
+<div class="mcq"><b>Check yourself</b>The damaged flights were shown and the undamaged ones were left
+out. Explain why leaving out the cases where nothing happened destroys the ability to see a
+relationship, and name one chart you have made where you did the same thing without noticing.</div>
+
+<h3>Mini-case 2 &middot; 2013: the model that kept answering after the world moved</h3>
+
+<p>In 2008 Google launched Flu Trends, which estimated how much influenza was circulating in the United
+States from what people were searching for. It looked like a triumph. It produced estimates faster than
+the public health agency it was built to match, and it was held up everywhere as proof of what large
+data could do.</p>
+
+<p>Then it drifted. Between August 2011 and September 2013 it reported flu levels that were too high in
+100 weeks out of 108. In the 2012 to 2013 season it overshot by more than half, and at one point
+predicted roughly double the proportion of doctor visits the agency measured. Researchers who took the
+model apart found several causes, including that heavy news coverage of flu made healthy, worried
+people search in ways the model read as illness. Google revised it, then retired it in 2015.</p>
+
+<p>Nothing broke. The model kept running and kept producing confident numbers, and the relationship
+between search behaviour and illness had changed underneath it. A model is a claim about how the world
+works, and the world does not agree to hold still.</p>
+
+<p><strong>The rung: predictive. The component: data.</strong> The failure was not in the mathematics.
+It was that the inputs stopped meaning what they meant when the model was built, and no amount of
+computation notices that on its own.</p>
+
+<div class="mcq"><b>Check yourself</b>Google's model was checked against the agency's actual figures,
+which is how anyone knew it had drifted. Name one forecast you have seen at work or in the news where
+no such check exists, and say what you would compare it to.</div>
+
+<h3>Mini-case 3 &middot; 2021: the algorithm that was allowed to spend</h3>
+
+<p>Zillow is a property website. In 2018 it started buying houses itself, using its own price estimates
+to decide what to pay, renovating them and selling them on. The estimate was no longer advice for a
+reader. It was an instruction to spend money.</p>
+
+<p>The model was not wildly wrong. It was wrong by a few percentage points, in a business where a few
+percentage points is the entire margin, and it was wrong in the same direction across thousands of
+houses at once. In November 2021 Zillow shut the business down, announced writedowns of up to $569
+million, and cut about a quarter of its staff.</p>
+
+<p>Compare that with the other two. A bad chart misleads a meeting. A bad forecast misleads a plan.
+A bad prescription buys seven thousand houses. The difference is not accuracy. It is how much authority
+somebody granted the output before anyone checked it.</p>
+
+<p><strong>The rung: prescriptive. The component: people.</strong> The decision that cost the money was
+not made by the model. It was made by the executives who decided how far the model's answers could
+travel without a human in between, which is the same decision Chapter 4 asked you to make about handing
+steps to an agent.</p>
+
+<div class="mcq"><b>Check yourself</b>Zillow's estimate had been public for years before it was used to
+buy anything. Explain what changed about the same number when it stopped being displayed and started
+being acted on, and name the specific control you would have put between the model and the cheque.</div>
+
+<h3>What the three have in common</h3>
+
+<p>Three failures, three rungs, and not one of them was caused by bad arithmetic. The Challenger data
+was correct. Google's model was competently built. Zillow's estimate was close. In every case the
+numbers were fine and something around them was not: how they were displayed, whether anyone checked
+them against reality, and how much authority they were given.</p>
+
+<p>That is the argument of this chapter in advance. Business intelligence is not a calculation problem.
+It is a series of judgments about what to measure, how to show it, what to compare it against, and how
+far to let it act on its own. The case that follows is what it looks like when an organization gets the
+first of those judgments right while an entire industry gets it wrong.</p>
+<h2 id="oakland"><span class="num">04</span>Oakland: the team that measured differently</h2>
+
+<p>After the 2001 season, the Oakland Athletics lost their best hitter, Jason Giambi, to the New York
+Yankees on a seven-year, $120 million contract, and lost outfielder Johnny Damon and closer Jason
+Isringhausen the same winter. Oakland could not outbid anyone: its payroll of roughly $41 million was
+the third lowest in Major League Baseball, against the Yankees' roughly $125 million. By every
+conventional measure, the 2002 A's were supposed to collapse.</p>
+
+<p>General manager Billy Beane and his assistant Paul DePodesta could not buy the players everyone
+agreed were good, so they asked a more basic question: is everyone right about who is good? Baseball
+had a century of meticulous statistics and a settled consensus about which ones mattered. Beane and
+DePodesta treated that consensus as a hypothesis rather than a fact, tested it against the data, and
+found it wrong in an exploitable way. Then they built a roster out of the players the market had
+mispriced: a catcher with a damaged arm converted to first base, a sidearm reliever nobody wanted, and
+hitters who looked wrong and walked constantly.</p>
+
+<p>The result was 103 wins, a division title, and a twenty-game winning streak that set an American
+League record, capped by a walk-off home run from Scott Hatteberg, the converted catcher. The season
+became Michael Lewis's book <em>Moneyball</em> and later the film. But strip away the baseball and what
+remains is the cleanest business intelligence case ever documented: an organization that gained a
+competitive advantage not by having more data than its rivals, because everyone had the same data, but
+by <strong>measuring the right thing</strong> while everyone else measured the wrong one.</p>
+
+<div class="statrow">
+  <div class="stat"><b>~$41M</b><span>A's payroll, third lowest in MLB</span></div>
+  <div class="stat"><b>~$125M</b><span>Yankees payroll, the team they had to beat</span></div>
+  <div class="stat"><b>103&ndash;59</b><span>Oakland's record</span></div>
+  <div class="stat"><b>20</b><span>straight wins, an AL record</span></div>
+  <div class="stat"><b>1</b><span>question: what actually causes runs?</span></div>
+</div>
+
+<h3>Buying what the market mispriced</h3>
+
+
+<p>A mismeasured quality becomes a mispriced asset. Because the market paid for batting average, home
+runs, and how an athlete looked in uniform, players who merely got on base relentlessly came cheap.
+Hatteberg, coming off a career-threatening injury and hitting for modest averages, was exactly that:
+his on-base skills made him a bargain, and in 2002 he posted a .374 OBP and hit the home run that won
+game twenty of the streak. Reliever Chad Bradford threw underhand, looked unorthodox, got outs, and
+cost almost nothing. The roster was an arbitrage portfolio.</p>
+
+<p>Connect this to Chapter 3. Porter would say the A's found a <strong>competitive advantage grounded
+in information</strong>: everyone had the same raw data, but Oakland converted it into a truer model of
+value than its rivals used, which let a $41 million payroll buy roughly as much real production as
+teams spending three times more. And, exactly as Chapter 3 predicts, the advantage decayed as the
+information spread. Boston hired sabermetric thinkers and won the 2004 World Series; within a decade
+every front office employed analysts; and once everyone measured correctly, the edge returned to the
+teams with the most money. An information advantage is real, and it is rented, not owned.</p>
+
+
+<h3>The five components of the 2002 A's</h3>
+
+
+<table class="sumtable stack-sm">
+<tr><th>Component</th><th>In the case</th><th>The lesson</th></tr>
+<tr><td data-label="Component"><strong>Hardware</strong></td><td data-label="In the case">A laptop and commodity computers; nothing exotic</td><td data-label="The lesson">The BI revolution was not a hardware story</td></tr>
+<tr><td data-label="Component"><strong>Software</strong></td><td data-label="In the case">Spreadsheets and statistical models on public data</td><td data-label="The lesson">The model encodes the insight; the tool is replaceable</td></tr>
+<tr><td data-label="Component"><strong>Data</strong></td><td data-label="In the case">A century of box scores every team also had</td><td data-label="The lesson">Advantage came from the question asked, not the data held</td></tr>
+<tr><td data-label="Component"><strong>Networks</strong></td><td data-label="In the case">Published statistics, available to every rival</td><td data-label="The lesson">Shared data means information advantages are temporary</td></tr>
+<tr><td data-label="Component"><strong>People</strong></td><td data-label="In the case">Beane choosing the model over a century of consensus</td><td data-label="The lesson">The scarce component was the willingness to trust a better measure</td></tr>
+</table>
+
+<h3>What happened after everybody caught up</h3>
+
+<p>Chapter 3 predicted the ending of this story before you read it. An advantage built on information
+lasts exactly as long as the information stays scarce, and this one did not stay scarce, because
+Michael Lewis published a book explaining it.</p>
+
+<p>Boston hired the same kind of thinking and won the 2004 World Series, ending an eighty-six-year
+drought. Within about a decade every club in the league employed analysts, and the analytics
+departments that were novelties in 2002 became standard staffing. Once every team measured correctly,
+measuring correctly stopped being an edge, and the advantage flowed back to the clubs with the most
+money, which now spent it efficiently. Oakland, for its part, never won a World Series under Beane, and
+by the 2020s was among the lowest-payroll teams in the sport and left the city entirely.</p>
+
+<p>Then something happened that no chapter in this book has shown you yet: the analysis worked so well
+that the industry changed the rules to stop it.</p>
+
+<p>Teams had used the data to reposition fielders, moving three infielders to one side of the diamond
+against hitters whose spray charts said they almost always hit there. It worked. It also removed base
+hits that fans had paid to see, and the sport's offensive numbers fell. Before the 2023 season Major
+League Baseball banned the practice, requiring two infielders on each side of second base. Batting
+averages on balls in play rose the following year.</p>
+
+<p>Sit with that for a moment, because it generalizes further than baseball. An analytics program
+succeeded, its conclusions were adopted by everyone, the aggregate result was a worse product for the
+customer, and the governing body outlawed the conclusion. You will meet the same shape in Week 8 with
+credit scoring and in Week 10 with recommendation systems: the question of what happens when
+optimization works, everyone does it, and the thing being optimized was not the thing anybody actually
+wanted.</p>
+
+<h2 id="other"><span class="num">05</span>The other side: being measured</h2>
 
 <p>The Moneyball story has winners it celebrates and costs it mentions quietly. The A's model worked
 partly by overruling scouts, professionals with decades of pattern-recognition that resisted
@@ -551,27 +730,7 @@ to the largest payrolls, now spending efficiently. Measuring right is necessary.
 own, sufficient, and it is never permanent. You will see the same pattern next week when every
 retailer learns to mine its data and the question becomes who has more of it.</p>
 
-<h2 id="s9"><span class="num">09</span>The five components of the 2002 A's</h2>
-
-<table class="sumtable">
-<tr><th>Component</th><th>In the case</th><th>The lesson</th></tr>
-<tr><td><strong>Hardware</strong></td><td>A laptop and commodity computers; nothing exotic</td><td>The BI revolution was not a hardware story</td></tr>
-<tr><td><strong>Software</strong></td><td>Spreadsheets and statistical models on public data</td><td>The model encodes the insight; the tool is replaceable</td></tr>
-<tr><td><strong>Data</strong></td><td>A century of box scores every team also had</td><td>Advantage came from the question asked, not the data held</td></tr>
-<tr><td><strong>Networks</strong></td><td>Published statistics, available to every rival</td><td>Shared data means information advantages are temporary</td></tr>
-<tr><td><strong>People</strong></td><td>Beane choosing the model over a century of consensus</td><td>The scarce component was the willingness to trust a better measure</td></tr>
-</table>
-
-<h2 id="s10"><span class="num">10</span>Summary and vocabulary</h2>
-
-<table class="sumtable">
-<tr><th>Idea</th><th>This chapter's version</th><th>Where you meet it next</th></tr>
-<tr><td><strong>Four kinds of analytics</strong></td><td>Descriptive to prescriptive; each rung changes decisions, not reports</td><td><a href="lab6-tableau.html">Lab 6's dashboard</a></td></tr>
-<tr><td><strong>Proxy metrics</strong></td><td>Batting average vs. OBP; revenue vs. attach rate</td><td>The co-op memo, and every KPI you ever inherit</td></tr>
-<tr><td><strong>Market inefficiency</strong></td><td>A mismeasured quality is a mispriced asset</td><td>Ch 3's five forces, revisited with data</td></tr>
-<tr><td><strong>Goodhart's law</strong></td><td>Targets corrupt their own measures</td><td>The Monday activity</td></tr>
-<tr><td><strong>The BI stack</strong></td><td>Operational systems feed a warehouse; dashboards sit on top</td><td>Cloud warehouses, Week 10</td></tr>
-</table>
+<h2 id="vocab"><span class="num">06</span>Vocabulary</h2>
 
 <dl class="vocab">
 <div><dt>Business intelligence (BI)</dt><dd>Systems and practices that turn organizational data into decision-ready information.</dd></div>
@@ -615,20 +774,33 @@ retailer learns to mine its data and the question becomes who has more of it.</p
   about, then judge for yourself which would survive this chapter's validity test.</p></div>
 </div>
 
-<h2 id="questions"><span class="num">11</span>Discussion questions</h2>
+<h2 id="discussion"><span class="num">07</span>Discussion questions</h2>
 <p>None of these get handed in. On Wednesday you run the discussion and I steer it, which means the
 class is only as good as what you walk in with. Read the chapter, pick the question you have the
 strongest opinion about, and be ready to say it first.</p>
 
 <ol class="dq">
-<li>Make the best case that batting average was a <em>reasonable</em> metric for a century, then explain what changed. Was the industry stupid, or was the metric serving a purpose other than predicting wins?<span class="tag tag-open">Judgment</span></li>
-<li>The A's advantage came from better measurement of public data, and it decayed within a few years. Using Chapter 3's five forces, explain why information advantages erode faster than most, and name one kind that erodes slowly.<span class="tag tag-open">Connect</span></li>
-<li>Find the OBP of another industry: a widely used headline metric with weak validity, and the better measure hiding in the same data. Defend your pick. (Followers, box office, GPA, and steps counted are all fair game.)<span class="tag tag-warm">Apply</span></li>
-<li>Give a real example of Goodhart's law from your own work, school, or consumer life, and design the counter-metric that would catch the gaming without creating a new target to game.<span class="tag tag-hard">Design</span></li>
-<li>Beane said his approach could not be counted on in a five-game series. A startup founder tells you their product works because sales doubled last month. Write the three questions this chapter trains you to ask before believing either claim.<span class="tag tag-open">Analyze</span></li>
-<li>At Cascadia, revenue was the batting average and attach rate was the OBP. Propose one more metric the co-op should track that no standard retail report includes, and say what decision it would change.<span class="tag tag-warm">Apply</span></li>
-<li>The analytics wave displaced scouts whose expertise resisted quantification. When should an organization trust the model over the expert, and when the reverse? Give one rule, not a platitude, and stress-test it against both the A's and a hospital.<span class="tag tag-hard">Judgment</span></li>
-<li>Your Lab 6 dashboard, like every dashboard, has a blind spot: something about the co-op it cannot reveal. Name it, and say what it would take to see it.<span class="tag tag-open">Reflect</span></li>
+  <li>Name a metric your employer, your school, or a team you belong to reports regularly. Say what it
+  is a proxy for, then say one specific way the metric could improve while the thing it stands for got
+  worse. <span class="tag">Apply</span></li>
+
+  <li>The A's had no more data than any other team and no better technology. Explain to somebody who has
+  not read this chapter where the advantage actually came from, and then say why Chapter 3 would have
+  predicted it could not last. <span class="tag">Systems</span></li>
+
+  <li>Put the three failures in section 03 in order of how much damage a wrong answer caused, then
+  explain what determines that order. It is not accuracy. Name what it is, and give an example from your
+  own experience of a number that moved up that scale. <span class="tag">Analyze</span></li>
+
+  <li>Cascadia's revenue looked fine on every standard report while the member attach rate was
+  collapsing. Design the dashboard that would have caught it: name the three numbers on it, say who
+  looks at it and how often, and say what each one is a proxy for. <span class="tag">Apply</span></li>
+
+  <li>Baseball banned the defensive shift in 2023 because the analysis worked: teams optimized
+  correctly and the game got worse to watch. Was that ban a reasonable act or an admission that the
+  sport did not like the answer? Argue one side, then state the strongest objection to your own
+  position, and say what the equivalent decision would look like inside a company.
+  <span class="tag tag-hard">Ethics</span></li>
 </ol>
 
 <h2><span class="num">12</span>Sources and further reading</h2>
@@ -640,6 +812,58 @@ strongest opinion about, and be ready to say it first.</p>
 </ul>
 
 <p style="margin-top:2.5rem"><a href="lab6-tableau.html">Lab 6, Data Visualization with Tableau, runs this week &#8594;</a></p>
+
+
+<h2 id="lab"><span class="num">08</span>From lecture to lab</h2>
+
+<div class="callout callout-bridge"><strong>Week 6 &middot; Lab 6</strong>
+<p>This chapter argues that the work is choosing the measure and putting it where decisions get made.
+<a href="lab6-tableau.html"><strong>Lab 6: Tableau</strong></a> is the second half of that sentence.</p>
+<p>You already found Cascadia's real problem in Lab 5, in a pivot table, by digging. This week you build
+the view that would have made it impossible to miss in the first place. Keep mini-case 1 in mind while
+you do it: the Challenger engineers had the right data and the wrong picture, and the picture is what
+the room saw.</p>
+  <a class="lablink" href="lab6-tableau.html">Go to Lab 6 &#8594;</a>
+</div>
+
+<h2 id="sources"><span class="num">09</span>Sources and further reading</h2>
+<ul class="sources">
+<li>Michael Lewis, <em>Moneyball: The Art of Winning an Unfair Game</em> (2003), for the 2002 season, the payroll gap, Hatteberg and Bradford, and the front office argument. Read it as a source with a point of view rather than a neutral record.</li>
+<li>Bill James's <em>Baseball Abstract</em> series, for the sabermetric work that preceded the A's by two decades and which they were the first to act on at scale.</li>
+<li>Contemporary reporting and league records for the 103-win season, the twenty-game streak, and the payroll figures, which vary slightly between sources depending on what is counted.</li>
+<li>Edward Tufte's analysis of the Challenger pre-launch charts in <em>Visual Explanations</em> (1997), and the Rogers Commission report (1986), for mini-case 1. Tufte's reading has been debated; the uncontested part is that the presented charts did not plot damage against temperature across all flights.</li>
+<li>David Lazer, Ryan Kennedy, Gary King and Alessandro Vespignani, "The Parable of Google Flu: Traps in Big Data Analysis," <em>Science</em>, 14 March 2014, for the overestimation figures in mini-case 2.</li>
+<li>Zillow's November 2021 announcement and contemporary reporting, for the closure of Zillow Offers, the writedowns of up to $569 million, and the workforce reduction.</li>
+<li>Major League Baseball's 2023 rule changes and subsequent reporting on their effect, for the shift restriction described at the end of section 04.</li>
+</ul>
+
+<h2 id="teaching"><span class="num">10</span>Teaching notes</h2>
+<p style="font-family:var(--sans);font-size:.95rem;color:var(--muted)">Written for whoever is running the sessions. Students are welcome to read them, but nothing here is required.</p>
+
+<div class="plan"><div class="plan-head">Monday session plan &middot; 80 minutes &middot; concepts, with the three failures as illustrations</div>
+<table>
+<tr><td class="t">0:00</td><td class="w">Open</td><td>Put two payroll numbers on the board, $41 million and $125 million, and ask what a fair season between those two teams looks like. Then say the cheap one won more games and stop. Do not explain. You are coming back to it on Wednesday.</td></tr>
+<tr><td class="t">0:05</td><td class="w">Lecture</td><td>What BI is and is not, then the four kinds of analytics walked on one example the room knows, such as last month's sales. Make them say which rung each question sits on before you tell them.</td></tr>
+<tr><td class="t">0:18</td><td class="w">Lecture</td><td>Metrics, proxies and measurement validity, using batting average against on-base percentage. The line to land is that almost every metric is a proxy, and the job is asking whether the proxy tracks the thing. Then apply it out loud: a store's revenue is a batting average.</td></tr>
+<tr><td class="t">0:32</td><td class="w">Lecture</td><td>Correlation, causation and sample size, then Goodhart's law. Goodhart is the one they will use most in their careers, so spend the time and collect examples from the room before you give yours.</td></tr>
+<tr><td class="t">0:46</td><td class="w">Lecture</td><td>The BI stack: operational systems, warehouse, dashboard, self-service tools. Connect it straight to Lab 7's database and this week's Tableau lab, and to why analysis runs on a copy.</td></tr>
+<tr><td class="t">0:56</td><td class="w">Cases 1&#8211;3</td><td>Challenger, Google Flu, Zillow, about two and a half minutes each. Name the rung and the component and stop. The comparison is the activity. If time is short, Zillow alone will do the work, because the jump from advice to spending is the one students feel.</td></tr>
+<tr><td class="t">1:04</td><td class="w">Think-pair-share</td><td>A metric that made a business worse. See the activity in section 06. Protect the silent minutes; the good examples come from their own jobs and take a moment to surface.</td></tr>
+<tr><td class="t">1:18</td><td class="w">Close</td><td>Point them at section 04 and the discussion questions. Tell them Wednesday answers the payroll question from the opening.</td></tr>
+</table></div>
+
+<div class="plan"><div class="plan-head">Wednesday session plan &middot; 80 minutes &middot; the Oakland case</div>
+<table>
+<tr><td class="t">0:00</td><td class="w">Open</td><td>Return to Monday's two payroll numbers and ask how a team spending a third as much wins more games. Collect answers on the board. Somebody will say better scouting or luck. Leave both up there.</td></tr>
+<tr><td class="t">0:07</td><td class="w">Walk the case</td><td>The lost players, the question Beane and DePodesta asked, and the answer sitting in a box score everyone already had. The sentence to repeat is that they had no more data than anyone else, which is what makes this a measurement story rather than a data story.</td></tr>
+<tr><td class="t">0:22</td><td class="w">The arbitrage</td><td>Mispriced players as an information advantage. Run it against Chapter 3's three legs explicitly and let the room work out which one was always going to fail.</td></tr>
+<tr><td class="t">0:34</td><td class="w">The five components</td><td>Ask what technology the A's had. The answer is public data and a laptop, and that is the point: no component here was expensive or rare, and the advantage lived in the question.</td></tr>
+<tr><td class="t">0:42</td><td class="w">After everyone caught up</td><td>The decay, then the 2023 shift ban. Ask why a league would outlaw a correct conclusion, and push until somebody says that optimizing the metric made the product worse. That is Goodhart from Monday, at the scale of an entire industry.</td></tr>
+<tr><td class="t">0:52</td><td class="w">Think</td><td>All five discussion questions on screen. Silent individual work, one sentence on at least two. Protect this step.</td></tr>
+<tr><td class="t">0:58</td><td class="w">Pair</td><td>Groups of three or four settle on positions they can defend. Circulate for a group that landed somewhere unusual on the shift ban or on being measured, and call on them first.</td></tr>
+<tr><td class="t">1:08</td><td class="w">Share</td><td>Groups take the questions in front of the room. Ask for disagreement rather than answers.</td></tr>
+<tr><td class="t">1:17</td><td class="w">Close and bridge</td><td>Back to the opening board: does anyone still think it was luck? Then preview the lab, and Chapter 9, where the model stops being a spreadsheet and starts learning from the data on its own.</td></tr>
+</table></div>
 
 </main>
 <!--NAVJS-->
