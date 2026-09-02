@@ -367,8 +367,8 @@ li{margin-bottom:.45rem}
 </header>
 <p class="lede">Every chart you built in Lab 4 says Cascadia is healthy. The board thinks
   something is wrong anyway, and they have sent you a memo asking you to settle it. Part A rehearses the
-  three tools you will need. Part B hands you the memo and gets out of the way, which is the closest thing
-  in this course to the work itself.</p>
+  tools you will need. Part B hands you the memo, which asks for six specific numbers and then for your
+  recommendation. The numbers are the easy part.</p>
   <p>Work from the clean data: <a href="cascadia-sales-2025.xlsx">cascadia-sales-2025.xlsx</a>.</p>
 
 <div id="steps">
@@ -470,53 +470,56 @@ which is the lesson.)</li>
 </div></details>
 <h2><span class="num">Part B</span>The mini project: answer the board</h2>
 
-<p>Everything in Part A was rehearsal. From here the direction comes from you. Nobody will tell you which
-number to compute, and working that out is the assignment.</p>
+<p>Everything in Part A was rehearsal. The board's memo below asks for six numbers and then for your
+judgment about what they mean. Work through the six in order; each one is a checkpoint.</p>
 
 <div class="callout callout-caution"><strong>Memo from the board of directors</strong>
-<p><em>"Our membership office brought us two problems this quarter, both from our North Cascades region.
+<p><em>"Our membership office brought us two problems this quarter, both in our North Cascades region.
 Far fewer members there claimed their annual dividend than we expected, and fewer of them answered our
 member survey than in any of the last three quarters.</em></p>
 <p><em>Finance does not think anything is wrong. Revenue in that region is on plan and store traffic looks
-normal. Membership thinks something is badly wrong. We cannot tell which of them is right, because we do
-not own a system that connects the two.</em></p>
-<p><em>What we do own is every sale from 2025. Use it to answer four things. Is membership right? If they
-are, which store is it? How bad is it, in numbers? And what would it take to fix?"</em></p></div>
-
-<div class="callout"><strong>Two things the memo does not tell you</strong>
-<p><strong>You do not have the dividend or survey data.</strong> Those numbers came from the membership
-office's own systems, and you will not find them in your workbook. Do not go looking. They are the reason
-the board is asking, not the evidence you answer with.</p>
-<p><strong>The answer is in the sales file you already have.</strong> Every sale record says which store
-it happened at and whether a member was attached to it. That second column is the one nobody has been
-looking at.</p></div>
-
-<div class="callout callout-good"><strong>What you hand in</strong>
-<p>A one-page memo back to the board, with four parts:</p>
+normal.</em></p>
+<p><em>We think the two sides are measuring different things. Every sale we ring up either has a member
+attached to it or does not, and nobody has ever looked at that by store. Please do that now, and tell
+us:</em></p>
 <ol>
-<li><strong>The finding.</strong> Which store, and what is wrong there. (Checkpoint 3)</li>
-<li><strong>Its size.</strong> The numbers that show how bad it is and how it compares to the other
-seven stores. (Checkpoints 4, 5 and 6)</li>
-<li><strong>Why nobody caught it.</strong> One short paragraph on why the reports the co-op already runs
-would never have shown this.</li>
-<li><strong>One recommendation, costed.</strong> What would have to change, and by how much. (Checkpoint 8)</li>
+<li><em>For each of our eight stores, the share of its sales that had a member attached. Call that the
+store's <strong>member attach rate</strong>.</em></li>
+<li><em>Which store has the lowest attach rate, and what that rate is.</em></li>
+<li><em>What the next-lowest store's rate is, so we know whether the first store is unusual or whether
+we have a problem everywhere.</em></li>
+<li><em>At the lowest store, how many sales in 2025 had no member attached at all.</em></li>
+<li><em>Which other store's total revenue is closest to that store's. We want to understand why this
+never showed up in a revenue report.</em></li>
+<li><em>How many of that store's non-member sales would have had to become member sales to bring its
+attach rate to 87 percent, which is roughly where the rest of the co-op sits.</em></li>
 </ol>
-<p>The checkpoints below walk the same path in the same order, so if you clear them in sequence you will
-have every number the memo needs.</p></div>
+<p><em>Then write us one page: what you found, why our existing reports missed it, and what you
+recommend we do about it."</em></p></div>
 
-<div class="callout callout-bridge"><strong>Three rules</strong>
+<div class="callout callout-good"><strong>What to hand in</strong>
+<p><strong>The six numbers</strong> go in Checkpoints 3 through 8 below, in the same order the board
+asked for them, and on your Analyst tab as live formulas.</p>
+<p><strong>The one-page memo</strong> is the graded thinking, and it has three parts:</p>
 <ol>
-<li>Everything you need is in the sales data you already have.</li>
-<li>"Revenue is on plan" is in the memo because it is true. Believe it, then ask what it hides.</li>
-<li>If you get stuck, open the guided path below. Using it is part of the method, not a shortcut.</li>
-</ol></div>
+<li><strong>What you found.</strong> Two or three sentences. Which store, what its attach rate is, and
+how far that is from everywhere else.</li>
+<li><strong>Why the existing reports missed it.</strong> One short paragraph. Your answer to Checkpoint 7
+is the clue: this store's revenue looks entirely normal next to its neighbours, so every revenue report
+the co-op runs shows it as healthy.</li>
+<li><strong>What you recommend.</strong> One action, with the number from Checkpoint 6 attached to it, so
+the board knows what it is buying.</li>
+</ol>
+<p>One thing you will <strong>not</strong> find: the dividend and survey numbers from the memo. Those
+came from the membership office's own systems and are not in your workbook. They are why the board is
+asking, not the evidence you answer with.</p></div>
 
-<details class="howto"><summary>Guided path, if you are stuck</summary><div class="howto-body">
-<p>The investigation is meant to be yours, but every tool it needs is one you already own. Work through these steps in order and stop as soon as you have identified the store.</p>
+<details class="howto"><summary>How to compute a member attach rate</summary><div class="howto-body">
+<p>This is the only new calculation in Part B. Everything the board asked for is built from it.</p>
 <ol>
 <li>The board's worry is about <em>members</em>. Get one number per store that measures membership, not revenue: for each store, =COUNTIFS(store, name, is_member,"Y") divided by =COUNTIF(store, name). That ratio is the store's member attach rate. (Your Lab 3 summary block is this table, one column short.)</li>
 <li>Or the pivot version: rows = store, values = count of sale_id, columns = is_member, then compute the Y share per row in the cells beside the pivot.</li>
-<li>Now read the eight rates side by side. Seven of them will be similar. The eighth is your answer to Checkpoint 3, and everything after that is measuring how bad it is.</li>
+<li>Now read the eight rates side by side. Seven of them will be similar and one will not. That is the board’s question 2, and everything after it measures how bad the gap is.</li>
 </ol>
 <p>Using these steps is not cheating; it is the method. The skill being graded is noticing that
 revenue could not answer the board's question and choosing a measure that could.</p>
@@ -586,7 +589,7 @@ b.setAttribute('aria-expanded',o?'true':'false');});})();
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-const LAB="LAB5", QS=[{"q": "Checkpoint 1 \u00b7 Pivot revenue by is_member. Total revenue from member-attached sales, in dollars?", "t": "num", "a": "NjE3NDk5LjY=", "tol": 1, "h": "is_member in Rows, revenue in Values."}, {"q": "Checkpoint 2 \u00b7 What share of all sales lines are member-attached, as a percent to one decimal?", "t": "num", "a": "ODYuMA==", "tol": 0.2, "h": "Count of lines by is_member, then Y / total. Show Values As \u2192 % of Column Total does it in one move."}, {"q": "Checkpoint 3 \u00b7 THE MINI PROJECT BEGINS. Read the board memo above, then investigate. Which store is the problem?", "t": "txt", "a": "QmVsbGluZ2hhbQ==", "h": "The memo says revenue looks fine, so stop looking at revenue. What other measure appears in the memo? Break it out by store."}, {"q": "Checkpoint 4 \u00b7 That store's member attach rate, as a percent to one decimal?", "t": "num", "a": "NTEuNg==", "tol": 0.2, "h": "Pivot: store in Rows, is_member in Columns, count of sale_id in Values, shown as % of Row Total."}, {"q": "Checkpoint 5 \u00b7 The next-lowest store's attach rate, to one decimal?", "t": "num", "a": "ODYuOQ==", "tol": 0.2, "h": "Same pivot. Notice the size of the cliff between last place and second-to-last."}, {"q": "Checkpoint 6 \u00b7 How many sales lines at the problem store have no member attached?", "t": "num", "a": "MTY4", "tol": 0, "h": "Filter or COUNTIFS: store = Bellingham, is_member = N."}, {"q": "Checkpoint 7 \u00b7 Which OTHER store's total revenue is closest to the problem store's? (This is why nobody noticed.)", "t": "txt", "a": "VGFjb21h", "h": "Revenue by store, sorted. The problem store sits comfortably mid-pack. The anomaly is invisible on every chart you built in Lab 4."}, {"q": "Checkpoint 8 \u00b7 Goal Seek thinking: converting how many of the problem store's existing non-member sales to member sales would lift its attach rate to 87%?", "t": "num", "a": "MTIz", "tol": 1, "h": "It has 347 total lines. What member count makes member/total reach 87%? Subtract the current member count. Goal Seek on a small model, or algebra (both are legitimate analyst moves."}];
+const LAB="LAB5", QS=[{"q": "Checkpoint 1 \u00b7 Pivot revenue by is_member. Total revenue from member-attached sales, in dollars?", "t": "num", "a": "NjE3NDk5LjY=", "tol": 1, "h": "is_member in Rows, revenue in Values."}, {"q": "Checkpoint 2 \u00b7 What share of all sales lines are member-attached, as a percent to one decimal?", "t": "num", "a": "ODYuMA==", "tol": 0.2, "h": "Count of lines by is_member, then Y / total. Show Values As \u2192 % of Column Total does it in one move."}, {"q": "Checkpoint 3 \u00b7 Board question 2: which store has the LOWEST member attach rate?", "t": "txt", "a": "QmVsbGluZ2hhbQ==", "h": "The memo says revenue looks fine, so stop looking at revenue. What other measure appears in the memo? Break it out by store."}, {"q": "Checkpoint 4 \u00b7 Board question 2: that store's member attach rate, as a percent to one decimal?", "t": "num", "a": "NTEuNg==", "tol": 0.2, "h": "Pivot: store in Rows, is_member in Columns, count of sale_id in Values, shown as % of Row Total."}, {"q": "Checkpoint 5 \u00b7 Board question 3: the next-lowest store's attach rate, to one decimal?", "t": "num", "a": "ODYuOQ==", "tol": 0.2, "h": "Same pivot. Notice the size of the cliff between last place and second-to-last."}, {"q": "Checkpoint 6 \u00b7 Board question 4: how many sales at that store had no member attached?", "t": "num", "a": "MTY4", "tol": 0, "h": "Filter or COUNTIFS: store = Bellingham, is_member = N."}, {"q": "Checkpoint 7 \u00b7 Board question 5: which OTHER store's total revenue is closest to that store's?", "t": "txt", "a": "VGFjb21h", "h": "Revenue by store, sorted. The problem store sits comfortably mid-pack. The anomaly is invisible on every chart you built in Lab 4."}, {"q": "Checkpoint 8 \u00b7 Board question 6: how many of that store's non-member sales would have to become member sales to reach an 87% attach rate?", "t": "num", "a": "MTIz", "tol": 1, "h": "It has 347 total lines. What member count makes member/total reach 87%? Subtract the current member count. Goal Seek on a small model, or algebra (both are legitimate analyst moves."}];
 const SKEY='mis320_'+LAB;
 let solved=new Set();
 function load(){try{const raw=localStorage.getItem(SKEY);if(!raw)return null;const s=JSON.parse(raw);
