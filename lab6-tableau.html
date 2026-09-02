@@ -369,8 +369,26 @@ li{margin-bottom:.45rem}
   Excel. Tableau exists because that assembly should be faster, and because a real dashboard does
   something an Excel sheet cannot: the pieces talk to each other. Click a region, and every chart
   responds.</p>
-  <p>Download <a href="cascadia-sales-2025.csv"><strong>cascadia-sales-2025.csv</strong></a> and connect
-  Tableau, or free <a href="https://public.tableau.com">Tableau Public</a>, to it.</p>
+  <p>Download <a href="cascadia-sales-2025.csv"><strong>cascadia-sales-2025.csv</strong></a> before you
+  start. Everything below connects Tableau to that one file.</p>
+
+<div class="callout callout-good"><strong>Getting Tableau</strong>
+<p style="font-family:var(--sans);font-size:.95rem"><strong>In the lab:</strong> Tableau Desktop is already
+installed on the Parks Hall computers. Open it from the Start menu and skip to Step 1.</p>
+<p style="font-family:var(--sans);font-size:.95rem"><strong>On your own computer:</strong> download Tableau
+Desktop from <a href="https://www.tableau.com/products/trial/desktop">tableau.com</a> (Windows or Mac)
+and install it. The first time it opens, it asks how you want to license it. Choose <em>Activate with
+a product key</em> and enter:</p>
+<p style="text-align:center;margin:.4rem 0 .6rem"><code class="inline" style="font-size:1.05rem;letter-spacing:.04em">TC75-F274-C950-5606-1891</code></p>
+<p style="font-family:var(--sans);font-size:.95rem">This key is for MIS 320 students this quarter. If it
+does not activate, pick <em>Use Tableau for free</em> on that same screen instead. That is Tableau
+Desktop Free Edition: the same program, no key and no expiry date, and it saves workbooks to your computer.
+The only thing it cannot do is publish to Tableau's cloud, which this lab never asks you to do.</p>
+<p style="font-family:var(--sans);font-size:.95rem">One warning about moving between computers. Tableau
+cannot open a workbook saved by a newer version than itself. If you start at home on the current
+release and the Parks Hall machines are a release behind, the file will not open there. Finish a
+workbook on the same machine you started it on, or carry your CSV and rebuild, which by the end of
+today takes ten minutes.</p></div>
 
 <div id="steps">
 
@@ -412,7 +430,9 @@ the person is or what they need to know, and no software ever will.</p>
 <p>Tableau has a Show Me panel that offers you every chart type it can draw with your fields, and it is
 a trap if you let it choose for you. The logic from Lab 4 still applies. Comparing across categories is
 a bar chart. Change over time is a line. A relationship between two numbers is a scatter. Show Me tells
-you what is possible, not what is right.</p></div>
+you what is possible, not what is right. It is useful for one other thing, though: hover over any
+chart type in Show Me and it lists the fewest fields that chart needs, which is a quick way to learn
+what each chart is made of.</p></div>
 
 <div class="callout"><strong>Email 1 &middot; Monday, 8:47 AM</strong>
 <p style="font-family:var(--sans);font-size:.9rem"><strong>From:</strong> General Manager &middot;
@@ -423,20 +443,27 @@ you what is possible, not what is right.</p></div>
 
 <p><strong>Same rhythm as the Excel labs: the first worksheet we build together, click by click; the
 other four you build from explicit instructions.</strong> Tableau is new to most of you, so nothing
-in Part A assumes you have seen it before.</p>
+in the follow-along assumes you have seen it before.</p>
 
 <h3>Follow along: connect, then your first worksheet</h3>
 <ol>
 <div class="sh" id="step1"><span class="badge">Step 1</span><span class="ttl">Connect</span></div>
-<p>Open Tableau. On the left, under Connect &#8594; To a File,
-click <strong>Text file</strong> and pick <code class="inline">cascadia-sales-2025.csv</code>. The
-Data Source screen opens with the data in a grid.</p>
+<p>Open Tableau. The start screen has a <strong>Connect</strong> column on the left. Under
+<strong>To a File</strong>, click <strong>Text file</strong> and pick
+<code class="inline">cascadia-sales-2025.csv</code>. The Data Source screen opens with the data in a
+grid. (Tableau also ships with a practice dataset called Sample &ndash; Superstore under Saved Data
+Sources. Ignore it today; the co-op's own data is the point.)</p>
 
 <div class="sh" id="step2"><span class="badge">Step 2</span><span class="ttl">Check what Tableau read</span><span class="cpx">Answer goes in <b>Checkpoint 1</b></span></div>
 <p>Look at the column headers: revenue should
 show a <strong>#</strong> (number) and sale_date a calendar icon (date). If either shows
 <strong>Abc</strong> (text), click that icon and change the data type now; fixing types here is much
 easier than fixing them under six charts. Then read the row count at the bottom left of the grid.</p>
+<p>While you are here, learn the two words Tableau uses for every column. A <strong>dimension</strong> is
+a category you slice by: store, region, category, the month of a sale. A <strong>measure</strong> is a
+number you add up: revenue, gross_margin. Tableau shows dimensions in blue and measures in green, and
+every chart you build today is one green thing sliced by one or more blue things. If you can say which
+of your columns are which, you already understand more of Tableau than the menus will teach you.</p>
 
 <div class="cpslot" data-cp="1"></div>
 
@@ -448,10 +475,16 @@ top. Building a chart in Tableau is dragging fields from the pane onto the shelv
 mechanism.</p>
 
 <div class="sh" id="step4"><span class="badge">Step 4</span><span class="ttl">Build the bar chart</span></div>
-<p>Drag <code class="inline">store</code> from the
-Data pane onto the <strong>Rows</strong> shelf. Drag <code class="inline">revenue</code> onto the
-<strong>Columns</strong> shelf; Tableau wraps it as SUM(revenue) automatically and bars appear, one
-per store.</p>
+<p>Start with the measure. Drag <code class="inline">revenue</code> from the Data pane onto the
+<strong>Columns</strong> shelf. Tableau wraps it as SUM(revenue) and draws one bar: the co-op's total
+for the year. One number is not a chart, so slice it. Drag <code class="inline">store</code> onto the
+<strong>Rows</strong> shelf and the single bar splits into one per store.</p>
+<p>Now slice it again, just to see what happens. Drag <code class="inline">category</code> onto Rows,
+to the right of the store pill. Every store breaks out by category. Useful, but that is a different
+question from the one the GM asked, so take it off: drag the category pill off the shelf and back into
+the Data pane. If you ever lose track, the <strong>back arrow</strong> in the toolbar (or Ctrl+Z, Cmd+Z
+on a Mac) walks you back one change at a time. Tableau is safe to experiment in; nothing you do on a
+worksheet touches the data.</p>
 
 <div class="sh" id="step5"><span class="badge">Step 5</span><span class="ttl">Sort it</span></div>
 <p>Click the <strong>sort descending</strong> button in the
@@ -460,8 +493,11 @@ than the Excel version. Read the chart for the second-place store.</p>
 
 <div class="sh" id="step6"><span class="badge">Step 6</span><span class="ttl">Name the sheet</span><span class="cpx">Answer goes in <b>Checkpoint 2</b></span></div>
 <p>Double-click the Sheet 1 tab at the bottom and rename
-it <code class="inline">Revenue by Store</code>. Do this for every sheet you make today; the
-dashboard step will thank you.</p>
+it <code class="inline">Revenue by Store</code>. Do this for every sheet you make today, because the
+dashboard step lists your sheets by name and five tabs called Sheet 1 to Sheet 5 tell you nothing.</p>
+<p>One more trick before you go on. Right-click the tab and choose <strong>Duplicate</strong>. You get a
+copy of this chart on a new tab, which is the fastest way to start a related chart without dragging
+the same fields again. You will use it for the highlight table below.</p>
 
 </ol>
 
@@ -483,12 +519,30 @@ points, connected: the shape of the co-op's year. Read the highest month. <em>Ch
 Columns. To show it as a percent: right-click margin_rate in the Data pane &#8594; Default Properties
 &#8594; Number Format &#8594; Percentage. This is the Moneyball move, charting a ratio the raw data
 does not contain. <em>Checkpoint 4.</em></li>
-<li><strong>Build the highlight table: store by month.</strong> Drag <code class="inline">store</code>
-to Rows and <code class="inline">sale_date</code> to Columns (set to Month, discrete this time, the
-blue section). Drag <code class="inline">revenue</code> onto <strong>Color</strong> on the Marks card,
-and set the Marks dropdown to <strong>Square</strong>. The co-op's whole year on one screen. Click the
-single darkest cell rather than judging by eye, because color is genuinely hard to read precisely, and
-read its value and location from the tooltip. <em>Checkpoints 5 and 6.</em></li>
+<li><strong>Build the highlight table: store by month.</strong> This time start from a copy: right-click
+the <em>Revenue by Store</em> tab and choose <strong>Duplicate</strong>. On the copy, drag
+<code class="inline">sale_date</code> to Columns and set it to Month, but pick the <em>discrete</em>
+Month this time, the one in the blue section of the menu, so you get twelve labeled columns rather than
+a timeline. Now open <strong>Show Me</strong> and click <strong>highlight table</strong>. Tableau
+rearranges the view for you: store and month become the grid, and revenue moves onto
+<strong>Color</strong>. If Show Me put months down the side and stores across the top, click the
+<strong>swap</strong> button in the toolbar (two arrows) so store is on Rows and month is on Columns.
+<p>Look at the <strong>Marks card</strong> on the left. It is the honest record of what the chart is
+made of: which field sets the color, which sets the size, which sets the label. Right now revenue sits
+on Color and nothing is on Label, which is why the cells are colored squares with no numbers. Drag
+<code class="inline">revenue</code> onto <strong>Label</strong>, then click Label and click the
+<strong>...</strong> button beside the text box and type <code class="inline">Revenue: </code> in front
+of <code class="inline">&lt;SUM(revenue)&gt;</code>. A number with no name is a number your reader has to
+guess at.</p>
+<p>Click Color, then <strong>Edit Colors</strong>, and look at the palettes on offer. You will see a
+Red&ndash;Green Diverging option. Leave it. A diverging palette is for values with a meaningful middle,
+such as profit that can go negative, and revenue has no middle: it only goes from small to large. A
+single color running from light to dark is the right choice here, and it has a second advantage:
+roughly one man in twelve cannot tell red from green, so a red&ndash;green chart is a chart some of your
+readers cannot read.</p>
+<p>The co-op's whole year is now on one screen. Click the single darkest cell rather than judging by eye,
+because color is hard to read precisely even when the palette is right, and read its value and location
+from the tooltip. <em>Checkpoints 5 and 6.</em></p></li>
 <li><strong>Build the attach-rate view, the one Cascadia never built.</strong> Create another
 calculated field (Analysis &#8594; Create Calculated Field), name it
 <code class="inline">attach_rate</code>, and type exactly:
@@ -513,8 +567,14 @@ worksheet tabs. Set a size that matches how it will be viewed rather than leavin
 <li><strong>Drag your worksheets in.</strong> Put the chart answering the most important question in the
 top left. Everything you learned about arrangement in Lab 4 applies here.</li>
 <li><strong>Add a filter and apply it everywhere.</strong> This is the step that makes it a dashboard
-rather than a poster. Add region as a filter, then set it to apply to all worksheets using this data
-source. Now changing one dropdown changes every chart at once.</li>
+rather than a poster. Go back to your <em>Revenue by Store</em> worksheet, drag
+<code class="inline">region</code> into the <strong>Filters</strong> shelf above the Marks card, and
+leave every region checked. Right-click the region pill in the Filters shelf and choose <strong>Show
+Filter</strong>; a list of regions appears on the right. Then right-click the pill once more and choose
+<strong>Apply to Worksheets &#8594; All Using This Data Source</strong>. Return to the dashboard: the
+filter is there, and it now controls every chart at once. If you would rather have a dropdown than a
+list of checkboxes, hover over the filter, click the small arrow at its top right, and choose
+<strong>Single Value (dropdown)</strong>.</li>
 <li><strong>Add a dashboard action.</strong> Dashboard menu, then Actions, then Add Action, then Filter.
 Set it so clicking a store in your bar chart filters the other charts to that store. Click Seattle
 Flagship and watch the rest of the screen answer a new question. Nothing in Excel does this.</li>
@@ -531,10 +591,19 @@ reveal. Every dashboard has a blind spot, and the professional skill is not buil
 spots, which is impossible. It is knowing where yours are and saying so out loud.</p></div>
 
 <div class="callout"><strong>If you finish early</strong>
-<p>Put revenue on one axis and margin rate on the other, by category, as a scatter. The A's looked for
-players the market underpriced. A merchant looks for categories earning a high rate on modest volume.
-Which category would you tell Cascadia to promote harder? There is no checkpoint for this and more than
-one defensible answer; your pick and one sentence of reasoning go in the submission note.</p></div></div>
+<p>Build a scatter plot, the chart for a relationship between two numbers. New sheet: drag
+<code class="inline">margin_rate</code> to Rows and <code class="inline">revenue</code> to Columns.
+You get one dot, because Tableau has added everything up. Now use the Marks card to pull it apart. Drag
+<code class="inline">category</code> onto <strong>Color</strong>: one dot per category. Drag
+<code class="inline">store</code> onto <strong>Detail</strong>: one dot per store and category, and
+the pattern spreads out. Click <strong>Shape</strong>, choose the <em>Filled</em> palette, and click
+<strong>Size</strong> to make the marks large enough to see. Finally right-click the empty part of the
+chart, choose <strong>Trend Lines &#8594; Show Trend Lines</strong>, and Tableau draws one line per color.</p>
+<p>Read it the way the A's read a scouting report. They looked for players the market underpriced. A
+merchant looks for categories earning a high rate on modest volume: dots high on the vertical axis and
+left on the horizontal one. Which category would you tell Cascadia to promote harder? There is no
+checkpoint for this and more than one defensible answer; your pick and one sentence of reasoning go in
+the submission note.</p></div></div>
 
 <h2 id="finish"><span class="num">Finish</span>Reflection &amp; certificate</h2>
 
@@ -573,7 +642,7 @@ b.setAttribute('aria-expanded',o?'true':'false');});})();
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-const LAB="LAB6", QS=[{"q": "Checkpoint 1 \u00b7 Connect Tableau to cascadia-sales-2025.csv. How many rows does the data source show?", "t": "num", "a": "Mjg5OQ==", "tol": 0, "h": "Data Source tab, bottom left, after the connection loads."}, {"q": "Checkpoint 2 \u00b7 Worksheet 1. Revenue by store as a sorted bar chart. Which store is SECOND?", "t": "txt", "a": "UG9ydGxhbmQgUGVhcmw=", "h": "Store to Rows, revenue to Columns, then the sort button in the toolbar. Same chart-type logic as Lab 4: comparing a number across separate named places is a bar chart."}, {"q": "Checkpoint 3 \u00b7 Worksheet 2. Revenue by month as a line chart. Which month is highest?", "t": "txt", "a": "SmFudWFyeQ==", "h": "Drag sale_date to Columns and set it to Month. Time on the horizontal axis, connected points, because these values are one continuous story."}, {"q": "Checkpoint 4 \u00b7 Worksheet 3. Create a calculated field: margin_rate = SUM([gross_margin]) / SUM([revenue]). Which category has the highest margin rate?", "t": "txt", "a": "QXBwYXJlbA==", "h": "Analysis menu, then Create Calculated Field. Category to Rows, your new field to Columns, format as a percentage."}, {"q": "Checkpoint 5 \u00b7 Worksheet 4. Build a highlight table: store in Rows, month in Columns, revenue on Color. Click the single darkest cell and read its value off the tooltip. What is it, to the nearest dollar?", "t": "num", "a": "MTczMzg=", "tol": 3, "h": "Colour alone is hard to judge, which is why you click to confirm rather than squinting. The answer is a store-month you might not expect, and it is not January."}, {"q": "Checkpoint 6 \u00b7 Which store and month is that darkest cell? Answer as 'Store Month'.", "t": "txt", "a": "U2VhdHRsZSBGbGFnc2hpcCBTZXB0ZW1iZXI=", "h": "The tooltip tells you both. Note that the co-op's best month overall is January, but its single best store-month is not, which is the kind of thing a highlight table shows and a bar chart cannot."}, {"q": "Checkpoint 7 \u00b7 Worksheet 5, the view Cascadia never built. Store in Rows, and the PERCENT of each store's sales that are member-attached (is_member = 'Y') in Columns. You found this in a pivot table in Lab 5. Which store does the chart make impossible to miss?", "t": "txt", "a": "QmVsbGluZ2hhbQ==", "h": "COUNT(IF [is_member]='Y' THEN 1 END) / COUNT([sale_id]), formatted as a percentage. Watch how much faster your eye catches it here than the pivot table did."}, {"q": "Checkpoint 8 \u00b7 Assemble your five worksheets into a Dashboard, then add region as a filter and apply it to all sheets. Filter to Puget Sound only. What total revenue does your dashboard now show, to the nearest dollar?", "t": "num", "a": "MzE5NjI4", "tol": 5, "h": "Dashboard tab at the bottom, drag your sheets in, then use the filter dropdown and choose Apply to Worksheets, All Using This Data Source. If only one chart changes, the filter is not applied across the dashboard yet."}];
+const LAB="LAB6", QS=[{"q": "Checkpoint 1 \u00b7 Connect Tableau to cascadia-sales-2025.csv. How many rows does the data source show?", "t": "num", "a": "Mjg5OQ==", "tol": 0, "h": "Data Source tab, bottom left, after the connection loads."}, {"q": "Checkpoint 2 \u00b7 Worksheet 1. Revenue by store as a sorted bar chart. Which store is SECOND?", "t": "txt", "a": "UG9ydGxhbmQgUGVhcmw=", "h": "Store to Rows, revenue to Columns, then the sort button in the toolbar. Same chart-type logic as Lab 4: comparing a number across separate named places is a bar chart."}, {"q": "Checkpoint 3 \u00b7 Worksheet 2. Revenue by month as a line chart. Which month is highest?", "t": "txt", "a": "SmFudWFyeQ==", "h": "Drag sale_date to Columns and set it to Month. Time on the horizontal axis, connected points, because these values are one continuous story."}, {"q": "Checkpoint 4 \u00b7 Worksheet 3. Create a calculated field: margin_rate = SUM([gross_margin]) / SUM([revenue]). Which category has the highest margin rate?", "t": "txt", "a": "QXBwYXJlbA==", "h": "Analysis menu, then Create Calculated Field. Category to Rows, your new field to Columns, format as a percentage."}, {"q": "Checkpoint 5 \u00b7 Worksheet 4. Build a highlight table: store in Rows, month in Columns, revenue on Color. Click the single darkest cell and read its value off the tooltip. What is it, to the nearest dollar?", "t": "num", "a": "MTczMzg=", "tol": 3, "h": "Color alone is hard to judge, which is why you click to confirm rather than squinting. The answer is a store-month you might not expect, and it is not January."}, {"q": "Checkpoint 6 \u00b7 Which store and month is that darkest cell? Answer as 'Store Month'.", "t": "txt", "a": "U2VhdHRsZSBGbGFnc2hpcCBTZXB0ZW1iZXI=", "h": "The tooltip tells you both. Note that the co-op's best month overall is January, but its single best store-month is not, which is the kind of thing a highlight table shows and a bar chart cannot."}, {"q": "Checkpoint 7 \u00b7 Worksheet 5, the view Cascadia never built. Store in Rows, and the PERCENT of each store's sales that are member-attached (is_member = 'Y') in Columns. You found this in a pivot table in Lab 5. Which store stands apart from all the others?", "t": "txt", "a": "QmVsbGluZ2hhbQ==", "h": "COUNT(IF [is_member]='Y' THEN 1 END) / COUNT([sale_id]), formatted as a percentage. Watch how much faster your eye catches it here than the pivot table did."}, {"q": "Checkpoint 8 \u00b7 Assemble your five worksheets into a Dashboard, then add region as a filter and apply it to all sheets. Filter to Puget Sound only. What total revenue does your dashboard now show, to the nearest dollar?", "t": "num", "a": "MzE5NjI4", "tol": 5, "h": "Dashboard tab at the bottom, drag your sheets in, then use the filter dropdown and choose Apply to Worksheets, All Using This Data Source. If only one chart changes, the filter is not applied across the dashboard yet."}];
 const SKEY='mis320_'+LAB;
 let solved=new Set();
 function load(){try{const raw=localStorage.getItem(SKEY);if(!raw)return null;const s=JSON.parse(raw);
