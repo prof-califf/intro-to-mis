@@ -382,7 +382,7 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 <p class="lede">Take the receipt from your last coffee or grocery run and count the facts on it. A store
 number, a date, a time, a register, a cashier. Then for every item a name, a quantity, a unit price, a
 line total. Then subtotal, tax, payment type, the last four digits of a card. A modest receipt easily
-holds thirty separate facts, and Walmart produces receipts like it at a rate of roughly 255 million
+holds thirty separate facts, and Walmart produces receipts like it at a rate of roughly 280 million
 customer visits a week.</p>
 
 <div class="callout"><strong>How this chapter runs</strong>
@@ -771,8 +771,8 @@ unthinkable: it gave its data away.</p>
 <p>Four numbers set the scale of what that decision produced:</p>
 
 <div class="stats">
-  <div class="stat"><b>~10,500</b><span>stores worldwide</span></div>
-  <div class="stat"><b>~255M</b><span>customer visits weekly</span></div>
+  <div class="stat"><b>~10,900</b><span>stores worldwide</span></div>
+  <div class="stat"><b>~280M</b><span>customer visits weekly</span></div>
   <div class="stat"><b>200+</b><span>data streams in the Data Caf&eacute;</span></div>
   <div class="stat"><b>40 PB</b><span>of recent transaction data</span></div>
 </div>
@@ -835,7 +835,7 @@ It is what databases are for.</p>
 
 <table class="sumtable stack-sm">
 <tr><th>Component</th><th>At Walmart</th><th>What breaks if it fails</th></tr>
-<tr><td data-label="Component"><strong>Hardware</strong></td><td data-label="At Walmart">Registers and scanners in ~10,500 stores; the servers behind the Data Caf&eacute;</td><td data-label="What breaks if it fails">A store goes dark: no sales recorded, shelves restocked on guesswork</td></tr>
+<tr><td data-label="Component"><strong>Hardware</strong></td><td data-label="At Walmart">Registers and scanners in ~10,900 stores; the servers behind the Data Caf&eacute;</td><td data-label="What breaks if it fails">A store goes dark: no sales recorded, shelves restocked on guesswork</td></tr>
 <tr><td data-label="Component"><strong>Software</strong></td><td data-label="At Walmart">The transaction systems, Retail Link, the analytics platforms</td><td data-label="What breaks if it fails">Suppliers plan against stale numbers; the bullwhip returns</td></tr>
 <tr><td data-label="Component"><strong>Data</strong></td><td data-label="At Walmart">Structured transactions at continental scale; 40 PB of recent history</td><td data-label="What breaks if it fails">A type error or bad key propagates into every report downstream</td></tr>
 <tr><td data-label="Component"><strong>Networks</strong></td><td data-label="At Walmart">Every register streaming to the center; Retail Link reaching thousands of suppliers</td><td data-label="What breaks if it fails">The shared version of the truth stops being shared</td></tr>
@@ -844,10 +844,11 @@ It is what databases are for.</p>
 
 <h3>Where this has gone since, and it is not nostalgia</h3>
 
-<p>Retail Link ran for more than thirty years. Walmart retired it on 1 March 2024 and moved suppliers
-onto a newer platform, first called Luminate and since renamed Scintilla, built by a division created
-around 2020 called Walmart Data Ventures. The name changes are not the interesting part. Three things
-about the move are.</p>
+<p>Retail Link has run for more than thirty years and still does, as the portal where suppliers manage
+orders. What Walmart retired, in 2024, was the reporting inside it. Supplier analytics moved onto a newer
+platform, launched in 2021 as Luminate and renamed Scintilla in 2025, built by a division created in 2021
+called Walmart Data Ventures. The name changes are not the interesting part. Three things about the move
+are.</p>
 
 <p><strong>The data became a business.</strong> In 1991 sharing point-of-sale records was a supply-chain
 decision that happened to involve data. There is now a division whose job is to create value from
@@ -972,15 +973,7 @@ strongest opinion about, and be ready to say it first.</p>
   decide. <span class="tag tag-hard">Ethics</span></li>
 </ol>
 
-<h2><span class="num">13</span>Sources and further reading</h2>
-<ul class="sources">
-<li>Bernard Marr, <a href="https://bernardmarr.com/walmart-big-data-analytics-at-the-worlds-biggest-retailer/">Walmart: Big Data analytics at the world's biggest retailer</a>: the Data Caf&eacute;, the 200+ streams and 40 petabyte figures, the 2.5 petabytes-per-hour cloud reporting, and the grocery pricing story, drawn from his interview with a Walmart analyst.</li>
-<li>SAS Insights, <a href="https://www.sas.com/en_us/insights/articles/analytics/how-walmart-makes-data-work-for-its-customers.html">How Walmart makes data work for its customers</a>: weekly customer volumes, social keyword analysis, and the company's own emphasis on cleansing data first.</li>
-<li>Datafloq, <a href="https://datafloq.com/read/big-data-walmart-big-numbers-40-petabytes/">Big Data at Walmart</a>: platform scale and the integration of internal and external datasets.</li>
-<li>Retail Link's history is documented across decades of supply chain literature; any account of vendor-managed inventory and the Walmart/P&amp;G partnership covers its origins. Note that Walmart's specific figures (petabytes, store counts) shift year to year; treat the numbers here as scale indicators, not current accounting.</li>
-</ul>
 
-<p class="pairline"><a href="lab7-sql.html">Go to Lab 7: SQL &#8594;</a></p>
 
 <h2 id="lab"><span class="num">08</span>From lecture to lab</h2><div class="callout callout-bridge"><strong>Week 7 &middot; Lab 7</strong>
 <p><strong>Monday</strong> covered what data is, why one grid breaks, and how tables and keys replace it.
@@ -998,9 +991,15 @@ that would be impossible in a single grid and are three lines of SQL against a n
 <li>Edgar F. Codd, "A Relational Model of Data for Large Shared Data Banks," <em>Communications of the ACM</em>, June 1970. The paper that defined the model this chapter teaches. Six pages, and readable if you skip the algebra.</li>
 <li>U.S. Census Bureau history pages on Herman Hollerith and the tabulating machine, for the 1888 competition timings, the 1880 tabulation finishing in 1887, and the 1890 count coming in ahead of schedule.</li>
 <li>Contemporary reporting on the Public Health England data loss, September and October 2020, for the 15,841 cases, the .xls row limit, and the untraced contacts. Thiemo Fetzer's Warwick working paper models the downstream effect; its figures are estimates rather than counts.</li>
-<li>Trade reporting on the retirement of Retail Link on 1 March 2024, the Luminate platform and its renaming to Scintilla, Walmart Data Ventures, the 2025 addition of AI tools, and the roughly 140 million households the platform covers. Platform names and figures here change yearly; check them before teaching from them.</li>
+<li>Walmart Data Ventures, "Introducing Scintilla" (February 2025), and trade reporting (Talk Business &amp; Politics, October 2023 and October 2024; Modern Retail, October 2024) on the retirement of the Decision Support reports inside Retail Link during 2024, the Luminate platform (launched September 2021) and its renaming to Scintilla, Walmart Data Ventures (formed February 2021), the 2025 addition of AI tools, and the expansion into Mexico and Canada. Platform names and figures here change yearly; check them before teaching from them.</li>
+<li>Walmart, 2026 Annual Report (April 2026), for the roughly 280 million weekly customer and member visits and the more than 10,900 stores.</li>
 <li>Walmart corporate materials and trade reporting on Retail Link since 1991 and on the Data Caf&eacute;, for the shared point-of-sale data, the data stream count, and the pricing-error story. Walmart's scale figures age quickly; check before teaching from them.</li>
 <li>The Y2K remediation effort is well documented in government and industry retrospectives; the useful framing for this chapter is that the successful ones are the ones nobody remembers.</li>
+<li><strong>Verification note.</strong> Checked against sources in September 2026: the Walmart scale figures (updated to the 2026 annual report), the Retail Link and Luminate/Scintilla timeline (corrected: the portal was not retired; the reporting inside it was, during 2024), the Data Ventures founding date (corrected from "around 2020" to February 2021). The Data Caf&eacute; figures (200 streams, 40 petabytes, 2.5 petabytes an hour) come from 2015 to 2017 coverage and are almost certainly out of date; they are kept as scale indicators from that period, as the text says. Not confirmed from a Walmart source: the "roughly 140 million households" figure for Scintilla's coverage. The Hollerith timings, the 1880 tabulation date, the Public Health England figures, and the Codd history were checked against the authors' knowledge of the published sources rather than re-searched.</li>
+<li>Bernard Marr, <a href="https://bernardmarr.com/walmart-big-data-analytics-at-the-worlds-biggest-retailer/">Walmart: Big Data analytics at the world's biggest retailer</a>: the Data Caf&eacute;, the 200+ streams and 40 petabyte figures, the 2.5 petabytes-per-hour cloud reporting, and the grocery pricing story, drawn from his interview with a Walmart analyst.</li>
+<li>SAS Insights, <a href="https://www.sas.com/en_us/insights/articles/analytics/how-walmart-makes-data-work-for-its-customers.html">How Walmart makes data work for its customers</a>: weekly customer volumes, social keyword analysis, and the company's own emphasis on cleansing data first.</li>
+<li>Datafloq, <a href="https://datafloq.com/read/big-data-walmart-big-numbers-40-petabytes/">Big Data at Walmart</a>: platform scale and the integration of internal and external datasets.</li>
+<li>Retail Link's history is documented across decades of supply chain literature; any account of vendor-managed inventory and the Walmart/P&amp;G partnership covers its origins. Note that Walmart's specific figures (petabytes, store counts) shift year to year; treat the numbers here as scale indicators, not current accounting.</li>
 </ul>
 
 <h2 id="teaching"><span class="num">10</span>Teaching notes</h2>
