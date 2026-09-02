@@ -301,6 +301,30 @@ li{margin-bottom:.45rem}
 .jump:hover{background:var(--magenta-dark);border-color:var(--magenta-dark);color:#fff}
 main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transform:none;letter-spacing:0;color:var(--off-black);margin:2.1rem 0 .55rem;padding-left:.7rem;border-left:3px solid var(--magenta)}
 .pairline{font-family:var(--sans);font-size:.9rem;color:var(--text-light);margin:.4rem 0 0}
+
+.tryit{border:1px solid var(--border);background:var(--white);box-shadow:0 2px 12px rgba(0,0,0,.06);margin:2rem 0;padding:0 0 1rem}
+.tryit-head{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#fff;background:var(--black);padding:.6rem 1rem}
+.tryit-intro{font-family:var(--sans);font-size:.97rem;color:var(--text-muted);margin:.9rem 1rem}
+.tryit-note{font-family:var(--sans);font-size:.9rem;color:var(--text-light);margin:.8rem 1rem 0;border-top:1px solid var(--border);padding-top:.7rem}
+.wrow{border-top:1px solid var(--border);padding:.75rem 1rem;display:grid;grid-template-columns:minmax(0,1fr);gap:.5rem 1rem;align-items:center}
+.wq{font-family:var(--sans);font-size:1rem;color:var(--text-dark)}
+.wbtns{display:flex;gap:.4rem;flex-wrap:wrap}
+.wbtns button{font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--off-white);border:1px solid var(--border);padding:.35rem .55rem;cursor:pointer;color:var(--text-dark)}
+.wbtns button:hover:not(:disabled){background:var(--magenta-pale);border-color:var(--magenta);color:var(--magenta-dark)}
+.wbtns button:disabled{opacity:.4;cursor:default}
+.wbtns button.you{opacity:1}
+.wbtns button.you.right{background:var(--good-pale);border-color:var(--good);color:var(--good)}
+.wbtns button.you.wrong{background:var(--warn-pale);border-color:var(--warn);color:var(--warn)}
+.wout{grid-column:1/-1;font-family:var(--sans);font-size:.95rem;line-height:1.5;padding:.6rem .8rem;border-left:3px solid var(--good);background:var(--good-pale);color:var(--text-dark)}
+.wout.no{border-left-color:var(--warn);background:var(--warn-pale)}
+.objectives{border:1px solid var(--border);border-left:4px solid var(--black);background:var(--off-white);padding:1rem 1.3rem;margin:1.6rem 0}
+.objectives .obj-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.4rem}
+.objectives ol{margin:.2rem 0 0 1.2rem;padding:0}
+.objectives li{margin:.3rem 0;font-size:16.5px;line-height:1.55}
+.takeaways{border:1px solid var(--border);border-left:4px solid var(--magenta);background:#fff;padding:1rem 1.3rem;margin:1.8rem 0}
+.takeaways .obj-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.4rem}
+.takeaways ul{margin:.2rem 0 0 1.2rem;padding:0}
+.takeaways li{margin:.35rem 0;font-size:16.5px;line-height:1.55}
 </style>
 </head>
 <body>
@@ -393,6 +417,17 @@ them worked. Section 04 is the full case. Section 05 asks who software forgets, 
 <p class="jumprow"><a class="jump" href="#robles">Jump to the Robles case &#8594;</a>
 <a class="jump" href="#cases">Jump to the three interfaces &#8594;</a>
 <a class="jump" href="#discussion">Jump to the discussion questions &#8594;</a></p></div>
+
+<div class="objectives"><span class="obj-tag">Learning objectives</span>
+<p>By the end of this chapter you should be able to:</p>
+<ol>
+<li>Distinguish system software from application software, and explain where business software comes from.</li>
+<li>Explain usability and accessibility, and why the interface decides who gets to be a customer.</li>
+<li>Apply the build, buy, or subscribe decision using the differentiator test and total cost of ownership.</li>
+<li>Describe a professional software selection process, from requirements to pilot.</li>
+<li>Explain why the ADA reached the web in Robles v. Domino's, and what the ruling now binds.</li>
+</ol>
+</div>
 
 <h2 id="design"><span class="num">01</span>Software, and the interface that decides who gets in</h2>
 
@@ -506,6 +541,42 @@ one piece that touches the customer experience most. The rule
 scales from a co-op's point-of-sale choice to a $100 billion streaming service without changing
 shape.</p>
 
+
+<div class="tryit" id="bbs">
+  <div class="tryit-head">Try it &middot; Build, buy, or subscribe?</div>
+  <p class="tryit-intro">Five software needs at the Cascadia co-op. Decide what it should do about each one before you check.</p>
+  <div id="bbsrows"></div>
+  <p class="tryit-note">Ask two questions. Is this the thing customers choose us for? If yes, owning it can be worth the cost. If no, is it standard enough that a rented version exists? Subscribe if it is; buy a license if you need it on your own machines.</p>
+</div>
+
+<script>
+(function(){
+  var host=document.getElementById('bbsrows');
+  if(!host)return;
+  var F=["Build", "Buy", "Subscribe"];
+  var R=[{"t": "Payroll for forty employees across three stores.", "a": "Subscribe", "why": "Every company runs payroll and none of them wins customers with it. A rented service that stays current with tax law is the cheapest correct answer."}, {"t": "The member-recognition feature that greets a returning member by name and remembers their last three purchases.", "a": "Build", "why": "This is the thing a co-op offers that a big-box store cannot. Owning it means owning the data underneath it, which is Chapter 3's flywheel."}, {"t": "A spreadsheet program for the finance team.", "a": "Buy", "why": "Commodity software that needs to run on the co-op's own machines, including the ones without reliable internet. A license is the fit; nobody is building a spreadsheet."}, {"t": "Email and calendars for staff.", "a": "Subscribe", "why": "Standard, hosted, and nobody's differentiator. The only decision is which vendor, and the pilot step exists to make it."}, {"t": "A model that predicts which members are about to lapse, using the co-op's own purchase history.", "a": "Build", "why": "The value is in the co-op's data, which no vendor has. The model itself may use rented tools, but the thing that makes it work is owned."}];
+  R.forEach(function(r){
+    var row=document.createElement('div'); row.className='wrow';
+    row.innerHTML='<div class="wq">'+r.t+'</div><div class="wbtns">'
+      +F.map(function(f){return '<button type="button" data-f="'+f+'">'+f+'</button>';}).join('')
+      +'</div><div class="wout" hidden></div>';
+    host.appendChild(row);
+    var bs=row.querySelectorAll('button'), out=row.querySelector('.wout');
+    bs.forEach(function(b){
+      b.addEventListener('click',function(){
+        if(!out.hidden)return;
+        var ok=b.getAttribute('data-f')===r.a;
+        bs.forEach(function(x){x.disabled=true;});
+        b.className='you '+(ok?'right':'wrong');
+        if(!ok) bs.forEach(function(x){ if(x.getAttribute('data-f')===r.a) x.className='you right'; });
+        out.hidden=false; out.className='wout '+(ok?'yes':'no');
+        out.innerHTML='<b>'+r.a+'.</b> '+r.why;
+      });
+    });
+  });
+})();
+</script>
+
 <h2 id="cases"><span class="num">03</span>Three interfaces that decided the outcome</h2>
 <p>Before the case, three short ones. In each, the system underneath worked exactly as built, and the
 interface decided the outcome anyway. That is the claim section 01 makes in the abstract; these are
@@ -560,7 +631,10 @@ routine one sit next to each other with the same confirmation.</div>
 
 <h3>Mini-case 3 &middot; 2024: the app that made the speakers stop working</h3>
 
-<p>Sonos makes wireless speakers that are controlled entirely through its app. In May 2024 it released
+<p>One morning in May 2024, people who owned expensive speakers found that their alarms had not gone
+off, their sleep timers were gone, and in some cases the speakers would not respond at all. Nothing
+in the hardware had changed. Sonos makes wireless speakers that are controlled entirely through its
+app, and that month it released
 a rebuilt version of that app, timed to accompany the launch of its first headphones. The new app was
 missing features customers used every day: sleep timers, editing a queue, searching a local music
 library. Alarms did not fire. Some systems could not be controlled at all. And support for screen
@@ -597,8 +671,10 @@ ended up at the door of the Supreme Court. The interface is where a business mee
 the part of the system a court can see.</p>
 <h2 id="robles"><span class="num">04</span>Robles v. Domino's: the ADA meets the web</h2>
 
-<p>Domino's, the company from Chapter 4, rebuilt itself as "a tech company that happens to sell
-pizza," and by the mid-2010s a large share of its orders arrived through its website and app. That is
+<p>Guillermo Robles tried to order a pizza. He is blind, he uses software that reads a screen aloud,
+and Domino's website and app would not let him finish. Domino's, the company from Chapter 4, had
+rebuilt itself as "a tech company that happens to sell pizza," and by the mid-2010s a large share of
+its orders arrived through its website and app. That is
 the front door Guillermo Robles walked up to. His screen reader converts on-screen text and controls
 into speech, and it works only when software is built with the underlying labels and structure the
 reader needs. Domino's site and app were not. On at least two occasions he could not complete an
@@ -695,6 +771,16 @@ warehouse worker fighting a fifteen-click process, the nurse clicking through sc
 billing department, pay daily for a selection decision they were never consulted on. Section 02's pilot step exists precisely to close that gap. The best single question to ask about
 any software purchase is the one this chapter has been circling: <em>who was in the room when this was
 chosen, and who has to live with it?</em></p>
+
+<div class="takeaways"><span class="obj-tag">Key takeaways</span>
+<ul>
+<li>The interface is the part of the system that decides who gets to be a customer. Everything behind it can work and the front door can still be closed.</li>
+<li>Accessibility is usability's widest circle, and the WCAG guidance was freely available the whole time Domino's argued there were no rules.</li>
+<li>Build your differentiator; buy or subscribe to your commodities. Custom-building a commodity buys you no advantage and all the maintenance.</li>
+<li>Write the requirements before the demo, or the demo will write them for you. Then pilot with real users doing real tasks.</li>
+<li>"There are no rules for this yet" is one of the most expensive sentences in business. The law caught up, unevenly, and the private suits never paused.</li>
+</ul>
+</div>
 
 <h2 id="vocab"><span class="num">06</span>Vocabulary</h2>
 

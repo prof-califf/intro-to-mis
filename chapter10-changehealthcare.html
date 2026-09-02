@@ -301,6 +301,30 @@ li{margin-bottom:.45rem}
 .jump:hover{background:var(--magenta-dark);border-color:var(--magenta-dark);color:#fff}
 main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transform:none;letter-spacing:0;color:var(--off-black);margin:2.1rem 0 .55rem;padding-left:.7rem;border-left:3px solid var(--magenta)}
 .pairline{font-family:var(--sans);font-size:.9rem;color:var(--text-light);margin:.4rem 0 0}
+
+.tryit{border:1px solid var(--border);background:var(--white);box-shadow:0 2px 12px rgba(0,0,0,.06);margin:2rem 0;padding:0 0 1rem}
+.tryit-head{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#fff;background:var(--black);padding:.6rem 1rem}
+.tryit-intro{font-family:var(--sans);font-size:.97rem;color:var(--text-muted);margin:.9rem 1rem}
+.tryit-note{font-family:var(--sans);font-size:.9rem;color:var(--text-light);margin:.8rem 1rem 0;border-top:1px solid var(--border);padding-top:.7rem}
+.wrow{border-top:1px solid var(--border);padding:.75rem 1rem;display:grid;grid-template-columns:minmax(0,1fr);gap:.5rem 1rem;align-items:center}
+.wq{font-family:var(--sans);font-size:1rem;color:var(--text-dark)}
+.wbtns{display:flex;gap:.4rem;flex-wrap:wrap}
+.wbtns button{font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--off-white);border:1px solid var(--border);padding:.35rem .55rem;cursor:pointer;color:var(--text-dark)}
+.wbtns button:hover:not(:disabled){background:var(--magenta-pale);border-color:var(--magenta);color:var(--magenta-dark)}
+.wbtns button:disabled{opacity:.4;cursor:default}
+.wbtns button.you{opacity:1}
+.wbtns button.you.right{background:var(--good-pale);border-color:var(--good);color:var(--good)}
+.wbtns button.you.wrong{background:var(--warn-pale);border-color:var(--warn);color:var(--warn)}
+.wout{grid-column:1/-1;font-family:var(--sans);font-size:.95rem;line-height:1.5;padding:.6rem .8rem;border-left:3px solid var(--good);background:var(--good-pale);color:var(--text-dark)}
+.wout.no{border-left-color:var(--warn);background:var(--warn-pale)}
+.objectives{border:1px solid var(--border);border-left:4px solid var(--black);background:var(--off-white);padding:1rem 1.3rem;margin:1.6rem 0}
+.objectives .obj-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.4rem}
+.objectives ol{margin:.2rem 0 0 1.2rem;padding:0}
+.objectives li{margin:.3rem 0;font-size:16.5px;line-height:1.55}
+.takeaways{border:1px solid var(--border);border-left:4px solid var(--magenta);background:#fff;padding:1rem 1.3rem;margin:1.8rem 0}
+.takeaways .obj-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.4rem}
+.takeaways ul{margin:.2rem 0 0 1.2rem;padding:0}
+.takeaways li{margin:.35rem 0;font-size:16.5px;line-height:1.55}
 </style>
 </head>
 <body>
@@ -392,6 +416,17 @@ graduate actually does, because most of them are not coding jobs.</p>
 <p class="jumprow"><a class="jump" href="#change">Jump to the Change Healthcare case &#8594;</a>
 <a class="jump" href="#cases">Jump to the three attacks &#8594;</a>
 <a class="jump" href="#discussion">Jump to the discussion questions &#8594;</a></p></div>
+
+<div class="objectives"><span class="obj-tag">Learning objectives</span>
+<p>By the end of this chapter you should be able to:</p>
+<ol>
+<li>Explain the three properties security protects (confidentiality, integrity, availability) and why availability comes first in a breach.</li>
+<li>Describe ransomware and double extortion, and explain why paying does not solve the problem.</li>
+<li>Read an attack as a kill chain and name the ordinary controls (MFA, least privilege, segmentation, backups) that break it.</li>
+<li>Explain concentration risk and third-party risk, and why a breach at a supplier is your breach.</li>
+<li>Say who bears the cost of a security failure, and why most of it sits off the company's books.</li>
+</ol>
+</div>
 
 <h2 id="protect"><span class="num">01</span>What security actually protects</h2>
 
@@ -491,6 +526,42 @@ their presence impossible to miss. Two failures, in sequence: a missing lock at 
 nine days of movement inside that nobody detected. Hold that shape; it is the kill chain, and it is
 the next section.</p>
 
+
+<div class="tryit" id="cia">
+  <div class="tryit-head">Try it &middot; Which property was lost?</div>
+  <p class="tryit-intro">Five incidents. Say which of the three properties failed first, before you check.</p>
+  <div id="ciarows"></div>
+  <p class="tryit-note">Confidentiality: the wrong people can see it. Integrity: it was altered without detection. Availability: the people who need it cannot get to it. Most incidents eventually hit more than one; name the first.</p>
+</div>
+
+<script>
+(function(){
+  var host=document.getElementById('ciarows');
+  if(!host)return;
+  var F=["Confidentiality", "Integrity", "Availability"];
+  var R=[{"t": "Ransomware encrypts a hospital's scheduling system. No data leaves the building.", "a": "Availability", "why": "Nothing was stolen and nothing was changed, and the hospital still cannot see its patients. Availability is the property people forget until it is the only one that matters."}, {"t": "An employee's laptop with an unencrypted spreadsheet of customer Social Security numbers is stolen from a car.", "a": "Confidentiality", "why": "The data is intact and the company still has it. The problem is who else has it now."}, {"t": "An attacker changes the bank account number on a supplier's record so the next payment goes to them.", "a": "Integrity", "why": "The record was altered and nothing flagged it. The payment system worked perfectly on a fact that was no longer true."}, {"t": "A denial-of-service attack floods an online store's servers on the busiest shopping day of the year.", "a": "Availability", "why": "No data was touched. The store simply is not there for the customers who came, which on that day is the whole business."}, {"t": "A researcher finds a public web address that returns any patient's records if you guess the ID number.", "a": "Confidentiality", "why": "Nothing changed and nothing went down. Anyone who wants to look, can. This is the kind of exposure that is a breach whether or not anyone has looked yet."}];
+  R.forEach(function(r){
+    var row=document.createElement('div'); row.className='wrow';
+    row.innerHTML='<div class="wq">'+r.t+'</div><div class="wbtns">'
+      +F.map(function(f){return '<button type="button" data-f="'+f+'">'+f+'</button>';}).join('')
+      +'</div><div class="wout" hidden></div>';
+    host.appendChild(row);
+    var bs=row.querySelectorAll('button'), out=row.querySelector('.wout');
+    bs.forEach(function(b){
+      b.addEventListener('click',function(){
+        if(!out.hidden)return;
+        var ok=b.getAttribute('data-f')===r.a;
+        bs.forEach(function(x){x.disabled=true;});
+        b.className='you '+(ok?'right':'wrong');
+        if(!ok) bs.forEach(function(x){ if(x.getAttribute('data-f')===r.a) x.className='you right'; });
+        out.hidden=false; out.className='wout '+(ok?'yes':'no');
+        out.innerHTML='<b>'+r.a+'.</b> '+r.why;
+      });
+    });
+  });
+})();
+</script>
+
 <h2 id="cases"><span class="num">03</span>Three attacks that came in sideways</h2>
 <p>Before the case, three short ones, spread across thirty-five years. Each one entered through
 something the victim did not think of as part of its own system: the network itself, a supplier's
@@ -558,7 +629,9 @@ routinely do not have it despite knowing they should.</div>
 
 <h3>Mini-case 3 &middot; 2023: one flaw in a tool most victims had never bought</h3>
 
-<p>MOVEit Transfer is a product for moving files securely between organizations. It is unglamorous
+<p>In the summer of 2023, employees at British Airways and the BBC learned their personal data had been
+stolen from a piece of software neither company had ever bought. MOVEit Transfer is a product for
+moving files securely between organizations. It is unglamorous
 software, used by around 1,700 organizations to shift payroll files, claims data and records between
 one company and another.</p>
 
@@ -597,9 +670,13 @@ end. It was not the victim that had failed to map its dependencies. It <em>was</
 a third of American healthcare, and almost nobody using it had written that down either.</p>
 <h2 id="change"><span class="num">04</span>Change Healthcare: the day the claims stopped</h2>
 
-<p>Most Americans had never heard of Change Healthcare before February 2024. It is not a hospital or an insurer. It is the plumbing between them: a UnitedHealth Group subsidiary
-that processes roughly 15 billion healthcare transactions a year and touches about one in every
-three US patient records.
+<p>Start at a pharmacy counter on the morning of 21 February 2024. The prescription is filled and
+sitting in the bag. The pharmacist scans it, waits for the insurer to confirm coverage, and the
+screen does nothing. Across the country the same screen is doing nothing in tens of thousands of
+clinics, hospitals, and pharmacies, and almost none of the people staring at it have heard of the
+company that just went dark. Change Healthcare is not a hospital or an insurer. It is the plumbing
+between them: a UnitedHealth Group subsidiary that processes roughly 15 billion healthcare
+transactions a year and touches about one in every three US patient records.
 When a doctor's office submits a claim or a pharmacy checks your coverage, that request very often
 passes through Change Healthcare.</p>
 
@@ -734,6 +811,16 @@ MFA everywhere, segment the network, keep an acquired company's defenses current
 decisions that went unmade. You do not need to write malware to prevent the next one. You need to
 understand the business well enough to insist on the boring controls before the crisis, which is
 precisely the vantage point an MIS degree provides.</p>
+
+<div class="takeaways"><span class="obj-tag">Key takeaways</span>
+<ul>
+<li>A breach is an availability problem before it is a confidentiality problem. The first question is not what was stolen but what stopped.</li>
+<li>Attacks are sequences, and a sequence can be broken at any point. Nearly every breach is a failure to apply a known, boring control.</li>
+<li>One portal without multi-factor authentication was enough. Nine days inside, six terabytes out, and a third of American medicine's cash flow frozen.</li>
+<li>"We depend on one vendor for something we cannot operate without" is a risk every board is now re-examining, and most of them could not have named the vendor before.</li>
+<li>The company weighs its own cost. The patients, the small practices, and the 193 million people are not in the room, which is why security cannot be left to private cost-benefit math alone.</li>
+</ul>
+</div>
 
 <h2 id="vocab"><span class="num">06</span>Vocabulary</h2>
 

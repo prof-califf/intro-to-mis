@@ -301,6 +301,30 @@ li{margin-bottom:.45rem}
 .jump:hover{background:var(--magenta-dark);border-color:var(--magenta-dark);color:#fff}
 main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transform:none;letter-spacing:0;color:var(--off-black);margin:2.1rem 0 .55rem;padding-left:.7rem;border-left:3px solid var(--magenta)}
 .pairline{font-family:var(--sans);font-size:.9rem;color:var(--text-light);margin:.4rem 0 0}
+
+.tryit{border:1px solid var(--border);background:var(--white);box-shadow:0 2px 12px rgba(0,0,0,.06);margin:2rem 0;padding:0 0 1rem}
+.tryit-head{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#fff;background:var(--black);padding:.6rem 1rem}
+.tryit-intro{font-family:var(--sans);font-size:.97rem;color:var(--text-muted);margin:.9rem 1rem}
+.tryit-note{font-family:var(--sans);font-size:.9rem;color:var(--text-light);margin:.8rem 1rem 0;border-top:1px solid var(--border);padding-top:.7rem}
+.wrow{border-top:1px solid var(--border);padding:.75rem 1rem;display:grid;grid-template-columns:minmax(0,1fr);gap:.5rem 1rem;align-items:center}
+.wq{font-family:var(--sans);font-size:1rem;color:var(--text-dark)}
+.wbtns{display:flex;gap:.4rem;flex-wrap:wrap}
+.wbtns button{font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--off-white);border:1px solid var(--border);padding:.35rem .55rem;cursor:pointer;color:var(--text-dark)}
+.wbtns button:hover:not(:disabled){background:var(--magenta-pale);border-color:var(--magenta);color:var(--magenta-dark)}
+.wbtns button:disabled{opacity:.4;cursor:default}
+.wbtns button.you{opacity:1}
+.wbtns button.you.right{background:var(--good-pale);border-color:var(--good);color:var(--good)}
+.wbtns button.you.wrong{background:var(--warn-pale);border-color:var(--warn);color:var(--warn)}
+.wout{grid-column:1/-1;font-family:var(--sans);font-size:.95rem;line-height:1.5;padding:.6rem .8rem;border-left:3px solid var(--good);background:var(--good-pale);color:var(--text-dark)}
+.wout.no{border-left-color:var(--warn);background:var(--warn-pale)}
+.objectives{border:1px solid var(--border);border-left:4px solid var(--black);background:var(--off-white);padding:1rem 1.3rem;margin:1.6rem 0}
+.objectives .obj-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.4rem}
+.objectives ol{margin:.2rem 0 0 1.2rem;padding:0}
+.objectives li{margin:.3rem 0;font-size:16.5px;line-height:1.55}
+.takeaways{border:1px solid var(--border);border-left:4px solid var(--magenta);background:#fff;padding:1rem 1.3rem;margin:1.8rem 0}
+.takeaways .obj-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.4rem}
+.takeaways ul{margin:.2rem 0 0 1.2rem;padding:0}
+.takeaways li{margin:.35rem 0;font-size:16.5px;line-height:1.55}
 </style>
 </head>
 <body>
@@ -395,6 +419,17 @@ lives next to the data center, and what a business graduate does in all of this.
 <a class="jump" href="#cases">Jump to the three answers &#8594;</a>
 <a class="jump" href="#discussion">Jump to the discussion questions &#8594;</a></p></div>
 
+<div class="objectives"><span class="obj-tag">Learning objectives</span>
+<p>By the end of this chapter you should be able to:</p>
+<ol>
+<li>Explain what the cloud is and distinguish infrastructure, platform, and software as a service by who manages what.</li>
+<li>Explain capex to opex, elasticity, and what renting transfers and what it does not.</li>
+<li>Describe concentration risk and lock-in in the cloud, and what a provider's bad morning costs a tenant.</li>
+<li>State what computing costs the planet, using the IEA figures, and who pays for it.</li>
+<li>Explain why Netflix rented nearly everything from a competitor and built the one piece it did not.</li>
+</ol>
+</div>
+
 <h2 id="what"><span class="num">01</span>What the cloud actually is</h2>
 
 <p>This is the last chapter, and it returns to the first component. Chapter 1 listed hardware first and then spent twelve chapters on the other four, because hardware
@@ -473,6 +508,42 @@ putting data-center emissions in the hundreds of millions of tonnes of CO2 per y
 an argument that streaming a show is shameful; a single stream or prompt costs very little. It is an argument that <em>at scale, computing is industry</em>, with industry's bills. The people who plan,
 site, buy, and account for it, which is to say people with business degrees, decide how those bills
 get paid.</p>
+
+
+<div class="tryit" id="layer">
+  <div class="tryit-head">Try it &middot; IaaS, PaaS, or SaaS?</div>
+  <p class="tryit-intro">Five things a company might rent. Say which service layer each one is before you check.</p>
+  <div id="layerrows"></div>
+  <p class="tryit-note">Ask what you still manage. If you install and patch the operating system, it is infrastructure. If you only deploy your code, it is a platform. If you just log in and use it, it is software as a service.</p>
+</div>
+
+<script>
+(function(){
+  var host=document.getElementById('layerrows');
+  if(!host)return;
+  var F=["IaaS", "PaaS", "SaaS"];
+  var R=[{"t": "A virtual server you rent by the hour, on which your team installs its own database and patches the operating system.", "a": "IaaS", "why": "You rented the machine and nothing else. Everything above the hardware is your job, including the thing that goes wrong at 2 a.m."}, {"t": "A hosted environment where your developers upload code and the provider handles the servers, scaling, and operating system.", "a": "PaaS", "why": "You manage the application; the provider manages everything it runs on. You gave up control of the machine to stop worrying about it."}, {"t": "A customer-relationship system your sales team uses in a browser, updated by the vendor without you noticing.", "a": "SaaS", "why": "You log in and use it. The vendor owns the code, the servers, and the upgrade schedule, which is the convenience and the lock-in at once."}, {"t": "Rented storage that your own applications write files to, billed by the gigabyte.", "a": "IaaS", "why": "A raw resource. The provider keeps the disks alive; what goes on them and what reads them is entirely yours, as the 2017 S3 morning proved."}, {"t": "Email and calendars for the whole company, paid per user per month.", "a": "SaaS", "why": "Nobody at your company touches a server or a line of code. It is the purest case of renting the whole stack."}];
+  R.forEach(function(r){
+    var row=document.createElement('div'); row.className='wrow';
+    row.innerHTML='<div class="wq">'+r.t+'</div><div class="wbtns">'
+      +F.map(function(f){return '<button type="button" data-f="'+f+'">'+f+'</button>';}).join('')
+      +'</div><div class="wout" hidden></div>';
+    host.appendChild(row);
+    var bs=row.querySelectorAll('button'), out=row.querySelector('.wout');
+    bs.forEach(function(b){
+      b.addEventListener('click',function(){
+        if(!out.hidden)return;
+        var ok=b.getAttribute('data-f')===r.a;
+        bs.forEach(function(x){x.disabled=true;});
+        b.className='you '+(ok?'right':'wrong');
+        if(!ok) bs.forEach(function(x){ if(x.getAttribute('data-f')===r.a) x.className='you right'; });
+        out.hidden=false; out.className='wout '+(ok?'yes':'no');
+        out.innerHTML='<b>'+r.a+'.</b> '+r.why;
+      });
+    });
+  });
+})();
+</script>
 
 <h2 id="cases"><span class="num">03</span>Three answers to where the computers are</h2>
 <p>Before the case, three short ones. Each is a different answer to the same question, which is the
@@ -686,6 +757,16 @@ company's systems must survive a provider region failing, and what that insuranc
 corporate climate reporting, and regulators and customers are learning to read it. Someone has to
 measure the footprint of systems the company does not own, negotiate greener regions and contracts,
 and answer for the trend line: Chapter 8's measurement-validity problem, with a planet attached.</p>
+
+<div class="takeaways"><span class="obj-tag">Key takeaways</span>
+<ul>
+<li>Renting computers outsources none of the responsibility for the data on them, the software above them, or the decisions about both.</li>
+<li>The three service models differ by where the line of responsibility sits. The higher the layer you rent, the less you manage and the less you can change.</li>
+<li>The landlord's bad morning is your bad morning. Resilience is a business decision about how much insurance to buy, made before the day it is needed.</li>
+<li>At scale, computing is industry, with industry's bills. The people who plan, site, buy, and account for it decide how those bills get paid.</li>
+<li>Build-versus-rent is decided capability by capability. Netflix rented the commodity from its fiercest rival and built the one piece the fire and the typo could not be allowed to touch.</li>
+</ul>
+</div>
 
 <h2 id="vocab"><span class="num">06</span>Vocabulary</h2>
 

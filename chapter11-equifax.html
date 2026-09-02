@@ -301,6 +301,30 @@ li{margin-bottom:.45rem}
 .jump:hover{background:var(--magenta-dark);border-color:var(--magenta-dark);color:#fff}
 main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transform:none;letter-spacing:0;color:var(--off-black);margin:2.1rem 0 .55rem;padding-left:.7rem;border-left:3px solid var(--magenta)}
 .pairline{font-family:var(--sans);font-size:.9rem;color:var(--text-light);margin:.4rem 0 0}
+
+.tryit{border:1px solid var(--border);background:var(--white);box-shadow:0 2px 12px rgba(0,0,0,.06);margin:2rem 0;padding:0 0 1rem}
+.tryit-head{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#fff;background:var(--black);padding:.6rem 1rem}
+.tryit-intro{font-family:var(--sans);font-size:.97rem;color:var(--text-muted);margin:.9rem 1rem}
+.tryit-note{font-family:var(--sans);font-size:.9rem;color:var(--text-light);margin:.8rem 1rem 0;border-top:1px solid var(--border);padding-top:.7rem}
+.wrow{border-top:1px solid var(--border);padding:.75rem 1rem;display:grid;grid-template-columns:minmax(0,1fr);gap:.5rem 1rem;align-items:center}
+.wq{font-family:var(--sans);font-size:1rem;color:var(--text-dark)}
+.wbtns{display:flex;gap:.4rem;flex-wrap:wrap}
+.wbtns button{font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--off-white);border:1px solid var(--border);padding:.35rem .55rem;cursor:pointer;color:var(--text-dark)}
+.wbtns button:hover:not(:disabled){background:var(--magenta-pale);border-color:var(--magenta);color:var(--magenta-dark)}
+.wbtns button:disabled{opacity:.4;cursor:default}
+.wbtns button.you{opacity:1}
+.wbtns button.you.right{background:var(--good-pale);border-color:var(--good);color:var(--good)}
+.wbtns button.you.wrong{background:var(--warn-pale);border-color:var(--warn);color:var(--warn)}
+.wout{grid-column:1/-1;font-family:var(--sans);font-size:.95rem;line-height:1.5;padding:.6rem .8rem;border-left:3px solid var(--good);background:var(--good-pale);color:var(--text-dark)}
+.wout.no{border-left-color:var(--warn);background:var(--warn-pale)}
+.objectives{border:1px solid var(--border);border-left:4px solid var(--black);background:var(--off-white);padding:1rem 1.3rem;margin:1.6rem 0}
+.objectives .obj-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.4rem}
+.objectives ol{margin:.2rem 0 0 1.2rem;padding:0}
+.objectives li{margin:.3rem 0;font-size:16.5px;line-height:1.55}
+.takeaways{border:1px solid var(--border);border-left:4px solid var(--magenta);background:#fff;padding:1rem 1.3rem;margin:1.8rem 0}
+.takeaways .obj-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.4rem}
+.takeaways ul{margin:.2rem 0 0 1.2rem;padding:0}
+.takeaways li{margin:.35rem 0;font-size:16.5px;line-height:1.55}
 </style>
 </head>
 <body>
@@ -392,6 +416,17 @@ product rather than its customers.</p>
 <p class="jumprow"><a class="jump" href="#equifax">Jump to the Equifax case &#8594;</a>
 <a class="jump" href="#cases">Jump to the three failures &#8594;</a>
 <a class="jump" href="#discussion">Jump to the discussion questions &#8594;</a></p></div>
+
+<div class="objectives"><span class="obj-tag">Learning objectives</span>
+<p>By the end of this chapter you should be able to:</p>
+<ol>
+<li>Define IT governance and explain what it decides: who may decide, who must do, who verifies, and who answers.</li>
+<li>Distinguish responsibility from accountability, and explain why accountability cannot be delegated.</li>
+<li>Explain what frameworks like NIST and COBIT provide, and the difference between compliance and security.</li>
+<li>Read a failure for the governance gap: the work that was everyone's responsibility and nobody's accountability.</li>
+<li>Explain why Equifax is different in kind from a retailer losing card numbers, and what that implies about who governs.</li>
+</ol>
+</div>
 
 <h2 id="what"><span class="num">01</span>What governance is</h2>
 
@@ -486,6 +521,42 @@ operated in a regulated industry with real requirements. Compliance regimes are 
 the floor for everyone, but a compliance mindset can actively harm security if it lets an organization
 mistake the paperwork for the protection. The job of good governance is to close that gap, not to
 celebrate the certificate.</p>
+
+
+<div class="tryit" id="acct">
+  <div class="tryit-head">Try it &middot; Responsible or accountable?</div>
+  <p class="tryit-intro">Five people in a company that just had a patch fail. Say which word applies to each one before you check.</p>
+  <div id="acctrows"></div>
+  <p class="tryit-note">Responsible means they do the work. Accountable means they answer for whether it got done, whether or not they touched a keyboard. Several people can be responsible; only one can be accountable.</p>
+</div>
+
+<script>
+(function(){
+  var host=document.getElementById('acctrows');
+  if(!host)return;
+  var F=["Responsible", "Accountable"];
+  var R=[{"t": "The engineer who applies patches to the servers on Tuesday nights.", "a": "Responsible", "why": "Doing the work. If the patch was on the list and got applied, the engineer did the job, whatever happened elsewhere."}, {"t": "The IT director whose name is on the policy that says every critical patch is applied within 48 hours.", "a": "Accountable", "why": "Answers for the outcome. The director did not apply the patch and is still the person who has to explain why it did not land."}, {"t": "The security team that sends out the alert about a new vulnerability.", "a": "Responsible", "why": "A task in the chain. Sending the alert is work; nobody on the team answers for what the recipients did with it."}, {"t": "The auditor who checks once a quarter that the patch list matches what is installed.", "a": "Responsible", "why": "Verification is work too. The auditor is responsible for checking; accountability for the gap the check finds sits with whoever owns the policy."}, {"t": "The chief executive, after the board asks why 147 million records left the building.", "a": "Accountable", "why": "When accountability was never assigned to someone specific, it rolls upward to whoever sits at the top. That is why executives should want it assigned in advance."}];
+  R.forEach(function(r){
+    var row=document.createElement('div'); row.className='wrow';
+    row.innerHTML='<div class="wq">'+r.t+'</div><div class="wbtns">'
+      +F.map(function(f){return '<button type="button" data-f="'+f+'">'+f+'</button>';}).join('')
+      +'</div><div class="wout" hidden></div>';
+    host.appendChild(row);
+    var bs=row.querySelectorAll('button'), out=row.querySelector('.wout');
+    bs.forEach(function(b){
+      b.addEventListener('click',function(){
+        if(!out.hidden)return;
+        var ok=b.getAttribute('data-f')===r.a;
+        bs.forEach(function(x){x.disabled=true;});
+        b.className='you '+(ok?'right':'wrong');
+        if(!ok) bs.forEach(function(x){ if(x.getAttribute('data-f')===r.a) x.className='you right'; });
+        out.hidden=false; out.className='wout '+(ok?'yes':'no');
+        out.innerHTML='<b>'+r.a+'.</b> '+r.why;
+      });
+    });
+  });
+})();
+</script>
 
 <h2 id="cases"><span class="num">03</span>Three failures, three broken links</h2>
 <p>Section 02 defined governance as the answer to four questions: who decides, who does the work, who
@@ -672,6 +743,16 @@ of the Equifax story. It is why the answer to a governance failure this large is
 patch process. It is a public argument about who should be allowed to hold what data about whom, and
 under what obligations. That argument is
 where the next unit, on regulating technology, begins.</p>
+
+<div class="takeaways"><span class="obj-tag">Key takeaways</span>
+<ul>
+<li>Governance is what decides whether the five components are looked after at all. It sounds bureaucratic until you watch its absence.</li>
+<li>Responsibility is the obligation to do the work. Accountability is the obligation to answer for the outcome, and it belongs to one named person or it belongs to nobody.</li>
+<li>A framework turns vague intentions into auditable commitments. Compliance measures whether documented controls exist, not whether every real system is covered every day.</li>
+<li>Equifax's patch failed in the space between teams. A fix existed, was known, was available, and had been ordered. Nobody was accountable that it landed.</li>
+<li>When the people bearing the risk are not the people the company answers to, the market cannot govern the outcome. Governance has to come from somewhere else.</li>
+</ul>
+</div>
 
 <h2 id="vocab"><span class="num">06</span>Vocabulary</h2>
 

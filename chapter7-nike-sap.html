@@ -294,6 +294,30 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
   table.stack-sm td:first-child::before{content:none}
   table.stack-sm td:first-child strong{color:#fff}
 }
+
+.tryit{border:1px solid var(--border);background:var(--white);box-shadow:0 2px 12px rgba(0,0,0,.06);margin:2rem 0;padding:0 0 1rem}
+.tryit-head{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#fff;background:var(--black);padding:.6rem 1rem}
+.tryit-intro{font-family:var(--sans);font-size:.97rem;color:var(--text-muted);margin:.9rem 1rem}
+.tryit-note{font-family:var(--sans);font-size:.9rem;color:var(--text-light);margin:.8rem 1rem 0;border-top:1px solid var(--border);padding-top:.7rem}
+.wrow{border-top:1px solid var(--border);padding:.75rem 1rem;display:grid;grid-template-columns:minmax(0,1fr);gap:.5rem 1rem;align-items:center}
+.wq{font-family:var(--sans);font-size:1rem;color:var(--text-dark)}
+.wbtns{display:flex;gap:.4rem;flex-wrap:wrap}
+.wbtns button{font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--off-white);border:1px solid var(--border);padding:.35rem .55rem;cursor:pointer;color:var(--text-dark)}
+.wbtns button:hover:not(:disabled){background:var(--magenta-pale);border-color:var(--magenta);color:var(--magenta-dark)}
+.wbtns button:disabled{opacity:.4;cursor:default}
+.wbtns button.you{opacity:1}
+.wbtns button.you.right{background:var(--good-pale);border-color:var(--good);color:var(--good)}
+.wbtns button.you.wrong{background:var(--warn-pale);border-color:var(--warn);color:var(--warn)}
+.wout{grid-column:1/-1;font-family:var(--sans);font-size:.95rem;line-height:1.5;padding:.6rem .8rem;border-left:3px solid var(--good);background:var(--good-pale);color:var(--text-dark)}
+.wout.no{border-left-color:var(--warn);background:var(--warn-pale)}
+.objectives{border:1px solid var(--border);border-left:4px solid var(--black);background:var(--off-white);padding:1rem 1.3rem;margin:1.6rem 0}
+.objectives .obj-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.4rem}
+.objectives ol{margin:.2rem 0 0 1.2rem;padding:0}
+.objectives li{margin:.3rem 0;font-size:16.5px;line-height:1.55}
+.takeaways{border:1px solid var(--border);border-left:4px solid var(--magenta);background:#fff;padding:1rem 1.3rem;margin:1.8rem 0}
+.takeaways .obj-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.4rem}
+.takeaways ul{margin:.2rem 0 0 1.2rem;padding:0}
+.takeaways li{margin:.35rem 0;font-size:16.5px;line-height:1.55}
 </style>
 </head>
 <body>
@@ -386,6 +410,17 @@ actually absorbs a failed rollout, and the discussion questions at the end come 
 <a class="jump" href="#cases">Jump to the three refusals &#8594;</a>
 <a class="jump" href="#discussion">Jump to the discussion questions &#8594;</a></p></div>
 
+<div class="objectives"><span class="obj-tag">Learning objectives</span>
+<p>By the end of this chapter you should be able to:</p>
+<ol>
+<li>Explain what an enterprise system is and why it forces one version of the truth on a company.</li>
+<li>Distinguish configuration from customization, and explain why customization compounds forever.</li>
+<li>Compare rollout strategies (big bang, phased, parallel) and say what each one buys and costs.</li>
+<li>Trace a failed rollout to the component that actually broke, using the three mini-cases and Nike.</li>
+<li>Name who pays for a failed rollout, and why change management arrives as a bill when it was not budgeted as a plan.</li>
+</ol>
+</div>
+
 <h2 id="what"><span class="num">01</span>What enterprise systems are</h2>
 
 <p>Chapter 6 argued that the shape you store facts in decides which questions are cheap to ask. This
@@ -449,6 +484,42 @@ one is expensive forever.</p>
 
 
 
+
+<div class="tryit" id="config">
+  <div class="tryit-head">Try it &middot; Configuration or customization?</div>
+  <p class="tryit-intro">Five things a company might do while installing an enterprise system. Decide which each one is before you check.</p>
+  <div id="configrows"></div>
+  <p class="tryit-note">If the vendor built a setting for it, it is configuration. If somebody has to write or change code to make it happen, it is customization, and it will need to be done again at every upgrade.</p>
+</div>
+
+<script>
+(function(){
+  var host=document.getElementById('configrows');
+  if(!host)return;
+  var F=["Configuration", "Customization"];
+  var R=[{"t": "Setting the system's fiscal year to start in July instead of January.", "a": "Configuration", "why": "A switch the vendor expected you to flip. Every company has a fiscal year; the software has a field for it."}, {"t": "Rewriting the order-entry screen so it accepts the company's old twelve-character product codes instead of the vendor's format.", "a": "Customization", "why": "The software now differs from the product every other customer runs. When the vendor ships an upgrade, this screen breaks until somebody rewrites it again."}, {"t": "Choosing which of the vendor's three approval workflows purchase orders will follow.", "a": "Configuration", "why": "Picking from options the vendor built is configuration, even when the choice is important."}, {"t": "Adding code so that the system calculates sales commissions using a formula only this company uses.", "a": "Customization", "why": "The vendor has no field for a formula nobody else uses. This is the kind of change i2 warned Nike to keep under fifteen percent."}, {"t": "Turning off the inventory module because the company does not hold stock.", "a": "Configuration", "why": "Modules are designed to be switched on and off. Not using something the vendor built is the cheapest decision in the whole project."}];
+  R.forEach(function(r){
+    var row=document.createElement('div'); row.className='wrow';
+    row.innerHTML='<div class="wq">'+r.t+'</div><div class="wbtns">'
+      +F.map(function(f){return '<button type="button" data-f="'+f+'">'+f+'</button>';}).join('')
+      +'</div><div class="wout" hidden></div>';
+    host.appendChild(row);
+    var bs=row.querySelectorAll('button'), out=row.querySelector('.wout');
+    bs.forEach(function(b){
+      b.addEventListener('click',function(){
+        if(!out.hidden)return;
+        var ok=b.getAttribute('data-f')===r.a;
+        bs.forEach(function(x){x.disabled=true;});
+        b.className='you '+(ok?'right':'wrong');
+        if(!ok) bs.forEach(function(x){ if(x.getAttribute('data-f')===r.a) x.className='you right'; });
+        out.hidden=false; out.className='wout '+(ok?'yes':'no');
+        out.innerHTML='<b>'+r.a+'.</b> '+r.why;
+      });
+    });
+  });
+})();
+</script>
+
 <h2 id="cases"><span class="num">03</span>Three companies, three refusals</h2>
 <p>Before the case, three companies that installed this class of system and were badly hurt by it. An
 enterprise system makes three demands of the organization that buys it, and each of these companies
@@ -457,7 +528,9 @@ at once.</p>
 
 <h3>Mini-case 1 &middot; 1996: the distributor that could not process its own orders</h3>
 
-<p>FoxMeyer was the fourth-largest pharmaceutical distributor in the United States, moving medicines
+<p>Imagine a warehouse that used to ship hundreds of thousands of orders a day, now shipping a fraction
+of that, with pharmacies calling to ask where their medicines are. FoxMeyer was the fourth-largest
+pharmaceutical distributor in the United States, moving medicines
 from manufacturers to pharmacies and hospitals at a scale of several billion dollars a year. In the
 early 1990s it committed to a new ERP system alongside a heavily automated warehouse, a project meant to
 cut costs enough to serve a very large new customer it had already signed.</p>
@@ -479,8 +552,9 @@ tested, and say what specific number would have told them to renegotiate rather 
 
 <h3>Mini-case 2 &middot; 2021 to 2026: eleven million items that did not match</h3>
 
-<p>Walmart sold the British supermarket chain Asda in 2021 and agreed to keep running its computer
-systems for three years while Asda built its own. Chapter 6 described what those Walmart systems are.
+<p>In 2021 a supermarket chain with hundreds of stores was told, in effect, that the systems it ran on
+belonged to someone else and it had three years to move out. Walmart had sold the British chain Asda
+and agreed to keep running its computer systems for three years while Asda built its own. Chapter 6 described what those Walmart systems are.
 Asda had been living inside them, and now had to move out.</p>
 
 <p>The program was called Project Future, and the scale of it is worth stating: separating more than
@@ -515,8 +589,9 @@ report a month later.</div>
 
 <h3>Mini-case 3 &middot; 2018: seven years, half a billion euros, and back to the old system</h3>
 
-<p>Lidl, the German discount grocery chain, began replacing its own merchandise management system with
-SAP in 2011. SAP publicly named Lidl among its notable customers along the way. In 2018, after seven
+<p>Seven years and half a billion euros into a project, somebody at Lidl had to stand up and recommend
+switching everything back to the old system. Lidl, the German discount grocery chain, had begun
+replacing its own merchandise management system with SAP in 2011. SAP publicly named Lidl among its notable customers along the way. In 2018, after seven
 years and roughly &euro;500 million, Lidl cancelled the project and returned to the system it had been
 trying to replace.</p>
 
@@ -556,9 +631,13 @@ and asked the software to work at a scale and speed nobody had tested. Then, on 
 a big-bang cutover. Then it manufactured shoes based on what came out.</p>
 <h2 id="nike"><span class="num">04</span>Nike: $400 million, huh?</h2>
 
-<p>By the late 1990s Nike was a global company still running on systems it had outgrown. The company
-had 27 different ordering systems scattered around the world, planning cycles of nine months or longer, and
-product that reached stores too early or too late: rarely on time. The answer was the $400 million Nike Supply Chain project: SAP for ERP, Siebel for customer tools,
+<p>Picture a Nike warehouse in the winter of 2001. One aisle is stacked to the ceiling with a shoe
+nobody is buying. Two aisles over, the shelf for the shoe every store is begging for is empty, and
+the factory that makes it is on the other side of the Pacific with a lead time measured in months.
+Nobody in the building did anything wrong. To see how a company arrives at that aisle, go back three
+years. By the late 1990s Nike was a global company still running on systems it had outgrown: 27
+different ordering systems scattered around the world, planning cycles of nine months or longer, and
+product that reached stores too early or too late, rarely on time. The answer was the $400 million Nike Supply Chain project: SAP for ERP, Siebel for customer tools,
 and, first to go live, predictive demand-planning software from i2 Technologies. The goal was to cut
 lead times from nine months to six.</p>
 
@@ -706,6 +785,16 @@ customers and on warehouse crews reconciling inventory by hand. ERP failures are
 money and stock price, because those are the measurable components. The five components framework
 insists on the fifth: somewhere under every failed implementation is a person doing manually, under
 pressure, what the software was supposed to do, and they are rarely in the case study.</p>
+<div class="takeaways"><span class="obj-tag">Key takeaways</span>
+<ul>
+<li>An enterprise system is a data decision wearing a software costume. Buying one means agreeing that every department will record things the same way.</li>
+<li>Configuration sets the switches the vendor built. Customization rewrites the software to match your habits, and every later upgrade has to be rewritten too.</li>
+<li>Integration means one version of the truth becomes mandatory. You gain a company that agrees with itself and lose the ability to be wrong in only one place.</li>
+<li>Nike's software worked. Its data was too fine-grained for the model, its rollout was too fast, and the errors amplified up the supply chain into a warehouse of the wrong shoes.</li>
+<li>The cost of a failed rollout is paid by the people who have to change how they record things, in overtime, and by customers who never see the software at all.</li>
+</ul>
+</div>
+
 <h2 id="vocab"><span class="num">06</span>Vocabulary</h2>
 
 <dl class="vocab">

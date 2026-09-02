@@ -300,6 +300,30 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
   table.stack-sm td:first-child::before{content:none}
   table.stack-sm td:first-child strong{color:#fff}
 }
+
+.tryit{border:1px solid var(--border);background:var(--white);box-shadow:0 2px 12px rgba(0,0,0,.06);margin:2rem 0;padding:0 0 1rem}
+.tryit-head{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#fff;background:var(--black);padding:.6rem 1rem}
+.tryit-intro{font-family:var(--sans);font-size:.97rem;color:var(--text-muted);margin:.9rem 1rem}
+.tryit-note{font-family:var(--sans);font-size:.9rem;color:var(--text-light);margin:.8rem 1rem 0;border-top:1px solid var(--border);padding-top:.7rem}
+.wrow{border-top:1px solid var(--border);padding:.75rem 1rem;display:grid;grid-template-columns:minmax(0,1fr);gap:.5rem 1rem;align-items:center}
+.wq{font-family:var(--sans);font-size:1rem;color:var(--text-dark)}
+.wbtns{display:flex;gap:.4rem;flex-wrap:wrap}
+.wbtns button{font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--off-white);border:1px solid var(--border);padding:.35rem .55rem;cursor:pointer;color:var(--text-dark)}
+.wbtns button:hover:not(:disabled){background:var(--magenta-pale);border-color:var(--magenta);color:var(--magenta-dark)}
+.wbtns button:disabled{opacity:.4;cursor:default}
+.wbtns button.you{opacity:1}
+.wbtns button.you.right{background:var(--good-pale);border-color:var(--good);color:var(--good)}
+.wbtns button.you.wrong{background:var(--warn-pale);border-color:var(--warn);color:var(--warn)}
+.wout{grid-column:1/-1;font-family:var(--sans);font-size:.95rem;line-height:1.5;padding:.6rem .8rem;border-left:3px solid var(--good);background:var(--good-pale);color:var(--text-dark)}
+.wout.no{border-left-color:var(--warn);background:var(--warn-pale)}
+.objectives{border:1px solid var(--border);border-left:4px solid var(--black);background:var(--off-white);padding:1rem 1.3rem;margin:1.6rem 0}
+.objectives .obj-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.4rem}
+.objectives ol{margin:.2rem 0 0 1.2rem;padding:0}
+.objectives li{margin:.3rem 0;font-size:16.5px;line-height:1.55}
+.takeaways{border:1px solid var(--border);border-left:4px solid var(--magenta);background:#fff;padding:1rem 1.3rem;margin:1.8rem 0}
+.takeaways .obj-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.4rem}
+.takeaways ul{margin:.2rem 0 0 1.2rem;padding:0}
+.takeaways li{margin:.35rem 0;font-size:16.5px;line-height:1.55}
 </style>
 </head>
 <body>
@@ -395,6 +419,17 @@ week.</p>
 <p class="jumprow"><a class="jump" href="#walmart">Jump to the Walmart case &#8594;</a>
 <a class="jump" href="#cases">Jump to the three short failures &#8594;</a>
 <a class="jump" href="#discussion">Jump to the discussion questions &#8594;</a></p></div>
+
+<div class="objectives"><span class="obj-tag">Learning objectives</span>
+<p>By the end of this chapter you should be able to:</p>
+<ol>
+<li>Explain what data is, what it takes for a fact to become data, and why unrecorded facts cannot be managed.</li>
+<li>Distinguish structured, unstructured, and semi-structured data, and say which questions each makes cheap.</li>
+<li>Explain primary and foreign keys, and why normalization splits one grid into several tables.</li>
+<li>State the difference between operational (OLTP) and analytical use of data, and why the two are kept apart.</li>
+<li>Describe how Walmart turned its own data into a product for suppliers, and what that decision required of each component.</li>
+</ol>
+</div>
 
 <h2 id="data"><span class="num">01</span>What data actually is</h2>
 
@@ -655,6 +690,42 @@ data for reporting, accepting some duplication in exchange for fast questions. T
 differs by purpose, which is the door into the next two sections: one shape for running the
 business, another for understanding it.</p>
 
+
+<div class="tryit" id="shape">
+  <div class="tryit-head">Try it &middot; Structured, unstructured, or semi-structured?</div>
+  <p class="tryit-intro">Five things a business might store. Decide what shape each one has before you check.</p>
+  <div id="shaperows"></div>
+  <p class="tryit-note">Ask whether every item has the same fields. If yes, it is structured. If it is free text or an image, unstructured. If it has tags but the tags vary from item to item, semi-structured.</p>
+</div>
+
+<script>
+(function(){
+  var host=document.getElementById('shaperows');
+  if(!host)return;
+  var F=["Structured", "Unstructured", "Semi-structured"];
+  var R=[{"t": "Every sale at the register: date, store, product, quantity, price.", "a": "Structured", "why": "Fixed fields, every row the same shape, each field a known type. This is the kind of data databases were invented for."}, {"t": "The voicemail a customer left complaining about a late delivery.", "a": "Unstructured", "why": "Audio with no fields. A person can understand it; a database cannot query it until something has turned it into data."}, {"t": "A product page saved as a web file, with tags for name and price but different extra tags on every product.", "a": "Semi-structured", "why": "Tags give it some structure, but the tags vary between items, so no fixed grid fits it. Most of the web looks like this."}, {"t": "The employee roster: name, hire date, store, hourly rate.", "a": "Structured", "why": "Same fields for every person. That it is about people rather than sales does not change its shape."}, {"t": "Ten thousand photos customers posted of their purchases, each with a caption.", "a": "Unstructured", "why": "The photo is the content and the caption is free text. Counting them is easy; asking what is in them requires a model, which is Chapter 9."}];
+  R.forEach(function(r){
+    var row=document.createElement('div'); row.className='wrow';
+    row.innerHTML='<div class="wq">'+r.t+'</div><div class="wbtns">'
+      +F.map(function(f){return '<button type="button" data-f="'+f+'">'+f+'</button>';}).join('')
+      +'</div><div class="wout" hidden></div>';
+    host.appendChild(row);
+    var bs=row.querySelectorAll('button'), out=row.querySelector('.wout');
+    bs.forEach(function(b){
+      b.addEventListener('click',function(){
+        if(!out.hidden)return;
+        var ok=b.getAttribute('data-f')===r.a;
+        bs.forEach(function(x){x.disabled=true;});
+        b.className='you '+(ok?'right':'wrong');
+        if(!ok) bs.forEach(function(x){ if(x.getAttribute('data-f')===r.a) x.className='you right'; });
+        out.hidden=false; out.className='wout '+(ok?'yes':'no');
+        out.innerHTML='<b>'+r.a+'.</b> '+r.why;
+      });
+    });
+  });
+})();
+</script>
+
 <h2 id="cases"><span class="num">03</span>Three short failures of shape</h2>
 <p>Before the case, three short ones. In every one of them the facts existed, somebody needed an answer
 from those facts, and the answer was blocked by the <em>shape</em> the facts were stored in rather than
@@ -763,7 +834,9 @@ happen to have management consequences. They are management decisions that happe
 technology, and the chapter you are reading is about how to make them well.</p>
 <h2 id="walmart"><span class="num">04</span>Walmart: a company built on a database</h2>
 
-<p>Walmart's founding advantages were about trucks and locations. Its modern advantage was built on
+<p>Imagine being a supplier in 1991 and being handed a login. Behind it is what sold, of your products,
+in every Walmart store, yesterday. No retailer had ever shown a supplier that. Walmart's founding
+advantages were about trucks and locations. Its modern advantage was built on
 the ideas in this chapter, and the pivotal move was one most companies would have considered
 unthinkable: it gave its data away.</p>
 
@@ -892,6 +965,16 @@ cheap too. A company that holds well-structured data about people holds a capabi
 and 11 are about what happens when that capability leaks, and who is supposed to govern it. The
 second question of this course, what does the system make easier, and for whom, applies to a schema
 as much as to an algorithm.</p>
+
+<div class="takeaways"><span class="obj-tag">Key takeaways</span>
+<ul>
+<li>Data is not collected, it is designed. The shape you record facts in decides which questions are cheap, which contradictions are possible, and who can answer without asking you.</li>
+<li>One big grid works for a few hundred rows and breaks at scale, because every repeated fact is a place for two copies to disagree. Normalization puts each fact in exactly one place.</li>
+<li>A key is a promise: this value identifies exactly one thing. Most data failures in this chapter were broken promises about keys and formats, not broken software.</li>
+<li>Registers write data; analysts read a cleaned copy of it. Keeping the two apart is why a heavy query never slows a sale.</li>
+<li>Walmart's data became a business because a supplier could answer its own questions from Walmart's records without asking anyone. The data component carried the load; the other four made it deliverable.</li>
+</ul>
+</div>
 
 <h2 id="vocab"><span class="num">06</span>Vocabulary</h2>
 

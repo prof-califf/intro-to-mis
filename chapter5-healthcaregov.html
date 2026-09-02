@@ -332,6 +332,14 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 .diagram{margin:1.6rem 0;text-align:center}
 .diagram img{border:1px solid var(--border)}
 .diagram figcaption{text-align:left}
+.objectives{border:1px solid var(--border);border-left:4px solid var(--black);background:var(--off-white);padding:1rem 1.3rem;margin:1.6rem 0}
+.objectives .obj-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.4rem}
+.objectives ol{margin:.2rem 0 0 1.2rem;padding:0}
+.objectives li{margin:.3rem 0;font-size:16.5px;line-height:1.55}
+.takeaways{border:1px solid var(--border);border-left:4px solid var(--magenta);background:#fff;padding:1rem 1.3rem;margin:1.8rem 0}
+.takeaways .obj-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.4rem}
+.takeaways ul{margin:.2rem 0 0 1.2rem;padding:0}
+.takeaways li{margin:.35rem 0;font-size:16.5px;line-height:1.55}
 </style>
 </head>
 <body>
@@ -420,6 +428,17 @@ discussion questions at the end come from both.</p>
 <p class="jumprow"><a class="jump" href="#healthcaregov">Jump to the Healthcare.gov case &#8594;</a>
 <a class="jump" href="#cases">Jump to the three short failures &#8594;</a>
 <a class="jump" href="#discussion">Jump to the discussion questions &#8594;</a></p></div>
+
+<div class="objectives"><span class="obj-tag">Learning objectives</span>
+<p>By the end of this chapter you should be able to:</p>
+<ol>
+<li>Explain why requirements are the cheapest place to be wrong, and what feasibility analysis is for.</li>
+<li>Name the phases of the software development life cycle and place a failure in the phase it escaped.</li>
+<li>Distinguish waterfall from agile, and say what each one bets on.</li>
+<li>Write a testable requirement and explain what scope creep does to one.</li>
+<li>Read Healthcare.gov as a failure of analysis and governance rather than of code.</li>
+</ol>
+</div>
 
 <h2 id="why"><span class="num">01</span>Why systems analysis exists</h2>
 
@@ -942,8 +961,10 @@ option costs something.</div>
 
 <h3>Mini-case 3 &middot; 2024: the update that went everywhere at once</h3>
 
-<p>CrowdStrike sells security software that runs deep inside Windows, which is what lets it stop
-attacks and also what makes it dangerous when it is wrong. On 19 July 2024 the company released a
+<p>Early on 19 July 2024, airport check-in screens around the world went blue at the same moment, and
+gate agents reached for pens. CrowdStrike sells security software that runs deep inside Windows,
+which is what lets it stop attacks and also what makes it dangerous when it is wrong. That morning
+the company released a
 routine content update to that software. It went out to customers worldwide at essentially the same
 moment.</p>
 
@@ -1036,7 +1057,10 @@ becomes expensive because it survives.</p>
 three failures. It is all of them at once, at national scale, on a date set by law.</p>
 <h2 id="healthcaregov"><span class="num">04</span>Healthcare.gov: the first day</h2>
 
-<p>Healthcare.gov was the insurance marketplace created by the Affordable Care Act. Residents of the
+<p>On the morning of 2 October 2013, in a government crisis meeting, somebody read out how many people
+had managed to buy insurance through the new federal website on its first day. Six. Across five
+insurers. The site had cost roughly half a billion dollars and millions of people had tried to use
+it. Healthcare.gov was the insurance marketplace created by the Affordable Care Act. Residents of the
 36 states that had not built their own exchange were supposed to come to this one website, compare plans,
 learn whether they qualified for a subsidy, and enroll. The political stakes were enormous: Congress had
 shut down the federal government that same morning in an attempt to defund the law, but the technical
@@ -1216,6 +1240,16 @@ The waiting was done by the public.</p>
 data, and permission to tell the truth about what was broken. The lesson students most reliably take
 from this case is that the difference between the three years and the eight weeks was not talent. It
 was structure, honesty, and the political cover to have both.</p>
+<div class="takeaways"><span class="obj-tag">Key takeaways</span>
+<ul>
+<li>Requirements are the cheapest place to be wrong, because analysis is where you choose which of the five components will be the weak one.</li>
+<li>Every project passes through the same activities. The names vary; the phase a mistake escapes from decides what it costs.</li>
+<li>A requirement nobody can test is not a requirement, it is a hope. Healthcare.gov never had the number of users it was supposed to handle.</li>
+<li>Waterfall bets that you can know everything up front. Agile bets that you cannot, and builds so the plan absorbs learning. Royce, who is credited with waterfall, recommended doing the job twice.</li>
+<li>Modern tooling made every failure in this chapter cheap to prevent. Projects fail anyway, because the tools removed the excuses and left the decisions where they were.</li>
+</ul>
+</div>
+
 <h2 id="vocab"><span class="num">06</span>Vocabulary</h2>
 
 <dl class="vocab">

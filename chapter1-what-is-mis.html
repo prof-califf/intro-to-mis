@@ -320,6 +320,30 @@ li{margin-bottom:.45rem}
 .diagram{margin:1.6rem 0;text-align:center}
 .diagram img{max-width:100%;height:auto;border:1px solid var(--border)}
 .diagram figcaption{text-align:left}
+
+.tryit{border:1px solid var(--border);background:var(--white);box-shadow:0 2px 12px rgba(0,0,0,.06);margin:2rem 0;padding:0 0 1rem}
+.tryit-head{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#fff;background:var(--black);padding:.6rem 1rem}
+.tryit-intro{font-family:var(--sans);font-size:.97rem;color:var(--text-muted);margin:.9rem 1rem}
+.tryit-note{font-family:var(--sans);font-size:.9rem;color:var(--text-light);margin:.8rem 1rem 0;border-top:1px solid var(--border);padding-top:.7rem}
+.wrow{border-top:1px solid var(--border);padding:.75rem 1rem;display:grid;grid-template-columns:minmax(0,1fr);gap:.5rem 1rem;align-items:center}
+.wq{font-family:var(--sans);font-size:1rem;color:var(--text-dark)}
+.wbtns{display:flex;gap:.4rem;flex-wrap:wrap}
+.wbtns button{font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--off-white);border:1px solid var(--border);padding:.35rem .55rem;cursor:pointer;color:var(--text-dark)}
+.wbtns button:hover:not(:disabled){background:var(--magenta-pale);border-color:var(--magenta);color:var(--magenta-dark)}
+.wbtns button:disabled{opacity:.4;cursor:default}
+.wbtns button.you{opacity:1}
+.wbtns button.you.right{background:var(--good-pale);border-color:var(--good);color:var(--good)}
+.wbtns button.you.wrong{background:var(--warn-pale);border-color:var(--warn);color:var(--warn)}
+.wout{grid-column:1/-1;font-family:var(--sans);font-size:.95rem;line-height:1.5;padding:.6rem .8rem;border-left:3px solid var(--good);background:var(--good-pale);color:var(--text-dark)}
+.wout.no{border-left-color:var(--warn);background:var(--warn-pale)}
+.objectives{border:1px solid var(--border);border-left:4px solid var(--black);background:var(--off-white);padding:1rem 1.3rem;margin:1.6rem 0}
+.objectives .obj-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.4rem}
+.objectives ol{margin:.2rem 0 0 1.2rem;padding:0}
+.objectives li{margin:.3rem 0;font-size:16.5px;line-height:1.55}
+.takeaways{border:1px solid var(--border);border-left:4px solid var(--magenta);background:#fff;padding:1rem 1.3rem;margin:1.8rem 0}
+.takeaways .obj-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.4rem}
+.takeaways ul{margin:.2rem 0 0 1.2rem;padding:0}
+.takeaways li{margin:.35rem 0;font-size:16.5px;line-height:1.55}
 </style></head><body>
 <nav class="topnav">
   <div class="topnav-in">
@@ -437,6 +461,17 @@ li{margin-bottom:.45rem}
 <p class="lede">Every December, a music app produces a slideshow about you: your top artist, your
 minutes, your &#8220;listening personality&#8221;. Within hours it is everywhere, posted voluntarily by
 hundreds of millions of people.</p>
+
+<div class="objectives"><span class="obj-tag">Learning objectives</span>
+<p>By the end of this chapter you should be able to:</p>
+<ol>
+<li>Name the five components of an information system and find each one inside a system you use every day.</li>
+<li>Explain why MIS is the business management of technology rather than a technology skill, and how it differs from business analytics.</li>
+<li>Apply the weakest component rule: identify which component a failure lives in before assigning blame.</li>
+<li>Read a system as a loop of dependencies rather than a pile of parts, which this book calls systems thinking.</li>
+<li>Describe what a technology ethnographer does inside an organization, and why that is the job this degree prepares you for.</li>
+</ol>
+</div>
 
 <h2 id="intro"><span class="num">01</span>Why a music app opens a business course</h2>
 
@@ -700,6 +735,42 @@ for the thing to arrive on your phone in December.</p>
 <p>Next week you meet a company running the same five on coffee. By Week 4 you meet companies where a
 component is broken, and you practice locating which one.</p>
 
+
+
+<div class="tryit" id="comp">
+  <div class="tryit-head">Try it &middot; Which component is this?</div>
+  <p class="tryit-intro">Five things you would find inside a campus coffee shop. Name the component each one belongs to before you check.</p>
+  <div id="comprows"></div>
+  <p class="tryit-note">When two answers seem right, ask what would break if this thing disappeared. The component is whatever the rest of the system would miss.</p>
+</div>
+
+<script>
+(function(){
+  var host=document.getElementById('comprows');
+  if(!host)return;
+  var F=["Hardware", "Software", "Data", "Networks", "People"];
+  var R=[{"t": "The tablet at the register that the barista taps to enter your order.", "a": "Hardware", "why": "It is the physical machine. The app running on it is software; the order it captures is data. The tablet itself is the part you could drop."}, {"t": "The rule that a rewards member gets a free drink after ten purchases.", "a": "Software", "why": "A rule the system enforces automatically lives in software. Somebody wrote it down as code, and the register applies it without anyone deciding each time."}, {"t": "The record that you bought a large oat-milk latte at 8:14 on a Tuesday.", "a": "Data", "why": "A captured fact about the world. On its own it decides nothing; it is what every other component exists to collect and use."}, {"t": "The connection that sends your order to the payment processor and gets the approval back.", "a": "Networks", "why": "Anything that moves data between machines or organizations is the network component. When it is down, the register still works and the shop still cannot sell you coffee."}, {"t": "The shift manager who notices the register is charging the wrong price and overrides it by hand.", "a": "People", "why": "Judgment the system does not have. The manager noticed something was wrong, which no other component did, and acted on it."}];
+  R.forEach(function(r){
+    var row=document.createElement('div'); row.className='wrow';
+    row.innerHTML='<div class="wq">'+r.t+'</div><div class="wbtns">'
+      +F.map(function(f){return '<button type="button" data-f="'+f+'">'+f+'</button>';}).join('')
+      +'</div><div class="wout" hidden></div>';
+    host.appendChild(row);
+    var bs=row.querySelectorAll('button'), out=row.querySelector('.wout');
+    bs.forEach(function(b){
+      b.addEventListener('click',function(){
+        if(!out.hidden)return;
+        var ok=b.getAttribute('data-f')===r.a;
+        bs.forEach(function(x){x.disabled=true;});
+        b.className='you '+(ok?'right':'wrong');
+        if(!ok) bs.forEach(function(x){ if(x.getAttribute('data-f')===r.a) x.className='you right'; });
+        out.hidden=false; out.className='wout '+(ok?'yes':'no');
+        out.innerHTML='<b>'+r.a+'.</b> '+r.why;
+      });
+    });
+  });
+})();
+</script>
 
 <h2 id="wrapped"><span class="num">04</span>Spotify Wrapped as an information system</h2>
 
@@ -1008,6 +1079,16 @@ ask it.</p>
 
 <p>You do not get to look at it the easy way anymore. That is the whole point of this course, and it
 starts now.</p>
+
+<div class="takeaways"><span class="obj-tag">Key takeaways</span>
+<ul>
+<li>An information system is hardware, software, data, networks, and people working together. Remove any one and the rest is equipment.</li>
+<li>Most of what decides whether a system works is managerial: what somebody chose to build, what they were willing to spend, and who was made responsible for checking it.</li>
+<li>A system is only as good as its weakest component, and the weakest one is rarely the one you can buy.</li>
+<li>Spotify Wrapped looks like marketing. Underneath it is a year of captured data, a model that had to be judged before it was trusted, hardware warmed up in advance, and people at both ends.</li>
+<li>Your job in this field is to watch how people and technology actually work together, and to decide what fits.</li>
+</ul>
+</div>
 
 <h2 id="course"><span class="num">06</span>How this course works</h2>
 
