@@ -455,9 +455,9 @@ one member, one product. A <strong>field</strong> is one attribute inside it: th
 the price. In a grid, records are rows and fields are columns. This vocabulary sounds trivial until
 you watch it fail.</p>
 
-<p>You are about to watch it fail. In this week's lab, the controller's RAW export hands you prices stored as text with
-dollar signs, so they would not sum; quantities that were blank instead of zero, which are not the
-same thing; and Washington spelled fourteen different ways, so groups split that should have merged.
+<p>You are about to watch it fail. In this week's lab, the controller's RAW export hands you three of these. Prices stored as text with
+dollar signs, so they would not sum. Quantities that were blank instead of zero, which are not the
+same thing. And Washington spelled fourteen different ways, so groups split that should have merged.
 Every one of those problems is a <strong>format</strong> problem: the fact was fine, the
 representation was wrong. "March 3, 2025," "3/3/25," and "2025-03-03" are one fact wearing three
 costumes, and software, which matches representations rather than facts, treats them as three
@@ -506,10 +506,9 @@ once. No sheet survives contact with that.</p>
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">The relational database</span>
 <p>A relational database stores each kind of fact in its own <strong>table</strong>, one table for
 stores, one for products, one for sales, and connects them with keys. A <strong>primary key</strong>
-is a field that uniquely identifies each record in its table: store_id, product_id, sale_id. A
-<strong>foreign key</strong> is a field in one table that holds another table's primary key: each sale
-row carries a store_id and a product_id, which is how a three-field sale row can "know" the store's
-address and the product's supplier without repeating them. Asking questions across tables by matching
+is a field that uniquely identifies each record in its table: store_id, product_id, sale_id. A <strong>foreign key</strong> is a field in one table that holds another table's primary key. Each sale row carries
+a store_id and a product_id, which is how a three-field sale row can "know" the store's address and
+the product's supplier without repeating them. Asking questions across tables by matching
 keys is called a <strong>join</strong>, and it is the move that makes the whole model work.</p></div>
 
 <p>Run the receipt through it. The one big grid becomes a sales table (thin rows: date, store_id,
@@ -548,10 +547,9 @@ founding the company that became Oracle. Codd's employer had the paper, the rese
 and the money, and still arrived late, because it already sold something the paper made obsolete.</p>
 
 <p>Two things worth taking from that. The first is that the thing you are about to be taught as
-self-evident was argued for, against opposition, by a named person, in living memory. The second is a
-pattern you will meet again in Chapter 12 and in the AI chapter: the organization with the most to gain
-from an idea is frequently the one with the most to lose from it, and being right early is worth nothing
-by itself.</p>
+self-evident was argued for, against opposition, by a named person, in living memory. The second is a pattern you will meet again in Chapter 12 and in the AI chapter. The organization
+with the most to gain from an idea is frequently the one with the most to lose from it, and being
+right early is worth nothing by itself.</p>
 
 <figure class="diagram" style="margin:1.9rem auto;max-width:470px">
 <svg viewBox="0 0 470 396" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="nfT nfD"
@@ -624,7 +622,8 @@ place.</desc>
 <circle cx="150" cy="262" r="2.6" fill="var(--magenta)"/><circle cx="246" cy="278" r="2.6" fill="var(--magenta)"/>
 <text x="196" y="232" text-anchor="middle" font-size="8.5" fill="var(--magenta-dark)">foreign key</text>
 
-<text x="10" y="352" font-size="10.5" font-weight="600" fill="var(--magenta-dark)">The phone number now exists in exactly one place.</text>
+<text x="10" y="352" font-size="10.5" font-weight="600" fill="var(--magenta-dark)">The phone number now exists in exactly one place. (That is the whole idea of normalization.
+Everything else in this section is a consequence of it.)</text>
 <text x="10" y="368" font-size="10" fill="var(--muted)">Change it once and every sale that ever referred to it is correct, including the ones from 2019.</text>
 <text x="10" y="384" font-size="10" fill="var(--muted)">A new store can also exist before it has sold anything, which the sheet above made impossible.</text>
 </svg>
@@ -672,7 +671,7 @@ would take about thirteen years, which meant the results would arrive after the 
 to replace them.</p>
 
 <p>Herman Hollerith, who had worked on the 1880 count, proposed something that sounds obvious now and
-was not: give every person a card, and give the card a fixed set of positions, where a hole in a
+was not. Give every person a card, and give the card a fixed set of positions, where a hole in a
 particular place means a particular fact. Sex here. Age there. Occupation there. A machine passes pins
 through the card, the holes complete circuits, and counters advance.</p>
 
@@ -698,15 +697,15 @@ counting fast rather than the electricity.</div>
 <h3>Mini-case 2 &middot; 1999: two digits</h3>
 
 <p>For decades, programmers stored years as two digits. 1965 was 65. This was not carelessness. Storage
-was genuinely scarce and expensive, two characters per date across millions of records was real money,
+was scarce and expensive, two characters per date across millions of records was real money,
 and the people making the choice reasonably assumed their software would be retired long before the
 century turned.</p>
 
 <p>It was not retired. As 2000 approached, the problem was that a system storing years as two digits
 cannot tell 2000 from 1900, so any calculation involving a span of time might produce a negative number,
-a nonsense result, or a confident wrong answer. Governments and companies spent enormous sums auditing
-and correcting code, and the reason so little went wrong on the night is that a great deal of work went
-into it beforehand, which is an awkward kind of success to point at.</p>
+a nonsense result, or a confident wrong answer. Governments and companies spent enormous sums auditing and correcting code. The reason so little
+went wrong on the night is that a great deal of work went into it beforehand, which is an awkward
+kind of success to point at.</p>
 
 <p>Notice exactly what was wrong. Not the fact: the year was known. Not the logic: the programs
 calculated correctly given what they were told. The <strong>representation</strong> was wrong, and it
@@ -722,7 +721,7 @@ about the future, and say what happens on the day that assumption stops being tr
 
 <h3>Mini-case 3 &middot; 2020: the rows that fell off the bottom</h3>
 
-<p>During the pandemic, positive coronavirus test results in England travelled from testing laboratories
+<p>During the pandemic, positive coronavirus test results in England traveled from testing laboratories
 to the contact tracing service through Public Health England. The laboratories sent results as text
 files. PHE loaded them into a spreadsheet template and passed the spreadsheet on.</p>
 
@@ -735,7 +734,7 @@ The people who tested positive were told. Their contacts were not, and by the ti
 most of them were past the window in which isolating would have helped. Reporting at the time put the
 number of untraced contacts near 48,000. A later economics study estimated that the delay was associated
 with more than a hundred thousand additional infections; treat that figure as an estimate rather than a
-count, because it is modelled rather than observed.</p>
+count, because it is modeled rather than observed.</p>
 
 <p>This is section 02's argument about the single grid, at national scale, in a week. A spreadsheet is
 one big grid. It has a row limit, no rules about what a column may contain, no way to enforce that a
@@ -787,9 +786,8 @@ replacing the guesses with shared records. Suppliers plan against actual sales, 
 stay stocked without warehouses of padding, and the whole chain runs on one version of the truth.</p>
 
 <p>Whether giving away your most valuable data is genius or madness is your Monday activity, and it
-is a genuinely open question. What is not in question is the scale of what grew from it. Walmart's
-analytics hub, the Data Caf&eacute;, draws on more than 200 internal and external data streams,
-including roughly 40 petabytes of recent transaction data, and reporting from the mid-2010s described
+is a open question. What is not in question is the scale of what grew from it. Walmart's analytics hub, the Data Café, draws on more than 200 internal and external data streams,
+including roughly 40 petabytes of recent transaction data. Reporting from the mid-2010s described
 the company building a private cloud handling 2.5 petabytes an hour. The numbers age quickly; the
 design principle does not: <em>every register is a sensor, and the database is the instrument the
 whole company reads.</em></p>
@@ -857,9 +855,9 @@ accumulated data is the component nobody can buy. Walmart's answer, three decade
 carefully chosen views of it while keeping the accumulation.</p>
 
 <p><strong>The question changed from "how did I do" to "what should I do."</strong> The old platform
-reported what had happened. The new one adds recommendations, and in 2025 Walmart began adding AI tools
-on top: a conversational interface so a supplier can ask the data a question in ordinary language,
-automatic summaries of customer survey results, and suggested actions rather than tables. That is the
+reported what had happened. The new one adds recommendations. In 2025 Walmart began adding AI tools on top: a conversational
+interface so a supplier can ask the data a question in ordinary language, automatic summaries of
+customer survey results, and suggested actions rather than tables. That is the
 ladder from Chapter 2, climbing one rung in public. It is also why this chapter comes before the ones on
 analytics and AI: none of those tools would have anything to work with if somebody had not decided in
 1991 what to record.</p>
@@ -1010,7 +1008,7 @@ that would be impossible in a single grid and are three lines of SQL against a n
 <tr><td class="t">0:00</td><td class="w">Open</td><td>Hold up a receipt, real or on a slide. Ask how many separate facts are on it and count them out loud with the room. The number climbs past twenty fast, and everything in the session hangs off that pile of facts.</td></tr>
 <tr><td class="t">0:05</td><td class="w">Lecture</td><td>What data is: recorded, typed, quantitative against qualitative, then structured against unstructured. Then records and fields, and the point that format is not the same as fact. "March 3, 2025" and "3/3/25" are one fact in three costumes, and software matches representations rather than facts.</td></tr>
 <tr><td class="t">0:16</td><td class="w">Lecture</td><td>Why one grid breaks. Draw the receipt as a single wide sheet on the board and walk the three anomalies on it, pointing at the actual cells. Then draw it becoming three tables with keys. This is the single most important drawing of the session; do it slowly and let them copy it. The figure in section 02 is the same drawing if you would rather project it, but drawing it live is better, because the room watches the repetition disappear.</td></tr>
-<tr><td class="t">0:30</td><td class="w">Lecture</td><td>Normalization as one rule, that every field describes the thing the key identifies. Then name the cost honestly: a normalized database scatters a simple question across tables, which is why analysts build flattened copies. That tension sets up OLTP against analytics on Wednesday.</td></tr>
+<tr><td class="t">0:30</td><td class="w">Lecture</td><td>Normalization as one rule, that every field describes the thing the key identifies. Then name the cost plainly: a normalized database scatters a simple question across tables, which is why analysts build flattened copies. That tension sets up OLTP against analytics on Wednesday.</td></tr>
 <tr><td class="t">0:38</td><td class="w">Lecture</td><td>Codd in 1970 and what IBM did with it. Keep it to four minutes. The point is not the history, it is that the model students are about to treat as obvious was resisted for a decade by the company best placed to build it.</td></tr>
 <tr><td class="t">0:42</td><td class="w">Cases 1&#8211;3</td><td>The census, two digits, and the rows that fell off the bottom, about three minutes each. Name what the shape decided in each one and stop. The comparison is the activity. If the room is quick, the 1888 competition timings are worth putting on the board: 5.5 hours against 44.5.</td></tr>
 <tr><td class="t">0:52</td><td class="w">Lecture</td><td>Chapter 7 at speed: ERP, CRM, SCM, silos, the bullwhip effect. The bridge is one sentence, that enterprise systems are what happens when a company insists on one database instead of twenty-seven.</td></tr>

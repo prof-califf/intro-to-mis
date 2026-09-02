@@ -428,9 +428,9 @@ from engineering.</p>
 
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Ransomware</span>
 <p><strong>Ransomware</strong> is malicious software that encrypts an organization's data and demands
-payment for the key. Modern ransomware adds a second threat, called double extortion: the attackers
-also copy the data out first, so even a victim with perfect backups faces the choice of paying to
-prevent the data being published. The crucial thing for a business student to understand is that
+payment for the key. Modern ransomware adds a second threat, called double extortion. The attackers copy the data out
+first, so even a victim with perfect backups faces the choice of paying to keep the data off the
+internet. The crucial thing for a business student to understand is that
 ransomware is an <em>industry</em>, not a prank. Groups operate as ransomware-as-a-service:
 core operators build the malware and rent it to affiliates who carry out attacks and split the
 proceeds. It has revenue models, customer support, and, as Change Healthcare learned, dishonest
@@ -441,20 +441,20 @@ a UnitedHealth subsidiary, paid the ALPHV/BlackCat group about $22 million for a
 the stolen data. The core operators then took the entire payment and vanished, an exit scam, without
 paying the affiliate who had actually done the hacking. That affiliate still had a copy of the data,
 took it to a second ransomware group, RansomHub, and demanded a fresh ransom. The company had paid
-$22 million and protected nothing. This is the practical argument, not the moral one, against
-assuming a ransom payment solves the problem: <strong>you are trusting criminals to keep a promise,
-and the incentive structure among them is not built to protect you.</strong></p>
+$22 million and protected nothing. This is the practical argument, not the moral one, against assuming a ransom payment solves the
+problem. You are trusting criminals to keep a promise, and nothing in their incentives protects you.</p>
 
 <h2 id="defense"><span class="num">02</span>How attacks work, and how defense works</h2>
 
 <p>Attacks are not single events. They are sequences, and that is the good news, because a sequence can
-be broken at any point. This section gives you the model attackers are described with and the handful of
-ordinary controls that interrupt it, then applies both to the door the case's attackers walked through.</p>
+be broken at any point. This section gives you the model analysts use to describe attackers and the handful of ordinary
+controls that interrupt it, then applies both to the door the case's attackers walked through.</p>
 
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">The kill chain, and breaking it</span>
-<p>Analysts describe intrusions as a <strong>kill chain</strong>: an ordered sequence of stages an
-attacker must complete, from initial entry, to moving deeper (called lateral movement), to stealing
-or encrypting the data. The model's value is that the attacker must succeed at every stage while the
+<p>Analysts describe intrusions as a <strong>kill chain</strong>: an ordered sequence of stages an attacker must
+complete. It runs from initial entry, to moving deeper (called lateral movement), to stealing or encrypting
+the data. (You do not need to memorize the stages. You need to see that there are stages, because
+each one is a place to stop the attack.) The model's value is that the attacker must succeed at every stage while the
 defender only has to break one, so security stacks controls in layers, <strong>defense in
 depth</strong>, assuming each can fail. Two design rules do most of the work. <strong>Least
 privilege</strong>: every account gets the minimum access its job needs, so a stolen credential is
@@ -485,9 +485,9 @@ harvested by the millions and sold on criminal markets. MFA is not exotic, expen
 the single highest-value control most organizations can deploy, and its absence on one internet-facing
 portal is the root cause the company's own CEO named in sworn testimony to Congress.</p></div>
 
-<p>The attackers were then inside for about nine days before anyone noticed, moving through the
-network and copying out roughly six terabytes of data before deploying the ransomware that finally
-made their presence impossible to miss. Two failures, in sequence: a missing lock at the door, and
+<p>The attackers were then inside for about nine days before anyone noticed. They moved through the
+network and copied out roughly six terabytes of data, then deployed the ransomware that finally made
+their presence impossible to miss. Two failures, in sequence: a missing lock at the door, and
 nine days of movement inside that nobody detected. Hold that shape; it is the kill chain, and it is
 the next section.</p>
 
@@ -513,9 +513,9 @@ was read. Machines simply stopped being able to do their work, and administrator
 network to save themselves, which broke the network further.</p>
 
 <p>Two things came out of it. Its author became the first person convicted under the United States
-Computer Fraud and Abuse Act. And the incident led directly to the creation of the first coordinated
-computer emergency response team, because it had become obvious that nobody was on the other end of the
-phone when something like this happened.</p>
+Computer Fraud and Abuse Act. And the incident led directly to the creation of the first coordinated computer emergency response
+team. It had become obvious that nobody was on the other end of the phone when something like this
+happened.</p>
 
 <p><strong>Where it came in: the network connection itself. The component: networks.</strong> Note what
 kind of failure this was, because it is the one students expect least. No confidentiality was lost. The
@@ -542,9 +542,9 @@ them, rebuilding was close to impossible, because there was no authoritative rec
 identity system.</p>
 
 <p>Then the detail that makes this case unforgettable. A domain controller in Maersk's Ghana office had
-been offline during the attack, because of a local power cut. It held one clean copy. Getting it to the
-recovery team meant a staff member flying to Nigeria to hand a hard drive to a colleague, because the
-bandwidth in Ghana was not sufficient to send it and nobody in the Ghana office had a British visa.
+been offline during the attack, because of a local power cut. It held one clean copy. Getting it to the recovery team meant a staff member flying to Nigeria to hand a hard drive to a
+colleague. The internet connection in Ghana was too slow to send it, and nobody in the Ghana office
+had a British visa.
 Maersk reinstalled roughly four thousand servers and forty-five thousand computers in about ten days,
 and put the cost at around $300 million.</p>
 
@@ -597,19 +597,19 @@ end. It was not the victim that had failed to map its dependencies. It <em>was</
 a third of American healthcare, and almost nobody using it had written that down either.</p>
 <h2 id="change"><span class="num">04</span>Change Healthcare: the day the claims stopped</h2>
 
-<p>Most Americans had never heard of Change Healthcare before February 2024. It is not a hospital or
-an insurer; it is the plumbing between them, a UnitedHealth Group subsidiary that processes roughly
-15 billion healthcare transactions a year and touches about one in every three US patient records.
+<p>Most Americans had never heard of Change Healthcare before February 2024. It is not a hospital or an insurer. It is the plumbing between them: a UnitedHealth Group subsidiary
+that processes roughly 15 billion healthcare transactions a year and touches about one in every
+three US patient records.
 When a doctor's office submits a claim or a pharmacy checks your coverage, that request very often
 passes through Change Healthcare.</p>
 
 <p>On February 21, 2024, the company discovered ransomware on its systems and did the only thing it
 could: it took itself offline. The effect was immediate and national. Pharmacies could not verify
 coverage or process claims for a large share of the country. Hospitals and physician practices could
-not submit claims, which meant they could not get paid. An American Medical Association survey that
-spring found that 80 percent of physician practices lost revenue from unpaid claims, and many small
-practices, which run on thin cash reserves, faced a genuine liquidity crisis: real payroll for real
-staff, with the money that normally arrived from insurers simply not arriving.</p>
+not submit claims, which meant they could not get paid. An American Medical Association survey that spring found that 80 percent of physician practices lost
+revenue from unpaid claims. Many small practices, which run on thin cash reserves, faced a real cash
+crisis: payroll for real staff, with the money that normally arrived from insurers simply not
+arriving.</p>
 
 <p>The data theft, when its scale became clear, set a record: about 193 million people's protected
 health information by the final count in July 2025, the largest healthcare breach in US history. But notice which harm came first and
@@ -620,9 +620,9 @@ data breach was the aftermath.</strong> That ordering is the theme of this chapt
 <div class="callout"><strong>Why this case, and not an older one</strong>
 <p>The famous breaches of the last decade, Target and Equifax, were about stolen data. This one is
 about a stopped business, which is where cybercrime has actually gone. Ransomware does not quietly
-copy your data and leave; it takes your operations hostage. Understanding that shift is the
-difference between thinking of security as an IT problem and thinking of it as a survival problem for
-the whole organization, which is exactly the shift a business degree is supposed to give you.</p></div>
+copy your data and leave; it takes your operations hostage. Understanding that shift is the difference between thinking of security as an IT problem and
+thinking of it as a survival problem for the whole organization. That is exactly the shift a
+business degree is supposed to give you.</p></div>
 
 <div class="statrow">
   <div class="stat"><b>1 in 3</b><span>US patient records touched</span></div>
@@ -636,7 +636,7 @@ the whole organization, which is exactly the shift a business degree is supposed
 
 
 <p>UnitedHealth's own reporting put its direct costs for 2024 at about $3.1 billion. That number, large as it
-is, is the smallest part of the harm, because it is only the part that lands on the company big
+is, is the smallest part of the harm, because it is only the part that falls on the company big
 enough to absorb it. Trace the damage outward and it is almost entirely a business-operations story:</p>
 
 <p><strong>Provider cash flow.</strong> Thousands of practices and hospitals could not bill, so
@@ -651,9 +651,9 @@ approved. The availability failure reached from a server all the way to a pharma
 
 <p><strong>Concentration risk, revealed.</strong> The reason one company's outage could do national
 damage is that the industry had quietly routed a third of its transactions through a single point.
-Nobody chose that risk deliberately; it accumulated through decades of consolidation. The attack
-turned an invisible structural fact into a visible one, and "we depend on one vendor for something we
-cannot operate without" is now a risk that boards across every industry are re-examining.</p>
+Nobody chose that risk deliberately; it accumulated through decades of consolidation. The attack turned an invisible structural fact into a visible one. "We depend on one vendor for
+something we cannot operate without" is now a risk that boards across every industry are
+re-examining.</p>
 
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Concentration risk and business continuity</span>
 <p><strong>Concentration risk</strong> is the danger created when too much of something critical
@@ -680,7 +680,7 @@ business continuity, and it is a business planning question, not a technical one
 <h2 id="other"><span class="num">05</span>Who absorbs a breach, and who does this work</h2>
 
 <p>The $3.1 billion UnitedHealth booked is the cost that could be absorbed. Follow the rest of it
-outward and it lands on people with far less capacity to carry it.</p>
+outward and it falls on people with far less capacity to carry it.</p>
 
 <p>Small medical practices, some of which took emergency loans or closed, because a company they had
 never chosen to depend on went dark. Patients who waited for medications while an eligibility check
@@ -700,9 +700,8 @@ the security budget is set.</p>
 <h3>What business people actually do in security</h3>
 
 
-<p>Students often assume cybersecurity is a coding job they are unqualified for. Some of it is. But
-the field is short hundreds of thousands of workers in the US alone, and a large fraction of the open
-roles are business roles, because most of what determines whether an organization gets breached is
+<p>Students often assume cybersecurity is a coding job they are unqualified for. Some of it is. But the field is short hundreds of thousands of workers in the US alone, and a large fraction of the
+open roles are business roles. Most of what determines whether an organization gets breached is
 decisions, not code. A few of the jobs a business graduate actually does:</p>
 
 <p><strong>Governance, risk, and compliance (GRC).</strong> Deciding which risks the organization
@@ -824,7 +823,7 @@ strongest opinion about, and be ready to say it first.</p>
 which controls exist is a management job. <a href="lab8-security.html"><strong>Lab 8: Security and Data
 Governance: The Audit</strong></a> puts you in that job at Cascadia.</p>
 <p>You will spot the phish, map who can reach what, and make the same calls this chapter describes:
-where least privilege is not being applied, which single points the co-op depends on without having
+where the co-op is ignoring least privilege, which single points it depends on without having
 written them down, and what the answer would be on the morning one of them is gone. Every judgment in
 the lab is one from section 02, at co-op scale.</p>
   <a class="lablink" href="lab8-security.html">Go to Lab 8 &#8594;</a>

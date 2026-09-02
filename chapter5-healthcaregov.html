@@ -450,7 +450,9 @@ building them, and analysis is the phase where you choose which component will b
 <p>Two ideas do most of the work in this section, and both are ways of asking a question early that
 somebody will otherwise ask late.</p>
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Feasibility and scope creep</span>
-<p>Before the SDLC begins, feasibility analysis asks whether the project should exist at all, on three axes: <strong>technical</strong> (can it be built?), <strong>economic</strong> (is it worth what it costs?), and <strong>operational</strong> (will the organization actually use it as intended, on this schedule?). Healthcare.gov passed the first, never seriously ran the second, and failed the third before a line of code existed: the launch date was set by law, not by the work. <strong>Scope creep</strong> is the slow expansion of what the system must do after estimates are fixed; the late requirement forcing users to create accounts before browsing is scope creep in its natural habitat, arriving with good intentions and no schedule adjustment. Every <strong>stakeholder</strong>, each group with a stake in the system: insurers, states, regulators, the uninsured public, pushed requirements in, and no one owned the whole.</p></div>
+<p>Before the SDLC begins, feasibility analysis asks whether the project should exist at all, on three axes: <strong>technical</strong> (can it be built?), <strong>economic</strong> (is it worth what it costs?), and <strong>operational</strong> (will the organization actually use it as intended, on this schedule?). Healthcare.gov passed the first, never seriously ran the second, and failed the third before a line of code existed: the launch date was set by law, not by the work. <strong>Scope creep</strong> is the slow expansion of what the system must do after estimates are fixed. The late
+requirement forcing users to create accounts before browsing is scope creep in its natural habitat,
+arriving with good intentions and no schedule adjustment. Every <strong>stakeholder</strong>, each group with a stake in the system: insurers, states, regulators, the uninsured public, pushed requirements in, and no one owned the whole.</p></div>
 
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Requirements</span>
 <p>A requirement is a statement of what a system must do, written before anyone builds anything, and requirements are the hardest artifact in software because they demand that people articulate needs they have never had to state. Most catastrophic projects fail here, not in the code: the system that gets built faithfully implements a misunderstanding. Healthcare.gov’s late decision to force account creation before browsing, which multiplied load on the weakest part of the system, was a requirements change arriving after the architecture was set.</p></div>
@@ -486,11 +488,10 @@ before starting the next, or run all of them repeatedly on a small piece of the 
 argument between the two approaches below, and it is the one decision in this section that
 Healthcare.gov got wrong before a line of code existed.</p>
 
-<p>One thing to hold on to as you read the phases. A project is not building software. It is assembling
-an information system, which means five components have to arrive at the same moment and fit each other:
-the hardware sized for a load somebody estimated, the software written to a specification somebody wrote,
-the data structures agreed with whoever owns the data, the network connections negotiated with other
-organizations, and the people trained to use the result. Software is the component teams talk about most
+<p>One thing to hold on to as you read the phases. A project is not building software. It is assembling an information system, which means five components have to arrive at the same
+moment and fit each other. The hardware sized for a load somebody estimated. The software written to
+a specification somebody wrote. The data structures agreed with whoever owns the data. The network
+connections negotiated with other organizations. And the people trained to use the result. Software is the component teams talk about most
 because it is the one they build themselves. It is not usually the one that fails. In the case at the end
 of this chapter, the software mostly worked. Every other component was late, wrong, or belonged to
 somebody who had not been asked.</p>
@@ -499,7 +500,8 @@ somebody who had not been asked.</p>
 
 
 <p>The <strong>SDLC</strong> is the standard sequence organizations use to move from "we need something"
-to "it is running." Names vary by textbook and by firm; the phases do not:</p>
+to "it is running." Names vary by textbook and by firm; the phases do not. (Do not memorize any one firm's labels. Learn
+the six activities and you can translate whatever your employer calls them.) The phases:</p>
 
 <ol>
   <li><strong>Planning</strong>, what problem are we solving, is it worth solving, what will it cost?</li>
@@ -548,11 +550,10 @@ appearing in this chapter across sixty years.</p>
 will actually face. <strong>Waterfall</strong> runs the phases once, in order, with signed-off documents
 at each gate. Its strength is predictability: fixed scope, fixed price, a contract a government can
 procure against, which is exactly why federal contracting pushed Healthcare.gov toward it. Its weakness
-is that all learning arrives at the end, when it is most expensive to act on. <strong>Agile</strong>
-inverts the bet: work proceeds in <strong>sprints</strong> of one to four weeks, each ending in working
-software a real user can react to; a <strong>product owner</strong> continuously re-ranks what gets built
-next, so the plan absorbs learning instead of resisting it. Its weakness is the mirror image: scope and
-cost are genuinely uncertain up front, which contracts and legislatures hate.</p>
+is that all learning arrives at the end, when it is most expensive to act on. <strong>Agile</strong> inverts the bet. Work proceeds in <strong>sprints</strong> of one to four weeks, each ending in working
+software a real user can react to. A <strong>product owner</strong> continuously re-ranks what gets built next, so
+the plan absorbs learning instead of resisting it. Its weakness is the mirror image: scope and
+cost are uncertain up front, which contracts and legislatures hate.</p>
 <p>The honest rule: waterfall suits stable, well-understood requirements (a payroll migration); agile
 suits discovery (anything customer-facing being built for the first time). A national insurance
 marketplace nobody had ever built, for users nobody had met, was a discovery problem procured as a
@@ -705,10 +706,9 @@ technology than the original one. What it had was permission to decide that some
 and say so out loud. That is prioritization, performed under emergency conditions, eight weeks after the
 moment when it would have been cheap.</p>
 
-<p>Prioritizing once is not enough, because requirements keep arriving. What stops scope creep is not
-willpower but a procedure: agree a <strong>baseline</strong> of what is being built, then require every
-addition to arrive as a <strong>change request</strong> that names its cost in time and money and gets
-approved or refused by someone accountable. The account-creation mandate that arrived weeks before
+<p>Prioritizing once is not enough, because requirements keep arriving. What stops scope creep is not willpower but a procedure. Agree a <strong>baseline</strong> of what is being built.
+Then require every addition to arrive as a <strong>change request</strong> that names its cost in time and money, and
+gets approved or refused by someone accountable. The account-creation mandate that arrived weeks before
 Healthcare.gov's launch was a substantial change to the system's busiest path. Requirements that arrive
 that late are not automatically wrong. Requirements that arrive that late without anyone pricing them
 are.</p>
@@ -770,7 +770,7 @@ note at the bottom says water does not flow uphill.</desc>
 The shape is the argument, and so is the problem. Each phase finishes before the next begins, which
 means the first time anyone sees the system working is at deployment, five steps after the decisions
 that shaped it. Mistakes travel downhill and get more expensive at every step. This works when you
-genuinely know what you are building, which is why it came from aerospace and defense, and why Royce
+know what you are building, which is why it came from aerospace and defense, and why Royce
 warned about using it anywhere else.
 </figcaption>
 </figure>
@@ -926,9 +926,9 @@ about unacknowledged calls piled up faster than operators could clear them, whic
 further. Response times ran to hours. The service reverted to a semi-manual method on 4 November, nine
 days after launch, and the chief executive resigned.</p>
 
-<p>The inquiry did not find a single defect at fault. It found a system that had never been tested under
-realistic load, staff who had not been adequately trained on it, and a decision to switch the entire
-service over in one step, with no way to return to the old method. Press reports at the time linked deaths to the
+<p>The inquiry did not find a single defect at fault. It found a system that nobody had tested under realistic load, staff who had not been adequately
+trained on it, and a decision to switch the entire service over in one step, with no way to return
+to the old method. Press reports at the time linked deaths to the
 delays; the official inquiry did not establish a death toll, and you should be careful repeating the
 numbers that circulate.</p>
 
@@ -993,7 +993,7 @@ release.</div>
     why:'Choosing direct cutover is a rollout decision. The London Ambulance Service made it for the whole service at once, and had no way to reverse it when the day went wrong.'},
    {t:'A contract is signed to build a marketplace before anyone has specified how many people might use it at the same time.',a:'Planning',
     why:'Committing money and a date before the requirement exists is a planning failure. It then makes a load test impossible to design, because nobody can say what number to test against.'},
-   {t:'Six weeks before launch, a new rule requires every visitor to create an account before they can look at anything.',a:'Analysis',
+   {t:'Weeks before launch, a new rule requires every visitor to create an account before they can look at anything.',a:'Analysis',
     why:'A late requirement is still a requirement. The failure is not that it arrived late but that it arrived without anyone pricing its effect on the busiest path in the system.'},
    {t:'A team keeps postponing an upgrade to an ageing component because nothing has broken yet, and there is always something more visible to do.',a:'Maintenance',
     why:'This is preventive maintenance being deferred, which is exactly how technical debt accumulates. It is the easiest work to skip because its benefit is a failure that does not happen.'}
@@ -1067,17 +1067,16 @@ building of a system: decisions that had already determined the outcome before a
 moments where leadership must review evidence and decide whether to proceed, <strong>stage gates</strong>.
 Their whole value is that they are allowed to say no.</p>
 
-<p>They said yes. With months left before launch, CMS raised concerns about the lead
-contractor's performance without taking steps to hold it accountable; the agency moved staff into the
-contractor's offices in September 2013, delayed the governance reviews that would have surfaced the problems,
-and proceeded without the required approvals: deciding nonetheless to launch on schedule with the full
-feature set. The reviews that existed to stop the launch were postponed <em>because</em> the launch
+<p>They said yes. With months left before launch, CMS raised concerns about the lead contractor's performance without
+taking steps to hold it accountable. The agency moved staff into the contractor's offices in
+September 2013, delayed the governance reviews that would have surfaced the problems, and proceeded
+without the required approvals. It decided nonetheless to launch on schedule with the full feature
+set. The reviews that existed to stop the launch were postponed <em>because</em> the launch
 was near.</p>
 
-<p>The contracting structure removed the last brake. CMS did not check the federal
-past-performance database before awarding to CGI Federal, a contractor with prior missteps at the department,
-and chose contract types that placed the risk of cost overruns on the government rather than the vendor for
-five of the six main contracts. The financial results followed: the six
+<p>The contracting structure removed the last brake. CMS did not check the federal past-performance database before awarding to CGI Federal, a contractor
+with prior missteps at the department. For five of the six main contracts, it chose contract types
+that placed the risk of cost overruns on the government rather than the vendor. The financial results followed: the six
 major contracts grew from $464 million to $824 million, with one alone rising from $58 million to $207
 million.</p>
 
@@ -1102,7 +1101,7 @@ A small "tiger team" was given one narrow mandate and the authority to prioritiz
   <li><span class="when">Late Oct</span>Single accountable leader named; tech leadership restructured; tiger team formed.</li>
   <li><span class="when">Nov–Dec</span>Roughly 400 defects resolved over six weeks, concurrency raised to 25,000 users, response time brought to about one second.</li>
   <li><span class="when">Dec 1</span>System handling about 35,000 concurrent users.</li>
-  <li><span class="when">Winter</span>Enrollment climbs from roughly 26,000 in October to about 975,000 by the following month.</li>
+  <li><span class="when">Winter</span>Enrollment climbs from roughly 27,000 in October to about 975,000 in December alone.</li>
 </ul>
 
 <p>Six weeks. The same law, the same insurers, the same essential technical problem. What changed was
@@ -1189,11 +1188,13 @@ procurement practices this chapter has been criticizing.</p>
 
 <p>They built things you have probably used. Login.gov, the single sign-on for federal services.
 cloud.gov. The U.S. Web Design System, which is why federal websites now look and behave alike. 18F
-supported the IRS in building Direct File, free online tax filing.</p>
+supported the IRS in building Direct File, free online tax filing, which ran for two filing seasons before
+the IRS closed it in November 2025.</p>
 
 <p>In January 2025 an executive order reorganized the United States Digital Service into the United
 States DOGE Service. On 1 March 2025, weeks before its eleventh anniversary, 18F was eliminated and its
-staff laid off.</p>
+staff laid off. By the end of 2025 the DOGE Service itself had stopped operating as a single organization,
+with its remaining staff placed inside other agencies.</p>
 
 <p>Set that beside the rest of the chapter without deciding how you feel about it yet. The lesson
 Healthcare.gov taught in 2013 was that capability has to live inside the organization that needs it,
@@ -1204,10 +1205,9 @@ What is not in question is the finding underneath it, which is older than the ag
 them: somebody has to own the whole, and that somebody has to be allowed to say no.</p>
 
 <h2 id="other"><span class="num">05</span>Who waited</h2>
-<p>The engineering story has a human denominator it is easy to lose. The people refreshing
-Healthcare.gov on October 1 were not users testing a product; they were people without health
-insurance, many attempting to buy it for the first time in their lives, some with conditions that had
-made them uninsurable until that morning. Every week the site did not work was a week they stayed
+<p>The engineering story has a human denominator it is easy to lose. The people refreshing Healthcare.gov on October 1 were not users testing a product. They were people
+without health insurance, many attempting to buy it for the first time in their lives, some with
+conditions that had made them uninsurable until that morning. Every week the site did not work was a week they stayed
 uninsured, and the enrollment deadline bearing down on the project was also bearing down on them. When
 this course says a launch failed, keep asking the second question: failed for whom, and what did the
 failure cost people who had no seat in any status meeting. The contractors were paid for the overruns.
@@ -1256,7 +1256,7 @@ was structure, honesty, and the political cover to have both.</p>
     <div class="tps-q"><p>For each one, name the single cheapest check that would have caught it, and say which phase that check belongs to. Then rank the three by how easy the check would have been to skip.</p></div>
     <div class="tps-steps">
       <div class="tps-step"><div class="ph">Think <span>3 min</span></div><p>Write one check per failure. A check is something a named person does at a named moment, not a wish for more care.</p></div>
-      <div class="tps-step"><div class="ph">Pair <span>4 min</span></div><p>Compare with a neighbour. Where you disagree, it is usually because you put the check in different phases. Work out which of you is right.</p></div>
+      <div class="tps-step"><div class="ph">Pair <span>4 min</span></div><p>Compare with a neighbor. Where you disagree, it is usually because you put the check in different phases. Work out which of you is right.</p></div>
       <div class="tps-step"><div class="ph">Share <span>5 min</span></div><p>We collect the checks on the board, sorted by phase, and look at what the column shapes tell us.</p></div>
     </div>
     <div class="tps-note"><strong>Where this lands</strong>Two things usually emerge. First, every check the room names is small: a line in a specification, one borough for a month, a second person reading a checklist. That is the tenfold arithmetic from section 01 seen from the cheap end. Second, the easiest checks to skip are the ones that protect against something that has not happened yet, which is every check on the list. Push on the ranking question, because it is really a question about organizations rather than about projects: a check survives only if somebody's job is to perform it and somebody else notices when they do not. Carry that into Wednesday and ask which checks CMS had, and which of them were postponed because the launch was near.</div>
@@ -1292,7 +1292,7 @@ strongest opinion about, and be ready to say it first.</p>
   should it have been caught, and what would have made it visible?
   <span class="tag">Systems</span></li>
 
-  <li>The launch date came from a law rather than a project plan. When a deadline is genuinely immovable
+  <li>The launch date came from a law rather than a project plan. When a deadline is immovable
   and the system is not ready, what are a manager's real options, what does each one cost, and who pays
   that cost? Answer for Healthcare.gov specifically before you answer in general.
   <span class="tag tag-hard">Ethics</span></li>
@@ -1313,29 +1313,20 @@ strongest opinion about, and be ready to say it first.</p>
   <a class="lablink" href="lab5-excel-analysis.html">Go to Lab 5 &#8594;</a>
 </div>
 
-<div class="sources">
-  <h3>Sources and further reading</h3>
-  <ul>
-    <li>HHS Office of Inspector General, <em>HealthCare.gov: Case Study of CMS Management of the Federal Marketplace</em> (2016). The definitive account.</li>
-    <li>U.S. GAO, <em>Healthcare.gov: Ineffective Planning and Oversight Practices Underscore the Need for Improved Contract Management</em>, GAO-14-694 (2014).</li>
-    <li>House Oversight Committee release of CMS "war room" meeting notes, October 2013.</li>
-    <li>Steven Brill, "Code Red," <em>Time</em>, March 10, 2014: narrative account of the recovery effort.</li>
-  </ul>
-</div>
-
 <h2 id="sources"><span class="num">09</span>Sources and further reading</h2>
 <ul class="sources">
-<li>Office of Inspector General, U.S. Department of Health and Human Services, <em>CMS Management of the Federal Marketplace: An Case Study</em> (2016): the 60 contracts across 33 companies, the absent lead systems integrator, the misunderstanding over CGI's role, the delayed governance reviews, and the contract growth from $464 million to $824 million.</li>
-<li>Government Accountability Office reports on the federal marketplace (2014 onward), for task orders issued while key requirements, including expected enrollment volume, were still unknown.</li>
-<li>Contemporary reporting on the October 2013 launch, the roughly 250,000 concurrent users against a plan built for far fewer, and the six enrollments recorded on the first day.</li>
-<li>Accounts of the rescue by Jeffrey Zients and the technology team assembled in late October 2013, for the defect count, the concurrency and response-time targets, and the enrollment recovery over the winter.</li>
-<li>UK Government Digital Service (2011), the United States Digital Service and 18F (both 2014), for the institutional response to Healthcare.gov; and reporting on the January 2025 executive order reorganizing the Digital Service into the United States DOGE Service and the elimination of 18F on 1 March 2025. This is recent and contested; check the current position before teaching it.</li>
+<li>Office of Inspector General, U.S. Department of Health and Human Services, <em>HealthCare.gov: Case Study of CMS Management of the Federal Marketplace</em> (OEI-06-14-00350, February 2016): the 60 contracts across 33 companies, the absent lead systems integrator, the misunderstanding over CGI's role, the delayed governance reviews, and the contract growth from $464 million to $824 million.</li>
+<li>Government Accountability Office, <em>Healthcare.gov: Ineffective Planning and Oversight Practices Underscore the Need for Improved Contract Management</em>, GAO-14-694 (July 2014), for task orders issued while key requirements, including expected enrollment volume, were still unknown, and the $840 million spent across 62 contracts by early 2014.</li>
+<li>House Oversight Committee release of the CMS "war room" meeting notes, October 2013, for the six enrollments across five insurers as of the morning of 2 October; and contemporary reporting on the launch and the roughly 250,000 concurrent users against a plan built for far fewer.</li>
+<li>Steven Brill, "Code Red," <em>Time</em>, 10 March 2014, and other accounts of the rescue by Jeffrey Zients and the technology team assembled in late October 2013, for the defect count, the concurrency and response-time targets. HHS enrollment reports (ASPE, November 2013 to January 2014) for the 26,794 federal marketplace enrollments in October and the roughly 975,000 in December.</li>
+<li>UK Government Digital Service (2011), the United States Digital Service and 18F (both 2014), for the institutional response to Healthcare.gov; and reporting on the January 2025 executive order reorganizing the Digital Service into the United States DOGE Service and the elimination of 18F on 1 March 2025; IRS notice to states of 3 November 2025 that Direct File would not run in the 2026 filing season; reporting from November 2025 on the DOGE Service ceasing to operate as a central organization. This is recent and contested; check the current position before teaching it.</li>
 <li>Winston W. Royce, "Managing the Development of Large Software Systems," <em>Proceedings, IEEE WESCON</em>, August 1970: the phase diagram, the sentence calling that implementation risky and an invitation to failure, and the "attempt to do the job twice" recommendation. Short, readable, widely available, and worth reading in the original.</li>
 <li>Fred Brooks, <em>The Mythical Man-Month</em> (1975), for Brooks's law and the OS/360 experience behind it. The 1968 NATO conference at Garmisch is the usual citation for the terms "software crisis" and "software engineering."</li>
-<li>The Agile Manifesto (2001), agilemanifesto.org. Seventeen sentences; it takes two minutes to read.</li>
+<li>The Agile Manifesto (2001), agilemanifesto.org. Seventeen authors, four values, twelve principles; it takes two minutes to read.</li>
 <li>NASA, <em>Mars Climate Orbiter Mishap Investigation Board Phase I Report</em>, 10 November 1999: the pound-force seconds against newton-seconds mismatch between ground software and navigation software.</li>
-<li>Anthony Finkelstein, <em>Report of the Inquiry into the London Ambulance Service</em> (February 1993), for the 26 October 1992 launch, the failures in call handling and vehicle tracking, the reversion on 4 November, and the state of testing and training. Treat the death tolls that circulate about this case with care; the inquiry did not establish one.</li>
+<li>South West Thames Regional Health Authority, <em>Report of the Inquiry into the London Ambulance Service</em> (Page, Williams and Boyd, February 1993), widely read in the electronic version prepared by Anthony Finkelstein, for the 26 October 1992 launch, the failures in call handling and vehicle tracking, the reversion on 4 November, and the state of testing and training. Treat the death tolls that circulate about this case with care; the inquiry did not establish one.</li>
 <li>CrowdStrike's own post-incident materials and contemporary reporting on the 19 July 2024 outage, for the content update, the Windows boot failures, Microsoft's estimate of roughly 8.5 million affected devices, the sectors disrupted, and the company's commitment afterwards to staged deployment and customer control over update timing.</li>
+<li><strong>Verification note.</strong> Checked against sources in September 2026: the OIG and GAO figures (60 contracts across 33 companies, $464 million to $824 million, $58 million to $207 million, $840 million across 62 contracts), the October and December enrollment figures, the 18F and DOGE Service dates, and the end of Direct File. Corrected on that pass: the enrollment timeline had the 975,000 figure a month early; the London Ambulance inquiry was misattributed to Finkelstein, who circulated it but did not write it. The Mars Climate Orbiter, London Ambulance, CrowdStrike, Royce, Brooks, and NATO 1968 details were checked against the authors' knowledge of the published reports rather than re-searched. Two figures rest on contemporary reporting rather than a primary document: the roughly 250,000 concurrent users on 1 October (against a plan variously reported as 50,000 to 60,000), and the recovery milestones (400 defects, 25,000 then 35,000 concurrent users), which come from the recovery team's own progress reports and Brill's account. The "half a billion dollars" at launch is a rounded figure; GAO's $840 million covers spending through early 2014 including the repair.</li>
 </ul>
 
 <h2 id="teaching"><span class="num">10</span>Teaching notes</h2>
