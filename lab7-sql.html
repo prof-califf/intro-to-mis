@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lab 7 · SQL: Cleaning Data at the Source | MIS 320</title>
+<title>Lab 7 · SQL: Asking the Database a Question | MIS 320</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -362,30 +362,35 @@ li{margin-bottom:.45rem}
 <main id="top">
 <header class="chaphead">
   <p class="eyebrow">Lab 7 · Week 7</p>
-  <h1>SQL: Cleaning Data at the Source</h1>
+  <h1>SQL: Asking the Database a Question</h1>
   <div class="meta-row"><span>Lab session · 80 min</span><span class="alt"><a href="chapter6-walmart.html" style="color:inherit;text-decoration:none">Pairs with Chapter 6 · What Data Is &#8594;</a></span></div>
 </header>
-<p class="lede">Cascadia's controller has been sitting on a dirty sales export all quarter. Cleaning it by hand in Excel would take
-  a whole session: removing duplicates, trimming spaces, fixing dates, converting text back into numbers.
-  Today you will do the same job in SQL, and it will take you about six functions.</p>
-  <p>That comparison is the point of this lab. Cleaning data is the least glamorous work in the field
-  and by far the most common, so the tool you use for it matters more than almost anything else you
-  learn this quarter.</p>
-  <div class="callout"><strong>Where this framework comes from</strong>
-  <p>The six steps below follow a widely shared SQL data-cleaning cheat sheet by data analyst
-  <strong>Jess Ramos</strong>. It is a good summary of how working analysts actually approach a messy
-  table, which is why we are using it rather than something invented for a textbook.</p></div>
-  <div class="callout"><strong>The schema</strong>
-  <p style="font-family:var(--sans);font-size:.9rem">The database has the co-op's seven clean tables plus
-  one deliberately messy one. You will work mostly in <code class="inline">sales_raw</code>.</p>
-  <p style="font-family:var(--sans);font-size:.88rem"><code class="inline">sales_raw</code>(sale_id, sale_date, store, category, state, quantity, unit_price, member_id) &#183;
-  <code class="inline">stores</code>(store_id, store_name, region, opened_year, square_feet) &#183;
-  <code class="inline">suppliers</code>(supplier_id, supplier_name, country, lead_time_days) &#183;
+<p class="lede">Every number you have worked with this quarter came to you in a spreadsheet that
+  somebody exported for you. Today you go to where the numbers actually live and ask for them yourself.
+  You will run six short queries in SQL, the language every database speaks, and draw two more with your mouse. Every one is printed for
+  you, most are one line, and by the end you will have asked a question that no report at the co-op
+  was built to answer. That is the whole lab: not to make you a database person, but to show you that
+  you can get an answer from the source when you need one.</p>
+  <div class="callout"><strong>What a query is</strong>
+  <p>A <strong>query</strong> is a question you ask a database, written in a language called SQL (say
+  "sequel" or spell it out; both are fine). It is a sentence with a fixed word order, and here is a
+  complete one with each line labeled:</p>
+  <div style="font-family:ui-monospace,Menlo,monospace;font-size:.9rem;line-height:1.7;background:var(--paper);border:1px solid var(--rule);padding:.8rem 1rem;margin:.8rem 0">
+    <div><span style="color:var(--magenta-dark);font-weight:600">SELECT</span> store_name, region <span style="font-family:var(--sans);color:var(--muted);font-size:.85rem">&nbsp;&#8592; which columns you want to see</span></div>
+    <div><span style="color:var(--magenta-dark);font-weight:600">FROM</span> stores <span style="font-family:var(--sans);color:var(--muted);font-size:.85rem">&nbsp;&#8592; which table to look in</span></div>
+    <div><span style="color:var(--magenta-dark);font-weight:600">WHERE</span> region = 'Inland'; <span style="font-family:var(--sans);color:var(--muted);font-size:.85rem">&nbsp;&#8592; which rows to keep</span></div>
+  </div>
+  <p>Three things to know about every query. It always comes back as a table, even if that table is
+  one number. It never changes the data; asking is not editing. And the word order is fixed: SELECT,
+  then FROM, then WHERE, the same every time, which is why after three or four of them the shape stops
+  looking strange. Once the sandbox below has loaded, type that exact query into it and press Run. Two
+  rows come back, Spokane and Boise. You have just asked a database a question.</p></div>
+  <div class="callout"><strong>The tables you will use</strong>
+  <p style="font-family:var(--sans);font-size:.88rem"><code class="inline">stores</code>(store_id, store_name, region, opened_year, square_feet) &#183;
   <code class="inline">products</code>(product_id, product_name, category, supplier_id, unit_cost, list_price) &#183;
-  <code class="inline">members</code>(member_id, first_name, last_name, city, state, member_type, join_date) &#183;
-  <code class="inline">sales</code>(sale_id, sale_date, store_id, product_id, member_id, quantity, unit_price) &#183;
-  <code class="inline">inventory</code>(store_id, product_id, quantity_on_hand, reorder_point) &#183;
-  <code class="inline">used_gear</code>(item_id, product_id, store_id, condition, listed_price, date_listed, date_sold)</p></div>
+  <code class="inline">sales</code>(sale_id, sale_date, store_id, product_id, member_id, quantity, unit_price)</p>
+  <p style="font-family:var(--sans);font-size:.88rem">These are the same sales you have been analyzing
+  since Lab 2, before anyone exported them to Excel.</p></div>
 
 <div id="steps">
 
@@ -401,7 +406,7 @@ next question opens up. There is no penalty for a wrong answer, so guess, check,
 you get stuck. That is what it is there for.</p>
 <p style="font-family:var(--sans);font-size:.95rem">Once you have cleared them all, write your reflection
 and download your certificate for Canvas. Your progress saves automatically in this browser, so you can close the tab and pick up where you left off. It does not follow you to a different computer or a private window, and clearing your browser data clears it. If you need to start this lab over, use the <button type="button" class="hintb" onclick="resetLab()">Reset this lab</button> button.</p>
-<div class="progress" id="prog">Checkpoint progress: 0 / 10</div>
+<div class="progress" id="prog">Checkpoint progress: 0 / 8</div>
 </div>
 
 <h2><span class="num">Part 1</span>Why the data is not in Excel</h2>
@@ -423,145 +428,185 @@ is a <strong>primary key</strong>.</p>
 
 <p>Why build it that way? Because facts should live in one place. If Bellingham's name were spelled out
 on all of its sales rows and the co-op renamed the store, someone would have to fix thousands of rows
-and would miss some, and you have already seen this movie: it is exactly how the state column in
-sales_raw ended up with fourteen spellings. Storing each fact once and pointing at it is the cure for
-the disease you are about to spend this lab treating. Monday's lecture calls this
-<strong>normalization</strong>; today you get to feel why it exists.</p>
+and would miss some. Storing each fact once and pointing at it is how a database stays right.
+Monday's lecture calls this <strong>normalization</strong>; today you get to see what it looks like
+from the inside.</p>
 
 <div class="callout"><strong>The one-sentence version</strong>
 <p>Excel is where analysis happens. A database is where the truth lives. The skill this lab teaches is
 going to the truth directly.</p></div>
 
-<div class="callout"><strong>See it before you write it</strong>
-<p>Open the <a href="join-builder.html"><strong>Join Builder</strong></a> in another tab. Click a
-foreign key, click the primary key it points at, and watch the arrow become a working JOIN against this
-same database. Five minutes there makes the last two checkpoints here much easier.</p></div>
-<h2><span class="num">Sandbox</span>The Cascadia database, live</h2>
-<div id="sqlbox" style="border:1px solid var(--rule);background:var(--paper);border-radius:2px;padding:1rem 1.15rem;margin:1.2rem 0">
-  <p id="sqlstatus" style="font-family:var(--sans);font-size:.85rem;color:var(--muted);margin:0 0 .6rem">Loading database&hellip;</p>
-  <textarea id="sqlin" rows="5" spellcheck="false" style="width:100%;font-family:ui-monospace,Menlo,monospace;font-size:.92rem;padding:.6rem;border:1px solid var(--rule);border-radius:2px" aria-label="SQL query" placeholder="SELECT COUNT(*) FROM sales_raw;"></textarea>
+<h2><span class="num">Tool</span>The sandbox: where every query in this lab gets typed</h2>
+<p>The dark box below is not a checkpoint and nothing you type in it is graded. It is your workbench.
+Every step in Part 2 says "type this into the sandbox"; this is the sandbox. It stays here on the page,
+so scroll back up to it, or keep it open in a second window beside the steps.</p>
+<div id="sqlbox" style="background:var(--off-black);color:#f6f4f1;border-radius:3px;padding:1rem 1.15rem 1.15rem;margin:1.2rem 0;border-left:6px solid var(--magenta)">
+  <p style="font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--magenta);margin:0 0 .5rem">Sandbox &middot; tool, not a checkpoint</p>
+  <p id="sqlstatus" style="font-family:var(--sans);font-size:.85rem;color:#c9c6c0;margin:0 0 .6rem">Loading database&hellip;</p>
+  <textarea id="sqlin" rows="5" spellcheck="false" style="width:100%;font-family:ui-monospace,Menlo,monospace;font-size:.92rem;padding:.6rem;border:1px solid #3a3a38;border-radius:2px;background:#0e0e0d;color:#f6f4f1" aria-label="SQL query" placeholder="SELECT store_name, region FROM stores WHERE region = 'Inland';"></textarea>
   <br><button onclick="runSQL()" style="font-family:var(--display);font-size:14px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--magenta);color:#fff;border:none;padding:.5rem 1.1rem;cursor:pointer;margin-top:.5rem">Run query</button>
-  <div id="sqlout" style="overflow-x:auto;margin-top:.8rem;font-family:var(--sans);font-size:.85rem"></div>
+  <div id="sqlout" style="overflow-x:auto;margin-top:.8rem;font-family:var(--sans);font-size:.85rem;background:#f6f4f1;color:#0e0e0d;padding:.6rem .8rem;border-radius:2px;min-height:1.5rem"></div>
 </div>
 
 <div class="callout"><strong>Email 1 &middot; Monday, 8:30 AM</strong>
 <p style="font-family:var(--sans);font-size:.9rem"><strong>From:</strong> Controller &middot;
-<strong>Subject:</strong> The raw export (sorry in advance)<br><br>
-"Attached is the raw register export you asked about. Fair warning: the POS retry bug writes duplicate rows, some prices come out as text with dollar signs in them, quantities are sometimes just blank, and I have personally seen Washington spelled a dozen different ways in the state column. The database team tells me this is all fixable at the source in a few lines. I would like to see that."</p></div>
+<strong>Subject:</strong> Five quick questions, no report exists for them<br><br>
+"Our reporting person is out this week and the board meets Thursday. I have five questions that no
+existing report answers, and I am told anyone with access to the database can get them in a few minutes.
+Please try:<br><br>
+1. How many sales did we ring up in 2025, in total?<br>
+2. How many of those were at Bellingham?<br>
+3. What is the most expensive product we sell?<br>
+4. What was our best store's total revenue for the year?<br>
+5. How many sales did the Inland region ring up? (I know the sales export does not say which region;
+that is exactly why I cannot get this from a spreadsheet.)<br><br>
+And one more, if you get that far: which store has the most sales with no member attached. The board
+keeps asking about Bellingham, and I want the answer from the source this time."</p></div>
 
-<h2><span class="num">Part 2</span>Follow along: six steps for cleaning any table</h2>
-<p><strong>Every query in this part is printed for you.</strong> Type it into the sandbox above (typing,
-not pasting, is how the syntax gets into your hands), press Run, and enter what comes back. The last
-three checkpoints then hand the keyboard fully to you.</p>
+<details class="howto"><summary>The SQL cheat sheet: every word this lab uses, plus a few more, all runnable</summary><div class="howto-body">
+<p>Every example below runs in the sandbox as written. The four groups are the order the steps use them
+in. Come back here whenever a word looks unfamiliar.</p>
+<p><strong>1. Getting data out: SELECT and FROM.</strong> Every query starts with these two. The star
+means all columns; naming columns keeps the result narrow; DISTINCT means each value once.</p>
+<pre style="background:var(--off-white);border:1px solid var(--border);padding:.7rem .9rem;overflow-x:auto;font-family:ui-monospace,Menlo,monospace;font-size:.85rem;line-height:1.5;margin:.4rem 0 .8rem">SELECT * FROM stores;
+SELECT store_name, region FROM stores;
+SELECT DISTINCT category FROM products;</pre>
+<p><strong>2. Keeping some rows: WHERE.</strong> Compare with =, &gt;, &lt;, and &lt;&gt; (not equal).
+LIKE matches a pattern, where % means "anything here." AND needs both conditions true; OR needs either.
+Text goes in single quotes; numbers do not.</p>
+<pre style="background:var(--off-white);border:1px solid var(--border);padding:.7rem .9rem;overflow-x:auto;font-family:ui-monospace,Menlo,monospace;font-size:.85rem;line-height:1.5;margin:.4rem 0 .8rem">SELECT product_name, list_price FROM products WHERE list_price &lt; 30;
+SELECT product_name FROM products WHERE product_name LIKE 'Ridgeline%';
+SELECT COUNT(*) FROM sales WHERE store_id = 4 AND quantity &gt; 2;
+SELECT COUNT(*) FROM sales WHERE store_id = 5 OR store_id = 8;</pre>
+<p><strong>3. Sorting and stopping: ORDER BY and LIMIT.</strong> ORDER BY sorts smallest first unless
+you add DESC. LIMIT stops after that many rows, and it always goes last.</p>
+<pre style="background:var(--off-white);border:1px solid var(--border);padding:.7rem .9rem;overflow-x:auto;font-family:ui-monospace,Menlo,monospace;font-size:.85rem;line-height:1.5;margin:.4rem 0 .8rem">SELECT product_name, list_price FROM products ORDER BY list_price DESC LIMIT 5;</pre>
+<p><strong>4. Adding things up: COUNT, SUM, AVG, MIN, MAX, and GROUP BY.</strong> On their own, these
+turn a whole table into one number. Add GROUP BY and you get one number per group, which is a pivot
+table in words.</p>
+<pre style="background:var(--off-white);border:1px solid var(--border);padding:.7rem .9rem;overflow-x:auto;font-family:ui-monospace,Menlo,monospace;font-size:.85rem;line-height:1.5;margin:.4rem 0 .8rem">SELECT AVG(list_price) FROM products;
+SELECT MIN(list_price), MAX(list_price) FROM products;
+SELECT category, COUNT(*) FROM products GROUP BY category;
+SELECT store_id, SUM(quantity * unit_price) FROM sales GROUP BY store_id;</pre>
+<p><strong>Then JOIN</strong>, which Steps 5 and 6 teach on their own, because it is the one idea here
+with no spreadsheet equivalent.</p>
+</div></details>
 
-<div class="sh" id="step1"><span class="badge">Step 1</span><span class="ttl">Understand the data</span><span class="cpx">Answer goes in <b>Checkpoint 1 and 2</b></span></div>
-<p>Never clean anything before you have measured what is wrong with it. Your first job is a damage
-report, not a repair.</p>
-<p><code class="inline">SELECT COUNT(*) FROM sales_raw;</code> tells you how big it is.
-<code class="inline">SELECT COUNT(DISTINCT sale_id) FROM sales_raw;</code> tells you how many real
-orders there are. If those two numbers disagree, you have duplicates, and you now know exactly how many.
-<code class="inline">SELECT * FROM sales_raw LIMIT 10;</code> shows you what the rows actually look
-like, which is always worth doing before you assume anything.</p>
+<h2><span class="num">Part 2</span>Follow along: the GM's questions, one query at a time</h2>
+<p><strong>Every query is printed for you.</strong> Type it into the sandbox above (typing, not pasting,
+is how the words get into your hands), press Run, and enter what comes back. Each step adds one word to
+what you already know. Seven steps, and one of them is clicking rather than typing.</p>
+
+<div class="sh" id="step1"><span class="badge">Step 1</span><span class="ttl">Look, then count</span><span class="cpx">Answer goes in <b>Checkpoint 1</b></span></div>
+<p>Start by looking at a whole table. The stores table is small enough to see at once:</p>
+<p><code class="inline">SELECT * FROM stores;</code></p>
+<p>The star means every column. Eight rows come back, one per store, and you can see the store_id
+number that the sales table uses instead of the name. Now look at sales, which is not small, so ask
+for the first ten rows only:</p>
+<p><code class="inline">SELECT * FROM sales LIMIT 10;</code></p>
+<p>Then count them all. COUNT(*) means count the rows:</p>
+<p><code class="inline">SELECT COUNT(*) FROM sales;</code></p>
+<p>That is the GM's first question, and you answered it without opening a spreadsheet.</p>
 
 <div class="cpslot" data-cp="1"></div>
+
+<div class="sh" id="step2"><span class="badge">Step 2</span><span class="ttl">Only some rows: WHERE</span><span class="cpx">Answer goes in <b>Checkpoint 2</b></span></div>
+<p>WHERE keeps only the rows that meet a condition. Bellingham is store_id 4 (you saw that in Step 1),
+so:</p>
+<p><code class="inline">SELECT COUNT(*) FROM sales WHERE store_id = 4;</code></p>
+<p>Change one thing and you have a different question. Try <code class="inline">store_id = 1</code>
+for Seattle, or <code class="inline">quantity &gt; 2</code> for the larger sales, or both at once with
+<code class="inline">WHERE store_id = 4 AND quantity &gt; 2</code>. Each is one edit and one Run.</p>
+
 <div class="cpslot" data-cp="2"></div>
 
-<div class="sh" id="step2"><span class="badge">Step 2</span><span class="ttl">Standardize formats</span><span class="cpx">Answer goes in <b>Checkpoint 3 and 4</b></span></div>
-<p>The same value written five ways is five values as far as the database is concerned, and that quietly
-ruins every count and every GROUP BY you write afterward.</p>
-<ul>
-<li><code class="inline">trim(store)</code> removes leading and trailing spaces</li>
-<li><code class="inline">lower(store)</code> or <code class="inline">upper(store)</code> forces one casing</li>
-<li><code class="inline">replace(unit_price, '$', '')</code> strips a stray character</li>
-<li><code class="inline">CAST(replace(unit_price,'$','') AS REAL)</code> turns the cleaned text back into a number you can add up</li>
-</ul>
-<p>Try it: run <code class="inline">SELECT COUNT(DISTINCT store) FROM sales_raw;</code> and then the same
-query wrapped in <code class="inline">lower(trim(...))</code>. The co-op has eight stores. Whatever
-number the first query gives you is the size of the problem.</p>
+<div class="sh" id="step3"><span class="badge">Step 3</span><span class="ttl">In order: ORDER BY</span><span class="cpx">Answer goes in <b>Checkpoint 3</b></span></div>
+<p>Instead of every column, name the ones you want, and sort them. DESC means largest first:</p>
+<p><code class="inline">SELECT product_name, list_price FROM products ORDER BY list_price DESC LIMIT 5;</code></p>
+<p>The top row is the co-op's most expensive product. Take off DESC and you get the cheapest five
+instead. Or ask for one number rather than a list: <code class="inline">SELECT MAX(list_price) FROM
+products;</code> gives you the same top price with no sorting at all, and MIN and AVG work the same
+way.</p>
 
 <div class="cpslot" data-cp="3"></div>
+
+<div class="sh" id="step4"><span class="badge">Step 4</span><span class="ttl">Totals per group: GROUP BY</span><span class="cpx">Answer goes in <b>Checkpoint 4</b></span></div>
+<p>This is the pivot table, in words. GROUP BY collects the rows for each store into one line, and SUM
+adds up something for each group. Revenue is quantity times price:</p>
+<pre style="background:var(--off-white);border:1px solid var(--border);padding:.9rem 1rem;overflow-x:auto;font-family:ui-monospace,Menlo,monospace;font-size:.85rem;line-height:1.5">SELECT store_id, ROUND(SUM(quantity * unit_price), 2) AS revenue
+FROM sales
+GROUP BY store_id
+ORDER BY revenue DESC;</pre>
+<p>Eight rows, one per store, largest first. AS revenue just gives the new column a name. You built
+this same table in Lab 5 with a pivot and in Lab 6 with a bar chart. The numbers should look
+familiar.</p>
+
 <div class="cpslot" data-cp="4"></div>
 
-<div class="sh" id="step3"><span class="badge">Step 3</span><span class="ttl">Identify missing values</span><span class="cpx">Answer goes in <b>Checkpoint 5</b></span></div>
-<p>Missing is not the same as zero, and it is not the same as empty text. SQL has a separate idea for
-it: NULL.</p>
-<p>Find them with <code class="inline">WHERE quantity IS NULL</code>. Note carefully that
-<code class="inline">= NULL</code> does not work and will silently return nothing, because nothing is
-equal to NULL, including NULL. That trips up nearly everyone once, and it will be on Exam 2.</p>
+<div class="sh" id="step5"><span class="badge">Step 5</span><span class="ttl">See a JOIN before you type one</span><span class="cpx">Answers go in <b>Checkpoints 5 and 6</b></span></div>
+<p>Step 4 gave you store_id 1, 6, 2. The names live in a different table. Getting them means
+connecting two tables, which is the one idea in SQL that has no Excel equivalent, so look at it before
+you type it.</p>
+<p>Open the <a href="join-builder.html"><strong>Join Builder</strong></a> in a new tab. It shows the
+co-op's tables as boxes. Click the store_id column in sales, then the store_id column in stores. An
+arrow appears between them, and in the panel below the boxes, one line of SQL appears with it,
+highlighted: <code class="inline">JOIN stores ON sales.store_id = stores.store_id</code>. The arrow and
+that line are the same thing. Read the <em>rows total</em> above the result table; that number is
+Checkpoint 5.</p>
+<p>Then click Start over and connect sales to members instead. Read the rows total again. It is
+smaller, and the difference matters: a JOIN keeps only the rows that found a match, and a sale with no
+member has no members row to match. The rows that vanished are the non-member sales. That number is
+Checkpoint 6, and it is the same 405 sales, 168 of them at one store, that Lab 5 found. The Join
+Builder has a Back to Lab 7 button when you are done.</p>
 
 <div class="cpslot" data-cp="5"></div>
-
-<div class="sh" id="step4"><span class="badge">Step 4</span><span class="ttl">Handle and recode values</span><span class="cpx">Answer goes in <b>Checkpoint 6 and 7</b></span></div>
-<p>Two different jobs live here. <strong>Handling</strong> a missing value means deciding what to put in
-its place: <code class="inline">COALESCE(quantity, 0)</code> returns the quantity, or zero when it is
-NULL. <code class="inline">NULLIF(state, '')</code> does the reverse, turning empty text into a proper
-NULL so it stops masquerading as a real value.</p>
-<p><strong>Recoding</strong> is harder and no function can do it for you. Look at the state column:</p>
-<p><code class="inline">SELECT DISTINCT state FROM sales_raw ORDER BY 1;</code></p>
-<p>You will find WA, wa, Wash., and Washington all describing the same state. Cleaning the text with
-trim and upper gets you partway, but only a person knows that "Wash." means Washington. That judgment
-goes into a CASE expression:</p>
-<pre style="background:var(--off-white);border:1px solid var(--border);padding:.9rem 1rem;overflow-x:auto;font-family:ui-monospace,Menlo,monospace;font-size:.85rem;line-height:1.5">SELECT CASE
-         WHEN upper(trim(state)) IN ('WA','WASHINGTON','WASH.') THEN 'WA'
-         WHEN upper(trim(state)) IN ('OR','OREGON','ORE.')      THEN 'OR'
-         ELSE 'ID'
-       END AS state_clean,
-       COUNT(*)
-FROM sales_raw
-GROUP BY state_clean;</pre>
-<p>This is the step where a human has to know the business. It is also, not coincidentally, the step
-that is hardest to automate away.</p>
-
 <div class="cpslot" data-cp="6"></div>
+
+<div class="sh" id="step6"><span class="badge">Step 6</span><span class="ttl">Now type the JOIN yourself</span><span class="cpx">Answer goes in <b>Checkpoint 7</b></span></div>
+<p>Here is the Join Builder's line, typed by you. Everything else in this query you have already used:</p>
+<pre style="background:var(--off-white);border:1px solid var(--border);padding:.9rem 1rem;overflow-x:auto;font-family:ui-monospace,Menlo,monospace;font-size:.85rem;line-height:1.5">SELECT stores.store_name, sales.sale_date, sales.quantity
+FROM sales
+JOIN stores ON sales.store_id = stores.store_id
+LIMIT 10;</pre>
+<p>Ten sales rows, each with its store's name attached. Because two tables are in play, every column is
+written as table.column so the database knows which one you mean. Now the payoff: with stores joined
+in, you can ask sales a question about region, a column that sales does not have. Change the query to
+count instead of show, and add one WHERE line:</p>
+<pre style="background:var(--off-white);border:1px solid var(--border);padding:.9rem 1rem;overflow-x:auto;font-family:ui-monospace,Menlo,monospace;font-size:.85rem;line-height:1.5">SELECT COUNT(*)
+FROM sales
+JOIN stores ON sales.store_id = stores.store_id
+WHERE stores.region = 'Inland';</pre>
+<p>That is the GM's fifth question, and no spreadsheet the co-op exports can answer it, because the
+region lives in a different table from the sales. JOIN is the reason the data is stored this way.</p>
+
 <div class="cpslot" data-cp="7"></div>
 
-<div class="sh" id="step5"><span class="badge">Step 5</span><span class="ttl">Identify duplicates</span></div>
-<p>Group by whatever should be unique and keep only the groups that appear more than once:</p>
-<pre style="background:var(--off-white);border:1px solid var(--border);padding:.9rem 1rem;overflow-x:auto;font-family:ui-monospace,Menlo,monospace;font-size:.85rem;line-height:1.5">SELECT sale_id, COUNT(*)
-FROM sales_raw
-GROUP BY sale_id
-HAVING COUNT(*) > 1;</pre>
-<p><code class="inline">HAVING</code> filters groups the way <code class="inline">WHERE</code> filters
-rows. You need it here because you are asking a question about the group, not about any single row.</p>
-
-<div class="sh" id="step6"><span class="badge">Step 6</span><span class="ttl">Remove duplicates</span><span class="cpx">Answer goes in <b>Checkpoint 8</b></span></div>
-<p>Number the rows within each group, then keep number one:</p>
-<pre style="background:var(--off-white);border:1px solid var(--border);padding:.9rem 1rem;overflow-x:auto;font-family:ui-monospace,Menlo,monospace;font-size:.85rem;line-height:1.5">SELECT sale_id, quantity, unit_price
-FROM (
-  SELECT sale_id, quantity, unit_price,
-         ROW_NUMBER() OVER (PARTITION BY sale_id ORDER BY sale_id) AS rn
-  FROM sales_raw
-)
-WHERE rn = 1;</pre>
-<p><code class="inline">PARTITION BY</code> restarts the numbering for each sale_id, so every real order
-gets a row 1 and its copies get 2, 3, and so on.</p>
-<div class="callout callout-caution"><strong>A warning about cheat sheets</strong>
-<p>Published examples of this pattern often end with <code class="inline">QUALIFY rn = 1</code>, which is
-shorter and reads better. It will fail in this sandbox, and in SQLite, MySQL, and PostgreSQL, because
-QUALIFY exists only in Snowflake, BigQuery, and a few others. Try it and read the error. This is worth
-experiencing once: SQL is a standard that every database extends differently, and code you copy from the
-internet may be written for a database you are not using.</p></div>
+<div class="sh" id="step7"><span class="badge">Step 7</span><span class="ttl">The question no report answers</span><span class="cpx">Answer goes in <b>Checkpoint 8</b></span></div>
+<p>The Join Builder showed you that 405 sales have no member attached. The GM wants to know where they
+are. This last query has no new words in it. Every line comes from a step you have already done:</p>
+<pre style="background:var(--off-white);border:1px solid var(--border);padding:.9rem 1rem;overflow-x:auto;font-family:ui-monospace,Menlo,monospace;font-size:.85rem;line-height:1.5">SELECT stores.store_name, COUNT(*) AS no_member
+FROM sales
+JOIN stores ON sales.store_id = stores.store_id
+WHERE sales.member_id IS NULL
+GROUP BY stores.store_name
+ORDER BY no_member DESC;</pre>
+<ul style="font-family:var(--sans);font-size:.92rem">
+<li><strong>JOIN stores ON</strong> is Step 6, so the store has a name.</li>
+<li><strong>WHERE sales.member_id IS NULL</strong> is Step 2's WHERE. IS NULL means "is blank"; a sale with no member has a blank member_id.</li>
+<li><strong>GROUP BY</strong> is Step 4, one line per store.</li>
+<li><strong>COUNT(*) AS no_member</strong> is Step 1's count, given a name.</li>
+<li><strong>ORDER BY &hellip; DESC</strong> is Step 3, biggest first.</li>
+</ul>
+<p>Read the top row. You have now found this store three ways: a pivot table in Lab 5, a chart in Lab 6,
+and a query today. The tool kept changing and the fact did not, which is what it means for a finding
+to be real. And this time nobody exported anything for you.</p>
 
 <div class="cpslot" data-cp="8"></div>
 
-<h3>The payoff: tables that connect</h3>
-<p>Cleaning one table is half the story. The other half is that tables answer questions
-<em>together</em>. The pattern is JOIN:</p>
-<pre style="background:var(--off-white);border:1px solid var(--border);padding:.9rem 1rem;overflow-x:auto;font-family:ui-monospace,Menlo,monospace;font-size:.85rem;line-height:1.5">SELECT s.store_name, SUM(sa.quantity * sa.unit_price) AS revenue
-FROM sales sa
-JOIN stores s ON s.store_id = sa.store_id
-GROUP BY s.store_name;</pre>
-<p>Read the ON clause out loud: connect each sales row to the stores row whose primary key matches its
-foreign key. Every SUMIF you wrote in Lab 3 asked one question of one table; a JOIN asks one question across
-two tables at once, and the last two checkpoints ask you to make that move.</p>
-<h3>Putting it together</h3>
-<p><strong>Now you.</strong> The final checkpoints hand you the keyboard: no printed query, just the
-task. For the big one, build it in pieces and run each piece before you combine them; that is how
-working analysts write long queries, not in one heroic attempt. The pieces, in order, are all moves
-you ran above: first the dedupe from Step 6, then REPLACE for the dollar signs from Step 2's finding,
-then COALESCE to treat missing quantities as zero from Step 3, and finally SUM the cleaned
-quantity-times-price. For the two join checkpoints, start from the worked JOIN pattern above and
-change only the tables and columns it names.</p>
+<p><strong>If you finish early.</strong> Change two words in that last query: replace both
+<code class="inline">stores.store_name</code> with <code class="inline">stores.region</code>. Now the
+same question is asked by region. Does the result tell the board anything the store version did not?
+No checkpoint; use it in your reflection if you like.</p>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
 <script>
@@ -569,10 +614,35 @@ var CASCADIA_DB=null;
 initSqlJs({locateFile:function(f){return 'https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/'+f}})
 .then(function(SQL){return fetch('cascadia.db').then(function(r){if(!r.ok)throw new Error('db fetch '+r.status);return r.arrayBuffer()}).then(function(buf){
   CASCADIA_DB=new SQL.Database(new Uint8Array(buf));
-  document.getElementById('sqlstatus').textContent='Database loaded. Eight tables, including the messy sales_raw. Type a query and press Run.';
+  document.getElementById('sqlstatus').textContent='Database loaded. Type a query and press Run.';
 })}).catch(function(e){
   document.getElementById('sqlstatus').innerHTML='Could not load the database ('+e.message+'). The sandbox has to be served over http, so it works on the course site but not from a file you opened locally. You can also run these queries at <a href="https://sqliteonline.com">sqliteonline.com</a> by uploading <a href="cascadia.db">cascadia.db</a>.';
 });
+function explainSQL(q,r){
+  var s=q.replace(/\s+/g,' ').replace(/;\s*$/,'').trim(), up=s.toUpperCase(), parts=[];
+  function grab(kw,stops){var i=up.indexOf(' '+kw+' ');if(i<0&&up.indexOf(kw+' ')===0)i=-1;if(i<0)return null;var st=i+kw.length+2,en=s.length;stops.forEach(function(k){var j=up.indexOf(' '+k+' ',st);if(j>=0&&j<en)en=j});return s.slice(st,en).trim()}
+  var from=grab('FROM',['JOIN','WHERE','GROUP BY','ORDER BY','LIMIT']);
+  var join=grab('JOIN',['WHERE','GROUP BY','ORDER BY','LIMIT']);
+  var where=grab('WHERE',['GROUP BY','ORDER BY','LIMIT']);
+  var group=grab('GROUP BY',['ORDER BY','LIMIT']);
+  var order=grab('ORDER BY',['LIMIT']);
+  var limit=grab('LIMIT',[]);
+  var sel=up.indexOf('SELECT')===0? s.slice(6, from? up.indexOf(' FROM '):s.length).trim() : null;
+  if(from){ var f=from.split(' ')[0]; parts.push('Looked in the <b>'+f+'</b> table'+(join?', joined to <b>'+join.split(' ')[0]+'</b> by matching '+(join.split(/ ON /i)[1]||'the shared key'):'')+'.'); }
+  if(where) parts.push('Kept only the rows where '+where.replace(/ IS NULL/i,' is blank').replace(/ IS NOT NULL/i,' is not blank')+'.');
+  if(group) parts.push('Collected the rows into one line per '+group+'.');
+  if(sel){
+    var su=sel.toUpperCase();
+    if(su.indexOf('COUNT(DISTINCT')>=0) parts.push('Counted how many different values there are.');
+    else if(su.indexOf('COUNT(')>=0) parts.push(group?'Counted the rows in each group.':'Counted the rows.');
+    if(su.indexOf('SUM(')>=0) parts.push('Added up '+sel.replace(/.*SUM\(([^)]*)\).*/i,'$1')+(group?' for each group.':'.'));
+    if(su.indexOf('COUNT(')<0&&su.indexOf('SUM(')<0) parts.push(sel==='*'?'Showed every column.':'Showed the columns '+sel+'.');
+  }
+  if(order) parts.push('Sorted by '+order.replace(/ DESC/i,' with the largest first').replace(/ ASC/i,' with the smallest first')+'.');
+  if(limit) parts.push('Stopped after '+limit+' rows.');
+  parts.push('Result: '+r.values.length+' row'+(r.values.length===1?'':'s')+', '+r.columns.length+' column'+(r.columns.length===1?'':'s')+'.');
+  return parts.join(' ');
+}
 function runSQL(){
   var out=document.getElementById('sqlout');
   if(!CASCADIA_DB){out.textContent='Database still loading, give it a second.';return}
@@ -586,19 +656,18 @@ function runSQL(){
     r.values.slice(0,50).forEach(function(row){h+='<tr>';row.forEach(function(v){h+='<td style="border:1px solid var(--rule);padding:.35rem .65rem">'+(v===null?'<em style="color:#a03434">NULL</em>':String(v).replace(/</g,'&lt;'))+'</td>'});h+='</tr>'});
     h+='</table>';
     if(r.values.length>50)h+='<p style="color:var(--muted)">Showing 50 of '+r.values.length+' rows.</p>';
+    h+='<p style="margin:.7rem 0 0;padding:.55rem .7rem;border-left:3px solid var(--magenta);background:#fff;font-size:.85rem"><strong>What that query did:</strong> '+explainSQL(q,r)+'</p>';
     out.innerHTML=h;
   }catch(e){out.innerHTML='<span style="color:#a03434">SQL error: '+String(e.message).replace(/</g,'&lt;')+'</span><br><span style="color:var(--muted)">Read it closely. The word right before the error is usually where the problem is.</span>'}
 }
 </script></div>
 
-<div class="cpslot" data-cp="9"></div>
-<div class="cpslot" data-cp="10"></div>
 
 <h2 id="finish"><span class="num">Finish</span>Reflection &amp; certificate</h2>
 
 <div class="certbox" id="reflectbox">
   <h3>One last thing before your certificate</h3>
-  <p style="font-family:var(--sans);font-size:.88rem">Data professionals spend a large share of their time cleaning data rather than analyzing it. Now that you have done the same cleaning job twice, once by hand in Excel and once in SQL, describe a dataset in the field you plan to enter that probably arrives dirty. What would be wrong with it, who would have to clean it, and what would it cost the business if nobody did?</p>
+  <p style="font-family:var(--sans);font-size:.88rem">You just answered six questions from the source, including one that no report at the co-op was built to answer, and you did it in six short queries. Think about the job you are heading toward. What is one question you would want to ask the data directly rather than wait for someone to build you a report? Who owns that database today, and what would change if you could ask it yourself?</p>
   <p style="font-family:var(--sans);font-size:.88rem;color:var(--muted)">Fifty words is the minimum, but
   do not write to the counter. This prints as page 2 of your certificate, so it is the part your lab
   professor actually reads. Answer it like someone asked you the question out loud.</p>
@@ -618,7 +687,7 @@ function runSQL(){
 <h2 id="submit"><span class="num">Canvas</span>What to submit</h2>
 <p style="font-family:var(--sans);font-size:.92rem">Go to the <strong>Lab 7</strong> assignment in Canvas and upload two files.</p>
 <p style="font-family:var(--sans);font-size:.92rem"><strong>File 1: your queries.</strong> A plain text file or Word doc named
-<code class="inline">LAB7_Last_First</code>, containing your ten working queries, one per checkpoint,
+<code class="inline">LAB7_Last_First</code>, containing your six working queries, one for each checkpoint that asked you to type one (Checkpoints 5 and 6 came from the Join Builder and need no query),
 numbered so we can match them up. Paste the query text, not screenshots.</p>
 <p style="font-family:var(--sans);font-size:.92rem"><strong>File 2: your completion certificate PDF.</strong> Clear all the checkpoints above, write your reflection, and click Download certificate. Your reflection prints as page 2, so you do not submit it separately.</p>
 </main></div>
@@ -630,7 +699,7 @@ b.setAttribute('aria-expanded',o?'true':'false');});})();
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-const LAB="LAB7", QS=[{"q": "Step 1 \u00b7 Understand the data. Run: SELECT COUNT(*) FROM sales_raw; How many rows are in the messy export?", "t": "num", "a": "MjkyMw==", "tol": 0, "h": "Type it in the sandbox above and press Run. This is the controller's export exactly as her system produced it."}, {"q": "Step 1 \u00b7 Now count the real orders: SELECT COUNT(DISTINCT sale_id) FROM sales_raw; How many distinct sale IDs?", "t": "num", "a": "Mjg5OQ==", "tol": 0, "h": "COUNT(DISTINCT column) counts unique values. The gap between this and Checkpoint 1 is your duplicate problem, already measured, in one line."}, {"q": "Step 2 \u00b7 Standardize formats. The store column has stray spaces and inconsistent casing. Run SELECT COUNT(DISTINCT store) FROM sales_raw, then wrap it: SELECT COUNT(DISTINCT lower(trim(store))). What does the second query return?", "t": "num", "a": "OA==", "tol": 0, "h": "trim() strips spaces, lower() forces one casing. The co-op has eight stores, so eight is the right answer and anything higher means the text is still dirty."}, {"q": "Step 2 \u00b7 Some prices were exported as text with a dollar sign. Count them: SELECT COUNT(*) FROM sales_raw WHERE unit_price LIKE '$%'; How many?", "t": "num", "a": "MTA4", "tol": 0, "h": "LIKE '$%' matches any value starting with a dollar sign. In Excel you would hunt these down by eye; LIKE finds them in one line."}, {"q": "Step 3 \u00b7 Identify missing values. SELECT COUNT(*) FROM sales_raw WHERE quantity IS NULL; How many rows are missing a quantity?", "t": "num", "a": "ODE=", "tol": 0, "h": "IS NULL, never = NULL. Nothing equals NULL, not even NULL itself."}, {"q": "Step 4 \u00b7 Recode variables. The state column is a mess. SELECT COUNT(DISTINCT state) FROM sales_raw returns how many different spellings?", "t": "num", "a": "MTQ=", "tol": 0, "h": "Run SELECT DISTINCT state FROM sales_raw ORDER BY 1 first and look at what you are dealing with. Then count them."}, {"q": "Step 4 \u00b7 Cleaning the text only gets you partway: SELECT COUNT(DISTINCT upper(trim(state))) still returns 8, because 'Washington' and 'WA' are the same state spelled differently. Write a CASE expression that maps every variant to WA, OR, or ID, and count the distinct results. What do you get?", "t": "num", "a": "Mw==", "tol": 0, "h": "SELECT COUNT(DISTINCT CASE WHEN upper(trim(state)) IN ('WA','WASHINGTON','WASH.') THEN 'WA' WHEN upper(trim(state)) IN ('OR','OREGON','ORE.') THEN 'OR' ELSE 'ID' END) FROM sales_raw; This is recoding, and no string function can do it for you, because only a human knows Wash. means Washington."}, {"q": "Step 5 and 6 \u00b7 Put it together. Deduplicate with ROW_NUMBER, replace the dollar signs, and treat missing quantities as zero, then total the revenue. Round to two decimals. What is the cleaned total?", "t": "num", "a": "NjkyMjIwLjY=", "tol": 1, "h": "Use the pattern in the worked example above the checkpoints. The full query is: SELECT ROUND(SUM(COALESCE(quantity,0)*CAST(replace(unit_price,'$','') AS REAL)),2) FROM (SELECT sale_id, quantity, unit_price, ROW_NUMBER() OVER (PARTITION BY sale_id ORDER BY sale_id) rn FROM sales_raw) WHERE rn = 1;"}, {"q": "The relational payoff, part 1 \u00b7 The products table stores a supplier_id, not a supplier name. JOIN products to suppliers: which supplier makes the Avalanche Beacon?", "t": "txt", "a": "Tm9yZHZpayBPdXRkb29y", "h": "SELECT su.supplier_name FROM products p JOIN suppliers su ON su.supplier_id = p.supplier_id WHERE p.product_name = 'Avalanche Beacon'; The ON clause states which columns connect the tables."}, {"q": "The relational payoff, part 2 \u00b7 One question across two tables: JOIN sales to stores, group by store name, and compute each store's member attach rate: 100.0 * SUM(CASE WHEN member_id IS NOT NULL THEN 1 ELSE 0 END) / COUNT(*). One store is drastically below the others. Which one?", "t": "txt", "a": "QmVsbGluZ2hhbQ==", "h": "You have now found this three ways: a pivot table in Lab 5, a chart in Lab 6, and a query today. The instrument keeps changing. The fact does not, which is what it means for a finding to be real."}];
+const LAB="LAB7", QS=[{"q": "Checkpoint 1 · How many sales did the co-op ring up in 2025? Run: SELECT COUNT(*) FROM sales;", "t": "num", "a": "Mjg5OQ==", "tol": 0, "h": "Type it exactly as printed and press Run. The single number that comes back is the answer. If you get an error, check for the semicolon and the spelling of sales."}, {"q": "Checkpoint 2 · How many of those sales were at Bellingham? Run: SELECT COUNT(*) FROM sales WHERE store_id = 4;", "t": "num", "a": "MzQ3", "tol": 0, "h": "Bellingham is store_id 4; you can confirm that with SELECT * FROM stores. The WHERE line keeps only Bellingham's rows before COUNT counts them."}, {"q": "Checkpoint 3 · What is the co-op's most expensive product? Run the ORDER BY query in Step 3 and enter the top product name.", "t": "txt", "a": "VG91cmluZyBTa2kgUGFja2FnZQ==", "h": "ORDER BY list_price DESC puts the highest price first. Enter the product_name exactly as it appears in the result."}, {"q": "Checkpoint 4 · What was the best store's total revenue for the year, in dollars? Run the GROUP BY query in Step 4 and enter the top number.", "t": "num", "a": "MTQ4NDcxLjc1", "tol": 1, "h": "ORDER BY revenue DESC puts the biggest total first. Enter the number without a dollar sign or comma. It should match the top bar of your Lab 6 chart."}, {"q": "Checkpoint 5 · In the Join Builder, connect sales to stores. What is the rows total?", "t": "num", "a": "Mjg5OQ==", "tol": 0, "h": "Click store_id in the sales box, then store_id in the stores box. The rows total appears at the top right of the result panel. Every sale has a store, so joining adds columns and loses nothing; compare it with Checkpoint 1."}, {"q": "Checkpoint 6 · Start over, then connect sales to members. What is the rows total now?", "t": "num", "a": "MjQ5NA==", "tol": 0, "h": "Click member_id in sales, then member_id in members. The total drops because a JOIN keeps only rows that found a match, and 405 sales have no member. Checkpoint 1 minus this number is 405."}, {"q": "Checkpoint 7 · How many sales did the Inland region ring up? Type the second query in Step 6 (the COUNT with WHERE stores.region = 'Inland').", "t": "num", "a": "NTIw", "tol": 0, "h": "The region column lives in stores, not sales, so the JOIN line has to be there before WHERE stores.region works. Inland is two stores, Spokane and Boise; the answer is their sales added together."}, {"q": "Checkpoint 8 · Which store has the most sales with no member attached? Type the query in Step 7 and enter the store name on the top row.", "t": "txt", "a": "QmVsbGluZ2hhbQ==", "h": "ORDER BY no_member DESC puts the biggest count first. One store has far more than the others; its number should match what you found in Lab 5, Checkpoint 6."}];
 const SKEY='mis320_'+LAB;
 let solved=new Set();
 function load(){try{const raw=localStorage.getItem(SKEY);if(!raw)return null;const s=JSON.parse(raw);
@@ -699,7 +768,7 @@ function cert(){
  p.setFont('times','normal');p.setFontSize(13);
  p.text('completed all '+QS.length+' checkpoints of',280,198,{align:'center'});
  p.setFont('helvetica','bold');p.setFontSize(15);p.setTextColor(26,82,118);
- p.text('Lab 7 \u00B7 SQL: Cleaning Data at the Source',280,222,{align:'center'});
+ p.text('Lab 7 \u00B7 SQL: Asking the Database a Question',280,222,{align:'center'});
  p.setFont('helvetica','normal');p.setFontSize(11);p.setTextColor(90,90,90);
  p.text(d,280,252,{align:'center'});
  p.setFont('courier','bold');p.setFontSize(12);p.setTextColor(17,120,100);
@@ -712,7 +781,7 @@ function cert(){
  p.setTextColor(26,82,118);p.setFont('helvetica','bold');p.setFontSize(10);
  p.text('LAB REFLECTION \u00B7 '+n+' \u00B7 '+code,280,44,{align:'center'});
  p.setTextColor(60,60,60);p.setFont('times','italic');p.setFontSize(9);
- const promptLines=p.splitTextToSize('Prompt: Data professionals spend a large share of their time cleaning data rather than analyzing it. Now that you have done the same cleaning job twice, once by hand in Excel and once in SQL, describe a dataset in the field you plan to enter that probably arrives dirty. What would be wrong with it, who would have to clean it, and what would it cost the business if nobody did?',480);
+ const promptLines=p.splitTextToSize('Prompt: You just answered six questions from the source, including one that no report at the co-op was built to answer, and you did it in six short queries. Think about the job you are heading toward. What is one question you would want to ask the data directly rather than wait for someone to build you a report? Who owns that database today, and what would change if you could ask it yourself?',480);
  p.text(promptLines,40,70);
  p.setFont('times','normal');p.setFontSize(11);p.setTextColor(26,26,26);
  const lines=p.splitTextToSize(r,480);
