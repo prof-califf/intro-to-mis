@@ -11,7 +11,7 @@
 <style>
 :root{
   --black:#0e0e0d; --off-black:#1a1a18;
-  --magenta:#e8197d; --magenta-dark:#c0146a; --magenta-pale:#fdeaf3;
+  --magenta:#cc146d; --magenta-onblack:#f0348e; --magenta-dark:#c0146a; --magenta-pale:#fdeaf3;
   --white:#ffffff; --off-white:#f6f4f1;
   --text-dark:#0e0e0d; --text-muted:#3a3a38; --text-light:#6b6b68;
   --border:#e0ddd8;
@@ -20,7 +20,7 @@
   --sans:'Space Grotesk',sans-serif; --display:'Oswald',sans-serif;
   --wrap:1180px; --col:46rem;
   /* legacy aliases so existing markup keeps working */
-  --navy:#0e0e0d; --navy-soft:#1a1a18; --accent:#e8197d; --accent-deep:#c0146a;
+  --navy:#0e0e0d; --navy-soft:#1a1a18; --accent:#cc146d; --accent-deep:#c0146a;
   --accent-pale:#fdeaf3; --cream:#ffffff; --cream-deep:#f6f4f1; --paper:#ffffff;
   --ink:#0e0e0d; --muted:#6b6b68; --rule:#e0ddd8; --serif:'Space Grotesk',sans-serif;
 }
@@ -155,7 +155,7 @@ li{margin-bottom:.45rem}
 /* ---------- global top navigation with dropdowns ---------- */
 .topnav{position:sticky;top:0;z-index:100;background:var(--black);border-bottom:1px solid rgba(255,255,255,.14)}
 .topnav-in{max-width:var(--wrap);margin:0 auto;padding:.7rem 1.5rem;display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap}
-.topnav-brand{font-family:var(--display);font-size:16px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--magenta);text-decoration:none;margin-right:auto}
+.topnav-brand{font-family:var(--display);font-size:16px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--magenta-onblack);text-decoration:none;margin-right:auto}
 .topnav-brand:hover{color:#fff}
 .dd{position:relative}
 .dd-btn{font-family:var(--display);font-size:14.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
@@ -325,6 +325,8 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 .takeaways .obj-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.4rem}
 .takeaways ul{margin:.2rem 0 0 1.2rem;padding:0}
 .takeaways li{margin:.35rem 0;font-size:16.5px;line-height:1.55}
+.diagram{margin:1.6rem 0;text-align:center}
+.diagram figcaption{text-align:left}
 </style>
 </head>
 <body>
@@ -348,6 +350,8 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
       <a href="chapter11-equifax.html"><span class="lbl">Chapter 11 &middot; Week 8</span>IT Governance &mdash; Equifax</a>
       <a href="chapter12-software.html"><span class="lbl">Chapter 12 &middot; Week 9</span>Software Design &amp; Selection &mdash; Robles v. Domino's</a>
       <a href="chapter13-cloud.html"><span class="lbl">Chapter 13 &middot; Week 10</span>The Cloud &amp; What Computing Costs &mdash; Netflix</a>
+      <a href="glossary.html"><span class="lbl">Reference</span>Glossary, A to Z</a>
+      <a href="preface.html"><span class="lbl">Reference</span>About this book</a>
       </div>
     </div>
     <div class="dd">
@@ -497,6 +501,48 @@ worth as little as possible. <strong>Network segmentation</strong>: systems are 
 entry into one is not entry into all. Change Healthcare's attackers had nine days of lateral movement,
 which is a segmentation failure sitting behind the MFA failure. Break either link and the record
 breach does not happen.</p></div>
+<figure class="diagram" style="margin:1.8rem auto;max-width:470px">
+<svg viewBox="0 0 470 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="kcT kcD" style="width:100%;height:auto;font-family:var(--sans)">
+<title id="kcT">The kill chain, and where to break it</title>
+<desc id="kcD">Five boxes in a row joined by arrows, labelled entry, foothold, move deeper, take the data, and encrypt. Under each arrow a control that would have broken the chain at that point: multi-factor authentication, least privilege, segmentation, monitoring, and backups. The first two links are highlighted, with a note that at Change Healthcare both were missing.</desc>
+<defs><marker id="kca" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--text-light)"/></marker></defs>
+<rect x="12" y="70" width="78" height="46" fill="var(--warn-pale)" stroke="var(--text-dark)" stroke-width="1.2"/>
+<text x="51" y="89" text-anchor="middle" font-size="9.5" font-weight="700" fill="var(--text-dark)">ENTRY</text>
+<text x="51" y="104" text-anchor="middle" font-size="9" fill="var(--text-light)">stolen password</text>
+<path d="M92 93 L102 93" stroke="var(--text-light)" stroke-width="1.6" fill="none" marker-end="url(#kca)"/>
+<rect x="104" y="70" width="78" height="46" fill="var(--warn-pale)" stroke="var(--text-dark)" stroke-width="1.2"/>
+<text x="143" y="89" text-anchor="middle" font-size="9.5" font-weight="700" fill="var(--text-dark)">FOOTHOLD</text>
+<text x="143" y="104" text-anchor="middle" font-size="9" fill="var(--text-light)">first machine</text>
+<path d="M184 93 L194 93" stroke="var(--text-light)" stroke-width="1.6" fill="none" marker-end="url(#kca)"/>
+<rect x="196" y="70" width="78" height="46" fill="var(--warn-pale)" stroke="var(--text-dark)" stroke-width="1.2"/>
+<text x="235" y="89" text-anchor="middle" font-size="9.5" font-weight="700" fill="var(--text-dark)">MOVE DEEPER</text>
+<text x="235" y="104" text-anchor="middle" font-size="9" fill="var(--text-light)">nine days</text>
+<path d="M276 93 L286 93" stroke="var(--text-light)" stroke-width="1.6" fill="none" marker-end="url(#kca)"/>
+<rect x="288" y="70" width="78" height="46" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1.2"/>
+<text x="327" y="89" text-anchor="middle" font-size="9.5" font-weight="700" fill="var(--text-dark)">TAKE THE DATA</text>
+<text x="327" y="104" text-anchor="middle" font-size="9" fill="var(--text-light)">six terabytes</text>
+<path d="M368 93 L378 93" stroke="var(--text-light)" stroke-width="1.6" fill="none" marker-end="url(#kca)"/>
+<rect x="380" y="70" width="78" height="46" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1.2"/>
+<text x="419" y="89" text-anchor="middle" font-size="9.5" font-weight="700" fill="var(--text-dark)">ENCRYPT</text>
+<text x="419" y="104" text-anchor="middle" font-size="9" fill="var(--text-light)">the ransom note</text>
+<path d="M91 99 L103 87 M91 87 L103 99" stroke="var(--good)" stroke-width="2.4"/><path d="M97 102 L97 150" stroke="var(--good)" stroke-width="1.2" stroke-dasharray="3 3" fill="none"/>
+<text x="97" y="164" text-anchor="middle" font-size="9.5" font-weight="600" fill="var(--good)">MFA</text>
+<path d="M183 99 L195 87 M183 87 L195 99" stroke="var(--good)" stroke-width="2.4"/><path d="M189 102 L189 150" stroke="var(--good)" stroke-width="1.2" stroke-dasharray="3 3" fill="none"/>
+<text x="189" y="164" text-anchor="middle" font-size="9.5" font-weight="600" fill="var(--good)">least privilege</text>
+<path d="M275 99 L287 87 M275 87 L287 99" stroke="var(--good)" stroke-width="2.4"/><path d="M281 102 L281 150" stroke="var(--good)" stroke-width="1.2" stroke-dasharray="3 3" fill="none"/>
+<text x="281" y="164" text-anchor="middle" font-size="9.5" font-weight="600" fill="var(--good)">segmentation</text>
+<path d="M367 99 L379 87 M367 87 L379 99" stroke="var(--good)" stroke-width="2.4"/><path d="M373 102 L373 150" stroke="var(--good)" stroke-width="1.2" stroke-dasharray="3 3" fill="none"/>
+<text x="373" y="164" text-anchor="middle" font-size="9.5" font-weight="600" fill="var(--good)">monitoring</text>
+<path d="M419 122 L419 150" stroke="var(--good)" stroke-width="1.4" fill="none"/><path d="M412 132 L426 118 M412 118 L426 132" stroke="var(--good)" stroke-width="2"/><text x="419" y="178" text-anchor="middle" font-size="9.5" font-weight="600" fill="var(--good)">backups</text>
+<text x="235" y="40" text-anchor="middle" font-size="10.5" fill="var(--text-light)">The attacker must win every link. The defender has to break one.</text>
+<text x="235" y="196" text-anchor="middle" font-size="10" fill="var(--warn)" font-weight="600">At Change Healthcare the first three links held:</text><text x="235" y="210" text-anchor="middle" font-size="10" fill="var(--warn)" font-weight="600">no MFA on the portal, then nine days of movement.</text>
+<text x="235" y="240" text-anchor="middle" font-size="10" fill="var(--text-light)">Each green mark is an ordinary control. None is new. All were available.</text>
+</svg>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">
+Read the chain from left to right as the attacker did, then read the marks underneath as the controls that would have ended it. Multi-factor authentication stops the first link. Least privilege and segmentation stop the second and third; nine days of movement is a segmentation failure sitting behind an MFA failure. The attacker needed every link. The defender needed one.
+</figcaption>
+</figure>
+
 
 <p>Run the whole chain against a single question: at how many points could this have been stopped
 cheaply? MFA on one portal. Segmentation to contain the movement. Detection to catch nine days of an
@@ -544,7 +590,7 @@ the next section.</p>
     var row=document.createElement('div'); row.className='wrow';
     row.innerHTML='<div class="wq">'+r.t+'</div><div class="wbtns">'
       +F.map(function(f){return '<button type="button" data-f="'+f+'">'+f+'</button>';}).join('')
-      +'</div><div class="wout" hidden></div>';
+      +'</div><div class="wout" role="status" aria-live="polite" hidden></div>';
     host.appendChild(row);
     var bs=row.querySelectorAll('button'), out=row.querySelector('.wout');
     bs.forEach(function(b){

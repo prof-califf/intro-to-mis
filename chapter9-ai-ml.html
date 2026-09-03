@@ -11,7 +11,7 @@
 <style>
 :root{
   --black:#0e0e0d; --off-black:#1a1a18;
-  --magenta:#e8197d; --magenta-dark:#c0146a; --magenta-pale:#fdeaf3;
+  --magenta:#cc146d; --magenta-onblack:#f0348e; --magenta-dark:#c0146a; --magenta-pale:#fdeaf3;
   --white:#ffffff; --off-white:#f6f4f1;
   --text-dark:#0e0e0d; --text-muted:#3a3a38; --text-light:#6b6b68;
   --border:#e0ddd8;
@@ -20,7 +20,7 @@
   --sans:'Space Grotesk',sans-serif; --display:'Oswald',sans-serif;
   --wrap:1180px; --col:46rem;
   /* legacy aliases so existing markup keeps working */
-  --navy:#0e0e0d; --navy-soft:#1a1a18; --accent:#e8197d; --accent-deep:#c0146a;
+  --navy:#0e0e0d; --navy-soft:#1a1a18; --accent:#cc146d; --accent-deep:#c0146a;
   --accent-pale:#fdeaf3; --cream:#ffffff; --cream-deep:#f6f4f1; --paper:#ffffff;
   --ink:#0e0e0d; --muted:#6b6b68; --rule:#e0ddd8; --serif:'Space Grotesk',sans-serif;
 }
@@ -155,7 +155,7 @@ li{margin-bottom:.45rem}
 /* ---------- global top navigation with dropdowns ---------- */
 .topnav{position:sticky;top:0;z-index:100;background:var(--black);border-bottom:1px solid rgba(255,255,255,.14)}
 .topnav-in{max-width:var(--wrap);margin:0 auto;padding:.7rem 1.5rem;display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap}
-.topnav-brand{font-family:var(--display);font-size:16px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--magenta);text-decoration:none;margin-right:auto}
+.topnav-brand{font-family:var(--display);font-size:16px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--magenta-onblack);text-decoration:none;margin-right:auto}
 .topnav-brand:hover{color:#fff}
 .dd{position:relative}
 .dd-btn{font-family:var(--display);font-size:14.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
@@ -324,6 +324,8 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 .takeaways .obj-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.4rem}
 .takeaways ul{margin:.2rem 0 0 1.2rem;padding:0}
 .takeaways li{margin:.35rem 0;font-size:16.5px;line-height:1.55}
+.diagram{margin:1.6rem 0;text-align:center}
+.diagram figcaption{text-align:left}
 </style>
 </head>
 <body>
@@ -347,6 +349,8 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
       <a href="chapter11-equifax.html"><span class="lbl">Chapter 11 &middot; Week 8</span>IT Governance &mdash; Equifax</a>
       <a href="chapter12-software.html"><span class="lbl">Chapter 12 &middot; Week 9</span>Software Design &amp; Selection &mdash; Robles v. Domino's</a>
       <a href="chapter13-cloud.html"><span class="lbl">Chapter 13 &middot; Week 10</span>The Cloud &amp; What Computing Costs &mdash; Netflix</a>
+      <a href="glossary.html"><span class="lbl">Reference</span>Glossary, A to Z</a>
+      <a href="preface.html"><span class="lbl">Reference</span>About this book</a>
       </div>
     </div>
     <div class="dd">
@@ -544,6 +548,37 @@ patrols, loans, audits, hiring, have consequential ones, because the model chang
 generates its evidence. The test to carry into any AI deployment: <em>does acting on this prediction
 change the data that will judge the prediction?</em> If yes, the model can be confidently,
 self-certifyingly wrong, and the gap between a rabbit hole and a patrol pattern is only the stakes.</p></div>
+<figure class="diagram" style="margin:1.8rem auto;max-width:470px">
+<svg viewBox="0 0 470 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="flT flD" style="width:100%;height:auto;font-family:var(--sans)">
+<title id="flT">A feedback loop</title>
+<desc id="flD">Four boxes arranged in a ring with arrows running clockwise: the model predicts, the organization acts on the prediction, the action changes the world, the changed world produces the next training data, which returns to the model. In the centre, the question to ask: does acting on this prediction change the data that will judge it? Two labels beside the ring give the two examples from the text, a video feed and a patrol pattern, and note that the shape is the same and only the stakes differ.</desc>
+<defs><marker id="fla" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--text-light)"/></marker></defs>
+<rect x="175" y="13" width="120" height="38" rx="3" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1.2"/>
+<text x="235" y="29" text-anchor="middle" font-size="10" font-weight="700" fill="var(--text-dark)">THE MODEL</text>
+<text x="235" y="43" text-anchor="middle" font-size="9.5" fill="var(--text-light)">predicts</text>
+<rect x="345" y="131" width="120" height="38" rx="3" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1.2"/>
+<text x="405" y="147" text-anchor="middle" font-size="10" font-weight="700" fill="var(--text-dark)">THE ORGANIZATION</text>
+<text x="405" y="161" text-anchor="middle" font-size="9.5" fill="var(--text-light)">acts on it</text>
+<rect x="175" y="249" width="120" height="38" rx="3" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1.2"/>
+<text x="235" y="265" text-anchor="middle" font-size="10" font-weight="700" fill="var(--text-dark)">THE WORLD</text>
+<text x="235" y="279" text-anchor="middle" font-size="9.5" fill="var(--text-light)">changes</text>
+<rect x="5" y="131" width="120" height="38" rx="3" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1.2"/>
+<text x="65" y="147" text-anchor="middle" font-size="10" font-weight="700" fill="var(--text-dark)">THE NEXT DATA</text>
+<text x="65" y="161" text-anchor="middle" font-size="9.5" fill="var(--text-light)">records the change</text>
+<path d="M300 51 Q400 60 405 128" fill="none" stroke="var(--text-light)" stroke-width="1.5" marker-end="url(#fla)"/>
+<path d="M405 172 Q400 260 300 268" fill="none" stroke="var(--text-light)" stroke-width="1.5" marker-end="url(#fla)"/>
+<path d="M170 268 Q70 260 65 172" fill="none" stroke="var(--text-light)" stroke-width="1.5" marker-end="url(#fla)"/>
+<path d="M65 128 Q70 60 170 51" fill="none" stroke="var(--magenta)" stroke-width="2" marker-end="url(#fla)"/>
+<text x="235" y="140" text-anchor="middle" font-size="10.5" font-weight="600" fill="var(--magenta-dark)">Does acting on the prediction</text><text x="235" y="155" text-anchor="middle" font-size="10.5" font-weight="600" fill="var(--magenta-dark)">change the data that will judge it?</text>
+<text x="235" y="176" text-anchor="middle" font-size="9.5" fill="var(--text-light)">If yes, the model grades its own homework.</text>
+<text x="70" y="22" text-anchor="middle" font-size="9.5" fill="var(--text-light)">feed: what you watched</text><text x="70" y="34" text-anchor="middle" font-size="9.5" fill="var(--text-light)">becomes tomorrow&#8217;s data</text>
+<text x="395" y="278" text-anchor="middle" font-size="9.5" fill="var(--text-light)">patrols: where police went</text><text x="395" y="290" text-anchor="middle" font-size="9.5" fill="var(--text-light)">becomes where crime is recorded</text>
+</svg>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">
+The same ring, drawn in Chapter 3, was a flywheel that made Zara stronger every turn. Here it is the shape of a model confirming itself. The magenta arrow is the dangerous one: the world the model changed is the world it will be trained on next, so its prediction manufactures its own evidence. For a video feed that is a lost evening. For a patrol pattern it is policy, applied to people who cannot log off. The shape is identical; only the stakes differ.
+</figcaption>
+</figure>
+
 
 
 
@@ -564,7 +599,7 @@ self-certifyingly wrong, and the gap between a rabbit hole and a patrol pattern 
     var row=document.createElement('div'); row.className='wrow';
     row.innerHTML='<div class="wq">'+r.t+'</div><div class="wbtns">'
       +F.map(function(f){return '<button type="button" data-f="'+f+'">'+f+'</button>';}).join('')
-      +'</div><div class="wout" hidden></div>';
+      +'</div><div class="wout" role="status" aria-live="polite" hidden></div>';
     host.appendChild(row);
     var bs=row.querySelectorAll('button'), out=row.querySelector('.wout');
     bs.forEach(function(b){

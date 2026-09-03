@@ -11,7 +11,7 @@
 <style>
 :root{
   --black:#0e0e0d; --off-black:#1a1a18;
-  --magenta:#e8197d; --magenta-dark:#c0146a; --magenta-pale:#fdeaf3;
+  --magenta:#cc146d; --magenta-onblack:#f0348e; --magenta-dark:#c0146a; --magenta-pale:#fdeaf3;
   --white:#ffffff; --off-white:#f6f4f1;
   --text-dark:#0e0e0d; --text-muted:#3a3a38; --text-light:#6b6b68;
   --border:#e0ddd8;
@@ -20,7 +20,7 @@
   --sans:'Space Grotesk',sans-serif; --display:'Oswald',sans-serif;
   --wrap:1180px; --col:46rem;
   /* legacy aliases so existing markup keeps working */
-  --navy:#0e0e0d; --navy-soft:#1a1a18; --accent:#e8197d; --accent-deep:#c0146a;
+  --navy:#0e0e0d; --navy-soft:#1a1a18; --accent:#cc146d; --accent-deep:#c0146a;
   --accent-pale:#fdeaf3; --cream:#ffffff; --cream-deep:#f6f4f1; --paper:#ffffff;
   --ink:#0e0e0d; --muted:#6b6b68; --rule:#e0ddd8; --serif:'Space Grotesk',sans-serif;
 }
@@ -155,7 +155,7 @@ li{margin-bottom:.45rem}
 /* ---------- global top navigation with dropdowns ---------- */
 .topnav{position:sticky;top:0;z-index:100;background:var(--black);border-bottom:1px solid rgba(255,255,255,.14)}
 .topnav-in{max-width:var(--wrap);margin:0 auto;padding:.7rem 1.5rem;display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap}
-.topnav-brand{font-family:var(--display);font-size:16px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--magenta);text-decoration:none;margin-right:auto}
+.topnav-brand{font-family:var(--display);font-size:16px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--magenta-onblack);text-decoration:none;margin-right:auto}
 .topnav-brand:hover{color:#fff}
 .dd{position:relative}
 .dd-btn{font-family:var(--display);font-size:14.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
@@ -325,6 +325,8 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 .takeaways .obj-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.4rem}
 .takeaways ul{margin:.2rem 0 0 1.2rem;padding:0}
 .takeaways li{margin:.35rem 0;font-size:16.5px;line-height:1.55}
+.diagram{margin:1.6rem 0;text-align:center}
+.diagram figcaption{text-align:left}
 </style>
 </head>
 <body>
@@ -348,6 +350,8 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
       <a href="chapter11-equifax.html"><span class="lbl">Chapter 11 &middot; Week 8</span>IT Governance &mdash; Equifax</a>
       <a href="chapter12-software.html"><span class="lbl">Chapter 12 &middot; Week 9</span>Software Design &amp; Selection &mdash; Robles v. Domino's</a>
       <a class="current" href="chapter13-cloud.html"><span class="lbl">Chapter 13 &middot; Week 10</span>The Cloud &amp; What Computing Costs &mdash; Netflix</a>
+      <a href="glossary.html"><span class="lbl">Reference</span>Glossary, A to Z</a>
+      <a href="preface.html"><span class="lbl">Reference</span>About this book</a>
       </div>
     </div>
     <div class="dd">
@@ -456,6 +460,72 @@ converts <strong>capital expenditure</strong>, buying servers years ahead of nee
 <strong>operating expenditure</strong>, paying for what you use as you use it. And technically it
 delivers <strong>elasticity</strong>: capacity that expands in minutes and, just as importantly,
 contracts, so nobody pays all year for the machines that only Thanksgiving weekend needs.</p></div>
+<figure class="diagram" style="margin:1.8rem auto;max-width:470px">
+<svg viewBox="0 0 470 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="slT slD" style="width:100%;height:auto;font-family:var(--sans)">
+<title id="slT">Who manages what: on-premises, IaaS, PaaS, SaaS</title>
+<desc id="slD">Four columns, each a stack of the same six layers from bottom to top: hardware, networking, operating system, runtime, application, data. In the first column, on your own servers, every layer is yours. In the IaaS column the provider takes the bottom two. In PaaS the provider takes the bottom four. In SaaS the provider takes everything except the data. A stepped line marks where your responsibility stops in each column.</desc>
+<defs><marker id="sla" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--text-light)"/></marker></defs>
+<text x="74.0" y="40" text-anchor="middle" font-size="9.5" font-weight="700" fill="var(--text-dark)">ON YOUR OWN SERVERS</text>
+<rect x="22" y="52" width="104" height="28" fill="var(--magenta-pale)" stroke="var(--text-dark)" stroke-width="1"/>
+<text x="74.0" y="70" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--magenta-dark)">DATA</text>
+<rect x="22" y="82" width="104" height="28" fill="var(--magenta-pale)" stroke="var(--text-dark)" stroke-width="1"/>
+<text x="74.0" y="100" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--magenta-dark)">APPLICATION</text>
+<rect x="22" y="112" width="104" height="28" fill="var(--magenta-pale)" stroke="var(--text-dark)" stroke-width="1"/>
+<text x="74.0" y="130" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--magenta-dark)">RUNTIME</text>
+<rect x="22" y="142" width="104" height="28" fill="var(--magenta-pale)" stroke="var(--text-dark)" stroke-width="1"/>
+<text x="74.0" y="160" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--magenta-dark)">OPERATING SYSTEM</text>
+<rect x="22" y="172" width="104" height="28" fill="var(--magenta-pale)" stroke="var(--text-dark)" stroke-width="1"/>
+<text x="74.0" y="190" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--magenta-dark)">NETWORKING</text>
+<rect x="22" y="202" width="104" height="28" fill="var(--magenta-pale)" stroke="var(--text-dark)" stroke-width="1"/>
+<text x="74.0" y="220" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--magenta-dark)">HARDWARE</text>
+<text x="186.0" y="40" text-anchor="middle" font-size="9.5" font-weight="700" fill="var(--text-dark)">IaaS</text>
+<rect x="134" y="52" width="104" height="28" fill="var(--magenta-pale)" stroke="var(--text-dark)" stroke-width="1"/>
+<text x="186.0" y="70" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--magenta-dark)">DATA</text>
+<rect x="134" y="82" width="104" height="28" fill="var(--magenta-pale)" stroke="var(--text-dark)" stroke-width="1"/>
+<text x="186.0" y="100" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--magenta-dark)">APPLICATION</text>
+<rect x="134" y="112" width="104" height="28" fill="var(--magenta-pale)" stroke="var(--text-dark)" stroke-width="1"/>
+<text x="186.0" y="130" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--magenta-dark)">RUNTIME</text>
+<rect x="134" y="142" width="104" height="28" fill="var(--magenta-pale)" stroke="var(--text-dark)" stroke-width="1"/>
+<text x="186.0" y="160" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--magenta-dark)">OPERATING SYSTEM</text>
+<rect x="134" y="172" width="104" height="28" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1"/>
+<text x="186.0" y="190" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--text-light)">NETWORKING</text>
+<rect x="134" y="202" width="104" height="28" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1"/>
+<text x="186.0" y="220" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--text-light)">HARDWARE</text>
+<text x="298.0" y="40" text-anchor="middle" font-size="9.5" font-weight="700" fill="var(--text-dark)">PaaS</text>
+<rect x="246" y="52" width="104" height="28" fill="var(--magenta-pale)" stroke="var(--text-dark)" stroke-width="1"/>
+<text x="298.0" y="70" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--magenta-dark)">DATA</text>
+<rect x="246" y="82" width="104" height="28" fill="var(--magenta-pale)" stroke="var(--text-dark)" stroke-width="1"/>
+<text x="298.0" y="100" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--magenta-dark)">APPLICATION</text>
+<rect x="246" y="112" width="104" height="28" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1"/>
+<text x="298.0" y="130" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--text-light)">RUNTIME</text>
+<rect x="246" y="142" width="104" height="28" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1"/>
+<text x="298.0" y="160" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--text-light)">OPERATING SYSTEM</text>
+<rect x="246" y="172" width="104" height="28" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1"/>
+<text x="298.0" y="190" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--text-light)">NETWORKING</text>
+<rect x="246" y="202" width="104" height="28" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1"/>
+<text x="298.0" y="220" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--text-light)">HARDWARE</text>
+<text x="410.0" y="40" text-anchor="middle" font-size="9.5" font-weight="700" fill="var(--text-dark)">SaaS</text>
+<rect x="358" y="52" width="104" height="28" fill="var(--magenta-pale)" stroke="var(--text-dark)" stroke-width="1"/>
+<text x="410.0" y="70" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--magenta-dark)">DATA</text>
+<rect x="358" y="82" width="104" height="28" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1"/>
+<text x="410.0" y="100" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--text-light)">APPLICATION</text>
+<rect x="358" y="112" width="104" height="28" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1"/>
+<text x="410.0" y="130" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--text-light)">RUNTIME</text>
+<rect x="358" y="142" width="104" height="28" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1"/>
+<text x="410.0" y="160" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--text-light)">OPERATING SYSTEM</text>
+<rect x="358" y="172" width="104" height="28" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1"/>
+<text x="410.0" y="190" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--text-light)">NETWORKING</text>
+<rect x="358" y="202" width="104" height="28" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1"/>
+<text x="410.0" y="220" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--text-light)">HARDWARE</text>
+<rect x="22" y="244" width="14" height="10" fill="var(--magenta-pale)" stroke="var(--text-dark)" stroke-width="1"/><text x="42" y="253" font-size="9.5" fill="var(--text-dark)">you manage it</text>
+<rect x="142" y="244" width="14" height="10" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1"/><text x="162" y="253" font-size="9.5" fill="var(--text-dark)">the landlord manages it</text>
+<text x="235" y="282" text-anchor="middle" font-size="11" fill="var(--text-light)">The data is yours in every column. So is the decision.</text>
+</svg>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">
+The columns differ by where the line of responsibility sits, and the line only ever moves one way: the higher the layer you rent, the less you manage and the less you can change. What the picture also shows is what never moves. The top row is magenta in all four columns. Renting the computers outsources none of the responsibility for the data on them, or for the decisions about it.
+</figcaption>
+</figure>
+
 
 <p>In five-components terms, the cloud is the hardware component becoming a utility, like power from
 a grid instead of a generator in the basement. That framing also tells you what does not change. Renting the computers outsources none of the
@@ -527,7 +597,7 @@ get paid.</p>
     var row=document.createElement('div'); row.className='wrow';
     row.innerHTML='<div class="wq">'+r.t+'</div><div class="wbtns">'
       +F.map(function(f){return '<button type="button" data-f="'+f+'">'+f+'</button>';}).join('')
-      +'</div><div class="wout" hidden></div>';
+      +'</div><div class="wout" role="status" aria-live="polite" hidden></div>';
     host.appendChild(row);
     var bs=row.querySelectorAll('button'), out=row.querySelector('.wout');
     bs.forEach(function(b){

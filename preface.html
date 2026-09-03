@@ -1,0 +1,503 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Chapter 1 &#183; What Is MIS? | MIS 320</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0e0e0d; --off-black:#1a1a18;
+  --magenta:#cc146d; --magenta-onblack:#f0348e; --magenta-dark:#c0146a; --magenta-pale:#fdeaf3;
+  --white:#ffffff; --off-white:#f6f4f1;
+  --text-dark:#0e0e0d; --text-muted:#3a3a38; --text-light:#6b6b68;
+  --border:#e0ddd8;
+  --warn:#b3261e; --warn-pale:#fdeceb;
+  --good:#1f7a53; --good-pale:#e8f4ee;
+  --sans:'Space Grotesk',sans-serif; --display:'Oswald',sans-serif;
+  --wrap:1180px; --col:46rem;
+  /* legacy aliases so existing markup keeps working */
+  --navy:#0e0e0d; --navy-soft:#1a1a18; --accent:#cc146d; --accent-deep:#c0146a;
+  --accent-pale:#fdeaf3; --cream:#ffffff; --cream-deep:#f6f4f1; --paper:#ffffff;
+  --ink:#0e0e0d; --muted:#6b6b68; --rule:#e0ddd8; --serif:'Space Grotesk',sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--white);color:var(--text-dark);
+  font-family:var(--sans);font-size:18.5px;line-height:1.7;-webkit-font-smoothing:antialiased}
+
+/* ---------- shell ---------- */
+.shell{max-width:var(--wrap);margin:0 auto;display:grid;grid-template-columns:15rem minmax(0,1fr);gap:3.5rem;padding:0 1.5rem 6rem}
+main{margin-left:auto;margin-right:auto;max-width:var(--col);padding-top:2.5rem}
+
+/* ---------- sidebar ---------- */
+.rail{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:2.5rem 0 3rem;border-right:1px solid var(--border)}
+.rail .book{font-family:var(--display);font-size:15px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--magenta);margin:0 0 .2rem}
+.rail .course{font-size:13.5px;color:var(--text-light);margin:0 0 1.75rem}
+.rail nav a{display:block;font-size:15px;line-height:1.35;color:var(--text-muted);text-decoration:none;padding:.42rem .8rem .42rem .85rem;border-left:2px solid transparent;margin-left:-.85rem}
+.rail nav a:hover{color:var(--magenta);border-left-color:var(--magenta)}
+.rail nav a.sub{font-size:14px;color:var(--text-light);padding-left:1.7rem}
+.rail .back{display:inline-block;margin-top:2rem;font-size:14px;color:var(--text-light);text-decoration:none}
+.rail .back:hover{color:var(--magenta)}
+.railtoggle{display:none}
+
+/* ---------- chapter head ---------- */
+.chaphead{border-bottom:3px solid var(--black);padding-bottom:1.6rem;margin-bottom:2.5rem}
+.eyebrow{font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--magenta);margin:0 0 .7rem}
+.chaphead h1{font-family:var(--display);font-weight:600;font-size:clamp(1.9rem,4.4vw,2.7rem);line-height:1.12;text-transform:uppercase;letter-spacing:.01em;margin:0 0 .6rem;color:var(--black)}
+.chaphead .anchor{font-size:16px;color:var(--text-light);margin:0}
+.chaphead .anchor strong{color:var(--text-muted);font-weight:500}
+.meta-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.2rem}
+.meta-row span{font-size:13px;letter-spacing:.03em;background:var(--off-white);border:1px solid var(--border);padding:.32rem .65rem;color:var(--text-muted)}
+.meta-row span.alt{background:var(--magenta-pale);border-color:#f6cfe1;color:var(--magenta-dark)}
+
+/* ---------- type ---------- */
+h2{font-family:var(--display);font-weight:600;font-size:1.72rem;line-height:1.22;text-transform:uppercase;letter-spacing:.01em;color:var(--black);margin:3.2rem 0 .9rem}
+h2 .num::before{content:"Section "}
+h2 .num{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;color:var(--magenta);display:block;margin-bottom:.4rem;text-transform:uppercase}
+h3{font-family:var(--display);font-weight:600;font-size:1.18rem;text-transform:uppercase;letter-spacing:.03em;color:var(--off-black);margin:2rem 0 .55rem}
+p{margin:0 0 1.05rem}
+a{color:var(--magenta-dark)}
+strong{font-weight:600;color:var(--black)}
+.lede{font-size:1.24rem;line-height:1.55;color:var(--text-muted)}
+code.inline{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--off-white);padding:.1em .35em;border:1px solid var(--border)}
+ul,ol{margin:0 0 1.15rem;padding-left:1.3rem}
+li{margin-bottom:.45rem}
+
+/* ---------- pull quote ---------- */
+.pull{margin:2.2rem 0;padding:0 0 0 1.4rem;border-left:3px solid var(--magenta)}
+.pull p{font-family:var(--display);font-weight:400;font-size:1.32rem;line-height:1.3;color:var(--black);margin:0 0 .5rem}
+.pull cite{font-style:normal;font-size:12.5px;color:var(--text-light)}
+
+/* ---------- callouts ---------- */
+.callout{border:1px solid var(--border);border-left:4px solid var(--magenta);background:var(--off-white);padding:1.15rem 1.3rem;margin:1.9rem 0}
+.callout strong:first-child{display:block;font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--magenta);margin-bottom:.5rem}
+.callout p:last-child{margin-bottom:0}
+.callout-caution{border-left-color:var(--warn);background:var(--warn-pale)}
+.callout-caution strong:first-child{color:var(--warn)}
+.callout-bridge{border-left-color:var(--black);background:var(--off-white)}
+.callout-bridge strong:first-child{color:var(--black)}
+.callout-good{border-left-color:var(--good);background:var(--good-pale)}
+.callout-good strong:first-child{color:var(--good)}
+
+/* ---------- signature: value chain rail ---------- */
+.vc{margin:2.4rem 0;border:1px solid var(--border);background:var(--white);overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,.07)}
+.vc-head{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#fff;background:var(--black);padding:.7rem 1rem}
+.vc-strip{display:grid;grid-template-columns:repeat(5,1fr)}
+.vc-cell{padding:.85rem .7rem;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+.vc-cell:last-child{border-right:none}
+.vc-stage{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-light);display:block;margin-bottom:.3rem}
+.vc-cell p{font-size:15.5px;line-height:1.4;margin:0;color:var(--text-muted)}
+.vidwrap{margin:2rem auto;max-width:230px}.vidwrap .frame{position:relative;width:100%;aspect-ratio:9/16;border:1px solid var(--rule);border-radius:3px;overflow:hidden;background:#000}.vidwrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}.vidwrap figcaption{font-family:var(--sans);font-size:.95rem;color:var(--muted);margin-top:.6rem;line-height:1.5}.pullq{margin:2.2rem 0;padding:1.4rem 0 1.4rem 1.6rem;border-left:3px solid var(--magenta)}.pullq p{font-family:var(--display);font-size:1.5rem;line-height:1.35;color:var(--magenta-dark);margin:0;font-weight:500;letter-spacing:-.01em}.pullq cite{display:block;margin-top:.7rem;font-family:var(--sans);font-size:.8rem;font-style:normal;color:var(--muted);letter-spacing:.02em}@media(max-width:600px){.pullq p{font-size:1.2rem}}.vc-strip.four{grid-template-columns:repeat(4,1fr)}.vc-cell.people{grid-column:1/-1;border-right:none;border-top:1px solid var(--border);background:var(--magenta-pale);text-align:center;padding:1rem .8rem}.vc-cell.people .vc-stage{color:var(--magenta)}.vc-cell.people p{color:#8a1450;max-width:44rem;margin:0 auto}.vc-cell.broke{background:var(--magenta-pale)}
+.vc-cell.broke .vc-stage{color:var(--magenta)}
+.vc-cell.broke p{color:#8a1450}
+.vc-note{padding:.8rem 1rem;font-size:14px;color:var(--text-light);background:var(--off-white);border-top:1px solid var(--border)}
+.vc-note b{color:var(--magenta);font-weight:600}
+
+/* ---------- stat band ---------- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(8.5rem,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin:2rem 0}
+.stat{background:var(--white);padding:1rem .9rem}
+.stat b{display:block;font-family:var(--display);font-weight:700;font-size:1.8rem;color:var(--magenta);line-height:1.1}
+.stat span{display:block;font-size:13px;line-height:1.3;color:var(--text-light);margin-top:.3rem}
+
+/* ---------- timeline ---------- */
+.tl{list-style:none;padding:0;margin:1.8rem 0;border-left:2px solid var(--border)}
+.tl li{position:relative;padding:0 0 1.1rem 1.3rem;margin:0}
+.tl li:before{content:"";position:absolute;left:-5px;top:.55em;width:8px;height:8px;border-radius:50%;background:var(--magenta)}
+.tl li.bad:before{background:var(--warn)}
+.tl .when{font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--magenta);display:block}
+.tl li.bad .when{color:var(--warn)}
+
+/* ---------- vocabulary ---------- */
+.vocab{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin:1.8rem 0}
+.vocab div{background:var(--white);padding:.95rem 1rem}
+.vocab dt{font-family:var(--display);font-weight:600;font-size:15px;text-transform:uppercase;letter-spacing:.03em;color:var(--black);margin-bottom:.3rem}
+.vocab dd{margin:0;font-size:16.5px;line-height:1.5;color:var(--text-muted)}
+
+/* ---------- discussion questions ---------- */
+.dq{counter-reset:dq;margin:1.6rem 0 0;padding:0;list-style:none}
+.dq li{counter-increment:dq;position:relative;padding:1rem 0 1rem 2.6rem;border-top:1px solid var(--border)}
+.dq li:last-child{border-bottom:1px solid var(--border)}
+.dq li:before{content:counter(dq,decimal-leading-zero);position:absolute;left:0;top:1.05rem;font-family:var(--display);font-size:14.5px;font-weight:600;color:var(--magenta)}
+.tag{display:inline-block;font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:.2rem .5rem;margin-left:.5rem;vertical-align:.12em}
+.tag-hard{background:var(--warn);color:#fff}
+.tag-open{background:var(--black);color:#fff}
+.tag-warm{background:var(--magenta-pale);color:var(--magenta-dark)}
+
+/* ---------- sources ---------- */
+.sources{margin-top:3.5rem;padding-top:1.2rem;border-top:1px solid var(--border);font-size:14.5px;color:var(--text-light)}
+.sources h3{font-family:var(--display);font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin:0 0 .6rem}
+.sources li{margin-bottom:.35rem;line-height:1.5}
+
+/* ---------- responsive ---------- */
+@media (max-width:860px){
+  .shell{grid-template-columns:minmax(0,1fr);gap:0;padding:0 1.15rem 4rem}
+  .toc a{white-space:normal}
+  main table{display:block;overflow-x:auto;max-width:100%}
+  .rail{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);padding:1.5rem 0 1rem;margin-bottom:.5rem}
+  .rail nav{display:none}
+  .rail nav.open{display:block;margin-top:.8rem}
+  .railtoggle{display:inline-block;font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--magenta);background:none;border:1px solid var(--border);padding:.4rem .7rem;cursor:pointer}
+  main{padding-top:1.2rem}
+  .vc-strip{grid-template-columns:repeat(2,1fr)}
+}
+:focus-visible{outline:2px solid var(--magenta);outline-offset:2px}
+
+/* ---------- prominent lab link ---------- */
+.lablink{display:inline-block;margin-top:.9rem;font-family:var(--display);font-size:14.5px;font-weight:600;
+  letter-spacing:.06em;text-transform:uppercase;text-decoration:none;background:var(--magenta);color:#fff;
+  padding:.6rem 1.15rem;border:none}
+.lablink:hover{background:var(--magenta-dark);color:#fff}
+.callout .lablink{margin-top:1rem}
+
+/* ---------- global top navigation with dropdowns ---------- */
+.topnav{position:sticky;top:0;z-index:100;background:var(--black);border-bottom:1px solid rgba(255,255,255,.14)}
+.topnav-in{max-width:var(--wrap);margin:0 auto;padding:.7rem 1.5rem;display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap}
+.topnav-brand{font-family:var(--display);font-size:16px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--magenta-onblack);text-decoration:none;margin-right:auto}
+.topnav-brand:hover{color:#fff}
+.dd{position:relative}
+.dd-btn{font-family:var(--display);font-size:14.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:#fff;background:none;border:1px solid rgba(255,255,255,.3);padding:.42rem .85rem;cursor:pointer}
+.dd-btn:hover,.dd-btn[aria-expanded="true"]{background:var(--magenta);border-color:var(--magenta)}
+.dd-btn .caret{font-size:11px;margin-left:.35rem}
+.dd-menu{display:none;position:absolute;right:0;top:calc(100% + .4rem);min-width:20rem;background:#fff;
+  border:1px solid var(--border);box-shadow:0 8px 30px rgba(0,0,0,.22);padding:.4rem 0;max-height:75vh;overflow-y:auto}
+.dd-menu.open{display:block}
+.dd-menu a{display:block;padding:.55rem 1rem;text-decoration:none;color:var(--text-dark);font-size:14.5px;line-height:1.35}
+.dd-menu a:hover{background:var(--magenta-pale);color:var(--magenta-dark)}
+.dd-menu a .lbl{display:block;font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--magenta);margin-bottom:.1rem}
+.dd-menu a.current{background:var(--off-white);border-left:3px solid var(--magenta)}
+.dd-menu a.soon{color:var(--text-light);pointer-events:none}
+.dd-menu a.soon .lbl{color:var(--text-light)}
+.dd-sep{margin:.35rem 0;border-top:1px solid var(--border)}
+@media (max-width:700px){
+  .topnav-in{padding:.6rem 1.15rem;gap:.6rem}
+  .topnav-brand{font-size:13.5px;width:100%;margin-right:0}
+  .dd{flex:1}
+  .dd-btn{width:100%;font-size:13px;padding:.4rem .5rem}
+  .dd-menu{right:auto;left:0;min-width:min(92vw,22rem)}
+}
+
+/* ---------- collapsible step-by-step help ---------- */
+.howto{margin:.7rem 0 1.1rem;border:1px solid var(--border);background:var(--off-white)}
+.howto>summary{cursor:pointer;padding:.6rem .9rem;font-family:var(--display);font-size:13px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--magenta-dark);list-style:none}
+.howto>summary::-webkit-details-marker{display:none}
+.howto>summary:before{content:"\25B8  ";font-size:11px}
+.howto[open]>summary:before{content:"\25BE  "}
+.howto>summary:hover{background:var(--magenta-pale)}
+.howto-body{padding:.3rem 1.1rem 1rem;border-top:1px solid var(--border);background:#fff}
+.howto-body ol{margin:.7rem 0;padding-left:1.3rem}
+.howto-body li{margin-bottom:.45rem;font-size:16.5px;line-height:1.5}
+.howto-body p{font-size:16.5px;margin:.6rem 0}
+.kbd{font-family:ui-monospace,Menlo,monospace;font-size:.85em;background:var(--off-white);
+  border:1px solid var(--border);border-radius:2px;padding:.1em .35em;white-space:nowrap}
+.mac{display:inline-block;font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;background:var(--black);color:#fff;padding:.1rem .4rem;margin-right:.35rem}
+.stuck{border:1px solid var(--border);border-left:4px solid var(--black);background:var(--off-white);
+  padding:1rem 1.2rem;margin:2rem 0 0}
+.stuck strong:first-child{display:block;font-family:var(--display);font-size:12.5px;font-weight:600;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--black);margin-bottom:.5rem}
+.stuck ol{margin:.5rem 0 0;padding-left:1.3rem}
+.stuck li{font-size:16.5px;margin-bottom:.35rem}
+
+/* ---------- AI traffic lights ---------- */
+.ailight{display:flex;gap:1rem;align-items:flex-start;border:1px solid var(--border);background:#fff;
+  padding:1rem 1.2rem;margin:1rem 0}
+.ailight .lamp{flex:0 0 auto;width:34px;background:#1c1c1a;border-radius:8px;padding:7px 0;
+  display:flex;flex-direction:column;align-items:center;gap:5px}
+.ailight .bulb{width:20px;height:20px;border-radius:50%;background:#2e2e2b;box-shadow:inset 0 2px 4px rgba(0,0,0,.6)}
+.ailight.g .bulb.b3{background:#2fae5f;box-shadow:0 0 10px rgba(47,174,95,.8),inset 0 -2px 3px rgba(0,0,0,.25)}
+.ailight.y .bulb.b2{background:#e6b93c;box-shadow:0 0 10px rgba(230,185,60,.8),inset 0 -2px 3px rgba(0,0,0,.25)}
+.ailight.r .bulb.b1{background:#d5453a;box-shadow:0 0 10px rgba(213,69,58,.8),inset 0 -2px 3px rgba(0,0,0,.25)}
+.ailight .lighttext{flex:1;min-width:0}
+.ailight .lighttext strong:first-child{display:block;font-family:var(--display);font-size:13px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;margin-bottom:.3rem}
+.ailight.g .lighttext strong:first-child{color:#1e7c43}
+.ailight.y .lighttext strong:first-child{color:#a07a10}
+.ailight.r .lighttext strong:first-child{color:#a03434}
+.ailight p{margin:.2rem 0 0;font-size:16.5px;line-height:1.55}
+
+/* ---------- think-pair-share block ---------- */
+.tps{border:1px solid var(--black);background:#fff;margin:2.2rem 0}
+.tps-head{background:var(--black);color:#fff;padding:.6rem 1.1rem;font-family:var(--display);font-size:12.5px;
+  font-weight:600;letter-spacing:.2em;text-transform:uppercase;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.tps-head .mins{color:rgba(255,255,255,.7);letter-spacing:.1em}
+.tps-body{padding:1.1rem 1.25rem}
+.tps-setup{font-size:17px;line-height:1.6;margin:0 0 1rem}
+.tps-q{border-left:4px solid var(--magenta);background:var(--magenta-pale);padding:.8rem 1rem;margin:0 0 1.1rem}
+.tps-q p{margin:0;font-size:17px;line-height:1.5;font-weight:500}
+.tps-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border)}
+.tps-step{background:#fff;padding:.75rem .9rem}
+.tps-step .ph{font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--magenta);margin-bottom:.3rem;display:flex;justify-content:space-between}
+.tps-step .ph span{color:var(--text-light)}
+.tps-step p{margin:0;font-size:16px;line-height:1.45;color:var(--text-muted)}
+.tps-note{border-top:1px solid var(--border);margin-top:1.1rem;padding-top:.9rem;font-size:16px;color:var(--text-muted)}
+.tps-note strong{font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--black);display:block;margin-bottom:.35rem}
+@media(max-width:700px){.tps-steps{grid-template-columns:1fr}}
+
+/* ---------- Monday session plan (instructor-facing) ---------- */
+.plan{border:1px solid var(--border);background:var(--off-white);margin:2rem 0}
+.plan-head{background:var(--off-white);border-bottom:1px solid var(--border);padding:.55rem 1.05rem;
+  font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted)}
+.plan table{width:100%;border-collapse:collapse;background:#fff}
+.plan td{border-bottom:1px solid var(--border);padding:.6rem .9rem;font-size:15.5px;vertical-align:top;line-height:1.45}
+.plan tr:last-child td{border-bottom:none}
+.plan td.t{width:5.5rem;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--magenta);white-space:nowrap}
+.plan td.w{width:8rem;font-weight:600}
+@media(max-width:640px){.plan td.w{width:auto}}
+
+/* ---------- chapter depth: stat strip, TOC, key concept, summary table ---------- */
+.statrow{display:flex;flex-wrap:wrap;gap:1px;background:var(--border);border:1px solid var(--border);margin:1.6rem 0}
+.stat{flex:1 1 8rem;background:#fff;padding:.85rem 1rem;text-align:center}
+.stat b{display:block;font-family:var(--display);font-size:22px;font-weight:600;color:var(--magenta);line-height:1.1}
+.stat span{font-size:12.5px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;font-family:var(--display)}
+.toc{border:1px solid var(--border);background:var(--off-white);padding:1rem 1.25rem;margin:1.6rem 0;font-family:var(--sans);font-size:14.5px;line-height:2}
+.toc strong{display:block;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--magenta);margin-bottom:.3rem}
+.toc a{color:var(--text-dark);text-decoration:none;border-bottom:1px solid var(--border);margin-right:1rem;white-space:nowrap}
+.toc a:hover{color:var(--magenta-dark);border-bottom-color:var(--magenta)}
+.kc{border:1px solid var(--border);border-left:4px solid var(--magenta);background:#fff;margin:1.4rem 0;padding:1rem 1.2rem}
+.kc .kc-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.15rem}
+.kc .kc-term{font-family:var(--display);font-size:17px;font-weight:600;display:block;margin-bottom:.45rem}
+.kc p{margin:0;font-size:17px;line-height:1.62}
+.sumtable{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:15.5px}
+.sumtable th{background:var(--black);color:#fff;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.55rem .8rem;text-align:left}
+.sumtable td{border:1px solid var(--border);padding:.6rem .8rem;vertical-align:top;line-height:1.5}
+.sumtable tr:nth-child(even) td{background:var(--off-white)}
+
+/* ---------- IS concepts chip strip ---------- */
+.concepts{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;margin:1.1rem 0 0}
+.concepts .clabel{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-right:.3rem}
+.concepts span:not(.clabel){font-family:var(--display);font-size:12.5px;font-weight:500;letter-spacing:.04em;border:1px solid var(--border);background:var(--off-white);padding:.22rem .6rem;color:var(--text-dark)}
+
+
+@media (max-width:860px){.toc a{white-space:normal}main table{display:block;overflow-x:auto;max-width:100%}}
+
+.s6btns{display:flex;flex-wrap:wrap;gap:.4rem}
+.s6btns button{font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--off-white);border:1px solid var(--border);padding:.4rem .65rem;cursor:pointer;color:var(--text-dark)}
+.s6btns button[aria-pressed="true"]{background:var(--magenta);border-color:var(--magenta);color:#fff}
+.s6btns button:not([aria-pressed="true"]):hover{background:var(--magenta-pale);border-color:var(--magenta);color:var(--magenta-dark)}
+.s6thr{display:flex;align-items:center;gap:.7rem}
+.s6thr input{flex:1;min-width:0;accent-color:var(--magenta);height:22px;cursor:pointer}
+.s6thr output{font-family:var(--display);font-size:14px;font-weight:600;color:var(--magenta);white-space:nowrap;min-width:4.2rem}
+.s6days{display:flex;gap:6px;align-items:flex-end;margin:1.1rem 0 .2rem;border-bottom:1.4px solid var(--ink);padding:0 2px;height:78px}
+.s6day{flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%}
+.s6day i{display:block;background:var(--off-white);border:1px solid var(--border);font-style:normal}
+.s6day.win i{background:var(--magenta-pale);border-color:var(--magenta)}
+.s6daylbl{display:flex;gap:6px;padding:0 2px;margin-bottom:.4rem}
+.s6daylbl span{flex:1;text-align:center;font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.04em;color:var(--text-light)}
+.s6daylbl span.win{color:var(--magenta)}
+@media (max-width:860px){.s6ctl{grid-template-columns:1fr;gap:.3rem}}
+#s6table table{display:block;overflow-x:auto;max-width:100%;border-collapse:collapse;font-size:13px;white-space:nowrap}
+#s6table th,#s6table td{border:1px solid var(--border);padding:.28rem .55rem;text-align:left}
+#s6table th{background:var(--off-white);font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted)}
+
+.comptable{width:100%;border-collapse:collapse;background:#fff;font-size:15px}
+.comptable th{font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--magenta-dark);background:var(--off-white);text-align:left;padding:.55rem .8rem;border-bottom:2px solid var(--ink)}
+.comptable td{padding:.6rem .8rem;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.5}
+.comptable td:first-child{font-family:var(--display);font-weight:600;white-space:nowrap}
+.comptable tr.people td{background:var(--magenta-pale)}
+.comptable tr.people td:first-child{color:var(--magenta-dark)}
+
+.acr{color:var(--magenta)}
+
+/* narrow screens: wide prose comparison tables stack into labelled cards. */
+@media (max-width:640px){
+  main table.stack-sm{display:block;width:100%;overflow-x:visible;border-collapse:separate;border-spacing:0}
+  table.stack-sm tr:first-child{display:none}
+  table.stack-sm tr{display:block;width:100%;border:1px solid var(--border);margin:0 0 .85rem;background:#fff}
+  table.stack-sm td{display:block;width:100%;border:none;border-bottom:1px solid var(--border);padding:.6rem .85rem;background:#fff!important}
+  table.stack-sm td:last-child{border-bottom:none}
+  table.stack-sm td::before{content:attr(data-label);display:block;font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--text-light);margin-bottom:.28rem}
+  table.stack-sm td:first-child{background:var(--black)!important;color:#fff;font-family:var(--display);letter-spacing:.06em;white-space:normal}
+  table.stack-sm td:first-child::before{content:none}
+  table.stack-sm td:first-child strong{color:#fff}
+}
+
+/* ported: figures and jump buttons */
+.diagram{margin:1.6rem 0;text-align:center}
+.diagram img{max-width:100%;height:auto;border:1px solid var(--border)}
+.diagram figcaption{text-align:left}
+
+.tryit{border:1px solid var(--border);background:var(--white);box-shadow:0 2px 12px rgba(0,0,0,.06);margin:2rem 0;padding:0 0 1rem}
+.tryit-head{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#fff;background:var(--black);padding:.6rem 1rem}
+.tryit-intro{font-family:var(--sans);font-size:.97rem;color:var(--text-muted);margin:.9rem 1rem}
+.tryit-note{font-family:var(--sans);font-size:.9rem;color:var(--text-light);margin:.8rem 1rem 0;border-top:1px solid var(--border);padding-top:.7rem}
+.wrow{border-top:1px solid var(--border);padding:.75rem 1rem;display:grid;grid-template-columns:minmax(0,1fr);gap:.5rem 1rem;align-items:center}
+.wq{font-family:var(--sans);font-size:1rem;color:var(--text-dark)}
+.wbtns{display:flex;gap:.4rem;flex-wrap:wrap}
+.wbtns button{font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--off-white);border:1px solid var(--border);padding:.35rem .55rem;cursor:pointer;color:var(--text-dark)}
+.wbtns button:hover:not(:disabled){background:var(--magenta-pale);border-color:var(--magenta);color:var(--magenta-dark)}
+.wbtns button:disabled{opacity:.4;cursor:default}
+.wbtns button.you{opacity:1}
+.wbtns button.you.right{background:var(--good-pale);border-color:var(--good);color:var(--good)}
+.wbtns button.you.wrong{background:var(--warn-pale);border-color:var(--warn);color:var(--warn)}
+.wout{grid-column:1/-1;font-family:var(--sans);font-size:.95rem;line-height:1.5;padding:.6rem .8rem;border-left:3px solid var(--good);background:var(--good-pale);color:var(--text-dark)}
+.wout.no{border-left-color:var(--warn);background:var(--warn-pale)}
+.objectives{border:1px solid var(--border);border-left:4px solid var(--black);background:var(--off-white);padding:1rem 1.3rem;margin:1.6rem 0}
+.objectives .obj-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.4rem}
+.objectives ol{margin:.2rem 0 0 1.2rem;padding:0}
+.objectives li{margin:.3rem 0;font-size:16.5px;line-height:1.55}
+.takeaways{border:1px solid var(--border);border-left:4px solid var(--magenta);background:#fff;padding:1rem 1.3rem;margin:1.8rem 0}
+.takeaways .obj-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.4rem}
+.takeaways ul{margin:.2rem 0 0 1.2rem;padding:0}
+.takeaways li{margin:.35rem 0;font-size:16.5px;line-height:1.55}
+</style></head><body>
+<nav class="topnav">
+  <div class="topnav-in">
+    <a class="topnav-brand" href="index.html">MIS 320 &middot; Principles of Management Information Systems</a>
+    <a class="dd-btn" href="schedule.html" style="text-decoration:none">Schedule</a>
+    <div class="dd">
+      <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddc">Chapters<span class="caret">&#9660;</span></button>
+      <div class="dd-menu" id="ddc">
+      <a href="chapter1-what-is-mis.html"><span class="lbl">Chapter 1 &middot; Week 1</span>What Is MIS? &mdash; Spotify Wrapped</a>
+      <a href="chapter2-starbucks.html"><span class="lbl">Chapter 2 &middot; Week 2</span>The Value of Information &mdash; Starbucks</a>
+      <a href="chapter3-competitive-advantage.html"><span class="lbl">Chapter 3 &middot; Week 3</span>Technology &amp; Competitive Advantage &mdash; Zara</a>
+      <a href="chapter4-dominos.html"><span class="lbl">Chapter 4 &middot; Week 4</span>Business Processes &mdash; Domino's</a>
+      <a href="chapter5-healthcaregov.html"><span class="lbl">Chapter 5 &middot; Week 5</span>Systems Analysis &amp; the SDLC &mdash; Healthcare.gov</a>
+      <a href="chapter6-walmart.html"><span class="lbl">Chapter 6 &middot; Week 7</span>What Data Is: Databases &mdash; Walmart</a>
+      <a href="chapter7-nike-sap.html"><span class="lbl">Chapter 7 &middot; Week 7</span>Enterprise Systems &mdash; Nike/SAP</a>
+      <a href="chapter8-moneyball.html"><span class="lbl">Chapter 8 &middot; Week 6</span>Business Intelligence &mdash; Moneyball</a>
+      <a href="chapter9-ai-ml.html"><span class="lbl">Chapter 9 &middot; Week 10</span>AI, Machine Learning &amp; Bias &mdash; TikTok &amp; Amazon</a>
+      <a href="chapter10-changehealthcare.html"><span class="lbl">Chapter 10 &middot; Week 8</span>Cybersecurity &mdash; Change Healthcare</a>
+      <a href="chapter11-equifax.html"><span class="lbl">Chapter 11 &middot; Week 8</span>IT Governance &mdash; Equifax</a>
+      <a href="chapter12-software.html"><span class="lbl">Chapter 12 &middot; Week 9</span>Software Design &amp; Selection &mdash; Robles v. Domino's</a>
+      <a href="chapter13-cloud.html"><span class="lbl">Chapter 13 &middot; Week 10</span>The Cloud &amp; What Computing Costs &mdash; Netflix</a>
+      <a href="glossary.html"><span class="lbl">Reference</span>Glossary, A to Z</a>
+      <a href="preface.html"><span class="lbl">Reference</span>About this book</a>
+      </div>
+    </div>
+    <div class="dd">
+      <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddl">Labs<span class="caret">&#9660;</span></button>
+      <div class="dd-menu" id="ddl">
+      <a href="lab1-genai.html"><span class="lbl">Lab 1 &middot; Week 1</span>GenAI for Thinking</a>
+      <a href="lab2-excel-basics.html"><span class="lbl">Lab 2 &middot; Week 2</span>Excel Basics: Meeting the Client</a>
+      <a href="lab3-excel-dataprep.html"><span class="lbl">Lab 3 &middot; Week 3</span>Excel Functions: One Question, One Formula</a>
+      <a href="lab4-excel-dataviz.html"><span class="lbl">Lab 4 &middot; Week 4</span>Data Visualization: Charts That Tell the Truth</a>
+      <a href="lab5-excel-analysis.html"><span class="lbl">Lab 5 &middot; Week 5</span>Data Analysis &amp; Mini Project</a>
+      <a href="lab6-tableau.html"><span class="lbl">Lab 6 &middot; Week 6</span>Tableau: Worksheets to a Dashboard</a>
+      <a href="lab7-sql.html"><span class="lbl">Lab 7 &middot; Week 7</span>SQL Fundamentals</a>
+      <a href="lab8-security.html"><span class="lbl">Lab 8 &middot; Week 8</span>Security &amp; Data Governance: The Audit</a>
+      <div class="dd-sep"></div>
+      <a class="soon" href="#"><span class="lbl">Labs 9&ndash;10</span>UX Design, Information Architecture (in progress)</a>
+      </div>
+    </div>
+    <div class="dd">
+      <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddd">Data<span class="caret">&#9660;</span></button>
+      <div class="dd-menu" id="ddd">
+      <a href="cascadia-sales-2025.xlsx"><span class="lbl">Workbook</span>Cascadia sales, clean (.xlsx)</a>
+      <a href="cascadia-sales-2025-RAW.xlsx"><span class="lbl">Workbook</span>Cascadia sales, RAW export for Lab 7 (.xlsx)</a>
+      <a href="cascadia-sales-2025.csv"><span class="lbl">Data</span>Flat CSV for Tableau</a>
+      <a href="cascadia.db"><span class="lbl">Database</span>SQLite database for the SQL lab</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<main class="chapwrap">
+<header class="chaphead"><p class="eyebrow">Front matter</p><h1>About this book</h1>
+<p class="anchor">A free, open textbook for MIS 320, Principles of Management Information Systems, at Western Washington University. Thirteen chapters, ten labs, one fictional company, and no cost to the student.</p></header>
+
+<h2 id="who">Who it is for</h2>
+<p>Business students taking their first course in information systems, most of whom will never write production code and all of whom will spend their careers deciding what gets built, bought, recorded, and measured. It assumes no technical background. It does assume you are willing to be treated as a capable adult who can argue with a case.</p>
+<p>Many readers are not native English speakers. The book is written in plain language on purpose: short sentences, no idioms, every technical term defined in the sentence where it first appears, and a <a href="glossary.html">glossary</a> for the ones you half-remember from four weeks ago.</p>
+
+<h2 id="what">What it argues</h2>
+<p>Management information systems is the business management of technology, not a technology skill. Every chapter is built on the same five components, hardware, software, data, networks, and people, and on one rule: a system is only as good as its weakest component, and the weakest one is rarely the one you can buy. Every chapter has a company at its center and three shorter cases around it, chosen so that one is historical, one is from the period when the relevant technology changed, and one is from the last five years. The historical case proves the pattern is structural. The current one proves the course is about the world you are walking into.</p>
+
+<h2 id="how">How to use it</h2>
+<p>Each chapter follows the same shape. Learning objectives, then the concepts, then a short interactive quiz on the chapter's core distinction, then the three short cases, then the main case, then a section on who pays. After that: key takeaways, vocabulary, five discussion questions, a bridge to that week's lab, sources, and teaching notes with two session plans.</p>
+<ul>
+<li><strong>Read the concepts before Monday</strong> and the case before Wednesday. The session plans in the teaching notes tell you exactly what each class will do with them.</li>
+<li><strong>Do the quiz and the check-yourself boxes</strong> as you read. None of them is graded. All of them are the kind of question the exams ask.</li>
+<li><strong>Treat the discussion questions as arguments, not lookups.</strong> None can be answered from the text alone. That is deliberate.</li>
+<li><strong>The labs are where the ideas become skills.</strong> Every lab uses the same fictional company, Cascadia Outfitters, and the same database, so what you clean in Excel in Week 3 is what you query in SQL in Week 7.</li>
+</ul>
+<p>The AI policy is in Lab 1 and repeated in every chapter: use it to multiply your work, not to outsource your judgment. The book was written with AI assistance under the same rule, and every checkable claim in it was verified against a source you could cite. Where a figure could not be confirmed, the chapter's sources section says so.</p>
+
+<h2 id="who-wrote">Who wrote it</h2>
+<p><strong>Christopher B. Califf</strong> is a professor of Management Information Systems at Western Washington University. His research on technostress in healthcare, published in <em>MIS Quarterly</em>, appears in Chapters 7 and 12. <strong>Jennifer Califf</strong> designed and tested the lab sequence. The five-component framework the book is built on is David Kroenke's; the case-anchored structure owes a debt to John Gallaugher's <em>Information Systems: A Manager's Guide to Harnessing Technology</em>, which the author taught from for years before writing this one.</p>
+
+<h2 id="licence">Licence</h2>
+<p>This book is published under a <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International licence</a>. You may copy, share, and adapt it for non-commercial purposes, provided you credit the authors and release any adaptation under the same terms. Images and embedded videos carry their own credits and licences, noted where they appear. The Cascadia Outfitters database is fictional and released under the same licence.</p>
+<p>Corrections and suggestions are welcome. The book is a set of static HTML files in a public repository, and the sources section of every chapter records what was verified and when.</p>
+
+<p style="font-family:var(--sans);color:var(--text-light);margin-top:2.5rem">Last revised September 2026.</p>
+</main><!--NAVJS-->
+<script>
+(function(){
+  var btns=[].slice.call(document.querySelectorAll('.dd-btn'));
+  function closeAll(except){
+    btns.forEach(function(b){
+      var m=document.getElementById(b.getAttribute('data-dd'));
+      if(m&&m!==except){m.classList.remove('open');b.setAttribute('aria-expanded','false');}
+    });
+  }
+  btns.forEach(function(b){
+    b.addEventListener('click',function(e){
+      e.stopPropagation();
+      var m=document.getElementById(b.getAttribute('data-dd'));
+      var open=m.classList.contains('open');
+      closeAll();
+      if(!open){m.classList.add('open');b.setAttribute('aria-expanded','true');}
+    });
+  });
+  document.addEventListener('click',function(){closeAll();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeAll();});
+  document.querySelectorAll('.dd-menu').forEach(function(m){
+    m.addEventListener('click',function(e){e.stopPropagation();});
+  });
+})();
+</script>
+
+
+</body></html>

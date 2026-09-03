@@ -11,7 +11,7 @@
 <style>
 :root{
   --black:#0e0e0d; --off-black:#1a1a18;
-  --magenta:#e8197d; --magenta-dark:#c0146a; --magenta-pale:#fdeaf3;
+  --magenta:#cc146d; --magenta-onblack:#f0348e; --magenta-dark:#c0146a; --magenta-pale:#fdeaf3;
   --white:#ffffff; --off-white:#f6f4f1;
   --text-dark:#0e0e0d; --text-muted:#3a3a38; --text-light:#6b6b68;
   --border:#e0ddd8;
@@ -20,7 +20,7 @@
   --sans:'Space Grotesk',sans-serif; --display:'Oswald',sans-serif;
   --wrap:1180px; --col:46rem;
   /* legacy aliases so existing markup keeps working */
-  --navy:#0e0e0d; --navy-soft:#1a1a18; --accent:#e8197d; --accent-deep:#c0146a;
+  --navy:#0e0e0d; --navy-soft:#1a1a18; --accent:#cc146d; --accent-deep:#c0146a;
   --accent-pale:#fdeaf3; --cream:#ffffff; --cream-deep:#f6f4f1; --paper:#ffffff;
   --ink:#0e0e0d; --muted:#6b6b68; --rule:#e0ddd8; --serif:'Space Grotesk',sans-serif;
 }
@@ -155,7 +155,7 @@ li{margin-bottom:.45rem}
 /* ---------- global top navigation with dropdowns ---------- */
 .topnav{position:sticky;top:0;z-index:100;background:var(--black);border-bottom:1px solid rgba(255,255,255,.14)}
 .topnav-in{max-width:var(--wrap);margin:0 auto;padding:.7rem 1.5rem;display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap}
-.topnav-brand{font-family:var(--display);font-size:16px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--magenta);text-decoration:none;margin-right:auto}
+.topnav-brand{font-family:var(--display);font-size:16px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--magenta-onblack);text-decoration:none;margin-right:auto}
 .topnav-brand:hover{color:#fff}
 .dd{position:relative}
 .dd-btn{font-family:var(--display);font-size:14.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
@@ -347,6 +347,8 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
       <a href="chapter11-equifax.html"><span class="lbl">Chapter 11 &middot; Week 8</span>IT Governance &mdash; Equifax</a>
       <a href="chapter12-software.html"><span class="lbl">Chapter 12 &middot; Week 9</span>Software Design &amp; Selection &mdash; Robles v. Domino's</a>
       <a href="chapter13-cloud.html"><span class="lbl">Chapter 13 &middot; Week 10</span>The Cloud &amp; What Computing Costs &mdash; Netflix</a>
+      <a href="glossary.html"><span class="lbl">Reference</span>Glossary, A to Z</a>
+      <a href="preface.html"><span class="lbl">Reference</span>About this book</a>
       </div>
     </div>
     <div class="dd">
@@ -708,7 +710,7 @@ business, another for understanding it.</p>
     var row=document.createElement('div'); row.className='wrow';
     row.innerHTML='<div class="wq">'+r.t+'</div><div class="wbtns">'
       +F.map(function(f){return '<button type="button" data-f="'+f+'">'+f+'</button>';}).join('')
-      +'</div><div class="wout" hidden></div>';
+      +'</div><div class="wout" role="status" aria-live="polite" hidden></div>';
     host.appendChild(row);
     var bs=row.querySelectorAll('button'), out=row.querySelector('.wout');
     bs.forEach(function(b){
@@ -953,9 +955,11 @@ innocent-looking records.</p>
 
 <p>A single basket says little. A year of baskets, keyed to one identity, says a great deal: a
 household's size, schedule, budget, diet, religion by what is never bought, health by what suddenly
-is. Retail analytics openly works this inference, and the industry's most famous cautionary tale,
-which you will meet properly in the Target chapter in Week 8, involved purchase patterns revealing a
-pregnancy before the family knew. Nothing in that story required surveillance in the spy-movie sense.
+is. Retail analytics openly works this inference, and the industry's most famous cautionary tale is
+about exactly this. In 2012 the New York Times reported that Target's statisticians had built a
+model that guessed, from purchases like unscented lotion and supplements, which shoppers were
+pregnant, and mailed them baby coupons. A father in Minneapolis complained to a store manager that
+his teenage daughter was receiving them. She was pregnant. The store had known before he did. Nothing in that story required surveillance in the spy-movie sense.
 It required exactly what this chapter teaches: clean records, a stable key per customer, and a join
 across time.</p>
 
@@ -1069,6 +1073,7 @@ that would be impossible in a single grid and are three lines of SQL against a n
 
 <h2 id="sources"><span class="num">09</span>Sources and further reading</h2>
 <ul class="sources">
+<li>Charles Duhigg, "How Companies Learn Your Secrets," <em>The New York Times Magazine</em>, 16 February 2012, for the Target pregnancy-prediction story in section 05.</li>
 <li>Edgar F. Codd, "A Relational Model of Data for Large Shared Data Banks," <em>Communications of the ACM</em>, June 1970. The paper that defined the model this chapter teaches. Six pages, and readable if you skip the algebra.</li>
 <li>U.S. Census Bureau history pages on Herman Hollerith and the tabulating machine, for the 1888 competition timings, the 1880 tabulation finishing in 1887, and the 1890 count coming in ahead of schedule.</li>
 <li>Contemporary reporting on the Public Health England data loss, September and October 2020, for the 15,841 cases, the .xls row limit, and the untraced contacts. Thiemo Fetzer's Warwick working paper models the downstream effect; its figures are estimates rather than counts.</li>
@@ -1105,7 +1110,7 @@ that would be impossible in a single grid and are three lines of SQL against a n
 <tr><td class="t">0:07</td><td class="w">Walk the case</td><td>Retail Link from 1991: what Walmart gave away, to whom, and what it got back. Keep naming which concept from Monday each piece is an instance of. The move to land is that sharing the demand signal attacks the bullwhip at its root, by replacing each link's guess with a record.</td></tr>
 <tr><td class="t">0:22</td><td class="w">Revisit Monday</td><td>They answered the Retail Link question on Monday without the case. Ask who wants to change their answer now, and make the ones who do say what specifically changed it. Then push the other side seriously: sharing point-of-sale data tells a supplier how much leverage it has and which of your stores are weak. What stops a supplier using it against Walmart? Get to the answer, which is that the relationship is asymmetric and the data is Walmart's to withdraw.</td></tr>
 <tr><td class="t">0:32</td><td class="w">Storing against asking</td><td>OLTP and analytics, the Data Caf&eacute;, and the pricing-error story. The sentence worth repeating is that insight arriving a week late is sales already lost, which is Chapter 2's timeliness dimension at continental scale.</td></tr>
-<tr><td class="t">0:42</td><td class="w">The turn</td><td>Section 05. Walk a year of one household's baskets and let the room work out what can be inferred. Nothing here requires surveillance; it requires clean records, a stable key, and a join. Preview Target in Week 8 without telling the story yet.</td></tr>
+<tr><td class="t">0:42</td><td class="w">The turn</td><td>Section 05. Walk a year of one household's baskets and let the room work out what can be inferred. Nothing here requires surveillance; it requires clean records, a stable key, and a join. Tell the Target story here; it is in section 05.</td></tr>
 <tr><td class="t">0:52</td><td class="w">Think</td><td>All five discussion questions on screen. Silent individual work, one sentence on at least two. Protect this step.</td></tr>
 <tr><td class="t">0:58</td><td class="w">Pair</td><td>Groups of three or four settle on positions they can defend. Circulate for a group that landed somewhere unusual on the Retail Link or the inference question and call on them first.</td></tr>
 <tr><td class="t">1:08</td><td class="w">Share</td><td>Groups take the questions in front of the room. Ask for disagreement rather than answers.</td></tr>

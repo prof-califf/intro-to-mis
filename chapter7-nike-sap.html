@@ -11,7 +11,7 @@
 <style>
 :root{
   --black:#0e0e0d; --off-black:#1a1a18;
-  --magenta:#e8197d; --magenta-dark:#c0146a; --magenta-pale:#fdeaf3;
+  --magenta:#cc146d; --magenta-onblack:#f0348e; --magenta-dark:#c0146a; --magenta-pale:#fdeaf3;
   --white:#ffffff; --off-white:#f6f4f1;
   --text-dark:#0e0e0d; --text-muted:#3a3a38; --text-light:#6b6b68;
   --border:#e0ddd8;
@@ -20,7 +20,7 @@
   --sans:'Space Grotesk',sans-serif; --display:'Oswald',sans-serif;
   --wrap:1180px; --col:46rem;
   /* legacy aliases so existing markup keeps working */
-  --navy:#0e0e0d; --navy-soft:#1a1a18; --accent:#e8197d; --accent-deep:#c0146a;
+  --navy:#0e0e0d; --navy-soft:#1a1a18; --accent:#cc146d; --accent-deep:#c0146a;
   --accent-pale:#fdeaf3; --cream:#ffffff; --cream-deep:#f6f4f1; --paper:#ffffff;
   --ink:#0e0e0d; --muted:#6b6b68; --rule:#e0ddd8; --serif:'Space Grotesk',sans-serif;
 }
@@ -155,7 +155,7 @@ li{margin-bottom:.45rem}
 /* ---------- global top navigation with dropdowns ---------- */
 .topnav{position:sticky;top:0;z-index:100;background:var(--black);border-bottom:1px solid rgba(255,255,255,.14)}
 .topnav-in{max-width:var(--wrap);margin:0 auto;padding:.7rem 1.5rem;display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap}
-.topnav-brand{font-family:var(--display);font-size:16px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--magenta);text-decoration:none;margin-right:auto}
+.topnav-brand{font-family:var(--display);font-size:16px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--magenta-onblack);text-decoration:none;margin-right:auto}
 .topnav-brand:hover{color:#fff}
 .dd{position:relative}
 .dd-btn{font-family:var(--display);font-size:14.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
@@ -318,6 +318,8 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 .takeaways .obj-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.4rem}
 .takeaways ul{margin:.2rem 0 0 1.2rem;padding:0}
 .takeaways li{margin:.35rem 0;font-size:16.5px;line-height:1.55}
+.diagram{margin:1.6rem 0;text-align:center}
+.diagram figcaption{text-align:left}
 </style>
 </head>
 <body>
@@ -341,6 +343,8 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
       <a href="chapter11-equifax.html"><span class="lbl">Chapter 11 &middot; Week 8</span>IT Governance &mdash; Equifax</a>
       <a href="chapter12-software.html"><span class="lbl">Chapter 12 &middot; Week 9</span>Software Design &amp; Selection &mdash; Robles v. Domino's</a>
       <a href="chapter13-cloud.html"><span class="lbl">Chapter 13 &middot; Week 10</span>The Cloud &amp; What Computing Costs &mdash; Netflix</a>
+      <a href="glossary.html"><span class="lbl">Reference</span>Glossary, A to Z</a>
+      <a href="preface.html"><span class="lbl">Reference</span>About this book</a>
       </div>
     </div>
     <div class="dd">
@@ -502,7 +506,7 @@ one is expensive forever.</p>
     var row=document.createElement('div'); row.className='wrow';
     row.innerHTML='<div class="wq">'+r.t+'</div><div class="wbtns">'
       +F.map(function(f){return '<button type="button" data-f="'+f+'">'+f+'</button>';}).join('')
-      +'</div><div class="wout" hidden></div>';
+      +'</div><div class="wout" role="status" aria-live="polite" hidden></div>';
     host.appendChild(row);
     var bs=row.querySelectorAll('button'), out=row.querySelector('.wout');
     bs.forEach(function(b){
@@ -677,6 +681,35 @@ distributor over-orders more to be safe, the factory over-produces more still, a
 its own safety margin to a number that was already wrong. It happens with humans and fax machines. Nike ran it
 with software, across every store and factory at once, at machine speed. Automation did not create the bullwhip. It cracked the whip
 harder.</p>
+<figure class="diagram" style="margin:1.8rem auto;max-width:470px">
+<svg viewBox="0 0 470 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="bwT bwD" style="width:100%;height:auto;font-family:var(--sans)">
+<title id="bwT">The bullwhip effect</title>
+<desc id="bwD">Four bars in a row, labelled store, distributor, factory and supplier, each taller than the one before. A dashed line at the height of the first bar runs across all four, labelled what customers actually bought. Above each bar a small label gives the extra ordered at that stage: a little, more to be safe, more still, and far too much. An arrow along the bottom points from the store toward the supplier, labelled the order travels this way. A second arrow points back, labelled the shoes travel back months later.</desc>
+<defs><marker id="bwa" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--text-light)"/></marker></defs>
+<rect x="60" y="192" width="70" height="44" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1.2"/>
+<text x="95" y="252" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--text-dark)">STORE</text>
+<text x="95" y="216" text-anchor="middle" font-size="10" fill="var(--magenta-dark)" font-weight="600">+ a little</text>
+<rect x="162" y="150" width="70" height="86" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1.2"/>
+<text x="197" y="252" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--text-dark)">DISTRIBUTOR</text>
+<text x="197" y="142" text-anchor="middle" font-size="10" fill="var(--magenta-dark)" font-weight="600">+ more, to be safe</text>
+<rect x="264" y="96" width="70" height="140" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1.2"/>
+<text x="299" y="252" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--text-dark)">FACTORY</text>
+<text x="299" y="88" text-anchor="middle" font-size="10" fill="var(--magenta-dark)" font-weight="600">+ more still</text>
+<rect x="366" y="30" width="70" height="206" fill="var(--magenta-pale)" stroke="var(--text-dark)" stroke-width="1.2"/>
+<text x="401" y="252" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--text-dark)">SUPPLIER</text>
+<text x="401" y="22" text-anchor="middle" font-size="10" fill="var(--magenta-dark)" font-weight="600">+ far too much</text>
+<path d="M40 192 L450 192" stroke="var(--good)" stroke-width="1.4" stroke-dasharray="5 4" fill="none"/>
+<text x="40" y="186" font-size="10" fill="var(--good)" font-weight="600">what customers bought</text>
+<path d="M60 268 L430 268" stroke="var(--text-light)" stroke-width="1.4" fill="none" marker-end="url(#bwa)"/>
+<text x="245" y="262" text-anchor="middle" font-size="10" fill="var(--text-light)">the order travels this way, one guess added at each step</text>
+<path d="M430 288 L60 288" stroke="var(--magenta)" stroke-width="1.4" fill="none" marker-end="url(#bwa)"/>
+<text x="245" y="298" text-anchor="middle" font-size="10" fill="var(--magenta-dark)">the shoes travel back, months later, in the quantity nobody wanted</text>
+</svg>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">
+Nobody at any step was careless. Each one added a small safety margin to the number it was handed, and the number it was handed already contained the margins below it. The dashed line is what customers actually bought; the last bar is what the supplier made. Software did not create this shape. It sent the guess up the chain faster than a person could have, so the whip cracked harder.
+</figcaption>
+</figure>
+
 <p>Stay with the mechanism for a moment, because it is the chapter's core. Nothing <em>looked</em> broken. The software
 produced numbers; the numbers were plausible; planners planned. The failure was invisible at decision time
 and undeniable only at delivery time: months of manufacturing lead later, when the mistake was already
@@ -780,7 +813,12 @@ overtime followed by idled shifts. Retailers were shipped the wrong mix and mark
 Inside Nike, planners spent a year manually overriding a system they had been told to trust, doing two
 jobs for one salary. That is <strong>change management</strong> arriving as a bill rather than a plan. Change management is the work of
 getting an organization to actually operate the new way. Either you budget for it in advance, or the
-people who had no say in it pay for it afterwards in overtime. When Lamb Weston’s rollout stumbled in 2023, the shortfalls landed on restaurant
+people who had no say in it pay for it afterwards in overtime. Research on how people experience new
+systems at work backs this up. One of this book's authors studied nurses adjusting to electronic
+medical records and found that the stress a new system creates has two sides: the same demands that
+make one nurse feel more capable make another want to quit, and the difference lies in whether the
+system feels useful and whether anyone helped them learn it. Change management is the part of the
+project that decides which side people land on. When Lamb Weston’s rollout stumbled in 2023, the shortfalls landed on restaurant
 customers and on warehouse crews reconciling inventory by hand. ERP failures are always narrated as
 money and stock price, because those are the measurable components. The five components framework
 insists on the fifth: somewhere under every failed implementation is a person doing manually, under
@@ -884,6 +922,7 @@ and the half the lab makes concrete.</p>
 
 <h2 id="sources"><span class="num">09</span>Sources and further reading</h2>
 <ul class="sources">
+<li>Christopher B. Califf, Saonee Sarker and Suprateek Sarker, "The Bright and Dark Sides of Technostress: A Mixed-Methods Study Involving Healthcare IT," <em>MIS Quarterly</em> 44(2), 2020, pp. 809&ndash;856, for the finding in section 05 that technology-related stress has a positive and a negative form, and that usefulness, technical support and involvement in the rollout separate them.</li>
 <li>Contemporary trade and business reporting on Nike's i2 demand-planning rollout, 2000 and 2001, for the $400 million program, the twenty-seven ordering systems, the vendor's guidance on customization limits, the February 2001 earnings announcement, the roughly $100 million in lost sales and the share price fall.</li>
 <li>Reporting on Asda's Project Future, 2021 to 2026, for the separation from Walmart's systems, the cost rising from an initial budget near &pound;189 million past &pound;1 billion, the eleven million item stock mismatch reported by <em>The Register</em> in October 2024 (from an internal major-incident report), the cancelled and postponed cutovers, the August 2025 completion (Reuters), the chairman's December 2025 comments (<em>The Times</em>, <em>The Grocer</em>), and the 2025 accounts filed in June 2026 showing cumulative project spending of &pound;1,224 million and a &pound;284 million disruption charge. This is recent and still moving; check the figures before teaching them.</li>
 <li><strong>Verification note.</strong> Checked against sources in September 2026: the Asda figures and timeline (corrected: the eleven million figure was a stock-count mismatch between two of Asda's new systems in July 2024, worth about &pound;21 million, not a mismatch of item records between the old and new systems; the total cost is now &pound;1,224 million per the 2025 accounts), the Lamb Weston figures from its April 2024 filing and the May 2026 ruling. The Nike narrative follows Christopher Koch's 2004 CIO account and the contemporary reporting; the "$4 billion in market value" figure that circulates for the February 2001 fall is not supported by the share count at the time (a 20 percent fall on a market value near $13 billion is closer to $2.5 to 3 billion), so the chapter now says "several billion." Not confirmed from a primary source: the Lamb Weston CFO's "usual bumps" wording, the October 2024 CIO appointment and plant-by-plant revision, and the "11 billion potatoes" figure, all of which come from trade and consultancy coverage. The FoxMeyer and Lidl accounts were checked against the authors' knowledge of the published record rather than re-searched.</li>
