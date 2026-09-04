@@ -308,12 +308,12 @@ input::placeholder{color:#6b6b68;opacity:1}.cp.done{border-left:4px solid var(--
 <nav class="topnav">
   <div class="topnav-in">
     <a class="topnav-brand" href="index.html">MIS 320 &middot; Principles of Management Information Systems</a>
+    <a class="dd-btn" href="syllabus.html" style="text-decoration:none">Syllabus</a>
     <a class="dd-btn" href="schedule.html" style="text-decoration:none">Schedule</a>
     <div class="dd">
       <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddc">Chapters<span class="caret">&#9660;</span></button>
       <div class="dd-menu" id="ddc">
       <a href="preface.html"><span class="lbl">Start here</span>About this book</a>
-      <a href="syllabus.html"><span class="lbl">Start here</span>Syllabus and grading</a>
       <a href="chapter1-what-is-mis.html"><span class="lbl">Chapter 1 &middot; Week 1</span>What Is MIS? &mdash; Spotify Wrapped</a>
       <a href="chapter2-starbucks.html"><span class="lbl">Chapter 2 &middot; Week 2</span>The Value of Information &mdash; Starbucks</a>
       <a href="chapter3-competitive-advantage.html"><span class="lbl">Chapter 3 &middot; Week 3</span>Technology &amp; Competitive Advantage &mdash; Zara</a>
@@ -398,7 +398,7 @@ and download your certificate for Canvas. Your progress saves automatically in t
 close the tab and pick up where you left off. It does not follow you to a different computer or a private
 window, and clearing your browser data clears it. If you need to start this lab over, use the
 <button type="button" class="hintb" onclick="resetLab()">Reset this lab</button> button.</p>
-<div class="progress" id="prog">Checkpoint progress: 0 / 9</div>
+<div class="progress" id="prog">Checkpoint progress: 0 / 10</div>
 </div>
 
 <div class="ailight r">
@@ -506,7 +506,34 @@ what did not happen: the underlying numbers did not change. Formatting controls 
 which is half of this lab's subject.</p>
 
 <div class="cpslot" data-cp="3"></div>
-<div class="sh" id="step5"><span class="badge">Step 5</span><span class="ttl">Check the axis, then test what it is doing</span><span class="cpx">Answer goes in <b>Checkpoint 4</b></span></div>
+
+<div class="sh" id="step5"><span class="badge">Step 5</span><span class="ttl">Let the chart decide which bars matter</span><span class="cpx">Answer goes in <b>Checkpoint 4</b></span></div>
+<p>The GM asked for a comparison, and a comparison needs a reference point. Which stores are below
+the average? You could read it off the chart and color those bars by hand, and then recolor them by
+hand every time the numbers change. Or you can use the IF from Labs 2 and 3 and let the chart apply the
+rule itself.</p>
+<ol>
+<li>Copy your pivot's store names and revenues as plain values to a blank area, stores in column A
+(A2 to A9), revenue in column B (B2 to B9). A chart cannot take a second series from inside a pivot, so
+this copy is the chart's data from now on.</li>
+<li>In <code class="inline">C1</code> type the header <code class="inline">below average</code>. In
+<code class="inline">C2</code> type <code class="inline">=IF(B2&lt;AVERAGE($B$2:$B$9),B2,NA())</code> and
+fill it down to C9.</li>
+<li>Read column C. Where a store is below the average, C repeats its revenue. Where it is not, C shows
+<code class="inline">#N/A</code>, which Excel refuses to plot. That is the trick: the IF hands the
+chart only the bars you want highlighted.</li>
+<li>Select A1:C9 and insert a clustered bar chart. Two series appear. Right-click the second series,
+Format Data Series, set Series Overlap to 100%, and give it a color that stands out. The
+below-average stores are now marked, and if a number changes, the marks move by themselves.</li>
+</ol>
+<p><strong>What the formula is doing:</strong> the test compares each store to
+<code class="inline">AVERAGE($B$2:$B$9)</code>; the dollar signs pin that range so it does not slide
+when you fill down. If true, write the revenue; if false, write <code class="inline">NA()</code>, a
+deliberate blank the chart skips. Three parts, same as every IF you have written. Count the
+highlighted bars.</p>
+
+<div class="cpslot" data-cp="4"></div>
+<div class="sh" id="step6"><span class="badge">Step 6</span><span class="ttl">Check the axis, then test what it is doing</span><span class="cpx">Answer goes in <b>Checkpoint 5</b></span></div>
 <p>Click the vertical axis. It starts at zero, which is where a bar chart's axis has to stay, because bar
 length is the number. That rule is easy to accept and easy to forget, so spend one minute finding out
 what it is actually protecting you from.</p>
@@ -525,11 +552,11 @@ and that is the honest picture: these five stores really are close, and three mo
 <p>Then click the chart title and replace it with a sentence that states the finding rather than the
 topic: "Seattle Flagship leads; the gap to last place is wide," not "Revenue by Store."</p>
 
-<div class="cpslot" data-cp="4"></div>
+<div class="cpslot" data-cp="5"></div>
 
 <h3>Now you: the sequence, as a line</h3>
 
-<div class="sh" id="step6"><span class="badge">Step 6</span><span class="ttl">Revenue by month</span><span class="cpx">Answer goes in <b>Checkpoint 5 and 6</b></span></div>
+<div class="sh" id="step7"><span class="badge">Step 7</span><span class="ttl">Revenue by month</span><span class="cpx">Answer goes in <b>Checkpoint 6 and 7</b></span></div>
 <p>Build a second pivot the same way. This time drag <code class="inline">month</code> into Rows and
 <code class="inline">revenue</code> into Values. The month column holds the month
 number, <code class="inline">1</code> for January through <code class="inline">12</code> for December,
@@ -542,12 +569,12 @@ nothing. This is the one chart in the lab where the order is not yours to change
 a collapse. Look at the whole year before you do, and answer both checkpoints below. The second one is
 the reason the first is not a crisis: this is a seasonal business, and the strong months come back.</p>
 
-<div class="cpslot" data-cp="5"></div>
 <div class="cpslot" data-cp="6"></div>
+<div class="cpslot" data-cp="7"></div>
 
 <h3>Now you: the relationship, as a scatter</h3>
 
-<div class="sh" id="step7"><span class="badge">Step 7</span><span class="ttl">Price against units sold</span><span class="cpx">Answer goes in <b>Checkpoint 7 and 8</b></span></div>
+<div class="sh" id="step8"><span class="badge">Step 8</span><span class="ttl">Price against units sold</span><span class="cpx">Answer goes in <b>Checkpoint 8 and 9</b></span></div>
 <p>This one needs a pivot with two numbers per row, which is new. Build a third pivot with
 <code class="inline">product</code> in Rows. Drag <code class="inline">quantity</code> into Values, then
 drag <code class="inline">unit_price</code> into Values as well, so the pivot has two value columns.</p>
@@ -563,12 +590,12 @@ volume and expensive ones do not, which every retailer believes and this chart l
 chart could show you this, because a bar chart holds one number per product and a relationship needs
 two.</p>
 
-<div class="cpslot" data-cp="7"></div>
 <div class="cpslot" data-cp="8"></div>
+<div class="cpslot" data-cp="9"></div>
 
 <h3>Now you: the parts, as a pie</h3>
 
-<div class="sh" id="step8"><span class="badge">Step 8</span><span class="ttl">Revenue share by region</span><span class="cpx">Answer goes in <b>Checkpoint 9</b></span></div>
+<div class="sh" id="step9"><span class="badge">Step 9</span><span class="ttl">Revenue share by region</span><span class="cpx">Answer goes in <b>Checkpoint 10</b></span></div>
 <p>Build a fourth pivot with <code class="inline">region</code> in Rows and
 <code class="inline">revenue</code> in Values. Insert &#8594; Pie.</p>
 <p>Four regions, every sale in exactly one of them, and together they are the whole company. That is
@@ -578,16 +605,7 @@ As &#8594; % of Grand Total. The pie does not change shape, because it was alway
 changes is that you can now name the number instead of estimating the angle, which tells you something
 about how much work the picture was doing on its own.</p>
 
-<div class="cpslot" data-cp="9"></div>
-
-<div class="callout callout-good"><strong>Finished early? Make the chart decide</strong>
-<p>Charts can apply a rule too. Beside your store revenue table, add a column
-<code class="inline">=IF(B2&lt;AVERAGE($B$2:$B$9),B2,NA())</code> and fill it down. It copies a store's revenue only
-when that store is below the average, and leaves <code class="inline">#N/A</code> otherwise, which Excel simply
-does not plot. Add the new column to your bar chart as a second series in a different color. The below-average
-stores are now highlighted, and the highlight moves by itself when the numbers change. That is a chart that
-applies a rule, instead of one somebody colored by hand and forgot to update. No checkpoint; keep it for Lab 5,
-where the same IF flags a store the board should worry about.</p></div>
+<div class="cpslot" data-cp="10"></div>
 
 <h2><span class="num">Part 3</span>Reading a chart critically</h2>
 
@@ -664,7 +682,7 @@ b.setAttribute('aria-expanded',o?'true':'false');});})();
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-const LAB="LAB4", QS=[{"q": "Part 1 \u00b7 The GM wants to compare total revenue across the eight stores. Which of the four chart types is right? (one word)", "t": "txt", "a": "YmFy", "h": "Separate categories with no natural order, one number each, and size is the point."}, {"q": "Step 3 \u00b7 In your sorted bar chart of revenue by store, which store is SECOND?", "t": "txt", "a": "UG9ydGxhbmQgUGVhcmw=", "h": "Sort the pivot largest to smallest and read the second row. It is not Seattle Flagship."}, {"q": "Step 4 \u00b7 After formatting the revenue field to 0 decimals with a thousands separator, what does the top store's revenue read?", "t": "num", "a": "MTQ4NDcy", "tol": 1, "h": "Seattle Flagship. The raw value is 148471.75, so the displayed number is that rounded to a whole dollar."}, {"q": "Step 5 \u00b7 With the axis floor lifted, Bellevue's bar looks more than four times Bellingham's. What is the real gap between them, as a percentage to one decimal place?", "t": "num", "a": "OC4x", "tol": 0.2, "h": "=(Bellevue-Bellingham)/Bellingham*100 using the values from your pivot, not the picture. The answer is single digits."}, {"q": "Step 6 \u00b7 In your line chart of revenue by month, which month number is highest?", "t": "num", "a": "MQ==", "tol": 0, "h": "Month 1. Holiday gear and the New Year rush both land in January."}, {"q": "Step 6 \u00b7 Now the reason the drop after that is not a collapse: which month number is SECOND highest?", "t": "num", "a": "MTA=", "tol": 0, "h": "Late in the year, when winter gear season begins. Revenue recovers, so the year is seasonal rather than declining."}, {"q": "Step 7 \u00b7 In your scatter, one product sits furthest to the right, meaning it sold the most units. Name it.", "t": "txt", "a": "Q2FzY2FkZSBDYW1wIFN0b3Zl", "h": "Sort your product pivot by the quantity column, largest to smallest, and read the top row."}, {"q": "Step 7 \u00b7 What is that product's AVERAGE unit price, to the nearest dollar?", "t": "num", "a": "ODM=", "tol": 1, "h": "Read the second value column of the same pivot row. If it looks far too large you left the field on Sum instead of Average."}, {"q": "Step 8 \u00b7 In your pie of revenue by region, what percent of total revenue does the LARGEST region hold? (one decimal place)", "t": "num", "a": "NDQuOA==", "tol": 0.2, "h": "Puget Sound. Use Show Values As \u2192 % of Grand Total rather than estimating the angle."}];
+const LAB="LAB4", QS=[{"q": "Part 1 · The GM wants to compare total revenue across the eight stores. Which of the four chart types is right? (one word)", "t": "txt", "a": "YmFy", "h": "Separate categories with no natural order, one number each, and size is the point."}, {"q": "Step 3 · In your sorted bar chart of revenue by store, which store is SECOND?", "t": "txt", "a": "UG9ydGxhbmQgUGVhcmw=", "h": "Sort the pivot largest to smallest and read the second row. It is not Seattle Flagship."}, {"q": "Step 4 · After formatting the revenue field to 0 decimals with a thousands separator, what does the top store's revenue read?", "t": "num", "a": "MTQ4NDcy", "tol": 1, "h": "Seattle Flagship. The raw value is 148471.75, so the displayed number is that rounded to a whole dollar."}, {"q": "Step 5 · With =IF(B2<AVERAGE($B$2:$B$9),B2,NA()) beside the eight store revenues, how many stores are highlighted as below average?", "t": "num", "a": "Ng==", "tol": 0, "h": "The average is about $89,000. Only two stores clear it, so the IF returns a revenue for the other six and #N/A for those two."}, {"q": "Step 6 · With the axis floor lifted, Bellevue's bar looks more than four times Bellingham's. What is the real gap between them, as a percentage to one decimal place?", "t": "num", "a": "OC4x", "tol": 0.2, "h": "=(Bellevue-Bellingham)/Bellingham*100 using the values from your pivot, not the picture. The answer is single digits."}, {"q": "Step 7 · In your line chart of revenue by month, which month number is highest?", "t": "num", "a": "MQ==", "tol": 0, "h": "Month 1. Holiday gear and the New Year rush both land in January."}, {"q": "Step 7 · Now the reason the drop after that is not a collapse: which month number is SECOND highest?", "t": "num", "a": "MTA=", "tol": 0, "h": "Late in the year, when winter gear season begins. Revenue recovers, so the year is seasonal rather than declining."}, {"q": "Step 8 · In your scatter, one product sits furthest to the right, meaning it sold the most units. Name it.", "t": "txt", "a": "Q2FzY2FkZSBDYW1wIFN0b3Zl", "h": "Sort your product pivot by the quantity column, largest to smallest, and read the top row."}, {"q": "Step 8 · What is that product's AVERAGE unit price, to the nearest dollar?", "t": "num", "a": "ODM=", "tol": 1, "h": "Read the second value column of the same pivot row. If it looks far too large you left the field on Sum instead of Average."}, {"q": "Step 9 · In your pie of revenue by region, what percent of total revenue does the LARGEST region hold? (one decimal place)", "t": "num", "a": "NDQuOA==", "tol": 0.2, "h": "Puget Sound. Use Show Values As → % of Grand Total rather than estimating the angle."}];
 const SKEY='mis320_'+LAB;
 let solved=new Set();
 function load(){try{const raw=localStorage.getItem(SKEY);if(!raw)return null;const s=JSON.parse(raw);
