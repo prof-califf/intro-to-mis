@@ -395,22 +395,6 @@ security lead, and this lab is your first week on the job.</p>
 
 <div class="toc"><strong>Contents</strong> <a href="#inventory">Part 1 · The inventory</a> &nbsp;·&nbsp; <a href="#verify">Part 2 · Verification</a> &nbsp;·&nbsp; <a href="#blast">Part 3 · Blast radius</a> &nbsp;·&nbsp; <a href="#controls">Part 4 · Control numbers</a> &nbsp;·&nbsp; <a href="#map">Part 5 · The access map</a> &nbsp;·&nbsp; <a href="#finish">Reflection &amp; certificate</a> &nbsp;·&nbsp; <a href="#submit">What to submit</a></div>
 
-
-<p>Here is what you will notice by the end of the session: nothing in this lab requires a single skill
-you do not already have. The audit is counting, and you count with SQL. The phish is caught by checking a
-claim against a database, which is a JOIN and a WHERE. The case for least privilege is one division. The
-chapter argued that most security is management, not code. Today you get to test that claim on a company
-whose data you know better than anyone.</p>
-
-<div class="callout"><strong>The schema, one more time</strong>
-<p style="font-family:var(--sans);font-size:.88rem"><code class="inline">stores</code>(store_id, store_name, region, opened_year, square_feet) &#183;
-<code class="inline">suppliers</code>(supplier_id, supplier_name, country, lead_time_days) &#183;
-<code class="inline">products</code>(product_id, product_name, category, supplier_id, unit_cost, list_price) &#183;
-<code class="inline">members</code>(member_id, first_name, last_name, city, state, member_type, join_date) &#183;
-<code class="inline">sales</code>(sale_id, sale_date, store_id, product_id, member_id, quantity, unit_price) &#183;
-<code class="inline">inventory</code>(store_id, product_id, quantity_on_hand, reorder_point) &#183;
-<code class="inline">used_gear</code>(item_id, product_id, store_id, condition, listed_price, date_listed, date_sold)</p></div>
-
 <div class="ailight g">
   <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
   <div class="lighttext"><strong>Green &middot; AI as sparring partner</strong>
@@ -427,6 +411,23 @@ whose data you know better than anyone.</p>
   outside a classroom it is a crime. Studying the two fake emails printed below is the entire point;
   manufacturing new ones is not.</p></div>
 </div>
+
+
+
+<p>Here is what you will notice by the end of the session: nothing in this lab requires a single skill
+you do not already have. The audit is counting, and you count with SQL. The phish is caught by checking a
+claim against a database, which is a JOIN and a WHERE. The case for least privilege is one division. The
+chapter argued that most security is management, not code. Today you get to test that claim on a company
+whose data you know better than anyone.</p>
+
+<div class="callout"><strong>The schema, one more time</strong>
+<p style="font-family:var(--sans);font-size:.88rem"><code class="inline">stores</code>(store_id, store_name, region, opened_year, square_feet) &#183;
+<code class="inline">suppliers</code>(supplier_id, supplier_name, country, lead_time_days) &#183;
+<code class="inline">products</code>(product_id, product_name, category, supplier_id, unit_cost, list_price) &#183;
+<code class="inline">members</code>(member_id, first_name, last_name, city, state, member_type, join_date) &#183;
+<code class="inline">sales</code>(sale_id, sale_date, store_id, product_id, member_id, quantity, unit_price) &#183;
+<code class="inline">inventory</code>(store_id, product_id, quantity_on_hand, reorder_point) &#183;
+<code class="inline">used_gear</code>(item_id, product_id, store_id, condition, listed_price, date_listed, date_sold)</p></div>
 
 <h2><span class="num">Sandbox</span>The Cascadia database, live</h2>
 <div id="sqlbox" style="border:1px solid var(--rule);background:var(--paper);border-radius:2px;padding:1rem 1.15rem;margin:1.2rem 0">
