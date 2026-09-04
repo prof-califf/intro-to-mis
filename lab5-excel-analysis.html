@@ -347,9 +347,9 @@ input::placeholder{color:#6b6b68;opacity:1}.cp.done{border-left:4px solid var(--
     <div class="dd">
       <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddd">Data<span class="caret">&#9660;</span></button>
       <div class="dd-menu" id="ddd">
-      <a href="cascadia-sales-2025.xlsx"><span class="lbl">Workbook</span>Cascadia sales, clean (.xlsx)</a>
-      <a href="cascadia-sales-2025-RAW.xlsx"><span class="lbl">Workbook</span>Cascadia sales, RAW export for Lab 7 (.xlsx)</a>
-      <a href="cascadia-sales-2025.csv"><span class="lbl">Data</span>Flat CSV for Tableau</a>
+      <a href="cascadia-sales-2025.xlsx" download><span class="lbl">Workbook</span>Cascadia sales, clean (.xlsx)</a>
+      <a href="cascadia-sales-2025-RAW.xlsx" download><span class="lbl">Workbook</span>Cascadia sales, RAW export for Lab 7 (.xlsx)</a>
+      <a href="cascadia-sales-2025.csv" download><span class="lbl">Data</span>Flat CSV for Tableau</a>
       <a href="cascadia.db"><span class="lbl">Database</span>SQLite database for the SQL lab</a>
       </div>
     </div>
@@ -377,7 +377,7 @@ input::placeholder{color:#6b6b68;opacity:1}.cp.done{border-left:4px solid var(--
   something is wrong anyway, and they have sent you a memo asking you to settle it. Part A rehearses the
   tools you will need. Part B hands you the memo, which asks for six specific numbers and then for your
   recommendation. The numbers are the easy part.</p>
-  <p>Work from the clean data: <a href="cascadia-sales-2025.xlsx">cascadia-sales-2025.xlsx</a>.</p>
+  <p>Work from the clean data: <a href="cascadia-sales-2025.xlsx" download>cascadia-sales-2025.xlsx</a>.</p>
 
 <div id="steps">
 
@@ -400,7 +400,7 @@ next question opens up. There is no penalty for a wrong answer, so guess, check,
 you get stuck. That is what it is there for.</p>
 <p style="font-family:var(--sans);font-size:.95rem">Once you have cleared them all, write your reflection
 and download your certificate for Canvas. Your progress saves automatically in this browser, so you can close the tab and pick up where you left off. It does not follow you to a different computer or a private window, and clearing your browser data clears it. If you need to start this lab over, use the <button type="button" class="hintb" onclick="resetLab()">Reset this lab</button> button.</p>
-<div class="progress" id="prog">Checkpoint progress: 0 / 8</div>
+<div class="progress" id="prog">Checkpoint progress: 0 / 9</div>
 </div>
 
 <h2><span class="num">Part A</span>Follow along, skills: pivots as instruments, what-if, forecasting</h2>
@@ -536,6 +536,24 @@ revenue could not answer the board's question and choosing a measure that could.
 <div class="cpslot" data-cp="7"></div>
 <div class="cpslot" data-cp="8"></div>
 
+<div class="sh" id="step9"><span class="badge">Step 9</span><span class="ttl">Let the sheet flag the problem for you</span><span class="cpx">Answer goes in <b>Checkpoint 9</b></span></div>
+<p>You found the store by reading eight rates with your eyes. A board pack has to work when nobody
+is reading closely, so make the sheet do the noticing. Next to your eight attach rates, add a
+<code class="inline">status</code> column with the IF you learned in Lab 3, testing each rate against
+the 87 percent target from the memo:</p>
+<p><code class="inline">=IF(C2&lt;0.87,"Below target","On target")</code></p>
+<p>(C2 being wherever your first store's rate sits; if you typed the rate as 51.6 rather than 0.516,
+test against 87 instead.) Fill it down. Then count the flags:
+<code class="inline">=COUNTIF(D2:D9,"Below target")</code>. Read the result before you enter it,
+because it is not one. The memo's target catches a second store that your eyes skipped over, and that
+is the point of writing the rule down instead of eyeballing it: a rule applies the same standard to
+every row, every time, including the borderline ones. If the board wanted only the serious cases, you
+would tighten the rule with <code class="inline">AND</code>:
+<code class="inline">=IF(AND(C2&lt;0.87,C2&lt;0.7),"Investigate","Watch")</code> flags a store only when it
+misses the target by a wide margin.</p>
+
+<div class="cpslot" data-cp="9"></div>
+
 <div class="callout callout-bridge"><strong>Why this pairs with Nike</strong>
 <p>Nike's planners trusted a system whose numbers looked plausible while its demand signal was
 corrupted, and the gap between looked-fine and was-fine cost $100 million. Cascadia's board has the
@@ -593,7 +611,7 @@ b.setAttribute('aria-expanded',o?'true':'false');});})();
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-const LAB="LAB5", QS=[{"q": "Checkpoint 1 \u00b7 Pivot revenue by is_member. Total revenue from member-attached sales, in dollars?", "t": "num", "a": "NjE3NDk5LjY=", "tol": 1, "h": "SUMIF on the Analyst tab first (is_member = Y, sum revenue), then is_member in Rows and revenue in Values in the pivot to check it. They must agree."}, {"q": "Checkpoint 2 \u00b7 What share of all sales lines are member-attached, as a percent to one decimal?", "t": "num", "a": "ODYuMA==", "tol": 0.2, "h": "Count of lines by is_member, then Y / total. Show Values As \u2192 % of Column Total does it in one move."}, {"q": "Checkpoint 3 \u00b7 Board question 2: which store has the LOWEST member attach rate?", "t": "txt", "a": "QmVsbGluZ2hhbQ==", "h": "The memo says revenue looks fine, so stop looking at revenue. What other measure appears in the memo? Break it out by store."}, {"q": "Checkpoint 4 \u00b7 Board question 2: that store's member attach rate, as a percent to one decimal?", "t": "num", "a": "NTEuNg==", "tol": 0.2, "h": "Pivot: store in Rows, is_member in Columns, count of sale_id in Values, shown as % of Row Total."}, {"q": "Checkpoint 5 \u00b7 Board question 3: the next-lowest store's attach rate, to one decimal?", "t": "num", "a": "ODYuOQ==", "tol": 0.2, "h": "Same pivot. Notice the size of the cliff between last place and second-to-last."}, {"q": "Checkpoint 6 \u00b7 Board question 4: how many sales at the lowest-attach-rate store had no member attached?", "t": "num", "a": "MTY4", "tol": 0, "h": "Filter or COUNTIFS: store = Bellingham, is_member = N."}, {"q": "Checkpoint 7 \u00b7 Board question 5: which OTHER store's total revenue is closest to the lowest-attach-rate store's?", "t": "txt", "a": "VGFjb21h", "h": "Revenue by store, sorted. The problem store sits comfortably mid-pack. The anomaly is invisible on every chart you built in Lab 4."}, {"q": "Checkpoint 8 \u00b7 Board question 6: how many of the lowest-attach-rate store's non-member sales would have to become member sales to reach an 87% attach rate?", "t": "num", "a": "MTIz", "tol": 1, "h": "It has 347 total lines. What member count makes member/total reach 87%? Subtract the current member count. Goal Seek on a small model, or algebra (both are legitimate analyst moves."}];
+const LAB="LAB5", QS=[{"q": "Checkpoint 1 · Pivot revenue by is_member. Total revenue from member-attached sales, in dollars?", "t": "num", "a": "NjE3NDk5LjY=", "tol": 1, "h": "SUMIF on the Analyst tab first (is_member = Y, sum revenue), then is_member in Rows and revenue in Values in the pivot to check it. They must agree."}, {"q": "Checkpoint 2 · What share of all sales lines are member-attached, as a percent to one decimal?", "t": "num", "a": "ODYuMA==", "tol": 0.2, "h": "Count of lines by is_member, then Y / total. Show Values As → % of Column Total does it in one move."}, {"q": "Checkpoint 3 · Board question 2: which store has the LOWEST member attach rate?", "t": "txt", "a": "QmVsbGluZ2hhbQ==", "h": "The memo says revenue looks fine, so stop looking at revenue. What other measure appears in the memo? Break it out by store."}, {"q": "Checkpoint 4 · Board question 2: that store's member attach rate, as a percent to one decimal?", "t": "num", "a": "NTEuNg==", "tol": 0.2, "h": "Pivot: store in Rows, is_member in Columns, count of sale_id in Values, shown as % of Row Total."}, {"q": "Checkpoint 5 · Board question 3: the next-lowest store's attach rate, to one decimal?", "t": "num", "a": "ODYuOQ==", "tol": 0.2, "h": "Same pivot. Notice the size of the cliff between last place and second-to-last."}, {"q": "Checkpoint 6 · Board question 4: how many sales at the lowest-attach-rate store had no member attached?", "t": "num", "a": "MTY4", "tol": 0, "h": "Filter or COUNTIFS: store = Bellingham, is_member = N."}, {"q": "Checkpoint 7 · Board question 5: which OTHER store's total revenue is closest to the lowest-attach-rate store's?", "t": "txt", "a": "VGFjb21h", "h": "Revenue by store, sorted. The problem store sits comfortably mid-pack. The anomaly is invisible on every chart you built in Lab 4."}, {"q": "Checkpoint 8 · Board question 6: how many of the lowest-attach-rate store's non-member sales would have to become member sales to reach an 87% attach rate?", "t": "num", "a": "MTIz", "tol": 1, "h": "It has 347 total lines. What member count makes member/total reach 87%? Subtract the current member count. Goal Seek on a small model, or algebra (both are legitimate analyst moves."}, {"q": "Checkpoint 9 · With =IF(rate<0.87,\"Below target\",\"On target\") beside your eight store attach rates, how many stores are Below target?", "t": "num", "a": "Mg==", "tol": 0, "h": "Bellingham is far below. Look for the store just under 87 percent that a glance would call fine. COUNTIF the status column for \"Below target\"."}];
 const SKEY='mis320_'+LAB;
 let solved=new Set();
 function load(){try{const raw=localStorage.getItem(SKEY);if(!raw)return null;const s=JSON.parse(raw);

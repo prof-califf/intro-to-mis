@@ -355,9 +355,9 @@ input::placeholder{color:#6b6b68;opacity:1}.cp.done{border-left:4px solid var(--
     <div class="dd">
       <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddd">Data<span class="caret">&#9660;</span></button>
       <div class="dd-menu" id="ddd">
-      <a href="cascadia-sales-2025.xlsx"><span class="lbl">Workbook</span>Cascadia sales, clean (.xlsx)</a>
-      <a href="cascadia-sales-2025-RAW.xlsx"><span class="lbl">Workbook</span>Cascadia sales, RAW export for Lab 7 (.xlsx)</a>
-      <a href="cascadia-sales-2025.csv"><span class="lbl">Data</span>Flat CSV for Tableau</a>
+      <a href="cascadia-sales-2025.xlsx" download><span class="lbl">Workbook</span>Cascadia sales, clean (.xlsx)</a>
+      <a href="cascadia-sales-2025-RAW.xlsx" download><span class="lbl">Workbook</span>Cascadia sales, RAW export for Lab 7 (.xlsx)</a>
+      <a href="cascadia-sales-2025.csv" download><span class="lbl">Data</span>Flat CSV for Tableau</a>
       <a href="cascadia.db"><span class="lbl">Database</span>SQLite database for the SQL lab</a>
       </div>
     </div>
@@ -370,7 +370,7 @@ input::placeholder{color:#6b6b68;opacity:1}.cp.done{border-left:4px solid var(--
   <button class="railtoggle" aria-expanded="false" aria-controls="chapnav">Lab contents</button>
   <nav id="chapnav">
     <a href="#top">Overview</a><a href="#parta">Part A · Follow along</a>
-    <a href="#partb">Part B · Now you</a><a href="#finish">Reflection &amp; certificate</a>
+    <a href="#partb">Part B · Now you</a><a href="#partc">Part C · IF</a><a href="#finish">Reflection &amp; certificate</a>
     <a href="#submit">What to submit</a>
     <a href="chapter4-dominos.html">↳ Chapter 4 · Business Processes</a>
   </nav>
@@ -393,7 +393,7 @@ match. <strong>Part A answers the first email together, keystroke by keystroke.<
 
 <div class="callout"><strong>Download</strong>
 <p style="font-family:var(--sans);font-size:.9rem">Same workbook as last week:
-<a href="cascadia-sales-2025.xlsx">cascadia-sales-2025.xlsx</a>. Download a fresh copy so your tabs
+<a href="cascadia-sales-2025.xlsx" download>cascadia-sales-2025.xlsx</a>. Download a fresh copy so your tabs
 match the ones named below. It opens on three tabs: <strong>Analyst</strong>, where your answers go;
 <strong>Sales2025</strong>, the data; and <strong>Read Me</strong>, which explains what every column
 holds. Columns you will use today are all on Sales2025: <code class="inline">C</code> store,
@@ -428,7 +428,7 @@ question opens up. There is no penalty for a wrong answer, so guess, check, and 
 you get stuck. That is what it is there for.</p>
 <p style="font-family:var(--sans);font-size:.95rem">Once you have cleared them all, write your reflection
 and download your certificate for Canvas. Your progress saves automatically in this browser, so you can close the tab and pick up where you left off. It does not follow you to a different computer or a private window, and clearing your browser data clears it. If you need to start this lab over, use the <button type="button" class="hintb" onclick="resetLab()">Reset this lab</button> button.</p>
-<div class="progress" id="prog">Checkpoint progress: 0 / 10</div>
+<div class="progress" id="prog">Checkpoint progress: 0 / 12</div>
 </div>
 
 <h2 id="parta"><span class="num">Part A</span>Follow along: answering her, together</h2>
@@ -450,7 +450,7 @@ numbers will tell you where you are.</p>
 tab is where your answers go, laid out the same way as last week: a numbered row for each checkpoint,
 your answer in column B, room for a note in column C. Checkpoint 1 goes in
 <code class="inline">B5</code>, Checkpoint 2 in <code class="inline">B6</code>, and so on down to
-Checkpoint 10 in <code class="inline">B14</code>.</p>
+Checkpoint 10 in <code class="inline">B14</code>. Part C adds two more rows, 11 and 12, which you will type in yourself.</p>
 <p>The <strong>Sales2025</strong> tab holds the data: every 2025 sale line, one per row. Click that tab
 now. Press <span class="kbd">Ctrl</span> + <span class="kbd">End</span> on Windows, or
 <span class="kbd">&#8984;</span> + <span class="kbd">Fn</span> + <span class="kbd">&rarr;</span> on a
@@ -649,6 +649,67 @@ SUMIF for its revenue, and a COUNTIFS for its member lines, filled down. Eight r
 you have just hand-built the table that dashboards are made from. Keep it; next week's lab turns
 exactly this block into charts.</p></div>
 
+<h2 id="partc"><span class="num">Part C</span>A formula that decides: IF</h2>
+
+<p>Everything so far has counted or added rows that match a label that already exists in the data.
+The last tool of the day makes a new label. <strong>IF</strong> is the Excel version of a decision:
+look at a value, test it, and write one thing if the test passes and another if it fails. It is the
+same if-then-else logic every programming language has, and once you can write one you can make a
+spreadsheet sort its own rows into categories nobody typed.</p>
+
+<div class="callout"><strong>Email 4 &middot; Tuesday, 9:05 AM</strong>
+<p style="font-family:var(--sans);font-size:.9rem"><strong>From:</strong> Warehouse Lead &middot;
+<strong>Subject:</strong> Two counts I cannot get from the export<br><br>
+"Two things for the pick-and-pack plan. We treat any line of three units as a bulk pick, so how many
+bulk lines did we have in 2025? And separately, how many lines were high-ticket, meaning $300 or more?
+The export does not have a column for either, which is why I keep asking people."</p></div>
+
+<div class="sh" id="step11"><span class="badge">Step 11</span><span class="ttl">Warehouse: how many bulk lines?</span><span class="cpx">Answer goes in <b>Checkpoint 11</b> &middot; cell B15</span></div>
+<p>The export has no bulk column, so you will build one. This is a walked step; the next one you do
+alone.</p>
+<ol>
+<li>On the <strong>Sales2025</strong> tab, click cell <code class="inline">P1</code> (the first empty
+column, to the right of <code class="inline">month</code>) and type the header
+<code class="inline">size</code>.</li>
+<li>In <code class="inline">P2</code>, type <code class="inline">=IF(H2&gt;=3,"Bulk","Single")</code>
+and press Enter. Column H is quantity.</li>
+<li>Click <code class="inline">P2</code> again, then double-click the small square in the cell's
+bottom-right corner (the fill handle). Excel copies the formula down every row that has data beside
+it. Scroll: every row now says Bulk or Single.</li>
+<li>On the <strong>Analyst</strong> tab, type <code class="inline">11</code> in <code class="inline">A15</code>,
+then in <code class="inline">B15</code> type <code class="inline">=COUNTIF(Sales2025!P:P,"Bulk")</code>.</li>
+</ol>
+<p><strong>What the formula is doing:</strong> IF takes three pieces, separated by commas. The test
+(<code class="inline">H2&gt;=3</code>: is the quantity at least three?). What to write if the test is
+true (<code class="inline">"Bulk"</code>). What to write if it is false (<code class="inline">"Single"</code>).
+Excel runs that test on every row you filled down, so column P is a label the data never had, and
+your COUNTIF from Step 2 works on it exactly as it worked on the store column. That is the pattern:
+IF makes the category, COUNTIF or SUMIF uses it.</p>
+
+<div class="cpslot" data-cp="11"></div>
+
+<div class="sh" id="step12"><span class="badge">Step 12</span><span class="ttl">Warehouse: how many high-ticket lines?</span><span class="cpx">Answer goes in <b>Checkpoint 12</b> &middot; cell B16</span></div>
+<p>Same idea, one level deeper. The lead wants lines of $300 or more, but a three-way split is more
+useful to the co-op, so build that: <em>High</em> for revenue of $300 or more, <em>Mid</em> for $100
+up to $300, <em>Low</em> for under $100. That takes an IF inside an IF, which is called nesting: the
+"if false" slot of the first IF holds a second IF that runs the next test.</p>
+<p>In <code class="inline">Q1</code> type the header <code class="inline">tier</code>. In
+<code class="inline">Q2</code> write the nested formula against the revenue column (K), fill it down,
+then count the High rows into <code class="inline">B16</code> (type <code class="inline">12</code> in
+<code class="inline">A16</code> first). Read the formula aloud before you press Enter: if revenue is
+at least 300, write High; otherwise, if it is at least 100, write Mid; otherwise write Low.</p>
+<p>Newer versions of Excel also have <code class="inline">IFS</code>, which takes test-and-result
+pairs in a row without the nesting. Either is fine here. Learn the nested form anyway; it is the one
+you will meet in other people's spreadsheets.</p>
+
+<div class="cpslot" data-cp="12"></div>
+
+<div class="callout"><strong>Where this shows up again</strong>
+<p>Lab 5 asks whether each store's members are behaving like members. The store labels exist in the
+data; the "is this normal or not" label does not, and IF is how you make it. Chapter 6 gives the
+principle: data is not collected, it is designed, and a column you compute with IF is a design
+decision you just made.</p></div>
+
 <h2 id="finish"><span class="num">Finish</span>Reflection &amp; certificate</h2>
 
 <div class="certbox" id="reflectbox">
@@ -686,7 +747,7 @@ work is visible to whoever grades it. Go to the <strong>Formulas</strong> tab on
 sharing a key with ~.</p>
 <p>Every cell switches from showing its answer to showing the formula behind it, and the columns widen
 to fit. That is expected. Leave it on, save, and upload. Do this <strong>last</strong>: while Show
-Formulas is on you cannot read your answers off the sheet, so finish all ten checkpoints first.</p>
+Formulas is on you cannot read your answers off the sheet, so finish all twelve checkpoints first.</p>
 <p>A cell showing a number instead of a formula is a typed-in answer and earns no credit. A correct
 formula that returns a wrong answer earns partial credit. A correct number with nothing behind it
 earns none.</p></div>
@@ -702,7 +763,7 @@ b.setAttribute('aria-expanded',o?'true':'false');});})();
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-const LAB="LAB3", QS=[{"q": "Step 1 \u00b7 How many rows of sales data are on the Sales2025 tab (not counting the header row)?", "t": "num", "a": "Mjg5OQ==", "tol": 0, "h": "Click the Sales2025 tab, press Ctrl+End (Windows) or Cmd+Fn+Right (Mac). The Name Box top left tells you the last row. Row 1 is the header, so subtract one."}, {"q": "Step 2 \u00b7 The regional manager's first number: how many sales lines came from the Bellingham store?", "t": "num", "a": "MzQ3", "tol": 0, "h": "Step 2's formula, built by clicking: =COUNTIF(Sales2025!C:C,\"Bellingham\"). Where to look, then what to match."}, {"q": "Step 3 \u00b7 The deliberate typo: what did =COUNTIF(Sales2025!C:C,\"Portland Parl\") return?", "t": "num", "a": "MA==", "tol": 0, "h": "No store is spelled that way, so nothing matched. COUNTIF does not warn you; it just reports what it found."}, {"q": "Step 4 \u00b7 Her second number: total revenue from the Portland Pearl store, in dollars?", "t": "num", "a": "MTI1MDQ2LjA1", "tol": 1, "h": "Step 4's formula: =SUMIF(Sales2025!C:C,\"Portland Pearl\",Sales2025!K:K). Where to look, what to match, what to add up."}, {"q": "Step 5 \u00b7 Winter-buy email, question 1: how many sales lines are in the Snow category?", "t": "num", "a": "MzU3", "tol": 0, "h": "A COUNTIF on the category column (F) matching \"Snow\", the same shape as Step 2."}, {"q": "Step 6 \u00b7 Winter-buy email, question 2: the average revenue per Snow-category line, to the cent?", "t": "num", "a": "NDgyLjc=", "tol": 0.05, "h": "An AVERAGEIF: look in the category column (F) for \"Snow\", average the revenue column (K). Snow gear is expensive, so expect a large number."}, {"q": "Step 7 \u00b7 Winter-buy email, question 3: revenue from Snow-category sales at the Seattle Flagship, in dollars?", "t": "num", "a": "Mzk1MzEuOA==", "tol": 1, "h": "A SUMIFS. The revenue column (K) goes first, then two condition pairs: category (F) matching \"Snow\", store (C) matching \"Seattle Flagship\"."}, {"q": "Step 8 \u00b7 Membership email, question 1: how many sales lines at the Tacoma store were member sales (is_member = Y)?", "t": "num", "a": "Mjg2", "tol": 0, "h": "A COUNTIFS with two condition pairs: the store column (C) matching \"Tacoma\", and the is_member column (N) matching \"Y\"."}, {"q": "Step 9 \u00b7 Total revenue across every store in 2025, in dollars?", "t": "num", "a": "NzEyOTcxLjU=", "tol": 1, "h": "A plain =SUM of the whole revenue column: =SUM(Sales2025!K:K). No condition, no matching."}, {"q": "Step 10 \u00b7 Portland Pearl's share of total revenue, as your formatted cell shows it (one decimal place)?", "t": "num", "a": "MTcuNQ==", "tol": 0.1, "m": 100, "h": "=B8/B13, then format the cell as a percentage with one decimal. Do not multiply by 100. Either 17.5% or 0.175 will be accepted here."}];
+const LAB="LAB3", QS=[{"q": "Step 1 · How many rows of sales data are on the Sales2025 tab (not counting the header row)?", "t": "num", "a": "Mjg5OQ==", "tol": 0, "h": "Click the Sales2025 tab, press Ctrl+End (Windows) or Cmd+Fn+Right (Mac). The Name Box top left tells you the last row. Row 1 is the header, so subtract one."}, {"q": "Step 2 · The regional manager's first number: how many sales lines came from the Bellingham store?", "t": "num", "a": "MzQ3", "tol": 0, "h": "Step 2's formula, built by clicking: =COUNTIF(Sales2025!C:C,\"Bellingham\"). Where to look, then what to match."}, {"q": "Step 3 · The deliberate typo: what did =COUNTIF(Sales2025!C:C,\"Portland Parl\") return?", "t": "num", "a": "MA==", "tol": 0, "h": "No store is spelled that way, so nothing matched. COUNTIF does not warn you; it just reports what it found."}, {"q": "Step 4 · Her second number: total revenue from the Portland Pearl store, in dollars?", "t": "num", "a": "MTI1MDQ2LjA1", "tol": 1, "h": "Step 4's formula: =SUMIF(Sales2025!C:C,\"Portland Pearl\",Sales2025!K:K). Where to look, what to match, what to add up."}, {"q": "Step 5 · Winter-buy email, question 1: how many sales lines are in the Snow category?", "t": "num", "a": "MzU3", "tol": 0, "h": "A COUNTIF on the category column (F) matching \"Snow\", the same shape as Step 2."}, {"q": "Step 6 · Winter-buy email, question 2: the average revenue per Snow-category line, to the cent?", "t": "num", "a": "NDgyLjc=", "tol": 0.05, "h": "An AVERAGEIF: look in the category column (F) for \"Snow\", average the revenue column (K). Snow gear is expensive, so expect a large number."}, {"q": "Step 7 · Winter-buy email, question 3: revenue from Snow-category sales at the Seattle Flagship, in dollars?", "t": "num", "a": "Mzk1MzEuOA==", "tol": 1, "h": "A SUMIFS. The revenue column (K) goes first, then two condition pairs: category (F) matching \"Snow\", store (C) matching \"Seattle Flagship\"."}, {"q": "Step 8 · Membership email, question 1: how many sales lines at the Tacoma store were member sales (is_member = Y)?", "t": "num", "a": "Mjg2", "tol": 0, "h": "A COUNTIFS with two condition pairs: the store column (C) matching \"Tacoma\", and the is_member column (N) matching \"Y\"."}, {"q": "Step 9 · Total revenue across every store in 2025, in dollars?", "t": "num", "a": "NzEyOTcxLjU=", "tol": 1, "h": "A plain =SUM of the whole revenue column: =SUM(Sales2025!K:K). No condition, no matching."}, {"q": "Step 10 · Portland Pearl's share of total revenue, as your formatted cell shows it (one decimal place)?", "t": "num", "a": "MTcuNQ==", "tol": 0.1, "m": 100, "h": "=B8/B13, then format the cell as a percentage with one decimal. Do not multiply by 100. Either 17.5% or 0.175 will be accepted here."}, {"q": "Step 11 · Warehouse email, question 1: how many sales lines were bulk (quantity of 3)?", "t": "num", "a": "MzUz", "tol": 0, "h": "Column P: =IF(H2>=3,\"Bulk\",\"Single\") filled down, then =COUNTIF(Sales2025!P:P,\"Bulk\") on the Analyst tab."}, {"q": "Step 12 · Warehouse email, question 2: how many sales lines were High tier (revenue of $300 or more)?", "t": "num", "a": "NzYw", "tol": 0, "h": "Column Q: =IF(K2>=300,\"High\",IF(K2>=100,\"Mid\",\"Low\")) filled down, then =COUNTIF(Sales2025!Q:Q,\"High\"). The inner IF sits in the outer IF's \"if false\" slot."}];
 const SKEY='mis320_'+LAB;
 let solved=new Set();
 function load(){try{const raw=localStorage.getItem(SKEY);if(!raw)return null;const s=JSON.parse(raw);
