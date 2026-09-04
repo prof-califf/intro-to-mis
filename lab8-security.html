@@ -468,10 +468,16 @@ altered (integrity), and what stops if it is unavailable (availability).</p>
 </tbody>
 </table></div>
 
-<p>Checkpoints 1 and 2 make the confidentiality row concrete: how many people, and how many states'
-breach laws are standing behind them. Run the queries, then sit with the second number for a moment,
-because it is the one that surprises new security leads. A breach is not one legal event; it is one per
-jurisdiction.</p>
+<p>Two counts make the confidentiality row concrete: how many people, and how many states' breach
+laws stand behind them. Both queries are printed for you, as in Lab 7. Type each into the sandbox
+above, press Run, and enter what comes back.</p>
+<p><strong>How many people's information does the co-op hold?</strong></p>
+<pre class="sql" style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92rem;background:var(--off-white);border:1px solid var(--border);padding:12px 16px;margin:10px 0;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-all">SELECT COUNT(*) FROM members;</pre>
+<p><strong>How many different states are those people in?</strong> COUNT(DISTINCT) collapses a column to
+its unique values.</p>
+<pre class="sql" style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92rem;background:var(--off-white);border:1px solid var(--border);padding:12px 16px;margin:10px 0;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-all">SELECT COUNT(DISTINCT state) FROM members;</pre>
+<p>Look at the second number for a moment, because it is the one that surprises new security leads. A
+breach is not one legal event; it is one per state.</p>
 
 <div id="verify"></div>
 <div class="cpslot" data-cp="1"></div>
@@ -494,7 +500,10 @@ be sent to our new account, details attached. Please update before Friday's paym
 disruption to your spring orders."</p></div>
 
 <p>Plausible. Nordvik Outdoor is a real supplier; you joined to it in Lab 7. The urgency is realistic
-and the ask is routine. Now verify the one factual claim the email makes about itself. Checkpoint 3.</p>
+and the ask is routine. Now verify the one factual claim the email makes about itself, that the
+supplier is US-based, against the system of record:</p>
+<pre class="sql" style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92rem;background:var(--off-white);border:1px solid var(--border);padding:12px 16px;margin:10px 0;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-all">SELECT country FROM suppliers WHERE supplier_name='Nordvik Outdoor';</pre>
+<p>One word comes back. Enter it in Checkpoint 3.</p>
 
 <div class="callout callout-caution"><strong>Email two &middot; to member services</strong>
 <p style="font-family:var(--sans);font-size:.92rem"><em>From: privacy-request@mail-cascadia-coop.net<br>
@@ -504,7 +513,9 @@ billing errors on their account. Under our review procedure, please reply with t
 including name, address, and complete purchase history, so we can begin the investigation today."</p></div>
 
 <p>Notice what this one is really asking for: not money, but a record. Verify that the member exists at
-all. Checkpoint 4, and it is one line.</p>
+all:</p>
+<pre class="sql" style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92rem;background:var(--off-white);border:1px solid var(--border);padding:12px 16px;margin:10px 0;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-all">SELECT COUNT(*) FROM members WHERE member_id=1287;</pre>
+<p>The count is Checkpoint 4.</p>
 
 <div class="cpslot" data-cp="3"></div>
 <div class="cpslot" data-cp="4"></div>
@@ -528,8 +539,15 @@ otherwise, and security failures are mostly decisions that went unmade. Your pro
 register to its own store. Checkpoints 5 and 6 measure exactly how much that one decision shrinks the
 blast radius of one stolen password.</p>
 
-<p>Keep the resulting percentage for your memo. It is the rare security argument that fits in one
-sentence with a number in it, which is the kind boards actually act on.</p>
+<p>First, how many rows a Bellingham-only register could reach. This is a JOIN and a WHERE, both from
+Lab 7:</p>
+<pre class="sql" style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92rem;background:var(--off-white);border:1px solid var(--border);padding:12px 16px;margin:10px 0;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-all">SELECT COUNT(*) FROM sales s JOIN stores st ON st.store_id=s.store_id WHERE st.store_name='Bellingham';</pre>
+<p>That count is Checkpoint 5. Then turn it into a share of everything: divide it by the total number of
+sales rows (2,899, the number you have known since Lab 2) and multiply by 100. One decimal place. That
+percentage is Checkpoint 6, and it is the blast radius of one stolen register password under least
+privilege. The same password against an everything-access account exposes 100 percent.</p>
+<p>Keep the percentage for your memo. It is the rare security argument that fits in one sentence with a
+number in it, which is the kind boards act on.</p>
 
 <div id="controls"></div>
 <div class="cpslot" data-cp="5"></div>
@@ -545,11 +563,15 @@ number: a total you can recompute from source at will. You have one already. Tot
 you since Lab 2, and Checkpoint 7 asks for it one more time, now wearing its security hat: if this
 number ever disagrees with itself, someone has been in your tables.</p>
 
+<pre class="sql" style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92rem;background:var(--off-white);border:1px solid var(--border);padding:12px 16px;margin:10px 0;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-all">SELECT ROUND(SUM(quantity*unit_price),2) FROM sales;</pre>
 <p><strong>Availability.</strong> Ransomware's real product is the dark day: registers down, inventory
 unreadable, stores effectively closed. Checkpoint 8 computes what one such day costs the co-op in
 revenue alone, before a single record leaks and before a lawyer is hired. Multiply it across the ten
 days Change Healthcare was down and you understand why the chapter insisted the business disruption was
 the disaster and the data breach was the aftermath.</p>
+<pre class="sql" style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92rem;background:var(--off-white);border:1px solid var(--border);padding:12px 16px;margin:10px 0;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-all">SELECT ROUND(SUM(quantity*unit_price)/COUNT(DISTINCT sale_date),2) FROM sales;</pre>
+<p>Total revenue divided by the number of days the stores sold something: one dark day, in revenue
+alone. Round to the nearest dollar for Checkpoint 8.</p>
 
 <div id="map"></div>
 <div class="cpslot" data-cp="7"></div>
@@ -557,35 +579,35 @@ the disaster and the data breach was the aftermath.</p>
 
 <h2><span class="num">Part 5</span>The access map: who should see what</h2>
 
-<p>Now the part with no checkpoint, because it is the part that is actually your job. Least privilege
+<p>The last part has no checkpoint, because it is the part that is actually your job. Least privilege
 says every role gets the minimum it needs. Someone has to decide what that minimum is, role by role and
-table by table, and that someone is never the database; it is a manager who understands the work. Copy
-this grid into your submission document and fill every cell with <strong>R</strong> (read),
-<strong>W</strong> (read and write), or a dash (no access).</p>
+table by table, and that someone is never the database; it is a manager who understands the work.</p>
+
+<p>Copy this grid into your submission document and fill every cell with <strong>R</strong> (read),
+<strong>W</strong> (read and write), or a dash (no access). Four roles, four tables, sixteen decisions.</p>
 
 <div class="tablewrap" tabindex="0" role="region" aria-label="Scrollable table"><table class="lab">
-<thead><tr><th>Role</th><th>sales</th><th>members</th><th>products</th><th>suppliers</th><th>inventory</th><th>used_gear</th></tr></thead>
+<thead><tr><th>Role</th><th>sales</th><th>members</th><th>suppliers</th><th>inventory</th></tr></thead>
 <tbody>
-<tr><td>Register clerk</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td>Store manager (one store)</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td>Buyer (procurement)</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td>Member services</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td>Marketing intern</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td>The board</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>Register clerk</td><td></td><td></td><td></td><td></td></tr>
+<tr><td>Store manager (one store)</td><td></td><td></td><td></td><td></td></tr>
+<tr><td>Marketing intern</td><td></td><td></td><td></td><td></td></tr>
+<tr><td>The board</td><td></td><td></td><td></td><td></td></tr>
 </tbody>
 </table></div>
 
-<p>There is no single right map, but there are defensible and indefensible cells, and your memo must
-defend three of your choices in a sentence each. Two prompts to pressure-test yourself: does the
-marketing intern really need member <em>names</em>, or would an anonymized extract serve the campaign?
-And does the board need write access to anything at all? (Chapter 11 has opinions about that one.)</p>
+<p>There is no single right map, but there are defensible and indefensible cells. Pick <strong>two</strong>
+of your sixteen and defend each in one sentence. Two prompts to pressure-test yourself: does the
+marketing intern really need member names, or would an anonymized count serve the campaign? And does
+the board need write access to anything at all? (Chapter 11 has opinions about that one.)</p>
 
-<div class="callout"><strong>If you finish early: the $10,000 question</strong>
-<p>The board approves a $10,000 security budget for the year, and only one of these fits inside it: MFA
-on every account, an automated offline backup of the database, or a yearly phishing training with test
-emails for all staff. Pick one, and write the three sentences you would say to the board: what it
-prevents, what you are consciously leaving unprotected, and why that trade is right for a company this
-size. There is no checkpoint; your pick and the three sentences go in your submission note.</p></div>
+<div class="callout"><strong>The memo: three sentences</strong>
+<p>Your security memo to the board is three sentences, in this order. One: the blast radius, using the
+percentage from Checkpoint 6 ("scoping each register to its own store limits one stolen password to
+about 12 percent of our sales records instead of all of them"). Two: the dark day, using Checkpoint 8
+("a day with the registers down costs the co-op roughly $X in revenue before anything is stolen").
+Three: the one control you would put in place first, and why. That is the whole memo. Boards read three
+sentences with numbers in them; they do not read paragraphs.</p></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
 <script>
@@ -638,9 +660,8 @@ function runSQL(){
 <h2 id="submit"><span class="num">Canvas</span>What to submit</h2>
 <p style="font-family:var(--sans);font-size:.92rem">Go to the <strong>Lab 8</strong> assignment in Canvas and upload two files.</p>
 <p style="font-family:var(--sans);font-size:.92rem"><strong>File 1: your audit document.</strong> One Word doc or PDF named
-<code class="inline">LAB8_Last_First</code>, containing your completed access map with three defended
-cells, your one-paragraph security memo to the board opening with the blast-radius percentage and the
-dark-day number, and your $10,000 pick if you got to it.</p>
+<code class="inline">LAB8_Last_First</code>, containing your completed sixteen-cell access map, your
+two defended cells (one sentence each), and your three-sentence memo to the board.</p>
 <p style="font-family:var(--sans);font-size:.92rem"><strong>File 2: your completion certificate PDF.</strong> Clear all the checkpoints above, write your reflection, and click Download certificate. Your reflection prints as page 2, so you do not submit it separately.</p>
 </main></div>
 <script>
