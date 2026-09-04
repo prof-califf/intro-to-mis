@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lab 2 · Excel Basics: Meeting the Client | MIS 320</title>
+<title>Lab 10 &middot; Information Architecture: Making Sense of a Mess | MIS 320</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -89,6 +89,17 @@ li{margin-bottom:.45rem}
 .progress{border:none}
 .lockmsg{font-family:var(--sans);font-size:.82rem;color:var(--text-light);margin:.4rem 0 0}
 .cp .q,.cp .hint,.cp .msg{overflow-wrap:anywhere}
+
+/* ---------- narrow-screen overflow guards ---------- */
+.tablewrap{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;margin:1.2rem 0}
+.tablewrap>table{margin:0}
+table.lab{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:15.5px}
+table.lab th{background:var(--black);color:#fff;font-family:var(--display);font-size:12px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;padding:.55rem .8rem;text-align:left}
+table.lab td{border:1px solid var(--border);padding:.6rem .8rem;vertical-align:top;line-height:1.5}
+table.lab tr:nth-child(even) td{background:var(--off-white)}
+main a{overflow-wrap:anywhere}
+code.inline{overflow-wrap:anywhere}
 
 /* ---------- pull quote ---------- */
 .pull{margin:2.2rem 0;padding:0 0 0 1.4rem;border-left:3px solid var(--magenta)}
@@ -333,7 +344,7 @@ input::placeholder{color:#6b6b68;opacity:1}.cp.done{border-left:4px solid var(--
       <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddl">Labs<span class="caret">&#9660;</span></button>
       <div class="dd-menu" id="ddl">
       <a href="lab1-genai.html"><span class="lbl">Lab 1 &middot; Week 1</span>GenAI for Thinking</a>
-      <a class="current" href="lab2-excel-basics.html"><span class="lbl">Lab 2 &middot; Week 2</span>Excel Basics: Meeting the Client</a>
+      <a href="lab2-excel-basics.html"><span class="lbl">Lab 2 &middot; Week 2</span>Excel Basics: Meeting the Client</a>
       <a href="lab3-excel-dataprep.html"><span class="lbl">Lab 3 &middot; Week 3</span>Excel Functions: One Question, One Formula</a>
       <a href="lab4-excel-dataviz.html"><span class="lbl">Lab 4 &middot; Week 4</span>Data Visualization: Charts That Tell the Truth</a>
       <a href="lab5-excel-analysis.html"><span class="lbl">Lab 5 &middot; Week 5</span>Data Analysis &amp; Mini Project</a>
@@ -341,7 +352,7 @@ input::placeholder{color:#6b6b68;opacity:1}.cp.done{border-left:4px solid var(--
       <a href="lab7-sql.html"><span class="lbl">Lab 7 &middot; Week 7</span>SQL Fundamentals</a>
       <a href="lab8-security.html"><span class="lbl">Lab 8 &middot; Week 8</span>Security &amp; Data Governance: The Audit</a>
       <a href="lab9-ux.html"><span class="lbl">Lab 9 &middot; Week 9</span>UX Design: The Heuristic Evaluation</a>
-      <a href="lab10-ia.html"><span class="lbl">Lab 10 &middot; Week 10</span>Information Architecture: Making Sense of a Mess</a>
+      <a class="current" href="lab10-ia.html"><span class="lbl">Lab 10 &middot; Week 10</span>Information Architecture: Making Sense of a Mess</a>
       </div>
     </div>
     <div class="dd">
@@ -361,357 +372,95 @@ input::placeholder{color:#6b6b68;opacity:1}.cp.done{border-left:4px solid var(--
   <p class="book">MIS 320</p><p class="course">Principles of Management Information Systems</p>
   <button class="railtoggle" aria-expanded="false" aria-controls="chapnav">Lab contents</button>
   <nav id="chapnav">
-    <a href="#top">Overview</a><a href="#parta">Part A · Follow along</a>
-    <a href="#partb">Part B · Now you</a><a href="#finish">Reflection &amp; certificate</a>
+    <a href="#top">Overview</a><a href="#read">Part 1 · Read</a><a href="#watch">Part 2 · Watch</a><a href="#example">Part 3 · Find an example</a><a href="#model">Part 4 · Model</a>
     <a href="#submit">What to submit</a>
-    <a href="chapter2-starbucks.html">↳ Chapter 2 · Value of Information</a>
+    <a href="chapter13-cloud.html">↳ Chapter 13 · The Cloud</a>
   </nav>
   <a class="back" href="index.html">← All chapters &amp; labs</a>
 </aside>
 <main id="top">
 <header class="chaphead">
-  <p class="eyebrow">Lab 2 · Week 2</p>
-  <h1><b>Excel Basics</b>: Meeting the Client</h1>
-  <div class="meta-row"><span>Lab session · 80 min</span><span class="alt"><a href="chapter2-starbucks.html" style="color:inherit;text-decoration:none">Pairs with Chapter 2 · The Value of Information &#8594;</a></span></div>
+  <p class="eyebrow">Lab 10 · Week 10</p>
+  <h1><b>Information Architecture</b>: Making Sense of a Mess</h1>
+  <div class="meta-row"><span>Lab session · 80 min</span><span class="alt"><a href="chapter13-cloud.html" style="color:inherit;text-decoration:none">Pairs with Chapter 13 · The Cloud &#8594;</a></span></div>
 </header>
 
-<p class="lede">Meet your client. Cascadia Outfitters is a member-owned gear co-op with eight stores
-from Boise to Bellingham, and for the next month you are their analyst. Here is the thing to
-understand about that job on day one: analysts do not "do formulas." They answer questions that
-arrive from real people, usually by email, usually needing numbers. Two such emails arrive in this
-lab. <strong>Part A solves the first one together, every click and keystroke shown.</strong>
-<strong>Part B hands you the second email to answer alone, with the same moves.</strong> If you have
-never used Excel, you cannot get lost; if you have, the emails are still worth answering well.</p>
+<p class="lede">Is a hotdog a sandwich? Come to lab this week and find out. The question sounds like a joke, and it is
+also the entire subject of this lab: who decides what category a thing belongs in, by what rule, and for whom. That
+decision is called information architecture, and every menu, folder, aisle, and website you have ever used is
+somebody's answer to it.</p>
 
-<div class="toc"><strong>Contents</strong> <a href="#parta">Part A · Follow along</a> &nbsp;·&nbsp; <a href="#partb">Part B · Now you</a> &nbsp;·&nbsp; <a href="#finish">Reflection &amp; certificate</a> &nbsp;·&nbsp; <a href="#submit">What to submit</a></div>
+<div class="toc"><strong>Contents</strong> <a href="#read">Part 1 · Read</a> &nbsp;·&nbsp; <a href="#watch">Part 2 · Watch</a> &nbsp;·&nbsp; <a href="#example">Part 3 · Find an example</a> &nbsp;·&nbsp; <a href="#model">Part 4 · Model</a> &nbsp;·&nbsp; <a href="#submit">What to submit</a></div>
 
 
-<div class="callout"><strong>Download</strong>
-<p style="font-family:var(--sans);font-size:.9rem"><a href="cascadia-sales-2025.xlsx" download>cascadia-sales-2025.xlsx</a>,
-one sheet, one year of sales. Columns you will use today: <code class="inline">C</code> store,
-<code class="inline">H</code> quantity, <code class="inline">K</code> revenue.</p></div>
+<p>Attending lab in person gives you the mini lecture and discussion that the assignment assumes. It is possible to
+complete the work without it, but you will be missing a lot of the context, and this week's lab quiz draws on both
+the lecture and the reading below.</p>
 
-<div class="ailight r">
+<div class="ailight y">
   <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
-  <div class="lighttext"><strong>Red &middot; No AI in Labs 2 through 5</strong>
-  <p>AI use is not allowed in these four labs. That means no formula help, no error explanations, and
-  no AI checking your work. An AI tool can produce accurate responses to this lab in seconds, which is
-  exactly why it is not allowed: the AI's work never becomes your own.</p>
-  <p>These four labs build your Excel skills, which are critical in business settings. So, even though
-  it is tedious, this means typing every formula yourself. The goal is to be able to write a formula
-  like =SUM without thinking. If you get stuck, that is what the walkthrough steps, the hints, and your
-  lab professor are for.</p>
-  <p>AI comes back in Lab 6, where you will use it as a coach under the three lights from Lab 1.</p></div>
+  <div class="lighttext"><strong>Yellow &middot; AI can explain the reading; it cannot do the sorting</strong>
+  <p>Green: ask an AI to explain a term from Covert's book, or to describe a diagram type. Red: asking it to sort
+  the card list, to draw your model, or to pick your real-world example. Card sorting is the exercise; an AI's
+  categories tell us how it thinks, not how you do. Hand-sketched models are preferred for the same reason.</p></div>
 </div>
 
-<div class="callout"><strong>Email 1 &middot; Monday, 9:04 AM</strong>
-<p style="font-family:var(--sans);font-size:.9rem"><strong>From:</strong> General Manager &middot;
-<strong>Subject:</strong> Numbers for the member newsletter<br><br>
-"Welcome aboard. The January newsletter goes to print Thursday and I want to open it with our year in
-three numbers: how many sales we rang up in 2025, what they added up to, and what a typical sale
-looked like. Can you pull those from the sales export? Exact figures please, the members read
-closely."</p></div>
+<h2 id="read"><span class="num">Part 1</span>Read: excerpts from <em>How to Make Sense of Any Mess</em></h2>
+<p>Abby Covert's book is free online, and the reading is short. Read these three sections; the quiz draws on them.</p>
+<ul>
+<li>Chapter 2, part: <a href="https://www.howtomakesenseofanymess.com/chapter2/32/intent-is-language/" target="_blank" rel="noopener">State your intent</a> (pages 32 to 36)</li>
+<li>Chapter 3, part: <a href="https://www.howtomakesenseofanymess.com/chapter3/65/expand-your-toolbox/" target="_blank" rel="noopener">Expand your diagramming toolbox</a> (pages 65 to 75)</li>
+<li>Chapter 6, all: <a href="https://www.howtomakesenseofanymess.com/chapter6/123/play-with-structure/" target="_blank" rel="noopener">Play with structure</a> (pages 123 to 145)</li>
+</ul>
 
-<div class="callout callout-bridge"><strong>How the checkpoints work</strong>
-<p style="font-family:var(--sans);font-size:.95rem">Here is how this works. Each checkpoint sits directly under the step it belongs to. You do the actual work in your own file, then paste the answer here. Get it right and the
-next question opens up. There is no penalty for a wrong answer, so guess, check, and lean on the hint if
-you get stuck. That is what it is there for.</p>
-<p style="font-family:var(--sans);font-size:.95rem">Once you have cleared them all, write your reflection
-and download your certificate for Canvas. Your progress saves automatically in this browser, so you can close the tab and pick up where you left off. It does not follow you to a different computer or a private window, and clearing your browser data clears it. If you need to start this lab over, use the <button type="button" class="hintb" onclick="resetLab()">Reset this lab</button> button.</p>
-<div class="progress" id="prog">Checkpoint progress: 0 / 7</div>
-</div>
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Information architecture</span>
+<p>The structure that makes a body of information navigable: what the categories are, what goes in each, what the labels say, and how a person moves between them. It is not the visual design and not the content. It is the decision about how the content is arranged, and Chapter 6 already told you why that decision matters: the shape you store facts in decides which questions are cheap to answer.</p></div>
 
-<h2 id="parta"><span class="num">Part A</span>Follow along: answering the GM, together</h2>
+<h2 id="watch"><span class="num">Part 2</span>Watch: modeling and card sorting</h2>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=vofXjT8YPC0" target="_blank" rel="noopener">Modeling for Clarity</a>, The Understanding Group (16 minutes)</li>
+<li><a href="https://www.youtube.com/watch?v=TbEfjaE94sU" target="_blank" rel="noopener">Card Sorting</a>, Nielsen Norman Group (2 minutes)</li>
+</ul>
 
-<p>Her three numbers are a count, a total, and an average. Do these steps in order, exactly as
-written; Checkpoints 1 through 3 are her three answers.</p>
+<h2 id="example"><span class="num">Part 3</span>Find information architecture in the world</h2>
+<p>Choose one real information architecture: a grocery store's aisles, a university website, a streaming app's menu, a hospital's signage, a syllabus. Then answer, in writing:</p>
+<ul>
+<li><strong>Who matters?</strong> Use <a href="https://www.howtomakesenseofanymess.com/chapter2/38/who-matters/" target="_blank" rel="noopener">Covert's seven questions</a>.</li>
+<li><strong>Is there a clear hierarchy?</strong> If so, how is it structured? Are there established taxonomies or relationships between terms?</li>
+<li><strong>Does the structure make sense to the people who matter?</strong> Or could it be improved? Remember that you are not your user.</li>
+</ul>
+<p>Include a photo, screenshot, or sketch if it helps. This part is worth 10 points.</p>
 
-<div class="sh" id="step1"><span class="badge">Step 1</span><span class="ttl">Save it properly</span></div>
-<p>Open the download, then File &#8594; Save As, and name
-it <code class="inline">LAB2_Last_First.xlsx</code>. You will submit a file like this every week, so
-start the naming habit now. The workbook opens on a tab called <strong>Analyst</strong>. That is where
-every answer goes: checkpoint 1 in cell <code class="inline">B5</code>, checkpoint 2 in
-<code class="inline">B6</code>, and so on down the numbered rows. The sales data is on the
-<strong>Sales2025</strong> tab next to it.</p>
+<h2 id="model"><span class="num">Part 4</span>Practice diagramming: model the student experience</h2>
+<p>Create an information model that organizes the terms of your own student experience into a structure that makes sense. The rules:</p>
+<ul>
+<li>Use one or more of the diagram types from Covert's Chapter 3.</li>
+<li>Use at least twenty terms from <a href="https://wwu.instructure.com/courses/1853411/files/folder/Lab%20Assignment%20Materials/Lab%20Assignment%20%237%20-%20Information%20Architecture" target="_blank" rel="noopener">the card sort list</a> (in Canvas).</li>
+<li>Hand-sketched is preferred; digital is fine.</li>
+<li>Keep it low-fidelity. The diagram's job is to show the structure of your idea, not to look finished.</li>
+</ul>
+<p>It does not have to be perfect. It is a rough model, and the interesting part is the choices it forces: which terms go together, what the groups are called, and what did not fit anywhere. This part is worth 10 points.</p>
 
-<div class="sh" id="step2"><span class="badge">Step 2</span><span class="ttl">Make it readable</span></div>
-<p>Click the triangle above row 1 and left of column A to
-select everything, then double-click any boundary between two column letters; every column snaps to
-fit. Then View tab &#8594; Freeze Panes &#8594; Freeze Top Row, so the headers stay put while you
-scroll.</p>
+<div class="callout"><strong>The hotdog question, answered the IA way</strong>
+<p>The question is not whether a hotdog <em>is</em> a sandwich. It is who needs the answer and what they will do with it. A menu designer, a tax authority, and a nutrition label all sort it differently, and each is right for their user. That is the whole lesson: categories are made, not found, and the maker's intent is the first thing to state.</p></div>
 
-<div class="sh" id="step3"><span class="badge">Step 3</span><span class="ttl">Her first number: how many sales</span><span class="cpx">Answer goes in <b>Checkpoint 1</b> &middot; cell B5</span></div>
-<p>Press Ctrl+End
-(<span class="mac">Mac</span> Cmd+Fn+&#8594; then &#8595;) to jump to the data's last corner and read
-the row number. The header row takes one of those rows, so the number of sales is that figure minus
-one. Type that number on the Analyst tab in <code class="inline">B5</code>.</p>
-
-<div class="cpslot" data-cp="1"></div>
-
-<div class="sh" id="step4"><span class="badge">Step 4</span><span class="ttl">Her second number: total revenue</span><span class="cpx">Answer goes in <b>Checkpoint 2</b> &middot; cell B6</span></div>
-<p>Go to the Analyst tab and click
-cell <code class="inline">B6</code>. Type <code class="inline">=SUM(Sales2025!K:K)</code> exactly, and
-press Enter. Read the formula left to right: add up everything in column K of the Sales2025 tab. The
-<code class="inline">Sales2025!</code> part is how a formula on one tab reaches data on another; you
-will use it all quarter.</p>
-
-<div class="cpslot" data-cp="2"></div>
-
-<div class="sh" id="step5"><span class="badge">Step 5</span><span class="ttl">Her third number: the typical sale</span><span class="cpx">Answer goes in <b>Checkpoint 3</b> &middot; cell B7</span></div>
-<p>In <code class="inline">B7</code>
-on the Analyst tab, type <code class="inline">=AVERAGE(Sales2025!K:K)</code>. Same three parts as Step 4;
-the only change is what Excel does with the column, averaging it instead of adding it.</p>
-
-<div class="cpslot" data-cp="3"></div>
-
-<div class="sh" id="step6"><span class="badge">Step 6</span><span class="ttl">Check yourself with the status bar</span></div>
-<p>Click column K's header letter to
-select the whole column, then look at the bar along the bottom of the window: Excel shows Average,
-Count, and Sum for any selection automatically. All three of the GM's numbers are sitting there,
-confirming your formulas (the Count includes nothing extra because column K has one header cell and
-no stray values). Remember this; Part B uses it.</p>
-
-<div class="sh" id="step7"><span class="badge">Step 7</span><span class="ttl">Write the reply</span></div>
-<p>Your Analyst tab now holds three answers in
-<code class="inline">B5:B7</code>. That block, tidy, numbered, checkable, is the actual deliverable of
-analyst work, and every lab this month ends with one. In the Notes column beside each answer, write one
-short line saying what the number is, the way you would if the GM opened this file. Her email is
-answered.</p>
-
-
-
-<details class="howto"><summary>If a step misbehaves</summary><div class="howto-body">
-<ol>
-<li><strong>Freeze Panes is grayed out:</strong> you are in a cell-editing state; press Esc first.</li>
-<li><strong>=SUM shows 0:</strong> you are probably on a different sheet, or typed a letter other than K. Click the cell and read the formula bar.</li>
-<li><strong>#NAME? error:</strong> the function name is misspelled. Delete and retype.</li>
-<li><strong>The status bar shows nothing:</strong> right-click the status bar itself and check Sum, Average, and Count.</li>
-</ol>
-</div></details>
-
-<div class="callout"><strong>Email 2 &middot; Monday, 11:40 AM</strong>
-<p style="font-family:var(--sans);font-size:.9rem"><strong>From:</strong> Operations Manager &middot;
-<strong>Subject:</strong> Three quick ones before Thursday<br><br>
-"Heard you pulled the newsletter numbers, so you get my list too. One: the warehouse recount is
-Thursday and I need to know how many total units we moved in 2025. Two: I am setting winter staffing
-levels and need to know which store produced the most revenue. Three: our payment processor flagged
-our largest single transaction of the year for review; how much was it? Same drill, exact
-figures."</p></div>
-
-<h2 id="partb"><span class="num">Part B</span>Now you: the ops email, alone</h2>
-
-<p>Everything he asks for is a move you made in Part A, pointed at a new target. Steps 8 through 10 each
-tell you exactly what to do; doing it with your own hands is the point. Build his answers as a
-labeled block, the Step 7 habit.</p>
-
-<div class="sh" id="step8"><span class="badge">Step 8</span><span class="ttl">Ops email: total units moved</span><span class="cpx">Answer goes in <b>Checkpoint 4</b></span></div>
-<p>Click an empty cell and write a SUM formula on the
-quantity column, which is column H, the same way you wrote Step 4's formula on column K. Label it.</p>
-
-<div class="cpslot" data-cp="4"></div>
-
-<div class="sh" id="step9"><span class="badge">Step 9</span><span class="ttl">Ops email: the leading store</span><span class="cpx">Answer goes in <b>Checkpoint 5</b></span></div>
-<p>Put a filter on (click any cell in the data, Data
-tab &#8594; Filter), use column C's dropdown to show one store at a time, and read column K's Sum in
-the status bar, the Step 6 trick. Work through the stores until you are sure, then clear the filter
-and record the winner.</p>
-
-<div class="cpslot" data-cp="5"></div>
-
-<div class="sh" id="step10"><span class="badge">Step 10</span><span class="ttl">Ops email: the flagged transaction</span><span class="cpx">Answer goes in <b>Checkpoint 6</b></span></div>
-<p>Click another empty cell and write a MAX
-formula on the revenue column (K). MAX works exactly like SUM: one column in, one number out. If you
-want to see the actual row, sort by revenue, largest to smallest.</p>
-
-
-
-<div class="cpslot" data-cp="6"></div>
-
-<div class="sh" id="step11"><span class="badge">Step 11</span><span class="ttl">Ops email: one formula that decides</span><span class="cpx">Answer goes in <b>Checkpoint 7</b></span></div>
-<p>The processor flags any single sale over $900, and ops wants the sheet to say so rather than a
-person. Every formula so far has produced a number. This one produces a decision. In the cell below
-your MAX, type:</p>
-<p><code class="inline">=IF(</code> then click the cell holding your MAX answer, then type
-<code class="inline">&gt;900,"Flag","Normal")</code> and press Enter.</p>
-<p><strong>What the formula is doing:</strong> IF has three parts, separated by commas. A test (is the
-largest sale greater than 900?). What to write if the test is true (<code class="inline">Flag</code>).
-What to write if it is false (<code class="inline">Normal</code>). Change the 900 to 1000 and watch the
-word change. That is the whole idea, and it is the first formula you have written that answers a
-question with a word instead of a number. Lab 3 makes it do real work.</p>
-
-<div class="cpslot" data-cp="7"></div>
-
-<div class="callout"><strong>Why a co-op cares about members (a seed for later)</strong>
-<p>Column N marks whether each sale had a member attached. Every "N" is a customer the co-op earned
-nothing durable from: no relationship, no dividend, no reason to come back. Neither email asked about
-it today. Scroll past it once and remember it exists; an email about that column is coming later this
-month, and it will matter more than revenue.</p></div>
-
-<div class="callout callout-good"><strong>Finished early? One stretch</strong>
-<p>Select the whole data range and Insert &#8594; Table (Ctrl+T). Notice the filter arrows appear on
-their own and formulas start referring to columns by name. Then just explore: filter to your favorite store,
-read a week of its sales. Familiarity with a dataset is part of analysis, not a delay before it.</p></div>
-
-<h2 id="finish"><span class="num">Finish</span>Reflection &amp; certificate</h2>
-
-<div class="certbox" id="reflectbox">
-  <h3>One last thing before your certificate</h3>
-  <p style="font-family:var(--sans);font-size:.88rem">Cascadia's leaders could not answer basic questions about their own business until someone computed these totals. In the field you plan to enter, what is one number that leadership probably cannot state off the top of their head but should be able to, and what decision would knowing it change?</p>
-  <p style="font-family:var(--sans);font-size:.88rem;color:var(--muted)">Fifty words is the minimum, but
-  do not write to the counter. This prints as page 2 of your certificate, so it is the part your lab
-  professor actually reads. Answer it like someone asked you the question out loud.</p>
-  <textarea id="refl" rows="6" style="width:100%;font-family:var(--sans);font-size:.9rem;padding:.6rem;border:1px solid var(--rule);border-radius:2px" aria-label="Lab reflection"></textarea>
-  <p class="msg" id="reflcount" style="font-family:var(--sans);font-size:.95rem;color:var(--muted)">0 words</p>
-</div>
-<div class="certbox" id="certbox">
-  <h3>All checkpoints cleared</h3>
-  <p style="font-family:var(--sans);font-size:.95rem">Put your name in exactly as it appears in Canvas,
-  then download your certificate. The code on it is generated from your name, so it is yours and nobody
-  else's.</p>
-  <input type="text" id="nm" placeholder="Last, First" aria-label="Your name as in Canvas">
-  <button onclick="cert()">Download certificate (PDF)</button>
-  <p class="codebox" id="codeout" style="font-family:var(--sans);font-size:.85rem"></p>
+<div class="callout callout-bridge"><strong>Why this is the last lab</strong>
+<p>Every lab this quarter handed you a structure somebody else built: seven tables, fifteen columns, a schema. This one hands you the blank page. Chapter 13 ends on the same move, deciding what to rent and what to build; information architecture is deciding what to call things and where they go, which is the decision underneath every other one in this course.</p>
+<p><a class="lablink" href="chapter13-cloud.html">Back to Chapter 13 &#8594;</a></p>
 </div>
 
 <h2 id="submit"><span class="num">Canvas</span>What to submit</h2>
-<p style="font-family:var(--sans);font-size:.92rem">Go to the <strong>Lab 2</strong> assignment in Canvas and upload two files.</p>
-<p style="font-family:var(--sans);font-size:.92rem"><strong>File 1: your workbook</strong>, saved as
-<code class="inline">LAB2_Last_First.xlsx</code>. Your answers should be on the Analyst tab in
-<code class="inline">B5</code> through <code class="inline">B7</code>, with a short note beside each.
-Formulas must be live in the cells; a typed-in number does not count.</p>
-<p style="font-family:var(--sans);font-size:.92rem"><strong>File 2: your completion certificate PDF.</strong> Clear all the checkpoints above, write
-your reflection, and click Download certificate. Your reflection prints as page 2, so you do not submit
-it separately.</p>
+<p>Go to the Lab 10 assignment in Canvas and upload two things:</p>
+<ol>
+<li>Your real-world information architecture example, with your answers to the three questions in Part 3.</li>
+<li>Your information model diagram(s) from Part 4, as photos or a PDF.</li>
+</ol>
+<p>The lab quiz this week draws on the lecture and the reading in Part 1.</p>
+
 </main></div>
 <script>
 (function(){var b=document.querySelector('.railtoggle'),n=document.getElementById('chapnav');
 if(!b||!n)return;b.addEventListener('click',function(){var o=n.classList.toggle('open');
 b.setAttribute('aria-expanded',o?'true':'false');});})();
-</script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script>
-const LAB="LAB2", QS=[{"q": "Part A · The GM's first number: how many sales lines did the co-op record in 2025? (Data rows, not the header.)", "t": "num", "a": "Mjg5OQ==", "tol": 0, "h": "Step 3: Ctrl+End (Cmd+Fn+→ then ↓ on a Mac) lands on the last row; subtract 1 for the header."}, {"q": "Part A · The GM's second number: total revenue for 2025, in dollars?", "t": "num", "a": "NzEyOTcxLjU=", "tol": 1, "h": "Step 4's formula: =SUM(K:K). If you got 0, check you are on the data sheet and pressed Enter."}, {"q": "Part A · The GM's third number: the average sale, to the cent?", "t": "num", "a": "MjQ1Ljk0", "tol": 0.05, "h": "Step 5's formula: =AVERAGE(K:K). Same shape as SUM; it averages the column instead of adding it."}, {"q": "Part B · Ops email, question 1: how many total units moved through the stores in 2025? (Sum the quantity column.)", "t": "num", "a": "NDI0Ng==", "tol": 0, "h": "Write =SUM on column H, exactly the way you wrote it on column K in Step 4."}, {"q": "Part B · Ops email, question 2: which store produced the most revenue in 2025?", "t": "txt", "a": "U2VhdHRsZSBGbGFnc2hpcA==", "tol": 0, "h": "The Step 6 method: filter column C to one store, click column K's header, read Sum in the status bar. Eight stores, eight reads. Clear the filter when done."}, {"q": "Part B · Ops email, question 3: the payment processor flagged the year's largest single sale. How much was it, in dollars?", "t": "num", "a": "OTQ5LjA=", "tol": 0, "h": "Write =MAX on the revenue column (K). It works exactly like SUM: one column in, one number out. Note: three different stores tie for this amount."}, {"q": "Part B · Ops email, question 4: with the processor's $900 threshold, what word does =IF(largest sale>900,\"Flag\",\"Normal\") return?", "t": "text", "a": "RmxhZw==", "h": "Your MAX from Checkpoint 6 is above 900, so the test is true and IF writes the first word."}];
-const SKEY='mis320_'+LAB;
-let solved=new Set();
-function load(){try{const raw=localStorage.getItem(SKEY);if(!raw)return null;const s=JSON.parse(raw);
- if(Array.isArray(s.solved))solved=new Set(s.solved.filter(i=>Number.isInteger(i)&&i<QS.length));return s}catch(e){return null}}
-function save(){try{const r=document.getElementById('refl'),n=document.getElementById('nm');
- localStorage.setItem(SKEY,JSON.stringify({solved:[...solved],refl:r?r.value:'',nm:n?n.value:''}))}catch(e){}}
-function resetLab(){if(!confirm('Clear your saved progress for this lab and start over?'))return;
- try{localStorage.removeItem(SKEY)}catch(e){}solved=new Set();
- const r=document.getElementById('refl'),n=document.getElementById('nm');if(r)r.value='';if(n)n.value='';
- render();if(r)r.dispatchEvent(new Event('input',{bubbles:true}));}
-const norm=s=>s.replace(/[$,\s]/g,'').toLowerCase();
-function render(){
- QS.forEach((q,i)=>{
-  const c=document.querySelector('.cpslot[data-cp="'+(i+1)+'"]');
-  if(!c)return; c.innerHTML='';
-  const lock=i>0&&!solved.has(i-1);
-  const d=document.createElement('div');
-  d.className='cp'+(solved.has(i)?' done':(lock?' locked':''));
-  d.innerHTML='<span class="cphead">Checkpoint '+(i+1)+' of '+QS.length+(solved.has(i)?' \u00b7 cleared':'')+'</span>'
-   +'<p class="q">'+q.q+'</p>'
-   +(solved.has(i)?'<p class="msg" style="color:var(--good)">Correct.</p>':'<input type="text" id="in'+i+'" aria-label="Answer '+(i+1)+'">'
-   +'<button onclick="chk('+i+')">Check</button>'
-   +'<button class="hintb" onclick="hint('+i+')">Hint</button>'
-   +'<p class="msg" id="m'+i+'"></p><p class="hint" id="h'+i+'">'+q.h+'</p>');
-  c.appendChild(d);
-  if(lock)c.insertAdjacentHTML('beforeend','<p class="lockmsg">Clear Checkpoint '+i+' first.</p>');});
- document.getElementById('prog').textContent='Checkpoint progress: '+solved.size+' / '+QS.length;
- const done=solved.size===QS.length;
- document.getElementById('reflectbox').className='certbox'+(done?' show':'');
- document.getElementById('certbox').className='certbox'+(done&&wc()>=50?' show':'');
-}
-function wc(){const t=document.getElementById('refl');return t?t.value.trim().split(/\s+/).filter(Boolean).length:0}
-document.addEventListener('input',function(e){
- if(e.target&&e.target.id==='refl'){
-  const n=wc();document.getElementById('reflcount').textContent=n+' words'+(n<50?': '+(50-n)+' more to unlock your certificate':': certificate unlocked below');
-  document.getElementById('certbox').className='certbox'+(solved.size===QS.length&&n>=50?' show':'');save();
- }
-});
-function hint(i){const h=document.getElementById('h'+i);h.style.display=h.style.display==='block'?'none':'block'}
-function chk(i){
- const v=document.getElementById('in'+i).value,m=document.getElementById('m'+i);
- if(!v.trim()){m.textContent='Enter an answer first.';m.style.color='#7d6608';return}
- const ans=atob(QS[i].a);let ok=false;
- if(QS[i].t==='num'){const g=parseFloat(norm(v)),a=parseFloat(ans);ok=!isNaN(g)&&Math.abs(g-a)<=QS[i].tol}
- else ok=norm(v)===norm(ans);
- if(ok){solved.add(i);save();render()}
- else{m.textContent='Not yet: check the hint, or re-read the step above.';m.style.color='#a03434'}
-}
-function h32(s){let h=5381;for(const c of s)h=((h<<5)+h+c.charCodeAt(0))|0;return(h>>>0).toString(36).toUpperCase()}
-function cert(){
- const n=document.getElementById('nm').value.trim();
- if(!n){document.getElementById('codeout').textContent='Enter your name first.';return}
- const r=document.getElementById('refl').value.trim();
- if(wc()<50){document.getElementById('codeout').textContent='Finish your 50-word reflection above first.';return}
- const code=LAB+'-'+h32(n.toLowerCase()+'|'+LAB+'|'+QS.length);
- const d=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
- const {jsPDF}=window.jspdf;const p=new jsPDF({orientation:'landscape',unit:'pt',format:[560,380]});
- p.setFillColor(11,29,51);p.rect(0,0,560,380,'F');
- p.setFillColor(253,252,250);p.rect(16,16,528,348,'F');
- p.setTextColor(26,82,118);p.setFont('helvetica','bold');p.setFontSize(10);
- p.text('MIS 320 \u00B7 INTRODUCTION TO INFORMATION SYSTEMS \u00B7 WWU',280,58,{align:'center'});
- p.setTextColor(26,26,26);p.setFont('times','bold');p.setFontSize(26);
- p.text('Certificate of Lab Completion',280,105,{align:'center'});
- p.setFont('times','normal');p.setFontSize(13);p.text('This certifies that',280,140,{align:'center'});
- p.setFont('times','bold');p.setFontSize(20);p.text(n,280,170,{align:'center'});
- p.setFont('times','normal');p.setFontSize(13);
- p.text('completed all '+QS.length+' checkpoints of',280,198,{align:'center'});
- p.setFont('helvetica','bold');p.setFontSize(15);p.setTextColor(26,82,118);
- p.text('Lab 2 \u00B7 Excel Basics: Meeting the Client',280,222,{align:'center'});
- p.setFont('helvetica','normal');p.setFontSize(11);p.setTextColor(90,90,90);
- p.text(d,280,252,{align:'center'});
- p.setFont('courier','bold');p.setFontSize(12);p.setTextColor(17,120,100);
- p.text('Verification code: '+code,280,290,{align:'center'});
- p.setFontSize(8);p.setFont('helvetica','normal');p.setTextColor(150,150,150);
- p.text('Upload this PDF to Canvas. Reflection on page 2. Code is unique to name + lab.',280,330,{align:'center'});
- p.addPage([560,380],'landscape');
- p.setFillColor(253,252,250);p.rect(0,0,560,380,'F');
- p.setDrawColor(11,29,51);p.setLineWidth(2);p.rect(16,16,528,348);
- p.setTextColor(26,82,118);p.setFont('helvetica','bold');p.setFontSize(10);
- p.text('LAB REFLECTION \u00B7 '+n+' \u00B7 '+code,280,44,{align:'center'});
- p.setTextColor(60,60,60);p.setFont('times','italic');p.setFontSize(9);
- const promptLines=p.splitTextToSize('Prompt: Cascadia\'s leaders could not answer basic questions about their own business until someone computed these totals. In the field you plan to enter, what is one number that leadership probably cannot state off the top of their head but should be able to, and what decision would knowing it change?',480);
- p.text(promptLines,40,70);
- p.setFont('times','normal');p.setFontSize(11);p.setTextColor(26,26,26);
- const lines=p.splitTextToSize(r,480);
- p.text(lines.slice(0,22),40,70+promptLines.length*11+14);
- p.save(LAB+'_certificate_'+n.replace(/[^a-z0-9]/gi,'_')+'.pdf');
- document.getElementById('codeout').innerHTML='Certificate downloaded (reflection on page 2). Your code: <code>'+code+'</code>';
-}
-(function(){const s=load();render();
- if(s){const r=document.getElementById('refl'),n=document.getElementById('nm');
-  if(r&&s.refl){r.value=s.refl;r.dispatchEvent(new Event('input',{bubbles:true}))}
-  if(n&&s.nm)n.value=s.nm;}
- const nm=document.getElementById('nm');if(nm)nm.addEventListener('input',save);})();
-</script>
-
-<!--NAVJS-->
-<script>
-(function(){
-  var btns=[].slice.call(document.querySelectorAll('.dd-btn'));
-  function closeAll(except){
-    btns.forEach(function(b){
-      var m=document.getElementById(b.getAttribute('data-dd'));
-      if(m&&m!==except){m.classList.remove('open');b.setAttribute('aria-expanded','false');}
-    });
-  }
-  btns.forEach(function(b){
-    b.addEventListener('click',function(e){
-      e.stopPropagation();
-      var m=document.getElementById(b.getAttribute('data-dd'));
-      var open=m.classList.contains('open');
-      closeAll();
-      if(!open){m.classList.add('open');b.setAttribute('aria-expanded','true');}
-    });
-  });
-  document.addEventListener('click',function(){closeAll();});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeAll();});
-  document.querySelectorAll('.dd-menu').forEach(function(m){
-    m.addEventListener('click',function(e){e.stopPropagation();});
-  });
-})();
 </script>
 </body></html>
