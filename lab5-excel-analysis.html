@@ -4,7 +4,7 @@
 <title>Lab 5 · Data Analysis: Why Are Members Disappearing? | MIS 320</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --black:#0e0e0d; --off-black:#1a1a18;
@@ -302,7 +302,9 @@ li{margin-bottom:.45rem}
 .locked button{background:var(--off-white)!important;color:var(--text-light)!important;border:1px solid var(--rule)!important;cursor:default}
 .locked input{background:var(--off-white)}
 input::placeholder{color:#6b6b68;opacity:1}.cp.done{border-left:4px solid var(--good);background:var(--good-pale)}.cp .q{font-family:var(--sans);font-size:.92rem;color:var(--navy);margin:0 0.6rem;font-weight:500}.cp input[type=text]{font-family:var(--sans);font-size:.9rem;padding:.45rem.6rem;border:1px solid var(--rule);border-radius:2px;width:14rem;max-width:100%}.cp button{font-family:var(--sans);font-size:.8rem;font-weight:600;letter-spacing:.04em;background:var(--accent-deep);color:#fff;border:none;border-radius:2px;padding:.5rem.9rem;cursor:pointer;margin-left:.4rem}.cp button.hintb{background:none;color:var(--accent-deep);border:1px solid var(--rule)}.cp .msg{font-family:var(--sans);font-size:.8rem;margin:.5rem 0 0}.cp .hint{font-family:var(--sans);font-size:.8rem;color:var(--muted);margin:.5rem 0 0;display:none;border-top:1px dashed var(--rule);padding-top:.5rem}.progress{position:sticky;top:0;z-index:5;background:var(--black);color:#fff;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:.6rem 1rem;margin:1.5rem 0}.certbox{border:2px solid var(--black);background:var(--paper);padding:1.2rem 1.3rem;margin:1.5rem 0;display:none}.certbox.show{display:block}.certbox h3{margin-top:0}.codebox code{font-family:ui-monospace,Menlo,monospace;background:var(--cream-deep);padding:.15em.45em;border-radius:2px}
-</style></head><body>
+</style>
+<link rel="stylesheet" href="book.css">
+<link rel="stylesheet" href="lab.css"></head><body>
 <nav class="topnav">
   <div class="topnav-in">
     <a class="topnav-brand" href="index.html">MIS 320 &middot; Principles of Management Information Systems</a>
@@ -402,14 +404,13 @@ and download your certificate for Canvas. Your progress saves automatically in t
 </div>
 
 <h2><span class="num">Part A</span>Follow along, skills: pivots as instruments, what-if, forecasting</h2>
+<p class="note" style="font-family:var(--sans);font-size:.95rem;border-left:3px solid var(--magenta);padding:.5rem .8rem;background:var(--off-white)"><strong>Do Part A before you come to lab.</strong> It is a follow-along and takes about twenty-five minutes. Lab time is for Part B, which is the part you will want help with.</p>
 <h3>Follow along: the member pivot, click by click</h3>
 <div class="sh" id="step1"><span class="badge">Step 1</span><span class="ttl">Build the pivot</span></div>
-<p>Click any cell in the data, Insert &#8594; PivotTable, new worksheet.</p>
+<p>The workbook opens with two tabs that matter: <code class="inline">Sales2025</code>, the data, and <code class="inline">Analyst</code>, where every checkpoint answer goes as a live formula, one per row, the same way as Lab 3. Leave both names as they are. Now click any cell in the data on <code class="inline">Sales2025</code>, Insert &#8594; PivotTable, new worksheet.</p>
 
 <div class="sh" id="step2"><span class="badge">Step 2</span><span class="ttl">Revenue by member status</span><span class="cpx">Answer goes in <b>Checkpoint 1</b></span></div>
-<p>Drag <code class="inline">is_member</code> to Rows and
-<code class="inline">revenue</code> to Values. Two rows appear, Y and N, with revenue beside each.
-The Y row is <em>Checkpoint 1</em>.</p>
+<p>Do this one twice, on purpose. First, on the <code class="inline">Analyst</code> tab, write it as a formula the way you did in Lab 3: <code class="inline">=SUMIF(</code>the <code class="inline">is_member</code> column<code class="inline">,"Y",</code>the <code class="inline">revenue</code> column<code class="inline">)</code>. Format that cell as Currency with 0 decimal places (Home &#8594; Number). Then go to your pivot and drag <code class="inline">is_member</code> to Rows and <code class="inline">revenue</code> to Values. Two rows appear, Y and N, with revenue beside each. The Y row should match your formula to the dollar. If it does not, one of them is wrong, and it is nearly always the range in the SUMIF. The formula is <em>Checkpoint 1</em>; the pivot is how you know it is right.</p>
 
 <div class="cpslot" data-cp="1"></div>
 
@@ -441,11 +442,9 @@ type <code class="inline">Attach rate</code>, in <code class="inline">C2</code> 
 of: <em>what input produces the output I want?</em> Suppose the board wants a 90% attach rate. Data
 &#8594; What-If Analysis &#8594; Goal Seek: Set cell <code class="inline">C2</code>, To value
 <code class="inline">0.9</code>, By changing cell <code class="inline">A2</code>. OK. Excel rewrites
-A2 to about 2609: the co-op would need roughly 115 more member-attached sales. Undo (Ctrl+Z) to
-restore the real numbers. You have now used Goal Seek once, start to finish; Part B's last checkpoint
+A2 to about 2609: the co-op would need roughly 115 more member-attached sales. Leave it there; the model is a sandbox and the real numbers are still in your pivot. You have now used Goal Seek once, start to finish; Part B's last checkpoint
 asks you to aim this exact move at a harder question.</li>
-<li><strong>Forecasting, walked then judged.</strong> On that same blank worksheet, copy your monthly
-pivot's results as plain values:
+<li><strong>Forecasting, walked then judged.</strong> First build one more pivot (any cell in the data, Insert &#8594; PivotTable, new worksheet): <code class="inline">month</code> in Rows, <code class="inline">revenue</code> in Values, twelve rows. Then on your what-if worksheet copy that pivot's results as plain values:
 month numbers 1 through 12 down one column (say <code class="inline">E2:E13</code>), each month's
 revenue beside them (<code class="inline">F2:F13</code>). In an empty cell type
 <code class="inline">=FORECAST.LINEAR(13, F2:F13, E2:E13)</code>: predict the y for x = 13, January
@@ -493,10 +492,10 @@ store's <strong>member attach rate</strong>.</em></li>
 <li><em>Which store has the lowest attach rate, and what that rate is.</em></li>
 <li><em>What the next-lowest store's rate is, so we know whether the first store is unusual or whether
 we have a problem everywhere.</em></li>
-<li><em>At the lowest store, how many sales in 2025 had no member attached at all.</em></li>
-<li><em>Which other store's total revenue is closest to that store's. We want to understand why this
+<li><em>At the lowest-attach-rate store, how many sales in 2025 had no member attached at all.</em></li>
+<li><em>Which other store's total revenue is closest to the lowest-attach-rate store's. We want to understand why this
 never showed up in a revenue report.</em></li>
-<li><em>How many of that store's non-member sales would have had to become member sales to bring its
+<li><em>How many of the lowest-attach-rate store's non-member sales would have had to become member sales to bring its
 attach rate to 87 percent, which is roughly where the rest of the co-op sits.</em></li>
 </ol>
 <p><em>Then write us one page: what you found, why our existing reports missed it, and what you
@@ -594,7 +593,7 @@ b.setAttribute('aria-expanded',o?'true':'false');});})();
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-const LAB="LAB5", QS=[{"q": "Checkpoint 1 \u00b7 Pivot revenue by is_member. Total revenue from member-attached sales, in dollars?", "t": "num", "a": "NjE3NDk5LjY=", "tol": 1, "h": "is_member in Rows, revenue in Values."}, {"q": "Checkpoint 2 \u00b7 What share of all sales lines are member-attached, as a percent to one decimal?", "t": "num", "a": "ODYuMA==", "tol": 0.2, "h": "Count of lines by is_member, then Y / total. Show Values As \u2192 % of Column Total does it in one move."}, {"q": "Checkpoint 3 \u00b7 Board question 2: which store has the LOWEST member attach rate?", "t": "txt", "a": "QmVsbGluZ2hhbQ==", "h": "The memo says revenue looks fine, so stop looking at revenue. What other measure appears in the memo? Break it out by store."}, {"q": "Checkpoint 4 \u00b7 Board question 2: that store's member attach rate, as a percent to one decimal?", "t": "num", "a": "NTEuNg==", "tol": 0.2, "h": "Pivot: store in Rows, is_member in Columns, count of sale_id in Values, shown as % of Row Total."}, {"q": "Checkpoint 5 \u00b7 Board question 3: the next-lowest store's attach rate, to one decimal?", "t": "num", "a": "ODYuOQ==", "tol": 0.2, "h": "Same pivot. Notice the size of the cliff between last place and second-to-last."}, {"q": "Checkpoint 6 \u00b7 Board question 4: how many sales at that store had no member attached?", "t": "num", "a": "MTY4", "tol": 0, "h": "Filter or COUNTIFS: store = Bellingham, is_member = N."}, {"q": "Checkpoint 7 \u00b7 Board question 5: which OTHER store's total revenue is closest to that store's?", "t": "txt", "a": "VGFjb21h", "h": "Revenue by store, sorted. The problem store sits comfortably mid-pack. The anomaly is invisible on every chart you built in Lab 4."}, {"q": "Checkpoint 8 \u00b7 Board question 6: how many of that store's non-member sales would have to become member sales to reach an 87% attach rate?", "t": "num", "a": "MTIz", "tol": 1, "h": "It has 347 total lines. What member count makes member/total reach 87%? Subtract the current member count. Goal Seek on a small model, or algebra (both are legitimate analyst moves."}];
+const LAB="LAB5", QS=[{"q": "Checkpoint 1 \u00b7 Pivot revenue by is_member. Total revenue from member-attached sales, in dollars?", "t": "num", "a": "NjE3NDk5LjY=", "tol": 1, "h": "SUMIF on the Analyst tab first (is_member = Y, sum revenue), then is_member in Rows and revenue in Values in the pivot to check it. They must agree."}, {"q": "Checkpoint 2 \u00b7 What share of all sales lines are member-attached, as a percent to one decimal?", "t": "num", "a": "ODYuMA==", "tol": 0.2, "h": "Count of lines by is_member, then Y / total. Show Values As \u2192 % of Column Total does it in one move."}, {"q": "Checkpoint 3 \u00b7 Board question 2: which store has the LOWEST member attach rate?", "t": "txt", "a": "QmVsbGluZ2hhbQ==", "h": "The memo says revenue looks fine, so stop looking at revenue. What other measure appears in the memo? Break it out by store."}, {"q": "Checkpoint 4 \u00b7 Board question 2: that store's member attach rate, as a percent to one decimal?", "t": "num", "a": "NTEuNg==", "tol": 0.2, "h": "Pivot: store in Rows, is_member in Columns, count of sale_id in Values, shown as % of Row Total."}, {"q": "Checkpoint 5 \u00b7 Board question 3: the next-lowest store's attach rate, to one decimal?", "t": "num", "a": "ODYuOQ==", "tol": 0.2, "h": "Same pivot. Notice the size of the cliff between last place and second-to-last."}, {"q": "Checkpoint 6 \u00b7 Board question 4: how many sales at the lowest-attach-rate store had no member attached?", "t": "num", "a": "MTY4", "tol": 0, "h": "Filter or COUNTIFS: store = Bellingham, is_member = N."}, {"q": "Checkpoint 7 \u00b7 Board question 5: which OTHER store's total revenue is closest to the lowest-attach-rate store's?", "t": "txt", "a": "VGFjb21h", "h": "Revenue by store, sorted. The problem store sits comfortably mid-pack. The anomaly is invisible on every chart you built in Lab 4."}, {"q": "Checkpoint 8 \u00b7 Board question 6: how many of the lowest-attach-rate store's non-member sales would have to become member sales to reach an 87% attach rate?", "t": "num", "a": "MTIz", "tol": 1, "h": "It has 347 total lines. What member count makes member/total reach 87%? Subtract the current member count. Goal Seek on a small model, or algebra (both are legitimate analyst moves."}];
 const SKEY='mis320_'+LAB;
 let solved=new Set();
 function load(){try{const raw=localStorage.getItem(SKEY);if(!raw)return null;const s=JSON.parse(raw);

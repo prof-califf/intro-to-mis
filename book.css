@@ -1,0 +1,131 @@
+/* book.css - reading design for the MIS 320 chapter pages.
+   Loaded after each page's inline styles; overrides type, color, and layout only.
+   Adapted 4 Sep 2026 from the Intro to AI in Business chapter template. */
+:root{
+  --display:'Fraunces',Georgia,'Times New Roman',serif;
+  --sans:'Inter',Helvetica,Arial,sans-serif;
+  --serif:'Fraunces',Georgia,serif;
+  --pink:#FF3D8A;              /* accent: rules, numerals, on-dark text */
+  --yellow:#E4FF32;            /* on-dark highlight only */
+  --magenta:#D61F69;           /* pink safe for small text on light backgrounds (4.9:1) */
+  --magenta-dark:#B5185A;
+  --magenta-onblack:#FF3D8A;
+  --magenta-pale:#FDE7F0;
+  --accent:#D61F69; --accent-deep:#B5185A; --accent-pale:#FDE7F0;
+  --black:#0E1116; --off-black:#14181D; --navy:#0E1116;
+  --white:#FCFCFA; --off-white:#F7F7F4; --paper:#FCFCFA; --cream:#FCFCFA; --cream-deep:#F4F4F1;
+  --text-dark:#14181D; --text-muted:#3E454E; --text-light:#5A626C;
+  --ink:#14181D; --muted:#5A626C;
+  --border:#E7E7E2; --rule:#E7E7E2;
+  --col:860px;
+}
+html{overflow-x:clip}
+body{font-family:var(--sans);font-size:16px;line-height:1.7;color:var(--text-dark);background:var(--white)}
+main{max-width:var(--col);padding-left:24px;padding-right:24px;padding-top:0}
+main>p,main>ul,main>ol,main>h3,.lede,.chaphead .anchor{max-width:640px}
+main p,main li,main dd,.kc p,.ailight p,.tps-setup,.tps-q p,.tps-step p,.tps-note,.objectives li,.takeaways li,.vocab dd{font-size:16px;line-height:1.7}
+p{margin:0 0 1.1em}
+strong{font-weight:600}
+
+/* top nav: keep the dark bar, quiet the type */
+.topnav-brand{font-family:var(--display);font-size:1.05rem;font-weight:600;letter-spacing:0;text-transform:none;color:#fff}
+.dd-btn{font-family:var(--sans);font-size:.82rem;letter-spacing:.06em}
+.dd-menu a{font-family:var(--sans);font-size:.9rem}
+.dd-menu a .lbl{font-family:var(--sans);letter-spacing:.08em}
+.topnav a[href="schedule.html"],.topnav .navlink{font-family:var(--sans);font-size:.82rem;letter-spacing:.06em}
+
+/* chapter head as a dark masthead, full bleed */
+.chaphead{background:var(--black);color:#fff;border-bottom:none;margin:0 calc(50% - 50vw) 40px;padding:56px calc(50vw - 50%) 48px}
+.chaphead .eyebrow{font-family:var(--sans);font-size:.78rem;font-weight:400;letter-spacing:.08em;color:#B4BBC4;margin:0 0 18px}
+.chaphead h1{font-family:var(--display);font-weight:600;font-size:clamp(2rem,5vw,3rem);line-height:1.15;text-transform:none;letter-spacing:0;color:#fff;margin:0 0 18px}
+.chaphead h1 b,.chaphead h1 em{color:var(--yellow);font-style:normal;font-weight:700}
+.chaphead .anchor{color:#C9CED6;font-size:1rem;max-width:640px}
+.chaphead .anchor strong{color:#fff;font-weight:500}
+
+/* headings */
+h2{font-family:var(--display);font-weight:600;font-size:1.6rem;line-height:1.2;text-transform:none;letter-spacing:0;color:var(--text-dark);margin:2.75rem 0 1.6rem;border-bottom:2px solid var(--pink);padding-bottom:10px}
+h2 .num{display:inline;font-family:var(--display);font-size:1.6rem;font-weight:600;letter-spacing:0;text-transform:none;color:var(--pink);margin:0 16px 0 0}
+h2 .num::before{content:""}
+h3{font-family:var(--display);font-weight:600;font-size:1.15rem;text-transform:none;letter-spacing:0;color:var(--text-dark);margin:1.6em 0 .6em}
+.lede{font-size:1.05rem;line-height:1.7;color:var(--text-dark)}
+
+/* small caps labels everywhere: quiet sans, not condensed caps */
+.eyebrow,.kc .kc-tag,.callout strong:first-child,.objectives .obj-tag,.takeaways .obj-tag,.toc strong,.concepts .clabel,.sources h3,.tryit-head,.tps-head,.plan-head,.tps-step .ph,.tps-note strong,.ailight .lighttext strong:first-child,.tag,.stat span,.dq li:before,.vocab dt,.comptable th,.sumtable th,.plan td.t,.wbtns button,.mcq b,.tryit .wq b{font-family:var(--sans)}
+.kc .kc-tag,.callout strong:first-child,.objectives .obj-tag,.takeaways .obj-tag,.toc strong,.sources h3,.tps-step .ph,.tps-note strong,.ailight .lighttext strong:first-child{font-size:.78rem;letter-spacing:.08em;font-weight:500}
+
+/* key concept: dark box, yellow term */
+.kc{background:var(--black);color:#E7EAEF;border:none;border-left:4px solid var(--yellow);padding:20px 24px;margin:26px 0}
+.kc .kc-tag{color:#B4BBC4;margin-bottom:6px}
+.kc .kc-term{font-family:var(--display);font-size:1.02rem;color:var(--yellow);margin-bottom:8px}
+.kc p{color:#E7EAEF;font-size:.95rem;line-height:1.65}
+.kc p strong{color:#fff}
+.kc a{color:var(--yellow)}
+
+/* callouts, objectives, takeaways, contents: white cards with a thin rule */
+.callout{border:1px solid var(--border);border-left:1px solid var(--border);border-top:3px solid var(--pink);background:#fff;padding:22px 26px;margin:26px 0}
+.callout strong:first-child{color:var(--magenta);margin-bottom:10px}
+.callout-bridge{border-top-color:var(--black)}.callout-bridge strong:first-child{color:var(--text-dark)}
+.callout-caution{border-top-color:var(--warn);background:#fff}.callout-good{border-top-color:var(--good);background:#fff}
+.objectives,.takeaways,.toc{border:1px solid var(--border);border-left:1px solid var(--border);background:#fff;padding:24px 28px;margin:26px 0}
+.objectives .obj-tag,.takeaways .obj-tag,.toc strong{color:var(--text-light);margin-bottom:12px}
+.objectives ol,.takeaways ul{margin:0 0 0 1.25rem}
+.objectives li::marker,.takeaways li::marker{color:var(--magenta);font-family:var(--display);font-weight:600}
+.toc{font-size:.95rem;line-height:1.9}
+.toc a{border-bottom:none;color:var(--text-dark)}.toc a:hover{color:var(--magenta)}
+.concepts span:not(.clabel){font-family:var(--sans);font-size:.78rem;letter-spacing:.02em;background:#fff;border:1px solid var(--border);color:var(--text-muted)}
+
+/* check-yourself and try-it */
+.mcq{border:1px solid var(--border);border-left:3px solid var(--pink);background:#fff;padding:16px 20px;margin:22px 0;font-size:.95rem;line-height:1.65}
+.mcq b{display:block;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--magenta);margin-bottom:6px;font-weight:500}
+.tryit{border:1px solid var(--border);box-shadow:none;background:#fff}
+.tryit-head{background:var(--black);color:#fff;font-size:.78rem;letter-spacing:.08em;font-weight:500}
+.wbtns button{font-size:.72rem;letter-spacing:.04em;font-weight:500}
+.wq{font-size:.95rem}
+
+/* stats, vocab, discussion */
+.stat b{font-family:var(--display);font-weight:700;font-size:1.9rem;color:var(--text-dark)}
+.stat span{font-size:.8rem;color:var(--text-light);text-transform:none;letter-spacing:0}
+.vocab dt{font-family:var(--display);font-size:1rem;text-transform:none;letter-spacing:0;color:var(--text-dark)}
+.vocab dd{font-size:.9rem;color:var(--text-muted);line-height:1.6}
+.dq li{padding:14px 0 14px 2.4rem}
+.dq li:before{font-family:var(--display);font-size:1.05rem;color:var(--magenta);top:14px}
+.tag{font-size:.7rem;letter-spacing:.08em;font-weight:500}
+.tag-warm{background:var(--magenta-pale);color:var(--magenta-dark)}
+
+/* activity, plans, sources */
+.tps{border:1px solid var(--border)}
+.tps-head{background:var(--black);font-size:.78rem;letter-spacing:.08em;font-weight:500}
+.tps-q{border-left:3px solid var(--pink);background:var(--magenta-pale)}
+.plan{background:#fff}.plan-head{font-family:var(--sans);font-size:.78rem;letter-spacing:.08em;font-weight:500;background:#fff}
+.plan td{font-size:.92rem}.plan td.t{font-size:.75rem;color:var(--magenta)}
+.sources{font-size:.85rem;color:var(--text-light)}
+.sources h3{font-size:.78rem;letter-spacing:.08em;color:var(--text-light)}
+.sources a,main a{color:var(--magenta)}
+.lablink,.jump{font-family:var(--sans);font-size:.85rem;letter-spacing:.02em;text-transform:none;background:var(--magenta);color:#fff;border-radius:2px}
+.lablink:hover,.jump:hover{background:var(--magenta-dark)}
+.comptable th,.sumtable th{font-size:.75rem;letter-spacing:.08em}
+figure.diagram figcaption{font-size:.9rem;color:var(--text-light)}
+.ailight{border:1px solid var(--border);background:#fff}
+
+@media (max-width:860px){
+  main{padding-left:24px;padding-right:24px}
+  .chaphead{padding-top:40px;padding-bottom:36px}
+  h2{font-size:1.4rem}h2 .num{font-size:1.4rem}
+}
+
+/* fixes from the audit */
+.chaphead .concepts .clabel{color:#B4BBC4}
+.vc-cell.broke .vc-stage,.broke .vc-stage{color:var(--magenta-dark)}
+.chaphead .concepts span:not(.clabel){background:#1B222B;border-color:#2A323C;color:#E7EAEF}
+.vc-note b{color:var(--magenta-dark)}
+
+/* yellow on dark: activity and quiz bars, and the lab bridge as an entry ticket */
+.tryit-head,.tps-head{color:var(--yellow)}
+.tps-head .mins{color:#B4BBC4}
+.callout-bridge{background:var(--black);color:#E7EAEF;border:none;border-top:none;padding:30px 32px}
+.callout-bridge strong:first-child{color:var(--yellow)}
+.callout-bridge p{color:#E7EAEF}
+.callout-bridge a{color:var(--yellow)}
+.callout-bridge .lablink{background:var(--yellow);color:var(--black);font-weight:600}
+.callout-bridge .lablink:hover{background:#fff;color:var(--black)}
+.chaphead h1 .acr{color:var(--yellow)}
