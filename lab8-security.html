@@ -29,7 +29,7 @@ body{margin:0;background:var(--white);color:var(--text-dark);
 
 /* ---------- shell ---------- */
 .shell{max-width:var(--wrap);margin:0 auto;display:grid;grid-template-columns:15rem minmax(0,1fr);gap:3.5rem;padding:0 1.5rem 6rem}
-main{max-width:var(--col);min-width:0;padding-top:2.5rem}
+main{margin-left:auto;margin-right:auto;max-width:var(--col);min-width:0;padding-top:2.5rem}
 
 /* ---------- sidebar ---------- */
 .rail{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:2.5rem 0 3rem;border-right:1px solid var(--border)}
@@ -368,20 +368,8 @@ input::placeholder{color:#6b6b68;opacity:1}.cp.done{border-left:4px solid var(--
   </div>
 </nav>
 
-<div class="shell">
-<aside class="rail">
-  <p class="book">MIS 320</p><p class="course">Principles of Management Information Systems</p>
-  <button class="railtoggle" aria-expanded="false" aria-controls="chapnav">Lab contents</button>
-  <nav id="chapnav">
-    <a href="#top">Overview</a><a href="#inventory">Part 1 · The inventory</a>
-    <a href="#verify">Part 2 · Verification</a><a href="#blast">Part 3 · Blast radius</a>
-    <a href="#controls">Part 4 · Control numbers</a><a href="#map">Part 5 · The access map</a>
-    <a href="#finish">Reflection &amp; certificate</a><a href="#submit">What to submit</a>
-    <a href="chapter10-changehealthcare.html">↳ Chapter 10 · Cybersecurity</a>
-  </nav>
-  <a class="back" href="index.html">← All chapters &amp; labs</a>
-</aside>
-<main id="top">
+
+<main id="top" class="chapwrap">
 <header class="chaphead">
   <p class="eyebrow">Lab 8 · Week 8</p>
   <h1><b>Security &amp; Data Governance</b>: The Audit</h1>
@@ -663,12 +651,7 @@ function runSQL(){
 <code class="inline">LAB8_Last_First</code>, containing your completed sixteen-cell access map, your
 two defended cells (one sentence each), and your three-sentence memo to the board.</p>
 <p style="font-family:var(--sans);font-size:.92rem"><strong>File 2: your completion certificate PDF.</strong> Clear all the checkpoints above, write your reflection, and click Download certificate. Your reflection prints as page 2, so you do not submit it separately.</p>
-</main></div>
-<script>
-(function(){var b=document.querySelector('.railtoggle'),n=document.getElementById('chapnav');
-if(!b||!n)return;b.addEventListener('click',function(){var o=n.classList.toggle('open');
-b.setAttribute('aria-expanded',o?'true':'false');});})();
-</script>
+</main>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 const LAB="LAB8", QS=[{"q": "Part 1 \u00b7 The confidentiality inventory. Start where every audit starts, with a count of what you are protecting: SELECT COUNT(*) FROM members; How many people's personal information does the co-op hold?", "t": "num", "a": "NjA=", "tol": 0, "h": "One line in the sandbox above. Each row is a real person's name, city, and membership history. Change Healthcare's number was 190 million; the co-op's is smaller, but the shape of the obligation is identical."}, {"q": "Part 1 \u00b7 Breach notification is state law, and every state writes its own. SELECT COUNT(DISTINCT state) FROM members; If member data leaked, how many different states' notification laws would the co-op be answering to?", "t": "num", "a": "Mw==", "tol": 0, "h": "COUNT(DISTINCT state) collapses the column to its unique values. Every distinct state is a separate legal clock that starts ticking the day you discover a breach."}, {"q": "Part 2 \u00b7 Email one claims to be from Nordvik Outdoor, \"your US-based climbing hardware supplier,\" announcing new bank details for invoice payments. Verify the claim against the system of record: SELECT country FROM suppliers WHERE supplier_name='Nordvik Outdoor'; What country is Nordvik Outdoor actually in?", "t": "txt", "a": "Tm9yd2F5", "h": "The query returns one word, and it is not the one the email used. A supplier that gets its own country wrong is not your supplier. This exact fraud, a real vendor name plus new bank details, is called business email compromise, and it costs companies billions a year."}, {"q": "Part 2 \u00b7 Email two says member 1287 has filed a complaint and demands you send their full record for review. SELECT COUNT(*) FROM members WHERE member_id=1287; What does the count return?", "t": "num", "a": "MA==", "tol": 0, "h": "Zero rows. There is no member 1287, so the request is a fishing trip for whatever record you might send back. The lesson generalizes: verify the claim, not the tone. Urgency is a technique, not evidence."}, {"q": "Part 3 \u00b7 Least privilege, measured. Suppose each register credential could read only its own store's sales. How many rows can a Bellingham-scoped account reach? SELECT COUNT(*) FROM sales s JOIN stores st ON st.store_id=s.store_id WHERE st.store_name='Bellingham';", "t": "num", "a": "MzQ3", "tol": 0, "h": "A JOIN and a WHERE, both from Lab 7. This number is the blast radius of one stolen register password in a least-privilege design."}, {"q": "Part 3 \u00b7 Now express the blast radius as a share: one hundred times your Checkpoint 5 answer, divided by the total number of sales rows (you have known that total since Lab 2). What percent of the co-op's sales does one scoped credential expose? One decimal.", "t": "num", "a": "MTIuMA==", "tol": 0.2, "h": "Roughly one eighth. The same stolen password against an unscoped, everything-access account exposes one hundred percent. That gap is the entire argument for least privilege, in one division."}, {"q": "Part 4 \u00b7 Integrity. You have computed total revenue in Excel twice this quarter. Compute it here in one line: SELECT ROUND(SUM(quantity*unit_price),2) FROM sales; What is it?", "t": "num", "a": "NzEyOTcxLjU=", "tol": 1, "h": "The point is not the arithmetic. A number you can recompute from source at any time is a control: if an attacker with write access quietly alters rows, this total moves, and you notice. Integrity monitoring is recomputing what you already know and checking that it still agrees."}, {"q": "Part 4 \u00b7 Availability. Ransomware does not steal a register; it stops it. SELECT ROUND(SUM(quantity*unit_price)/COUNT(DISTINCT sale_date),2) FROM sales; To the nearest dollar, what does one dark day cost the co-op in revenue alone?", "t": "num", "a": "MTk1OC43MQ==", "tol": 5, "h": "Total revenue over distinct selling days. Multiply by the ten days Change Healthcare's systems were down and you have the start of a board-ready number, before a single record leaks."}];
