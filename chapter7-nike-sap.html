@@ -261,6 +261,7 @@ li{margin-bottom:.45rem}
 .toc{border:1px solid var(--border);background:var(--off-white);padding:1rem 1.25rem;margin:1.6rem 0;font-family:var(--sans);font-size:14.5px;line-height:2}
 .toc strong{display:block;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.3rem}
 .toc a{color:var(--text-dark);text-decoration:none;border-bottom:1px solid var(--border);margin-right:1rem;white-space:nowrap}
+@media (max-width:860px){.toc a{white-space:normal}}
 .toc a:hover{color:var(--magenta-dark);border-bottom-color:var(--magenta)}
 .kc{border:1px solid var(--border);border-left:4px solid var(--magenta);background:#fff;margin:1.4rem 0;padding:1rem 1.2rem}
 .kc .kc-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.15rem}
@@ -394,8 +395,8 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 <a href="#what">What enterprise systems are</a>
 <a href="#hard">Why they are hard to install</a>
 <a href="#cases">Three companies, three refusals</a>
-<a href="#nike">Nike: $400 million, huh?</a>
-<a href="#other">Who absorbs a failed rollout</a>
+<a href="#nike">Main case. Nike: $400 million, huh?</a>
+<a href="#other">The downside: who absorbs a failed rollout</a>
 <a href="#vocab">Vocabulary</a>
 <a href="#discussion">Discussion questions</a>
 <a href="#lab">From lecture to lab</a>
@@ -411,8 +412,8 @@ and too few of the right ones.</p>
 <div class="callout"><strong>How this chapter runs</strong>
 <p>Sections 1 and 2 are the concepts: what these systems are, and why installing one is so much harder
 than buying one. Section 3 puts them to work on three companies that each refused a different demand.
-Section 4 is the full case, Nike, and it runs forward to failures happening now. Section 5 asks who
-actually absorbs a failed rollout, and the discussion questions at the end come from both.</p>
+Section 4 is the main case, Nike, and it runs forward to failures happening now. Section 5 is the
+downside, who actually absorbs a failed rollout, and the discussion questions at the end come from both.</p>
 <p class="jumprow"><a class="jump" href="#nike">Jump to the Nike case &#8594;</a>
 <a class="jump" href="#cases">Jump to the three refusals &#8594;</a>
 <a class="jump" href="#discussion">Jump to the discussion questions &#8594;</a></p></div>
@@ -445,9 +446,8 @@ what is being transformed is not the technology.</p>
 <p>Keep the weakest component rule from Chapter 1 in view, because this chapter is where it bites
 hardest. When one shared database feeds every decision in the company, a fault in the data component is
 no longer contained in one department. It reaches the factory.</p>
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">ERP, CRM, and SCM</span>
-<p>An ERP (enterprise resource planning) system is one shared database and one set of processes for the whole company: finance, orders, inventory, and manufacturing reading the same numbers. CRM (customer relationship management) does the same for everything customer-facing; SCM (supply chain management) for the flow of materials from suppliers to shelves. The point of all three is the same: replace departmental versions of the truth with one version, so decisions in one corner of the company are visible in every other.</p></div>
 
+<h3>1.1 ERP, CRM, and SCM</h3>
 
 <p>An <strong>enterprise system</strong> is software that runs a company's core operations on a single
 shared database, so that a sale, a purchase, and a paycheck are all facts in one place instead of
@@ -462,13 +462,25 @@ copies in twenty. Three families dominate:</p>
   category i2 led in 2000.</li>
 </ul>
 
-<p>Why do these systems exist at all? Because organizations grow into information silos. Each department buys or builds its own system,
-each with its own copy of the truth, and soon the same customer exists three times with three
-addresses and the same product has two prices.
-Nike's 27 ordering systems were 27 silos. An ERP's whole premise is the demolition of silos into one
-shared database, which is also why implementing one is so violent: it forces every department to
-surrender its private version of reality.</p>
-<h2 id="hard"><span class="num">2</span>Why they are hard to install</h2><p>Two ideas explain most enterprise-system grief. (If you end up on an ERP project, and many of you
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">ERP, CRM, and SCM</span>
+<p>An ERP (enterprise resource planning) system is one shared database and one set of processes for the whole company: finance, orders, inventory, and manufacturing reading the same numbers. CRM (customer relationship management) does the same for everything customer-facing; SCM (supply chain management) for the flow of materials from suppliers to shelves. The point of all three is the same: replace departmental versions of the truth with one version, so decisions in one corner of the company are visible in every other.</p></div>
+
+<h3>1.2 Information silos, and why one version of the truth is mandatory</h3>
+
+<p>Why do these systems exist at all? Because organizations grow into <strong>information silos</strong>:
+each department buys or builds its own system, each with its own copy of the truth, and soon the same
+customer exists three times with three addresses and the same product has two prices. A global company
+can easily end up with dozens of separate ordering systems, none of which agrees with the others. An
+ERP's whole premise is the demolition of silos into one shared database, which is also why implementing
+one is so violent: it forces every department to surrender its private version of reality.</p>
+<h2 id="hard"><span class="num">2</span>Why they are hard to install</h2>
+
+<p>Buying an enterprise system takes an afternoon. Installing one takes years, and the reasons are
+organizational rather than technical.</p>
+
+<h3>2.1 Configuration versus customization, and process fit</h3>
+
+<p>Two ideas explain most enterprise-system grief. (If you end up on an ERP project, and many of you
 will, these two ideas are what the meetings will be about.) First, <strong>configuration versus
 customization</strong>: configuring means setting the switches the vendor built; customizing means
 rewriting the software to match your habits. Customization feels reasonable and compounds forever. Every
@@ -477,23 +489,8 @@ an ERP embeds a definition of how ordering, invoicing, and fulfillment <em>shoul
 change your process to match the software, or the software to match your process. Both are expensive; only
 one is expensive forever.</p>
 
-<div class="callout">
-  <strong>Why "big bang" keeps appearing in this course</strong>
-  <p>You met the rollout taxonomy in Chapter 5: direct cutover, parallel, phased, pilot. Enterprise
-  systems raise the stakes on that choice, because the system being replaced is the one currently running
-  the company. A failed website launch loses enrollments. A failed ERP cutover can mean the company
-  temporarily cannot ship, bill, or plan, while the old system it might have fallen back to is already
-  gone.</p>
-</div>
-
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">The bullwhip effect</span>
-<p>Small changes in real demand amplify as they travel up a supply chain, because each link adds its own safety margin to a number that was already padded. A store that sells 100 orders 110 to be safe; the distributor orders 125; the factory tools for 150. Sharing actual demand data across links is the only cure, which is what enterprise systems promise. Nike’s failure ran the amplifier in software: bad forecasts propagated across every store and factory at once, at machine speed. Automation did not create the bullwhip. It removed the humans who would have questioned it.</p></div>
-
-
-
-
 <div class="tryit" id="config">
-  <div class="tryit-head">Try it &middot; Configuration or customization?</div>
+  <div class="tryit-head">Quick quiz &middot; Configuration or customization?</div>
   <p class="tryit-intro">Five things a company might do while installing an enterprise system. Decide which each one is before you check.</p>
   <div id="configrows"></div>
   <p class="tryit-note">If the vendor built a setting for it, it is configuration. If somebody has to write or change code to make it happen, it is customization, and it will need to be done again at every upgrade.</p>
@@ -504,7 +501,7 @@ one is expensive forever.</p>
   var host=document.getElementById('configrows');
   if(!host)return;
   var F=["Configuration", "Customization"];
-  var R=[{"t": "Setting the system's fiscal year to start in July instead of January.", "a": "Configuration", "why": "A switch the vendor expected you to flip. Every company has a fiscal year; the software has a field for it."}, {"t": "Rewriting the order-entry screen so it accepts the company's old twelve-character product codes instead of the vendor's format.", "a": "Customization", "why": "The software now differs from the product every other customer runs. When the vendor ships an upgrade, this screen breaks until somebody rewrites it again."}, {"t": "Choosing which of the vendor's three approval workflows purchase orders will follow.", "a": "Configuration", "why": "Picking from options the vendor built is configuration, even when the choice is important."}, {"t": "Adding code so that the system calculates sales commissions using a formula only this company uses.", "a": "Customization", "why": "The vendor has no field for a formula nobody else uses. This is the kind of change i2 warned Nike to keep under fifteen percent."}, {"t": "Turning off the inventory module because the company does not hold stock.", "a": "Configuration", "why": "Modules are designed to be switched on and off. Not using something the vendor built is the cheapest decision in the whole project."}];
+  var R=[{"t": "Setting the system's fiscal year to start in July instead of January.", "a": "Configuration", "why": "A switch the vendor expected you to flip. Every company has a fiscal year; the software has a field for it."}, {"t": "Rewriting the order-entry screen so it accepts the company's old twelve-character product codes instead of the vendor's format.", "a": "Customization", "why": "The software now differs from the product every other customer runs. When the vendor ships an upgrade, this screen breaks until somebody rewrites it again."}, {"t": "Choosing which of the vendor's three approval workflows purchase orders will follow.", "a": "Configuration", "why": "Picking from options the vendor built is configuration, even when the choice is important."}, {"t": "Adding code so that the system calculates sales commissions using a formula only this company uses.", "a": "Customization", "why": "The vendor has no field for a formula nobody else uses. This is the kind of change vendors warn customers to keep to a small fraction of the system."}, {"t": "Turning off the inventory module because the company does not hold stock.", "a": "Configuration", "why": "Modules are designed to be switched on and off. Not using something the vendor built is the cheapest decision in the whole project."}];
   R.forEach(function(r){
     var row=document.createElement('div'); row.className='wrow';
     row.innerHTML='<div class="wq">'+r.t+'</div><div class="wbtns">'
@@ -527,13 +524,38 @@ one is expensive forever.</p>
 })();
 </script>
 
+<h3>2.2 Rollout: why "big bang" keeps appearing</h3>
+
+<div class="callout">
+  <strong>The stakes are higher for an enterprise system</strong>
+  <p>You met the rollout taxonomy in Chapter 5: direct cutover, parallel, phased, pilot. Enterprise
+  systems raise the stakes on that choice, because the system being replaced is the one currently running
+  the company. A failed website launch loses enrollments. A failed ERP cutover can mean the company
+  temporarily cannot ship, bill, or plan, while the old system it might have fallen back to is already
+  gone.</p>
+</div>
+
+<h3>2.3 The bullwhip effect</h3>
+
+<p>The third idea explains why a supply chain system in particular is dangerous when it goes wrong. A
+supply chain is a series of companies, each ordering from the one behind it, and each one guessing. The
+guesses do not cancel out. They add up, and the pattern has a name.</p>
+
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">The bullwhip effect</span>
+<p>Small changes in real demand amplify as they travel up a supply chain, because each link adds its own safety margin to a number that was already padded. A store that sells 100 orders 110 to be safe; the distributor orders 125; the factory tools for 150. Sharing actual demand data across links is the only cure, which is what enterprise systems promise. Run the same chain in software and the amplifier runs at machine speed, with nobody in the middle to question a number. Automation does not create the bullwhip. It removes the humans who would have questioned it.</p></div>
+
+
+
+
+
+
 <h2 id="cases"><span class="num">3</span>Three companies, three refusals</h2>
 <p>Before the case, three companies that installed this class of system and were badly hurt by it. An
 enterprise system makes three demands of the organization that buys it, and each of these companies
 refused a different one. Read them with the Nike case coming, because Nike managed to refuse all three
 at once.</p>
 
-<h3>Mini-case 1 &middot; 1996: the distributor that could not process its own orders</h3>
+<h3>3.1 Mini-case 1 &middot; 1996: the distributor that could not process its own orders</h3>
 
 <p>Imagine a warehouse that used to ship hundreds of thousands of orders a day, now shipping a fraction
 of that, with pharmacies calling to ask where their medicines are. FoxMeyer was the fourth-largest
@@ -557,7 +579,7 @@ had them.</p>
 system would deliver savings. Name the phase from Chapter 5 where that assumption should have been
 tested, and say what specific number would have told them to renegotiate rather than proceed.</div>
 
-<h3>Mini-case 2 &middot; 2021 to 2026: eleven million items that did not match</h3>
+<h3>3.2 Mini-case 2 &middot; 2021 to 2026: eleven million items that did not match</h3>
 
 <p>In 2021 a supermarket chain with hundreds of stores was told, in effect, that the systems it ran on
 belonged to someone else and it had three years to move out. Walmart had sold the British chain Asda
@@ -594,7 +616,7 @@ report and corrected by hand. Say what that report is doing, in Chapter 6's voca
 change so that the system refuses a disagreement when it is written, rather than finding it in a
 report a month later.</div>
 
-<h3>Mini-case 3 &middot; 2018: seven years, half a billion euros, and back to the old system</h3>
+<h3>3.3 Mini-case 3 &middot; 2018: seven years, half a billion euros, and back to the old system</h3>
 
 <p>Seven years and half a billion euros into a project, somebody at Lidl had to stand up and recommend
 switching everything back to the old system. Lidl, the German discount grocery chain, had begun
@@ -620,7 +642,7 @@ should not buy the system.</p>
 Say which, explain the mechanism, and then name a situation where customizing anyway would be the right
 business decision. There is one; be specific about what makes it so.</div>
 
-<h3>What the three have in common</h3>
+<h3>3.4 What the three have in common</h3>
 
 <p>Three demands, three refusals, and each one landed on a different component. Be honest about scale,
 which is hardware and software. Know what your records actually contain, which is data. Change yourself
@@ -636,7 +658,7 @@ the people who approve it will never log in to it.</p>
 point its vendor had warned about, fed the result data from twenty-seven systems it had not cleaned up,
 and asked the software to work at a scale and speed nobody had tested. Then, on top of all that, it ran
 a big-bang cutover. Then it manufactured shoes based on what came out.</p>
-<h2 id="nike"><span class="num">4</span>Nike: $400 million, huh?</h2>
+<h2 id="nike"><span class="num">4</span>Main case &middot; Nike: $400 million, huh?</h2>
 
 <p>Picture a Nike warehouse in the winter of 2001. One aisle is stacked to the ceiling with a shoe
 nobody is buying. Two aisles over, the shelf for the shoe every store is begging for is empty, and
@@ -652,7 +674,7 @@ lead times from nine months to six.</p>
 connected the whole company: how orders, forecasts, factories, and finances talk to each other. That is what this
 chapter's vocabulary is for.</p>
 
-<h3>The promise, and the shortcuts</h3>
+<h3>4.1 The promise, and the shortcuts</h3>
 
 
 <p>i2's demand planner promised something very appealing: feed it history, and it predicts what to make.
@@ -670,7 +692,7 @@ single-instance data problems, no staged fallback. Every element of the Chapter 
 system that decides what physically gets manufactured.</p>
 
 
-<h3>Where it broke</h3>
+<h3>4.2 Where it broke</h3>
 
 <p>The system went live and began quietly corrupting the one thing it existed to produce: the demand
 signal. Forecasts for products and locations came out overestimated or
@@ -720,7 +742,7 @@ cast in rubber and foam. Information systems that feed <em>physical</em> process
 the feedback loop is as long as the supply chain.</p>
 
 
-<h3>The aftermath</h3>
+<h3>4.3 The aftermath</h3>
 
 
 <div class="stats">
@@ -740,7 +762,7 @@ public companies become disclosure events, which is why CFOs and general counsel
 meetings.</p>
 
 
-<h3>The recovery</h3>
+<h3>4.4 The recovery</h3>
 
 
 <p>The fix was not sophisticated. Nike built manual workarounds: programmers downloaded
@@ -755,7 +777,7 @@ times moved from nine months toward six. The failure was real and so, eventually
 return. Both facts belong in your analysis.</p>
 
 
-<h3>It still happens, and close to home</h3>
+<h3>4.5 It still happens, and close to home</h3>
 
 
 <p>It would be comforting to file Nike under "early-2000s growing pains." The record refuses. Consider a
@@ -794,7 +816,7 @@ where the failure actually lives.</p>
 
 
 
-<h3>The five components at Nike</h3>
+<h3>4.6 The five components at Nike</h3>
 
 
 <div class="vc">
@@ -808,7 +830,7 @@ where the failure actually lives.</p>
   </div>
   <div class="vc-note">Breaks at <b>Software</b>, <b>Data</b>, and <b>People</b>, and note the contrast with Healthcare.gov: here the data itself was rotten, and automation amplified it.</div>
 </div>
-<h2 id="other"><span class="num">5</span>Who absorbs a failed rollout</h2>
+<h2 id="other"><span class="num">5</span>The downside: who absorbs a failed rollout</h2>
 <p>The $100 million Nike lost is the number the case is named for, and it is the shallowest measure of
 the damage. Follow the failure outward. Factories in Asia received orders for shoes nobody wanted and
 cancellations for shoes they had already made; the workers on those lines absorbed the whiplash as
@@ -816,12 +838,15 @@ overtime followed by idled shifts. Retailers were shipped the wrong mix and mark
 Inside Nike, planners spent a year manually overriding a system they had been told to trust, doing two
 jobs for one salary. That is <strong>change management</strong> arriving as a bill rather than a plan. Change management is the work of
 getting an organization to actually operate the new way. Either you budget for it in advance, or the
-people who had no say in it pay for it afterwards in overtime. Research on how people experience new
-systems at work backs this up. One of this book's authors studied nurses adjusting to electronic
+people who had no say in it pay for it afterwards in overtime.</p>
+
+<p>Research on how people experience new systems at work backs this up. One of this book's authors studied nurses adjusting to electronic
 medical records and found that the stress a new system creates has two sides: the same demands that
 make one nurse feel more capable make another want to quit, and the difference lies in whether the
 system feels useful and whether anyone helped them learn it. Change management is the part of the
-project that decides which side people land on. When Lamb Weston’s rollout stumbled in 2023, the shortfalls landed on restaurant
+project that decides which side people land on.</p>
+
+<p>When Lamb Weston’s rollout stumbled in 2023, the shortfalls landed on restaurant
 customers and on warehouse crews reconciling inventory by hand. ERP failures are always narrated as
 money and stock price, because those are the measurable components. The five components framework
 insists on the fifth: somewhere under every failed implementation is a person doing manually, under
@@ -952,7 +977,7 @@ and the half the lab makes concrete.</p>
 <tr><td class="t">0:06</td><td class="w">Walk the case</td><td>The setup, the shortcuts, the break. Name the three refusals from Monday as each appears: the compressed timeline, the customization past the vendor's warning, the big bang. Then retire the opening answer, because the software worked inside the envelope it was designed for.</td></tr>
 <tr><td class="t">0:20</td><td class="w">The mechanism</td><td>The bullwhip, run in software. Slow down here. Nothing looked broken, the numbers were plausible, the planners planned, and the error was undeniable only at delivery time, months of manufacturing later. Ask how long the feedback loop was, and get to the answer that it was as long as the supply chain.</td></tr>
 <tr><td class="t">0:32</td><td class="w">The recovery</td><td>The part most retellings skip. Nike kept the strategy and the leadership, and the program eventually delivered: pre-building fell sharply, lead times came down. Ask whether that makes the project a success and refuse to settle it for them.</td></tr>
-<tr><td class="t">0:40</td><td class="w">It still happens</td><td>Lamb Weston, four hours from here, in 2023. Walk the timeline and land the last line: the remediation for a failed big bang was to adopt, a year late, the phased rollout available from the start. Then the question that matters, which is why a pattern taught in every business school survives twenty-five years of better software.</td></tr>
+<tr><td class="t">0:40</td><td class="w">It still happens</td><td>Lamb Weston, four hours from Bellingham, in 2023. Walk the timeline and land the last line: the remediation for a failed big bang was to adopt, a year late, the phased rollout available from the start. Then the question that matters, which is why a pattern taught in every business school survives twenty-five years of better software.</td></tr>
 <tr><td class="t">0:50</td><td class="w">Think</td><td>All five discussion questions on screen. Silent individual work, one sentence on at least two. Protect this step.</td></tr>
 <tr><td class="t">0:56</td><td class="w">Pair</td><td>Groups of three or four settle on positions they can defend. Circulate for a group that landed somewhere unusual on the recovery question or on who absorbs the failure, and call on them first.</td></tr>
 <tr><td class="t">1:06</td><td class="w">Share</td><td>Groups take the questions in front of the room. Ask for disagreement rather than answers.</td></tr>

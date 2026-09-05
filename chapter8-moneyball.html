@@ -399,9 +399,9 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 <div class="toc"><strong>Contents</strong>
 <a href="#bi">What business intelligence actually is</a>
 <a href="#traps">Reading numbers honestly</a>
-<a href="#cases">Three failures, three rungs</a>
-<a href="#oakland">Oakland: the team that measured differently</a>
-<a href="#other">The other side: being measured</a>
+<a href="#cases">Three failures, three levels</a>
+<a href="#oakland">Main case. Oakland: the team that measured differently</a>
+<a href="#other">The downside: being measured</a>
 <a href="#vocab">Vocabulary</a>
 <a href="#discussion">Discussion questions</a>
 <a href="#lab">From lecture to lab</a>
@@ -417,8 +417,8 @@ whole time.</p>
 <div class="callout"><strong>How this chapter runs</strong>
 <p>Sections 1 and 2 are the concepts: what business intelligence is, the four kinds of analytics, and
 the traps that catch people reading numbers. Section 3 puts them to work on three failures, one at each
-level of ambition. Section 4 is the full case, Oakland, and it follows the story past 2002 to what
-happened once everyone caught up. Section 5 asks what it is like to be the thing being measured.</p>
+level of ambition. Section 4 is the main case, Oakland, and it follows the story past 2002 to what
+happened once everyone caught up. Section 5 is the downside, what it is like to be the thing being measured.</p>
 <p class="jumprow"><a class="jump" href="#oakland">Jump to the Oakland case &#8594;</a>
 <a class="jump" href="#cases">Jump to the three failures &#8594;</a>
 <a class="jump" href="#discussion">Jump to the discussion questions &#8594;</a></p></div>
@@ -426,7 +426,7 @@ happened once everyone caught up. Section 5 asks what it is like to be the thing
 <div class="objectives"><span class="obj-tag">Learning objectives</span>
 <p>By the end of this chapter you should be able to:</p>
 <ol>
-<li>Place a question on the analytics ladder (descriptive, diagnostic, predictive, prescriptive) and say what each rung costs when it is wrong.</li>
+<li>Place a question on the four levels of analytics (descriptive, diagnostic, predictive, prescriptive) and say what each level costs when it is wrong.</li>
 <li>Explain why every metric is a proxy, and test a metric for validity against the thing it is supposed to measure.</li>
 <li>Recognize correlation without causation and the small-sample problem in a business claim.</li>
 <li>State Goodhart's law and give an example of a metric that made a business worse.</li>
@@ -448,6 +448,11 @@ who asks whether the number everybody is staring at measures the thing everybody
 That question is the entire chapter, and the case at the end is an organization that asked it while an
 industry with identical data did not.</p>
 
+<h3>1.1 Business intelligence, and the four levels of analytics</h3>
+
+<p>The field has a name for the work of asking records a question, and a standard way of sorting the
+questions by how much they ask.</p>
+
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Business intelligence &amp; analytics</span>
 <p><strong>Business intelligence (BI)</strong> is the practice of turning an organization's data into
 information that supports decisions: the systems, reports, and dashboards that tell a business what is
@@ -459,12 +464,12 @@ moved is diagnostic. A forecast is predictive. A recommended reorder quantity is
 
 <p>You have been doing this for four weeks without the vocabulary. Lab 2's totals were descriptive
 analytics. Lab 5's mini project, where something was wrong at Cascadia and you had to find out what,
-was diagnostic analytics, and the forecasting section was your first predictive step. The ladder matters because each rung is worth more and costs more. Most organizations live on the bottom rung, drowning in descriptive reports. (Most of you will spend
-your first job on the bottom two rungs. That is not a demotion; it is where the work is.) The ones that climb are the ones that turn data into
+was diagnostic analytics, and the forecasting section was your first predictive step. The four levels matter because each level is worth more and costs more. Most organizations live on the bottom level, drowning in descriptive reports. (Most of you will spend
+your first job on the bottom two levels. That is not a demotion; it is where the work is.) The ones that move up are the ones that turn data into
 different decisions rather than prettier summaries.</p>
 <figure class="diagram" style="margin:1.8rem auto;max-width:470px">
 <svg viewBox="0 0 470 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="alT alD" style="width:100%;height:auto;font-family:var(--sans)">
-<title id="alT">The analytics ladder</title>
+<title id="alT">The four levels of analytics</title>
 <desc id="alD">Four steps rising from left to right, labelled descriptive, diagnostic, predictive and prescriptive, with the question each one asks: what happened, why, what will happen, what should we do. Each step is wider and taller than the one before. A bar on the right, widening toward the top, is labelled cost of being wrong. Most organizations, a note says, live on the bottom step.</desc>
 <defs><marker id="ala" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--text-light)"/></marker></defs>
 <rect x="30" y="214" width="90" height="40" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1.2"/>
@@ -483,13 +488,48 @@ different decisions rather than prettier summaries.</p>
 <text x="380" y="222" text-anchor="middle" font-size="9" fill="var(--magenta-dark)" font-weight="600">a wrong answer here</text><text x="380" y="234" text-anchor="middle" font-size="9" fill="var(--magenta-dark)" font-weight="600">has already spent money</text>
 <path d="M452 254 L452 74" stroke="var(--magenta)" stroke-width="1.4" fill="none"/><path d="M448 82 L452 72 L456 82" fill="var(--magenta)"/>
 <text x="462" y="164" text-anchor="middle" font-size="10" font-weight="600" fill="var(--magenta-dark)" transform="rotate(-90 462 164)">cost of being wrong</text>
-<text x="235" y="292" text-anchor="middle" font-size="11" fill="var(--text-light)">Each rung is worth more, costs more, and hurts more when it is wrong.</text>
+<text x="235" y="292" text-anchor="middle" font-size="11" fill="var(--text-light)">Each level is worth more, costs more, and hurts more when it is wrong.</text>
 </svg>
 <figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">
-The shape is the argument. Each rung asks a harder question than the one below it, and each answer is worth more. But the bar on the right climbs too: a bad description produces a bad slide, a bad prediction produces a bad forecast, and a bad prescription produces a forecast that has already acted. The organizations that climb are not the ones with the most data. They are the ones that turn each rung into a different decision.
+The shape is the argument. Each level asks a harder question than the one below it, and each answer is worth more. But the bar on the right climbs too: a bad description produces a bad slide, a bad prediction produces a bad forecast, and a bad prescription produces a forecast that has already acted. The organizations that climb are not the ones with the most data. They are the ones that turn each level into a different decision.
 </figcaption>
 </figure>
 
+
+<div class="tryit" id="rung">
+  <div class="tryit-head">Quick quiz &middot; Which of the four levels is this?</div>
+  <p class="tryit-intro">Five questions a manager might ask. Place each one on the four levels of analytics before you check.</p>
+  <div id="rungrows"></div>
+  <p class="tryit-note">The levels are in order of what they ask: what happened, why, what will happen, what should we do. Each one costs more to answer and costs more when it is wrong.</p>
+</div>
+
+<script>
+(function(){
+  var host=document.getElementById('rungrows');
+  if(!host)return;
+  var F=["Descriptive", "Diagnostic", "Predictive", "Prescriptive"];
+  var R=[{"t": "How many memberships did the Bellingham store sell last month?", "a": "Descriptive", "why": "A count of what happened. The answer is in the records and nobody has to interpret it."}, {"t": "Why did Bellingham's membership sales fall when every other store's rose?", "a": "Diagnostic", "why": "Looking for a cause. This requires comparing, slicing, and ruling things out, which is where the correlation trap starts."}, {"t": "How many memberships will Bellingham sell next quarter if nothing changes?", "a": "Predictive", "why": "A forecast. It is built from the past, so it is only as good as the assumption that the future will resemble the past."}, {"t": "Should we move the membership desk to the front of the store or retrain the staff?", "a": "Prescriptive", "why": "A recommendation that will spend money. This is the level where a wrong answer has already acted."}, {"t": "Which stores had the highest return rate on rain jackets this year?", "a": "Descriptive", "why": "A ranking of what happened. It feels analytical because it is sorted, but nobody has asked why yet."}];
+  R.forEach(function(r){
+    var row=document.createElement('div'); row.className='wrow';
+    row.innerHTML='<div class="wq">'+r.t+'</div><div class="wbtns">'
+      +F.map(function(f){return '<button type="button" data-f="'+f+'">'+f+'</button>';}).join('')
+      +'</div><div class="wout" role="status" aria-live="polite" hidden></div>';
+    host.appendChild(row);
+    var bs=row.querySelectorAll('button'), out=row.querySelector('.wout');
+    bs.forEach(function(b){
+      b.addEventListener('click',function(){
+        if(!out.hidden)return;
+        var ok=b.getAttribute('data-f')===r.a;
+        bs.forEach(function(x){x.disabled=true;});
+        b.className='you '+(ok?'right':'wrong');
+        if(!ok) bs.forEach(function(x){ if(x.getAttribute('data-f')===r.a) x.className='you right'; });
+        out.hidden=false; out.className='wout '+(ok?'yes':'no');
+        out.innerHTML='<b>'+r.a+'.</b> '+r.why;
+      });
+    });
+  });
+})();
+</script>
 
 <p>Baseball in 2001 was a perfect specimen of a descriptive-analytics industry. It had more data per
 event than almost any business on earth, a box score for every game since the 1870s, and it used that
@@ -498,7 +538,7 @@ a night-shift statistician named Bill James had spent two decades publishing ana
 <strong>sabermetrics</strong>, showing that some of baseball's most cherished numbers barely predicted
 winning. The A's were simply the first team desperate enough to act on it.</p>
 
-<h3>The wrong number on the scoreboard</h3>
+<h3>1.2 The wrong number on the scoreboard</h3>
 
 
 <p>For a century, the headline measure of a hitter was <strong>batting average</strong>: hits divided
@@ -531,6 +571,11 @@ there are three traps that catch people who are perfectly competent at the arith
 about what the numbers can and cannot tell you. The third is about what happens to a number once people
 know they are being judged by it.</p>
 
+<h3>2.1 Correlation, causation, and sample size</h3>
+
+<p>The first two traps are old, and both come from forgetting what a pattern in the numbers can and
+cannot prove.</p>
+
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Correlation, causation, and sample size</span>
 <p>Two numbers are <strong>correlated</strong> when they move together; <strong>causation</strong>
 means one actually drives the other. Team OBP correlates strongly with runs scored across a 162-game
@@ -547,7 +592,7 @@ of data, and the honest analyst's question, there and everywhere, is whether the
 pattern is large enough to bet on. A twenty-game winning streak is thrilling and it is also, as the
 A's themselves would tell you, partly a run of luck sitting on top of a good team.</p>
 
-<h3>When the metric becomes the target</h3>
+<h3>2.2 When the metric becomes the target</h3>
 
 
 <p>There is a trap waiting inside every successful metric, and it has a name: <strong>Goodhart's
@@ -568,7 +613,7 @@ rate, units shipped with returns. Keep this section in mind for the Monday activ
 because your job there is to find one of these traps in the wild.</p>
 
 
-<h3>From the dugout to the dashboard</h3>
+<h3>2.3 From the dugout to the dashboard</h3>
 
 
 <p>What did the A's revolution look like as an information system? Unremarkably modest: public
@@ -598,48 +643,15 @@ what a dashboard is for.</p>
 care about, and putting it where decisions get made.</p></div>
 
 
-<div class="tryit" id="rung">
-  <div class="tryit-head">Try it &middot; Which rung of the ladder?</div>
-  <p class="tryit-intro">Five questions a manager might ask. Place each one on the analytics ladder before you check.</p>
-  <div id="rungrows"></div>
-  <p class="tryit-note">The rungs are in order of what they ask: what happened, why, what will happen, what should we do. Each one costs more to answer and costs more when it is wrong.</p>
-</div>
 
-<script>
-(function(){
-  var host=document.getElementById('rungrows');
-  if(!host)return;
-  var F=["Descriptive", "Diagnostic", "Predictive", "Prescriptive"];
-  var R=[{"t": "How many memberships did the Bellingham store sell last month?", "a": "Descriptive", "why": "A count of what happened. The answer is in the records and nobody has to interpret it."}, {"t": "Why did Bellingham's membership sales fall when every other store's rose?", "a": "Diagnostic", "why": "Looking for a cause. This requires comparing, slicing, and ruling things out, which is where the correlation trap starts."}, {"t": "How many memberships will Bellingham sell next quarter if nothing changes?", "a": "Predictive", "why": "A forecast. It is built from the past, so it is only as good as the assumption that the future will resemble the past."}, {"t": "Should we move the membership desk to the front of the store or retrain the staff?", "a": "Prescriptive", "why": "A recommendation that will spend money. This is the rung where a wrong answer has already acted."}, {"t": "Which stores had the highest return rate on rain jackets this year?", "a": "Descriptive", "why": "A ranking of what happened. It feels analytical because it is sorted, but nobody has asked why yet."}];
-  R.forEach(function(r){
-    var row=document.createElement('div'); row.className='wrow';
-    row.innerHTML='<div class="wq">'+r.t+'</div><div class="wbtns">'
-      +F.map(function(f){return '<button type="button" data-f="'+f+'">'+f+'</button>';}).join('')
-      +'</div><div class="wout" role="status" aria-live="polite" hidden></div>';
-    host.appendChild(row);
-    var bs=row.querySelectorAll('button'), out=row.querySelector('.wout');
-    bs.forEach(function(b){
-      b.addEventListener('click',function(){
-        if(!out.hidden)return;
-        var ok=b.getAttribute('data-f')===r.a;
-        bs.forEach(function(x){x.disabled=true;});
-        b.className='you '+(ok?'right':'wrong');
-        if(!ok) bs.forEach(function(x){ if(x.getAttribute('data-f')===r.a) x.className='you right'; });
-        out.hidden=false; out.className='wout '+(ok?'yes':'no');
-        out.innerHTML='<b>'+r.a+'.</b> '+r.why;
-      });
-    });
-  });
-})();
-</script>
 
-<h2 id="cases"><span class="num">3</span>Three failures, three rungs</h2>
-<p>Before the case, three short ones, arranged up the ladder from section 1. The first is a
+<h2 id="cases"><span class="num">3</span>Three failures, three levels</h2>
+<p>Before the case, three short ones, arranged up the four levels from section 1. The first is a
 descriptive failure, the second predictive, the third prescriptive. Read them in order and watch the cost of being wrong grow. A bad description produces a bad slide. A
 bad prediction produces a bad forecast. A bad prescription produces a bad forecast that has already
 spent your money.</p>
 
-<h3>Mini-case 1 &middot; 1986: the chart that did not show the thing it contained</h3>
+<h3>3.1 Mini-case 1 &middot; 1986: the chart that did not show the thing it contained</h3>
 
 <p>The night before the Challenger launch, engineers at the contractor that built the shuttle's rocket
 boosters argued against flying. It was going to be unusually cold in Florida, and they believed the
@@ -656,7 +668,7 @@ the shuttle was destroyed, killing all seven people aboard.</p>
 information, because the argument the engineers were making was <em>in</em> their data and was not
 <em>in</em> their charts. This is descriptive analytics failing at its only job.</p>
 
-<p><strong>The rung: descriptive. The component: software, meaning the tool that displayed
+<p><strong>The level: descriptive. The component: software, meaning the tool that displayed
 it.</strong> Nobody lacked the numbers, and nobody miscalculated. The presentation decided what a room
 full of decision-makers could see, which is worth remembering in a week when you are choosing what to
 put on a dashboard.</p>
@@ -665,7 +677,7 @@ put on a dashboard.</p>
 out. Explain why leaving out the cases where nothing happened destroys the ability to see a
 relationship, and name one chart you have made where you did the same thing without noticing.</div>
 
-<h3>Mini-case 2 &middot; 2013: the model that kept answering after the world moved</h3>
+<h3>3.2 Mini-case 2 &middot; 2013: the model that kept answering after the world moved</h3>
 
 <p>In 2008 Google launched Flu Trends, which estimated how much influenza was circulating in the United
 States from what people were searching for. It looked like a triumph. It produced estimates faster than
@@ -682,7 +694,7 @@ people search in ways the model read as illness. Google revised it, then retired
 between search behavior and illness had changed underneath it. A model is a claim about how the world
 works, and the world does not agree to hold still.</p>
 
-<p><strong>The rung: predictive. The component: data.</strong> The failure was not in the mathematics.
+<p><strong>The level: predictive. The component: data.</strong> The failure was not in the mathematics.
 It was that the inputs stopped meaning what they meant when the model was built, and no amount of
 computation notices that on its own.</p>
 
@@ -690,7 +702,7 @@ computation notices that on its own.</p>
 which is how anyone knew it had drifted. Name one forecast you have seen at work or in the news where
 no such check exists, and say what you would compare it to.</div>
 
-<h3>Mini-case 3 &middot; 2021: the algorithm that was allowed to spend</h3>
+<h3>3.3 Mini-case 3 &middot; 2021: the algorithm that was allowed to spend</h3>
 
 <p>A model looks at a house and names a price, and a company wires the money, thousands of times, on the model's word. Zillow is a property website. In 2018 it started buying houses
 itself, using its own price estimates
@@ -706,7 +718,7 @@ million, and cut about a quarter of its staff.</p>
 A bad prescription buys seven thousand houses. The difference is not accuracy. It is how much authority
 somebody granted the output before anyone checked it.</p>
 
-<p><strong>The rung: prescriptive. The component: people.</strong> The decision that cost the money was
+<p><strong>The level: prescriptive. The component: people.</strong> The decision that cost the money was
 not made by the model. It was made by the executives who decided how far the model's answers could travel without a human
 in between. That is the same decision Chapter 4 asked you to make about handing steps to an agent.</p>
 
@@ -714,9 +726,9 @@ in between. That is the same decision Chapter 4 asked you to make about handing 
 buy anything. Explain what changed about the same number when it stopped being displayed and started
 being acted on, and name the specific control you would have put between the model and the cheque.</div>
 
-<h3>What the three have in common</h3>
+<h3>3.4 What the three have in common</h3>
 
-<p>Three failures, three rungs, and not one of them was caused by bad arithmetic. The Challenger data
+<p>Three failures, three levels, and not one of them was caused by bad arithmetic. The Challenger data
 was correct. Google's model was competently built. Zillow's estimate was close. In every case the
 numbers were fine and something around them was not: how they were displayed, whether anyone checked
 them against reality, and how much authority they were given.</p>
@@ -725,7 +737,7 @@ them against reality, and how much authority they were given.</p>
 It is a series of judgments about what to measure, how to show it, what to compare it against, and how
 far to let it act on its own. The case that follows is what it looks like when an organization gets the
 first of those judgments right while an entire industry gets it wrong.</p>
-<h2 id="oakland"><span class="num">4</span>Oakland: the team that measured differently</h2>
+<h2 id="oakland"><span class="num">4</span>Main case &middot; Oakland: the team that measured differently</h2>
 
 <p>After the 2001 season, the Oakland Athletics lost their best hitter, Jason Giambi, to the New York
 Yankees on a seven-year, $120 million contract, and lost outfielder Johnny Damon and closer Jason
@@ -756,7 +768,7 @@ the wrong one.</p>
   <div class="stat"><b>1</b><span>question: what actually causes runs?</span></div>
 </div>
 
-<h3>Buying what the market mispriced</h3>
+<h3>4.1 Buying what the market mispriced</h3>
 
 
 <p>A mismeasured quality becomes a mispriced asset. Because the market paid for batting average, home
@@ -775,7 +787,7 @@ every front office employed analysts; and once everyone measured correctly, the 
 teams with the most money. An information advantage is real, and it is rented, not owned.</p>
 
 
-<h3>The five components of the 2002 A's</h3>
+<h3>4.2 The five components of the 2002 A's</h3>
 
 
 <table class="sumtable stack-sm">
@@ -787,7 +799,7 @@ teams with the most money. An information advantage is real, and it is rented, n
 <tr><td data-label="Component"><strong>People</strong></td><td data-label="In the case">Beane choosing the model over a century of consensus</td><td data-label="The lesson">The scarce component was the willingness to trust a better measure</td></tr>
 </table>
 
-<h3>What happened after everybody caught up</h3>
+<h3>4.3 What happened after everybody caught up</h3>
 
 <p>Chapter 3 predicted the ending of this story before you read it. An advantage built on information
 lasts exactly as long as the information stays scarce, and this one did not stay scarce, because
@@ -811,11 +823,11 @@ averages on balls in play rose that season.</p>
 
 <p>Stay with that for a moment, because it generalizes further than baseball. An analytics program
 succeeded, its conclusions were adopted by everyone, the aggregate result was a worse product for the
-customer, and the governing body outlawed the conclusion. You will meet the same shape in Week 8 with credit scoring and in Week 10 with recommendation
-systems. The question is what happens when optimization works, everyone does it, and the thing being
+customer, and the governing body outlawed the conclusion. The same shape appears wherever a score or a
+recommendation is optimized hard enough. The question is what happens when optimization works, everyone does it, and the thing being
 optimized was not the thing anybody actually wanted.</p>
 
-<h2 id="other"><span class="num">5</span>The other side: being measured</h2>
+<h2 id="other"><span class="num">5</span>The downside: being measured</h2>
 
 <p>The Moneyball story has winners it celebrates and costs it mentions quietly. The A's model worked
 partly by overruling scouts, professionals with decades of pattern-recognition that resisted
@@ -829,8 +841,8 @@ always sees some things by going blind to others, and the people inside it feel 
 round, and Beane's Oakland teams never won a World Series: analytics bought an edge, not a
 championship, and edges decay. And once every team adopted the same methods, the advantage flowed back
 to the largest payrolls, now spending efficiently. Measuring right is necessary. It is not, on its
-own, sufficient, and it is never permanent. You will see the same pattern next week when every
-retailer learns to mine its data and the question becomes who has more of it.</p>
+own, sufficient, and it is never permanent. Once every competitor measures the same thing, the
+question becomes who has more data to measure, which is where the advantage went.</p>
 
 <div class="takeaways"><span class="obj-tag">Key takeaways</span>
 <ul>
@@ -946,11 +958,11 @@ the room saw.</p>
 <div class="plan"><div class="plan-head">Monday session plan &middot; 80 minutes &middot; concepts, with the three failures as illustrations</div>
 <table>
 <tr><td class="t">0:00</td><td class="w">Open</td><td>Put two payroll numbers on the board, $41 million and $125 million, and ask what a fair season between those two teams looks like. Then say the cheap one won more games and stop. Do not explain. You are coming back to it on Wednesday.</td></tr>
-<tr><td class="t">0:05</td><td class="w">Lecture</td><td>What BI is and is not, then the four kinds of analytics walked on one example the room knows, such as last month's sales. Make them say which rung each question sits on before you tell them.</td></tr>
+<tr><td class="t">0:05</td><td class="w">Lecture</td><td>What BI is and is not, then the four kinds of analytics walked on one example the room knows, such as last month's sales. Make them say which level each question sits on before you tell them.</td></tr>
 <tr><td class="t">0:18</td><td class="w">Lecture</td><td>Metrics, proxies and measurement validity, using batting average against on-base percentage. The line to land is that almost every metric is a proxy, and the job is asking whether the proxy tracks the thing. Then apply it out loud: a store's revenue is a batting average.</td></tr>
 <tr><td class="t">0:32</td><td class="w">Lecture</td><td>Correlation, causation and sample size, then Goodhart's law. Goodhart is the one they will use most in their careers, so spend the time and collect examples from the room before you give yours.</td></tr>
 <tr><td class="t">0:46</td><td class="w">Lecture</td><td>The BI stack: operational systems, warehouse, dashboard, self-service tools. Connect it straight to Lab 7's database and this week's Tableau lab, and to why analysis runs on a copy.</td></tr>
-<tr><td class="t">0:56</td><td class="w">Cases 1&#8211;3</td><td>Challenger, Google Flu, Zillow, about two and a half minutes each. Name the rung and the component and stop. The comparison is the activity. If time is short, Zillow alone will do the work, because the jump from advice to spending is the one students feel.</td></tr>
+<tr><td class="t">0:56</td><td class="w">Cases 1&#8211;3</td><td>Challenger, Google Flu, Zillow, about two and a half minutes each. Name the level and the component and stop. The comparison is the activity. If time is short, Zillow alone will do the work, because the jump from advice to spending is the one students feel.</td></tr>
 <tr><td class="t">1:04</td><td class="w">Think-pair-share</td><td>A metric that made a business worse. See the activity in section 6. Protect the silent minutes; the good examples come from their own jobs and take a moment to surface.</td></tr>
 <tr><td class="t">1:18</td><td class="w">Close</td><td>Point them at section 4 and the discussion questions. Tell them Wednesday answers the payroll question from the opening.</td></tr>
 </table></div>
