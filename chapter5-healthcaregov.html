@@ -412,8 +412,8 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 <a href="#why">Why systems analysis exists</a>
 <a href="#sdlc">The software development life cycle</a>
 <a href="#cases">Three short failures, three phases</a>
-<a href="#healthcaregov">Healthcare.gov: the first day</a>
-<a href="#other">Who waited</a>
+<a href="#healthcaregov">Main case. Healthcare.gov: the first day</a>
+<a href="#other">The downside: who waited</a>
 <a href="#vocab">Vocabulary</a>
 <a href="#discussion">Discussion questions</a>
 <a href="#lab">From lecture to lab</a>
@@ -428,7 +428,7 @@ managed to buy health insurance.</p>
 <div class="callout"><strong>How this chapter runs</strong>
 <p>Sections 1 and 2 are the concepts: why analysis exists, and the phases every project moves through.
 Section 3 puts them to work on three short failures, each with a question you can answer from the
-reading. Section 4 is the full case, Healthcare.gov. Section 5 asks who paid for it, and the
+reading. Section 4 is the main case, Healthcare.gov. Section 5 is the downside, who paid for it, and the
 discussion questions at the end come from both.</p>
 <p class="jumprow"><a class="jump" href="#healthcaregov">Jump to the Healthcare.gov case &#8594;</a>
 <a class="jump" href="#cases">Jump to the three short failures &#8594;</a>
@@ -453,6 +453,8 @@ never served before. The work of deciding what a system must do, before anyone b
 <strong>systems analysis</strong>, and it is unglamorous enough that most projects do less of it than
 they should.</p>
 
+<h3>1.1 The cheapest place to be wrong</h3>
+
 <p>The reason to do it is arithmetic rather than virtue. A misunderstanding caught in a conversation
 costs a conversation. The same misunderstanding caught after launch costs rework, retraining, and
 sometimes a congressional hearing, and the cost rises by roughly ten times at every phase it survives.
@@ -471,8 +473,22 @@ because by then everything else has been built on the assumption that somebody h
 weakest component rule usually gets taught as a fact about running systems. It is at least as true about
 building them, and analysis is the phase where you choose which component will be the weak one.</p>
 
-<p>Two ideas do most of the work in this section, and both are ways of asking a question early that
-somebody will otherwise ask late.</p>
+<div class="callout">
+  <strong>The core idea</strong>
+  <p>Every system is built twice: once in the specification, and once in the code. Building it well the
+  second time cannot rescue a bad job the first time. Most large failures you will read about in this course
+  are failures of the first build, discovered during the second.</p>
+</div>
+
+<h3>1.2 Feasibility, requirements, and scope creep</h3>
+
+<p>Three ideas do most of the work in this section, and all three are ways of asking a question early
+that somebody will otherwise ask late. <strong>Feasibility analysis</strong> asks, before anything is
+built, whether the project should exist at all. A <strong>requirement</strong> is a statement of what the
+system must do, written down before anyone builds it. <strong>Scope creep</strong> is what happens to
+requirements after the estimates are fixed: they keep arriving, each one reasonable, and nobody adjusts
+the schedule. The two boxes below give each its full definition.</p>
+
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Feasibility and scope creep</span>
 <p>Before the SDLC begins, feasibility analysis asks whether the project should exist at all, on three axes: <strong>technical</strong> (can it be built?), <strong>economic</strong> (is it worth what it costs?), and <strong>operational</strong> (will the organization actually use it as intended, on this schedule?). Healthcare.gov passed the first, never seriously ran the second, and failed the third before a line of code existed: the launch date was set by law, not by the work. <strong>Scope creep</strong> is the slow expansion of what the system must do after estimates are fixed. The late
 requirement forcing users to create accounts before browsing is scope creep in its natural habitat,
@@ -482,22 +498,8 @@ arriving with good intentions and no schedule adjustment. Every <strong>stakehol
 <p>A requirement is a statement of what a system must do, written before anyone builds anything, and requirements are the hardest artifact in software because they demand that people articulate needs they have never had to state. Most catastrophic projects fail here, not in the code: the system that gets built faithfully implements a misunderstanding. Healthcare.gov’s late decision to force account creation before browsing, which multiplied load on the weakest part of the system, was a requirements change arriving after the architecture was set.</p></div>
 
 
-<p><strong>Systems analysis</strong> is the work of figuring out what a system must do before anyone
-builds it, and of deciding how to build it in a sequence that keeps the risk survivable. It is the least
-glamorous phase of any technology project and the one that most reliably determines whether the project
-lives or dies.</p>
-
-<p>The reason is arithmetic. A misunderstanding caught during analysis costs a conversation. The same
-misunderstanding caught after go-live costs rework, emergency labor, lost customers, and  as Healthcare.gov
-demonstrated, congressional hearings. The cost of fixing a defect rises by roughly an order of magnitude
-at each stage it survives. Analysis is where that arithmetic is cheapest.</p>
-
-<div class="callout">
-  <strong>The core idea</strong>
-  <p>Every system is built twice: once in the specification, and once in the code. Building it well the
-  second time cannot rescue a bad job the first time. Most large failures you will read about in this course
-  are failures of the first build, discovered during the second.</p>
-</div>
+<p>Analysis also decides how to build the system in a sequence that keeps the risk survivable, which is
+what section 2 is about.</p>
 
 <h2 id="sdlc"><span class="num">2</span>The software development life cycle</h2>
 
@@ -519,9 +521,8 @@ connections negotiated with other organizations. And the people trained to use t
 because it is the one they build themselves. It is not usually the one that fails. In the case at the end
 of this chapter, the software mostly worked. Every other component was late, wrong, or belonged to
 somebody who had not been asked.</p>
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Waterfall and agile</span>
-<p>Waterfall builds in sequential phases, requirements through testing, each completed before the next begins; it assumes you can know the requirements up front. Agile builds in short cycles, shipping small working slices and correcting course from real feedback; it assumes you cannot. Neither is virtue. Waterfall suits stable, regulated, contract-bound work; agile suits uncertainty. Healthcare.gov ran waterfall against maximal uncertainty with a fixed public deadline, which is the worst available pairing, and the rescue that followed was agile in everything but name.</p></div>
 
+<h3>2.1 The six phases</h3>
 
 <p>The <strong>SDLC</strong> is the standard sequence organizations use to move from "we need something"
 to "it is running." Names vary by textbook and by firm; the phases do not. (Do not memorize any one firm's labels. Learn
@@ -542,7 +543,7 @@ the sequence once, at full scale. An <strong>agile</strong> or <strong>iterative
 many times on small slices, so that each pass produces something real and each mistake is small. Healthcare.gov
 ran it once, at national scale, on a fixed political deadline. Hold that thought.</p>
 
-<h3>The phase that never ends</h3>
+<h3>2.2 The phase that never ends</h3>
 
 <p>Students, and a surprising number of executives, treat launch day as the end of a project. It is
 closer to the beginning. Across a system's life, most of the money is spent after go-live, not before,
@@ -569,7 +570,7 @@ the answer may be embarrassing, and because the people who made the decisions ha
 organization that never does it cannot learn from its own projects, which is why the same failures keep
 appearing in this chapter across sixty years.</p>
 
-<h3>Waterfall versus agile, properly</h3>
+<h3>2.3 Waterfall versus agile, properly</h3>
 <p>The two methodologies deserve more than a sentence, because choosing between them is a decision you
 will actually face. <strong>Waterfall</strong> runs the phases once, in order, with signed-off documents
 at each gate. Its strength is predictability: fixed scope, fixed price, a contract a government can
@@ -582,175 +583,6 @@ cost are uncertain up front, which contracts and legislatures hate.</p>
 suits discovery (anything customer-facing being built for the first time). A national insurance
 marketplace nobody had ever built, for users nobody had met, was a discovery problem procured as a
 stable one. The recovery team's six weeks of ship-test-fix loops was, in everything but name, agile: adopted at last, under duress, in production.</p>
-
-<h3>Where these phases came from, and the sentence everyone misquotes</h3>
-
-<p>It is worth knowing that this argument is nearly sixty years old, because you are going to hear it
-presented as new every few years for the rest of your career.</p>
-
-<ul>
-  <li><strong>1968.</strong> A NATO conference in Garmisch, Germany gathers the people building large
-  computer systems to discuss what they are calling the <em>software crisis</em>: projects late, over
-  budget, and unreliable, at a rate that hardware engineering did not have. They coin the term
-  <em>software engineering</em> to describe a discipline that does not exist yet.</li>
-  <li><strong>1970.</strong> Winston Royce publishes "Managing the Development of Large Software
-  Systems," the paper universally cited as the origin of waterfall.</li>
-  <li><strong>1975.</strong> Fred Brooks publishes <em>The Mythical Man-Month</em>, written out of
-  managing IBM's OS/360, and states the law named after him: adding people to a late software project
-  makes it later. New people must be taught, and the teaching is done by the people already behind.</li>
-  <li><strong>2001.</strong> Seventeen practitioners meet at a ski lodge in Utah and write the Agile
-  Manifesto, which is largely a list of things they had watched go wrong.</li>
-</ul>
-
-<p>Now the part worth knowing about Royce, because it is one of the most consequential misreadings in
-the history of this field. His paper does contain the famous diagram of phases flowing downward, one
-into the next. Immediately underneath it he writes that he believes in the concept, but that the
-implementation just described <em>is risky and invites failure</em>. The rest of the paper is about how
-to avoid doing it that way. His central recommendation, several figures later, is a heading that reads:
-attempt to do the job twice.</p>
-
-<p>He never uses the word waterfall. The industry took his first diagram, discarded his warning and his
-proposed fix, gave the diagram his name, and built four decades of contracting practice on it. Then a
-later generation rebelled against "Royce's waterfall" without reading Royce either.</p>
-
-<p>Two things to take from that. The smaller one is a fact you can use: the founding document of
-waterfall says waterfall does not work. The larger one is about how ideas travel. A diagram is portable
-and a caveat is not, so the diagram survives the journey and the caveat does not. You will watch this
-happen to a framework in your own career, and it is worth being the person in the room who has read the
-original.</p>
-
-<h3 id="requirements">Requirements: the part everyone rushes</h3>
-
-<p>A <strong>requirement</strong> is a statement of something the system must do or some quality it must
-have. <em>Functional</em> requirements describe behavior: "the system shall determine subsidy eligibility from
-household income and size." <em>Non-functional</em> requirements describe qualities: how fast, how many at once,
-how secure, how available. Non-functional requirements are the ones organizations skip, and they are the ones
-that produce spectacular public failures, because you cannot see them missing until load arrives.</p>
-
-<p>Healthcare.gov's most consequential missing requirement was a number. The agency issued
-task orders to build the federal marketplace and the data hub while key technical requirements were still
-unknown, including which states the system would have to serve and, critically, how many people might
-enroll. Contracts were signed to build a thing whose size nobody had specified. Every capacity
-decision downstream (servers, database design, queueing) inherited that blank.</p>
-
-<div class="callout callout-caution">
-  <strong>Watch for this pattern</strong>
-  <p>When a deadline is fixed by forces outside the project (a law, an earnings call, a trade show), requirements
-  become the only variable left that leadership can quietly compress. Scope, schedule, and quality form a
-  triangle, usually called the <strong>iron triangle</strong>: fix two and the third moves on its own. On Healthcare.gov, schedule and scope were both politically
-  untouchable. Quality was the only side left free to give.</p>
-</div>
-
-
-<h3>How requirements are actually gathered</h3>
-
-<p>Requirements do not arrive. Somebody goes and gets them, and the work has a name,
-<strong>requirements elicitation</strong>. How they go about it decides what they come back with. The standard methods each have a characteristic blind spot, which is why serious
-projects use several.</p>
-
-<ul>
-  <li><strong>Interviews.</strong> Ask people what they need. Fast and essential, and limited by the
-  fact that people describe the job they think they do rather than the job they do.</li>
-  <li><strong>Observation.</strong> Watch the work happen. Slow, and the only method that reliably finds
-  the workarounds, the second spreadsheet, and the step everybody performs and nobody mentions.</li>
-  <li><strong>Document analysis.</strong> Read the forms, reports, and rules the current process
-  produces. Good for regulated work, and it tells you what was true when the document was written.</li>
-  <li><strong>Workshops.</strong> Put the disagreeing parties in one room and make them settle it in
-  front of each other. Expensive in calendar time, and the only method that surfaces conflicts between
-  stakeholders rather than collecting them separately.</li>
-  <li><strong>Prototypes.</strong> Show people something and watch them react. People are far better at
-  criticizing a thing than describing one, which is the single most useful fact in this section.</li>
-</ul>
-
-<p>The person who does this work has a job title, and it is the one many of you will hold:
-<strong>business analyst</strong>. The role sits between the people who need the system and the people
-who will build it, and its output is the specification that everything downstream depends on. It is
-the translation job from Chapter 1, performed at the phase where translation is cheapest.</p>
-
-<p>Notice what none of these methods produces on its own. Every one of them collects requirements from
-somebody who already exists and can be asked. Healthcare.gov's users were, by definition, people who
-had never bought insurance this way before, and many of whom had never had insurance at all. There was
-no current process to observe and no experienced user to interview. That is precisely the situation
-where prototypes and pilots stop being good practice and become the only honest source of information,
-and it is the situation in which the project ran neither.</p>
-
-
-<h3>Writing a requirement down</h3>
-
-<p>Gathering a requirement and recording it are different jobs, and the second one is where projects
-quietly go wrong. A requirement that lives in somebody's memory of a meeting is not a requirement. The
-standard way to write one is the <strong>user story</strong>, and the format is deliberately rigid:</p>
-
-<p style="font-family:var(--sans);background:var(--off-white);border-left:3px solid var(--magenta);padding:.8rem 1rem;margin:1.1rem 0">
-As a <em>[kind of person]</em>, I want <em>[to do something]</em>, so that <em>[I get some result]</em>.</p>
-
-<p>The third clause is the one that matters and the one people drop. "As a shopper, I want to create an
-account" is not a user story, because it never says what the account is for. Written properly, "so that
-I can see the prices I qualify for" invites the obvious question: does the shopper need an account
-before seeing prices, or after? Healthcare.gov answered that late and wrongly, and the format would
-have forced the argument to happen earlier.</p>
-
-<p>A story on its own is still not enough, because two people can agree with a sentence and mean
-different things by it. So each story carries <strong>acceptance criteria</strong>: specific,
-checkable conditions that decide whether it is finished. Not "the site should be fast," which nobody can
-pass or fail, but "a page returns in under two seconds with fifty thousand people using the site at
-once." That is a testable statement, and notice that writing it requires knowing the number of people,
-which is the requirement CMS never had.</p>
-
-<p><strong>The rule to remember: a requirement nobody can test is not a requirement, it is a hope.</strong>
-Teams also agree a <strong>definition of done</strong>, a standing checklist that applies to everything,
-covering things like code review, tests written, and documentation updated, so that "done" means the
-same thing in March as it does in September.</p>
-
-<h3>Deciding what not to build</h3>
-
-<p>Every project asks for more than it can have, so somebody has to choose. Doing this by argument in a
-meeting produces whatever the most senior person wants. Doing it with a method produces something you
-can defend later.</p>
-
-<p>The common method is <strong>MoSCoW</strong>, which sorts every requirement into four boxes:</p>
-
-<ul>
-  <li><strong>Must have.</strong> Without it the system has no reason to exist. On Healthcare.gov, a
-  person can compare plans and enroll in one.</li>
-  <li><strong>Should have.</strong> Important, and the system is still usable without it for a while.</li>
-  <li><strong>Could have.</strong> Desirable, and the first thing dropped when time runs short.</li>
-  <li><strong>Won't have, this time.</strong> Explicitly excluded, written down, and agreed. This box is
-  the one teams skip, and it is the most useful of the four, because an excluded requirement stops being
-  an argument.</li>
-</ul>
-
-<p>The related idea is the <strong>minimum viable product</strong>, the smallest version that delivers
-real value to a real user, released so you can learn from what happens. It is frequently misused as a
-polite word for unfinished. The distinction is whether you are shipping less in order to learn
-something, or shipping less because you ran out of time.</p>
-
-<p>Now reread the recovery in section 4 with this in front of you. The rescue team did not have better
-technology than the original one. What it had was permission to decide that some things were Could-haves
-and say so out loud. That is prioritization, performed under emergency conditions, eight weeks after the
-moment when it would have been cheap.</p>
-
-<p>Prioritizing once is not enough, because requirements keep arriving. What stops scope creep is not willpower but a procedure. Agree a <strong>baseline</strong> of what is being built.
-Then require every addition to arrive as a <strong>change request</strong> that names its cost in time and money, and
-gets approved or refused by someone accountable. The account-creation mandate that arrived weeks before
-Healthcare.gov's launch was a substantial change to the system's busiest path. Requirements that arrive
-that late are not automatically wrong. Requirements that arrive that late without anyone pricing them
-are.</p>
-
-<h3>Testing is not one thing</h3>
-
-<p>"We tested it" is not a statement anyone should accept, because testing happens at four different
-levels and they catch entirely different problems. A project can do three of them thoroughly and fail
-on the fourth.</p>
-
-<table class="comptable">
-<caption>The four levels of testing</caption>
-<tr><th>Level</th><th>What it checks</th><th>What it cannot catch</th></tr>
-<tr><td>Unit</td><td>One piece of code does what its author intended, on its own</td><td>Anything about how that piece talks to another piece</td></tr>
-<tr><td>Integration</td><td>Two or more parts work correctly together, including systems owned by other organizations</td><td>Whether the assembled whole behaves under real conditions</td></tr>
-<tr><td>System</td><td>The whole thing, end to end, including how it behaves under expected load</td><td>Whether it fits the way people actually work</td></tr>
-<tr><td>User acceptance</td><td>Real users, doing real tasks, decide whether it is fit to release</td><td>Nothing, but only if the users are real and the tasks are real</td></tr>
-</table>
 
 <figure class="diagram" style="margin:1.8rem auto;max-width:470px">
 <svg viewBox="0 0 470 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="wfT wfD"
@@ -850,6 +682,177 @@ exactly when.
 </figcaption>
 </figure>
 
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Waterfall and agile</span>
+<p>Waterfall builds in sequential phases, requirements through testing, each completed before the next begins; it assumes you can know the requirements up front. Agile builds in short cycles, shipping small working slices and correcting course from real feedback; it assumes you cannot. Neither is virtue. Waterfall suits stable, regulated, contract-bound work; agile suits uncertainty. Healthcare.gov ran waterfall against maximal uncertainty with a fixed public deadline, which is the worst available pairing, and the rescue that followed was agile in everything but name.</p></div>
+
+<h3>2.4 Where these phases came from, and the sentence everyone misquotes</h3>
+
+<p>It is worth knowing that this argument is nearly sixty years old, because you are going to hear it
+presented as new every few years for the rest of your career.</p>
+
+<ul>
+  <li><strong>1968.</strong> A NATO conference in Garmisch, Germany gathers the people building large
+  computer systems to discuss what they are calling the <em>software crisis</em>: projects late, over
+  budget, and unreliable, at a rate that hardware engineering did not have. They coin the term
+  <em>software engineering</em> to describe a discipline that does not exist yet.</li>
+  <li><strong>1970.</strong> Winston Royce publishes "Managing the Development of Large Software
+  Systems," the paper universally cited as the origin of waterfall.</li>
+  <li><strong>1975.</strong> Fred Brooks publishes <em>The Mythical Man-Month</em>, written out of
+  managing IBM's OS/360, and states the law named after him: adding people to a late software project
+  makes it later. New people must be taught, and the teaching is done by the people already behind.</li>
+  <li><strong>2001.</strong> Seventeen practitioners meet at a ski lodge in Utah and write the Agile
+  Manifesto, which is largely a list of things they had watched go wrong.</li>
+</ul>
+
+<p>Now the part worth knowing about Royce, because it is one of the most consequential misreadings in
+the history of this field. His paper does contain the famous diagram of phases flowing downward, one
+into the next. Immediately underneath it he writes that he believes in the concept, but that the
+implementation just described <em>is risky and invites failure</em>. The rest of the paper is about how
+to avoid doing it that way. His central recommendation, several figures later, is a heading that reads:
+attempt to do the job twice.</p>
+
+<p>He never uses the word waterfall. The industry took his first diagram, discarded his warning and his
+proposed fix, gave the diagram his name, and built four decades of contracting practice on it. Then a
+later generation rebelled against "Royce's waterfall" without reading Royce either.</p>
+
+<p>Two things to take from that. The smaller one is a fact you can use: the founding document of
+waterfall says waterfall does not work. The larger one is about how ideas travel. A diagram is portable
+and a caveat is not, so the diagram survives the journey and the caveat does not. You will watch this
+happen to a framework in your own career, and it is worth being the person in the room who has read the
+original.</p>
+
+<h3 id="requirements">2.5 Requirements: the part everyone rushes</h3>
+
+<p>A <strong>requirement</strong> is a statement of something the system must do or some quality it must
+have. <em>Functional</em> requirements describe behavior: "the system shall determine subsidy eligibility from
+household income and size." <em>Non-functional</em> requirements describe qualities: how fast, how many at once,
+how secure, how available. Non-functional requirements are the ones organizations skip, and they are the ones
+that produce spectacular public failures, because you cannot see them missing until load arrives.</p>
+
+<p>Healthcare.gov's most consequential missing requirement was a number. The agency issued
+task orders to build the federal marketplace and the data hub while key technical requirements were still
+unknown, including which states the system would have to serve and, critically, how many people might
+enroll. Contracts were signed to build a thing whose size nobody had specified. Every capacity
+decision downstream (servers, database design, queueing) inherited that blank.</p>
+
+<div class="callout callout-caution">
+  <strong>Watch for this pattern</strong>
+  <p>When a deadline is fixed by forces outside the project (a law, an earnings call, a trade show), requirements
+  become the only variable left that leadership can quietly compress. Scope, schedule, and quality form a
+  triangle, usually called the <strong>iron triangle</strong>: fix two and the third moves on its own. On Healthcare.gov, schedule and scope were both politically
+  untouchable. Quality was the only side left free to give.</p>
+</div>
+
+
+<h3>2.6 How requirements are actually gathered</h3>
+
+<p>Requirements do not arrive. Somebody goes and gets them, and the work has a name,
+<strong>requirements elicitation</strong>. How they go about it decides what they come back with. The standard methods each have a characteristic blind spot, which is why serious
+projects use several.</p>
+
+<ul>
+  <li><strong>Interviews.</strong> Ask people what they need. Fast and essential, and limited by the
+  fact that people describe the job they think they do rather than the job they do.</li>
+  <li><strong>Observation.</strong> Watch the work happen. Slow, and the only method that reliably finds
+  the workarounds, the second spreadsheet, and the step everybody performs and nobody mentions.</li>
+  <li><strong>Document analysis.</strong> Read the forms, reports, and rules the current process
+  produces. Good for regulated work, and it tells you what was true when the document was written.</li>
+  <li><strong>Workshops.</strong> Put the disagreeing parties in one room and make them settle it in
+  front of each other. Expensive in calendar time, and the only method that surfaces conflicts between
+  stakeholders rather than collecting them separately.</li>
+  <li><strong>Prototypes.</strong> Show people something and watch them react. People are far better at
+  criticizing a thing than describing one, which is the single most useful fact in this section.</li>
+</ul>
+
+<p>The person who does this work has a job title, and it is the one many of you will hold:
+<strong>business analyst</strong>. The role sits between the people who need the system and the people
+who will build it, and its output is the specification that everything downstream depends on. It is
+the translation job from Chapter 1, performed at the phase where translation is cheapest.</p>
+
+<p>Notice what none of these methods produces on its own. Every one of them collects requirements from
+somebody who already exists and can be asked. Healthcare.gov's users were, by definition, people who
+had never bought insurance this way before, and many of whom had never had insurance at all. There was
+no current process to observe and no experienced user to interview. That is precisely the situation
+where prototypes and pilots stop being good practice and become the only honest source of information,
+and it is the situation in which the project ran neither.</p>
+
+
+<h3>2.7 Writing a requirement down</h3>
+
+<p>Gathering a requirement and recording it are different jobs, and the second one is where projects
+quietly go wrong. A requirement that lives in somebody's memory of a meeting is not a requirement. The
+standard way to write one is the <strong>user story</strong>, and the format is deliberately rigid:</p>
+
+<p style="font-family:var(--sans);background:var(--off-white);border-left:3px solid var(--magenta);padding:.8rem 1rem;margin:1.1rem 0">
+As a <em>[kind of person]</em>, I want <em>[to do something]</em>, so that <em>[I get some result]</em>.</p>
+
+<p>The third clause is the one that matters and the one people drop. "As a shopper, I want to create an
+account" is not a user story, because it never says what the account is for. Written properly, "so that
+I can see the prices I qualify for" invites the obvious question: does the shopper need an account
+before seeing prices, or after? Healthcare.gov answered that late and wrongly, and the format would
+have forced the argument to happen earlier.</p>
+
+<p>A story on its own is still not enough, because two people can agree with a sentence and mean
+different things by it. So each story carries <strong>acceptance criteria</strong>: specific,
+checkable conditions that decide whether it is finished. Not "the site should be fast," which nobody can
+pass or fail, but "a page returns in under two seconds with fifty thousand people using the site at
+once." That is a testable statement, and notice that writing it requires knowing the number of people,
+which is the requirement CMS never had.</p>
+
+<p><strong>The rule to remember: a requirement nobody can test is not a requirement, it is a hope.</strong>
+Teams also agree a <strong>definition of done</strong>, a standing checklist that applies to everything,
+covering things like code review, tests written, and documentation updated, so that "done" means the
+same thing in March as it does in September.</p>
+
+<h3>2.8 Deciding what not to build</h3>
+
+<p>Every project asks for more than it can have, so somebody has to choose. Doing this by argument in a
+meeting produces whatever the most senior person wants. Doing it with a method produces something you
+can defend later.</p>
+
+<p>The common method is <strong>MoSCoW</strong>, which sorts every requirement into four boxes:</p>
+
+<ul>
+  <li><strong>Must have.</strong> Without it the system has no reason to exist. On Healthcare.gov, a
+  person can compare plans and enroll in one.</li>
+  <li><strong>Should have.</strong> Important, and the system is still usable without it for a while.</li>
+  <li><strong>Could have.</strong> Desirable, and the first thing dropped when time runs short.</li>
+  <li><strong>Won't have, this time.</strong> Explicitly excluded, written down, and agreed. This box is
+  the one teams skip, and it is the most useful of the four, because an excluded requirement stops being
+  an argument.</li>
+</ul>
+
+<p>The related idea is the <strong>minimum viable product</strong>, the smallest version that delivers
+real value to a real user, released so you can learn from what happens. It is frequently misused as a
+polite word for unfinished. The distinction is whether you are shipping less in order to learn
+something, or shipping less because you ran out of time.</p>
+
+<p>Now reread the recovery in section 4 with this in front of you. The rescue team did not have better
+technology than the original one. What it had was permission to decide that some things were Could-haves
+and say so out loud. That is prioritization, performed under emergency conditions, eight weeks after the
+moment when it would have been cheap.</p>
+
+<p>Prioritizing once is not enough, because requirements keep arriving. What stops scope creep is not willpower but a procedure. Agree a <strong>baseline</strong> of what is being built.
+Then require every addition to arrive as a <strong>change request</strong> that names its cost in time and money, and
+gets approved or refused by someone accountable. The account-creation mandate that arrived weeks before
+Healthcare.gov's launch was a substantial change to the system's busiest path. Requirements that arrive
+that late are not automatically wrong. Requirements that arrive that late without anyone pricing them
+are.</p>
+
+<h3>2.9 Testing is not one thing</h3>
+
+<p>"We tested it" is not a statement anyone should accept, because testing happens at four different
+levels and they catch entirely different problems. A project can do three of them thoroughly and fail
+on the fourth.</p>
+
+<table class="comptable">
+<caption>The four levels of testing</caption>
+<tr><th>Level</th><th>What it checks</th><th>What it cannot catch</th></tr>
+<tr><td>Unit</td><td>One piece of code does what its author intended, on its own</td><td>Anything about how that piece talks to another piece</td></tr>
+<tr><td>Integration</td><td>Two or more parts work correctly together, including systems owned by other organizations</td><td>Whether the assembled whole behaves under real conditions</td></tr>
+<tr><td>System</td><td>The whole thing, end to end, including how it behaves under expected load</td><td>Whether it fits the way people actually work</td></tr>
+<tr><td>User acceptance</td><td>Real users, doing real tasks, decide whether it is fit to release</td><td>Nothing, but only if the users are real and the tasks are real</td></tr>
+</table>
 
 <p>Now place the three failures from section 3 on that table. Mars Climate Orbiter passed unit testing
 twice, once on each team's software, and had no <strong>integration testing</strong> that would have compared the two
@@ -863,7 +866,7 @@ Non-functional requirements are only checkable by testing under the volume you e
 ever specified the volume, as at Healthcare.gov, there is no load test that can be designed. Missing
 requirements do not just produce missing features. They produce missing tests.</p>
 
-<h3 id="integration">Integration: the seam nobody owned</h3>
+<h3 id="integration">2.10 Integration: the connection nobody owned</h3>
 
 <p>Healthcare.gov was never one system. It was a federal marketplace that had to talk in real time to the
 IRS, the Social Security Administration, the Department of Homeland Security, and dozens of private insurers,
@@ -881,7 +884,7 @@ lead integrator, while CGI did not share that understanding of its role.</p>
 with multiple vendors needs one accountable party for the whole. Where that role is vacant, each vendor
 delivers its own piece correctly and the assembled system does not work, and no one has breached a contract.</p>
 
-<h3 id="rollout">Rollout strategy: how you turn it on</h3>
+<h3 id="rollout">2.11 Rollout strategy: how you turn it on</h3>
 
 <p>There are four ways to move users from an old world to a new one, and choosing among them is a risk
 decision, not a technical one:</p>
@@ -900,11 +903,11 @@ one date. A pilot was available and obvious. One state, or federal employees, or
 regional beta months ahead of the deadline. It was not taken. The consequence of big bang is that the first
 honest test of the system is also the moment of maximum public exposure, and there is nothing to roll back to.</p>
 
-<div class="callout callout-bridge">
-  <strong>Connect it forward</strong>
-  <p>Two chapters from now, Nike will make the same rollout choice on a $400 million supply chain system and
-  get the same class of result. Watch for it. The pattern, a big-bang cutover of a system whose requirements
-  were never nailed down, is the single most repeated failure mode in this course.</p>
+<div class="callout callout-caution">
+  <strong>The most repeated failure in this book</strong>
+  <p>A big-bang cutover of a system whose requirements were never settled is the single most repeated
+  failure pattern in this book, and it appears at companies with far more money than CMS. Learn the
+  shape of it now.</p>
 </div>
 
 <h2 id="cases"><span class="num">3</span>Three short failures, three phases</h2>
@@ -913,7 +916,7 @@ rises by roughly ten times at each phase it survives. That claim is easier to be
 happen. Each failure below escaped a different phase, and in each one the fix was available one phase
 earlier and would have cost almost nothing there. Two of the three had working code.</p>
 
-<h3>Mini-case 1 &middot; 1999: the spacecraft that used the wrong units</h3>
+<h3>3.1 Mini-case 1 &middot; 1999: the spacecraft that used the wrong units</h3>
 
 <p>NASA launched the Mars Climate Orbiter in December 1998 on a mission costing around $193 million.
 Nine months later it reached Mars, fired its engine to enter orbit, and was never heard from again. It
@@ -937,7 +940,7 @@ nine months of flight, and was found by the planet.</p>
 successfully. Name the specific document that should have existed between them, and say who in an
 organization is responsible for noticing that it does not.</div>
 
-<h3>Mini-case 2 &middot; 1992: the ambulance service that went live on a Monday</h3>
+<h3>3.2 Mini-case 2 &middot; 1992: the ambulance service that went live on a Monday</h3>
 
 <p>The London Ambulance Service, then the largest in the world, had already spent about &pound;7.5 million
 on a failed attempt to computerize its dispatch operation. The second attempt went live on Monday,
@@ -964,7 +967,7 @@ anyone stop it. One borough for a month would have found all of this.</p>
 choose, and which one would you have chosen? Name the specific cost of your choice, because every safer
 option costs something.</div>
 
-<h3>Mini-case 3 &middot; 2024: the update that went everywhere at once</h3>
+<h3>3.3 Mini-case 3 &middot; 2024: the update that went everywhere at once</h3>
 
 <p>Early on 19 July 2024, airport check-in screens around the world went blue at the same moment, and
 gate agents reached for pens. CrowdStrike sells security software that runs deep inside Windows,
@@ -995,7 +998,7 @@ that argument, then say what it would take to hold both things at once: fast pro
 release.</div>
 
 <div class="tryit" id="phasecheck">
-  <div class="tryit-head">Try it &middot; Which phase did it escape?</div>
+  <div class="tryit-head">Quick quiz &middot; Which phase did it escape?</div>
   <p class="tryit-intro">Six things that went wrong on real projects, including three from this chapter.
   For each one, name the phase where the mistake was made, not the phase where it was noticed. Those are
   almost never the same, and the gap between them is what this chapter is about.</p>
@@ -1046,7 +1049,7 @@ release.</div>
 })();
 </script>
 
-<h3>What the three have in common</h3>
+<h3>3.4 What the three have in common</h3>
 
 <p>Look at what was working in each case. Two spacecraft teams whose software both passed its own tests.
 An ambulance dispatch system whose requirements were broadly correct. A security update that had been
@@ -1060,7 +1063,7 @@ becomes expensive because it survives.</p>
 
 <p>Now read the case that follows with one question in front of you. Healthcare.gov is not one of these
 three failures. It is all of them at once, at national scale, on a date set by law.</p>
-<h2 id="healthcaregov"><span class="num">4</span>Healthcare.gov: the first day</h2>
+<h2 id="healthcaregov"><span class="num">4</span>Main case &middot; Healthcare.gov: the first day</h2>
 
 <p>On the morning of 2 October 2013, in a government crisis meeting, somebody read out how many people
 had managed to buy insurance through the new federal website on its first day. Six. Across five
@@ -1089,10 +1092,11 @@ That reading is wrong, and the rest of this chapter is about why. Capacity was a
 a set of decisions made over three years about how to <em>analyze, specify, sequence, and govern</em> the
 building of a system: decisions that had already determined the outcome before a single user arrived.</p>
 
-<h3>Where it actually broke</h3>
+<h3>4.1 Where it actually broke: governance</h3>
 
-
-<p>Governance is the last piece, and it is where analysis either holds or collapses. A project has scheduled
+<p>Section 2 has already shown three of the breaks: a capacity requirement nobody wrote, an integration
+nobody owned, and a rollout with nothing to fall back to. The fourth is governance, and it is where
+analysis either holds or collapses. A project has scheduled
 moments where leadership must review evidence and decide whether to proceed, <strong>stage gates</strong>.
 Their whole value is that they are allowed to say no.</p>
 
@@ -1115,7 +1119,7 @@ are all decisions made by managers, not engineers, which is exactly why this mat
 school course.</p>
 
 
-<h3>The recovery, and what it proves</h3>
+<h3>4.2 The recovery, and what it proves</h3>
 
 
 <p>The repair is as instructive as the failure, because it shows the problem was tractable all along.
@@ -1150,7 +1154,7 @@ variable, and every one was available in 2011.</p>
 
 
 
-<h3>The five components at Healthcare.gov</h3>
+<h3>4.3 The five components at Healthcare.gov</h3>
 
 
 <p>Every chapter maps its case onto the same five components. The point of the exercise is to locate the break, because a system is only as strong as its weakest component, no matter how strong the others are.</p>
@@ -1168,7 +1172,7 @@ variable, and every one was available in 2011.</p>
 </div>
 
 
-<h3>Systems analysis in 2026, and what did not change</h3>
+<h3>4.4 Systems analysis in 2026, and what did not change</h3>
 
 <p>This case is from 2013, and you are entitled to ask whether any of it still applies. Two answers,
 and they point in different directions.</p>
@@ -1185,8 +1189,7 @@ was expensive to prevent at the time and is nearly free to prevent now.</p>
   customers, watch, and expand exists and is standard. CrowdStrike had it available and did not use it
   for the class of update that failed, which is why its own remedy afterwards was to start.</li>
   <li><strong>Capacity is rented by the minute.</strong> Load testing against a realistic volume no
-  longer requires buying the hardware to test with, which is Chapter 1's Spotify example and Week 10's
-  subject.</li>
+  longer requires buying the hardware to test with, which is how Chapter 1's Spotify example ran.</li>
   <li><strong>Systems watch themselves.</strong> Monitoring now routes an alert to a named person who is
   on duty and treats an unanswered alert as its own failure, rather than sending mail nobody reads.</li>
 </ul>
@@ -1203,7 +1206,7 @@ hide behind the build. Now that a model can produce a working draft in an aftern
 a larger share of what is left, not a smaller one, and an AI that builds the wrong system builds it
 faster. Chapter 4 made this point about processes; it is the same point about projects.</p>
 
-<h3>What happened next, which is not a happy ending</h3>
+<h3>4.5 What happened next, which is not a happy ending</h3>
 
 <p>The failure had institutional consequences, and they are worth following, because most textbooks stop
 at the recovery.</p>
@@ -1233,7 +1236,7 @@ sustain, or evidence of something else entirely is a genuine question, and the a
 What is not in question is the finding underneath it, which is older than the agencies and outlived
 them: somebody has to own the whole, and that somebody has to be allowed to say no.</p>
 
-<h2 id="other"><span class="num">5</span>Who waited</h2>
+<h2 id="other"><span class="num">5</span>The downside: who waited</h2>
 <p>The engineering story has a human denominator it is easy to lose. The people refreshing Healthcare.gov on October 1 were not users testing a product. They were people
 without health insurance, many attempting to buy it for the first time in their lives, some with
 conditions that had made them uninsurable until that morning. Every week the site did not work was a week they stayed

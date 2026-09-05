@@ -261,6 +261,7 @@ li{margin-bottom:.45rem}
 .toc{border:1px solid var(--border);background:var(--off-white);padding:1rem 1.25rem;margin:1.6rem 0;font-family:var(--sans);font-size:14.5px;line-height:2}
 .toc strong{display:block;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.3rem}
 .toc a{color:var(--text-dark);text-decoration:none;border-bottom:1px solid var(--border);margin-right:1rem;white-space:nowrap}
+@media (max-width:860px){.toc a{white-space:normal}}
 .toc a:hover{color:var(--magenta-dark);border-bottom-color:var(--magenta)}
 .kc{border:1px solid var(--border);border-left:4px solid var(--magenta);background:#fff;margin:1.4rem 0;padding:1rem 1.2rem}
 .kc .kc-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.15rem}
@@ -399,8 +400,8 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 <a href="#data">What data actually is</a>
 <a href="#tables">Why one grid breaks, and what replaces it</a>
 <a href="#cases">Three short failures of shape</a>
-<a href="#walmart">Walmart: a company built on a database</a>
-<a href="#other">What the basket reveals</a>
+<a href="#walmart">Main case. Walmart: a company built on a database</a>
+<a href="#other">The downside: what the basket reveals</a>
 <a href="#vocab">Vocabulary</a>
 <a href="#discussion">Discussion questions</a>
 <a href="#lab">From lecture to lab</a>
@@ -417,8 +418,8 @@ customer visits a week.</p>
 <div class="callout"><strong>How this chapter runs</strong>
 <p>Sections 1 and 2 are the concepts: what data is, and why storing it in one big grid fails. Section
 3 puts them to work on three short failures, each with a question you can answer from the reading.
-Section 4 is the full case, Walmart. Section 5 asks what the same design makes possible that you might
-not want, and the discussion questions at the end come from both. This is the most technical chapter in
+Section 4 is the main case, Walmart. Section 5 is the downside, what the same design makes possible that
+you might not want, and the discussion questions at the end come from both. This is the most technical chapter in
 the book, and it is technical the way a lab is: everything in it, you do with your own hands in SQL this
 week.</p>
 <p class="jumprow"><a class="jump" href="#walmart">Jump to the Walmart case &#8594;</a>
@@ -438,20 +439,21 @@ week.</p>
 
 <h2 id="data"><span class="num">1</span>What data actually is</h2>
 
-<p>Chapter 2 defined data by its role: raw recorded facts, the bottom rung of a ladder that climbs to
-information and knowledge. This chapter asks the more physical question. What is the stuff itself, and
+<p>Chapter 2 defined data by its role: raw recorded facts, the base layer that information and
+knowledge are built from. This chapter asks the more physical question. What is the stuff itself, and
 what has to be true of it before anyone can ask it anything?</p>
 
 <p>Notice where this sits in the five components. Data is the one component that is not bought and not
 built, but <em>accumulated</em>, one recorded fact at a time, according to rules somebody decided in
 advance. Hardware and software can be replaced over a weekend. The records cannot, because they are a
 history, and a history is the one thing money cannot buy in a hurry. That is Chapter 3's argument
-arriving from the other direction, and it is why this chapter comes before the ones on analytics and
-AI: those are things you do <em>to</em> data, and they inherit every decision made here.</p>
+arriving from the other direction. Analytics and AI are things you do <em>to</em> data, so they inherit
+every decision made here.</p>
 
-<p>Chapter 2 defined data by its role: raw recorded facts, the bottom rung of the ladder that climbs
-to information and knowledge. This chapter asks the more physical question. What is the stuff
-itself?</p>
+<h3>1.1 What turns a fact into data</h3>
+
+<p>Two properties turn a fact into data, and the rest of this chapter follows from them: the fact has to
+be recorded, and it has to be given a type.</p>
 
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Data</span>
 <p>Data is any recorded representation of a fact: a number, a piece of text, a date, a true/false
@@ -460,6 +462,8 @@ a sale that no system wrote down generates no data, no matter how real the sale 
 a <strong>type</strong>: the same marks on a screen mean different things depending on whether a
 system treats them as a number, text, or a date, and most data disasters begin with a type being
 wrong.</p></div>
+
+<h3>1.2 Kinds of data</h3>
 
 <p>Data comes in kinds, and the kinds determine what you can do with it:</p>
 
@@ -476,7 +480,7 @@ you sum one and group by the other.</p>
 same fields and every field has a type: transactions, inventory counts, member records. It is the
 easiest data to query and the kind databases were invented for. <strong>Unstructured data</strong>
 has no fixed grid: emails, reviews, photos, call recordings, social posts. It is most of the data in
-the world by volume and historically the hardest to use; the AI systems in Week 10 exist largely
+the world by volume and historically the hardest to use; modern AI systems matter to business largely
 because they made unstructured data usable. <strong>Semi-structured data</strong> sits between: it
 has labels but not a rigid grid, like a JSON order from a website where one order has a delivery note
 and the next does not.</p></div>
@@ -487,7 +491,42 @@ which is unstructured text being mined for structure. The skill of a data organi
 skill of moving facts rightward: from unstructured, to labeled, to fully structured, because
 structure is what makes questions cheap to ask.</p>
 
-<h3>Records, fields, and why format matters</h3>
+<div class="tryit" id="shape">
+  <div class="tryit-head">Quick quiz &middot; Structured, unstructured, or semi-structured?</div>
+  <p class="tryit-intro">Five things a business might store. Decide what shape each one has before you check.</p>
+  <div id="shaperows"></div>
+  <p class="tryit-note">Ask whether every item has the same fields. If yes, it is structured. If it is free text or an image, unstructured. If it has tags but the tags vary from item to item, semi-structured.</p>
+</div>
+
+<script>
+(function(){
+  var host=document.getElementById('shaperows');
+  if(!host)return;
+  var F=["Structured", "Unstructured", "Semi-structured"];
+  var R=[{"t": "Every sale at the register: date, store, product, quantity, price.", "a": "Structured", "why": "Fixed fields, every row the same shape, each field a known type. This is the kind of data databases were invented for."}, {"t": "The voicemail a customer left complaining about a late delivery.", "a": "Unstructured", "why": "Audio with no fields. A person can understand it; a database cannot query it until something has turned it into data."}, {"t": "A product page saved as a web file, with tags for name and price but different extra tags on every product.", "a": "Semi-structured", "why": "Tags give it some structure, but the tags vary between items, so no fixed grid fits it. Most of the web looks like this."}, {"t": "The employee roster: name, hire date, store, hourly rate.", "a": "Structured", "why": "Same fields for every person. That it is about people rather than sales does not change its shape."}, {"t": "Ten thousand photos customers posted of their purchases, each with a caption.", "a": "Unstructured", "why": "The photo is the content and the caption is free text. Counting them is easy; asking what is in them requires a model."}];
+  R.forEach(function(r){
+    var row=document.createElement('div'); row.className='wrow';
+    row.innerHTML='<div class="wq">'+r.t+'</div><div class="wbtns">'
+      +F.map(function(f){return '<button type="button" data-f="'+f+'">'+f+'</button>';}).join('')
+      +'</div><div class="wout" role="status" aria-live="polite" hidden></div>';
+    host.appendChild(row);
+    var bs=row.querySelectorAll('button'), out=row.querySelector('.wout');
+    bs.forEach(function(b){
+      b.addEventListener('click',function(){
+        if(!out.hidden)return;
+        var ok=b.getAttribute('data-f')===r.a;
+        bs.forEach(function(x){x.disabled=true;});
+        b.className='you '+(ok?'right':'wrong');
+        if(!ok) bs.forEach(function(x){ if(x.getAttribute('data-f')===r.a) x.className='you right'; });
+        out.hidden=false; out.className='wout '+(ok?'yes':'no');
+        out.innerHTML='<b>'+r.a+'.</b> '+r.why;
+      });
+    });
+  });
+})();
+</script>
+
+<h3>1.3 Records, fields, and why format matters</h3>
 
 
 <p>Structured data has an anatomy. A <strong>record</strong> is one complete fact-bundle: one sale,
@@ -524,9 +563,7 @@ neither can a machine learning model. In five-component terms, a bad data design
 component, and the weakest component rule from Chapter 1 says the rest of the system is then limited by
 it however good it is.</p>
 
-<p>The natural first instinct is to put everything in one giant sheet: every sale, with the store's
-name and address and the product's name and price and supplier repeated on every row. For a few
-hundred rows it works. Then it breaks, in three predictable ways that have textbook names.</p>
+<h3>2.1 The three ways one grid breaks</h3>
 
 <p>First, <strong>update anomalies</strong>: the Bellingham store's phone number lives on every one
 of its thousands of sale rows, so changing it means changing it thousands of times, and missing one
@@ -540,8 +577,11 @@ lifetimes, and the knots become errors.</p>
 million rows. Walmart's registers write millions of new rows an hour, from thousands of locations at
 once. No sheet survives contact with that.</p>
 
-<h3>The relational model</h3>
+<h3>2.2 The relational model</h3>
 
+<p>The fix is to stop repeating facts. Give each kind of thing its own table, one for stores, one for
+products, one for sales, and connect the tables to each other with identifying numbers called keys.
+That design is the <strong>relational model</strong>, and the box names its parts.</p>
 
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">The relational database</span>
 <p>A relational database stores each kind of fact in its own <strong>table</strong>, one table for
@@ -563,7 +603,7 @@ final checkpoints, finding a supplier's products and a store's real problem, are
 write yourself.</p>
 
 
-<h3>Where the tables came from, and the decade nobody wanted them</h3>
+<h3>2.3 Where the tables came from, and the decade nobody wanted them</h3>
 
 <p>The model in this section is so standard now that it looks like a discovery about the nature of
 information rather than somebody's idea. It was somebody's idea, and it was resisted for years by the
@@ -587,7 +627,8 @@ founding the company that became Oracle. Codd's employer had the paper, the rese
 and the money, and still arrived late, because it already sold something the paper made obsolete.</p>
 
 <p>Two things worth taking from that. The first is that the thing you are about to be taught as
-self-evident was argued for, against opposition, by a named person, in living memory. The second is a pattern you will meet again in Chapter 12 and in the AI chapter. The organization
+self-evident was argued for, against opposition, by a named person, in living memory. The second is a
+pattern you will meet again and again in this book and in your career. The organization
 with the most to gain from an idea is frequently the one with the most to lose from it, and being
 right early is worth nothing by itself.</p>
 
@@ -675,8 +716,10 @@ patched. They become impossible to express.
 </figcaption>
 </figure>
 
-<h3>Normalization</h3>
+<h3>2.4 Normalization</h3>
 
+<p>Splitting the one grid into tables so that each fact lives in exactly one place has a name,
+<strong>normalization</strong>, and it is less a technique than a habit of mind.</p>
 
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Normalization</span>
 <p>Normalization is the design discipline of splitting data into tables so that every fact is stored
@@ -696,40 +739,7 @@ differs by purpose, which is the door into the next two sections: one shape for 
 business, another for understanding it.</p>
 
 
-<div class="tryit" id="shape">
-  <div class="tryit-head">Try it &middot; Structured, unstructured, or semi-structured?</div>
-  <p class="tryit-intro">Five things a business might store. Decide what shape each one has before you check.</p>
-  <div id="shaperows"></div>
-  <p class="tryit-note">Ask whether every item has the same fields. If yes, it is structured. If it is free text or an image, unstructured. If it has tags but the tags vary from item to item, semi-structured.</p>
-</div>
 
-<script>
-(function(){
-  var host=document.getElementById('shaperows');
-  if(!host)return;
-  var F=["Structured", "Unstructured", "Semi-structured"];
-  var R=[{"t": "Every sale at the register: date, store, product, quantity, price.", "a": "Structured", "why": "Fixed fields, every row the same shape, each field a known type. This is the kind of data databases were invented for."}, {"t": "The voicemail a customer left complaining about a late delivery.", "a": "Unstructured", "why": "Audio with no fields. A person can understand it; a database cannot query it until something has turned it into data."}, {"t": "A product page saved as a web file, with tags for name and price but different extra tags on every product.", "a": "Semi-structured", "why": "Tags give it some structure, but the tags vary between items, so no fixed grid fits it. Most of the web looks like this."}, {"t": "The employee roster: name, hire date, store, hourly rate.", "a": "Structured", "why": "Same fields for every person. That it is about people rather than sales does not change its shape."}, {"t": "Ten thousand photos customers posted of their purchases, each with a caption.", "a": "Unstructured", "why": "The photo is the content and the caption is free text. Counting them is easy; asking what is in them requires a model, which is Chapter 9."}];
-  R.forEach(function(r){
-    var row=document.createElement('div'); row.className='wrow';
-    row.innerHTML='<div class="wq">'+r.t+'</div><div class="wbtns">'
-      +F.map(function(f){return '<button type="button" data-f="'+f+'">'+f+'</button>';}).join('')
-      +'</div><div class="wout" role="status" aria-live="polite" hidden></div>';
-    host.appendChild(row);
-    var bs=row.querySelectorAll('button'), out=row.querySelector('.wout');
-    bs.forEach(function(b){
-      b.addEventListener('click',function(){
-        if(!out.hidden)return;
-        var ok=b.getAttribute('data-f')===r.a;
-        bs.forEach(function(x){x.disabled=true;});
-        b.className='you '+(ok?'right':'wrong');
-        if(!ok) bs.forEach(function(x){ if(x.getAttribute('data-f')===r.a) x.className='you right'; });
-        out.hidden=false; out.className='wout '+(ok?'yes':'no');
-        out.innerHTML='<b>'+r.a+'.</b> '+r.why;
-      });
-    });
-  });
-})();
-</script>
 
 <h2 id="cases"><span class="num">3</span>Three short failures of shape</h2>
 <p>Before the case, three short ones. In every one of them the facts existed, somebody needed an answer
@@ -737,7 +747,7 @@ from those facts, and the answer was blocked by the <em>shape</em> the facts wer
 by the facts themselves. They are separated by 130 years, which is the point. This is not a modern
 problem, and it did not stop being a problem when computers got fast.</p>
 
-<h3>Mini-case 1 &middot; 1890: the census that would have taken thirteen years</h3>
+<h3>3.1 Mini-case 1 &middot; 1890: the census that would have taken thirteen years</h3>
 
 <p>The United States Constitution requires a population count every ten years, and by the 1880s the
 counting had stopped working. The 1880 census was recorded on paper schedules and tallied by hundreds of
@@ -770,7 +780,7 @@ was not wrong. It was unstructured, and an unstructured fact is one that a perso
 thing Hollerith changed, in the vocabulary of section 1, and explain why that change is what made the
 counting fast rather than the electricity.</div>
 
-<h3>Mini-case 2 &middot; 1999: two digits</h3>
+<h3>3.2 Mini-case 2 &middot; 1999: two digits</h3>
 
 <p>For decades, programmers stored years as two digits. 1965 was 65. This was not carelessness. Storage
 was scarce and expensive, two characters per date across millions of records was real money,
@@ -795,7 +805,7 @@ everybody else's problem in 1999.</p>
 type being wrong. Name one field in a system you use where the storage decision embeds an assumption
 about the future, and say what happens on the day that assumption stops being true.</div>
 
-<h3>Mini-case 3 &middot; 2020: the rows that fell off the bottom</h3>
+<h3>3.3 Mini-case 3 &middot; 2020: the rows that fell off the bottom</h3>
 
 <p>During the pandemic, positive coronavirus test results in England traveled from testing laboratories
 to the contact tracing service through Public Health England. The laboratories sent results as text
@@ -824,7 +834,7 @@ lost. It was that data was lost <em>quietly</em>, and a tool with rules is a too
 chapter is about databases. Name two properties a database has that a spreadsheet does not, and then
 name one situation where a spreadsheet is still the right choice.</div>
 
-<h3>What the three have in common</h3>
+<h3>3.4 What the three have in common</h3>
 
 <p>Put them side by side. In 1890 the facts had no structure, so no one could count them. In 1999 the
 structure was chosen sensibly and outlived the assumption underneath it. In 2020 the wrong container was
@@ -837,7 +847,7 @@ the time, and it was made long before anyone could see the consequence. Somebody
 Somebody chose two digits. Somebody chose the file format. Those are not technical decisions that
 happen to have management consequences. They are management decisions that happen to be expressed in
 technology, and the chapter you are reading is about how to make them well.</p>
-<h2 id="walmart"><span class="num">4</span>Walmart: a company built on a database</h2>
+<h2 id="walmart"><span class="num">4</span>Main case &middot; Walmart: a company built on a database</h2>
 
 <p>Imagine being a supplier in 1991 and being handed a login. Behind it is what sold, of your products,
 in every Walmart store, yesterday. No retailer had ever shown a supplier that. Walmart's founding
@@ -855,12 +865,15 @@ unthinkable: it gave its data away.</p>
 </div>
 
 
+<h3>4.1 Giving the data away: Retail Link</h3>
+
 <p>In 1991 the company launched <strong>Retail Link</strong>, a system that shares Walmart's own
 point-of-sale data with its suppliers. A supplier like Procter &amp; Gamble can see how its products
 are selling, store by store, day by day, and manage its own inventory against real demand instead of
-against guesses. Chapter 7, which you meet on Wednesday of this same week, covers the bullwhip effect: demand
-distortion amplifying up a supply chain because each link guesses at what the next one will need. Retail Link attacks the bullwhip at the root by
-replacing the guesses with shared records. Suppliers plan against actual sales, Walmart's shelves
+against guesses. Every supply chain suffers from the <strong>bullwhip effect</strong>: demand distortion
+that grows larger at each step up the chain, because each company guesses at what the next one will
+need and adds a margin for safety. Retail Link attacks the bullwhip at the root by replacing the guesses
+with shared records. Suppliers plan against actual sales, Walmart's shelves
 stay stocked without warehouses of padding, and the whole chain runs on one version of the truth.</p>
 
 <p>Whether giving away your most valuable data is genius or madness is your Monday activity, and it
@@ -877,7 +890,7 @@ analyst put the underlying principle plainly, noting that insights arriving afte
 are sales already lost. That is Chapter 2's timeliness dimension, operating at Walmart scale: the
 same information, a week late, is worth a fraction as much.</p>
 
-<h3>From records to answers: analytics</h3>
+<h3>4.2 From records to answers: analytics</h3>
 
 
 <p>Everything to this point is about storing facts correctly. Analytics is about asking the facts
@@ -898,15 +911,15 @@ for the second, because a query scanning two years of sales should never slow do
 recording today's. When you pivot in Excel, chart in Tableau, or write a GROUP BY in SQL, you are
 doing analytics; the database underneath did the transaction processing first.</p></div>
 
-<p>Seen through this lens, the second half of your course is one continuous story. Week 6 asked what
-to measure and what happens when an industry measures the wrong thing. This week supplies the
-machinery those measurements come from. Your Tableau dashboard and your SQL queries are analytics
+<p>Seen through this lens, the labs in this course are one continuous story. Business intelligence asks
+what to measure; this chapter supplies the machinery those measurements come from. Your Tableau
+dashboard and your SQL queries are analytics
 running on structured, normalized, joined data, and the reason your questions are cheap to ask is
 that someone designed the tables so they would be. Analytics is not a separate world from databases.
 It is what databases are for.</p>
 
 
-<h3>The five components at Walmart</h3>
+<h3>4.3 The five components at Walmart</h3>
 
 
 <table class="sumtable stack-sm">
@@ -918,7 +931,7 @@ It is what databases are for.</p>
 <tr><td data-label="Component"><strong>People</strong></td><td data-label="At Walmart">Analysts in the Data Caf&eacute;; the grocery team that chased the slump; suppliers reading Retail Link</td><td data-label="What breaks if it fails">Data nobody investigates is a cost, not an asset: the pricing error runs for months</td></tr>
 </table>
 
-<h3>Where this has gone since, and it is not nostalgia</h3>
+<h3>4.4 Where this has gone since, and it is not nostalgia</h3>
 
 <p>Retail Link has run for more than thirty years and still does, as the portal where suppliers manage
 orders. What Walmart retired, in 2024, was the reporting inside it. Supplier analytics moved onto a newer
@@ -935,10 +948,9 @@ carefully chosen views of it while keeping the accumulation.</p>
 <p><strong>The question changed from "how did I do" to "what should I do."</strong> The old platform
 reported what had happened. The new one adds recommendations. In 2025 Walmart began adding AI tools on top: a conversational
 interface so a supplier can ask the data a question in ordinary language, automatic summaries of
-customer survey results, and suggested actions rather than tables. That is the
-ladder from Chapter 2, climbing one rung in public. It is also why this chapter comes before the ones on
-analytics and AI: none of those tools would have anything to work with if somebody had not decided in
-1991 what to record.</p>
+customer survey results, and suggested actions rather than tables. That is
+Chapter 2's progression from data to information to knowledge, happening in public. None of those
+tools would have anything to work with if somebody had not decided in 1991 what to record.</p>
 
 <p><strong>The scope widened.</strong> The platform now covers customer behavior and perception across
 roughly 140 million households, not just what moved off a shelf, and it is expanding into Canada and
@@ -950,7 +962,7 @@ capability is identical; only the question differs. And notice that nothing in t
 new invention. It required thirty years of somebody having decided, correctly, what was worth writing
 down.</p>
 
-<h2 id="other"><span class="num">5</span>What the basket reveals</h2>
+<h2 id="other"><span class="num">5</span>The downside: what the basket reveals</h2>
 
 <p>A store's transaction database looks like the least sensitive data imaginable: no health records,
 no messages, just groceries. The discomfort arrives when you understand what joins and history do to
@@ -968,8 +980,8 @@ across time.</p>
 
 <p>The lesson is not that databases are sinister. It is that <strong>the power to join is the power
 to reveal</strong>, and the same design choices that make honest questions cheap make invasive ones
-cheap too. A company that holds well-structured data about people holds a capability, and Chapters 10
-and 11 are about what happens when that capability leaks, and who is supposed to govern it. The
+cheap too. A company that holds well-structured data about people holds a capability, and somebody
+has to decide who may use it, for what, and what happens when it leaks. The
 second question of this course, what does the system make easier, and for whom, applies to a schema
 as much as to an algorithm.</p>
 
