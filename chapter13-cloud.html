@@ -403,8 +403,8 @@ in what currency?</p>
 <a href="#what">What the cloud actually is</a>
 <a href="#risk">When the cloud blinks, and the bill the planet gets</a>
 <a href="#cases">Three answers to where the computers are</a>
-<a href="#netflix">Netflix: seven years to zero data centers</a>
-<a href="#other">The cloud's neighbors, and who does this work</a>
+<a href="#netflix">Main case. Netflix: seven years to zero data centers</a>
+<a href="#other">The downside: the cloud's neighbors, and who does this work</a>
 <a href="#vocab">Vocabulary</a>
 <a href="#discussion">Discussion questions</a>
 <a href="#lab">From lecture to lab</a>
@@ -443,6 +443,8 @@ lives next to the data center, and what a business graduate does in all of this.
 was the part you could point at. (You will not be asked to configure a server in your career. You
 will be asked to approve one, and this chapter is about that decision.) This
 chapter is about what happened when it stopped being something you owned.</p>
+
+<h3>1.1 One component moves, four stay</h3>
 
 <p>Read it with the five components in view, because the cloud moves exactly one of them and leaves
 the other four exactly where they were. The <strong>hardware</strong> becomes somebody else's, rented by
@@ -535,56 +537,8 @@ a grid instead of a generator in the basement. That framing also tells you what 
 responsibility for the data on them, the software above them, or the decisions about both. Chapter
 10's third-party-risk lesson already made that point in harder currency.</p>
 
-<h2 id="risk"><span class="num">2</span>When the cloud blinks, and the bill the planet gets</h2>
-
-<p>Renting has two bills that never appear on the invoice. One arrives on the morning the landlord has
-a bad day, and the whole course's argument about concentration risk applies to it. The other arrives
-in electricity, water and land, and is paid by people who never signed the contract. This section is
-about both.</p>
-
-<p>Concentration risk, Chapter 10's word for a third of US medical claims flowing through one
-company, has a computing version, and it demonstrated itself recently. In October 2025 a failure in
-AWS's largest region, US-East-1 in Northern Virginia, rooted in a DNS fault involving its DynamoDB
-database service, cascaded for the better part of a day. Thousands of services stumbled at once:
-social apps, games, banks, airlines, smart-home devices, companies whose customers had no idea AWS
-existed until the morning it mattered. Nothing was hacked. One landlord had a bad day, and a
-noticeable slice of the internet had it too.</p>
-
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Lock-in, egress, and the cost of leaving</span>
-<p>The strategic mirror of concentration risk is <strong>vendor lock-in</strong>. Cloud providers
-price movement asymmetrically: data flows in free and pays <strong>egress fees</strong> on the way
-out, and every provider-specific service your engineers adopt deepens the rebuild required to leave.
-This is Chapter 3's <strong>switching costs</strong>, implemented in infrastructure. The remedies, spreading across regions or across providers, are real and expensive. That makes
-resilience what it has been all course: not a technical setting but a business decision about how
-much insurance to buy, made before the morning it is needed.</p></div>
-
-<h3>The bill the planet gets</h3>
-
-
-<p>Chapter 9 ended with a promissory note: when the For You page or a chatbot answer feels free, who
-is paying, and in what currency? This section pays it, with the International Energy Agency's
-ledger. In 2024, the world's data centers consumed roughly <strong>415 terawatt-hours</strong> of electricity, about <strong>1.5
-percent of all electricity on Earth</strong>. The figure has grown around 12 percent a year since 2017, four
-times faster than electricity use overall. The IEA's base
-case projects consumption more than doubling to about <strong>945 TWh by 2030</strong>, roughly
-Japan's entire current annual usage, with AI-accelerated servers driving close to half of the
-increase. The United States hosts the largest share, around 45 percent, and data centers account for
-nearly half of all US electricity-demand growth between now and 2030.</p>
-
-<p>The global percentages stay small; the local ones do not, because the load clusters. Data centers already consume on the order of a fifth of Ireland's electricity and, by commonly cited
-estimates, a quarter of Virginia's. That is why siting fights, grid-upgrade bills, and moratorium
-debates now follow the industry around. Electricity is also only the headline line item. Cooling the machines
-consumes water, a sharpening issue where the cheap land and power happen to be dry. The accelerator
-arms race turns over hardware fast enough to make e-waste a growing stream. And the electricity mix
-matters as much as the amount: today it leans on coal and gas alongside renewables and nuclear,
-putting data-center emissions in the hundreds of millions of tonnes of CO2 per year. None of this is
-an argument that streaming a show is shameful; a single stream or prompt costs very little. It is an argument that <em>at scale, computing is industry</em>, with industry's bills. The people who plan,
-site, buy, and account for it, which is to say people with business degrees, decide how those bills
-get paid.</p>
-
-
 <div class="tryit" id="layer">
-  <div class="tryit-head">Try it &middot; IaaS, PaaS, or SaaS?</div>
+  <div class="tryit-head">Quick quiz &middot; IaaS, PaaS, or SaaS?</div>
   <p class="tryit-intro">Five things a company might rent. Say which service layer each one is before you check.</p>
   <div id="layerrows"></div>
   <p class="tryit-note">Ask what you still manage. If you install and patch the operating system, it is infrastructure. If you only deploy your code, it is a platform. If you just log in and use it, it is software as a service.</p>
@@ -618,13 +572,65 @@ get paid.</p>
 })();
 </script>
 
+<h2 id="risk"><span class="num">2</span>When the cloud blinks, and the bill the planet gets</h2>
+
+<p>Renting has two bills that never appear on the invoice. One arrives on the morning the landlord has
+a bad day, and the whole course's argument about concentration risk applies to it. The other arrives
+in electricity, water and land, and is paid by people who never signed the contract. This section is
+about both.</p>
+
+<h3>2.1 When the cloud blinks: concentration risk and lock-in</h3>
+
+<p>Concentration risk, Chapter 10's word for a third of US medical claims flowing through one
+company, has a computing version, and it demonstrated itself recently. In October 2025 a failure in
+AWS's largest region, US-East-1 in Northern Virginia, rooted in a DNS fault involving its DynamoDB
+database service, cascaded for the better part of a day. Thousands of services stumbled at once:
+social apps, games, banks, airlines, smart-home devices, companies whose customers had no idea AWS
+existed until the morning it mattered. Nothing was hacked. One landlord had a bad day, and a
+noticeable slice of the internet had it too.</p>
+
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Lock-in, egress, and the cost of leaving</span>
+<p>The strategic mirror of concentration risk is <strong>vendor lock-in</strong>. Cloud providers
+price movement asymmetrically: data flows in free and pays <strong>egress fees</strong> on the way
+out, and every provider-specific service your engineers adopt deepens the rebuild required to leave.
+This is Chapter 3's <strong>switching costs</strong>, implemented in infrastructure. The remedies, spreading across regions or across providers, are real and expensive. That makes
+resilience what it has been all course: not a technical setting but a business decision about how
+much insurance to buy, made before the morning it is needed.</p></div>
+
+<h3>2.2 The bill the planet gets</h3>
+
+
+<p>Chapter 9 ended with a promissory note: when the For You page or a chatbot answer feels free, who
+is paying, and in what currency? This section pays it, with the International Energy Agency's
+ledger. In 2024, the world's data centers consumed roughly <strong>415 terawatt-hours</strong> of electricity, about <strong>1.5
+percent of all electricity on Earth</strong>. The figure has grown around 12 percent a year since 2017, four
+times faster than electricity use overall. The IEA's base
+case projects consumption more than doubling to about <strong>945 TWh by 2030</strong>, roughly
+Japan's entire current annual usage, with AI-accelerated servers driving close to half of the
+increase. The United States hosts the largest share, around 45 percent, and data centers account for
+nearly half of all US electricity-demand growth between now and 2030.</p>
+
+<p>The global percentages stay small; the local ones do not, because the load clusters. Data centers already consume on the order of a fifth of Ireland's electricity and, by commonly cited
+estimates, a quarter of Virginia's. That is why siting fights, grid-upgrade bills, and moratorium
+debates now follow the industry around. Electricity is also only the headline line item. Cooling the machines
+consumes water, a sharpening issue where the cheap land and power happen to be dry. The accelerator
+arms race turns over hardware fast enough to make e-waste a growing stream. And the electricity mix
+matters as much as the amount: today it leans on coal and gas alongside renewables and nuclear,
+putting data-center emissions in the hundreds of millions of tonnes of CO2 per year. None of this is
+an argument that streaming a show is shameful; a single stream or prompt costs very little. It is an argument that <em>at scale, computing is industry</em>, with industry's bills. The people who plan,
+site, buy, and account for it, which is to say people with business degrees, decide how those bills
+get paid.</p>
+
+
+
+
 <h2 id="cases"><span class="num">3</span>Three answers to where the computers are</h2>
 <p>Before the case, three short ones. Each is a different answer to the same question, which is the
 question underneath this whole chapter: where are the computers, and whose problem is that? The first
 answer was that the customer no longer needs to know. The second was that everyone finds out at once.
 The third was that they are in a building, and buildings burn.</p>
 
-<h3>Mini-case 1 &middot; 1999: the software you did not have to install</h3>
+<h3>3.1 Mini-case 1 &middot; 1999: the software you did not have to install</h3>
 
 <p>In 1999 business software arrived in a box, or on a truck. A company bought it, installed it on its
 own servers, paid consultants to make it work, and paid again for every upgrade. Chapter 7 is a chapter
@@ -651,7 +657,7 @@ not transfer.</p>
 somebody else's computers, and something it gains. Then say which of the five components moved, and
 which stayed exactly where it was.</div>
 
-<h3>Mini-case 2 &middot; 2017: the mistyped command that took down half the web</h3>
+<h3>3.2 Mini-case 2 &middot; 2017: the mistyped command that took down half the web</h3>
 
 <p>On the morning of 28 February 2017, an engineer at Amazon Web Services was investigating a billing
 problem in the storage service that a large share of the internet uses to hold its images, files and
@@ -681,7 +687,7 @@ bill.</p>
 taken down by the outage. Name the general principle that failure illustrates, then find one system you
 depend on whose backup lives in the same place as the thing it backs up.</div>
 
-<h3>Mini-case 3 &middot; 2021: the cloud that caught fire</h3>
+<h3>3.3 Mini-case 3 &middot; 2021: the cloud that caught fire</h3>
 
 <p>In the early hours of 10 March 2021, a fire started in a data center in Strasbourg belonging to
 OVHcloud, one of Europe's largest hosting providers. One building was destroyed and a neighbouring one
@@ -707,7 +713,7 @@ world. It means you have outsourced your exposure to it, along with your ability
 co-op chooses. Name three questions about that building you would want answered before signing, and say
 which of them the cheapest provider would rather you did not ask.</div>
 
-<h3>What the three have in common</h3>
+<h3>3.4 What the three have in common</h3>
 
 <p>A subscription, a typo and a fire. In none of the three did the technology fail in a way that was
 hard to understand once it had happened. What each one changed was what people understood they were
@@ -721,7 +727,7 @@ years. It got clearer, and every one of those clarifications was a bill.</p>
 <p>Read the case with that in mind. Netflix understood all three early, and made a decision that still
 surprises people: it rented nearly everything, including from a competitor, and built the one piece
 the fire and the typo could not be allowed to touch.</p>
-<h2 id="netflix"><span class="num">4</span>Netflix: seven years to zero data centers</h2>
+<h2 id="netflix"><span class="num">4</span>Main case &middot; Netflix: seven years to zero data centers</h2>
 
 <p>By its own account, Netflix's road to the cloud began with a failure: in August 2008 a major
 database corruption meant that for three days the company could not ship DVDs to its members. The
@@ -741,7 +747,7 @@ from a rival, freeing the company to spend its effort on what differentiates it.
   <div class="stat"><b>&times;2</b><span>projected by 2030, roughly Japan's annual usage</span></div>
 </div>
 
-<h3>Seven years to zero data centers</h3>
+<h3>4.1 Seven years to zero data centers</h3>
 
 
 <p>The migration took seven years, finishing in early January 2016 when Netflix shut down the last
@@ -762,7 +768,7 @@ forced to design for the failure before it happens for real. Chapter 10 called t
 for the bad day business continuity. Netflix automated the rehearsal.</p>
 
 
-<h3>The part Netflix built anyway</h3>
+<h3>4.2 The part Netflix built anyway</h3>
 
 
 <p>Here is the detail that turns the case from a cloud advertisement into a strategy lesson.
@@ -781,7 +787,7 @@ capability by capability, by the same differentiator test, at every scale from C
 to a third of the internet's evening traffic.</p>
 
 
-<h3>The five components at Netflix</h3>
+<h3>4.3 The five components at Netflix</h3>
 
 
 <table class="sumtable stack-sm">
@@ -793,7 +799,7 @@ to a third of the internet's evening traffic.</p>
 <tr><td data-label="Component"><strong>People</strong></td><td data-label="In the case">Engineers who break things on purpose; FinOps; the neighbors</td><td data-label="The lesson">Every rented machine still has humans deciding, and absorbing</td></tr>
 </table>
 
-<h2 id="other"><span class="num">5</span>The cloud's neighbors, and who does this work</h2>
+<h2 id="other"><span class="num">5</span>The downside: the cloud's neighbors, and who does this work</h2>
 
 <p>The cloud's benefits disperse globally; its burdens concentrate locally, and the people carrying
 them rarely chose to. A data-center cluster arrives with jobs and tax revenue, and also with demand
@@ -810,7 +816,7 @@ who are not in the room when the decision is made. This course keeps returning t
 because, in an economy that runs on information systems, the person in the room is increasingly
 someone with your degree.</p>
 
-<h3>What business people do with the cloud</h3>
+<h3>5.1 What business people do with the cloud</h3>
 
 
 <p><strong>Cloud cost management, now a discipline called FinOps.</strong> Elasticity cuts both

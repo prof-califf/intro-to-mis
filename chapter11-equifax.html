@@ -399,8 +399,8 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 <a href="#what">What governance is</a>
 <a href="#tools">Frameworks, compliance, and their limits</a>
 <a href="#cases">Three failures, three broken links</a>
-<a href="#equifax">Equifax: a patch nobody applied</a>
-<a href="#other">Data about people who never agreed</a>
+<a href="#equifax">Main case. Equifax: a patch nobody applied</a>
+<a href="#other">The downside: data about people who never agreed</a>
 <a href="#vocab">Vocabulary</a>
 <a href="#discussion">Discussion questions</a>
 <a href="#lab">From lecture to lab</a>
@@ -457,16 +457,19 @@ decide what, who must do what, who verifies it was done, and who is answerable w
 software you install; it is the answer to the question "who is in charge of this, specifically?" for
 every part of the technology that matters. When that answer is vague, work falls through the gaps
 between people who each assumed someone else had it, which is a fair one-sentence summary of the
-Equifax breach.</p></div>
+breach in this chapter's case.</p></div>
 
-<p>Governance sounds bureaucratic until you watch its absence. The Struts patch failed not because anyone refused to do it but because the task lived in the space
-between teams. The people who knew about the vulnerability, the people who owned the server, and the
+<p>Governance sounds bureaucratic until you watch its absence. In the case at the end of this chapter, a
+security fix that had been ordered never got applied to one server, not because anyone refused to do it
+but because the task lived in the space between teams. The people who knew about the vulnerability, the people who owned the server, and the
 people responsible for verifying compliance had no structure connecting them that forced the loop to
 close. Good governance is
 mostly the unglamorous work of making sure every critical task has exactly one owner and one check.</p>
 
-<h3>Responsibility versus accountability</h3>
+<h3>1.1 Responsibility versus accountability</h3>
 
+<p>The most useful distinction in this chapter is between two words most people treat as synonyms.
+Governance depends on keeping them apart.</p>
 
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Responsibility and accountability</span>
 <p>These words are used loosely in conversation and precisely in governance.
@@ -483,53 +486,8 @@ quietly. The company's CEO, CIO, and CSO all departed. Accountability that nobod
 upward to whoever sits at the top, which is exactly why executives should want it assigned in
 advance.</p>
 
-<h2 id="tools"><span class="num">2</span>Frameworks, compliance, and their limits</h2>
-
-<p>Organizations do not invent governance from scratch, and they are frequently required to prove it
-exists. Both of those facts produce useful machinery and a characteristic trap, and you should be able
-to see the difference from across a room.</p>
-
-<p>Organizations do not invent governance from scratch. They adopt frameworks: shared checklists and
-vocabularies that encode what mature IT management looks like, so that "are we secure?" becomes a set
-of answerable questions rather than a feeling.</p>
-
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Governance frameworks</span>
-<p>A <strong>framework</strong> is a structured, widely accepted set of practices an organization can
-adopt and be measured against. In security and IT governance the common ones include the
-<strong>NIST Cybersecurity Framework</strong> (organized around five functions: identify, protect,
-detect, respond, recover) and <strong>COBIT</strong> (aimed at aligning IT with business goals).
-Their value is not magic. They turn vague intentions into specific, auditable commitments, and they
-let an outsider, an auditor, a regulator, a board, check whether the organization is keeping them. Frameworks are how an organization proves its governance exists rather
-than merely claiming it does.</p></div>
-
-<p>Map Equifax onto the NIST functions and the failure is easy to locate: identify (they knew about
-the vulnerability), protect (they failed to patch), detect (the monitoring certificate had expired),
-respond (they were slow and their public response was widely criticized). A framework would not have
-applied the patch for them. But a framework, audited in good faith, forces the question "show me that
-every internet-facing system got this patch," and that question is precisely the one no one at
-Equifax was structurally required to answer.</p>
-
-<h3>Compliance is not security</h3>
-
-
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Compliance versus security</span>
-<p><strong>Compliance</strong> means meeting the specific requirements of a standard or law.
-<strong>Security</strong> means actually being hard to breach. They overlap but are not the same, and
-the gap between them is where a lot of breaches live. An organization can pass its audits, hold its certifications, and check every box while a single
-unpatched server sits exposed. Compliance measures whether documented controls exist, not whether
-every real system is actually covered every day. Treating a passed audit as proof of safety is one of the most common and expensive mistakes in
-the field. Compliance is a floor, not a finish line.</p></div>
-
-<p>This is the trap that connects both cases in this pair. Target, a decade before Change Healthcare,
-was certified compliant with the payment-card security standard when it was breached. Equifax
-operated in a regulated industry with real requirements. Compliance regimes are valuable, they raise
-the floor for everyone, but a compliance mindset can actively harm security if it lets an organization
-mistake the paperwork for the protection. The job of good governance is to close that gap, not to
-celebrate the certificate.</p>
-
-
 <div class="tryit" id="acct">
-  <div class="tryit-head">Try it &middot; Responsible or accountable?</div>
+  <div class="tryit-head">Quick quiz &middot; Responsible or accountable?</div>
   <p class="tryit-intro">Five people in a company that just had a patch fail. Say which word applies to each one before you check.</p>
   <div id="acctrows"></div>
   <p class="tryit-note">Responsible means they do the work. Accountable means they answer for whether it got done, whether or not they touched a keyboard. Several people can be responsible; only one can be accountable.</p>
@@ -563,12 +521,63 @@ celebrate the certificate.</p>
 })();
 </script>
 
+<h2 id="tools"><span class="num">2</span>Frameworks, compliance, and their limits</h2>
+
+<p>Organizations do not invent governance from scratch, and they are frequently required to prove it
+exists. Both of those facts produce useful machinery and a characteristic trap, and you should be able
+to see the difference from across a room.</p>
+
+<h3>2.1 Frameworks</h3>
+
+<p>Nobody invents governance from scratch. Organizations adopt frameworks: shared checklists and
+vocabularies that encode what mature IT management looks like, so that "are we secure?" becomes a set
+of answerable questions rather than a feeling.</p>
+
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Governance frameworks</span>
+<p>A <strong>framework</strong> is a structured, widely accepted set of practices an organization can
+adopt and be measured against. In security and IT governance the common ones include the
+<strong>NIST Cybersecurity Framework</strong> (organized around five functions: identify, protect,
+detect, respond, recover) and <strong>COBIT</strong> (aimed at aligning IT with business goals).
+Their value is not magic. They turn vague intentions into specific, auditable commitments, and they
+let an outsider, an auditor, a regulator, a board, check whether the organization is keeping them. Frameworks are how an organization proves its governance exists rather
+than merely claiming it does.</p></div>
+
+<p>Map Equifax onto the NIST functions and the failure is easy to locate: identify (they knew about
+the vulnerability), protect (they failed to patch), detect (the monitoring certificate had expired),
+respond (they were slow and their public response was widely criticized). A framework would not have
+applied the patch for them. But a framework, audited in good faith, forces the question "show me that
+every internet-facing system got this patch," and that question is precisely the one no one at
+Equifax was structurally required to answer.</p>
+
+<h3>2.2 Compliance is not security</h3>
+
+<p>Frameworks come with a trap, and it is the most common one in the field: an organization that can
+prove it follows the rules starts to believe that proof is the same thing as being safe.</p>
+
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Compliance versus security</span>
+<p><strong>Compliance</strong> means meeting the specific requirements of a standard or law.
+<strong>Security</strong> means actually being hard to breach. They overlap but are not the same, and
+the gap between them is where a lot of breaches live. An organization can pass its audits, hold its certifications, and check every box while a single
+unpatched server sits exposed. Compliance measures whether documented controls exist, not whether
+every real system is actually covered every day. Treating a passed audit as proof of safety is one of the most common and expensive mistakes in
+the field. Compliance is a floor, not a finish line.</p></div>
+
+<p>This is the trap that connects both cases in this pair. Target, a decade before Change Healthcare,
+was certified compliant with the payment-card security standard when it was breached. Equifax
+operated in a regulated industry with real requirements. Compliance regimes are valuable, they raise
+the floor for everyone, but a compliance mindset can actively harm security if it lets an organization
+mistake the paperwork for the protection. The job of good governance is to close that gap, not to
+celebrate the certificate.</p>
+
+
+
+
 <h2 id="cases"><span class="num">3</span>Three failures, three broken links</h2>
 <p>Section 2 defined governance as the answer to four questions: who decides, who does the work, who
 checks it was done, and who answers when it was not. Each of the three cases below broke a different one
 of those links, and in each the technology was working exactly as built.</p>
 
-<h3>Mini-case 1 &middot; 2003: the alarm that failed quietly</h3>
+<h3>3.1 Mini-case 1 &middot; 2003: the alarm that failed quietly</h3>
 
 <p>On the afternoon of 14 August 2003, a high-voltage line in northern Ohio sagged in the heat into
 overgrown trees and switched off. That is routine. Grids handle it constantly, and operators redistribute
@@ -596,7 +605,7 @@ owned the question of whether it was still working.</p>
 whether it was running or not: a backup, an alert, a report you assume somebody reads. Then say how you
 would find out, today, whether it is actually working.</div>
 
-<h3>Mini-case 2 &middot; 2020: the grades nobody would own</h3>
+<h3>3.2 Mini-case 2 &middot; 2020: the grades nobody would own</h3>
 
 <p>When examinations were cancelled in England in 2020, the regulator had to award A-level grades
 without exams. It built a model. Teachers submitted predicted grades and rankings, and the model adjusted
@@ -624,7 +633,7 @@ that input was acceptable before a single grade was issued.</p>
 would have inflated grades. Propose an approach that addresses that problem without judging individuals
 by their school's history, and then name what your approach costs.</div>
 
-<h3>Mini-case 3 &middot; 2021 to 2025: the convictions that had to be undone</h3>
+<h3>3.3 Mini-case 3 &middot; 2021 to 2025: the convictions that had to be undone</h3>
 
 <p>Start at the end, because the end is happening now. From 2021 British courts began quashing the
 criminal convictions of subpostmasters, a statutory public inquiry was set up, and in 2025 that inquiry
@@ -656,7 +665,7 @@ Office had delegated it, in writing, to the least powerful people in the chain. 
 apply to an accountability arrangement to tell the difference between assigning it properly and
 offloading it.</div>
 
-<h3>What the three have in common</h3>
+<h3>3.4 What the three have in common</h3>
 
 <p>An alarm, a grading model, and a branch accounting system. In none of the three was the failure a
 mystery once anybody looked, and in all three the organization had a governance structure on paper.</p>
@@ -670,7 +679,7 @@ power to argue.</p>
 about a missed patch, and it is. But it is also a story about a company holding data on a hundred and forty-seven million people who
 were never its customers and never agreed to anything. The question of who answers to whom had been
 settled long before anyone forgot to patch a server.</p>
-<h2 id="equifax"><span class="num">4</span>Equifax: a patch nobody applied</h2>
+<h2 id="equifax"><span class="num">4</span>Main case &middot; Equifax: a patch nobody applied</h2>
 
 <p>In March 2017, a serious vulnerability was disclosed in Apache Struts, a piece of open-source
 software used inside countless corporate web applications. A fix was published the same week.
@@ -701,7 +710,7 @@ controls, which turns out to be the harder problem.</p></div>
   <div class="stat"><b>0</b><span>consent from those exposed</span></div>
 </div>
 
-<h3>The five components at Equifax</h3>
+<h3>4.1 The five components at Equifax</h3>
 
 
 <table class="sumtable stack-sm">
@@ -713,7 +722,7 @@ controls, which turns out to be the harder problem.</p></div>
 <tr><td data-label="Component"><strong>People</strong></td><td data-label="In the breach">Responsibility everywhere, accountability nowhere; three executives gone</td><td data-label="The governance lesson">Unassigned accountability rolls to the top</td></tr>
 </table>
 
-<h2 id="other"><span class="num">5</span>Data about people who never agreed</h2>
+<h2 id="other"><span class="num">5</span>The downside: data about people who never agreed</h2>
 
 <p>There is a fact about Equifax that makes its breach different in kind from a retailer losing card
 numbers, and it deserves to be stated plainly. The 147 million people whose data was exposed were
@@ -729,7 +738,7 @@ relationship they could exit. You cannot boycott a company you were never a cust
 the outcome by itself. Governance has to come from somewhere else: regulation, law, and
 accountability assigned by force rather than by choice.</p>
 
-<h3>The other side: data about people who never agreed</h3>
+<h3>5.1 A permanent risk, settled for a few dollars each</h3>
 
 
 <p>Chapter 10 argued that breach costs are an externality, exported to people outside the company's
@@ -747,7 +756,7 @@ worked extremely well, at collecting, matching, and selling. The question this c
 of the Equifax story. It is why the answer to a governance failure this large is not only a better
 patch process. It is a public argument about who should be allowed to hold what data about whom, and
 under what obligations. That argument is
-where the next unit, on regulating technology, begins.</p>
+bigger than any one company, and it is still going on.</p>
 
 <div class="takeaways"><span class="obj-tag">Key takeaways</span>
 <ul>
