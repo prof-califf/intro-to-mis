@@ -401,8 +401,8 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 <a href="#protect">What security actually protects</a>
 <a href="#defense">How attacks work, and how defense works</a>
 <a href="#cases">Three attacks that came in sideways</a>
-<a href="#change">Change Healthcare: the day the claims stopped</a>
-<a href="#other">Who absorbs a breach, and who does this work</a>
+<a href="#change">Main case. Change Healthcare: the day the claims stopped</a>
+<a href="#other">The downside: who absorbs a breach, and who does this work</a>
 <a href="#vocab">Vocabulary</a>
 <a href="#discussion">Discussion questions</a>
 <a href="#lab">From lecture to lab</a>
@@ -449,6 +449,11 @@ reason anyone notices. The chapter's case turns on a missing lock, nine days of 
 a decision nobody had made about how much of a country's medical billing should run through one
 building. Not one of those is a coding problem.</p>
 
+<h3>1.1 The three things security protects</h3>
+
+<p>Ask what an attack actually took from the victim and the answer is always one of three properties
+of information. Security people have a name for the set.</p>
+
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">The CIA triad</span>
 <p>Security protects three properties of information. <strong>Confidentiality</strong>: only
 authorized people can read it. <strong>Integrity</strong>: it cannot be altered without detection.
@@ -465,8 +470,46 @@ completely as if the building had flooded. This is why security stopped being pu
 became a boardroom one, and why the people who manage it increasingly come from business, not only
 from engineering.</p>
 
-<h3>Ransomware as a business</h3>
+<div class="tryit" id="cia">
+  <div class="tryit-head">Quick quiz &middot; Which property was lost?</div>
+  <p class="tryit-intro">Five incidents. Say which of the three properties failed first, before you check.</p>
+  <div id="ciarows"></div>
+  <p class="tryit-note">Confidentiality: the wrong people can see it. Integrity: it was altered without detection. Availability: the people who need it cannot get to it. Most incidents eventually hit more than one; name the first.</p>
+</div>
 
+<script>
+(function(){
+  var host=document.getElementById('ciarows');
+  if(!host)return;
+  var F=["Confidentiality", "Integrity", "Availability"];
+  var R=[{"t": "Ransomware encrypts a hospital's scheduling system. No data leaves the building.", "a": "Availability", "why": "Nothing was stolen and nothing was changed, and the hospital still cannot see its patients. Availability is the property people forget until it is the only one that matters."}, {"t": "An employee's laptop with an unencrypted spreadsheet of customer Social Security numbers is stolen from a car.", "a": "Confidentiality", "why": "The data is intact and the company still has it. The problem is who else has it now."}, {"t": "An attacker changes the bank account number on a supplier's record so the next payment goes to them.", "a": "Integrity", "why": "The record was altered and nothing flagged it. The payment system worked perfectly on a fact that was no longer true."}, {"t": "A denial-of-service attack floods an online store's servers on the busiest shopping day of the year.", "a": "Availability", "why": "No data was touched. The store simply is not there for the customers who came, which on that day is the whole business."}, {"t": "A researcher finds a public web address that returns any patient's records if you guess the ID number.", "a": "Confidentiality", "why": "Nothing changed and nothing went down. Anyone who wants to look, can. This is the kind of exposure that is a breach whether or not anyone has looked yet."}];
+  R.forEach(function(r){
+    var row=document.createElement('div'); row.className='wrow';
+    row.innerHTML='<div class="wq">'+r.t+'</div><div class="wbtns">'
+      +F.map(function(f){return '<button type="button" data-f="'+f+'">'+f+'</button>';}).join('')
+      +'</div><div class="wout" role="status" aria-live="polite" hidden></div>';
+    host.appendChild(row);
+    var bs=row.querySelectorAll('button'), out=row.querySelector('.wout');
+    bs.forEach(function(b){
+      b.addEventListener('click',function(){
+        if(!out.hidden)return;
+        var ok=b.getAttribute('data-f')===r.a;
+        bs.forEach(function(x){x.disabled=true;});
+        b.className='you '+(ok?'right':'wrong');
+        if(!ok) bs.forEach(function(x){ if(x.getAttribute('data-f')===r.a) x.className='you right'; });
+        out.hidden=false; out.className='wout '+(ok?'yes':'no');
+        out.innerHTML='<b>'+r.a+'.</b> '+r.why;
+      });
+    });
+  });
+})();
+</script>
+
+<h3>1.2 Ransomware as a business</h3>
+
+<p>The attack in this chapter's case was ransomware, which is now the most common way a large
+organization loses availability, and the first thing to understand about it is that the people behind
+it are running a business.</p>
 
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Ransomware</span>
 <p><strong>Ransomware</strong> is malicious software that encrypts an organization's data and demands
@@ -490,7 +533,33 @@ problem. You are trusting criminals to keep a promise, and nothing in their ince
 
 <p>Attacks are not single events. They are sequences, and that is the good news, because a sequence can
 be broken at any point. This section gives you the model analysts use to describe attackers and the handful of ordinary
-controls that interrupt it, then applies both to the door the case's attackers walked through.</p>
+controls that interrupt it. It starts at the door the case's attackers walked through.</p>
+
+<h3>2.1 The missing control</h3>
+
+
+<p>Here is how the largest healthcare breach in US history began. Attackers logged into a Change
+Healthcare remote-access portal, a Citrix system, using a stolen username and password. That portal
+was not protected by multi-factor authentication. There was no second step, no code from a phone, no
+confirmation prompt. A password was the whole lock.</p>
+
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Multi-factor authentication (MFA)</span>
+<p>MFA requires more than one kind of proof to log in: something you know (a password), plus
+something you have (a phone or hardware key) or something you are (a fingerprint). Its entire purpose
+is to make a stolen password insufficient by itself, and stolen passwords are cheap and everywhere,
+harvested by the millions and sold on criminal markets. MFA is not exotic, expensive, or new. It is
+the single highest-value control most organizations can deploy, and its absence on one internet-facing
+portal is the root cause the company's own CEO named in sworn testimony to Congress.</p></div>
+
+<p>The attackers were then inside for about nine days before anyone noticed. They moved through the
+network and copied out roughly six terabytes of data, then deployed the ransomware that finally made
+their presence impossible to miss. Two failures, in sequence: a missing lock at the door, and
+nine days of movement inside that nobody detected. Hold that shape, because it has a name.</p>
+
+<h3>2.2 The kill chain, and where to break it</h3>
+
+<p>Two failures in sequence is the general shape of a modern intrusion, and analysts have a model for
+it.</p>
 
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">The kill chain, and breaking it</span>
 <p>Analysts describe intrusions as a <strong>kill chain</strong>: an ordered sequence of stages an attacker must
@@ -553,63 +622,10 @@ intruder. Each is ordinary, none is exotic, and any one of them breaks the chain
 you will read about is a failure to apply known controls, not the work of unstoppable genius. That is
 oddly good news: it means most security is a management problem, and management is learnable.</p>
 
-<h3>The missing control</h3>
 
 
-<p>Here is how the largest healthcare breach in US history began. Attackers logged into a Change
-Healthcare remote-access portal, a Citrix system, using a stolen username and password. That portal
-was not protected by multi-factor authentication. There was no second step, no code from a phone, no
-confirmation prompt. A password was the whole lock.</p>
-
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Multi-factor authentication (MFA)</span>
-<p>MFA requires more than one kind of proof to log in: something you know (a password), plus
-something you have (a phone or hardware key) or something you are (a fingerprint). Its entire purpose
-is to make a stolen password insufficient by itself, and stolen passwords are cheap and everywhere,
-harvested by the millions and sold on criminal markets. MFA is not exotic, expensive, or new. It is
-the single highest-value control most organizations can deploy, and its absence on one internet-facing
-portal is the root cause the company's own CEO named in sworn testimony to Congress.</p></div>
-
-<p>The attackers were then inside for about nine days before anyone noticed. They moved through the
-network and copied out roughly six terabytes of data, then deployed the ransomware that finally made
-their presence impossible to miss. Two failures, in sequence: a missing lock at the door, and
-nine days of movement inside that nobody detected. Hold that shape; it is the kill chain, and it is
-the next section.</p>
 
 
-<div class="tryit" id="cia">
-  <div class="tryit-head">Try it &middot; Which property was lost?</div>
-  <p class="tryit-intro">Five incidents. Say which of the three properties failed first, before you check.</p>
-  <div id="ciarows"></div>
-  <p class="tryit-note">Confidentiality: the wrong people can see it. Integrity: it was altered without detection. Availability: the people who need it cannot get to it. Most incidents eventually hit more than one; name the first.</p>
-</div>
-
-<script>
-(function(){
-  var host=document.getElementById('ciarows');
-  if(!host)return;
-  var F=["Confidentiality", "Integrity", "Availability"];
-  var R=[{"t": "Ransomware encrypts a hospital's scheduling system. No data leaves the building.", "a": "Availability", "why": "Nothing was stolen and nothing was changed, and the hospital still cannot see its patients. Availability is the property people forget until it is the only one that matters."}, {"t": "An employee's laptop with an unencrypted spreadsheet of customer Social Security numbers is stolen from a car.", "a": "Confidentiality", "why": "The data is intact and the company still has it. The problem is who else has it now."}, {"t": "An attacker changes the bank account number on a supplier's record so the next payment goes to them.", "a": "Integrity", "why": "The record was altered and nothing flagged it. The payment system worked perfectly on a fact that was no longer true."}, {"t": "A denial-of-service attack floods an online store's servers on the busiest shopping day of the year.", "a": "Availability", "why": "No data was touched. The store simply is not there for the customers who came, which on that day is the whole business."}, {"t": "A researcher finds a public web address that returns any patient's records if you guess the ID number.", "a": "Confidentiality", "why": "Nothing changed and nothing went down. Anyone who wants to look, can. This is the kind of exposure that is a breach whether or not anyone has looked yet."}];
-  R.forEach(function(r){
-    var row=document.createElement('div'); row.className='wrow';
-    row.innerHTML='<div class="wq">'+r.t+'</div><div class="wbtns">'
-      +F.map(function(f){return '<button type="button" data-f="'+f+'">'+f+'</button>';}).join('')
-      +'</div><div class="wout" role="status" aria-live="polite" hidden></div>';
-    host.appendChild(row);
-    var bs=row.querySelectorAll('button'), out=row.querySelector('.wout');
-    bs.forEach(function(b){
-      b.addEventListener('click',function(){
-        if(!out.hidden)return;
-        var ok=b.getAttribute('data-f')===r.a;
-        bs.forEach(function(x){x.disabled=true;});
-        b.className='you '+(ok?'right':'wrong');
-        if(!ok) bs.forEach(function(x){ if(x.getAttribute('data-f')===r.a) x.className='you right'; });
-        out.hidden=false; out.className='wout '+(ok?'yes':'no');
-        out.innerHTML='<b>'+r.a+'.</b> '+r.why;
-      });
-    });
-  });
-})();
-</script>
 
 <h2 id="cases"><span class="num">3</span>Three attacks that came in sideways</h2>
 <p>Before the case, three short ones, spread across thirty-five years. Each one entered through
@@ -618,7 +634,7 @@ software update, and a file-transfer tool bought by somebody else. Read them wit
 because it is the question section 5 will make national: what did the organization actually depend on
 that it had never listed anywhere?</p>
 
-<h3>Mini-case 1 &middot; 1988: the program that was only supposed to count</h3>
+<h3>3.1 Mini-case 1 &middot; 1988: the program that was only supposed to count</h3>
 
 <p>In November 1988 a graduate student at Cornell released a program onto the internet, which then
 connected a few tens of thousands of machines belonging mostly to universities, research labs and the
@@ -647,7 +663,7 @@ the three properties in section 1, explain what an organization loses when a sys
 unavailable, and name one system where a day of unavailability would hurt you more than a leak
 would.</div>
 
-<h3>Mini-case 2 &middot; 2017: the shipping line taken down by Ukrainian tax software</h3>
+<h3>3.2 Mini-case 2 &middot; 2017: the shipping line taken down by Ukrainian tax software</h3>
 
 <p>Maersk is the world's largest container shipping company. On 27 June 2017 its staff in Copenhagen
 watched screens go dark across the building, and within hours the company's network was gone. Operations
@@ -676,7 +692,7 @@ Ask yourself which of those two facts a board should find more alarming.</p>
 company should have had in place that would have made that luck unnecessary, and say why organizations
 routinely do not have it despite knowing they should.</div>
 
-<h3>Mini-case 3 &middot; 2023: one flaw in a tool most victims had never bought</h3>
+<h3>3.3 Mini-case 3 &middot; 2023: one flaw in a tool most victims had never bought</h3>
 
 <p>In the summer of 2023, employees at British Airways and the BBC learned their personal data had been
 stolen from a piece of software neither company had ever bought. MOVEit Transfer is a product for
@@ -703,7 +719,7 @@ this, and it is a job a business graduate does.</p>
 organization you belong to rather than through you directly. Now say how you would find out who
 <em>their</em> suppliers are, and what that tells you about how hard this job is.</div>
 
-<h3>What the three have in common</h3>
+<h3>3.4 What the three have in common</h3>
 
 <p>A network connection, a foreign tax package, and a file-transfer tool nobody remembers buying. In
 none of the three did the attack arrive through the front door the organization was defending, and in
@@ -717,7 +733,7 @@ the BBC's.</p>
 <p>Hold that as you read the case, because Change Healthcare is the same problem seen from the other
 end. It was not the victim that had failed to map its dependencies. It <em>was</em> the dependency, for
 a third of American healthcare, and almost nobody using it had written that down either.</p>
-<h2 id="change"><span class="num">4</span>Change Healthcare: the day the claims stopped</h2>
+<h2 id="change"><span class="num">4</span>Main case &middot; Change Healthcare: the day the claims stopped</h2>
 
 <p>Start at a pharmacy counter on the morning of 21 February 2024. The prescription is filled and
 sitting in the bag. The pharmacist scans it, waits for the insurer to confirm coverage, and the
@@ -758,7 +774,7 @@ business degree is supposed to give you.</p></div>
   <div class="stat"><b>~$3.1B</b><span>cost to UnitedHealth, 2024</span></div>
 </div>
 
-<h3>The business damage, not the data</h3>
+<h3>4.1 The business damage, not the data</h3>
 
 
 <p>UnitedHealth's own reporting put its direct costs for 2024 at about $3.1 billion. That number, large as it
@@ -791,7 +807,7 @@ assumed would always be there. Asking "what do we do the day this critical thing
 business continuity, and it is a business planning question, not a technical one.</p></div>
 
 
-<h3>The five components at Change Healthcare</h3>
+<h3>4.2 The five components at Change Healthcare</h3>
 
 
 <table class="sumtable stack-sm">
@@ -803,7 +819,7 @@ business continuity, and it is a business planning question, not a technical one
 <tr><td data-label="Component"><strong>People</strong></td><td data-label="In the breach">The stolen credential; the security procedures never updated after acquisition; the CEO before Congress</td><td data-label="The lesson">The decisive failures were management decisions, not code</td></tr>
 </table>
 
-<h2 id="other"><span class="num">5</span>Who absorbs a breach, and who does this work</h2>
+<h2 id="other"><span class="num">5</span>The downside: who absorbs a breach, and who does this work</h2>
 
 <p>The $3.1 billion UnitedHealth booked is the cost that could be absorbed. Follow the rest of it
 outward and it falls on people with far less capacity to carry it.</p>
@@ -823,7 +839,7 @@ weigh the closed clinic or the stolen medical history, because those never appea
 of the job of governance, and of regulation, is to represent the people who are not in the room when
 the security budget is set.</p>
 
-<h3>What business people actually do in security</h3>
+<h3>5.1 What business people actually do in security</h3>
 
 
 <p>Students often assume cybersecurity is a coding job they are unqualified for. Some of it is. But the field is short hundreds of thousands of workers in the US alone, and a large fraction of the

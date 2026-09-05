@@ -400,8 +400,8 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 <a href="#what">What machine learning actually is</a>
 <a href="#bias">Bias, proxies, and feedback loops</a>
 <a href="#cases">Three systems nobody meant to build</a>
-<a href="#tiktok">The feed and the hiring desk</a>
-<a href="#governance">What can be done, and who does it</a>
+<a href="#tiktok">Main case. The feed and the hiring desk</a>
+<a href="#governance">The other side: what can be done, and who does it</a>
 <a href="#vocab">Vocabulary</a>
 <a href="#discussion">Discussion questions</a>
 <a href="#lab">From lecture to lab</a>
@@ -452,6 +452,12 @@ component made the system slow, or unreliable, or blind. In this one a weak data
 system <em>confidently wrong in a way that looks like an answer</em>, and no amount of quality in the
 other four corrects it.</p>
 
+<h3>1.1 Three terms that get used as one</h3>
+
+<p>Artificial intelligence, machine learning, and generative AI are used interchangeably in the press.
+They are three generations of one family, and the differences matter for what a manager can expect
+from each.</p>
+
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">AI, machine learning, and generative AI</span>
 <p><strong>Artificial intelligence</strong> is the broad project of making computers do things that
 seem to require intelligence. For decades the main approach was writing explicit rules. <strong>Machine
@@ -469,8 +475,10 @@ the preference was learned from behavior, and it lives in millions of model para
 either. That is not a dodge; it is how the technology works.) That opacity is harmless when the stakes are otters. The rest of this chapter is about what
 happens as the stakes rise, which is why it is mostly about data, not algorithms.</p>
 
-<h3>How a model learns, and what learning buys</h3>
+<h3>1.2 How a model learns, and what learning buys</h3>
 
+<p>Most of the machine learning a business will ever buy works one way: show the system a large set of
+past cases where the answer is already known, and let it work out what predicts the answer.</p>
 
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Training data, labels, and supervised learning</span>
 <p>The workhorse of business ML is <strong>supervised learning</strong>. You assemble <strong>training
@@ -511,22 +519,30 @@ having all three named before you meet them in the cases. The examples can carry
 chose to predict can be the wrong thing. And acting on the prediction can change the world that produces
 the next batch of evidence.</p>
 
+<h3>2.1 Training-data bias and proxy discrimination</h3>
+
+<p>The first way is the most common. If the examples a model learned from carry a skew, the model
+learns the skew as if it were a rule, and it will keep applying it after the humans who produced the
+examples have been told to stop.</p>
+
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Training-data bias and proxy discrimination</span>
 <p><strong>Training-data bias</strong> is a skew in the examples that the model faithfully learns and
 reproduces; the model is not malfunctioning, which is what makes it dangerous. <strong>Proxy
 discrimination</strong> is the sequel: remove the forbidden attribute, here gender, and the model
-finds stand-ins that correlate with it, a word, a college, a verb, a zip code. Amazon could delete
-the "women's" penalty, but could never certify the absence of every subtler proxy in fifty thousand
-terms, and that impossibility, not the one embarrassing term, is why the project died.</p></div>
+finds stand-ins that correlate with it, a word, a college, a verb, a zip code. A company can delete
+the one proxy it noticed, but it can never certify the absence of every subtler one among tens of
+thousands of terms, and that impossibility, not the one embarrassing term, is what kills such
+projects.</p></div>
 
-<p>Two management lessons hide in the ending. First, "the algorithm decided" is never an explanation. A model's decisions are its training data's
-decisions, laundered through math. Accountability for them belongs to the people who chose the data
-and shipped the system, which is Chapter 11's distinction between responsibility and accountability
-arriving a chapter early. Second, Amazon's least celebrated act here was its
-best one: it tested its own system, found the failure, and killed a project it had wanted badly. The
-discussion questions will ask whether you would have had the nerve.</p>
+<p>Two management lessons follow, and the main case in section 4 shows both. First, "the algorithm
+decided" is never an explanation. A model's decisions are its training data's decisions, laundered
+through math. Accountability for them belongs to the people who chose the data and shipped the system:
+the engineers were responsible for building it, but the managers who approved it are the ones who
+answer for it. Second, the least celebrated act in that case is the best one: the company tested its
+own system, found the failure, and killed a project it had wanted badly. The discussion questions will
+ask whether you would have had the nerve.</p>
 
-<h3>The feedback loop</h3>
+<h3>2.2 The feedback loop</h3>
 
 
 <p>Now take the feed from section 1 one step further. The For You page does not just learn from your behavior; it
@@ -586,7 +602,7 @@ The same ring, drawn in Chapter 3, was a flywheel that made Zara stronger every 
 
 
 <div class="tryit" id="fail">
-  <div class="tryit-head">Try it &middot; Which failure is this?</div>
+  <div class="tryit-head">Quick quiz &middot; Which failure is this?</div>
   <p class="tryit-intro">Five systems that went wrong without anybody writing a bad rule. Name the mechanism before you check.</p>
   <div id="failrows"></div>
   <p class="tryit-note">Ask where the human decision hid: in the examples the model learned from, in the stand-in it found for something forbidden, or in the way its own actions changed the next batch of evidence.</p>
@@ -627,7 +643,7 @@ learning" was in common use. That is the point. This is not a new problem that a
 language models. What differs between them is
 <em>where</em> the human decision was hiding.</p>
 
-<h3>Mini-case 1 &middot; 1988: the admissions program that learned the school's own habits</h3>
+<h3>3.1 Mini-case 1 &middot; 1988: the admissions program that learned the school's own habits</h3>
 
 <p>In 1979 a doctor at St George's Hospital Medical School in London wrote a program to do the first
 pass of sorting applicants, a job then done by hand across thousands of applications. It was built to
@@ -655,7 +671,7 @@ mechanism, same surprise.</p>
 panel. Explain why that test could never have caught the problem, and name the test that would
 have.</div>
 
-<h3>Mini-case 2 &middot; 2019: the algorithm that measured the wrong thing</h3>
+<h3>3.2 Mini-case 2 &middot; 2019: the algorithm that measured the wrong thing</h3>
 
 <p>Two patients are equally ill. Software flags one for extra help and not the other, and nobody in the
 hospital can see why. American hospitals use software to decide which patients with complex
@@ -683,7 +699,7 @@ target was wrong.</p>
 someone building this system in good faith would have chosen it. Now propose a target you would have
 used instead, and name the practical reason nobody did.</div>
 
-<h3>Mini-case 3 &middot; 2024: the airline that blamed its own chatbot</h3>
+<h3>3.3 Mini-case 3 &middot; 2024: the airline that blamed its own chatbot</h3>
 
 <p>A man booking a flight after a death in his family asked Air Canada's website chatbot about
 bereavement fares. The chatbot told him he could book now and apply for the discount within ninety days.
@@ -707,7 +723,7 @@ and never tested, that deploying a model does not transfer any obligation with i
 that argument is tempting for a company to make, then name the specific control that would have stopped
 the chatbot inventing a policy in the first place.</div>
 
-<h3>What the three have in common</h3>
+<h3>3.4 What the three have in common</h3>
 
 <p>Three systems, three decades, and not one biased rule between them. Nobody at St George's wrote down
 that women should score lower. Nobody at the hospitals chose to under-refer Black patients. Nobody at
@@ -723,7 +739,7 @@ machine learning are almost never about the algorithm.</p>
 <p>Keep all three in view for the case, because it contains all three. A model that learned who you are
 from your own behavior. A model that learned what a good hire looks like from ten years of hiring. And,
 underneath both, a company deciding how much authority to hand a system it could not read.</p>
-<h2 id="tiktok"><span class="num">4</span>The feed and the hiring desk</h2>
+<h2 id="tiktok"><span class="num">4</span>Main case &middot; The feed and the hiring desk</h2>
 
 <p>TikTok's For You page is the most personally familiar machine-learning system on earth, which
 makes it the right place to start. There is no channel to subscribe to and no search you must run;
@@ -756,7 +772,7 @@ a proxy becomes the target. Section 2 showed you the loop that follows; section 
   <div class="stat"><b>1</b><span>idea behind all of it: learn from examples</span></div>
 </div>
 
-<h3>The turn: the model that scored people</h3>
+<h3>4.1 The turn: the model that scored people</h3>
 
 
 <p>Now the same idea, aimed one domain too far. Beginning in 2014, a team at Amazon built experimental models to do for recruiting what the company
@@ -784,11 +800,11 @@ history, and history had a skew.</p>
 <div class="pull"><p>The model that found your niche by bedtime and the model that rejected her resume are the same idea. Only the training data, and the stakes, differ.</p></div>
 
 
-<h3>Generative AI at 1.4 billion</h3>
+<h3>4.2 Generative AI at 1.4 billion</h3>
 
 
 <p>Now the current generation, at industrial scale, through a system you have been studying all
-quarter. In Week 1 Spotify Wrapped was your "what is MIS" specimen; in Lab 7 you learned its core is
+quarter. In Chapter 1 Spotify Wrapped was your "what is MIS" specimen; in Lab 7 you learned its core is
 a GROUP BY. For Wrapped 2025, Spotify added an <strong>Archive</strong>. For each of roughly 350 million eligible users, rules
 scanned the year's listening for up to five "remarkable days": your biggest discovery day, your most
 nostalgic day. Then a language model wrote a short personalized narrative about each one. About 1.4 billion reports, all pre-generated before launch day, each one a call
@@ -806,7 +822,7 @@ grounding, the evaluation, the capacity planning, is the achievement, and every 
 describes MIS work, not model-building work.</p>
 
 
-<h3>The five components of a machine-learning system</h3>
+<h3>4.3 The five components of a machine-learning system</h3>
 
 
 <table class="sumtable stack-sm">
@@ -818,18 +834,23 @@ describes MIS work, not model-building work.</p>
 <tr><td data-label="Component"><strong>People</strong></td><td data-label="In these cases">Choosing the training data, testing for bias, killing the tool</td><td data-label="The lesson">Every consequential choice in this chapter was a human one</td></tr>
 </table>
 
-<h2 id="governance"><span class="num">5</span>What can be done, and who does it</h2>
+<h2 id="governance"><span class="num">5</span>The other side: what can be done, and who does it</h2>
 
 <p>A chapter that stopped at the last section would leave you with a diagnosis and no treatment. That
 would be a lie by omission. The treatments exist, they are increasingly required by law, and
 administering them is a business job. They come in two layers: what a company can do to govern
 its own models, and what the law now demands.</p>
 
+<h3>5.1 Governing your own models</h3>
+
+<p>Governance is the word for deciding, in advance and in writing, who is allowed to decide what, and
+who answers when it goes wrong. Applied to models it has a short list of working parts.</p>
+
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">AI governance</span>
-<p><strong>AI governance</strong> is Chapter 11's discipline applied to models: the accountability
+<p><strong>AI governance</strong> is IT governance applied to models: the accountability
 structure that decides which AI systems exist, what they may decide, and who answers when they fail.
 Its working parts are concrete. A <strong>model inventory</strong> with a named owner for every
-deployed model, because Equifax taught you what "everyone was responsible" means. <strong>Bias
+deployed model, because an incident review that ends with "everyone was responsible" has found nobody. <strong>Bias
 audits</strong> before deployment: testing whether outcomes differ across groups, the exact test that
 caught Amazon's tool. <strong>Documentation</strong>, in industry practice called model cards and
 datasheets: what the model was trained on, what it is for, and where it must not be used.
@@ -879,13 +900,13 @@ so any specific technical rule is born aging, and, as 2026 showed, may be delaye
 it ever applies. And audit quality: a bias audit is only as good as its
 auditor and its access, and a rubber-stamp industry would launder exactly the harms it was created
 to catch. The durable answer, in both architectures, is the pair of skills this course keeps handing
-you: measurement that is valid, from Chapter 8, and accountability that has a name attached, from
-Chapter 11. Regulation, at its best, is those two things with legal force.</p>
+you: measurement that is valid, from Chapter 8, and accountability that has a name attached. Regulation,
+at its best, is those two things with legal force.</p>
 
-<h3>What business people do with AI</h3>
+<h3>5.2 What business people do with AI</h3>
 
 
-<p>As with security in Chapter 10, students assume AI jobs are engineering jobs they are unqualified
+<p>As with security, students assume AI jobs are engineering jobs they are unqualified
 for, and as with security, the decisions that determine outcomes are mostly business decisions. The
 roles a business graduate actually fills:</p>
 
@@ -908,7 +929,7 @@ makes "which model, whose cloud, at what cost, for which process" a procurement-
 one Wednesday's chapter prices out in detail.</p>
 
 
-<h3>The other side: the people in the data</h3>
+<h3>5.3 The people in the data</h3>
 
 
 <p>Every system in this chapter runs on data generated by people who never signed up to be training
@@ -916,16 +937,16 @@ examples, and one of them, the feed, pays for itself with the attention it harve
 experiment that would score people like them. The residents of a heavily patrolled neighborhood never agreed to have their arrest records forecast
 their children's police coverage. Spotify's Archive drew
 on years of retained listening history, and thoughtful engineering coverage of the launch raised
-exactly that question: delight built on how much a platform remembers about you. This is Chapter 11's
-"data about people who never agreed", resurfacing one layer up the stack.</p>
+exactly that question: delight built on how much a platform remembers about you. This is data about
+people who never agreed to be in the record, resurfacing one layer up the stack.</p>
 
 <p>Behind the models sits labor the demos never show: data-labeling workers, often contractors in
 lower-wage countries, tagging the examples supervised learning requires, including the disturbing
 content that moderation models train on. And generative AI produces its own pollution for other people to absorb. Spotify itself reported
 removing some 75 million spam and AI-generated tracks in 2025 to protect artists and royalties: the
 same company using LLMs as a feature while fighting them as an infestation. When a company weighs an AI deployment, most of these costs sit off its books. That is an
-externality, and it is the same reason Chapter 10 gave for why security cannot be left to private
-cost-benefit math alone.</p>
+externality, and it is the same reason security cannot be left to private cost-benefit math
+alone.</p>
 
 <p>One more cost sits behind every system in this chapter, and it is physical. Training a large model and then serving it to hundreds of millions of people consumes serious
 electricity, and the data centers doing the work drink water to stay cool. The AI boom is a major
