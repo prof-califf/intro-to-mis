@@ -381,14 +381,15 @@ dark because one login was missing one control. Cascadia's board read the same s
 they asked the question every board is now asking: could that be us? You are the co-op's newly appointed
 security lead, and this lab is your first week on the job.</p>
 
-<div class="toc"><strong>Contents</strong> <a href="#inventory">Part 1 · The inventory</a> &nbsp;·&nbsp; <a href="#verify">Part 2 · Verification</a> &nbsp;·&nbsp; <a href="#blast">Part 3 · Blast radius</a> &nbsp;·&nbsp; <a href="#controls">Part 4 · Control numbers</a> &nbsp;·&nbsp; <a href="#map">Part 5 · The access map</a> &nbsp;·&nbsp; <a href="#finish">Reflection &amp; certificate</a> &nbsp;·&nbsp; <a href="#submit">What to submit</a></div>
+<div class="toc"><strong>Contents</strong> <a href="#triad">Part 1 · The triad</a> &nbsp;·&nbsp; <a href="#inbox">Part 2 · The inbox</a> &nbsp;·&nbsp; <a href="#monday">Part 3 · Monday morning</a> &nbsp;·&nbsp; <a href="#finish">Reflection &amp; certificate</a> &nbsp;·&nbsp; <a href="#submit">What to submit</a></div>
 
 <div class="ailight g">
   <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
   <div class="lighttext"><strong>Green &middot; AI as sparring partner</strong>
-  <p>Draft your access map first, then ask an AI to attack it: "Here is who can read what at a retail
-  co-op. Which cell would you exploit?" Defending your map against the pushback is exactly the drill.
-  Asking it to fill in the map for you skips the only part that is graded on thinking.</p></div>
+  <p>Decide about each message yourself first. Then, if you want, paste one in and ask an AI: "What would
+  a careful person check before acting on this?" Compare its list with the facts you actually checked.
+  Asking it to tell you which messages are attacks skips the only part of this lab that is worth
+  doing.</p></div>
 </div>
 
 <div class="ailight r">
@@ -396,239 +397,174 @@ security lead, and this lab is your first week on the job.</p>
   <div class="lighttext"><strong>Red &middot; No attack tooling, ever</strong>
   <p>Never ask an AI to write malware, working exploit code, or a phishing message aimed at a real person
   or organization. That is the hard red light from Chapter 10, it stays red after this course ends, and
-  outside a classroom it is a crime. Studying the two fake emails printed below is the entire point;
+  outside a classroom it is a crime. Studying the seven fake messages printed below is the entire point;
   manufacturing new ones is not.</p></div>
 </div>
 
+<div class="callout"><strong>What you will do in this lab</strong>
+<p>Three things, and none of them needs a line of code. In <strong>Part 1</strong> you take the chapter's
+CIA triad and use it to say what an attack actually took from a company. In <strong>Part 2</strong>, the
+main event, you open the co-op's inbox: seven messages arrived this morning, some of them are attacks,
+and your job is to tell which by checking what each one claims against what you already know about
+Cascadia. In <strong>Part 3</strong> you decide what you would change on Monday. The checkpoints are
+one-word answers. What you actually learn is a habit: never act on a message until one of its claims
+has been checked against a record the sender does not control.</p></div>
 
+<div class="callout"><strong>What you know about Cascadia</strong>
+<p style="font-family:var(--sans);font-size:.9rem">This is your system of record for the whole lab. Everything below is true, and you have seen
+most of it in earlier labs.</p>
+<ul style="font-family:var(--sans);font-size:.9rem">
+  <li><strong>Eight stores:</strong> Seattle Flagship, Bellevue, Tacoma, Bellingham, Spokane, Portland
+  Pearl, Eugene, Boise. No others.</li>
+  <li><strong>Seven suppliers:</strong> Olympic Down Works (USA), Cascade Textiles (USA), Kitsap Forge
+  (USA), Nordvik Outdoor (Norway), Sanko Technical (Japan), Andes Alpaca Co-op (Peru), Fraser Valley
+  Rubber (Canada).</li>
+  <li><strong>Sixty members</strong>, with member IDs running from 1001 to 1060. Eight hold Lifetime
+  memberships; the rest are Standard.</li>
+  <li><strong>The co-op's real email domain</strong> is <code class="inline">cascadia-coop.org</code>.
+  Staff email addresses end in exactly that, and nothing else.</li>
+  <li><strong>The people:</strong> the General Manager, the Controller in finance, a member services
+  team, a marketing intern, and eight store managers. The GM is out of the building at a supplier visit
+  all day today.</li>
+  <li><strong>The policy that exists:</strong> supplier bank details are only ever changed after a phone
+  call to a number already on file. Member records are only ever sent to the member, in person or to the
+  email on file.</li>
+</ul></div>
 
-<p>Here is what you will notice by the end of the session: nothing in this lab requires a single skill
-you do not already have. The audit is counting, and you count with SQL. The phish is caught by checking a
-claim against a database, which is a JOIN and a WHERE. The case for least privilege is one division. The
-chapter argued that most security is management, not code. Today you get to test that claim on a company
-whose data you know better than anyone.</p>
-
-<div class="callout"><strong>The schema, one more time</strong>
-<p style="font-family:var(--sans);font-size:.88rem"><code class="inline">stores</code>(store_id, store_name, region, opened_year, square_feet) &#183;
-<code class="inline">suppliers</code>(supplier_id, supplier_name, country, lead_time_days) &#183;
-<code class="inline">products</code>(product_id, product_name, category, supplier_id, unit_cost, list_price) &#183;
-<code class="inline">members</code>(member_id, first_name, last_name, city, state, member_type, join_date) &#183;
-<code class="inline">sales</code>(sale_id, sale_date, store_id, product_id, member_id, quantity, unit_price) &#183;
-<code class="inline">inventory</code>(store_id, product_id, quantity_on_hand, reorder_point) &#183;
-<code class="inline">used_gear</code>(item_id, product_id, store_id, condition, listed_price, date_listed, date_sold)</p></div>
-
-<h2><span class="num">Sandbox</span>The Cascadia database, live</h2>
-<div id="sqlbox" style="border:1px solid var(--rule);background:var(--paper);border-radius:2px;padding:1rem 1.15rem;margin:1.2rem 0">
-  <p id="sqlstatus" style="font-family:var(--sans);font-size:.85rem;color:var(--muted);margin:0 0 .6rem">Loading database&hellip;</p>
-  <textarea id="sqlin" rows="5" spellcheck="false" style="width:100%;font-family:ui-monospace,Menlo,monospace;font-size:.92rem;padding:.6rem;border:1px solid var(--rule);border-radius:2px" aria-label="SQL query" placeholder="SELECT COUNT(*) FROM members;"></textarea>
-  <br><button onclick="runSQL()" style="font-family:var(--display);font-size:14px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--magenta);color:#fff;border:none;padding:.5rem 1.1rem;cursor:pointer;margin-top:.5rem">Run query</button>
-  <div id="sqlout" style="overflow-x:auto;margin-top:.8rem;font-family:var(--sans);font-size:.85rem"></div>
-</div>
-
-<div id="inventory"></div>
 <div class="callout callout-bridge"><strong>How the checkpoints work</strong>
-<p style="font-family:var(--sans);font-size:.95rem">Here is how this works. Each checkpoint sits directly under the work that produces it. You do the actual work in your own file, then paste the answer here. Get it right and the
-next question opens up. There is no penalty for a wrong answer, so guess, check, and lean on the hint if
-you get stuck. That is what it is there for.</p>
+<p style="font-family:var(--sans);font-size:.95rem">Each checkpoint sits directly under the message or
+scenario it belongs to, and every answer is a single word. Get it right and the next one opens up,
+along with a short explanation of what you should have checked. There is no penalty for a wrong
+answer, so decide, check, and read the hint if you get stuck.</p>
 <p style="font-family:var(--sans);font-size:.95rem">Once you have cleared them all, write your reflection
-and download your certificate for Canvas. Your progress saves automatically in this browser, so you can close the tab and pick up where you left off. It does not follow you to a different computer or a private window, and clearing your browser data clears it. If you need to start this lab over, use the <button type="button" class="hintb" onclick="resetLab()">Reset this lab</button> button.</p>
-<div class="progress" id="prog">Checkpoint progress: 0 / 8</div>
+and download your certificate for Canvas. Your progress saves automatically in this browser, so you can
+close the tab and pick up where you left off. It does not follow you to a different computer or a
+private window, and clearing your browser data clears it. If you need to start this lab over, use the
+Reset this lab button.</p>
+<div class="progress" id="prog">Checkpoint progress: 0 / 11</div>
 </div>
 
-<h2><span class="num">Part 1</span>The inventory: know what you hold</h2>
+<h2 id="triad"><span class="num">Part 1</span>The triad: what an attack actually takes</h2>
 
-<p>Every security framework on earth begins with the same unglamorous step: you cannot protect what you
-have not listed. Chapter 10 put it as a manager's question, "do we have a current inventory?", and the
-honest answer at most companies is no. Yours is about to be yes, because the co-op's inventory is eight
-tables and you can read all of them.</p>
+<p>Chapter 10 said security protects three properties of information, and that every attack takes at
+least one of them. <strong>Confidentiality</strong>: the wrong people can now read it.
+<strong>Integrity</strong>: it was changed and nobody noticed. <strong>Availability</strong>: the people
+who need it cannot get to it. The chapter's argument was that a breach is usually an availability
+problem before it is a confidentiality one, and that the first question a manager asks is not what was
+stolen but what stopped.</p>
 
-<p>Not all tables are equal, and the chapter's CIA triad is the sorting tool. For each table, ask which
-property matters most: who must <em>not</em> read it (confidentiality), what breaks if it is silently
-altered (integrity), and what stops if it is unavailable (availability).</p>
+<p>Practice the sorting on the co-op. Four things that could happen to Cascadia this year are below.
+For each one, name the property that was attacked <em>first</em>. One word, spelled as above. Most
+incidents eventually damage more than one, so ask what the attacker took at the moment of the attack,
+not what happened afterwards.</p>
 
-<div class="tablewrap" tabindex="0" role="region" aria-label="Scrollable table"><table class="lab">
-<thead><tr><th>Table</th><th>What it really is</th><th>Which property dominates</th></tr></thead>
-<tbody>
-<tr><td><code class="inline">members</code></td><td>Real people's names, cities, and membership history. The only table with PII.</td><td>Confidentiality. This is the table a breach notification is about.</td></tr>
-<tr><td><code class="inline">sales</code></td><td>The financial record of the business.</td><td>Integrity first, availability a close second. Quietly altered sales hide fraud; frozen sales stop the stores.</td></tr>
-<tr><td><code class="inline">suppliers</code></td><td>Who the co-op pays, and where.</td><td>Integrity. An attacker who edits a bank detail here gets paid instead of the supplier.</td></tr>
-<tr><td><code class="inline">inventory</code>, <code class="inline">products</code>, <code class="inline">stores</code>, <code class="inline">used_gear</code></td><td>Operating data.</td><td>Availability. Registers and reorder decisions read these all day.</td></tr>
-</tbody>
-</table></div>
-
-<p>Two counts make the confidentiality row concrete: how many people, and how many states' breach
-laws stand behind them. Both queries are printed for you, as in Lab 7. Type each into the sandbox
-above, press Run, and enter what comes back.</p>
-<p><strong>How many people's information does the co-op hold?</strong></p>
-<pre class="sql" style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92rem;background:var(--off-white);border:1px solid var(--border);padding:12px 16px;margin:10px 0;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-all">SELECT COUNT(*) FROM members;</pre>
-<p><strong>How many different states are those people in?</strong> COUNT(DISTINCT) collapses a column to
-its unique values.</p>
-<pre class="sql" style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92rem;background:var(--off-white);border:1px solid var(--border);padding:12px 16px;margin:10px 0;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-all">SELECT COUNT(DISTINCT state) FROM members;</pre>
-<p>Look at the second number for a moment, because it is the one that surprises new security leads. A
-breach is not one legal event; it is one per state.</p>
-
-<div id="verify"></div>
 <div class="cpslot" data-cp="1"></div>
 <div class="cpslot" data-cp="2"></div>
-
-<h2><span class="num">Part 2</span>Verification beats vibes: two emails from this morning</h2>
-
-<p>Chapter 10's breach began with a stolen password, but most breaches begin one step earlier, with a
-message that persuades someone to hand access over. The defense you are about to practice is the one
-that scales: do not judge a message by its tone, its urgency, or its logo. Judge it by whether its
-claims survive contact with your system of record. You have the system of record open in the sandbox
-above.</p>
-
-<div class="callout callout-caution"><strong>Email one &middot; to accounts payable</strong>
-<p style="font-family:var(--sans);font-size:.92rem"><em>From: billing@nordvik-outdoor-payments.com<br>
-Subject: URGENT: Updated remittance details, action required before Friday</em></p>
-<p style="font-family:var(--sans);font-size:.92rem">"Hello, this is the finance team at Nordvik Outdoor,
-your US-based climbing hardware supplier. Due to a banking migration we require all invoice payments to
-be sent to our new account, details attached. Please update before Friday's payment run to avoid
-disruption to your spring orders."</p></div>
-
-<p>Plausible. Nordvik Outdoor is a real supplier; you joined to it in Lab 7. The urgency is realistic
-and the ask is routine. Now verify the one factual claim the email makes about itself, that the
-supplier is US-based, against the system of record:</p>
-<pre class="sql" style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92rem;background:var(--off-white);border:1px solid var(--border);padding:12px 16px;margin:10px 0;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-all">SELECT country FROM suppliers WHERE supplier_name='Nordvik Outdoor';</pre>
-<p>One word comes back. Enter it in Checkpoint 3.</p>
-
-<div class="callout callout-caution"><strong>Email two &middot; to member services</strong>
-<p style="font-family:var(--sans);font-size:.92rem"><em>From: privacy-request@mail-cascadia-coop.net<br>
-Subject: Formal complaint from member #1287, records required</em></p>
-<p style="font-family:var(--sans);font-size:.92rem">"Member 1287 has filed a formal complaint regarding
-billing errors on their account. Under our review procedure, please reply with the member's full record,
-including name, address, and complete purchase history, so we can begin the investigation today."</p></div>
-
-<p>Notice what this one is really asking for: not money, but a record. Verify that the member exists at
-all:</p>
-<pre class="sql" style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92rem;background:var(--off-white);border:1px solid var(--border);padding:12px 16px;margin:10px 0;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-all">SELECT COUNT(*) FROM members WHERE member_id=1287;</pre>
-<p>The count is Checkpoint 4.</p>
-
 <div class="cpslot" data-cp="3"></div>
 <div class="cpslot" data-cp="4"></div>
 
-<div class="callout callout-good"><strong>The habit, stated once</strong>
-<p>Both emails die to a query that takes ten seconds. The professionals' version of this habit has a
-name, out-of-band verification: confirm the request through a channel the requester does not control.
-Call the supplier at the number in <em>your</em> records, not the one in the email. The database is your
-first out-of-band channel, and you have had it since Week 7.</p></div>
+<p>Notice which of the four would be hardest to discover. A locked register announces itself. A posted
+member list gets found eventually. A reorder point quietly set to zero looks like an ordinary number
+until the shelf is empty, which is why the chapter called integrity the property nobody checks until
+it is too late.</p>
 
-<div id="blast"></div>
-<h2><span class="num">Part 3</span>Blast radius: least privilege in numbers</h2>
+<h2 id="inbox"><span class="num">Part 2</span>The inbox: seven messages from this morning</h2>
 
-<p>Chapter 10 said the attackers had nine days of lateral movement, which meant one stolen credential
-became access to everything. The design rules against that, least privilege and segmentation, tend to
-get taught as slogans. You are going to compute them instead.</p>
+<p>Chapter 10's breach began with a stolen password. Most breaches begin one step before that, with a
+message that persuades somebody to hand something over. The defense that scales is not spotting bad
+grammar or scary logos. It is this: <strong>find the one factual claim the message makes, and check it
+against a record the sender does not control.</strong> The box at the top of this lab is that record. Every message below either survives that check or does not. In the chapter's kill chain, every one of these messages is an attempt at the first stage, initial entry. It is also the cheapest stage to break, because nothing has happened yet.</p>
 
-<p>The co-op's registers log in to record sales. Question: what should a register's credential be able
-to <em>read</em>? Today, the honest answer at Cascadia is "everything," because nobody ever decided
-otherwise, and security failures are mostly decisions that went unmade. Your proposal: scope each
-register to its own store. Checkpoints 5 and 6 measure exactly how much that one decision shrinks the
-blast radius of one stolen password.</p>
+<p>Seven messages arrived at Cascadia this morning. For each one, decide whether it is an
+<strong>attack</strong> or <strong>legitimate</strong>, and enter that one word as the checkpoint. Do the
+checking before you decide. Some of these are meant to feel urgent, and one of the legitimate ones is
+more urgent-sounding than most of the attacks.</p>
 
-<p>First, how many rows a Bellingham-only register could reach. This is a JOIN and a WHERE, both from
-Lab 7:</p>
-<pre class="sql" style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92rem;background:var(--off-white);border:1px solid var(--border);padding:12px 16px;margin:10px 0;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-all">SELECT COUNT(*) FROM sales s JOIN stores st ON st.store_id=s.store_id WHERE st.store_name='Bellingham';</pre>
-<p>That count is Checkpoint 5. Then turn it into a share of everything: divide it by the total number of
-sales rows (2,899, the number you have known since Lab 2) and multiply by 100. One decimal place. That
-percentage is Checkpoint 6, and it is the blast radius of one stolen register password under least
-privilege. The same password against an everything-access account exposes 100 percent.</p>
-<p>Keep the percentage for your memo. It is the rare security argument that fits in one sentence with a
-number in it, which is the kind boards act on.</p>
+<div class="callout callout-caution"><strong>Message 1 &middot; to accounts payable</strong>
+<p style="font-family:var(--sans);font-size:.92rem"><em>From: billing@nordvik-outdoor-payments.com<br>Subject: URGENT: Updated remittance details, action required before Friday</em></p>
+<p style="font-family:var(--sans);font-size:.92rem">"Hello, this is the finance team at Nordvik Outdoor, your US-based climbing hardware supplier. Due to a banking migration we require all invoice payments to be sent to our new account, details attached. Please update before Friday's payment run to avoid disruption to your spring orders."</p></div>
 
-<div id="controls"></div>
 <div class="cpslot" data-cp="5"></div>
+
+<div class="callout callout-caution"><strong>Message 2 &middot; to member services</strong>
+<p style="font-family:var(--sans);font-size:.92rem"><em>From: privacy-request@mail-cascadia-coop.net<br>Subject: Formal complaint from member #1287, records required</em></p>
+<p style="font-family:var(--sans);font-size:.92rem">"Member 1287 has filed a formal complaint regarding billing errors on their account. Under our review procedure, please reply with the member's full record, including name, address, and complete purchase history, so we can begin the investigation today."</p></div>
+
 <div class="cpslot" data-cp="6"></div>
 
-<h2><span class="num">Part 4</span>The control numbers: integrity and availability, priced</h2>
+<div class="callout callout-caution"><strong>Message 3 &middot; a text to the Controller's phone</strong>
+<p style="font-family:var(--sans);font-size:.92rem"><em>From: +1 (360) 555-0142, unknown number<br>Subject: (no subject)</em></p>
+<p style="font-family:var(--sans);font-size:.92rem">"Hey it's me, stuck in the supplier meeting and can't talk. Need you to pick up five $100 gift cards for the staff awards tonight and text me the codes off the back so I can hand them out from here. Will square up with you tomorrow. Thx."</p></div>
 
-<p>Two more numbers finish the audit, one for each remaining letter of the triad.</p>
-
-<p><strong>Integrity.</strong> An attacker with write access does not always lock your data; sometimes
-they quietly change it, and the fraud hides inside numbers nobody rechecks. The defense is a control
-number: a total you can recompute from source at will. You have one already. Total revenue has followed
-you since Lab 2, and Checkpoint 7 asks for it one more time, now wearing its security hat: if this
-number ever disagrees with itself, someone has been in your tables.</p>
-
-<pre class="sql" style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92rem;background:var(--off-white);border:1px solid var(--border);padding:12px 16px;margin:10px 0;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-all">SELECT ROUND(SUM(quantity*unit_price),2) FROM sales;</pre>
-<p><strong>Availability.</strong> Ransomware's real product is the dark day: registers down, inventory
-unreadable, stores effectively closed. Checkpoint 8 computes what one such day costs the co-op in
-revenue alone, before a single record leaks and before a lawyer is hired. Multiply it across the ten
-days Change Healthcare was down and you understand why the chapter insisted the business disruption was
-the disaster and the data breach was the aftermath.</p>
-<pre class="sql" style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92rem;background:var(--off-white);border:1px solid var(--border);padding:12px 16px;margin:10px 0;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-all">SELECT ROUND(SUM(quantity*unit_price)/COUNT(DISTINCT sale_date),2) FROM sales;</pre>
-<p>Total revenue divided by the number of days the stores sold something: one dark day, in revenue
-alone. Round to the nearest dollar for Checkpoint 8.</p>
-
-<div id="map"></div>
 <div class="cpslot" data-cp="7"></div>
+
+<div class="callout callout-caution"><strong>Message 4 &middot; to the buying team</strong>
+<p style="font-family:var(--sans);font-size:.92rem"><em>From: shipping@fraservalleyrubber.ca<br>Subject: URGENT: winter boot shipment delayed 3 days</em></p>
+<p style="font-family:var(--sans);font-size:.92rem">"Hi, apologies for the short notice. The Fraser Valley Rubber order due Thursday is held at the Blaine crossing and will now arrive Monday. Nothing is needed from you; we just did not want your Bellingham and Spokane stores caught short. Reply if the new date is a problem and we will split the shipment."</p></div>
+
 <div class="cpslot" data-cp="8"></div>
 
-<h2><span class="num">Part 5</span>The access map: who should see what</h2>
+<div class="callout callout-caution"><strong>Message 5 &middot; to all staff</strong>
+<p style="font-family:var(--sans);font-size:.92rem"><em>From: it-support@cascadia-coop-support.com<br>Subject: Action required: password reset within 24 hours</em></p>
+<p style="font-family:var(--sans);font-size:.92rem">"As part of our security upgrade, all staff must reset their password within 24 hours using the link below. Accounts not reset by tomorrow will be locked. This is an automated message; do not reply. [Reset my password]"</p></div>
 
-<p>The last part has no checkpoint, because it is the part that is actually your job. Least privilege
-says every role gets the minimum it needs. Someone has to decide what that minimum is, role by role and
-table by table, and that someone is never the database; it is a manager who understands the work.</p>
+<div class="cpslot" data-cp="9"></div>
 
-<p>Copy this grid into your submission document and fill every cell with <strong>R</strong> (read),
-<strong>W</strong> (read and write), or a dash (no access). Four roles, four tables, sixteen decisions.</p>
+<div class="callout callout-caution"><strong>Message 6 &middot; to member services</strong>
+<p style="font-family:var(--sans);font-size:.92rem"><em>From: d.okafor@gmail.com<br>Subject: Address change, member 1042</em></p>
+<p style="font-family:var(--sans);font-size:.92rem">"Hi, I'm a Lifetime member (1042) and I've moved from Tacoma to Olympia. Can you update my mailing address so the dividend statement comes to the right place? I'd rather not put the new address in email, so call me at the number you have on file and I'll give it to you then. Thanks, Daniel."</p></div>
 
-<div class="tablewrap" tabindex="0" role="region" aria-label="Scrollable table"><table class="lab">
-<thead><tr><th>Role</th><th>sales</th><th>members</th><th>suppliers</th><th>inventory</th></tr></thead>
-<tbody>
-<tr><td>Register clerk</td><td></td><td></td><td></td><td></td></tr>
-<tr><td>Store manager (one store)</td><td></td><td></td><td></td><td></td></tr>
-<tr><td>Marketing intern</td><td></td><td></td><td></td><td></td></tr>
-<tr><td>The board</td><td></td><td></td><td></td><td></td></tr>
-</tbody>
-</table></div>
+<div class="cpslot" data-cp="10"></div>
 
-<p>There is no single right map, but there are defensible and indefensible cells. Pick <strong>two</strong>
-of your sixteen and defend each in one sentence. Two prompts to pressure-test yourself: does the
-marketing intern really need member names, or would an anonymized count serve the campaign? And does
-the board need write access to anything at all? (Chapter 11 has opinions about that one.)</p>
+<div class="callout callout-caution"><strong>Message 7 &middot; to the Bellingham store manager</strong>
+<p style="font-family:var(--sans);font-size:.92rem"><em>From: olympia.store@cascadia-coop.org<br>Subject: Quick favor: member list for our grand opening</em></p>
+<p style="font-family:var(--sans);font-size:.92rem">"Hi! I'm the new manager at the Olympia store, we open next month and I'd love to invite your Bellingham members to the launch. Could you export your store's member list with emails and send it over? The GM said you'd be able to help. Thanks so much!"</p></div>
 
-<div class="callout"><strong>The memo: three sentences</strong>
-<p>Your security memo to the board is three sentences, in this order. One: the blast radius, using the
-percentage from Checkpoint 6 ("scoping each register to its own store limits one stolen password to
-about 12 percent of our sales records instead of all of them"). Two: the dark day, using Checkpoint 8
-("a day with the registers down costs the co-op roughly $X in revenue before anything is stolen").
-Three: the one control you would put in place first, and why. That is the whole memo. Boards read three
-sentences with numbers in them; they do not read paragraphs.</p></div>
+<div class="cpslot" data-cp="11"></div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
-<script>
-var CASCADIA_DB=null;
-initSqlJs({locateFile:function(f){return 'https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/'+f}})
-.then(function(SQL){return fetch('cascadia.db').then(function(r){if(!r.ok)throw new Error('db fetch '+r.status);return r.arrayBuffer()}).then(function(buf){
-  CASCADIA_DB=new SQL.Database(new Uint8Array(buf));
-  document.getElementById('sqlstatus').textContent='Database loaded. The co-op has eight tables, same as Lab 7. Type a query and press Run.';
-})}).catch(function(e){
-  document.getElementById('sqlstatus').innerHTML='Could not load the database ('+e.message+'). The sandbox has to be served over http, so it works on the course site but not from a file you opened locally. You can also run these queries at <a href="https://sqliteonline.com">sqliteonline.com</a> by uploading <a href="cascadia.db">cascadia.db</a>.';
-});
-function runSQL(){
-  var out=document.getElementById('sqlout');
-  if(!CASCADIA_DB){out.textContent='Database still loading, give it a second.';return}
-  var q=document.getElementById('sqlin').value;
-  try{
-    var res=CASCADIA_DB.exec(q);
-    if(!res.length){out.textContent='Query ran, no rows returned.';return}
-    var r=res[0],h='<div class="tablewrap" tabindex="0" role="region" aria-label="Scrollable table"><table style="border-collapse:collapse"><tr>';
-    r.columns.forEach(function(c){h+='<th style="border:1px solid var(--rule);padding:.35rem .65rem;background:var(--off-white);text-align:left">'+c+'</th>'});
-    h+='</tr>';
-    r.values.slice(0,50).forEach(function(row){h+='<tr>';row.forEach(function(v){h+='<td style="border:1px solid var(--rule);padding:.35rem .65rem">'+(v===null?'<em style="color:#a03434">NULL</em>':String(v).replace(/</g,'&lt;'))+'</td>'});h+='</tr>'});
-    h+='</table></div>';
-    if(r.values.length>50)h+='<p style="color:var(--muted)">Showing 50 of '+r.values.length+' rows.</p>';
-    out.innerHTML=h;
-  }catch(e){out.innerHTML='<span style="color:#a03434">SQL error: '+String(e.message).replace(/</g,'&lt;')+'</span><br><span style="color:var(--muted)">Read it closely. The word right before the error is usually where the problem is.</span>'}
-}
-</script>
+<p>Look back at what caught each attack. Not the tone, not the spelling, and not the logo. A country, a
+member number, a store that does not exist, a domain that is nearly right, a request that bypasses a
+policy already on file. Every one was a claim you could check in under a minute against something the
+sender did not control. Security people call this <strong>out-of-band verification</strong>: confirm
+the request through a channel the requester did not choose. Call the number on file, not the one in
+the message. Look up the member, do not take the number as given. It is the single habit that would
+have stopped every message above, and it costs nothing.</p>
+
+<p>Notice also what the legitimate messages had in common. Neither asked you to bypass anything. The
+supplier asked for nothing at all. The member asked you to follow the policy rather than skip it. Real
+requests tend to survive verification because they are not afraid of it.</p>
+
+<h2 id="monday"><span class="num">Part 3</span>Monday morning: the one control</h2>
+
+<p>Seven messages, five attacks, and every one of them was aimed at a person, not a server. Chapter 10's
+argument was that most security is management, and this is what that looks like in practice: the
+decisions that stop these attacks are about policies, habits, and who is allowed to do what, not about
+code.</p>
+
+<p>You are the security lead, and the board has given you Monday morning and no budget. Pick
+<strong>one</strong> control from the list below to put in place first, and be ready to say why that one
+before the others. There is no checkpoint for this, because it is the part of the job that is actually
+yours.</p>
+
+<ul>
+  <li><strong>A verification rule.</strong> No bank detail, password, or member record is ever changed
+  or sent on the strength of a message alone. One phone call to a number on file, every time.</li>
+  <li><strong>Multi-factor authentication</strong> on every staff login, so that a password stolen by a
+  message like number 5 is not enough by itself.</li>
+  <li><strong>Least privilege.</strong> Decide, role by role, who can read the member table at all, so
+  that a request like number 7 has fewer people it could work on.</li>
+  <li><strong>Training.</strong> Walk every employee through these seven messages, because the person
+  who has seen the pattern once recognizes it the second time.</li>
+</ul>
+
+<p>Write your choice and your reason in two sentences at the top of your reflection below. Then
+answer the reflection question.</p>
+
 <h2 id="finish"><span class="num">Finish</span>Reflection &amp; certificate</h2>
 
 <div class="certbox" id="reflectbox">
   <h3>One last thing before your certificate</h3>
-  <p style="font-family:var(--sans);font-size:.88rem">This lab asked you to make security decisions with a business degree's tools: an inventory, a verification habit, an access map, and a handful of numbers. Think of an organization you know from the inside, a job, a club, a team. Name the data it holds that would hurt most if it leaked or locked up, who can currently reach it, and the one control from this lab you would put in place there first. Why that one?</p>
+  <p style="font-family:var(--sans);font-size:.88rem">Start with your Part 3 choice: which one control you would put in place Monday, and why that one first. Then think of an organization you know from the inside, a job, a club, a team. Which of the seven messages above would have worked there, on whom, and what fact could that person have checked to stop it?</p>
   <p style="font-family:var(--sans);font-size:.88rem;color:var(--muted)">Fifty words is the minimum, but
   do not write to the counter. This prints as page 2 of your certificate, so it is the part your lab
   professor actually reads. Answer it like someone asked you the question out loud.</p>
@@ -646,15 +582,12 @@ function runSQL(){
 </div>
 
 <h2 id="submit"><span class="num">Canvas</span>What to submit</h2>
-<p style="font-family:var(--sans);font-size:.92rem">Go to the <strong>Lab 8</strong> assignment in Canvas and upload two files.</p>
-<p style="font-family:var(--sans);font-size:.92rem"><strong>File 1: your audit document.</strong> One Word doc or PDF named
-<code class="inline">LAB8_Last_First</code>, containing your completed sixteen-cell access map, your
-two defended cells (one sentence each), and your three-sentence memo to the board.</p>
-<p style="font-family:var(--sans);font-size:.92rem"><strong>File 2: your completion certificate PDF.</strong> Clear all the checkpoints above, write your reflection, and click Download certificate. Your reflection prints as page 2, so you do not submit it separately.</p>
+<p style="font-family:var(--sans);font-size:.92rem">Go to the <strong>Lab 8</strong> assignment in Canvas and upload one file.</p>
+<p style="font-family:var(--sans);font-size:.92rem"><strong>Your completion certificate PDF.</strong> Clear all the checkpoints above, write your reflection, and click Download certificate. Your reflection prints as page 2, so you do not submit it separately.</p>
 </main>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-const LAB="LAB8", QS=[{"q": "Part 1 \u00b7 The confidentiality inventory. Start where every audit starts, with a count of what you are protecting: SELECT COUNT(*) FROM members; How many people's personal information does the co-op hold?", "t": "num", "a": "NjA=", "tol": 0, "h": "One line in the sandbox above. Each row is a real person's name, city, and membership history. Change Healthcare's number was 190 million; the co-op's is smaller, but the shape of the obligation is identical."}, {"q": "Part 1 \u00b7 Breach notification is state law, and every state writes its own. SELECT COUNT(DISTINCT state) FROM members; If member data leaked, how many different states' notification laws would the co-op be answering to?", "t": "num", "a": "Mw==", "tol": 0, "h": "COUNT(DISTINCT state) collapses the column to its unique values. Every distinct state is a separate legal clock that starts ticking the day you discover a breach."}, {"q": "Part 2 \u00b7 Email one claims to be from Nordvik Outdoor, \"your US-based climbing hardware supplier,\" announcing new bank details for invoice payments. Verify the claim against the system of record: SELECT country FROM suppliers WHERE supplier_name='Nordvik Outdoor'; What country is Nordvik Outdoor actually in?", "t": "txt", "a": "Tm9yd2F5", "h": "The query returns one word, and it is not the one the email used. A supplier that gets its own country wrong is not your supplier. This exact fraud, a real vendor name plus new bank details, is called business email compromise, and it costs companies billions a year."}, {"q": "Part 2 \u00b7 Email two says member 1287 has filed a complaint and demands you send their full record for review. SELECT COUNT(*) FROM members WHERE member_id=1287; What does the count return?", "t": "num", "a": "MA==", "tol": 0, "h": "Zero rows. There is no member 1287, so the request is a fishing trip for whatever record you might send back. The lesson generalizes: verify the claim, not the tone. Urgency is a technique, not evidence."}, {"q": "Part 3 \u00b7 Least privilege, measured. Suppose each register credential could read only its own store's sales. How many rows can a Bellingham-scoped account reach? SELECT COUNT(*) FROM sales s JOIN stores st ON st.store_id=s.store_id WHERE st.store_name='Bellingham';", "t": "num", "a": "MzQ3", "tol": 0, "h": "A JOIN and a WHERE, both from Lab 7. This number is the blast radius of one stolen register password in a least-privilege design."}, {"q": "Part 3 \u00b7 Now express the blast radius as a share: one hundred times your Checkpoint 5 answer, divided by the total number of sales rows (you have known that total since Lab 2). What percent of the co-op's sales does one scoped credential expose? One decimal.", "t": "num", "a": "MTIuMA==", "tol": 0.2, "h": "Roughly one eighth. The same stolen password against an unscoped, everything-access account exposes one hundred percent. That gap is the entire argument for least privilege, in one division."}, {"q": "Part 4 \u00b7 Integrity. You have computed total revenue in Excel twice this quarter. Compute it here in one line: SELECT ROUND(SUM(quantity*unit_price),2) FROM sales; What is it?", "t": "num", "a": "NzEyOTcxLjU=", "tol": 1, "h": "The point is not the arithmetic. A number you can recompute from source at any time is a control: if an attacker with write access quietly alters rows, this total moves, and you notice. Integrity monitoring is recomputing what you already know and checking that it still agrees."}, {"q": "Part 4 \u00b7 Availability. Ransomware does not steal a register; it stops it. SELECT ROUND(SUM(quantity*unit_price)/COUNT(DISTINCT sale_date),2) FROM sales; To the nearest dollar, what does one dark day cost the co-op in revenue alone?", "t": "num", "a": "MTk1OC43MQ==", "tol": 5, "h": "Total revenue over distinct selling days. Multiply by the ten days Change Healthcare's systems were down and you have the start of a board-ready number, before a single record leaks."}];
+const LAB="LAB8", QS=[{"q": "Part 1 · Someone posts the co-op's complete member list, names and cities, on a public forum. Which property was attacked first?", "t": "txt", "a": "Y29uZmlkZW50aWFsaXR5", "tol": 0, "h": "The data is unchanged and still available to the co-op. What changed is who can read it."}, {"q": "Part 1 · Ransomware encrypts every register in all eight stores on the Saturday before Thanksgiving. Which property was attacked first?", "t": "txt", "a": "YXZhaWxhYmlsaXR5", "tol": 0, "h": "Nothing has been read or altered yet. The stores simply cannot use their own data. Chapter 10 called this the disaster; the leak is the aftermath."}, {"q": "Part 1 · An attacker with a stolen login sets the reorder point on the co-op's best-selling sleeping bag to zero, and nobody notices for six weeks. Which property was attacked first?", "t": "txt", "a": "aW50ZWdyaXR5", "tol": 0, "h": "The data is readable and available. It is wrong, and the system trusts it."}, {"q": "Part 1 · Someone deletes the co-op's backups the night before a ransomware attack, so there is nothing to restore from. Which property was attacked first?", "t": "txt", "a": "YXZhaWxhYmlsaXR5", "tol": 0, "h": "Deleting backups does not expose or alter the live data. It removes the co-op's ability to get its data back, which is availability, planned in advance."}, {"q": "Message 1 · Nordvik Outdoor bank details. Attack or legitimate?", "t": "txt", "a": "YXR0YWNr", "tol": 0, "h": "Check the one factual claim: Nordvik is 'your US-based supplier.' Your record says Norway. Also, the co-op's policy says bank details change only after a phone call to a number on file, which this message is trying to skip. Property targeted: integrity of the payment record."}, {"q": "Message 2 · Member 1287 complaint. Attack or legitimate?", "t": "txt", "a": "YXR0YWNr", "tol": 0, "h": "Member IDs run from 1001 to 1060. There is no member 1287. The domain is also mail-cascadia-coop.net, not cascadia-coop.org. Property targeted: confidentiality of a member's record."}, {"q": "Message 3 · The gift-card text. Attack or legitimate?", "t": "txt", "a": "YXR0YWNr", "tol": 0, "h": "The GM is at a supplier visit, which makes the story plausible, and that is the point. But it arrives from an unknown number, asks for codes that cannot be recovered, and asks you not to call. Verify out of band: call the GM's real number. This is the most common scam aimed at finance staff, and it works because of urgency, not technology."}, {"q": "Message 4 · Fraser Valley Rubber delay. Attack or legitimate?", "t": "txt", "a": "bGVnaXRpbWF0ZQ==", "tol": 0, "h": "URGENT in the subject line is not the test. Check the claims: Fraser Valley Rubber is a real supplier in Canada, the domain matches, the Blaine crossing is where a Canadian shipment would come in, and the message asks for nothing except a reply if the date is a problem. Real messages survive verification."}, {"q": "Message 5 · Password reset in 24 hours. Attack or legitimate?", "t": "txt", "a": "YXR0YWNr", "tol": 0, "h": "The domain is cascadia-coop-support.com. The co-op's real domain is cascadia-coop.org, and nothing else. Lookalike domains are the standard way to steal a password, and a stolen password is exactly how Chapter 10's breach began. Property targeted: confidentiality first, then everything the login can reach."}, {"q": "Message 6 · Daniel's address change. Attack or legitimate?", "t": "txt", "a": "bGVnaXRpbWF0ZQ==", "tol": 0, "h": "A Gmail address looks suspicious, and that is a distraction. Member 1042 exists, Lifetime members exist, and the member asks you to call the number on file rather than trust the email, which is the co-op's own policy. This is what a real request looks like."}, {"q": "Message 7 · The Olympia store manager. Attack or legitimate?", "t": "txt", "a": "YXR0YWNr", "tol": 0, "h": "The domain is right, which is what makes this one dangerous. But there is no Olympia store: the co-op has eight, and you can name them. A spoofed or compromised address plus a name-drop of the GM, who is unreachable today, is a classic combination. Property targeted: confidentiality of the member list."}];
 const SKEY='mis320_'+LAB;
 let solved=new Set();
 function load(){try{const raw=localStorage.getItem(SKEY);if(!raw)return null;const s=JSON.parse(raw);
@@ -675,7 +608,7 @@ function render(){
   d.className='cp'+(solved.has(i)?' done':(lock?' locked':''));
   d.innerHTML='<span class="cphead">Checkpoint '+(i+1)+' of '+QS.length+(solved.has(i)?' \u00b7 cleared':'')+'</span>'
    +'<p class="q">'+q.q+'</p>'
-   +(solved.has(i)?'<p class="msg" style="color:var(--good)">Correct.</p>':'<input type="text" id="in'+i+'" aria-label="Answer '+(i+1)+'">'
+   +(solved.has(i)?'<p class="msg" style="color:var(--good)">Correct.</p><p class="hint" style="display:block">'+q.h+'</p>':'<input type="text" id="in'+i+'" aria-label="Answer '+(i+1)+'">'
    +'<button onclick="chk('+i+')">Check</button>'
    +'<button class="hintb" onclick="hint('+i+')">Hint</button>'
    +'<p class="msg" id="m'+i+'"></p><p class="hint" id="h'+i+'">'+q.h+'</p>');
