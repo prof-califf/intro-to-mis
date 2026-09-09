@@ -448,21 +448,21 @@ discussion questions at the end come from both.</p>
 <h2 id="why"><span class="num">1</span>Why systems analysis exists</h2>
 
 <p>Chapter 4 argued that a process has to be understood before it is worth automating. This chapter is
-about what happens when an organization has to build the system anyway, at scale, for people it has
+about what happens when an organization has to build an information system anyway, at scale, for people it has
 never served before.</p>
 
 <p>Nobody builds an information system by sitting down and writing code on day one. Before that,
 somebody has to figure out two things: what the system is supposed to do, and how it is going to do
-it. Figuring out <em>what</em> is called <strong>systems analysis</strong>. Who will use this system?
+it. Figuring out <em>what</em> is called <strong>systems analysis</strong>. To do that, analysts ask questions such as: Who will use this system?
 What does it need to keep track of? What other systems does it have to talk to? How will we know it
-works? Figuring out <em>how</em> is called <strong>systems design</strong>. How will the data be
-organized? Which parts do we build and which do we buy? What will the person at the screen actually
-see? Put the two together and you have <strong>systems analysis and design</strong>, which is what this
+works? Figuring out <em>how</em> is called <strong>systems design</strong>. Systems design involves more technology-related questions like: How will the data be
+organized? Which parts of the information system do we build? Which parts can we buy? What will the person at the screen actually
+see (and what do they actually need to see)? Put the analysis and design together and you have <strong>systems analysis and design</strong>, which is what this
 chapter is about.</p>
 
-<p>Think of building a house. Analysis is the conversation with the family about how many bedrooms
+<p>To further your understanding of systems analysis and design, think of building a house. Analysis is the conversation with the family about how many bedrooms
 they need and whether anyone uses a wheelchair. Design is the blueprint. Nobody pours concrete until
-both are done, because concrete is expensive to move. Software is the same, except that people skip the
+both are done, because concrete is expensive to move. Software is the same, except that often individuals and businesses skip the
 first two steps far more often than builders do, and that is where most of this chapter's disasters
 come from.</p>
 
@@ -471,19 +471,19 @@ come from.</p>
 
 <h3>1.1 The cheapest place to be wrong</h3>
 
-<p>Why bother with all this instead of just starting to build? Because mistakes get more expensive the
+<p>So, why should businesses bother with understanding analysis and design instead of just starting to build? Because mistakes get more expensive the
 longer they go unnoticed. A misunderstanding caught in a conversation costs a conversation. The same
-misunderstanding caught after launch costs rework, retraining, and sometimes a congressional hearing.
+misunderstanding caught after system launch costs rework, retraining, and sometimes a congressional hearing, depending on the importance of the system.
 A common estimate is that the cost of fixing a mistake goes up about ten times at every phase it survives.
-Analysis is not about being careful for its own sake. It is the cheapest place to be wrong.</p>
+So, analysis is not about being careful for its own sake. It is the cheapest place to be wrong.</p>
 
-<p>Notice what is being decided during analysis, in the terms of Chapter 1. Nobody is choosing hardware
+<p>Notice what is being decided during analysis, in the terms we discussed in Chapter 1. Nobody is choosing hardware
 yet, and nobody is writing software. What gets settled is <strong>what the system will record</strong>,
 <strong>which people will be responsible for which steps</strong>, and <strong>which other systems it
-must exchange data with</strong>. Those are the data, people and network components, and they are being
-fixed by conversation, in meetings, months before anyone can point at a machine.</p>
+must exchange data with</strong>. Those are the people, data, and network components, and they are being
+understood by conversations with human analysts, in meetings, months before anyone can point at a machine.</p>
 
-<p>That has a consequence worth carrying through the chapter. Hardware and software can be replaced
+<p>All of this has a point that you may notice throughout the chapter. Hardware and software can be replaced
 late; organizations do it constantly and it is merely expensive. A missing data requirement, an
 unassigned responsibility, or an unspecified boundary between two systems cannot be replaced late,
 because by then everything else has been built on the assumption that somebody had decided. Chapter 1's
@@ -499,11 +499,11 @@ building them, and analysis is the phase where you choose which component will b
 
 <h3>1.2 Feasibility, requirements, and scope creep</h3>
 
-<p>Three ideas do most of the work in this section, and all three are ways of asking a question early
-that somebody will otherwise ask late. <strong>Feasibility analysis</strong> asks, before anything is
-built, whether the project should exist at all. A <strong>requirement</strong> is a statement of what the
-system must do, written down before anyone builds it. <strong>Scope creep</strong> is what happens to
-requirements after the estimates are fixed: they keep arriving, each one reasonable, and nobody adjusts
+<p>Three ideas do most of the work in this section, and all three are ways of asking early questions about how to build an information system
+that somebody will otherwise ask late. The first thing you really need is a <strong>feasibility analysis</strong>, which asks, before anything is
+built, whether the project should exist at all. To do that, you need to figure out <strong>system requirements</strong> which are statements about what the
+system must do, written down before anyone builds it. Once these things are in place, businesses often struggle with <strong>scope creep</strong>, which is what happens to
+system requirements after the feasibility and requirements are settled on. Things change. Changes keep arriving, each one reasonable, and nobody adjusts
 the schedule. The two boxes below give each its full definition.</p>
 
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Feasibility and scope creep</span>
@@ -520,29 +520,26 @@ what section 2 is about.</p>
 
 <h2 id="sdlc"><span class="num">2</span>The software development life cycle</h2>
 
-<p>Every project, whatever it calls itself, passes through the same handful of activities: working out
+<p>Every information systems project, whatever it calls itself, passes through the same six phases: working out
 what is needed, deciding how to build it, building it, checking it, turning it on, and keeping it
-running. That sequence is the <strong>software development life cycle</strong>, and the useful thing
-about it is not the diagram. It is that each phase has a question attached, and skipping the question
-does not skip the consequence.</p>
+running. That sequence is called the <strong>software development life cycle (SDLC)</strong>. The important thing to note about the SDLC is that each phase has a question attached, and skipping the question does not skip the consequence.</p>
 
-<p>What projects actually differ on is the order and the size of the loop: whether you finish each phase
-before starting the next, or run all of them repeatedly on a small piece of the system. That is the
-argument between the two approaches below, and it is the one decision in this section that
-Healthcare.gov got wrong before a line of code existed.</p>
+<p>Where information systems projects differ in the SDLC is in how they go through each phase. One approach to systems analysis finishes each phase completely before starting the next. The other takes a small piece of the system, runs it through all six phases in a few weeks, then does it again with the next piece. That is the difference between two commonly used approaches to systems development: waterfall and agile.</p>
 
-<p>One thing to hold on to as you read the phases. A project is not building software. It is assembling an information system, which means five components have to arrive at the same
-moment and fit each other. The hardware sized for a load somebody estimated. The software written to
-a specification somebody wrote. The data structures agreed with whoever owns the data. The network
-connections negotiated with other organizations. And the people trained to use the result. Software is the component teams talk about most
-because it is the one they build themselves. It is not usually the one that fails. In the case at the end
-of this chapter, the software mostly worked. Every other component was late, wrong, or belonged to
-somebody who had not been asked.</p>
+<p>One thing to keep in mind as you read through the phases. A systems project is not just building
+software. It is assembling an information system, which means all five components have to arrive at
+the same moment and fit each other. The hardware has to be sized for a load somebody estimated. The
+software has to be written to a specification somebody wrote. The data structures have to be agreed on
+with whoever owns the data. The network connections have to be negotiated with other organizations. And
+the people have to be trained to use the result. Software is the component teams talk about most,
+because it is the one they build themselves. But it is not usually the one that fails. In the main case
+at the end of this chapter, the software mostly worked. Every other component was late, wrong, or
+belonged to somebody who had not been asked.</p>
 
-<h3>2.1 The six phases</h3>
+<h3>2.1 The six phases, and two ways through them</h3>
 
 <p>The <strong>SDLC</strong> is the standard sequence organizations use to move from "we need something"
-to "it is running." Names vary by textbook and by firm; the phases do not. (Do not memorize any one firm's labels. Learn
+to "the system is running." The SDLC names vary by textbook and by firm; the phases do not. (Do not memorize any one firm's labels. Learn
 the six activities and you can translate whatever your employer calls them.) The phases:</p>
 
 <ol>
@@ -554,20 +551,15 @@ the six activities and you can translate whatever your employer calls them.) The
   <li><strong>Maintenance</strong>, fix, extend, and eventually retire it.</li>
 </ol>
 
-<p>The phases are a checklist of questions that must be answered, not a calendar. What varies between
-methodologies is <em>how many times you go around the loop</em>. A <strong>waterfall</strong> approach runs
-the sequence once, at full scale. An <strong>agile</strong> or <strong>iterative</strong> approach runs it
-many times on small slices, so that each pass produces something real and each mistake is small. Healthcare.gov
-ran it once, at national scale, on a fixed political deadline. Hold that thought.</p>
+<p>The phases are essentially a checklist of questions that must be answered by a systems analyst and designer, not a calendar. What varies between
+methodologies is <em>how many times you go through the phases</em>. Two different methods emphasize two different approaches to the SDLC: A <strong>waterfall</strong> approach runs
+through all six phases one time, for the whole system. An <strong>agile</strong> approach runs through each phase many times on small parts of the systems project, so that each pass produces something real and each mistake is small. For the main case in this chapter, Healthcare.gov ran through the SDLC once, at national scale, on a fixed political deadline.</p>
 
 <h3>2.2 The phase that never ends</h3>
 
-<p>Students, and a surprising number of executives, treat launch day as the end of a project. It is
-closer to the beginning. Across a system's life, most of the money is spent after go-live, not before,
-and industry estimates commonly put maintenance at more than half of total lifetime cost. Healthcare.gov
-did not finish in December 2013. It has been maintained, changed and re-tested every year since.</p>
+<p>Students, and a surprising number of executives, treat launch day as the end of a project. But launch day is closer to the beginning of a system's life, the point where it starts interacting with and supporting real people. Across a system's life, most of the money is spent after launch day, not before, and industry estimates commonly put maintenance at more than half of total lifetime cost. As we will see later, Healthcare.gov did not finish in December 2013. It has been maintained, changed and re-tested every year since.</p>
 
-<p>Maintenance is also not one activity. It comes in four kinds, and only the first is what most people
+<p>Maintenance should not be thought of as a one-time activity. Systems maintenance comes in four kinds, and only the first is what most people
 picture:</p>
 
 <ul>
@@ -582,18 +574,17 @@ picture:</p>
 
 <p>One more thing belongs here and is almost always skipped. A <strong>post-implementation review</strong>
 asks, some months after launch, whether the system delivered what the business case promised, and what
-the organization should do differently next time. It is skipped because everyone is exhausted, because
+the organization should do differently next time. It is often skipped because everyone is exhausted, because
 the answer may be embarrassing, and because the people who made the decisions have often moved on. An
 organization that never does it cannot learn from its own projects, which is why the same failures keep
 appearing in this chapter across sixty years.</p>
 
 <h3>2.3 Waterfall versus agile, properly</h3>
-<p>The two methodologies deserve more than a sentence, because choosing between them is a decision you
-will actually face. <strong>Waterfall</strong> runs the phases once, in order, with signed-off documents
-at each gate. Its strength is predictability: fixed scope, fixed price, a contract a government can
+<p>The two methodologies mentioned above deserve more than a sentence, because choosing between them is a decision a systems designer or analyst
+will actually face. <strong>Waterfall</strong> runs through each of the phases once, in order, with signed-off documents
+at each phase. Its strength is predictability: fixed scope, fixed price, a contract a government can
 procure against, which is exactly why federal contracting pushed Healthcare.gov toward it. Its weakness
-is that all learning arrives at the end, when it is most expensive to act on. <strong>Agile</strong> inverts the bet. Work proceeds in <strong>sprints</strong> of one to four weeks, each ending in working
-software a real user can react to. A <strong>product owner</strong> continuously re-ranks what gets built next, so
+is that all learning arrives at the end, when it is most expensive to act on. <strong>Agile</strong> inverts the bet. Work proceeds in <strong>sprints</strong> of one to four weeks, each ending in working software a real user can react to. A <strong>product owner</strong> continuously re-ranks what gets built next, so
 the plan absorbs learning instead of resisting it. Its weakness is the mirror image: scope and
 cost are uncertain up front, which contracts and legislatures hate.</p>
 <p>The honest rule: waterfall suits stable, well-understood requirements (a payroll migration); agile
