@@ -475,7 +475,7 @@ Every message below either survives that check or does not. In the chapter's kil
 <p>Seven messages arrive at Cascadia this morning, one at a time, and you are the one who has to deal
 with them. For each message you have three moves:</p>
 <ul>
-  <li><strong>Verify first.</strong> Opens the co-op's records and asks which one answers the claim the
+  <li><strong>Check the records.</strong> Opens the co-op's records and asks which one answers the claim the
   message makes. Pick the right record and the tell lights up. Pick the wrong one and you lose twenty
   minutes.</li>
   <li><strong>Act on it.</strong> Do what the message asks. Right for a real request. Costly for an
@@ -570,7 +570,7 @@ function pane(){
   h+='<div class="g8-out '+(r.ok?'good':'bad')+'"><b>'+(r.ok?'Right call.':'That cost you.')+'</b>'+esc(r.text)+'<br><span style="color:var(--text-muted)">What to check: '+esc(m.tell)+'</span></div>';
   h+='<p style="margin:.9rem 0 0"><button class="g8-next" onclick="g8next()">'+(r.ok?(st.i<MSG.length-1?'Next message &rarr;':'End the day &rarr;'):'Try this one again &rarr;')+'</button></p>';
  }else{
-  h+='<div class="g8-acts"><button class="v" onclick="g8verify()">Verify first</button><button onclick="g8call(\'act\')">Act on it</button><button onclick="g8call(\'flag\')">Flag as attack</button></div>';
+  h+='<p class="g8-meta" style="margin:.2rem 0 .5rem;color:var(--ink)"><strong>Is this message real?</strong> Check the co-op\'s records before you decide, then act on it or flag it.</p><div class="g8-acts"><button class="v" onclick="g8verify()">Check the records</button><button onclick="g8call(\'act\')">Act on it</button><button onclick="g8call(\'flag\')">Flag as attack</button></div>';
   if(st.verified!==null||st.showRec){
    h+='<div class="g8-recs"><p><strong>The co-op\'s records.</strong> Which one answers the claim this message makes? Each wrong record costs you twenty minutes.</p><div class="row">';
    for(var k in REC){h+='<button onclick="g8rec(\''+k+'\')"'+(st.verified===k?' disabled':'')+'>'+REC[k].name+'</button>';}
