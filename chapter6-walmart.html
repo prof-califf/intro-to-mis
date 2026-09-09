@@ -443,7 +443,7 @@ week.</p>
 knowledge are built from. This chapter asks the more physical question. What is the stuff itself, and
 what has to be true of it before anyone can ask it anything?</p>
 
-<p>Notice where this sits in the five components. Data is the one component that is not bought and not
+<p>Notice where data sits among the five components. Data is the one component that is not bought and not
 built, but <em>accumulated</em>, one recorded fact at a time, according to rules somebody decided in
 advance. Hardware and software can be replaced over a weekend. The records cannot, because they are a
 history, and a history is the one thing money cannot buy in a hurry. That is Chapter 3's argument
@@ -473,7 +473,7 @@ state, a product name, a customer complaint. In your Cascadia work, revenue is q
 name is qualitative, and you have already noticed that pivots treat the two completely differently:
 you sum one and group by the other.</p>
 
-<p>The second, bigger split is about shape:</p>
+<p>The second, bigger split is about shape, meaning how the data is organized:</p>
 
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Structured, unstructured, and semi-structured data</span>
 <p><strong>Structured data</strong> fits a fixed grid of rows and columns, where every row has the
@@ -529,12 +529,12 @@ structure is what makes questions cheap to ask.</p>
 <h3>1.3 Records, fields, and why format matters</h3>
 
 
-<p>Structured data has an anatomy. A <strong>record</strong> is one complete fact-bundle: one sale,
+<p>Structured data has a standard anatomy, and you need three words for it. A <strong>record</strong> is one complete fact-bundle: one sale,
 one member, one product. A <strong>field</strong> is one attribute inside it: the date, the quantity,
 the price. In a grid, records are rows and fields are columns. This vocabulary sounds trivial until
 you watch it fail.</p>
 
-<p>You are about to watch it fail. In this week's lab, the controller's RAW export hands you three of these. Prices stored as text with
+<p>You are about to watch that anatomy fail. In this week's lab, the controller's RAW export hands you three of these. Prices stored as text with
 dollar signs, so they would not sum. Quantities that were blank instead of zero, which are not the
 same thing. And Washington spelled fourteen different ways, so groups split that should have merged.
 Every one of those problems is a <strong>format</strong> problem: the fact was fine, the
@@ -551,12 +551,12 @@ the systems with rules.</p></div>
 
 <h2 id="tables"><span class="num">2</span>Why one grid breaks, and what replaces it</h2>
 
-<p>So far the facts have been sitting in a list. The natural next instinct is to put them all in one
+<p>So far in this chapter the facts have been sitting in a list. The natural next instinct is to put them all in one
 giant sheet: every sale, with the store's name and address and the product's name and price and
 supplier repeated on every row. For a few hundred rows that works, and everyone in this course has done
 it. Then it breaks, in three ways that have textbook names and one that does not.</p>
 
-<p>Before the mechanics, the reason this is a management topic and not a technical one. The structure you
+<p>Before the mechanics, here is the reason this is a management topic and not a technical one. The structure you
 choose decides which questions are cheap to ask and which are effectively impossible, and nobody
 downstream can undo it. An analyst with a wrong-shaped database cannot analyze their way out of it, and
 neither can a machine learning model. In five-component terms, a bad data design makes data the weakest
@@ -573,7 +573,7 @@ sale rows. Third, <strong>deletion anomalies</strong>: delete a store's only sal
 deleted everything you knew about the store. The single grid ties facts together that have different
 lifetimes, and the knots become errors.</p>
 
-<p>There is also a blunter limit: one grid is edited by one person at a time and tops out around a
+<p>There is also a blunter, physical limit: one grid is edited by one person at a time and tops out around a
 million rows. Walmart's registers write millions of new rows an hour, from thousands of locations at
 once. No sheet survives contact with that.</p>
 
@@ -591,13 +591,13 @@ a store_id and a product_id, which is how a three-field sale row can "know" the 
 the product's supplier without repeating them. Asking questions across tables by matching
 keys is called a <strong>join</strong>, and it is the move that makes the whole model work.</p></div>
 
-<p>Run the receipt through it. The one big grid becomes a sales table (thin rows: date, store_id,
+<p>Now run the Walmart receipt through that model. The one big grid becomes a sales table (thin rows: date, store_id,
 product_id, quantity, price), a stores table (one row per store, with the phone number stored
 exactly once), and a products table (one row per product, with its category and supplier). Each fact
 now lives in one place, updates happen once, and a new product can exist before it sells. The grid's
 three anomalies are not patched; they are structurally impossible.</p>
 
-<p>This is not an abstraction you have to take on faith. The <a href="join-builder.html">join
+<p>This is not an abstraction you have to take on faith, because you will build it yourself. The <a href="join-builder.html">join
 builder</a> lets you draw these key connections against the real Cascadia database, and Lab 7's
 final checkpoints, finding a supplier's products and a store's real problem, are joins you will
 write yourself.</p>
@@ -605,8 +605,7 @@ write yourself.</p>
 
 <h3>2.3 Where the tables came from, and the decade nobody wanted them</h3>
 
-<p>The model in this section is so standard now that it looks like a discovery about the nature of
-information rather than somebody's idea. It was somebody's idea, and it was resisted for years by the
+<p>The relational model is so standard now that it looks like a discovery about the nature of information rather than somebody's idea. It was somebody's idea, and it was resisted for years by the
 company best placed to build it.</p>
 
 <p>In June 1970, Edgar Codd, a mathematician at IBM's research laboratory in San Jose, published a paper
@@ -615,7 +614,7 @@ stored as simple tables of rows and columns, related to each other by values, an
 questions should not have to know how any of it was physically stored. You should be able to describe
 <em>what</em> you want rather than <em>how</em> to go and get it.</p>
 
-<p>At the time, databases worked the other way. A programmer navigated to data by following pointers
+<p>At the time, databases worked the other way around. A programmer navigated to data by following pointers
 through a hierarchy, which meant every question had to be written against the storage layout, and
 changing the layout broke the programs. IBM sold a very successful product built exactly that way. Its
 research division had just published a paper explaining why that approach was the wrong one.</p>
@@ -626,7 +625,7 @@ market, and it was a young outsider who read Codd's paper, took the idea serious
 founding the company that became Oracle. Codd's employer had the paper, the researchers, the customers
 and the money, and still arrived late, because it already sold something the paper made obsolete.</p>
 
-<p>Two things worth taking from that. The first is that the thing you are about to be taught as
+<p>There are two things worth taking from that story. The first is that the thing you are about to be taught as
 self-evident was argued for, against opposition, by a named person, in living memory. The second is a
 pattern you will meet again and again in this book and in your career. The organization
 with the most to gain from an idea is frequently the one with the most to lose from it, and being
@@ -731,7 +730,7 @@ Normalization has formal levels, called normal forms, that a database course wil
 course, the instinct matters more than the formalism: <em>if the same fact appears twice, the design
 is wrong.</em></p></div>
 
-<p>Normalization has a cost, and honesty requires naming it. A perfectly normalized database scatters
+<p>Normalization has a cost, and it is worth naming. A perfectly normalized database scatters
 a simple question across many tables, so answering "revenue by state last October" means joining
 sales to stores to a calendar. That is why analysts often build deliberately flattened copies of the
 data for reporting, accepting some duplication in exchange for fast questions. The design goal
@@ -742,7 +741,7 @@ business, another for understanding it.</p>
 
 
 <h2 id="cases"><span class="num">3</span>Three short failures of shape</h2>
-<p>Before the case, three short ones. In every one of them the facts existed, somebody needed an answer
+<p>Before the main case, here are three short ones. In every one of them the facts existed, somebody needed an answer
 from those facts, and the answer was blocked by the <em>shape</em> the facts were stored in rather than
 by the facts themselves. They are separated by 130 years, which is the point. This is not a modern
 problem, and it did not stop being a problem when computers got fast.</p>
@@ -761,7 +760,7 @@ was not. Give every person a card, and give the card a fixed set of positions, w
 particular place means a particular fact. Sex here. Age there. Occupation there. A machine passes pins
 through the card, the holes complete circuits, and counters advance.</p>
 
-<p>Look at what that actually is. One card is a <strong>record</strong>. Each position on it is a
+<p>Look at what Hollerith's card actually is, in this chapter's terms. One card is a <strong>record</strong>. Each position on it is a
 <strong>field</strong>. Every card carries the same fields in the same order, which is what lets a
 machine handle them at all. Hollerith invented the row of a table forty years before there was a
 computer to put it in.</p>
@@ -787,13 +786,13 @@ was scarce and expensive, two characters per date across millions of records was
 and the people making the choice reasonably assumed their software would be retired long before the
 century turned.</p>
 
-<p>It was not retired. As 2000 approached, the problem was that a system storing years as two digits
+<p>Those systems were not retired. As 2000 approached, the problem was that a system storing years as two digits
 cannot tell 2000 from 1900, so any calculation involving a span of time might produce a negative number,
 a nonsense result, or a confident wrong answer. Governments and companies spent enormous sums auditing and correcting code. The reason so little
 went wrong on the night is that a great deal of work went into it beforehand, which is an awkward
 kind of success to point at.</p>
 
-<p>Notice exactly what was wrong. Not the fact: the year was known. Not the logic: the programs
+<p>Notice exactly what was wrong in the Y2K problem. Not the fact: the year was known. Not the logic: the programs
 calculated correctly given what they were told. The <strong>representation</strong> was wrong, and it
 was wrong in a way that was invisible for thirty years and then wrong everywhere at once.</p>
 
@@ -822,7 +821,7 @@ number of untraced contacts near 48,000. A later economics study estimated that 
 with more than a hundred thousand additional infections; treat that figure as an estimate rather than a
 count, because it is modeled rather than observed.</p>
 
-<p>This is section 2's argument about the single grid, at national scale, in a week. A spreadsheet is
+<p>This is section 2's argument about the single grid, played out at national scale, in a week. A spreadsheet is
 one big grid. It has a row limit, no rules about what a column may contain, no way to enforce that a
 result belongs to a person, and, crucially here, no obligation to complain when it drops something. A
 database would have refused the row and said so.</p>
@@ -836,12 +835,12 @@ name one situation where a spreadsheet is still the right choice.</div>
 
 <h3>3.4 What the three have in common</h3>
 
-<p>Put them side by side. In 1890 the facts had no structure, so no one could count them. In 1999 the
+<p>Put the three mini-cases side by side. In 1890 the facts had no structure, so no one could count them. In 1999 the
 structure was chosen sensibly and outlived the assumption underneath it. In 2020 the wrong container was
 used for the volume, and it failed without saying so. Different centuries, different technologies, one
 finding: <strong>the facts were never the problem</strong>.</p>
 
-<p>There is a second thing they share, and it matters more for your career than the first. In all three
+<p>There is a second thing the three share, and it matters more for your career than the first. In all three
 cases the decision that caused the failure was made by a person, early, for a reason that was sound at
 the time, and it was made long before anyone could see the consequence. Somebody chose the fields.
 Somebody chose two digits. Somebody chose the file format. Those are not technical decisions that
@@ -876,14 +875,13 @@ need and adds a margin for safety. Retail Link attacks the bullwhip at the root 
 with shared records. Suppliers plan against actual sales, Walmart's shelves
 stay stocked without warehouses of padding, and the whole chain runs on one version of the truth.</p>
 
-<p>Whether giving away your most valuable data is genius or madness is your Monday activity, and it
-is a open question. What is not in question is the scale of what grew from it. Walmart's analytics hub, the Data Café, draws on more than 200 internal and external data streams,
+<p>Whether giving away your most valuable data is genius or madness is your Monday activity, and it is an open question. What is not in question is the scale of what grew from it. Walmart's analytics hub, the Data Café, draws on more than 200 internal and external data streams,
 including roughly 40 petabytes of recent transaction data. Reporting from the mid-2010s described
 the company building a private cloud handling 2.5 petabytes an hour. The numbers age quickly; the
 design principle does not: <em>every register is a sensor, and the database is the instrument the
 whole company reads.</em></p>
 
-<p>One story from the Data Caf&eacute; makes the point better than the petabytes. A grocery team
+<p>One story from the Data Caf&eacute; makes the point better than the petabytes do. A grocery team
 watched sales in one category slump and could not explain it. Drilling into the data showed a pricing
 error: the products were listed higher than intended. The fix was trivial once seen. A company
 analyst put the underlying principle plainly, noting that insights arriving after a week of analysis
@@ -893,10 +891,10 @@ same information, a week late, is worth a fraction as much.</p>
 <h3>4.2 From records to answers: analytics</h3>
 
 
-<p>Everything to this point is about storing facts correctly. Analytics is about asking the facts
+<p>Everything in this chapter to this point has been about storing facts correctly. Analytics is about asking the facts
 questions, and the two jobs pull database design in opposite directions.</p>
 
-<p>This is also where the remaining components arrive. A normalized database is useless sitting still: the
+<p>This is also where the remaining four components arrive. A normalized database is useless sitting still: the
 <strong>networks</strong> carry every register's writes to the center and carry Retail Link's answers back
 out to thousands of suppliers, and the <strong>people</strong> are the ones who think of the question. The
 Data Caf&eacute; did not notice the pricing error. A grocery team did, and then had somewhere to look.</p>
@@ -939,24 +937,24 @@ platform, launched in 2021 as Luminate and renamed Scintilla in 2025, built by a
 called Walmart Data Ventures. The name changes are not the interesting part. Three things about the move
 are.</p>
 
-<p><strong>The data became a business.</strong> In 1991 sharing point-of-sale records was a supply-chain
+<p><strong>First, the data became a business.</strong> In 1991 sharing point-of-sale records was a supply-chain
 decision that happened to involve data. There is now a division whose job is to create value from
 Walmart's records, and access to the good tiers is a product suppliers pay for. Chapter 3 argued that
 accumulated data is the component nobody can buy. Walmart's answer, three decades later, is to sell
 carefully chosen views of it while keeping the accumulation.</p>
 
-<p><strong>The question changed from "how did I do" to "what should I do."</strong> The old platform
+<p><strong>Second, the question a supplier asks changed from "how did I do" to "what should I do."</strong> The old platform
 reported what had happened. The new one adds recommendations. In 2025 Walmart began adding AI tools on top: a conversational
 interface so a supplier can ask the data a question in ordinary language, automatic summaries of
 customer survey results, and suggested actions rather than tables. That is
 Chapter 2's progression from data to information to knowledge, happening in public. None of those
 tools would have anything to work with if somebody had not decided in 1991 what to record.</p>
 
-<p><strong>The scope widened.</strong> The platform now covers customer behavior and perception across
+<p><strong>Third, the scope widened.</strong> The platform now covers customer behavior and perception across
 roughly 140 million households, not just what moved off a shelf, and it is expanding into Canada and
 Mexico.</p>
 
-<p>Hold that beside section 5 before you decide how you feel about it. The same joins that let a
+<p>Hold all of that beside section 5 before you decide how you feel about it. The same joins that let a
 supplier see which stores are underperforming let somebody infer what a household is going through. The
 capability is identical; only the question differs. And notice that nothing in this paragraph required a
 new invention. It required thirty years of somebody having decided, correctly, what was worth writing
@@ -978,7 +976,7 @@ his teenage daughter was receiving them. She was pregnant. The store had known b
 It required exactly what this chapter teaches: clean records, a stable key per customer, and a join
 across time.</p>
 
-<p>The lesson is not that databases are sinister. It is that <strong>the power to join is the power
+<p>The lesson of this section is not that databases are sinister. It is that <strong>the power to join is the power
 to reveal</strong>, and the same design choices that make honest questions cheap make invasive ones
 cheap too. A company that holds well-structured data about people holds a capability, and somebody
 has to decide who may use it, for what, and what happens when it leaks. The
