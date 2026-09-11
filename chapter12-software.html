@@ -399,7 +399,7 @@ a customer.</p>
 <div class="toc"><strong>Contents</strong>
 <a href="#design">Software, and the interface that decides who gets in</a>
 <a href="#select">How businesses choose software</a>
-<a href="#cases">Three interfaces that decided the outcome</a>
+<a href="#cases">Two interfaces that decided the outcome</a>
 <a href="#robles">Main case. Robles v. Domino's: the ADA meets the web</a>
 <a href="#other">The downside: who software forgets</a>
 <a href="#vocab">Vocabulary</a>
@@ -438,7 +438,7 @@ already made the center of its business, and forgot to ask who could open it.</p
 
 <h3>1.1 Kinds of software, and where it comes from</h3>
 
-<p>Before getting to the interface, here is the plain inventory: what kinds of software a business runs, and the three ways it can get them.</p>
+<p>Let's start with the plain inventory: what kinds of software a business runs, and the three ways it can get them.</p>
 
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Kinds of software, and where software comes from</span>
 <p><strong>System software</strong>, the operating systems and utilities that run the machine, versus
@@ -575,8 +575,8 @@ changing shape, and it comes up again in the last chapter of this book.</p>
 })();
 </script>
 
-<h2 id="cases"><span class="num">3</span>Three interfaces that decided the outcome</h2>
-<p>Before the main case, here are three short ones. In each one, the system underneath worked exactly as built, and the
+<h2 id="cases"><span class="num">3</span>Two interfaces that decided the outcome</h2>
+<p>Before the main case, here are two short ones. In each one, the system underneath worked exactly as built, and the
 interface decided the outcome anyway. That is the claim section 1 makes in the abstract; these are
 what it looks like when it costs something.</p>
 
@@ -601,33 +601,10 @@ market, and here the market was an electorate.</p>
 
 <div class="mcq"><b>Check yourself</b>The official who designed the ballot did it to make the names
 larger for older voters. Say what she should have done before printing it, using the vocabulary in
-section 1, and say why that step is so routinely skipped.</div>
+section 1, and say why that step is so routinely skipped.
+<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>Usability, and specifically the property called error prevention. Larger type made each name easier to read, which is one usability goal, and the layout that larger type forced, names on two facing pages with one column of punch holes between them, made it easy to punch the wrong hole, which defeats the other. The ballot passed the test the designer ran (can you read it?) and failed the test she did not run (can you vote for who you meant to?). That is the general lesson: a design decision made to help one property can quietly break another, and the only way to know is to watch real people use the thing before it counts.</p></details></div>
 
-<h3>3.2 Mini-case 2 &middot; 2018: the menu with no undo</h3>
-
-<p>At 8:07 on a Saturday morning in January 2018, every phone in Hawaii received a message telling
-people to seek immediate shelter from an incoming ballistic missile, and that this was not a drill. It
-was not true. It took 38 minutes to send a correction, during which people said goodbye to their
-families, drove into ditches, and put children into storm drains.</p>
-
-<p>An employee running a routine shift-change drill had selected the live alert instead of the test
-alert. The two were adjacent options on a dropdown menu. There was a confirmation prompt, and it looked
-identical for both. There was no way to cancel a live alert from the same screen, which is why the correction took 38
-minutes. Nobody had built the interface for the case where the thing you had just done was wrong.</p>
-
-<p>Hawaii's emergency management administrator resigned. The federal communications regulator
-investigated. The findings were about training and procedure, and they were also about a screen that
-made the most dangerous action in the building as easy as the most routine one.</p>
-
-<p><strong>What decided the outcome: the menu. The component: software.</strong> Section 1's error
-tolerance is not an abstraction. It is the question of what happens in the second after somebody clicks
-the wrong thing, and this interface had no answer.</p>
-
-<div class="mcq"><b>Check yourself</b>Sketch, in words, the three changes to that screen that would
-have prevented this or shortened it. Then name one system you use where the destructive action and the
-routine one sit next to each other with the same confirmation.</div>
-
-<h3>3.3 Mini-case 3 &middot; 2024: the app that made the speakers stop working</h3>
+<h3>3.2 Mini-case 2 &middot; 2024: the app that made the speakers stop working</h3>
 
 <p>One morning in May 2024, people who owned expensive speakers found that their alarms had not gone
 off, their sleep timers were gone, and in some cases the speakers would not respond at all. Nothing
@@ -655,20 +632,19 @@ pattern section 1 describes and the case that follows turned into a lawsuit.</p>
 
 <div class="mcq"><b>Check yourself</b>Sonos had a testing process and shipped anyway. Using section
 2's selection vocabulary, say what a scripted demo with real customers doing real tasks would have
-shown, and say why a company that knew that would still choose the launch date.</div>
+shown, and say why a company that knew that would still choose the launch date.
+<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>Testing tells you whether the software does what the specification says. It cannot tell you whether the specification left something out, and Sonos's left out the users who could not see the screen. The app passed its tests because screen-reader support was not in them; it had been treated as a feature rather than a requirement, so removing it broke no test. The gap is in section 2's selection and design step, before testing begins: the requirement was never written down as one, so nobody was responsible for it, and the process that was supposed to catch failures had nothing to catch. A test suite is only as complete as the list of people the product is for.</p></details></div>
 
-<h3>3.4 What the three have in common</h3>
+<h3>3.3 What the two have in common</h3>
 
-<p>A ballot, a dropdown menu and a mobile app. In each, the system underneath was correct: the votes
-were counted accurately, the alert system worked as designed, the speakers played. And in each, the
-interface decided what people could actually do, which is the only thing they experience.</p>
+<p>A ballot and a mobile app. In both, the system underneath was correct: the votes were counted accurately, the speakers played. And in both, the interface decided what people could actually do, which is the only thing they experience.</p>
 
-<p>Hold the third one especially close for the main case, because it is the same failure at a different scale. Sonos removed screen-reader support and lost a chief executive. Domino's never added it and
+<p>Hold the second one especially close for the main case, because it is the same failure at a different scale. Sonos removed screen-reader support and lost a chief executive. Domino's never added it and
 ended up at the door of the Supreme Court. The interface is where a business meets a person, and it is
 the part of the system a court can see.</p>
 <h2 id="robles"><span class="num">4</span>Main case &middot; Robles v. Domino's: the ADA meets the web</h2>
 
-<p>Guillermo Robles tried to order a pizza. He is blind, he uses software that reads a screen aloud,
+<p>Let's begin with a pizza. Guillermo Robles tried to order one. He is blind, he uses software that reads a screen aloud,
 and Domino's website and app would not let him finish. Domino's, the company from Chapter 4, had
 rebuilt itself as "a tech company that happens to sell pizza," and by the mid-2010s a large share of
 its orders arrived through its website and app. That is
@@ -739,6 +715,8 @@ has to ask.</p>
 
 <h3>4.3 The five components at Domino's, again</h3>
 
+<p>Now that you have seen the whole system, here it is as five components, the way this course maps every case. Compare it with the Chapter 4 table for the same company. The rows are the same; the question asked of them is different.</p>
+
 <table class="sumtable stack-sm">
 <tr><th>Component</th><th>In the case</th><th>The lesson</th></tr>
 <tr><td data-label="Component"><strong>Hardware</strong></td><td data-label="In the case">His phone and computer, standard equipment running assistive software</td><td data-label="The lesson">The barrier was never the device</td></tr>
@@ -747,6 +725,18 @@ has to ask.</p>
 <tr><td data-label="Component"><strong>Networks</strong></td><td data-label="In the case">The web, which a 1990 statute reached anyway</td><td data-label="The lesson">New channels inherit old obligations</td></tr>
 <tr><td data-label="Component"><strong>People</strong></td><td data-label="In the case">Builders who never tested with a screen reader; a customer who sued</td><td data-label="The lesson">The users you do not picture will find you eventually</td></tr>
 </table>
+
+<h3>4.4 What a business technology manager takes from this chapter</h3>
+
+<p>Strip the Robles case down to what you can reuse in any company. Four decisions came up in it, and each one is a decision you will be in the room for.</p>
+
+<p><strong>The interface is the system, as far as the customer and the court are concerned.</strong> Domino's counted votes correctly in the ballot case, played music correctly in the Sonos case, and took orders correctly on its website, and in every one the interface decided who could actually use it. When you review a system, review it from the outside, as the person who has to use it, because that is the only part they will ever see.</p>
+
+<p><strong>Write accessibility down as a requirement, not a feature.</strong> Sonos had a testing process and shipped an app that blind users could not operate, because screen-reader support was never a requirement, so no test covered it. A feature can be dropped in a sprint. A requirement has an owner and a test. Which one accessibility is at your company is a decision, and after Robles it is a legal one.</p>
+
+<p><strong>Decide build, buy, or subscribe by who is accountable for the result.</strong> Most companies buy far more software than they build, and the selection process is learnable. But whichever you choose, the company that puts the software in front of customers answers for what it does. Domino's did not write its screen-reader failure; it bought and configured its way into it, and the court did not care.</p>
+
+<p><strong>Ask who the system forgets.</strong> Every one of the cases in this chapter is about a user the designers never pictured: a voter who could not follow the layout, a blind customer, an employee stuck with the tools the company chose. That question costs nothing to ask before launch and a great deal to answer after, and it is the manager's question, because the developers are building what they were told.</p>
 
 <h2 id="other"><span class="num">5</span>The downside: who software forgets</h2>
 
@@ -869,7 +859,7 @@ the launch date moves.</p>
 <li><em>Robles v. Domino's Pizza LLC</em>, Ninth Circuit Court of Appeals, January 2019, and the Supreme Court's denial of certiorari, October 2019, for the two holdings in section 4.</li>
 <li>Web Content Accessibility Guidelines (WCAG), World Wide Web Consortium, for the four principles in section 1. The guidelines themselves are readable and worth an hour.</li>
 <li>Contemporary reporting and subsequent analysis of the Palm Beach County ballot in the 2000 election, for mini-case 1. The precise number of misdirected votes is contested; the design and the margin are not.</li>
-<li>The Federal Communications Commission's 2018 report on the Hawaii false alert, and contemporary reporting, for mini-case 2 including the drill, the menu, and the 38-minute correction.</li>
+<li></li>
 <li>Sonos investor communications and reporting from May 2024 to January 2025, for the app release, the missing features, the remediation cost, the layoffs, the revenue decline and the chief executive's departure, for mini-case 3.</li>
 <li>US Department of Justice, final rule on web and mobile accessibility under Title II of the ADA (April 2024), and the European Accessibility Act (in force June 2025), for the "since the ruling" material. Both are recent; check current deadlines before teaching them.</li>
 <li>World Health Organization estimates on the global prevalence of significant disability, for the scale figure in section 1.</li>
@@ -879,20 +869,20 @@ the launch date moves.</p>
 <li>World Health Organization, World Report on Disability estimates: roughly one in six people worldwide live with significant disability, the market-scale figure in section 1.</li>
 <li>Coverage of the case's 2022 settlement (accessibility-industry reporting): the quiet ending, after the expensive route.</li>
 <li>US Department of Justice, interim final rule of 20 April 2026 extending the Title II web-accessibility compliance dates to 26 April 2027 (large public entities) and 26 April 2028 (smaller ones); the National Federation of the Blind's suit over the delay; and law-firm tallies of 2025 web-accessibility litigation (more than 3,100 federal Title III suits), for the "Since the ruling" passage.</li>
-<li><strong>Verification note.</strong> Checked in September 2026: the DOJ deadline extension (the chapter had described the 2024 rule as due on a deadline; it now records the April 2026 delay), the European Accessibility Act's June 2025 application date, and the 2025 lawsuit counts. The Robles procedural history, the Palm Beach ballot, the Hawaii alert, and the Sonos figures were checked against the authors' knowledge of the published record rather than re-searched. Also fixed on that pass: section cross-references that used an older numbering, and a "Since the ruling" passage that had been stranded after the discussion questions and is now back inside section 4.</li>
+<li><strong>Verification note.</strong> Checked in September 2026: the DOJ deadline extension (the chapter had described the 2024 rule as due on a deadline; it now records the April 2026 delay), the European Accessibility Act's June 2025 application date, and the 2025 lawsuit counts. The Robles procedural history, the Palm Beach ballot and the Sonos figures were checked against the authors' knowledge of the published record rather than re-searched. Also fixed on that pass: section cross-references that used an older numbering, and a "Since the ruling" passage that had been stranded after the discussion questions and is now back inside section 4.</li>
 </ul>
 
 <h2 id="teaching"><span class="num">10</span>Teaching notes</h2>
 <p style="font-family:var(--sans);font-size:.95rem;color:var(--muted)">Written for whoever is running the sessions. Students are welcome to read them, but nothing here is required. This chapter follows Exam 2, so the Monday plan opens gently.</p>
 
-<div class="plan"><div class="plan-head">Monday session plan &middot; 80 minutes &middot; concepts, with the three interfaces as illustrations</div>
+<div class="plan"><div class="plan-head">Monday session plan &middot; 80 minutes &middot; concepts, with the two interfaces as illustrations</div>
 <table>
 <tr><td class="t">0:00</td><td class="w">Open</td><td>Ask everyone to close their eyes and order a pizza in their head using only what a screen reader would say aloud. Then play thirty seconds of a screen reader on a cluttered site. The room understands the case before you state it.</td></tr>
 <tr><td class="t">0:06</td><td class="w">Lecture</td><td>Kinds of software and where it comes from: system against application, custom against packaged against SaaS. Land the point that Domino's ordering system was custom and owned, which makes the gap in it a gap in the company's own decisions.</td></tr>
 <tr><td class="t">0:16</td><td class="w">Lecture</td><td>The interface decides who gets in: the command line to the graphical interface as a market-expansion story, then usability as three measurable properties. Make them put a number on each for an app they use.</td></tr>
 <tr><td class="t">0:28</td><td class="w">Lecture</td><td>Accessibility and WCAG's four principles, then the two facts that move it from charity to strategy: one in six people, and the curb-cut effect. Collect curb-cut examples from the room before you give yours.</td></tr>
 <tr><td class="t">0:40</td><td class="w">Lecture</td><td>Selection: requirements before demos, scripted demos on your data, total cost of ownership, references, pilot. Then build, buy or subscribe as Chapter 3's commodity-versus-differentiator rule. Keep it brisk; Chapter 7 already showed the nine-figure version of getting this wrong.</td></tr>
-<tr><td class="t">0:52</td><td class="w">Cases 1&#8211;3</td><td>The ballot, the menu, the app, about two and a half minutes each. Name what decided the outcome and stop. The Hawaii case gets the reaction; Sonos is the one to connect forward, because it went backwards on accessibility and paid for it without a lawsuit.</td></tr>
+<tr><td class="t">0:52</td><td class="w">Cases 1&#8211;2</td><td>The ballot and the app, about four minutes each. Name what decided the outcome and stop. Sonos is the one to connect forward, because it went backwards on accessibility and paid for it without a lawsuit.</td></tr>
 <tr><td class="t">1:00</td><td class="w">Think-pair-share</td><td>Pick a point-of-sale system for Cascadia. See the activity in section 6.</td></tr>
 <tr><td class="t">1:16</td><td class="w">Close</td><td>Assign section 4 and the discussion questions. Preview the lab: they test real interfaces the way Robles experienced them.</td></tr>
 </table></div>

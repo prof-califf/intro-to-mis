@@ -397,7 +397,7 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 <div class="toc"><strong>Contents</strong>
 <a href="#data">What data actually is</a>
 <a href="#tables">Why one grid breaks, and what replaces it</a>
-<a href="#cases">Three short failures of shape</a>
+<a href="#cases">Two short failures of shape</a>
 <a href="#walmart">Main case. Walmart: a company built on a database</a>
 <a href="#other">The downside: what the basket reveals</a>
 <a href="#vocab">Vocabulary</a>
@@ -439,7 +439,7 @@ every decision made here.</p>
 
 <h3>1.1 What turns a fact into data</h3>
 
-<p>Two properties turn a fact into data, and the rest of this chapter follows from them: the fact has to
+<p>So what turns a fact into data? Two properties, and the rest of this chapter follows from them: the fact has to
 be recorded, and it has to be given a type.</p>
 
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Data</span>
@@ -452,7 +452,7 @@ wrong.</p></div>
 
 <h3>1.2 Kinds of data</h3>
 
-<p>Data comes in kinds, and the kinds determine what you can do with it:</p>
+<p>Now, data comes in kinds, and the kinds determine what you can do with it:</p>
 
 <p><strong>Quantitative</strong> data is numeric and supports math: quantities, prices, temperatures,
 durations. <strong>Qualitative</strong> data is descriptive and supports grouping: a category, a
@@ -515,7 +515,7 @@ structure is what makes questions cheap to ask.</p>
 
 <h3>1.3 Records, fields, and why format matters</h3>
 
-<p>Structured data has a standard anatomy, and you need three words for it. A <strong>record</strong> is one complete fact-bundle: one sale,
+<p>Structured data has a standard anatomy, and you need three words for it, because you will use them in every lab from here on. A <strong>record</strong> is one complete fact-bundle: one sale,
 one member, one product. A <strong>field</strong> is one attribute inside it: the date, the quantity,
 the price. In a grid, records are rows and fields are columns. This vocabulary sounds trivial until
 you watch it fail.</p>
@@ -565,7 +565,7 @@ once. No sheet survives contact with that.</p>
 
 <h3>2.2 The relational model</h3>
 
-<p>The fix is to stop repeating facts. Give each kind of thing its own table, one for stores, one for
+<p>So what is the fix? Stop repeating facts. Give each kind of thing its own table, one for stores, one for
 products, one for sales, and connect the tables to each other with identifying numbers called keys.
 That design is the <strong>relational model</strong>, and the box names its parts.</p>
 
@@ -722,8 +722,8 @@ data for reporting, accepting some duplication in exchange for fast questions. T
 differs by purpose, which is the door into the next two sections: one shape for running the
 business, another for understanding it.</p>
 
-<h2 id="cases"><span class="num">3</span>Three short failures of shape</h2>
-<p>Before the main case, here are three short ones. In every one of them the facts existed, somebody needed an answer
+<h2 id="cases"><span class="num">3</span>Two short failures of shape</h2>
+<p>Before the main case, here are two short ones. In every one of them the facts existed, somebody needed an answer
 from those facts, and the answer was blocked by the <em>shape</em> the facts were stored in rather than
 by the facts themselves. They are separated by 130 years, which is the point. This is not a modern
 problem, and it did not stop being a problem when computers got fast.</p>
@@ -759,34 +759,10 @@ was not wrong. It was unstructured, and an unstructured fact is one that a perso
 
 <div class="mcq"><b>Check yourself</b>The census facts were identical in 1880 and 1890. Name the specific
 thing Hollerith changed, in the vocabulary of section 1, and explain why that change is what made the
-counting fast rather than the electricity.</div>
+counting fast rather than the electricity.
+<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>The facts did not change; the shape did. In 1880 each answer was a mark on a paper schedule, readable by a person and countable only by a person. In 1890 each answer became a hole in a fixed position on a card: a field, with a type, in a record. That is the change. Once a fact has a position, a machine can find it, and once every record has the same positions, the machine can count across millions of them. Every database in this chapter is Hollerith's card with the paper removed.</p></details></div>
 
-<h3>3.2 Mini-case 2 &middot; 1999: two digits</h3>
-
-<p>For decades, programmers stored years as two digits. 1965 was 65. This was not carelessness. Storage
-was scarce and expensive, two characters per date across millions of records was real money,
-and the people making the choice reasonably assumed their software would be retired long before the
-century turned.</p>
-
-<p>Those systems were not retired. As 2000 approached, the problem was that a system storing years as two digits
-cannot tell 2000 from 1900, so any calculation involving a span of time might produce a negative number,
-a nonsense result, or a confident wrong answer. Governments and companies spent enormous sums auditing and correcting code. The reason so little
-went wrong on the night is that a great deal of work went into it beforehand, which is an awkward
-kind of success to point at.</p>
-
-<p>Notice exactly what was wrong in the Y2K problem. Not the fact: the year was known. Not the logic: the programs
-calculated correctly given what they were told. The <strong>representation</strong> was wrong, and it
-was wrong in a way that was invisible for thirty years and then wrong everywhere at once.</p>
-
-<p><strong>What the shape decided: how long the answer stayed correct. The component: data, at the level of the type.</strong> A format decision made
-in 1965 by somebody with a good reason, on an assumption about how long the system would live, became
-everybody else's problem in 1999.</p>
-
-<div class="mcq"><b>Check yourself</b>Section 1 says data has a type and most disasters begin with a
-type being wrong. Name one field in a system you use where the storage decision embeds an assumption
-about the future, and say what happens on the day that assumption stops being true.</div>
-
-<h3>3.3 Mini-case 3 &middot; 2020: the rows that fell off the bottom</h3>
+<h3>3.2 Mini-case 2 &middot; 2020: the rows that fell off the bottom</h3>
 
 <p>During the pandemic, positive coronavirus test results in England traveled from testing laboratories
 to the contact tracing service through Public Health England. The laboratories sent results as text
@@ -813,19 +789,17 @@ lost. It was that data was lost <em>quietly</em>, and a tool with rules is a too
 
 <div class="mcq"><b>Check yourself</b>You will spend this quarter working in spreadsheets, and this
 chapter is about databases. Name two properties a database has that a spreadsheet does not, and then
-name one situation where a spreadsheet is still the right choice.</div>
+name one situation where a spreadsheet is still the right choice.
+<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>The spreadsheet did what it was built to do. The file format Public Health England chose had a fixed limit on the number of rows, and when the case data exceeded it, the extra rows were silently dropped rather than flagged, so 16,000 positive tests never reached the contact tracers. A spreadsheet is a fine container for a few thousand rows that one person reads. It is the wrong container for a national count that grows every day, because it has no way to say "this is too big for me." A database would have taken the rows or refused them out loud. The failure was in choosing the container, not in using it.</p></details></div>
 
-<h3>3.4 What the three have in common</h3>
+<h3>3.3 What the two have in common</h3>
 
-<p>Put the three mini-cases side by side. In 1890 the facts had no structure, so no one could count them. In 1999 the
-structure was chosen sensibly and outlived the assumption underneath it. In 2020 the wrong container was
+<p>Put the two mini-cases side by side. In 1890 the facts had no structure, so no one could count them. In 2020 the wrong container was
 used for the volume, and it failed without saying so. Different centuries, different technologies, one
 finding: <strong>the facts were never the problem</strong>.</p>
 
-<p>There is a second thing the three share, and it matters more for your career than the first. In all three
-cases the decision that caused the failure was made by a person, early, for a reason that was sound at
-the time, and it was made long before anyone could see the consequence. Somebody chose the fields.
-Somebody chose two digits. Somebody chose the file format. Those are not technical decisions that
+<p>There is a second thing the two share, and it matters more for your career than the first. In both cases the decision that caused the failure was made by a person, early, for a reason that was sound at
+the time, and it was made long before anyone could see the consequence. Somebody chose the fields. Somebody chose the file format. Those are not technical decisions that
 happen to have management consequences. They are management decisions that happen to be expressed in
 technology, and the chapter you are reading is about how to make them well.</p>
 <h2 id="walmart"><span class="num">4</span>Main case &middot; Walmart: a company built on a database</h2>
@@ -847,7 +821,7 @@ unthinkable: it gave its data away.</p>
 
 <h3>4.1 Giving the data away: Retail Link</h3>
 
-<p>In 1991 the company launched <strong>Retail Link</strong>, a system that shares Walmart's own
+<p>Let's start with the decision itself. In 1991 the company launched <strong>Retail Link</strong>, a system that shares Walmart's own
 point-of-sale data with its suppliers. A supplier like Procter &amp; Gamble can see how its products
 are selling, store by store, day by day, and manage its own inventory against real demand instead of
 against guesses. Every supply chain suffers from the <strong>bullwhip effect</strong>: demand distortion
@@ -896,18 +870,7 @@ running on structured, normalized, joined data, and the reason your questions ar
 that someone designed the tables so they would be. Analytics is not a separate world from databases.
 It is what databases are for.</p>
 
-<h3>4.3 The five components at Walmart</h3>
-
-<table class="sumtable stack-sm">
-<tr><th>Component</th><th>At Walmart</th><th>What breaks if it fails</th></tr>
-<tr><td data-label="Component"><strong>Hardware</strong></td><td data-label="At Walmart">Registers and scanners in ~10,900 stores; the servers behind the Data Caf&eacute;</td><td data-label="What breaks if it fails">A store goes dark: no sales recorded, shelves restocked on guesswork</td></tr>
-<tr><td data-label="Component"><strong>Software</strong></td><td data-label="At Walmart">The transaction systems, Retail Link, the analytics platforms</td><td data-label="What breaks if it fails">Suppliers plan against stale numbers; the bullwhip returns</td></tr>
-<tr><td data-label="Component"><strong>Data</strong></td><td data-label="At Walmart">Structured transactions at continental scale; 40 PB of recent history</td><td data-label="What breaks if it fails">A type error or bad key propagates into every report downstream</td></tr>
-<tr><td data-label="Component"><strong>Networks</strong></td><td data-label="At Walmart">Every register streaming to the center; Retail Link reaching thousands of suppliers</td><td data-label="What breaks if it fails">The shared version of the truth stops being shared</td></tr>
-<tr><td data-label="Component"><strong>People</strong></td><td data-label="At Walmart">Analysts in the Data Caf&eacute;; the grocery team that chased the slump; suppliers reading Retail Link</td><td data-label="What breaks if it fails">Data nobody investigates is a cost, not an asset: the pricing error runs for months</td></tr>
-</table>
-
-<h3>4.4 Where this has gone since, and it is not nostalgia</h3>
+<h3>4.3 What's next: where this has gone since, and it is not nostalgia</h3>
 
 <p>Retail Link has run for more than thirty years and still does, as the portal where suppliers manage
 orders. What Walmart retired, in 2024, was the reporting inside it. Supplier analytics moved onto a newer
@@ -937,6 +900,31 @@ supplier see which stores are underperforming let somebody infer what a househol
 capability is identical; only the question differs. And notice that nothing in this paragraph required a
 new invention. It required thirty years of somebody having decided, correctly, what was worth writing
 down.</p>
+
+<h3>4.4 The five components at Walmart</h3>
+
+<p>Now that you have seen the whole system, here it is as five components, the way this course maps every case. Look at which row the advantage lives in, and notice that it is the row Walmart chose to give away.</p>
+
+<table class="sumtable stack-sm">
+<tr><th>Component</th><th>At Walmart</th><th>What breaks if it fails</th></tr>
+<tr><td data-label="Component"><strong>Hardware</strong></td><td data-label="At Walmart">Registers and scanners in ~10,900 stores; the servers behind the Data Caf&eacute;</td><td data-label="What breaks if it fails">A store goes dark: no sales recorded, shelves restocked on guesswork</td></tr>
+<tr><td data-label="Component"><strong>Software</strong></td><td data-label="At Walmart">The transaction systems, Retail Link, the analytics platforms</td><td data-label="What breaks if it fails">Suppliers plan against stale numbers; the bullwhip returns</td></tr>
+<tr><td data-label="Component"><strong>Data</strong></td><td data-label="At Walmart">Structured transactions at continental scale; 40 PB of recent history</td><td data-label="What breaks if it fails">A type error or bad key propagates into every report downstream</td></tr>
+<tr><td data-label="Component"><strong>Networks</strong></td><td data-label="At Walmart">Every register streaming to the center; Retail Link reaching thousands of suppliers</td><td data-label="What breaks if it fails">The shared version of the truth stops being shared</td></tr>
+<tr><td data-label="Component"><strong>People</strong></td><td data-label="At Walmart">Analysts in the Data Caf&eacute;; the grocery team that chased the slump; suppliers reading Retail Link</td><td data-label="What breaks if it fails">Data nobody investigates is a cost, not an asset: the pricing error runs for months</td></tr>
+</table>
+
+<h3>4.5 What a business technology manager takes from this chapter</h3>
+
+<p>Strip the Walmart case down to what you can reuse in any company. Four decisions came up in it, and each one is a decision you will be in the room for.</p>
+
+<p><strong>Decide the shape of the data before you decide anything else.</strong> A fact recorded as a field with a type can be counted, joined, and questioned; the same fact typed into a note cannot. Hollerith's census and Public Health England's spreadsheet failed for the same reason at opposite ends of history: the facts existed and the container was wrong. When somebody proposes to collect something, ask what the record will look like, because that decides which questions will be cheap for the next twenty years.</p>
+
+<p><strong>Put each fact in one place, and connect the places with keys.</strong> One giant grid corrupts itself in three predictable ways, and the relational model exists to stop that. You will not design databases for a living, but you will approve them, and the question to ask is whether the same fact is stored twice anywhere, because if it is, the two copies will eventually disagree and nobody will know which is right.</p>
+
+<p><strong>Sharing data can be worth more than hoarding it.</strong> Walmart's most valuable move was handing suppliers a login to their own sales data, which no retailer had done before. The information was worth more in the suppliers' hands than locked in Bentonville, because the suppliers used it to stop guessing. Before you treat data as a secret, ask who could make a better decision with it and what that decision would be worth to you.</p>
+
+<p><strong>Remember that the shape is a management decision, not a technical one.</strong> Somebody chose the fields. Somebody chose the file format. Those choices were made early, for reasons that were sound at the time, by people who could not see the consequence, and every one of them is the kind of choice a manager signs off on. Chapters 8 and 9 are about what analytics and AI do with data; none of it works if the decisions in this chapter were made badly.</p>
 
 <h2 id="other"><span class="num">5</span>The downside: what the basket reveals</h2>
 
@@ -1080,14 +1068,14 @@ that would be impossible in a single grid and are three lines of SQL against a n
 <h2 id="teaching"><span class="num">10</span>Teaching notes</h2>
 <p style="font-family:var(--sans);font-size:.95rem;color:var(--muted)">Written for whoever is running the sessions. Students are welcome to read them, but nothing here is required. Note that this Monday carries Chapters 6 and 7 together, which makes it the heaviest of the quarter.</p>
 
-<div class="plan"><div class="plan-head">Monday session plan &middot; 80 minutes &middot; concepts, with the three short failures as illustrations</div>
+<div class="plan"><div class="plan-head">Monday session plan &middot; 80 minutes &middot; concepts, with the two short failures as illustrations</div>
 <table>
 <tr><td class="t">0:00</td><td class="w">Open</td><td>Hold up a receipt, real or on a slide. Ask how many separate facts are on it and count them out loud with the room. The number climbs past twenty fast, and everything in the session hangs off that pile of facts.</td></tr>
 <tr><td class="t">0:05</td><td class="w">Lecture</td><td>What data is: recorded, typed, quantitative against qualitative, then structured against unstructured. Then records and fields, and the point that format is not the same as fact. "March 3, 2025" and "3/3/25" are one fact in three costumes, and software matches representations rather than facts.</td></tr>
 <tr><td class="t">0:16</td><td class="w">Lecture</td><td>Why one grid breaks. Draw the receipt as a single wide sheet on the board and walk the three anomalies on it, pointing at the actual cells. Then draw it becoming three tables with keys. This is the single most important drawing of the session; do it slowly and let them copy it. The figure in section 2 is the same drawing if you would rather project it, but drawing it live is better, because the room watches the repetition disappear.</td></tr>
 <tr><td class="t">0:30</td><td class="w">Lecture</td><td>Normalization as one rule, that every field describes the thing the key identifies. Then name the cost plainly: a normalized database scatters a simple question across tables, which is why analysts build flattened copies. That tension sets up OLTP against analytics on Wednesday.</td></tr>
 <tr><td class="t">0:38</td><td class="w">Lecture</td><td>Codd in 1970 and what IBM did with it. Keep it to four minutes. The point is not the history, it is that the model students are about to treat as obvious was resisted for a decade by the company best placed to build it.</td></tr>
-<tr><td class="t">0:42</td><td class="w">Cases 1&#8211;3</td><td>The census, two digits, and the rows that fell off the bottom, about three minutes each. Name what the shape decided in each one and stop. The comparison is the activity. If the room is quick, the 1888 competition timings are worth putting on the board: 5.5 hours against 44.5.</td></tr>
+<tr><td class="t">0:42</td><td class="w">Cases 1&#8211;2</td><td>The census and the rows that fell off the bottom, about four minutes each. Name what the shape decided in each one and stop. The comparison is the activity. If the room is quick, the 1888 competition timings are worth putting on the board: 5.5 hours against 44.5.</td></tr>
 <tr><td class="t">0:52</td><td class="w">Lecture</td><td>Chapter 7 at speed: ERP, CRM, SCM, silos, the bullwhip effect. The bridge is one sentence, that enterprise systems are what happens when a company insists on one database instead of twenty-seven.</td></tr>
 <tr><td class="t">1:06</td><td class="w">Think-pair-share</td><td>The Retail Link question. See the activity in section 6. Protect the silent minutes; the instinct in the room is unanimous and wrong, and it needs to be written down before it is challenged.</td></tr>
 <tr><td class="t">1:18</td><td class="w">Close</td><td>Preview Wednesday's double case, and tell them the SQL lab this week queries a real database with exactly the structures they just drew.</td></tr>

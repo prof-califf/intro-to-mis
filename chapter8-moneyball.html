@@ -398,7 +398,7 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 <div class="toc"><strong>Contents</strong>
 <a href="#bi">What business intelligence actually is</a>
 <a href="#traps">Reading numbers honestly</a>
-<a href="#cases">Three failures, three levels</a>
+<a href="#cases">Two failures, two levels</a>
 <a href="#oakland">Main case. Oakland: the team that measured differently</a>
 <a href="#other">The downside: being measured</a>
 <a href="#vocab">Vocabulary</a>
@@ -439,7 +439,7 @@ industry with identical data did not.</p>
 
 <h3>1.1 Business intelligence, and the four levels of analytics</h3>
 
-<p>Asking records a question has a name in business, and there is a standard way of sorting those questions by how much they ask.</p>
+<p>So what do we call this? Asking records a question has a name in business, and there is a standard way of sorting those questions by how much they ask.</p>
 
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Business intelligence &amp; analytics</span>
 <p><strong>Business intelligence (BI)</strong> is the practice of turning an organization's data into
@@ -625,11 +625,8 @@ what a dashboard is for.</p>
 <p>BI is not having data. Everyone has data. BI is choosing the measure that tracks what you actually
 care about, and putting it where decisions get made.</p></div>
 
-<h2 id="cases"><span class="num">3</span>Three failures, three levels</h2>
-<p>Before the main case, here are three short ones, arranged up the four levels from section 1. The first is a
-descriptive failure, the second predictive, the third prescriptive. Read them in order and watch the cost of being wrong grow. A bad description produces a bad slide. A
-bad prediction produces a bad forecast. A bad prescription produces a bad forecast that has already
-spent your money.</p>
+<h2 id="cases"><span class="num">3</span>Two failures, two levels</h2>
+<p>Before the main case, here are two short ones, from opposite ends of the four levels in section 1. The first is a descriptive failure, the second prescriptive. Read them in order and watch the cost of being wrong grow. A bad description produces a bad slide. A bad prescription produces a bad forecast that has already spent your money.</p>
 
 <h3>3.1 Mini-case 1 &middot; 1986: the chart that did not show the thing it contained</h3>
 
@@ -655,34 +652,10 @@ put on a dashboard.</p>
 
 <div class="mcq"><b>Check yourself</b>The damaged flights were shown and the undamaged ones were left
 out. Explain why leaving out the cases where nothing happened destroys the ability to see a
-relationship, and name one chart you have made where you did the same thing without noticing.</div>
+relationship, and name one chart you have made where you did the same thing without noticing.
+<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>Completeness. The chart showed only the flights with damage, so the reader could not see the relationship between temperature and damage, because half the evidence, every cold-weather flight that was damaged and every warm-weather flight that was fine, was either missing or not lined up with the rest. The data existed. The picture left it out. That is the descriptive level failing: not a wrong number, but a display that hid what the numbers contained. Tufte's redrawn version, all flights on one temperature axis, makes the danger obvious in a glance, which is the whole point of the descriptive level.</p></details></div>
 
-<h3>3.2 Mini-case 2 &middot; 2013: the model that kept answering after the world moved</h3>
-
-<p>In 2008 Google launched Flu Trends, which estimated how much influenza was circulating in the United
-States from what people were searching for. It looked like a triumph. It produced estimates faster than
-the public health agency it was built to match, and it was held up everywhere as proof of what large
-data could do.</p>
-
-<p>Then the model drifted. Between August 2011 and September 2013 it reported flu levels that were too high in
-100 weeks out of 108. In the 2012 to 2013 season it overshot by more than half, and at one point
-predicted roughly double the proportion of doctor visits the agency measured. Researchers who took the
-model apart found several causes, including that heavy news coverage of flu made healthy, worried
-people search in ways the model read as illness. Google revised it, then retired it in 2015.</p>
-
-<p>Nothing broke at Google. The model kept running and kept producing confident numbers, and the relationship
-between search behavior and illness had changed underneath it. A model is a claim about how the world
-works, and the world does not agree to hold still.</p>
-
-<p><strong>The level: predictive. The component: data.</strong> The failure was not in the mathematics.
-It was that the inputs stopped meaning what they meant when the model was built, and no amount of
-computation notices that on its own.</p>
-
-<div class="mcq"><b>Check yourself</b>Google's model was checked against the agency's actual figures,
-which is how anyone knew it had drifted. Name one forecast you have seen at work or in the news where
-no such check exists, and say what you would compare it to.</div>
-
-<h3>3.3 Mini-case 3 &middot; 2021: the algorithm that was allowed to spend</h3>
+<h3>3.2 Mini-case 2 &middot; 2021: the algorithm that was allowed to spend</h3>
 
 <p>A model looks at a house and names a price, and a company wires the money, thousands of times, on the model's word. Zillow is a property website. In 2018 it started buying houses
 itself, using its own price estimates
@@ -704,14 +677,12 @@ in between. That is the same decision Chapter 4 asked you to make about handing 
 
 <div class="mcq"><b>Check yourself</b>Zillow's estimate had been public for years before it was used to
 buy anything. Explain what changed about the same number when it stopped being displayed and started
-being acted on, and name the specific control you would have put between the model and the cheque.</div>
+being acted on, and name the specific control you would have put between the model and the cheque.
+<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>Nothing changed about the estimate. What changed was the level it was operating at. As a number on a listing, the Zestimate was descriptive: a guess that a person read and weighed against everything else they knew. Once it was used to decide what Zillow itself would pay for a house, it became prescriptive: the number acted, with money, at scale, and nobody checked each decision. An estimate that is fine as information becomes dangerous as an instruction, because the errors that a person would have caught one at a time now pile up unchecked. That is why moving a model up the levels is a management decision, not a technical upgrade.</p></details></div>
 
-<h3>3.4 What the three have in common</h3>
+<h3>3.3 What the two have in common</h3>
 
-<p>Three failures, three levels, and not one of them was caused by bad arithmetic. The Challenger data
-was correct. Google's model was competently built. Zillow's estimate was close. In every case the
-numbers were fine and something around them was not: how they were displayed, whether anyone checked
-them against reality, and how much authority they were given.</p>
+<p>Two failures, two levels, and neither was caused by bad arithmetic. The Challenger data was correct. Zillow's estimate was close. In both cases the numbers were fine and something around them was not: how they were displayed, and how much authority they were given.</p>
 
 <p>That is the argument of this chapter, stated in advance of the main case. Business intelligence is not a calculation problem.
 It is a series of judgments about what to measure, how to show it, what to compare it against, and how
@@ -719,7 +690,7 @@ far to let it act on its own. The case that follows is what it looks like when a
 first of those judgments right while an entire industry gets it wrong.</p>
 <h2 id="oakland"><span class="num">4</span>Main case &middot; Oakland: the team that measured differently</h2>
 
-<p>After the 2001 season, the Oakland Athletics lost their best hitter, Jason Giambi, to the New York
+<p>Let's begin with the problem Oakland faced. After the 2001 season, the Oakland Athletics lost their best hitter, Jason Giambi, to the New York
 Yankees on a seven-year, $120 million contract, and lost outfielder Johnny Damon and closer Jason
 Isringhausen the same winter. Oakland could not outbid anyone: its payroll of roughly $41 million was
 the third lowest in Major League Baseball, against the Yankees' roughly $125 million. By every
@@ -765,18 +736,7 @@ information spread. Boston hired sabermetric thinkers and won the 2004 World Ser
 every front office employed analysts; and once everyone measured correctly, the edge returned to the
 teams with the most money. An information advantage is real, and it is rented, not owned.</p>
 
-<h3>4.2 The five components of the 2002 A's</h3>
-
-<table class="sumtable stack-sm">
-<tr><th>Component</th><th>In the case</th><th>The lesson</th></tr>
-<tr><td data-label="Component"><strong>Hardware</strong></td><td data-label="In the case">A laptop and commodity computers; nothing exotic</td><td data-label="The lesson">The BI revolution was not a hardware story</td></tr>
-<tr><td data-label="Component"><strong>Software</strong></td><td data-label="In the case">Spreadsheets and statistical models on public data</td><td data-label="The lesson">The model encodes the insight; the tool is replaceable</td></tr>
-<tr><td data-label="Component"><strong>Data</strong></td><td data-label="In the case">A century of box scores every team also had</td><td data-label="The lesson">Advantage came from the question asked, not the data held</td></tr>
-<tr><td data-label="Component"><strong>Networks</strong></td><td data-label="In the case">Published statistics, available to every rival</td><td data-label="The lesson">Shared data means information advantages are temporary</td></tr>
-<tr><td data-label="Component"><strong>People</strong></td><td data-label="In the case">Beane choosing the model over a century of consensus</td><td data-label="The lesson">The scarce component was the willingness to trust a better measure</td></tr>
-</table>
-
-<h3>4.3 What happened after everybody caught up</h3>
+<h3>4.2 What's next: what happened after everybody caught up</h3>
 
 <p>Chapter 3 predicted the ending of this story before you read it. An advantage built on information
 lasts exactly as long as the information stays scarce, and this one did not stay scarce, because
@@ -803,6 +763,31 @@ succeeded, its conclusions were adopted by everyone, the aggregate result was a 
 customer, and the governing body outlawed the conclusion. The same shape appears wherever a score or a
 recommendation is optimized hard enough. The question is what happens when optimization works, everyone does it, and the thing being
 optimized was not the thing anybody actually wanted.</p>
+
+<h3>4.3 The five components of the 2002 A's</h3>
+
+<p>Now that you have seen the whole system, here it is as five components, the way this course maps every case. Notice how little of it is technology. The advantage lived in the question, which is the people row.</p>
+
+<table class="sumtable stack-sm">
+<tr><th>Component</th><th>In the case</th><th>The lesson</th></tr>
+<tr><td data-label="Component"><strong>Hardware</strong></td><td data-label="In the case">A laptop and commodity computers; nothing exotic</td><td data-label="The lesson">The BI revolution was not a hardware story</td></tr>
+<tr><td data-label="Component"><strong>Software</strong></td><td data-label="In the case">Spreadsheets and statistical models on public data</td><td data-label="The lesson">The model encodes the insight; the tool is replaceable</td></tr>
+<tr><td data-label="Component"><strong>Data</strong></td><td data-label="In the case">A century of box scores every team also had</td><td data-label="The lesson">Advantage came from the question asked, not the data held</td></tr>
+<tr><td data-label="Component"><strong>Networks</strong></td><td data-label="In the case">Published statistics, available to every rival</td><td data-label="The lesson">Shared data means information advantages are temporary</td></tr>
+<tr><td data-label="Component"><strong>People</strong></td><td data-label="In the case">Beane choosing the model over a century of consensus</td><td data-label="The lesson">The scarce component was the willingness to trust a better measure</td></tr>
+</table>
+
+<h3>4.4 What a business technology manager takes from this chapter</h3>
+
+<p>Strip the Oakland case down to what you can reuse in any company. Four decisions came up in it, and each one is a decision you will be in the room for.</p>
+
+<p><strong>Choose the measure before you build the dashboard.</strong> Baseball had a century of accurate statistics and measured the wrong one. Everyone had the same data; Oakland asked a different question of it. When someone shows you a report, the first question is not whether the numbers are right but whether they are the numbers that matter for the decision, and that is a judgment the software cannot make.</p>
+
+<p><strong>Show the data so that the danger is visible.</strong> The Challenger engineers had the right numbers and drew a chart that hid the relationship. A description that leaves half the evidence off the page is not a description. Before a chart goes to a decision-maker, ask what a reader would conclude from it in five seconds, and whether that is what the data says.</p>
+
+<p><strong>Decide how much authority a number gets, and decide it on purpose.</strong> Zillow's estimate was fine as information and ruinous as an instruction. Moving a model from describing to deciding is a management decision, because the errors a person would catch one at a time now act at scale with nobody watching. Ask, for every number in the company, who is allowed to act on it without a person in between.</p>
+
+<p><strong>Expect the advantage to end when everybody catches up.</strong> By 2010 every team measured what Oakland measured, and the edge was gone; by 2023 the league changed the rules to undo what the measuring produced. A measurement advantage is real, and it is never permanent. The lasting advantage is the habit of asking whether the consensus is right, and that habit is a person, not a system.</p>
 
 <h2 id="other"><span class="num">5</span>The downside: being measured</h2>
 
@@ -923,23 +908,23 @@ the room saw.</p>
 <li>Bill James's <em>Baseball Abstract</em> series, for the sabermetric work that preceded the A's by two decades and which they were the first to act on at scale.</li>
 <li>Baseball-Reference, 2002 Oakland Athletics season page, for the record (103&ndash;59), the 13 August to 4 September winning streak, and player statistics including Hatteberg's .374 OBP; the USA Today MLB salary database for the 2002 payrolls (Oakland roughly $41 million, third lowest; the Yankees roughly $125 million). Payroll figures vary slightly between sources depending on what is counted. Cleveland's 22-game streak in 2017 passed Oakland's American League mark.</li>
 <li>Edward Tufte's analysis of the Challenger pre-launch charts in <em>Visual Explanations</em> (1997), and the Rogers Commission report (1986), for mini-case 1. Tufte's reading has been debated; the uncontested part is that the presented charts did not plot damage against temperature across all flights.</li>
-<li>David Lazer, Ryan Kennedy, Gary King and Alessandro Vespignani, "The Parable of Google Flu: Traps in Big Data Analysis," <em>Science</em>, 14 March 2014, for the overestimation figures in mini-case 2.</li>
+
 <li>Zillow's November 2021 announcement and contemporary reporting, for the closure of Zillow Offers, the writedowns of up to $569 million, and the workforce reduction.</li>
 <li>Major League Baseball's 2023 rule changes and subsequent reporting on their effect, for the shift restriction described at the end of section 4.</li>
-<li><strong>Verification note.</strong> Checked in September 2026 against the authors' knowledge of the published record rather than by new searches, because none of this chapter's figures are recent: the 2002 season and payroll numbers, the Challenger and Google Flu Trends details (Lazer et al. give the 100 of 108 weeks and the overshoot), the Zillow figures, and the 2023 shift rule. Two wording corrections were made on that pass: the twenty-game streak was an American League record only until 2017, and the rise in batting average on balls in play came in the 2023 season itself, not the year after. The claim that Oakland's payroll bought "roughly as much real production as teams spending three times more" is the book's argument rather than a measured figure; treat it as an interpretation.</li>
+<li><strong>Verification note.</strong> Checked in September 2026 against the authors' knowledge of the published record rather than by new searches, because none of this chapter's figures are recent: the 2002 season and payroll numbers, the Challenger details, the Zillow figures, and the 2023 shift rule. Two wording corrections were made on that pass: the twenty-game streak was an American League record only until 2017, and the rise in batting average on balls in play came in the 2023 season itself, not the year after. The claim that Oakland's payroll bought "roughly as much real production as teams spending three times more" is the book's argument rather than a measured figure; treat it as an interpretation.</li>
 </ul>
 
 <h2 id="teaching"><span class="num">10</span>Teaching notes</h2>
 <p style="font-family:var(--sans);font-size:.95rem;color:var(--muted)">Written for whoever is running the sessions. Students are welcome to read them, but nothing here is required.</p>
 
-<div class="plan"><div class="plan-head">Monday session plan &middot; 80 minutes &middot; concepts, with the three failures as illustrations</div>
+<div class="plan"><div class="plan-head">Monday session plan &middot; 80 minutes &middot; concepts, with the two failures as illustrations</div>
 <table>
 <tr><td class="t">0:00</td><td class="w">Open</td><td>Put two payroll numbers on the board, $41 million and $125 million, and ask what a fair season between those two teams looks like. Then say the cheap one won more games and stop. Do not explain. You are coming back to it on Wednesday.</td></tr>
 <tr><td class="t">0:05</td><td class="w">Lecture</td><td>What BI is and is not, then the four kinds of analytics walked on one example the room knows, such as last month's sales. Make them say which level each question sits on before you tell them.</td></tr>
 <tr><td class="t">0:18</td><td class="w">Lecture</td><td>Metrics, proxies and measurement validity, using batting average against on-base percentage. The line to land is that almost every metric is a proxy, and the job is asking whether the proxy tracks the thing. Then apply it out loud: a store's revenue is a batting average.</td></tr>
 <tr><td class="t">0:32</td><td class="w">Lecture</td><td>Correlation, causation and sample size, then Goodhart's law. Goodhart is the one they will use most in their careers, so spend the time and collect examples from the room before you give yours.</td></tr>
 <tr><td class="t">0:46</td><td class="w">Lecture</td><td>The BI stack: operational systems, warehouse, dashboard, self-service tools. Connect it straight to Lab 7's database and this week's Tableau lab, and to why analysis runs on a copy.</td></tr>
-<tr><td class="t">0:56</td><td class="w">Cases 1&#8211;3</td><td>Challenger, Google Flu, Zillow, about two and a half minutes each. Name the level and the component and stop. The comparison is the activity. If time is short, Zillow alone will do the work, because the jump from advice to spending is the one students feel.</td></tr>
+<tr><td class="t">0:56</td><td class="w">Cases 1&#8211;2</td><td>Challenger and Zillow, about four minutes each. Name the level and the component and stop. The comparison is the activity. If time is short, Zillow alone will do the work, because the jump from advice to spending is the one students feel.</td></tr>
 <tr><td class="t">1:04</td><td class="w">Think-pair-share</td><td>A metric that made a business worse. See the activity in section 6. Protect the silent minutes; the good examples come from their own jobs and take a moment to surface.</td></tr>
 <tr><td class="t">1:18</td><td class="w">Close</td><td>Point them at section 4 and the discussion questions. Tell them Wednesday answers the payroll question from the opening.</td></tr>
 </table></div>

@@ -393,7 +393,7 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 <div class="toc"><strong>Contents</strong>
 <a href="#what">What enterprise systems are</a>
 <a href="#hard">Why they are hard to install</a>
-<a href="#cases">Three companies, three refusals</a>
+<a href="#cases">Two companies, two refusals</a>
 <a href="#nike">Main case. Nike: $400 million, huh?</a>
 <a href="#other">The downside: who absorbs a failed rollout</a>
 <a href="#vocab">Vocabulary</a>
@@ -469,7 +469,7 @@ organizational rather than technical.</p>
 
 <h3>2.1 Configuration versus customization, and process fit</h3>
 
-<p>Two ideas explain most of the trouble companies have with enterprise systems. (If you end up on an ERP project, and many of you
+<p>So why is installing one so hard? Two ideas explain most of the trouble companies have with enterprise systems. (If you end up on an ERP project, and many of you
 will, these two ideas are what the meetings will be about.) First, <strong>configuration versus
 customization</strong>: configuring means setting the switches the vendor built; customizing means
 rewriting the software to match your habits. Customization feels reasonable and compounds forever. Every
@@ -533,8 +533,8 @@ guesses do not cancel out. They add up, and the pattern has a name.</p>
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">The bullwhip effect</span>
 <p>Small changes in real demand amplify as they travel up a supply chain, because each link adds its own safety margin to a number that was already padded. A store that sells 100 orders 110 to be safe; the distributor orders 125; the factory tools for 150. Sharing actual demand data across links is the only cure, which is what enterprise systems promise. Run the same chain in software and the amplifier runs at machine speed, with nobody in the middle to question a number. Automation does not create the bullwhip. It removes the humans who would have questioned it.</p></div>
 
-<h2 id="cases"><span class="num">3</span>Three companies, three refusals</h2>
-<p>Before the main case, here are three companies that installed this kind of system and were badly hurt by it. An
+<h2 id="cases"><span class="num">3</span>Two companies, two refusals</h2>
+<p>Before the main case, here are two companies that installed this kind of system and were badly hurt by it. An
 enterprise system makes three demands of the organization that buys it, and each of these companies
 refused a different one. Read them with the Nike case coming, because Nike managed to refuse all three
 at once.</p>
@@ -561,7 +561,8 @@ had them.</p>
 
 <div class="mcq"><b>Check yourself</b>FoxMeyer signed a large contract on the assumption that the new
 system would deliver savings. Name the phase from Chapter 5 where that assumption should have been
-tested, and say what specific number would have told them to renegotiate rather than proceed.</div>
+tested, and say what specific number would have told them to renegotiate rather than proceed.
+<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>The assumption was about scale: that the new system could process the order volume the contract required, when it had never been run at that volume anywhere. That is a hardware and software claim, and the honest answer in 1996 was that nobody knew. The test that would have settled it belongs to the testing phase from Chapter 5, load testing, run before the contract was signed rather than after the warehouse was built. FoxMeyer skipped it because the vendor's demonstration looked fine, and a demonstration is a system running at the scale the vendor chose. The lesson generalizes: when a purchase depends on a number the seller supplied, the buyer tests the number.</p></details></div>
 
 <h3>3.2 Mini-case 2 &middot; 2021 to 2026: eleven million items that did not match</h3>
 
@@ -598,43 +599,14 @@ at all about records that disagree.</p>
 department keeping its own. Asda's eleven million mismatches were found by a routine reconciliation
 report and corrected by hand. Say what that report is doing, in Chapter 6's vocabulary. Then name what a company would have to
 change so that the system refuses a disagreement when it is written, rather than finding it in a
-report a month later.</div>
+report a month later.
+<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>Chapter 6 is right, and Asda is the proof of its hidden condition. A shared database is worth more than separate ones only if the records agree with each other, and eleven million of Asda's did not: the same item existed with different codes, prices, and descriptions in different places, because nobody had ever needed them to match. Migrating to one system did not create that problem. It exposed it, all at once, on the day the one system had to trust the records. So the chapter's claim holds, with a bill attached: before a company can have one version of the truth, somebody has to do the unglamorous work of making the old versions agree, and that work is data cleaning, done by people, and it cannot be bought from the vendor.</p></details></div>
 
-<h3>3.3 Mini-case 3 &middot; 2018: seven years, half a billion euros, and back to the old system</h3>
+<h3>3.3 What the two have in common</h3>
 
-<p>Seven years and half a billion euros into a project, somebody at Lidl had to stand up and recommend
-switching everything back to the old system. Lidl, the German discount grocery chain, had begun
-replacing its own merchandise management system with SAP in 2011. SAP publicly named Lidl among its notable customers along the way. In 2018, after seven
-years and roughly &euro;500 million, Lidl cancelled the project and returned to the system it had been
-trying to replace.</p>
+<p>Two demands, two refusals, and each one landed on a different component. Be honest about scale, which is hardware and software. Know what your records actually contain, which is data. Neither failure was caused by bad code, and in both the vendor's software worked as designed for the customers who used it as designed.</p>
 
-<p>The reported cause at Lidl was not a defect in the software. Lidl's business runs on its own way of handling stock and
-pricing, built up over decades and central to how it competes on cost. The standard software did it
-differently. Rather than change the practice, Lidl set about changing the software to match it. The modifications
-spread into the core of the system until what they had was neither the standard product nor
-something they could maintain.</p>
-
-<p>That is the configuration-versus-customization decision from section 2, taken one reasonable
-concession at a time across seven years. Notice that no single decision along the way looks obviously
-wrong. Each one was a company protecting something it was good at.</p>
-
-<p><strong>The demand it refused: change yourself, not the software. The component: people.</strong> An enterprise system
-carries a definition of how the work ought to be done. You may reject that definition, but then you
-should not buy the system.</p>
-
-<div class="mcq"><b>Check yourself</b>Section 2 says only one of the two options is expensive forever.
-Say which, explain the mechanism, and then name a situation where customizing anyway would be the right
-business decision. There is one; be specific about what makes it so.</div>
-
-<h3>3.4 What the three have in common</h3>
-
-<p>Three demands, three refusals, and each one landed on a different component. Be honest about scale,
-which is hardware and software. Know what your records actually contain, which is data. Change yourself
-rather than the software, which is people. Not one of the three failures was caused by bad code, and in
-all three the vendor's software worked as designed for the customers who used it as designed.</p>
-
-<p>Notice something else about that list of three demands. Every one of the three demands is about the organization
-rather than the technology, and every one has to be met before the software is switched on. An enterprise system is unusual among purchases in that it requires you to change in order to use
+<p>Notice something else about those demands, and add the third one an enterprise system makes: change yourself rather than the software, which is people. Every one of the three demands is about the organization rather than the technology, and every one has to be met before the software is switched on. An enterprise system is unusual among purchases in that it requires you to change in order to use
 it. That is why buying one is a decision about the company rather than about the software, and why
 the people who approve it will never log in to it.</p>
 
@@ -644,7 +616,7 @@ and asked the software to work at a scale and speed nobody had tested. Then, on 
 a big-bang cutover. Then it manufactured shoes based on what came out.</p>
 <h2 id="nike"><span class="num">4</span>Main case &middot; Nike: $400 million, huh?</h2>
 
-<p>Picture a Nike warehouse in the winter of 2001. One aisle is stacked to the ceiling with a shoe
+<p>Let's begin in a warehouse. Picture a Nike warehouse in the winter of 2001. One aisle is stacked to the ceiling with a shoe
 nobody is buying. Two aisles over, the shelf for the shoe every store is begging for is empty, and
 the factory that makes it is on the other side of the Pacific with a lead time measured in months.
 Nobody in the building did anything wrong. To see how a company arrives at that aisle, go back three
@@ -754,7 +726,7 @@ Pre-building of shoes fell from about 30% of manufacturing units toward 3%, and 
 times moved from nine months toward six. The failure was real and so, eventually, was the
 return. Both facts belong in your analysis.</p>
 
-<h3>4.5 It still happens, and close to home</h3>
+<h3>4.5 What's next: it still happens, and close to home</h3>
 
 <p>It would be comforting to file Nike under "early-2000s growing pains." The record since then does not allow it. Consider a
 company you can drive to from Bellingham in four hours: Lamb Weston, the frozen-potato giant whose
@@ -792,6 +764,8 @@ where the failure actually lives.</p>
 
 <h3>4.6 The five components at Nike</h3>
 
+<p>Now that you have seen the whole system, here it is as five components, the way this course maps every case. Look at which rows failed. Nike spent $400 million on the two rows it could buy and treated the three it could not as afterthoughts.</p>
+
 <div class="vc">
   <div class="vc-head">The Five Components · Nike, 2000–2001</div>
   <div class="vc-strip">
@@ -803,6 +777,18 @@ where the failure actually lives.</p>
   </div>
   <div class="vc-note">Breaks at <b>Software</b>, <b>Data</b>, and <b>People</b>, and note the contrast with Healthcare.gov: here the data itself was rotten, and automation amplified it.</div>
 </div>
+<h3>4.7 What a business technology manager takes from this chapter</h3>
+
+<p>Strip the Nike case down to what you can reuse in any company. Four decisions came up in it, and each one is a decision you will be in the room for.</p>
+
+<p><strong>Budget for the data before you budget for the software.</strong> Nike's demand-planning software was fed records from 27 ordering systems nobody had cleaned up, and it produced orders for shoes nobody wanted. Asda found eleven million records that did not match on the day one system had to trust them. The software is the line item everyone can see; the data cleaning is the one that decides whether the software works, and it is paid for in people's time, not licenses.</p>
+
+<p><strong>Configure, do not customize, unless you can say why for each change.</strong> A configured system is set up within what the vendor supports; a customized one has been rewritten, and every future upgrade has to be rewritten with it. Nike customized past the point its vendor warned about. When someone proposes changing the software to fit the company, ask whether the company could change instead, because that is usually cheaper forever.</p>
+
+<p><strong>Do not run a big-bang cutover on a system that changes how everyone works.</strong> Nike switched on at once and manufactured shoes based on what came out. Lamb Weston did the same in 2023 and lost sales it could not recover. Every rollout strategy from Chapter 5 was available, and the pilot is the one to reach for when the system decides what gets made.</p>
+
+<p><strong>Remember who pays when it fails.</strong> The people who approve an enterprise system will never log in to it. The people who use it every day had no say in it and absorb the failure in overtime, workarounds, and blame. Section 5 is about that, and it is worth reading before you sign anything.</p>
+
 <h2 id="other"><span class="num">5</span>The downside: who absorbs a failed rollout</h2>
 <p>The $100 million Nike lost is the number the case is named for, and it is the shallowest measure of
 the damage. Follow the failure outward from the headquarters. Factories in Asia received orders for shoes nobody wanted and
@@ -923,10 +909,9 @@ and the half the lab makes concrete.</p>
 <li>Christopher B. Califf, Saonee Sarker and Suprateek Sarker, "The Bright and Dark Sides of Technostress: A Mixed-Methods Study Involving Healthcare IT," <em>MIS Quarterly</em> 44(2), 2020, pp. 809&ndash;856, for the finding in section 5 that technology-related stress has a positive and a negative form, and that usefulness, technical support and involvement in the rollout separate them.</li>
 <li>Contemporary trade and business reporting on Nike's i2 demand-planning rollout, 2000 and 2001, for the $400 million program, the twenty-seven ordering systems, the vendor's guidance on customization limits, the February 2001 earnings announcement, the roughly $100 million in lost sales and the share price fall.</li>
 <li>Reporting on Asda's Project Future, 2021 to 2026, for the separation from Walmart's systems, the cost rising from an initial budget near &pound;189 million past &pound;1 billion, the eleven million item stock mismatch reported by <em>The Register</em> in October 2024 (from an internal major-incident report), the cancelled and postponed cutovers, the August 2025 completion (Reuters), the chairman's December 2025 comments (<em>The Times</em>, <em>The Grocer</em>), and the 2025 accounts filed in June 2026 showing cumulative project spending of &pound;1,224 million and a &pound;284 million disruption charge. This is recent and still moving; check the figures before teaching them.</li>
-<li><strong>Verification note.</strong> Checked against sources in September 2026: the Asda figures and timeline (corrected: the eleven million figure was a stock-count mismatch between two of Asda's new systems in July 2024, worth about &pound;21 million, not a mismatch of item records between the old and new systems; the total cost is now &pound;1,224 million per the 2025 accounts), the Lamb Weston figures from its April 2024 filing and the May 2026 ruling. The Nike narrative follows Christopher Koch's 2004 CIO account and the contemporary reporting; the "$4 billion in market value" figure that circulates for the February 2001 fall is not supported by the share count at the time (a 20 percent fall on a market value near $13 billion is closer to $2.5 to 3 billion), so the chapter now says "several billion." Not confirmed from a primary source: the Lamb Weston CFO's "usual bumps" wording, the October 2024 CIO appointment and plant-by-plant revision, and the "11 billion potatoes" figure, all of which come from trade and consultancy coverage. The FoxMeyer and Lidl accounts were checked against the authors' knowledge of the published record rather than re-searched.</li>
+<li><strong>Verification note.</strong> Checked against sources in September 2026: the Asda figures and timeline (corrected: the eleven million figure was a stock-count mismatch between two of Asda's new systems in July 2024, worth about &pound;21 million, not a mismatch of item records between the old and new systems; the total cost is now &pound;1,224 million per the 2025 accounts), the Lamb Weston figures from its April 2024 filing and the May 2026 ruling. The Nike narrative follows Christopher Koch's 2004 CIO account and the contemporary reporting; the "$4 billion in market value" figure that circulates for the February 2001 fall is not supported by the share count at the time (a 20 percent fall on a market value near $13 billion is closer to $2.5 to 3 billion), so the chapter now says "several billion." Not confirmed from a primary source: the Lamb Weston CFO's "usual bumps" wording, the October 2024 CIO appointment and plant-by-plant revision, and the "11 billion potatoes" figure, all of which come from trade and consultancy coverage. The FoxMeyer account was checked against the authors' knowledge of the published record rather than re-searched.</li>
 <li>Accounts of the FoxMeyer Drug bankruptcy in 1996 and the litigation that followed against the software vendor and the implementation consultants. Figures vary between retellings; treat the specific numbers with caution and the pattern as reliable.</li>
-<li>Reporting on Lidl's abandonment of its SAP program in 2018, for the seven-year duration, the roughly &euro;500 million figure, the customization of core merchandise management and the return to the legacy system.</li>
-<li>Lamb Weston investor communications and the securities litigation that followed, 2023 to 2025, for the November 2023 go-live, the January 2024 characterization of the issues, the $135 million in lost sales, the share price fall and the later shift to a plant-by-plant rollout.</li>
+<li></li>
 <li>Court filings and reporting in Zimmer Biomet's 2025 action against its implementation partner, and coverage of Revlon's 2018 implementation, for the pattern at the end of section 4. These matters are live; check their status before teaching them.</li>
 </ul>
 
@@ -937,7 +922,7 @@ and the half the lab makes concrete.</p>
 <table>
 <tr><td class="t">0:52</td><td class="w">Lecture</td><td>ERP, CRM and SCM, and the single idea underneath all three: replace each department's private version of the truth with one shared record. Then information silos, with Nike's twenty-seven ordering systems as the concrete example. The bridge from Chapter 6 is one sentence, that an enterprise system is what happens when a company insists on one database instead of twenty-seven.</td></tr>
 <tr><td class="t">1:00</td><td class="w">Lecture</td><td>Why installing one is hard: configuration against customization, process fit, and the raised stakes on rollout, because the system being replaced is the one currently running the company. Then the bullwhip effect, which they need on Wednesday for both cases.</td></tr>
-<tr><td class="t">1:08</td><td class="w">Cases 1&#8211;3</td><td>FoxMeyer, Asda and Lidl, about two minutes each. Name the demand each one refused, then stop. Asda is the one to make vivid, and the one to connect back to Monday's Chapter 6 material: eleven million records that disagreed, discovered only because they finally had to move.</td></tr>
+<tr><td class="t">1:08</td><td class="w">Cases 1&#8211;2</td><td>FoxMeyer and Asda, about three minutes each. Name the demand each one refused, then stop. Asda is the one to make vivid, and the one to connect back to Monday's Chapter 6 material: eleven million records that disagreed, discovered only because they finally had to move.</td></tr>
 <tr><td class="t">1:14</td><td class="w">Close</td><td>Set up Wednesday as a double bill: a company that gave its data away and won, and a company that spent $400 million to unify its data and made the wrong shoes. Assign section 4 in both chapters.</td></tr>
 </table></div>
 

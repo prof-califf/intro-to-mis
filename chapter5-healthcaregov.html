@@ -410,7 +410,7 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 <div class="toc"><strong>Contents</strong>
 <a href="#why">Why systems analysis exists</a>
 <a href="#sdlc">The software development life cycle</a>
-<a href="#cases">Three short failures, three phases</a>
+<a href="#cases">Two short failures, two phases</a>
 <a href="#healthcaregov">Main case. Healthcare.gov: the first day</a>
 <a href="#other">The downside: who waited</a>
 <a href="#vocab">Vocabulary</a>
@@ -720,7 +720,7 @@ original.</p>
 
 <h3 id="requirements">2.5 Requirements: the part everyone rushes</h3>
 
-<p>A <strong>requirement</strong> is a statement of something the system must do or some quality it must
+<p>So what exactly is a requirement? A <strong>requirement</strong> is a statement of something the system must do or some quality it must
 have. <em>Functional</em> requirements describe behavior: "the system shall determine subsidy eligibility from
 household income and size." <em>Non-functional</em> requirements describe qualities: how fast, how many at once,
 how secure, how available. Non-functional requirements are the ones organizations often skip, and they are the ones
@@ -742,7 +742,7 @@ decision downstream (servers, database design, queueing) inherited that blank.</
 
 <h3>2.6 How requirements are actually gathered</h3>
 
-<p>Requirements do not arrive. Somebody goes and gets them, and the work has a name,
+<p>Now, where do requirements come from? They do not arrive on their own. Somebody goes and gets them, and the work has a name,
 <strong>requirements elicitation</strong>. How the analyst goes about it decides what they come back with. The standard methods each have a characteristic blind spot, which is why serious
 projects use several.</p>
 
@@ -850,10 +850,9 @@ on the fourth.</p>
 <tr><td>User acceptance</td><td>Real users, doing real tasks, decide whether it is fit to release</td><td>Nothing, but only if the users are real and the tasks are real</td></tr>
 </table>
 
-<p>Now take the three failures from section 3 and place them on that table. Mars Climate Orbiter passed unit testing
+<p>Now take the two failures from section 3 and place them on that table. Mars Climate Orbiter passed unit testing
 twice, once on each team's software, and had no <strong>integration testing</strong> that would have compared the two
-across the boundary. London Ambulance had no realistic system testing under load and no <strong>user acceptance
-testing</strong> worth the name, because the operators met the system on the morning it went live. CrowdStrike's update passed
+across the boundary. Healthcare.gov, which you will meet in section 4, had no realistic system testing under load and no <strong>user acceptance testing</strong> worth the name, because the public met the system on the morning it went live. CrowdStrike's update passed
 its testing and was destroyed by none of these four, because the thing that failed was not the software
 but the decision to give it to everyone at once, and nobody tests a rollout.</p>
 
@@ -882,7 +881,7 @@ delivers its own piece correctly and the assembled system does not work, and no 
 
 <h3 id="rollout">2.11 Rollout strategy: how you turn it on</h3>
 
-<p>There are four ways to move users from an old world to a new one, and choosing among them is a risk
+<p>Finally, the system has to be turned on. There are four ways to move users from an old world to a new one, and choosing among them is a risk
 decision, not a technical one:</p>
 
 <ul>
@@ -906,11 +905,11 @@ honest test of the system is also the moment of maximum public exposure, and the
   shape of it now.</p>
 </div>
 
-<h2 id="cases"><span class="num">3</span>Three short failures, three phases</h2>
-<p>Before the main case, here are three short ones. The chapter has just claimed that the cost of fixing a mistake
+<h2 id="cases"><span class="num">3</span>Two short failures, two phases</h2>
+<p>Before the main case, here are two short ones. The chapter has just claimed that the cost of fixing a mistake
 rises by roughly ten times at each phase it survives. That claim is easier to believe when you watch it
 happen. Each failure below escaped a different phase, and in each one the fix was available one phase
-earlier and would have cost almost nothing there. Two of the three had working code.</p>
+earlier and would have cost almost nothing there. Both had working code.</p>
 
 <h3>3.1 Mini-case 1 &middot; 1999: the spacecraft that used the wrong units</h3>
 
@@ -934,36 +933,10 @@ nine months of flight, and was found by the planet.</p>
 
 <div class="mcq"><b>Check yourself</b>Two teams, each competent, each testing its own software
 successfully. Name the specific document that should have existed between them, and say who in an
-organization is responsible for noticing that it does not.</div>
+organization is responsible for noticing that it does not.
+<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>Unit testing: each team tested its own software against its own specification, and each passed, because each was internally consistent. What was missing was integration testing, the test that runs the two together across the boundary and checks whether what one sends is what the other expects. That test would have caught the units in an afternoon, because a value in pounds-force fed to software expecting newtons is off by a factor of about 4.5, which is not subtle. The cheap phase was requirements: one line in the interface specification saying which unit crossed the boundary. It was never written, so nobody tested for it, and a spacecraft went into the atmosphere of Mars.</p></details></div>
 
-<h3>3.2 Mini-case 2 &middot; 1992: the ambulance service that went live on a Monday</h3>
-
-<p>The London Ambulance Service, then the largest in the world, had already spent about &pound;7.5 million
-on a failed attempt to computerize its dispatch operation. The second attempt went live on Monday,
-26 October 1992, across the whole service at once.</p>
-
-<p>It went wrong within hours. The system could not reliably tell duplicate calls about the same
-incident apart, so multiple ambulances were sent to some emergencies and none to others. It lost track
-of which vehicles were free, so it had fewer and fewer to allocate as the day went on. Automatic alerts
-about unacknowledged calls piled up faster than operators could clear them, which slowed the system
-further. Response times ran to hours. The service reverted to a semi-manual method on 4 November, nine
-days after launch, and the chief executive resigned.</p>
-
-<p>The inquiry did not find a single defect at fault. It found a system that nobody had tested under realistic load, staff who had not been adequately
-trained on it, and a decision to switch the entire service over in one step, with no way to return
-to the old method. Press reports at the time linked deaths to the
-delays; the official inquiry did not establish a death toll, and you should be careful repeating the
-numbers that circulate.</p>
-
-<p><strong>The phase it escaped: implementation and deployment. The component: people.</strong> The requirements were roughly
-right. What was missing was testing under real conditions, training, and a rollout that would have let
-anyone stop it. One borough for a month would have found all of this.</p>
-
-<div class="mcq"><b>Check yourself</b>Of the four rollout strategies in section 2, which one did London
-choose, and which one would you have chosen? Name the specific cost of your choice, because every safer
-option costs something.</div>
-
-<h3>3.3 Mini-case 3 &middot; 2024: the update that went everywhere at once</h3>
+<h3>3.2 Mini-case 2 &middot; 2024: the update that went everywhere at once</h3>
 
 <p>Early on 19 July 2024, airport check-in screens around the world went blue at the same moment, and
 gate agents reached for pens. CrowdStrike sells security software that runs deep inside Windows,
@@ -991,7 +964,8 @@ section 2, and note that the remedy adopted afterwards was one of them, availabl
 <div class="mcq"><b>Check yourself</b>Security software is argued to be a special case, because a delayed
 update leaves customers exposed to a threat that is already circulating. Make the strongest version of
 that argument, then say what it would take to hold both things at once: fast protection and a staged
-release.</div>
+release.
+<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>The argument for speed is real: a security update that arrives a day late leaves every machine exposed for a day. But the argument does not survive the numbers. The update was correct on almost every machine and wrong on a class of them, and a phased rollout to one percent of customers would have found that class in minutes, with the other 99 percent still running. The delay to protect against a threat that had not yet appeared was worth hours; the outage that actually happened cost airlines, hospitals, and banks days. So the special case does not exempt security software from rollout strategy. It changes the size of the first phase, not whether there is one. Nobody tests a rollout, which is exactly why a rollout has to be staged.</p></details></div>
 
 <div class="tryit" id="phasecheck">
   <div class="tryit-head">Quick quiz &middot; Which phase did it escape?</div>
@@ -1045,20 +1019,16 @@ release.</div>
 })();
 </script>
 
-<h3>3.4 What the three have in common</h3>
+<h3>3.3 What the two have in common</h3>
 
-<p>Look at what was working in each case. Two spacecraft teams whose software both passed its own tests.
-An ambulance dispatch system whose requirements were broadly correct. A security update that had been
-tested and was correct on almost every machine that received it. In none of the three was the failure a
-matter of somebody writing bad instructions.</p>
+<p>Look at what was working in each case. Two spacecraft teams whose software both passed its own tests. A security update that had been
+tested and was correct on almost every machine that received it. In neither case was the failure a matter of somebody writing bad instructions.</p>
 
 <p>What each of them lacked was a check that belonged to an earlier phase and would have been cheap
-there: an interface specification, a pilot, a staged release. That is the cost pattern
-from section 1, shown three times. The mistake does not become expensive because it is serious. It
+there: an interface specification, a staged release. That is the cost pattern from section 1, shown twice. The mistake does not become expensive because it is serious. It
 becomes expensive because it survives.</p>
 
-<p>Now read the main case with one idea in front of you. Healthcare.gov is not one of these
-three failures. It is all of them at once, at national scale, on a date set by law.</p>
+<p>Now read the main case with one idea in front of you. Healthcare.gov is not one of these two failures. It is both of them at once, plus a rollout with nothing to fall back to, at national scale, on a date set by law.</p>
 <h2 id="healthcaregov"><span class="num">4</span>Main case &middot; Healthcare.gov: the first day</h2>
 
 <p>On the morning of 2 October 2013, in a government crisis meeting, somebody read out how many people
@@ -1146,23 +1116,7 @@ decision, and every one was available in 2011.</p>
   choice, and organizational choices can be made differently.</p>
 </div>
 
-<h3>4.3 The five components at Healthcare.gov</h3>
-
-<p>Every chapter maps its case onto the same five components. The point of the exercise is to locate the break, because a system is only as strong as its weakest component, no matter how strong the others are.</p>
-
-<div class="vc">
-  <div class="vc-head">The Five Components · Healthcare.gov</div>
-  <div class="vc-strip">
-    <div class="vc-cell"><span class="vc-stage">Hardware</span><p>Sized for a number nobody had specified; buckled at 250,000 users. A symptom, not the disease.</p></div>
-    <div class="vc-cell broke"><span class="vc-stage">Software</span><p>Sixty contracts of components, each defensible alone, that never worked as one system.</p></div>
-    <div class="vc-cell"><span class="vc-stage">Data</span><p>Income, household, identity: held by IRS, SSA, DHS. Accurate and available.</p></div>
-    <div class="vc-cell"><span class="vc-stage">Networks</span><p>Real-time links to the IRS, SSA, and DHS. The connections existed; ownership of them didn't.</p></div>
-    <div class="vc-cell broke"><span class="vc-stage">People</span><p>33 contractors, no integrator, gates waved through. Accountability diffused to zero.</p></div>
-  </div>
-  <div class="vc-note">Break located at <b>Software</b> and <b>People</b>. The data was good, and the hardware shortfall was downstream of a requirement no person wrote. </div>
-</div>
-
-<h3>4.4 Systems analysis in 2026, and what did not change</h3>
+<h3>4.3 What's next: systems analysis in 2026, and what did not change</h3>
 
 <p>This case is from 2013, and you are entitled to ask whether any of it still applies. There are two
 answers, and they point in different directions.</p>
@@ -1196,7 +1150,7 @@ hide behind the build. Now that a model can produce a working draft in an aftern
 a larger share of what is left, not a smaller one, and an AI that builds the wrong system builds it
 faster. Chapter 4 made this point about processes; it is the same point about projects.</p>
 
-<h3>4.5 What happened next, which is not a happy ending</h3>
+<h3>4.4 What happened next, which is not a happy ending</h3>
 
 <p>The failure had institutional consequences, and they are worth following, because most textbooks stop
 at the recovery.</p>
@@ -1225,6 +1179,36 @@ that is evidence the response was wrong, evidence that this kind of capability i
 sustain, or evidence of something else entirely is a genuine question, and the answer is not obvious.
 What is not in question is the finding underneath it, which is older than the agencies and outlived
 them: somebody has to own the whole, and that somebody has to be allowed to say no.</p>
+
+<h3>4.5 The five components at Healthcare.gov</h3>
+
+<p>Now that you have seen the whole system, here it is as five components, the way this course maps every case. Look at which rows failed. The software mostly worked; it was every other row that was late, wrong, or belonged to somebody who had not been asked.</p>
+
+<p>Every chapter maps its case onto the same five components. The point of the exercise is to locate the break, because a system is only as strong as its weakest component, no matter how strong the others are.</p>
+
+<div class="vc">
+  <div class="vc-head">The Five Components · Healthcare.gov</div>
+  <div class="vc-strip">
+    <div class="vc-cell"><span class="vc-stage">Hardware</span><p>Sized for a number nobody had specified; buckled at 250,000 users. A symptom, not the disease.</p></div>
+    <div class="vc-cell broke"><span class="vc-stage">Software</span><p>Sixty contracts of components, each defensible alone, that never worked as one system.</p></div>
+    <div class="vc-cell"><span class="vc-stage">Data</span><p>Income, household, identity: held by IRS, SSA, DHS. Accurate and available.</p></div>
+    <div class="vc-cell"><span class="vc-stage">Networks</span><p>Real-time links to the IRS, SSA, and DHS. The connections existed; ownership of them didn't.</p></div>
+    <div class="vc-cell broke"><span class="vc-stage">People</span><p>33 contractors, no integrator, gates waved through. Accountability diffused to zero.</p></div>
+  </div>
+  <div class="vc-note">Break located at <b>Software</b> and <b>People</b>. The data was good, and the hardware shortfall was downstream of a requirement no person wrote. </div>
+</div>
+
+<h3>4.6 What a business technology manager takes from this chapter</h3>
+
+<p>Strip the Healthcare.gov case down to what you can reuse in any project. Four decisions came up in it, and each one is a decision you will be in the room for.</p>
+
+<p><strong>Write the requirements down, including the ones that sound obvious.</strong> Nobody wrote down how many people the site had to serve at once, so contracts were signed to build a thing whose size nobody had specified. The requirement that feels too obvious to state is the one that will not get tested. If a number matters, it goes on paper before anyone builds anything.</p>
+
+<p><strong>Give every connection an owner.</strong> The site depended on real-time links to the IRS, Social Security, and Homeland Security, and no single person owned the whole chain. Every hand-off between two teams or two organizations is a place a system fails, and the cheapest fix in the book is a name next to each one.</p>
+
+<p><strong>Never launch everything to everyone on a date you cannot move.</strong> A pilot was available and obvious: one state, or federal employees, months ahead of the deadline. It was not taken. Every rollout strategy in section 2 was cheaper than the one CMS chose, and this is the single most repeated failure in this book. When you hear "big bang," ask what the fallback is, and if there is none, ask again.</p>
+
+<p><strong>Make sure somebody is allowed to say no.</strong> The reviews that existed to stop the launch were postponed because the launch was near. Governance is not paperwork; it is the decision, made in advance, about who can stop a project and on what evidence. If the answer is nobody, the project will launch on the date regardless of what the tests say, because that is what a deadline does to an organization with no brake.</p>
 
 <h2 id="other"><span class="num">5</span>The downside: who waited</h2>
 <p>The engineering story has a human side that is easy to lose. The people refreshing Healthcare.gov on October 1 were not users testing a product. They were people
@@ -1282,7 +1266,7 @@ was structure, honesty, and the political cover to have both.</p>
 <div class="tps">
   <div class="tps-head"><span>Monday activity &middot; Which check was missing?</span><span class="mins">12 minutes</span></div>
   <div class="tps-body">
-    <p class="tps-setup">Three failures, three phases. A spacecraft lost because nobody wrote down which unit crossed the boundary between two teams. An ambulance service that went live everywhere at once without testing under load or training its operators. A trading firm whose correct code was installed on seven servers out of eight, with nobody required to check.</p>
+    <p class="tps-setup">Two failures, two phases. A spacecraft lost because nobody wrote down which unit crossed the boundary between two teams. A security update pushed to 8.5 million machines at once, with no staged rollout and nothing to fall back to.</p>
     <div class="tps-q"><p>For each one, name the single cheapest check that would have caught it, and say which phase that check belongs to. Then rank the three by how easy the check would have been to skip.</p></div>
     <div class="tps-steps">
       <div class="tps-step"><div class="ph">Think <span>3 min</span></div><p>Write one check per failure. A check is something a named person does at a named moment, not a wish for more care.</p></div>
@@ -1354,15 +1338,15 @@ strongest opinion about, and be ready to say it first.</p>
 <li>Fred Brooks, <em>The Mythical Man-Month</em> (1975), for Brooks's law and the OS/360 experience behind it. The 1968 NATO conference at Garmisch is the usual citation for the terms "software crisis" and "software engineering."</li>
 <li>The Agile Manifesto (2001), agilemanifesto.org. Seventeen authors, four values, twelve principles; it takes two minutes to read.</li>
 <li>NASA, <em>Mars Climate Orbiter Mishap Investigation Board Phase I Report</em>, 10 November 1999: the pound-force seconds against newton-seconds mismatch between ground software and navigation software.</li>
-<li>South West Thames Regional Health Authority, <em>Report of the Inquiry into the London Ambulance Service</em> (Page, Williams and Boyd, February 1993), widely read in the electronic version prepared by Anthony Finkelstein, for the 26 October 1992 launch, the failures in call handling and vehicle tracking, the reversion on 4 November, and the state of testing and training. Treat the death tolls that circulate about this case with care; the inquiry did not establish one.</li>
+
 <li>CrowdStrike's own post-incident materials and contemporary reporting on the 19 July 2024 outage, for the content update, the Windows boot failures, Microsoft's estimate of roughly 8.5 million affected devices, the sectors disrupted, and the company's commitment afterwards to staged deployment and customer control over update timing.</li>
-<li><strong>Verification note.</strong> Checked against sources in September 2026: the OIG and GAO figures (60 contracts across 33 companies, $464 million to $824 million, $58 million to $207 million, $840 million across 62 contracts), the October and December enrollment figures, the 18F and DOGE Service dates, and the end of Direct File. Corrected on that pass: the enrollment timeline had the 975,000 figure a month early; the London Ambulance inquiry was misattributed to Finkelstein, who circulated it but did not write it. The Mars Climate Orbiter, London Ambulance, CrowdStrike, Royce, Brooks, and NATO 1968 details were checked against the authors' knowledge of the published reports rather than re-searched. Two figures rest on contemporary reporting rather than a primary document: the roughly 250,000 concurrent users on 1 October (against a plan variously reported as 50,000 to 60,000), and the recovery milestones (400 defects, 25,000 then 35,000 concurrent users), which come from the recovery team's own progress reports and Brill's account. The "half a billion dollars" at launch is a rounded figure; GAO's $840 million covers spending through early 2014 including the repair.</li>
+<li><strong>Verification note.</strong> Checked against sources in September 2026: the OIG and GAO figures (60 contracts across 33 companies, $464 million to $824 million, $58 million to $207 million, $840 million across 62 contracts), the October and December enrollment figures, the 18F and DOGE Service dates, and the end of Direct File. Corrected on that pass: the enrollment timeline had the 975,000 figure a month early; the Mars Climate Orbiter, CrowdStrike, Royce, Brooks, and NATO 1968 details were checked against the authors' knowledge of the published reports rather than re-searched. Two figures rest on contemporary reporting rather than a primary document: the roughly 250,000 concurrent users on 1 October (against a plan variously reported as 50,000 to 60,000), and the recovery milestones (400 defects, 25,000 then 35,000 concurrent users), which come from the recovery team's own progress reports and Brill's account. The "half a billion dollars" at launch is a rounded figure; GAO's $840 million covers spending through early 2014 including the repair.</li>
 </ul>
 
 <h2 id="teaching"><span class="num">10</span>Teaching notes</h2>
 <p style="font-family:var(--sans);font-size:.95rem;color:var(--muted)">Written for whoever is running the sessions. Students are welcome to read them, but nothing here is required.</p>
 
-<div class="plan"><div class="plan-head">Monday session plan &middot; 80 minutes &middot; concepts, with the three short failures as illustrations</div>
+<div class="plan"><div class="plan-head">Monday session plan &middot; 80 minutes &middot; concepts, with the two short failures as illustrations</div>
 <table>
 <tr><td class="t">0:00</td><td class="w">Open</td><td>Ask the room to name a project they have seen go wrong, at work, in a club, on a group assignment. Take four or five onto the board. Do not analyze them; you are coming back at the close to ask which phase each one failed in.</td></tr>
 <tr><td class="t">0:05</td><td class="w">Lecture</td><td>Why analysis exists, and the arithmetic that justifies it: a misunderstanding caught in analysis costs a conversation, the same one caught after go-live costs rework and hearings, and the cost rises about tenfold per phase. Put that number on the board and leave it there all session.</td></tr>
@@ -1373,7 +1357,7 @@ strongest opinion about, and be ready to say it first.</p>
 <tr><td class="t">0:43</td><td class="w">Exercise</td><td>User stories. Put a bad one on the board with the "so that" clause missing, and make the room supply it. Then ask for acceptance criteria for "the site should be fast" and refuse every answer that cannot be passed or failed. Five minutes, and it is the most transferable skill in the session.</td></tr>
 <tr><td class="t">0:48</td><td class="w">Lecture</td><td>MoSCoW and the minimum viable product, then baseline and change request as the actual control on scope creep. Flag that Wednesday's recovery is this method applied under emergency conditions.</td></tr>
 <tr><td class="t">0:53</td><td class="w">Lecture</td><td>Rollout strategies: direct cutover, parallel, phased, pilot. Have the room rank them by risk and by cost before you do, and make the point that these two rankings are opposites.</td></tr>
-<tr><td class="t">0:58</td><td class="w">Cases 1&#8211;3</td><td>Mars Climate Orbiter, London Ambulance, CrowdStrike, about two and a half minutes each. If the room is quick, run two or three rows of the "Which phase did it escape?" check on screen, hands up before revealing. The trap answer is testing, every time. Name the phase each one escaped and stop there. Do not draw the comparison; that is the activity. The detail worth landing on CrowdStrike is that the update had been tested and was correct for almost every machine that received it.</td></tr>
+<tr><td class="t">0:58</td><td class="w">Cases 1&#8211;2</td><td>Mars Climate Orbiter and CrowdStrike, about four minutes each. If the room is quick, run two or three rows of the "Which phase did it escape?" check on screen, hands up before revealing. The trap answer is testing, every time. Name the phase each one escaped and stop there. Do not draw the comparison; that is the activity. The detail worth landing on CrowdStrike is that the update had been tested and was correct for almost every machine that received it.</td></tr>
 <tr><td class="t">1:06</td><td class="w">Think-pair-share</td><td>Which check was missing? See the activity in section 6. Protect the silent three minutes.</td></tr>
 <tr><td class="t">1:18</td><td class="w">Close</td><td>Back to the opening board. For each project they named, ask which phase it failed in and whether the fix existed one phase earlier. Assign section 4, Healthcare.gov, and the discussion questions.</td></tr>
 </table></div>
