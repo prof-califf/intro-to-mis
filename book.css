@@ -130,3 +130,36 @@ figure.diagram figcaption{font-size:.9rem;color:var(--text-light)}
 .callout-bridge .lablink{background:var(--yellow);color:var(--black);font-weight:600}
 .callout-bridge .lablink:hover{background:#fff;color:var(--black)}
 .chaphead h1 .acr{color:var(--yellow)}
+
+/* ---------- print: browser Print / Save as PDF gives a clean handout ---------- */
+@media print{
+  html{overflow:visible}
+  body{background:#fff;color:#000;font-size:11pt}
+  .topnav,nav,.dd,.dd-menu,.jumprow,.wbtns,.railtoggle,.rail,button,input,textarea,.cpslot .hintb,.progress,.tryit button,.mcq button{display:none !important}
+  .chaphead{background:#fff !important;color:#000 !important;margin:0 0 18pt;padding:0 0 12pt;border-bottom:2pt solid #000}
+  .chaphead h1,.chaphead .eyebrow,.chaphead .anchor,.chaphead p{color:#000 !important}
+  .chaphead h1 b,.chaphead h1 em{color:#000 !important;text-decoration:underline}
+  main{max-width:none;padding:0}
+  main>p,main>ul,main>ol,main>h3,.lede,.chaphead .anchor{max-width:none}
+  .kc{background:#fff !important;color:#000 !important;border:1pt solid #000}
+  .kc .kc-term,.kc .kc-tag,.kc p{color:#000 !important}
+  .concepts span,.tag,.stat,.callout,.mcq,.tryit,.takeaways,.objectives,.ailight,.tps,.plan,.sources{background:#fff !important;color:#000 !important;border-color:#000 !important}
+  .kc,.callout,.mcq,.tryit,.takeaways,.objectives,figure,table,.plan,.tps{break-inside:avoid;page-break-inside:avoid}
+  h2,h3{break-after:avoid;page-break-after:avoid}
+  h2{margin-top:18pt}
+  details{display:block}details summary{display:none}details>*{display:block}
+  a{color:#000;text-decoration:underline}
+  a[href^="http"]:after{content:" (" attr(href) ")";font-size:8pt;color:#444}
+  .dd-menu a,.toc a{text-decoration:none}
+  .toc{border:1pt solid #000}
+  .tryit-head,.plan-head,.tps-head{background:#fff !important;color:#000 !important;border-bottom:1pt solid #000}
+  svg text{fill:#000}
+  img{max-width:100%}
+}
+
+/* print box under the contents */
+.printbox{display:flex;align-items:center;gap:.7rem;margin:-.4rem 0 1.4rem;font-family:var(--sans)}
+.printbox button{font-family:var(--sans);font-size:.8rem;font-weight:600;letter-spacing:.02em;padding:.4rem .8rem;border:1px solid var(--border);background:var(--off-white);color:var(--text-dark);border-radius:2px;cursor:pointer}
+.printbox button:hover{border-color:var(--magenta);color:var(--magenta)}
+.printbox span{font-size:.78rem;color:var(--text-light)}
+@media print{.printbox{display:none !important}}
