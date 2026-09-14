@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chapter 10: IT Governance: Equifax | MIS 320</title>
+<meta name="description" content="The 2017 Equifax breach as a governance failure: every technical fix existed, and the decisions failed anyway.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0e0e0d; --off-black:#1a1a18;
+  --magenta:#cc146d; --magenta-onblack:#f0348e; --magenta-dark:#c0146a; --magenta-pale:#fdeaf3;
+  --white:#ffffff; --off-white:#f6f4f1;
+  --text-dark:#0e0e0d; --text-muted:#3a3a38; --text-light:#6b6b68;
+  --border:#e0ddd8;
+  --warn:#b3261e; --warn-pale:#fdeceb;
+  --good:#1f7a53; --good-pale:#e8f4ee;
+  --sans:'Space Grotesk',sans-serif; --display:'Oswald',sans-serif;
+  --wrap:1180px; --col:46rem;
+  /* legacy aliases so existing markup keeps working */
+  --navy:#0e0e0d; --navy-soft:#1a1a18; --accent:#cc146d; --accent-deep:#c0146a;
+  --accent-pale:#fdeaf3; --cream:#ffffff; --cream-deep:#f6f4f1; --paper:#ffffff;
+  --ink:#0e0e0d; --muted:#6b6b68; --rule:#e0ddd8; --serif:'Space Grotesk',sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--white);color:var(--text-dark);
+  font-family:var(--sans);font-size:18.5px;line-height:1.7;-webkit-font-smoothing:antialiased}
+
+/* ---------- shell ---------- */
+.shell{max-width:var(--wrap);margin:0 auto;display:grid;grid-template-columns:15rem minmax(0,1fr);gap:3.5rem;padding:0 1.5rem 6rem}
+main{margin-left:auto;margin-right:auto;max-width:var(--col);padding-top:2.5rem}
+
+/* ---------- sidebar ---------- */
+.rail{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:2.5rem 0 3rem;border-right:1px solid var(--border)}
+.rail .book{font-family:var(--display);font-size:15px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--magenta);margin:0 0 .2rem}
+.rail .course{font-size:13.5px;color:var(--text-light);margin:0 0 1.75rem}
+.rail nav a{display:block;font-size:15px;line-height:1.35;color:var(--text-muted);text-decoration:none;padding:.42rem .8rem .42rem .85rem;border-left:2px solid transparent;margin-left:-.85rem}
+.rail nav a:hover{color:var(--magenta);border-left-color:var(--magenta)}
+.rail nav a.sub{font-size:14px;color:var(--text-light);padding-left:1.7rem}
+.rail .back{display:inline-block;margin-top:2rem;font-size:14px;color:var(--text-light);text-decoration:none}
+.rail .back:hover{color:var(--magenta)}
+.railtoggle{display:none}
+
+/* ---------- chapter head ---------- */
+.chaphead{border-bottom:3px solid var(--black);padding-bottom:1.6rem;margin-bottom:2.5rem}
+.eyebrow{font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--magenta);margin:0 0 .7rem}
+.chaphead h1{font-family:var(--display);font-weight:600;font-size:clamp(1.9rem,4.4vw,2.7rem);line-height:1.12;text-transform:uppercase;letter-spacing:.01em;margin:0 0 .6rem;color:var(--black)}
+.chaphead .anchor{font-size:16px;color:var(--text-light);margin:0}
+.chaphead .anchor strong{color:var(--text-muted);font-weight:500}
+.meta-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.2rem}
+.meta-row span{font-size:13px;letter-spacing:.03em;background:var(--off-white);border:1px solid var(--border);padding:.32rem .65rem;color:var(--text-muted)}
+.meta-row span.alt{background:var(--magenta-pale);border-color:#f6cfe1;color:var(--magenta-dark)}
+
+/* ---------- type ---------- */
+h2{font-family:var(--display);font-weight:600;font-size:1.72rem;line-height:1.22;text-transform:uppercase;letter-spacing:.01em;color:var(--black);margin:3.2rem 0 .9rem}
+h2 .num::before{content:"Section "}
+h2 .num{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;color:var(--magenta);display:block;margin-bottom:.4rem;text-transform:uppercase}
+h3{font-family:var(--display);font-weight:600;font-size:1.18rem;text-transform:uppercase;letter-spacing:.03em;color:var(--off-black);margin:2rem 0 .55rem}
+p{margin:0 0 1.05rem}
+a{color:var(--magenta-dark)}
+strong{font-weight:600;color:var(--black)}
+.lede{font-size:1.24rem;line-height:1.55;color:var(--text-muted)}
+code.inline{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--off-white);padding:.1em .35em;border:1px solid var(--border)}
+ul,ol{margin:0 0 1.15rem;padding-left:1.3rem}
+li{margin-bottom:.45rem}
+
+/* ---------- pull quote ---------- */
+.pull{margin:2.2rem 0;padding:0 0 0 1.4rem;border-left:3px solid var(--magenta)}
+.pull p{font-family:var(--display);font-weight:400;font-size:1.32rem;line-height:1.3;color:var(--black);margin:0 0 .5rem}
+.pull cite{font-style:normal;font-size:12.5px;color:var(--text-light)}
+
+/* ---------- callouts ---------- */
+.callout{border:1px solid var(--border);border-left:4px solid var(--magenta);background:var(--off-white);padding:1.15rem 1.3rem;margin:1.9rem 0}
+.callout > strong:first-child{display:block;font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--magenta);margin-bottom:.5rem}
+.callout p:last-child{margin-bottom:0}
+.callout-caution{border-left-color:var(--warn);background:var(--warn-pale)}
+.callout-caution strong:first-child{color:var(--warn)}
+.callout-bridge{border-left-color:var(--black);background:var(--off-white)}
+.callout-bridge strong:first-child{color:var(--black)}
+.callout-good{border-left-color:var(--good);background:var(--good-pale)}
+.callout-good strong:first-child{color:var(--good)}
+
+/* ---------- signature: value chain rail ---------- */
+.vc{margin:2.4rem 0;border:1px solid var(--border);background:var(--white);overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,.07)}
+.vc-head{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#fff;background:var(--black);padding:.7rem 1rem}
+.vc-strip{display:grid;grid-template-columns:repeat(5,1fr)}
+.vc-cell{padding:.85rem .7rem;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+.vc-cell:last-child{border-right:none}
+.vc-stage{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-light);display:block;margin-bottom:.3rem}
+.vc-cell p{font-size:15.5px;line-height:1.4;margin:0;color:var(--text-muted)}
+.vc-cell.broke{background:var(--magenta-pale)}
+.vc-cell.broke .vc-stage{color:var(--magenta)}
+.vc-cell.broke p{color:#8a1450}
+.vc-note{padding:.8rem 1rem;font-size:14px;color:var(--text-light);background:var(--off-white);border-top:1px solid var(--border)}
+.vc-note b{color:var(--magenta);font-weight:600}
+
+/* ---------- stat band ---------- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(8.5rem,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin:2rem 0}
+.stat{background:var(--white);padding:1rem .9rem}
+.stat b{display:block;font-family:var(--display);font-weight:700;font-size:1.8rem;color:var(--magenta);line-height:1.1}
+.stat span{display:block;font-size:13px;line-height:1.3;color:var(--text-light);margin-top:.3rem}
+
+/* ---------- timeline ---------- */
+.tl{list-style:none;padding:0;margin:1.8rem 0;border-left:2px solid var(--border)}
+.tl li{position:relative;padding:0 0 1.1rem 1.3rem;margin:0}
+.tl li:before{content:"";position:absolute;left:-5px;top:.55em;width:8px;height:8px;border-radius:50%;background:var(--magenta)}
+.tl li.bad:before{background:var(--warn)}
+.tl .when{font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--magenta);display:block}
+.tl li.bad .when{color:var(--warn)}
+
+/* ---------- vocabulary ---------- */
+.vocab{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin:1.8rem 0}
+.vocab div{background:var(--white);padding:.95rem 1rem}
+.vocab dt{font-family:var(--display);font-weight:600;font-size:15px;text-transform:uppercase;letter-spacing:.03em;color:var(--black);margin-bottom:.3rem}
+.vocab dd{margin:0;font-size:16.5px;line-height:1.5;color:var(--text-muted)}
+
+/* ---------- discussion questions ---------- */
+.dq{counter-reset:dq;margin:1.6rem 0 0;padding:0;list-style:none}
+.dq li{counter-increment:dq;position:relative;padding:1rem 0 1rem 2.6rem;border-top:1px solid var(--border)}
+.dq li:last-child{border-bottom:1px solid var(--border)}
+.dq li:before{content:counter(dq,decimal-leading-zero);position:absolute;left:0;top:1.05rem;font-family:var(--display);font-size:14.5px;font-weight:600;color:var(--magenta)}
+.tag{display:inline-block;font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:.2rem .5rem;margin-left:.5rem;vertical-align:.12em}
+.tag-hard{background:var(--warn);color:#fff}
+.tag-open{background:var(--black);color:#fff}
+.tag-warm{background:var(--magenta-pale);color:var(--magenta-dark)}
+
+/* ---------- sources ---------- */
+.sources{margin-top:3.5rem;padding-top:1.2rem;border-top:1px solid var(--border);font-size:14.5px;color:var(--text-light)}
+.sources h3{font-family:var(--display);font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin:0 0 .6rem}
+.sources li{margin-bottom:.35rem;line-height:1.5}
+
+/* ---------- responsive ---------- */
+@media (max-width:860px){
+  .shell{grid-template-columns:minmax(0,1fr);gap:0;padding:0 1.15rem 4rem}
+  .rail{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);padding:1.5rem 0 1rem;margin-bottom:.5rem}
+  .rail nav{display:none}
+  .rail nav.open{display:block;margin-top:.8rem}
+  .railtoggle{display:inline-block;font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--magenta);background:none;border:1px solid var(--border);padding:.4rem .7rem;cursor:pointer}
+  main{padding-top:1.2rem}
+  .vc-strip{grid-template-columns:repeat(2,1fr)}
+}
+:focus-visible{outline:2px solid var(--magenta);outline-offset:2px}
+
+/* ---------- prominent lab link ---------- */
+.lablink{display:inline-block;margin-top:.9rem;font-family:var(--display);font-size:14.5px;font-weight:600;
+  letter-spacing:.06em;text-transform:uppercase;text-decoration:none;background:var(--magenta);color:#fff;
+  padding:.6rem 1.15rem;border:none}
+.lablink:hover{background:var(--magenta-dark);color:#fff}
+.callout .lablink{margin-top:1rem}
+
+/* ---------- global top navigation with dropdowns ---------- */
+.topnav{position:sticky;top:0;z-index:100;background:var(--black);border-bottom:1px solid rgba(255,255,255,.14)}
+.topnav-in{max-width:var(--wrap);margin:0 auto;padding:.7rem 1.5rem;display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap}
+.topnav-brand{font-family:var(--display);font-size:16px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--magenta-onblack);text-decoration:none;margin-right:auto}
+.topnav-brand:hover{color:#fff}
+.dd{position:relative}
+.dd-btn{font-family:var(--display);font-size:14.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:#fff;background:none;border:1px solid rgba(255,255,255,.3);padding:.42rem .85rem;cursor:pointer}
+.dd-btn:hover,.dd-btn[aria-expanded="true"]{background:var(--magenta);border-color:var(--magenta)}
+.dd-btn .caret{font-size:11px;margin-left:.35rem}
+.dd-menu{display:none;position:absolute;right:0;top:calc(100% + .4rem);min-width:20rem;background:#fff;
+  border:1px solid var(--border);box-shadow:0 8px 30px rgba(0,0,0,.22);padding:.4rem 0;max-height:75vh;overflow-y:auto}
+.dd-menu.open{display:block}
+.dd-menu a{display:block;padding:.55rem 1rem;text-decoration:none;color:var(--text-dark);font-size:14.5px;line-height:1.35}
+.dd-menu a:hover{background:var(--magenta-pale);color:var(--magenta-dark)}
+.dd-menu a .lbl{display:block;font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--magenta);margin-bottom:.1rem}
+.dd-menu a.current{background:var(--off-white);border-left:3px solid var(--magenta)}
+.dd-menu a.soon{color:var(--text-light);pointer-events:none}
+.dd-menu a.soon .lbl{color:var(--text-light)}
+.dd-sep{margin:.35rem 0;border-top:1px solid var(--border)}
+@media (max-width:700px){
+  .topnav-in{padding:.6rem 1.15rem;gap:.6rem}
+  .topnav-brand{font-size:13.5px;width:100%;margin-right:0}
+  .dd{flex:1}
+  .dd-btn{width:100%;font-size:13px;padding:.4rem .5rem}
+  .dd-menu{right:auto;left:0;min-width:min(92vw,22rem)}
+}
+
+/* ---------- collapsible step-by-step help ---------- */
+.howto{margin:.7rem 0 1.1rem;border:1px solid var(--border);background:var(--off-white)}
+.howto>summary{cursor:pointer;padding:.6rem .9rem;font-family:var(--display);font-size:13px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--magenta-dark);list-style:none}
+.howto>summary::-webkit-details-marker{display:none}
+.howto>summary:before{content:"\25B8  ";font-size:11px}
+.howto[open]>summary:before{content:"\25BE  "}
+.howto>summary:hover{background:var(--magenta-pale)}
+.howto-body{padding:.3rem 1.1rem 1rem;border-top:1px solid var(--border);background:#fff}
+.howto-body ol{margin:.7rem 0;padding-left:1.3rem}
+.howto-body li{margin-bottom:.45rem;font-size:16.5px;line-height:1.5}
+.howto-body p{font-size:16.5px;margin:.6rem 0}
+.kbd{font-family:ui-monospace,Menlo,monospace;font-size:.85em;background:var(--off-white);
+  border:1px solid var(--border);border-radius:2px;padding:.1em .35em;white-space:nowrap}
+.mac{display:inline-block;font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;background:var(--black);color:#fff;padding:.1rem .4rem;margin-right:.35rem}
+.stuck{border:1px solid var(--border);border-left:4px solid var(--black);background:var(--off-white);
+  padding:1rem 1.2rem;margin:2rem 0 0}
+.stuck strong:first-child{display:block;font-family:var(--display);font-size:12.5px;font-weight:600;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--black);margin-bottom:.5rem}
+.stuck ol{margin:.5rem 0 0;padding-left:1.3rem}
+.stuck li{font-size:16.5px;margin-bottom:.35rem}
+
+/* ---------- AI traffic lights ---------- */
+.ailight{display:flex;gap:1rem;align-items:flex-start;border:1px solid var(--border);background:#fff;
+  padding:1rem 1.2rem;margin:1rem 0}
+.ailight .lamp{flex:0 0 auto;width:34px;background:#1c1c1a;border-radius:8px;padding:7px 0;
+  display:flex;flex-direction:column;align-items:center;gap:5px}
+.ailight .bulb{width:20px;height:20px;border-radius:50%;background:#2e2e2b;box-shadow:inset 0 2px 4px rgba(0,0,0,.6)}
+.ailight.g .bulb.b3{background:#2fae5f;box-shadow:0 0 10px rgba(47,174,95,.8),inset 0 -2px 3px rgba(0,0,0,.25)}
+.ailight.y .bulb.b2{background:#e6b93c;box-shadow:0 0 10px rgba(230,185,60,.8),inset 0 -2px 3px rgba(0,0,0,.25)}
+.ailight.r .bulb.b1{background:#d5453a;box-shadow:0 0 10px rgba(213,69,58,.8),inset 0 -2px 3px rgba(0,0,0,.25)}
+.ailight .lighttext{flex:1;min-width:0}
+.ailight .lighttext > strong:first-child{display:block;font-family:var(--display);font-size:13px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;margin-bottom:.3rem}
+.ailight.g .lighttext strong:first-child{color:#1e7c43}
+.ailight.y .lighttext strong:first-child{color:#a07a10}
+.ailight.r .lighttext strong:first-child{color:#a03434}
+.ailight p{margin:.2rem 0 0;font-size:16.5px;line-height:1.55}
+
+/* ---------- think-pair-share block ---------- */
+.tps{border:1px solid var(--black);background:#fff;margin:2.2rem 0}
+.tps-head{background:var(--black);color:#fff;padding:.6rem 1.1rem;font-family:var(--display);font-size:12.5px;
+  font-weight:600;letter-spacing:.2em;text-transform:uppercase;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.tps-head .mins{color:rgba(255,255,255,.7);letter-spacing:.1em}
+.tps-body{padding:1.1rem 1.25rem}
+.tps-setup{font-size:17px;line-height:1.6;margin:0 0 1rem}
+.tps-q{border-left:4px solid var(--magenta);background:var(--magenta-pale);padding:.8rem 1rem;margin:0 0 1.1rem}
+.tps-q p{margin:0;font-size:17px;line-height:1.5;font-weight:500}
+.tps-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border)}
+.tps-step{background:#fff;padding:.75rem .9rem}
+.tps-step .ph{font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--magenta);margin-bottom:.3rem;display:flex;justify-content:space-between}
+.tps-step .ph span{color:var(--text-light)}
+.tps-step p{margin:0;font-size:16px;line-height:1.45;color:var(--text-muted)}
+.tps-note{border-top:1px solid var(--border);margin-top:1.1rem;padding-top:.9rem;font-size:16px;color:var(--text-muted)}
+.tps-note strong{font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--black);display:block;margin-bottom:.35rem}
+@media(max-width:700px){.tps-steps{grid-template-columns:1fr}}
+
+/* ---------- Monday session plan (instructor-facing) ---------- */
+.plan{border:1px solid var(--border);background:var(--off-white);margin:2rem 0}
+.plan-head{background:var(--off-white);border-bottom:1px solid var(--border);padding:.55rem 1.05rem;
+  font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted)}
+.plan table{width:100%;border-collapse:collapse;background:#fff}
+.plan td{border-bottom:1px solid var(--border);padding:.6rem .9rem;font-size:15.5px;vertical-align:top;line-height:1.45}
+.plan tr:last-child td{border-bottom:none}
+.plan td.t{width:5.5rem;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--magenta);white-space:nowrap}
+.plan td.w{width:8rem;font-weight:600}
+@media(max-width:640px){.plan td.w{width:auto}}
+
+/* ---------- chapter depth: stat strip, TOC, key concept, summary table ---------- */
+.statrow{display:flex;flex-wrap:wrap;gap:1px;background:var(--border);border:1px solid var(--border);margin:1.6rem 0}
+.stat{flex:1 1 8rem;background:#fff;padding:.85rem 1rem;text-align:center}
+.stat b{display:block;font-family:var(--display);font-size:22px;font-weight:600;color:var(--magenta);line-height:1.1}
+.stat span{font-size:12.5px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;font-family:var(--display)}
+.toc{border:1px solid var(--border);background:var(--off-white);padding:1rem 1.25rem;margin:1.6rem 0;font-family:var(--sans);font-size:14.5px;line-height:2}
+.toc strong{display:block;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.3rem}
+.toc a{color:var(--text-dark);text-decoration:none;border-bottom:1px solid var(--border);margin-right:1rem;white-space:nowrap}
+.toc a:hover{color:var(--magenta-dark);border-bottom-color:var(--magenta)}
+.kc{border:1px solid var(--border);border-left:4px solid var(--magenta);background:#fff;margin:1.4rem 0;padding:1rem 1.2rem}
+.kc .kc-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.15rem}
+.kc .kc-term{font-family:var(--display);font-size:17px;font-weight:600;display:block;margin-bottom:.45rem}
+.kc p{margin:0;font-size:17px;line-height:1.62}
+.sumtable{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:15.5px}
+.sumtable th{background:var(--black);color:#fff;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.55rem .8rem;text-align:left}
+.sumtable td{border:1px solid var(--border);padding:.6rem .8rem;vertical-align:top;line-height:1.5}
+.sumtable tr:nth-child(even) td{background:var(--off-white)}
+
+/* ---------- IS concepts chip strip ---------- */
+.concepts{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;margin:1.1rem 0 0}
+.concepts .clabel{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-right:.3rem}
+.concepts span:not(.clabel){font-family:var(--display);font-size:12.5px;font-weight:500;letter-spacing:.04em;border:1px solid var(--border);background:var(--off-white);padding:.22rem .6rem;color:var(--text-dark)}
+
+/* mobile: wide tables scroll, long TOC anchors wrap */
+@media (max-width:860px){.toc a{white-space:normal}main table{display:block;overflow-x:auto;max-width:100%}}
+
+/* narrow screens: wide prose comparison tables stack into labelled cards.
+   Narrow data tables keep their grid so rows stay comparable. */
+@media (max-width:640px){
+  main table.stack-sm{display:block;width:100%;overflow-x:visible;border-collapse:separate;border-spacing:0}
+  table.stack-sm tr:first-child{display:none}
+  table.stack-sm tr{display:block;width:100%;border:1px solid var(--border);margin:0 0 .85rem;background:#fff}
+  table.stack-sm td{display:block;width:100%;border:none;border-bottom:1px solid var(--border);padding:.6rem .85rem;background:#fff!important}
+  table.stack-sm td:last-child{border-bottom:none}
+  table.stack-sm td::before{content:attr(data-label);display:block;font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--text-light);margin-bottom:.28rem}
+  table.stack-sm td:first-child{background:var(--black)!important;color:#fff;font-family:var(--display);letter-spacing:.06em;white-space:normal}
+  table.stack-sm td:first-child::before{content:none}
+  table.stack-sm td:first-child strong{color:#fff}
+}
+
+/* ported from ch3 */
+.mcq{border-left:3px solid var(--magenta);background:var(--off-white);padding:.7rem 1rem;margin:1rem 0 1.6rem;font-family:var(--sans);font-size:.95rem}
+.mcq b{font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--magenta-dark);display:block;margin-bottom:.2rem}
+.jumprow{display:flex;flex-wrap:wrap;gap:.5rem;margin:.9rem 0 0}
+.jump{font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:var(--magenta);color:#fff;border:1px solid var(--magenta);padding:.5rem .9rem;text-decoration:none;display:inline-block}
+.jump:hover{background:var(--magenta-dark);border-color:var(--magenta-dark);color:#fff}
+main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transform:none;letter-spacing:0;color:var(--off-black);margin:2.1rem 0 .55rem;padding-left:.7rem;border-left:3px solid var(--magenta)}
+.pairline{font-family:var(--sans);font-size:.9rem;color:var(--text-light);margin:.4rem 0 0}
+
+.tryit{border:1px solid var(--border);background:var(--white);box-shadow:0 2px 12px rgba(0,0,0,.06);margin:2rem 0;padding:0 0 1rem}
+.tryit-head{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#fff;background:var(--black);padding:.6rem 1rem}
+.tryit-intro{font-family:var(--sans);font-size:.97rem;color:var(--text-muted);margin:.9rem 1rem}
+.tryit-note{font-family:var(--sans);font-size:.9rem;color:var(--text-light);margin:.8rem 1rem 0;border-top:1px solid var(--border);padding-top:.7rem}
+.wrow{border-top:1px solid var(--border);padding:.75rem 1rem;display:grid;grid-template-columns:minmax(0,1fr);gap:.5rem 1rem;align-items:center}
+.wq{font-family:var(--sans);font-size:1rem;color:var(--text-dark)}
+.wbtns{display:flex;gap:.4rem;flex-wrap:wrap}
+.wbtns button{font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--off-white);border:1px solid var(--border);padding:.35rem .55rem;cursor:pointer;color:var(--text-dark)}
+.wbtns button:hover:not(:disabled){background:var(--magenta-pale);border-color:var(--magenta);color:var(--magenta-dark)}
+.wbtns button:disabled{opacity:.4;cursor:default}
+.wbtns button.you{opacity:1}
+.wbtns button.you.right{background:var(--good-pale);border-color:var(--good);color:var(--good)}
+.wbtns button.you.wrong{background:var(--warn-pale);border-color:var(--warn);color:var(--warn)}
+.wout{grid-column:1/-1;font-family:var(--sans);font-size:.95rem;line-height:1.5;padding:.6rem .8rem;border-left:3px solid var(--good);background:var(--good-pale);color:var(--text-dark)}
+.wout.no{border-left-color:var(--warn);background:var(--warn-pale)}
+.objectives{border:1px solid var(--border);border-left:4px solid var(--black);background:var(--off-white);padding:1rem 1.3rem;margin:1.6rem 0}
+.objectives .obj-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.4rem}
+.objectives ol{margin:.2rem 0 0 1.2rem;padding:0}
+.objectives li{margin:.3rem 0;font-size:16.5px;line-height:1.55}
+.takeaways{border:1px solid var(--border);border-left:4px solid var(--magenta);background:#fff;padding:1rem 1.3rem;margin:1.8rem 0}
+.takeaways .obj-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.4rem}
+.takeaways ul{margin:.2rem 0 0 1.2rem;padding:0}
+.takeaways li{margin:.35rem 0;font-size:16.5px;line-height:1.55}
+@media (max-width:860px){main{padding-left:1.25rem;padding-right:1.25rem}}
+</style>
+<link rel="stylesheet" href="book.css">
+</head>
+<body>
+<nav class="topnav">
+  <div class="topnav-in">
+    <a class="topnav-brand" href="index.html">MIS 320 &middot; Principles of Management Information Systems</a>
+    <a class="dd-btn" href="syllabus.html" style="text-decoration:none">Syllabus</a>
+    <a class="dd-btn" href="schedule.html" style="text-decoration:none">Schedule</a>
+    <div class="dd">
+      <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddc">Chapters<span class="caret">&#9660;</span></button>
+      <div class="dd-menu" id="ddc">
+      <a href="preface.html"><span class="lbl">Start here</span>About this book</a>
+      <a href="glossary.html"><span class="lbl">Reference</span>Glossary, A to Z</a>
+      <a href="chapter1-what-is-mis.html"><span class="lbl">Chapter 1 &middot; Week 1</span>What Is MIS? &mdash; Spotify Wrapped</a>
+      <a href="chapter2-starbucks.html"><span class="lbl">Chapter 2 &middot; Week 2</span>The Value of Information &mdash; Starbucks</a>
+      <a href="chapter3-competitive-advantage.html"><span class="lbl">Chapter 3 &middot; Week 3</span>Technology &amp; Competitive Advantage &mdash; Zara</a>
+      <a href="chapter4-dominos.html"><span class="lbl">Chapter 4 &middot; Week 4</span>Business Processes &mdash; Domino's</a>
+      <a href="chapter5-healthcaregov.html"><span class="lbl">Chapter 5 &middot; Week 5</span>Systems Analysis &amp; the SDLC &mdash; Healthcare.gov</a>
+      <a href="chapter6-moneyball.html"><span class="lbl">Chapter 6 &middot; Week 6</span>Business Intelligence &mdash; Moneyball</a>
+      <a href="chapter7-walmart.html"><span class="lbl">Chapter 7 &middot; Week 7</span>What Data Is: Databases &mdash; Walmart</a>
+      <a href="chapter8-nike-sap.html"><span class="lbl">Chapter 8 &middot; Week 7</span>Enterprise Systems &mdash; Nike/SAP</a>
+      <a href="chapter9-changehealthcare.html"><span class="lbl">Chapter 9 &middot; Week 8</span>Cybersecurity &mdash; Change Healthcare</a>
+      <a class="current" href="chapter10-equifax.html"><span class="lbl">Chapter 10 &middot; Week 8</span>IT Governance &mdash; Equifax</a>
+      <a href="chapter11-software.html"><span class="lbl">Chapter 11 &middot; Week 9</span>Software Design &amp; Selection &mdash; Robles v. Domino's</a>
+      <a href="chapter12-ai-ml.html"><span class="lbl">Chapter 12 &middot; Week 10</span>AI, Machine Learning &amp; Bias &mdash; TikTok &amp; Amazon</a>
+      <a href="chapter13-cloud.html"><span class="lbl">Chapter 13 &middot; Week 10</span>The Cloud &amp; What Computing Costs &mdash; Netflix</a>
+      </div>
+    </div>
+    <div class="dd">
+      <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddl">Labs<span class="caret">&#9660;</span></button>
+      <div class="dd-menu" id="ddl">
+      <a href="lab1-genai.html"><span class="lbl">Lab 1 &middot; Week 1</span>GenAI for Thinking</a>
+      <a href="lab2-excel-basics.html"><span class="lbl">Lab 2 &middot; Week 2</span>Excel Basics: Meeting the Client</a>
+      <a href="lab3-excel-dataprep.html"><span class="lbl">Lab 3 &middot; Week 3</span>Excel Functions: One Question, One Formula</a>
+      <a href="lab4-excel-dataviz.html"><span class="lbl">Lab 4 &middot; Week 4</span>Data Visualization: Charts That Tell the Truth</a>
+      <a href="lab5-excel-analysis.html"><span class="lbl">Lab 5 &middot; Week 5</span>Data Analysis &amp; Mini Project</a>
+      <a href="lab6-tableau.html"><span class="lbl">Lab 6 &middot; Week 6</span>Tableau: Worksheets to a Dashboard</a>
+      <a href="lab7-sql.html"><span class="lbl">Lab 7 &middot; Week 7</span>SQL Fundamentals</a>
+      <a href="lab8-security.html"><span class="lbl">Lab 8 &middot; Week 8</span>Security &amp; Data Governance: The Audit</a>
+      <a href="lab9-ux.html"><span class="lbl">Lab 9 &middot; Week 9</span>UX Design: The Heuristic Evaluation</a>
+      <a href="lab10-ia.html"><span class="lbl">Lab 10 &middot; Week 10</span>Information Architecture: Making Sense of a Mess</a>
+      <a href="resume.html"><span class="lbl">After the labs</span>Turning the labs into a resume</a>
+      </div>
+    </div>
+    <div class="dd">
+      <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddd">Data<span class="caret">&#9660;</span></button>
+      <div class="dd-menu" id="ddd">
+      <a href="cascadia-sales-2025.xlsx"><span class="lbl">Workbook</span>Cascadia sales, clean (.xlsx)</a>
+      <a href="cascadia-sales-2025-RAW.xlsx"><span class="lbl">Workbook</span>Cascadia sales, RAW export for Lab 7 (.xlsx)</a>
+      <a href="cascadia-sales-2025.csv"><span class="lbl">Data</span>Flat CSV for Tableau</a>
+      <a href="cascadia.db"><span class="lbl">Database</span>SQLite database for the SQL lab</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main class="chapwrap">
+
+<header class="chaphead">
+  <p class="eyebrow">Chapter 10 &middot; IT Governance</p>
+  <h1>IT Governance: When Everyone Was Responsible and <b>No One Was</b></h1>
+  <p class="anchor">In 2017 Equifax lost the personal data of nearly 150 million people. A fix existed,
+  was known, was available, and had even been ordered internally. It was never applied to the one server
+  that mattered, because no single person owned the job. This chapter is about the structures that decide
+  who answers, before a crisis reveals that nobody did.</p>
+  <div class="concepts"><span class="clabel">Key concepts</span><span>IT governance</span><span>Accountability vs. responsibility</span><span>Patch and vulnerability management</span><span>Frameworks: NIST, COBIT</span><span>Compliance vs. security</span><span>Data stewardship</span><span>Audit</span></div>
+</header>
+
+<div class="toc"><strong>Contents</strong>
+<a href="#what">What governance is</a>
+<a href="#tools">Frameworks, compliance, and their limits</a>
+<a href="#cases">Two failures, two broken links</a>
+<a href="#equifax">Main case. Equifax: a patch nobody applied</a>
+<a href="#other">The downside: data about people who never agreed</a>
+<a href="#vocab">Vocabulary</a>
+<a href="#discussion">Discussion questions</a>
+<a href="#lab">From lecture to lab</a>
+<a href="#sources">Sources and further reading</a>
+<a href="#teaching">Teaching notes</a>
+</div>
+<p class="printbox"><span>Wanna go analog?</span><button type="button" onclick="window.print()" aria-label="Print this page or save it as a PDF">&#9113;&nbsp; Print here</button><span>or save it as a PDF; the navigation drops out</span></p>
+
+<p class="lede">Chapter 9 was about controls: the locks, the segmentation, the second step at the door.
+This chapter is about who is accountable for the controls. That turns out to be the harder problem,
+and the one that actually decides whether the controls exist on the day you need them.</p>
+
+<div class="objectives"><span class="obj-tag">Learning objectives</span>
+<p>By the end of this chapter you should be able to:</p>
+<ol>
+<li>Define IT governance and explain what it decides: who may decide, who must do, who verifies, and who answers.</li>
+<li>Distinguish responsibility from accountability, and explain why accountability cannot be delegated.</li>
+<li>Explain what frameworks like NIST and COBIT provide, and the difference between compliance and security.</li>
+<li>Read a failure for the governance gap: the work that was everyone's responsibility and nobody's accountability.</li>
+<li>Explain why Equifax is different in kind from a retailer losing card numbers, and what that implies about who governs.</li>
+</ol>
+</div>
+
+<h2 id="what"><span class="num">1</span>What governance is</h2>
+
+<p>Chapter 9 ended on a hopeful note: nearly every breach is a failure to apply known controls, which
+means most security is a management problem. This chapter is about the management problem, and it is
+less comfortable than it sounds.</p>
+
+<p>Governance is what decides whether the five components are looked after at all. Somebody has to own
+each piece of <strong>hardware</strong>, or a server sits on the internet with nobody's name against it.
+Somebody has to own whether <strong>software</strong> is patched and whether the monitoring is still
+alive. Somebody has to own what <strong>data</strong> the organization holds and what it owes the people
+in it. Somebody has to own who may reach what across the <strong>networks</strong>. And all of those
+owners are <strong>people</strong>, which is why governance is not a technology at all.</p>
+
+<p>Here is the version of the weakest component rule that this chapter adds to the ones you already have. A control with no named
+owner is not a control. It is an intention, and intentions do not fail loudly. Everything below is about
+making sure that when something is nobody's job, you find out before an attacker does.</p>
+
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">IT governance</span>
+<p><strong>IT governance</strong> is the set of structures, policies, and decision rights that determine how an
+organization directs and controls its technology. It answers four questions: who is allowed to
+decide what, who must do what, who verifies it was done, and who is answerable when it is not. Governance is not
+software you install; it is the answer to the question "who is in charge of this, specifically?" for
+every part of the technology that matters. When that answer is vague, work falls through the gaps
+between people who each assumed someone else had it, which is a fair one-sentence summary of the
+breach in this chapter's case.</p></div>
+
+<p>Governance sounds bureaucratic until you watch its absence. In the case at the end of this chapter, a
+security fix that had been ordered never got applied to one server, not because anyone refused to do it
+but because the task lived in the space between teams. The people who knew about the vulnerability, the people who owned the server, and the
+people responsible for verifying compliance had no structure connecting them that forced the loop to
+close. Good governance is
+mostly the unglamorous work of making sure every critical task has exactly one owner and one check.</p>
+
+<h3>1.1 Responsibility versus accountability</h3>
+
+<p>Let's start with two words most people treat as synonyms, because the most useful distinction in this chapter sits between them.
+Governance depends on keeping them apart.</p>
+
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Responsibility and accountability</span>
+<p>These words are used loosely in conversation and precisely in governance.
+<strong>Responsibility</strong> is the obligation to do the work: the engineer who applies the patch.
+<strong>Accountability</strong> is the obligation to answer for the outcome, and nobody can share it or delegate it
+away. One named person is accountable that the patch got applied, whether or not they touched a keyboard.
+(The practical test is simple: whose name is on the email when it goes wrong?) The classic governance failure is work that many people are responsible for and nobody is
+accountable for. When it fails, everyone can truthfully say it was not their job. "Everyone was responsible" is how you get an outcome nobody owned.</p></div>
+
+<p>The main case is the textbook illustration. After the Equifax breach, no single person could be cleanly blamed for the missed patch, which sounds like exoneration and is actually the diagnosis. A system in which no one
+can be held accountable for a critical task is a system that has been designed, by accident, to fail
+quietly. The company's CEO, CIO, and CSO all departed. Accountability that nobody assigned in advance rolls
+upward to whoever sits at the top, which is exactly why executives should want it assigned in
+advance.</p>
+
+<div class="tryit" id="acct">
+  <div class="tryit-head">Quick quiz &middot; Responsible or accountable?</div>
+  <p class="tryit-intro">Five people in a company that just had a patch fail. Say which word applies to each one before you check.</p>
+  <div id="acctrows"></div>
+  <p class="tryit-note">Responsible means they do the work. Accountable means they answer for whether it got done, whether or not they touched a keyboard. Several people can be responsible; only one can be accountable.</p>
+</div>
+
+<script>
+(function(){
+  var host=document.getElementById('acctrows');
+  if(!host)return;
+  var F=["Responsible", "Accountable"];
+  var R=[{"t": "The engineer who applies patches to the servers on Tuesday nights.", "a": "Responsible", "why": "Doing the work. If the patch was on the list and got applied, the engineer did the job, whatever happened elsewhere."}, {"t": "The IT director whose name is on the policy that says every critical patch is applied within 48 hours.", "a": "Accountable", "why": "Answers for the outcome. The director did not apply the patch and is still the person who has to explain why it did not land."}, {"t": "The security team that sends out the alert about a new vulnerability.", "a": "Responsible", "why": "A task in the chain. Sending the alert is work; nobody on the team answers for what the recipients did with it."}, {"t": "The auditor who checks once a quarter that the patch list matches what is installed.", "a": "Responsible", "why": "Verification is work too. The auditor is responsible for checking; accountability for the gap the check finds sits with whoever owns the policy."}, {"t": "The chief executive, after the board asks why 147 million records left the building.", "a": "Accountable", "why": "When accountability was never assigned to someone specific, it rolls upward to whoever sits at the top. That is why executives should want it assigned in advance."}];
+  R.forEach(function(r){
+    var row=document.createElement('div'); row.className='wrow';
+    row.innerHTML='<div class="wq">'+r.t+'</div><div class="wbtns">'
+      +F.map(function(f){return '<button type="button" data-f="'+f+'">'+f+'</button>';}).join('')
+      +'</div><div class="wout" role="status" aria-live="polite" hidden></div>';
+    host.appendChild(row);
+    var bs=row.querySelectorAll('button'), out=row.querySelector('.wout');
+    bs.forEach(function(b){
+      b.addEventListener('click',function(){
+        if(!out.hidden)return;
+        var ok=b.getAttribute('data-f')===r.a;
+        bs.forEach(function(x){x.disabled=true;});
+        b.className='you '+(ok?'right':'wrong');
+        if(!ok) bs.forEach(function(x){ if(x.getAttribute('data-f')===r.a) x.className='you right'; });
+        out.hidden=false; out.className='wout '+(ok?'yes':'no');
+        out.innerHTML='<b>'+r.a+'.</b> '+r.why;
+      });
+    });
+  });
+})();
+</script>
+
+<h2 id="tools"><span class="num">2</span>Frameworks, compliance, and their limits</h2>
+
+<p>Organizations do not invent governance from scratch, and they are frequently required to prove it
+exists. Both of those facts produce useful machinery and a characteristic trap, and you should be able
+to see the difference from across a room.</p>
+
+<h3>2.1 Frameworks</h3>
+
+<p>Nobody invents governance from scratch. Organizations adopt frameworks: shared checklists and
+vocabularies that encode what mature IT management looks like, so that "are we secure?" becomes a set
+of answerable questions rather than a feeling.</p>
+
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Governance frameworks</span>
+<p>A <strong>framework</strong> is a structured, widely accepted set of practices an organization can
+adopt and be measured against. In security and IT governance the common ones include the
+<strong>NIST Cybersecurity Framework</strong> (organized around five functions: identify, protect,
+detect, respond, recover) and <strong>COBIT</strong> (aimed at aligning IT with business goals).
+Their value is not magic. They turn vague intentions into specific, auditable commitments, and they
+let an outsider, an auditor, a regulator, a board, check whether the organization is keeping them. Frameworks are how an organization proves its governance exists rather
+than merely claiming it does.</p></div>
+
+<p>Map the Equifax breach onto the NIST functions and the failure is easy to locate: identify (they knew about
+the vulnerability), protect (they failed to patch), detect (the monitoring certificate had expired),
+respond (they were slow and their public response was widely criticized). A framework would not have
+applied the patch for them. But a framework, audited in good faith, forces the question "show me that
+every internet-facing system got this patch," and that question is precisely the one no one at
+Equifax was structurally required to answer.</p>
+
+<h3>2.2 Compliance is not security</h3>
+
+<p>Frameworks come with a trap, and it is the most common one in the field: an organization that can
+prove it follows the rules starts to believe that proof is the same thing as being safe.</p>
+
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Compliance versus security</span>
+<p><strong>Compliance</strong> means meeting the specific requirements of a standard or law.
+<strong>Security</strong> means actually being hard to breach. They overlap but are not the same, and
+the gap between them is where a lot of breaches live. An organization can pass its audits, hold its certifications, and check every box while a single
+unpatched server sits exposed. Compliance measures whether documented controls exist, not whether
+every real system is actually covered every day. Treating a passed audit as proof of safety is one of the most common and expensive mistakes in
+the field. Compliance is a floor, not a finish line.</p></div>
+
+<p>This is the trap that connects this chapter's case with Chapter 9's. Target, a decade before Change Healthcare,
+was certified compliant with the payment-card security standard when it was breached. Equifax
+operated in a regulated industry with real requirements. Compliance regimes are valuable, they raise
+the floor for everyone, but a compliance mindset can actively harm security if it lets an organization
+mistake the paperwork for the protection. The job of good governance is to close that gap, not to
+celebrate the certificate.</p>
+
+<h2 id="cases"><span class="num">3</span>Two failures, two broken links</h2>
+<p>Section 2 defined governance as the answer to four questions: who decides, who does the work, who
+checks it was done, and who answers when it was not. Each of the two cases below broke a different one of those links, and in each the technology was working exactly as built.</p>
+
+<h3>3.1 Mini-case 1 &middot; 2003: the alarm that failed quietly</h3>
+
+<p>On the afternoon of 14 August 2003, a high-voltage line in northern Ohio sagged in the heat into
+overgrown trees and switched off. That is routine. Grids handle it constantly, and operators redistribute
+the load.</p>
+
+<p>The fault should have raised an alarm in the control room of FirstEnergy, the utility that owned the line. A software fault in the alarm
+system meant it did not, and, more importantly, the alarm system gave no indication that it had stopped
+working. Operators sat looking at a screen that appeared normal. Over the next ninety minutes three more lines sagged into trees and dropped out, each one loading
+the remaining lines further. The operators had no alerts and no way of knowing their alerts had
+gone. By early evening the cascade had taken out
+much of the north-eastern grid: about 55 million people across eight states and Ontario lost power, some
+for days.</p>
+
+<p>The investigation afterwards found the overgrown trees, the inadequate planning and the training gaps. But the
+governance finding is the one that changed the industry: before 2003, the reliability standards utilities
+were supposed to follow were <em>voluntary</em>. Afterwards Congress made them mandatory and legally enforceable, because it had become clear that a
+rule nobody has to follow and nobody verifies is not a rule.</p>
+
+<p><strong>The link that broke: nobody checked. The component: software.</strong> Note the specific
+shape, because it is the same as the expired certificate in section 4. The failure was not that a
+monitor broke. It was that a broken monitor looked exactly like a working one, and no person or process
+owned the question of whether it was still working.</p>
+
+<div class="mcq"><b>Check yourself</b>Name a check in your own life or work that would look identical
+whether it was running or not: a backup, an alert, a report you assume somebody reads. Then say how you
+would find out, today, whether it is actually working.
+<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>The pattern is a check whose silence means either "all clear" or "broken," and nobody can tell which. A smoke detector with a dead battery looks exactly like a smoke detector in a house with no fire. A monitoring dashboard that has stopped updating looks exactly like a system with nothing to report. A spam filter that quietly stopped running looks like a day with no spam. The fix is the same in every case: something has to prove the check is alive on a schedule, a test alarm, a heartbeat, a weekly "is this thing still on?" that somebody owns. FirstEnergy's alarm had been dead for an hour before anyone knew, because nothing checked the checker.</p></details></div>
+
+<h3>3.2 Mini-case 2 &middot; 2021 to 2025: the convictions that had to be undone</h3>
+
+<p>Start this one at the end, because the end is happening now. From 2021 British courts began quashing the
+criminal convictions of subpostmasters, a statutory public inquiry was set up, and in 2025 that inquiry
+reported on the human damage. To understand why, go back to 1999, when the Post Office rolled out an accounting system called
+Horizon across thousands of branches. Each branch was run by a subpostmaster who was contractually
+liable for any shortfall in the accounts. The system reported shortfalls that were not real.</p>
+
+<p>What the Post Office did next is the reason this case is in a governance chapter rather than a software one. The
+Post Office maintained that the system was reliable, and used that position to pursue the people the
+system was failing. More than seven hundred subpostmasters were prosecuted, many for theft or false
+accounting. People lost their businesses, their homes and their reputations; some went to prison; some
+died before the record was corrected. The organization had evidence of faults in the system and continued
+regardless.</p>
+
+<p>A television drama in 2024 turned it into a national political issue, decades after the first
+prosecutions and years after the faults were documented. The inquiry's 2025 report set out the human
+damage, including that a number of people are believed to have taken their own lives. Compensation
+schemes are still running as you read this, and the rest of the inquiry's report, the part that says
+who was responsible, had still not been published by September 2026, a year after the first volume.
+That is worth noticing: the failure began before most of you were born and is not finished.</p>
+
+<p><strong>The link that broke: who answers. The component: people.</strong> Accountability did exist
+here, and that is what makes it the most disturbing case in the book. It was assigned, formally and
+contractually, to the subpostmasters. When the system was wrong, the structure was already built to
+conclude that the people must be.</p>
+
+<div class="mcq"><b>Check yourself</b>Section 3 says accountability cannot be delegated away. The Post
+Office had delegated it, in writing, to the least powerful people in the chain. Say what test you would
+apply to an accountability arrangement to tell the difference between assigning it properly and
+offloading it.
+<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>The Post Office delegated the responsibility, the building and running of Horizon, to Fujitsu, and that part is ordinary; companies outsource systems constantly. What it tried to delegate was the accountability for what the system said: it treated Horizon's figures as proof and the subpostmasters as guilty, as if the truth of the records belonged to the vendor rather than to the organization prosecuting people on them. That cannot be handed off. The Post Office chose to prosecute, on evidence it owned, and the courts, the inquiry, and the compensation schemes have all landed on the Post Office, not on Fujitsu. Whoever acts on a system's output answers for it, whether or not they built it.</p></details></div>
+
+<h3>3.3 What the two have in common</h3>
+
+<p>An alarm and a branch accounting system. In neither case was the failure a mystery once anybody looked, and in both the organization had a governance structure on paper.</p>
+
+<p>What the two share is that the governance structure did not answer one of the four questions. Nobody owned whether the alarm was alive. And in the second, the question of who answers had been settled in advance, in the organization's favor, against the people with the least power to argue.</p>
+
+<p>Keep the second one especially close for the main case. Equifax is usually taught as a story
+about a missed patch, and it is. But it is also a story about a company holding data on a hundred and forty-seven million people who
+were never its customers and never agreed to anything. The question of who answers to whom had been
+settled long before anyone forgot to patch a server.</p>
+<h2 id="equifax"><span class="num">4</span>Main case &middot; Equifax: a patch nobody applied</h2>
+
+<p>Let's begin with a patch. In March 2017, a serious vulnerability was disclosed in Apache Struts, a piece of open-source
+software used inside countless corporate web applications. A fix was published the same week.
+Equifax, one of the three US credit bureaus, was told internally to apply it. The instruction went
+out through the company's patch management process, the routine that is supposed to track every
+known fix until it has landed. And then, on one internet-facing system that happened to run the vulnerable software, it did not
+get done. No alarm connected the order to the omission.</p>
+
+<p>Beginning in May, attackers used that exact vulnerability to get in, and they stayed for about 76
+days. They extracted the names, Social Security numbers, birth dates, and addresses of roughly 147
+million people, close to half the US population. A device meant to detect the exfiltration had been
+inactive for months because an expired security certificate had never been renewed. Two boring
+omissions, a missed patch and a lapsed certificate, and a firm whose entire business was holding
+sensitive data handed nearly half a country's identities to strangers.</p>
+
+<div class="callout"><strong>Why this is the governance chapter</strong>
+<p>Nothing about the Equifax breach required advanced attackers, and this is the point. Every technical
+safeguard that would have stopped it already existed and was already understood. What failed was
+governance: the structure that assigns who must do what, who checks that it was done, and who answers
+when it was not. Chapter 9 was about controls. This chapter is about who is accountable for the
+controls, which turns out to be the harder problem.</p></div>
+
+<div class="statrow">
+  <div class="stat"><b>~147M</b><span>people's data exposed</span></div>
+  <div class="stat"><b>1</b><span>unpatched server</span></div>
+  <div class="stat"><b>76 days</b><span>attackers inside</span></div>
+  <div class="stat"><b>$700M+</b><span>settlement, 2019</span></div>
+  <div class="stat"><b>0</b><span>consent from those exposed</span></div>
+</div>
+
+<h3>4.1 The five components at Equifax</h3>
+
+<p>Now that you have seen the whole system, here it is as five components, the way this course maps every case. Look at which rows failed. Both were the cheapest, most routine parts of the whole system.</p>
+
+<table class="sumtable stack-sm">
+<tr><th>Component</th><th>In the breach</th><th>The governance lesson</th></tr>
+<tr><td data-label="Component"><strong>Hardware</strong></td><td data-label="In the breach">One internet-facing server running vulnerable software</td><td data-label="The governance lesson">Every critical box needs a named owner</td></tr>
+<tr><td data-label="Component"><strong>Software</strong></td><td data-label="In the breach">The unpatched Apache Struts; the expired monitoring certificate</td><td data-label="The governance lesson">Known fixes are worthless if no process guarantees they land</td></tr>
+<tr><td data-label="Component"><strong>Data</strong></td><td data-label="In the breach">147M identities: the product, not the customer</td><td data-label="The governance lesson">Holding data creates duties to people who never agreed</td></tr>
+<tr><td data-label="Component"><strong>Networks</strong></td><td data-label="In the breach">76 days of extraction past a blinded monitor</td><td data-label="The governance lesson">Detection is a governance duty, not a one-time purchase</td></tr>
+<tr><td data-label="Component"><strong>People</strong></td><td data-label="In the breach">Responsibility everywhere, accountability nowhere; three executives gone</td><td data-label="The governance lesson">Unassigned accountability rolls to the top</td></tr>
+</table>
+
+<h3>4.2 What a business technology manager takes from this chapter</h3>
+
+<p>Strip the Equifax case down to what you can reuse in any company. Four decisions came up in it, and each one is a decision you will be in the room for.</p>
+
+<p><strong>Put a name next to every routine task, or it belongs to nobody.</strong> Equifax's patch was ordered, and it was not applied to one server, because the job lived in the space between teams. The 2003 alarm was dead for an hour because nobody owned checking that it was alive. Governance is mostly the unglamorous work of writing a name beside each task, and it is where most large failures live.</p>
+
+<p><strong>Keep responsibility and accountability apart, and know which one you hold.</strong> The person who does the work is responsible; the person who answers when it goes wrong is accountable. The Post Office outsourced the system to Fujitsu and still answered for every prosecution, because it acted on the numbers. When you sign off on something you did not build, you have taken the accountability whether or not you noticed.</p>
+
+<p><strong>Do not mistake passing an audit for being safe.</strong> Equifax had a governance structure on paper and a certification to show for it, and the certificate that was supposed to catch the exfiltration had been expired for months. A framework tells you which questions to ask. Only the answers, checked, tell you whether you are protected.</p>
+
+<p><strong>Remember whose data it is.</strong> The 147 million people in Equifax's files were never its customers and never agreed to anything. They could not take their business elsewhere, because they had never given it. When your company holds data about people who did not choose you, the ordinary market check on your behavior is gone, and governance is the only thing left. Section 5 is about what that costs them.</p>
+
+<h2 id="other"><span class="num">5</span>The downside: data about people who never agreed</h2>
+
+<p>There is a fact about Equifax that makes its breach different in kind from a retailer losing card
+numbers, and it deserves to be stated plainly. The 147 million people whose data was exposed were
+never Equifax's customers. They never signed up, never agreed to terms, never chose to do business
+with the company at all. Equifax's customers are lenders. The people in its database are its
+<em>product</em>: their financial histories, collected without their direct involvement, packaged and
+sold to others.</p>
+
+<p>That fact inverts the usual accountability relationship, and it is the deepest governance question in the chapter. A normal company that loses customer data faces those customers in the market: they can
+leave. The people harmed by the Equifax breach had no such lever, because they were never in a
+relationship they could exit. You cannot boycott a company you were never a customer of. When the people bearing the risk are not the people the company answers to, the market cannot govern
+the outcome by itself. Governance has to come from somewhere else: regulation, law, and
+accountability assigned by force rather than by choice.</p>
+
+<h3>5.1 A permanent risk, settled for a few dollars each</h3>
+
+<p>Chapter 9 argued that breach costs are an externality, exported to people outside the company's
+books. Equifax pushes that argument to its limit, because the people bearing the risk never entered
+into anything at all.</p>
+
+<p>A Social Security number cannot be reissued. The 147 million people in the Equifax breach carry a lifetime exposure to identity theft that no
+settlement retires. The roughly $700 million Equifax paid in 2019, split among restitution, credit
+monitoring, and penalties, works out to a few dollars of face value per person for a permanent risk. The company continues to operate and remains one of
+three firms that decide whether Americans can get a mortgage. The breach did not end the business,
+because the business does not depend on the goodwill of the people it holds data about.</p>
+
+<p>Hold all of this against the second question of the course. "Does the system work?" Equifax's data system
+worked extremely well, at collecting, matching, and selling. The question this course insists on adding, "for whom, and at whose expense?", is the entire content
+of the Equifax story. It is why the answer to a governance failure this large is not only a better
+patch process. It is a public argument about who should be allowed to hold what data about whom, and
+under what obligations. That argument is
+bigger than any one company, and it is still going on.</p>
+
+<div class="takeaways"><span class="obj-tag">Key takeaways</span>
+<ul>
+<li>Governance is what decides whether the five components are looked after at all. It sounds bureaucratic until you watch its absence.</li>
+<li>Responsibility is the obligation to do the work. Accountability is the obligation to answer for the outcome, and it belongs to one named person or it belongs to nobody.</li>
+<li>A framework turns vague intentions into auditable commitments. Compliance measures whether documented controls exist, not whether every real system is covered every day.</li>
+<li>Equifax's patch failed in the space between teams. A fix existed, was known, was available, and had been ordered. Nobody was accountable that it landed.</li>
+<li>When the people bearing the risk are not the people the company answers to, the market cannot govern the outcome. Governance has to come from somewhere else.</li>
+</ul>
+</div>
+
+<h2 id="vocab"><span class="num">6</span>Vocabulary</h2>
+
+<dl class="vocab">
+<div><dt>IT governance</dt><dd>The structures and decision rights that determine who directs, does, checks, and answers for technology.</dd></div>
+<div><dt>Responsibility</dt><dd>The obligation to do the work.</dd></div>
+<div><dt>Accountability</dt><dd>The obligation to answer for the outcome; cannot be shared away.</dd></div>
+<div><dt>Patch management</dt><dd>The process ensuring known fixes actually reach every affected system.</dd></div>
+<div><dt>Vulnerability</dt><dd>A known weakness attackers can exploit; the Struts flaw was one.</dd></div>
+<div><dt>Framework</dt><dd>A structured, auditable set of accepted practices (e.g., NIST CSF, COBIT).</dd></div>
+<div><dt>Compliance</dt><dd>Meeting a standard's requirements; a floor, not proof of security.</dd></div>
+<div><dt>Audit</dt><dd>An independent check that controls exist and are followed.</dd></div>
+<div><dt>Data stewardship</dt><dd>The duty of care owed by whoever holds data, especially about people who did not consent.</dd></div>
+<div><dt>Externality</dt><dd>A cost borne by people outside the decision; central to both security chapters.</dd></div>
+</dl>
+
+<div class="ailight g">
+  <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
+  <div class="lighttext"><strong>Green light for this chapter's questions.</strong> Use AI to test
+  your grasp of governance terms, or to argue the other side of the discussion questions once you have
+  taken a position, per the Lab 1 rules.</div>
+</div>
+
+<div class="tps">
+  <div class="tps-head"><span>Monday activity &middot; Who owns this?</span><span class="mins">12 minutes</span></div>
+  <div class="tps-body">
+    <p class="tps-setup">Equifax's patch failed in the space between the people who knew about the vulnerability, the people who owned the server, and the people responsible for verifying compliance. Nobody refused to do it. No structure forced the loop to close.</p>
+    <div class="tps-q"><p>Name one recurring task at a place you have worked, studied or volunteered where you do not know who is accountable. Then work out, from the outside, how you would find out.</p></div>
+    <div class="tps-steps">
+      <div class="tps-step"><div class="ph">Think <span>3 min</span></div><p>Write the task in one line. Then write the four answers from section 1, and leave blanks where you do not know.</p></div>
+      <div class="tps-step"><div class="ph">Pair <span>4 min</span></div><p>Swap. Your partner's job is to try to fill in your blanks by asking questions, and to notice which blank you cannot fill even with help.</p></div>
+      <div class="tps-step"><div class="ph">Share <span>5 min</span></div><p>We collect a few on the board, sorted by which of the four questions was blank.</p></div>
+    </div>
+    <div class="tps-note"><strong>Where this lands</strong>Two things come out reliably. The blank is almost always "who checks", because doing the work is visible and verifying it is not, which is exactly the shape of both the missed patch and the expired certificate. And students discover that finding the answer from outside is hard, which is the honest version of why these failures persist: the information needed to spot an ownership gap is itself ungoverned. Push on the second half of the question, because "ask my manager" is not an answer if the manager assumes somebody else has it. Carry the best example into the case and ask what it would look like if it failed for seventy-six days without anybody noticing.</div>
+  </div>
+</div>
+
+<h2 id="discussion"><span class="num">7</span>Discussion questions</h2>
+<p>None of these get handed in. On Wednesday you run the discussion and I steer it, which means the
+class is only as good as what you walk in with. Read the chapter, pick the question you have the
+strongest opinion about, and be ready to say it first.</p>
+
+<ol class="dq">
+  <li>Take a critical recurring task at an organization you know: backups, software updates, access
+  reviews, key handovers. Answer section 1's four questions for it. If any answer is "I am not sure",
+  say what that tells you. <span class="tag">Apply</span></li>
+
+  <li>After the breach nobody could be cleanly blamed for the missed patch. Explain why that is the
+  diagnosis rather than the exoneration, and describe the smallest change to the structure that would
+  have produced a different outcome. <span class="tag">Analyze</span></li>
+
+  <li>Map the failure onto the five functions of the NIST framework and say which function failed
+  worst. Then say honestly whether adopting a framework would have prevented this, and what else would
+  have had to be true. <span class="tag">Systems</span></li>
+
+  <li>The Post Office had assigned accountability in writing to the least powerful people in the chain,
+  and Equifax had assigned it to nobody. Design an accountability arrangement for a system whose errors
+  fall on people outside the organization, and name who you would give the authority to stop it.
+  <span class="tag">Apply</span></li>
+
+  <li>The settlement worked out to a few dollars of face value per person for a permanent, unfixable
+  exposure, and the company still operates as one of three that decide whether Americans can get a
+  mortgage. Is that an acceptable outcome? Argue one side, state the strongest objection to your own
+  position, and say what a better remedy would actually look like.
+  <span class="tag tag-hard">Ethics</span></li>
+</ol>
+
+<h2 id="lab"><span class="num">8</span>From lecture to lab</h2>
+
+<div class="callout callout-bridge"><strong>Week 8 &middot; Lab 8</strong>
+<p>Chapter 9 gave you the controls. This chapter says a control with no named owner is not a control.
+<a href="lab8-security.html"><strong>Lab 8: Security and Data Governance: The Audit</strong></a> is where
+you find out whether that is easy to say and hard to do.</p>
+<p>The access-and-ownership matrix you build for Cascadia is a governance artefact, not a technical one.
+For every system, you are answering section 1's four questions: who decides, who does the work, who
+checks it was done, and who answers when it was not. When you find a system where one of those answers
+is blank, you have found the co-op's version of an unpatched server.</p>
+  <a class="lablink" href="lab8-security.html">Go to Lab 8 &#8594;</a>
+</div>
+
+<h2 id="sources"><span class="num">9</span>Sources and further reading</h2>
+<ul class="sources">
+<li>US House Committee on Oversight and Government Reform, <em>The Equifax Data Breach</em> (2018), and the Government Accountability Office's report on the same incident, for the unapplied Apache Struts patch, the expired certificate on the monitoring device, the duration of the intrusion and the number of people affected.</li>
+<li>The 2019 settlement with the Federal Trade Commission, the Consumer Financial Protection Bureau and the states, for the sums involved and what they were allocated to.</li>
+<li>US&ndash;Canada Power System Outage Task Force, <em>Final Report on the August 14, 2003 Blackout</em> (April 2004), for mini-case 1, including the alarm failure, the sequence of line trips, and the recommendation that reliability standards be made mandatory and enforceable.</li>
+<li></li>
+<li>The Post Office Horizon IT Inquiry, including its 2025 report on human impact, and the Court of Appeal judgments quashing convictions from 2021 onward, for mini-case 3. This matter is still live and compensation schemes are ongoing; check the current position before teaching it.</li>
+<li>NIST Cybersecurity Framework and ISACA's COBIT, for section 2. Both are freely readable and worth ten minutes each, because seeing how plain the language is removes most of the mystique.</li>
+<li><strong>Verification note.</strong> Checked in September 2026: the Horizon inquiry's status (Volume 1, on human impact and redress, published 8 July 2025; the government responded in October 2025; the remaining volumes were still unpublished as of the chair's 8 July 2026 update). The Equifax figures (147 million, 76 days, the expired certificate, the 2019 settlement of up to $700 million), the 2003 blackout, and the 2020 grading figures were checked against the authors' knowledge of the GAO and task force reports rather than re-searched; none is recent enough to have moved.</li>
+<li>US Government Accountability Office, <a href="https://www.gao.gov/products/gao-18-559">Data Protection: Actions Taken by Equifax and Federal Agencies in Response to the 2017 Breach</a> (2018): the authoritative timeline, the unpatched Struts vulnerability, and the expired certificate that blinded detection.</li>
+<li>US Federal Trade Commission, <a href="https://www.ftc.gov/enforcement/refunds/equifax-data-breach-settlement">Equifax Data Breach Settlement</a> (2019): the settlement terms and the roughly 147 million figure.</li>
+<li>US House Committee on Oversight and Government Reform, <a href="https://oversight.house.gov/report/committee-releases-report-revealing-new-information-equifax-data-breach/">The Equifax Data Breach</a> (2018): the majority-staff report on the governance and accountability failures.</li>
+<li>For frameworks: the NIST Cybersecurity Framework and ISACA's COBIT are both published and freely summarized; any current overview covers the five functions used here.</li>
+</ul>
+
+<h2 id="teaching"><span class="num">10</span>Teaching notes</h2>
+<p style="font-family:var(--sans);font-size:.95rem;color:var(--muted)">Written for whoever is running the sessions. Students are welcome to read them, but nothing here is required. Week 8 carries Chapters 9 and 10 together and Wednesday is Veterans Day, so the Monday plan below is the Chapter 10 half of that session, and the second plan is written for whenever you teach the case.</p>
+
+<div class="plan"><div class="plan-head">Monday session plan &middot; the Chapter 10 half, following Chapter 9 in the same 80 minutes</div>
+<table>
+<tr><td class="t">0:47</td><td class="w">Lecture</td><td>Governance in one line: security is a set of decisions, not a set of tools. Then the four questions, who decides, who does, who checks, who answers, and write them on the board because everything after this hangs on them.</td></tr>
+<tr><td class="t">0:53</td><td class="w">Lecture</td><td>Responsibility against accountability, precisely. The sentence to land is that "everyone was responsible" is how you get an outcome nobody owned, and that unassigned accountability rolls upward to whoever sits at the top, which is why executives should want it assigned in advance.</td></tr>
+<tr><td class="t">1:00</td><td class="w">Cases 1&#8211;2</td><td>The 2003 blackout and the Post Office, about three minutes each. Name which of the four links broke and stop. The blackout is the one to make vivid, because a broken alarm looked exactly like a working one, and that is the same shape as Equifax's expired certificate.</td></tr>
+<tr><td class="t">1:06</td><td class="w">Think-pair-share</td><td>Who owns this? See the activity in section 6. Protect the silent minutes; the useful examples come from their own workplaces and take a moment to surface.</td></tr>
+<tr><td class="t">1:18</td><td class="w">Close</td><td>Preview the lab: the access-and-ownership matrix is this chapter as an exercise. Assign section 4 in both chapters.</td></tr>
+</table></div>
+
+<div class="plan"><div class="plan-head">Case session plan &middot; 80 minutes &middot; Equifax, whenever you teach it</div>
+<table>
+<tr><td class="t">0:00</td><td class="w">Open</td><td>Ask the room who in this building is accountable for making sure the fire doors work. Take answers. Nobody knows, everybody assumes somebody does, and that is the chapter in ninety seconds.</td></tr>
+<tr><td class="t">0:07</td><td class="w">Walk the case</td><td>The patch, the instruction that went out, the one server it did not reach, the expired certificate, seventy-six days. Keep asking at each step: whose job was this, and who would have noticed it had not been done?</td></tr>
+<tr><td class="t">0:20</td><td class="w">The diagnosis</td><td>Afterwards nobody could be cleanly blamed, which sounds like exoneration and is actually the finding. Push on this until the room feels the difference between "no one is to blame" and "no one was accountable".</td></tr>
+<tr><td class="t">0:30</td><td class="w">Frameworks and compliance</td><td>Map the failure onto NIST's five functions and let the room locate it. Then compliance against security, with Target as the second example: certified compliant and breached. Compliance is a floor, not a finish line.</td></tr>
+<tr><td class="t">0:42</td><td class="w">The turn</td><td>Section 5. The 147 million were never customers and cannot leave. Ask what governs a company whose product is people who have no relationship with it, and let them arrive at the answer that the market cannot, so something else has to.</td></tr>
+<tr><td class="t">0:52</td><td class="w">Think</td><td>All five discussion questions on screen. Silent individual work, one sentence on at least two.</td></tr>
+<tr><td class="t">0:58</td><td class="w">Pair and share</td><td>Groups settle on positions they can defend, then take the questions in front of the room. Circulate for a group that landed somewhere unusual on the Post Office question or the settlement arithmetic.</td></tr>
+<tr><td class="t">1:16</td><td class="w">Close and bridge</td><td>Back to the fire doors. Then the line to leave them with: a system in which nobody can be held accountable for a critical task has been designed, by accident, to fail quietly. Bridge to the software chapter and the question of what we are owed by the things we did not choose.</td></tr>
+</table></div>
+
+</main>
+<!--NAVJS-->
+<script>
+(function(){
+  var btns=[].slice.call(document.querySelectorAll('.dd-btn'));
+  function closeAll(except){
+    btns.forEach(function(b){
+      var m=document.getElementById(b.getAttribute('data-dd'));
+      if(m&&m!==except){m.classList.remove('open');b.setAttribute('aria-expanded','false');}
+    });
+  }
+  btns.forEach(function(b){
+    b.addEventListener('click',function(e){
+      e.stopPropagation();
+      var m=document.getElementById(b.getAttribute('data-dd'));
+      var open=m.classList.contains('open');
+      closeAll();
+      if(!open){m.classList.add('open');b.setAttribute('aria-expanded','true');}
+    });
+  });
+  document.addEventListener('click',function(){closeAll();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeAll();});
+  document.querySelectorAll('.dd-menu').forEach(function(m){
+    m.addEventListener('click',function(e){e.stopPropagation();});
+  });
+})();
+</script>
+</body>
+</html>

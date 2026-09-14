@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chapter 9: Cybersecurity: Change Healthcare | MIS 320</title>
+<meta name="description" content="The 2024 Change Healthcare ransomware attack: how one missing control halted a third of US healthcare, what it cost, and what business people actually do in security.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0e0e0d; --off-black:#1a1a18;
+  --magenta:#cc146d; --magenta-onblack:#f0348e; --magenta-dark:#c0146a; --magenta-pale:#fdeaf3;
+  --white:#ffffff; --off-white:#f6f4f1;
+  --text-dark:#0e0e0d; --text-muted:#3a3a38; --text-light:#6b6b68;
+  --border:#e0ddd8;
+  --warn:#b3261e; --warn-pale:#fdeceb;
+  --good:#1f7a53; --good-pale:#e8f4ee;
+  --sans:'Space Grotesk',sans-serif; --display:'Oswald',sans-serif;
+  --wrap:1180px; --col:46rem;
+  /* legacy aliases so existing markup keeps working */
+  --navy:#0e0e0d; --navy-soft:#1a1a18; --accent:#cc146d; --accent-deep:#c0146a;
+  --accent-pale:#fdeaf3; --cream:#ffffff; --cream-deep:#f6f4f1; --paper:#ffffff;
+  --ink:#0e0e0d; --muted:#6b6b68; --rule:#e0ddd8; --serif:'Space Grotesk',sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--white);color:var(--text-dark);
+  font-family:var(--sans);font-size:18.5px;line-height:1.7;-webkit-font-smoothing:antialiased}
+
+/* ---------- shell ---------- */
+.shell{max-width:var(--wrap);margin:0 auto;display:grid;grid-template-columns:15rem minmax(0,1fr);gap:3.5rem;padding:0 1.5rem 6rem}
+main{margin-left:auto;margin-right:auto;max-width:var(--col);padding-top:2.5rem}
+
+/* ---------- sidebar ---------- */
+.rail{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:2.5rem 0 3rem;border-right:1px solid var(--border)}
+.rail .book{font-family:var(--display);font-size:15px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--magenta);margin:0 0 .2rem}
+.rail .course{font-size:13.5px;color:var(--text-light);margin:0 0 1.75rem}
+.rail nav a{display:block;font-size:15px;line-height:1.35;color:var(--text-muted);text-decoration:none;padding:.42rem .8rem .42rem .85rem;border-left:2px solid transparent;margin-left:-.85rem}
+.rail nav a:hover{color:var(--magenta);border-left-color:var(--magenta)}
+.rail nav a.sub{font-size:14px;color:var(--text-light);padding-left:1.7rem}
+.rail .back{display:inline-block;margin-top:2rem;font-size:14px;color:var(--text-light);text-decoration:none}
+.rail .back:hover{color:var(--magenta)}
+.railtoggle{display:none}
+
+/* ---------- chapter head ---------- */
+.chaphead{border-bottom:3px solid var(--black);padding-bottom:1.6rem;margin-bottom:2.5rem}
+.eyebrow{font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--magenta);margin:0 0 .7rem}
+.chaphead h1{font-family:var(--display);font-weight:600;font-size:clamp(1.9rem,4.4vw,2.7rem);line-height:1.12;text-transform:uppercase;letter-spacing:.01em;margin:0 0 .6rem;color:var(--black)}
+.chaphead .anchor{font-size:16px;color:var(--text-light);margin:0}
+.chaphead .anchor strong{color:var(--text-muted);font-weight:500}
+.meta-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.2rem}
+.meta-row span{font-size:13px;letter-spacing:.03em;background:var(--off-white);border:1px solid var(--border);padding:.32rem .65rem;color:var(--text-muted)}
+.meta-row span.alt{background:var(--magenta-pale);border-color:#f6cfe1;color:var(--magenta-dark)}
+
+/* ---------- type ---------- */
+h2{font-family:var(--display);font-weight:600;font-size:1.72rem;line-height:1.22;text-transform:uppercase;letter-spacing:.01em;color:var(--black);margin:3.2rem 0 .9rem}
+h2 .num::before{content:"Section "}
+h2 .num{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;color:var(--magenta);display:block;margin-bottom:.4rem;text-transform:uppercase}
+h3{font-family:var(--display);font-weight:600;font-size:1.18rem;text-transform:uppercase;letter-spacing:.03em;color:var(--off-black);margin:2rem 0 .55rem}
+p{margin:0 0 1.05rem}
+a{color:var(--magenta-dark)}
+strong{font-weight:600;color:var(--black)}
+.lede{font-size:1.24rem;line-height:1.55;color:var(--text-muted)}
+code.inline{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--off-white);padding:.1em .35em;border:1px solid var(--border)}
+ul,ol{margin:0 0 1.15rem;padding-left:1.3rem}
+li{margin-bottom:.45rem}
+
+/* ---------- pull quote ---------- */
+.pull{margin:2.2rem 0;padding:0 0 0 1.4rem;border-left:3px solid var(--magenta)}
+.pull p{font-family:var(--display);font-weight:400;font-size:1.32rem;line-height:1.3;color:var(--black);margin:0 0 .5rem}
+.pull cite{font-style:normal;font-size:12.5px;color:var(--text-light)}
+
+/* ---------- callouts ---------- */
+.callout{border:1px solid var(--border);border-left:4px solid var(--magenta);background:var(--off-white);padding:1.15rem 1.3rem;margin:1.9rem 0}
+.callout > strong:first-child{display:block;font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--magenta);margin-bottom:.5rem}
+.callout p:last-child{margin-bottom:0}
+.callout-caution{border-left-color:var(--warn);background:var(--warn-pale)}
+.callout-caution strong:first-child{color:var(--warn)}
+.callout-bridge{border-left-color:var(--black);background:var(--off-white)}
+.callout-bridge strong:first-child{color:var(--black)}
+.callout-good{border-left-color:var(--good);background:var(--good-pale)}
+.callout-good strong:first-child{color:var(--good)}
+
+/* ---------- signature: value chain rail ---------- */
+.vc{margin:2.4rem 0;border:1px solid var(--border);background:var(--white);overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,.07)}
+.vc-head{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#fff;background:var(--black);padding:.7rem 1rem}
+.vc-strip{display:grid;grid-template-columns:repeat(5,1fr)}
+.vc-cell{padding:.85rem .7rem;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+.vc-cell:last-child{border-right:none}
+.vc-stage{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-light);display:block;margin-bottom:.3rem}
+.vc-cell p{font-size:15.5px;line-height:1.4;margin:0;color:var(--text-muted)}
+.vc-cell.broke{background:var(--magenta-pale)}
+.vc-cell.broke .vc-stage{color:var(--magenta)}
+.vc-cell.broke p{color:#8a1450}
+.vc-note{padding:.8rem 1rem;font-size:14px;color:var(--text-light);background:var(--off-white);border-top:1px solid var(--border)}
+.vc-note b{color:var(--magenta);font-weight:600}
+
+/* ---------- stat band ---------- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(8.5rem,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin:2rem 0}
+.stat{background:var(--white);padding:1rem .9rem}
+.stat b{display:block;font-family:var(--display);font-weight:700;font-size:1.8rem;color:var(--magenta);line-height:1.1}
+.stat span{display:block;font-size:13px;line-height:1.3;color:var(--text-light);margin-top:.3rem}
+
+/* ---------- timeline ---------- */
+.tl{list-style:none;padding:0;margin:1.8rem 0;border-left:2px solid var(--border)}
+.tl li{position:relative;padding:0 0 1.1rem 1.3rem;margin:0}
+.tl li:before{content:"";position:absolute;left:-5px;top:.55em;width:8px;height:8px;border-radius:50%;background:var(--magenta)}
+.tl li.bad:before{background:var(--warn)}
+.tl .when{font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--magenta);display:block}
+.tl li.bad .when{color:var(--warn)}
+
+/* ---------- vocabulary ---------- */
+.vocab{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin:1.8rem 0}
+.vocab div{background:var(--white);padding:.95rem 1rem}
+.vocab dt{font-family:var(--display);font-weight:600;font-size:15px;text-transform:uppercase;letter-spacing:.03em;color:var(--black);margin-bottom:.3rem}
+.vocab dd{margin:0;font-size:16.5px;line-height:1.5;color:var(--text-muted)}
+
+/* ---------- discussion questions ---------- */
+.dq{counter-reset:dq;margin:1.6rem 0 0;padding:0;list-style:none}
+.dq li{counter-increment:dq;position:relative;padding:1rem 0 1rem 2.6rem;border-top:1px solid var(--border)}
+.dq li:last-child{border-bottom:1px solid var(--border)}
+.dq li:before{content:counter(dq,decimal-leading-zero);position:absolute;left:0;top:1.05rem;font-family:var(--display);font-size:14.5px;font-weight:600;color:var(--magenta)}
+.tag{display:inline-block;font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:.2rem .5rem;margin-left:.5rem;vertical-align:.12em}
+.tag-hard{background:var(--warn);color:#fff}
+.tag-open{background:var(--black);color:#fff}
+.tag-warm{background:var(--magenta-pale);color:var(--magenta-dark)}
+
+/* ---------- sources ---------- */
+.sources{margin-top:3.5rem;padding-top:1.2rem;border-top:1px solid var(--border);font-size:14.5px;color:var(--text-light)}
+.sources h3{font-family:var(--display);font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin:0 0 .6rem}
+.sources li{margin-bottom:.35rem;line-height:1.5}
+
+/* ---------- responsive ---------- */
+@media (max-width:860px){
+  .shell{grid-template-columns:minmax(0,1fr);gap:0;padding:0 1.15rem 4rem}
+  .rail{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);padding:1.5rem 0 1rem;margin-bottom:.5rem}
+  .rail nav{display:none}
+  .rail nav.open{display:block;margin-top:.8rem}
+  .railtoggle{display:inline-block;font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--magenta);background:none;border:1px solid var(--border);padding:.4rem .7rem;cursor:pointer}
+  main{padding-top:1.2rem}
+  .vc-strip{grid-template-columns:repeat(2,1fr)}
+}
+:focus-visible{outline:2px solid var(--magenta);outline-offset:2px}
+
+/* ---------- prominent lab link ---------- */
+.lablink{display:inline-block;margin-top:.9rem;font-family:var(--display);font-size:14.5px;font-weight:600;
+  letter-spacing:.06em;text-transform:uppercase;text-decoration:none;background:var(--magenta);color:#fff;
+  padding:.6rem 1.15rem;border:none}
+.lablink:hover{background:var(--magenta-dark);color:#fff}
+.callout .lablink{margin-top:1rem}
+
+/* ---------- global top navigation with dropdowns ---------- */
+.topnav{position:sticky;top:0;z-index:100;background:var(--black);border-bottom:1px solid rgba(255,255,255,.14)}
+.topnav-in{max-width:var(--wrap);margin:0 auto;padding:.7rem 1.5rem;display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap}
+.topnav-brand{font-family:var(--display);font-size:16px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--magenta-onblack);text-decoration:none;margin-right:auto}
+.topnav-brand:hover{color:#fff}
+.dd{position:relative}
+.dd-btn{font-family:var(--display);font-size:14.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:#fff;background:none;border:1px solid rgba(255,255,255,.3);padding:.42rem .85rem;cursor:pointer}
+.dd-btn:hover,.dd-btn[aria-expanded="true"]{background:var(--magenta);border-color:var(--magenta)}
+.dd-btn .caret{font-size:11px;margin-left:.35rem}
+.dd-menu{display:none;position:absolute;right:0;top:calc(100% + .4rem);min-width:20rem;background:#fff;
+  border:1px solid var(--border);box-shadow:0 8px 30px rgba(0,0,0,.22);padding:.4rem 0;max-height:75vh;overflow-y:auto}
+.dd-menu.open{display:block}
+.dd-menu a{display:block;padding:.55rem 1rem;text-decoration:none;color:var(--text-dark);font-size:14.5px;line-height:1.35}
+.dd-menu a:hover{background:var(--magenta-pale);color:var(--magenta-dark)}
+.dd-menu a .lbl{display:block;font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--magenta);margin-bottom:.1rem}
+.dd-menu a.current{background:var(--off-white);border-left:3px solid var(--magenta)}
+.dd-menu a.soon{color:var(--text-light);pointer-events:none}
+.dd-menu a.soon .lbl{color:var(--text-light)}
+.dd-sep{margin:.35rem 0;border-top:1px solid var(--border)}
+@media (max-width:700px){
+  .topnav-in{padding:.6rem 1.15rem;gap:.6rem}
+  .topnav-brand{font-size:13.5px;width:100%;margin-right:0}
+  .dd{flex:1}
+  .dd-btn{width:100%;font-size:13px;padding:.4rem .5rem}
+  .dd-menu{right:auto;left:0;min-width:min(92vw,22rem)}
+}
+
+/* ---------- collapsible step-by-step help ---------- */
+.howto{margin:.7rem 0 1.1rem;border:1px solid var(--border);background:var(--off-white)}
+.howto>summary{cursor:pointer;padding:.6rem .9rem;font-family:var(--display);font-size:13px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--magenta-dark);list-style:none}
+.howto>summary::-webkit-details-marker{display:none}
+.howto>summary:before{content:"\25B8  ";font-size:11px}
+.howto[open]>summary:before{content:"\25BE  "}
+.howto>summary:hover{background:var(--magenta-pale)}
+.howto-body{padding:.3rem 1.1rem 1rem;border-top:1px solid var(--border);background:#fff}
+.howto-body ol{margin:.7rem 0;padding-left:1.3rem}
+.howto-body li{margin-bottom:.45rem;font-size:16.5px;line-height:1.5}
+.howto-body p{font-size:16.5px;margin:.6rem 0}
+.kbd{font-family:ui-monospace,Menlo,monospace;font-size:.85em;background:var(--off-white);
+  border:1px solid var(--border);border-radius:2px;padding:.1em .35em;white-space:nowrap}
+.mac{display:inline-block;font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;background:var(--black);color:#fff;padding:.1rem .4rem;margin-right:.35rem}
+.stuck{border:1px solid var(--border);border-left:4px solid var(--black);background:var(--off-white);
+  padding:1rem 1.2rem;margin:2rem 0 0}
+.stuck strong:first-child{display:block;font-family:var(--display);font-size:12.5px;font-weight:600;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--black);margin-bottom:.5rem}
+.stuck ol{margin:.5rem 0 0;padding-left:1.3rem}
+.stuck li{font-size:16.5px;margin-bottom:.35rem}
+
+/* ---------- AI traffic lights ---------- */
+.ailight{display:flex;gap:1rem;align-items:flex-start;border:1px solid var(--border);background:#fff;
+  padding:1rem 1.2rem;margin:1rem 0}
+.ailight .lamp{flex:0 0 auto;width:34px;background:#1c1c1a;border-radius:8px;padding:7px 0;
+  display:flex;flex-direction:column;align-items:center;gap:5px}
+.ailight .bulb{width:20px;height:20px;border-radius:50%;background:#2e2e2b;box-shadow:inset 0 2px 4px rgba(0,0,0,.6)}
+.ailight.g .bulb.b3{background:#2fae5f;box-shadow:0 0 10px rgba(47,174,95,.8),inset 0 -2px 3px rgba(0,0,0,.25)}
+.ailight.y .bulb.b2{background:#e6b93c;box-shadow:0 0 10px rgba(230,185,60,.8),inset 0 -2px 3px rgba(0,0,0,.25)}
+.ailight.r .bulb.b1{background:#d5453a;box-shadow:0 0 10px rgba(213,69,58,.8),inset 0 -2px 3px rgba(0,0,0,.25)}
+.ailight .lighttext{flex:1;min-width:0}
+.ailight .lighttext > strong:first-child{display:block;font-family:var(--display);font-size:13px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;margin-bottom:.3rem}
+.ailight.g .lighttext strong:first-child{color:#1e7c43}
+.ailight.y .lighttext strong:first-child{color:#a07a10}
+.ailight.r .lighttext strong:first-child{color:#a03434}
+.ailight p{margin:.2rem 0 0;font-size:16.5px;line-height:1.55}
+
+/* ---------- think-pair-share block ---------- */
+.tps{border:1px solid var(--black);background:#fff;margin:2.2rem 0}
+.tps-head{background:var(--black);color:#fff;padding:.6rem 1.1rem;font-family:var(--display);font-size:12.5px;
+  font-weight:600;letter-spacing:.2em;text-transform:uppercase;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.tps-head .mins{color:rgba(255,255,255,.7);letter-spacing:.1em}
+.tps-body{padding:1.1rem 1.25rem}
+.tps-setup{font-size:17px;line-height:1.6;margin:0 0 1rem}
+.tps-q{border-left:4px solid var(--magenta);background:var(--magenta-pale);padding:.8rem 1rem;margin:0 0 1.1rem}
+.tps-q p{margin:0;font-size:17px;line-height:1.5;font-weight:500}
+.tps-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border)}
+.tps-step{background:#fff;padding:.75rem .9rem}
+.tps-step .ph{font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--magenta);margin-bottom:.3rem;display:flex;justify-content:space-between}
+.tps-step .ph span{color:var(--text-light)}
+.tps-step p{margin:0;font-size:16px;line-height:1.45;color:var(--text-muted)}
+.tps-note{border-top:1px solid var(--border);margin-top:1.1rem;padding-top:.9rem;font-size:16px;color:var(--text-muted)}
+.tps-note strong{font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--black);display:block;margin-bottom:.35rem}
+@media(max-width:700px){.tps-steps{grid-template-columns:1fr}}
+
+/* ---------- Monday session plan (instructor-facing) ---------- */
+.plan{border:1px solid var(--border);background:var(--off-white);margin:2rem 0}
+.plan-head{background:var(--off-white);border-bottom:1px solid var(--border);padding:.55rem 1.05rem;
+  font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted)}
+.plan table{width:100%;border-collapse:collapse;background:#fff}
+.plan td{border-bottom:1px solid var(--border);padding:.6rem .9rem;font-size:15.5px;vertical-align:top;line-height:1.45}
+.plan tr:last-child td{border-bottom:none}
+.plan td.t{width:5.5rem;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--magenta);white-space:nowrap}
+.plan td.w{width:8rem;font-weight:600}
+@media(max-width:640px){.plan td.w{width:auto}}
+
+/* ---------- chapter depth: stat strip, TOC, key concept, summary table ---------- */
+.statrow{display:flex;flex-wrap:wrap;gap:1px;background:var(--border);border:1px solid var(--border);margin:1.6rem 0}
+.stat{flex:1 1 8rem;background:#fff;padding:.85rem 1rem;text-align:center}
+.stat b{display:block;font-family:var(--display);font-size:22px;font-weight:600;color:var(--magenta);line-height:1.1}
+.stat span{font-size:12.5px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;font-family:var(--display)}
+.toc{border:1px solid var(--border);background:var(--off-white);padding:1rem 1.25rem;margin:1.6rem 0;font-family:var(--sans);font-size:14.5px;line-height:2}
+.toc strong{display:block;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.3rem}
+.toc a{color:var(--text-dark);text-decoration:none;border-bottom:1px solid var(--border);margin-right:1rem;white-space:nowrap}
+.toc a:hover{color:var(--magenta-dark);border-bottom-color:var(--magenta)}
+.kc{border:1px solid var(--border);border-left:4px solid var(--magenta);background:#fff;margin:1.4rem 0;padding:1rem 1.2rem}
+.kc .kc-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.15rem}
+.kc .kc-term{font-family:var(--display);font-size:17px;font-weight:600;display:block;margin-bottom:.45rem}
+.kc p{margin:0;font-size:17px;line-height:1.62}
+.sumtable{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:15.5px}
+.sumtable th{background:var(--black);color:#fff;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.55rem .8rem;text-align:left}
+.sumtable td{border:1px solid var(--border);padding:.6rem .8rem;vertical-align:top;line-height:1.5}
+.sumtable tr:nth-child(even) td{background:var(--off-white)}
+
+/* ---------- IS concepts chip strip ---------- */
+.concepts{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;margin:1.1rem 0 0}
+.concepts .clabel{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-right:.3rem}
+.concepts span:not(.clabel){font-family:var(--display);font-size:12.5px;font-weight:500;letter-spacing:.04em;border:1px solid var(--border);background:var(--off-white);padding:.22rem .6rem;color:var(--text-dark)}
+
+/* mobile: wide tables scroll, long TOC anchors wrap */
+@media (max-width:860px){.toc a{white-space:normal}main table{display:block;overflow-x:auto;max-width:100%}}
+
+/* narrow screens: wide prose comparison tables stack into labelled cards.
+   Narrow data tables keep their grid so rows stay comparable. */
+@media (max-width:640px){
+  main table.stack-sm{display:block;width:100%;overflow-x:visible;border-collapse:separate;border-spacing:0}
+  table.stack-sm tr:first-child{display:none}
+  table.stack-sm tr{display:block;width:100%;border:1px solid var(--border);margin:0 0 .85rem;background:#fff}
+  table.stack-sm td{display:block;width:100%;border:none;border-bottom:1px solid var(--border);padding:.6rem .85rem;background:#fff!important}
+  table.stack-sm td:last-child{border-bottom:none}
+  table.stack-sm td::before{content:attr(data-label);display:block;font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--text-light);margin-bottom:.28rem}
+  table.stack-sm td:first-child{background:var(--black)!important;color:#fff;font-family:var(--display);letter-spacing:.06em;white-space:normal}
+  table.stack-sm td:first-child::before{content:none}
+  table.stack-sm td:first-child strong{color:#fff}
+}
+
+/* ported from ch3 */
+.mcq{border-left:3px solid var(--magenta);background:var(--off-white);padding:.7rem 1rem;margin:1rem 0 1.6rem;font-family:var(--sans);font-size:.95rem}
+.mcq b{font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--magenta-dark);display:block;margin-bottom:.2rem}
+.jumprow{display:flex;flex-wrap:wrap;gap:.5rem;margin:.9rem 0 0}
+.jump{font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:var(--magenta);color:#fff;border:1px solid var(--magenta);padding:.5rem .9rem;text-decoration:none;display:inline-block}
+.jump:hover{background:var(--magenta-dark);border-color:var(--magenta-dark);color:#fff}
+main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transform:none;letter-spacing:0;color:var(--off-black);margin:2.1rem 0 .55rem;padding-left:.7rem;border-left:3px solid var(--magenta)}
+.pairline{font-family:var(--sans);font-size:.9rem;color:var(--text-light);margin:.4rem 0 0}
+
+.tryit{border:1px solid var(--border);background:var(--white);box-shadow:0 2px 12px rgba(0,0,0,.06);margin:2rem 0;padding:0 0 1rem}
+.tryit-head{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#fff;background:var(--black);padding:.6rem 1rem}
+.tryit-intro{font-family:var(--sans);font-size:.97rem;color:var(--text-muted);margin:.9rem 1rem}
+.tryit-note{font-family:var(--sans);font-size:.9rem;color:var(--text-light);margin:.8rem 1rem 0;border-top:1px solid var(--border);padding-top:.7rem}
+.wrow{border-top:1px solid var(--border);padding:.75rem 1rem;display:grid;grid-template-columns:minmax(0,1fr);gap:.5rem 1rem;align-items:center}
+.wq{font-family:var(--sans);font-size:1rem;color:var(--text-dark)}
+.wbtns{display:flex;gap:.4rem;flex-wrap:wrap}
+.wbtns button{font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--off-white);border:1px solid var(--border);padding:.35rem .55rem;cursor:pointer;color:var(--text-dark)}
+.wbtns button:hover:not(:disabled){background:var(--magenta-pale);border-color:var(--magenta);color:var(--magenta-dark)}
+.wbtns button:disabled{opacity:.4;cursor:default}
+.wbtns button.you{opacity:1}
+.wbtns button.you.right{background:var(--good-pale);border-color:var(--good);color:var(--good)}
+.wbtns button.you.wrong{background:var(--warn-pale);border-color:var(--warn);color:var(--warn)}
+.wout{grid-column:1/-1;font-family:var(--sans);font-size:.95rem;line-height:1.5;padding:.6rem .8rem;border-left:3px solid var(--good);background:var(--good-pale);color:var(--text-dark)}
+.wout.no{border-left-color:var(--warn);background:var(--warn-pale)}
+.objectives{border:1px solid var(--border);border-left:4px solid var(--black);background:var(--off-white);padding:1rem 1.3rem;margin:1.6rem 0}
+.objectives .obj-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.4rem}
+.objectives ol{margin:.2rem 0 0 1.2rem;padding:0}
+.objectives li{margin:.3rem 0;font-size:16.5px;line-height:1.55}
+.takeaways{border:1px solid var(--border);border-left:4px solid var(--magenta);background:#fff;padding:1rem 1.3rem;margin:1.8rem 0}
+.takeaways .obj-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.4rem}
+.takeaways ul{margin:.2rem 0 0 1.2rem;padding:0}
+.takeaways li{margin:.35rem 0;font-size:16.5px;line-height:1.55}
+.diagram{margin:1.6rem 0;text-align:center}
+.diagram figcaption{text-align:left}
+@media (max-width:860px){main{padding-left:1.25rem;padding-right:1.25rem}}
+</style>
+<link rel="stylesheet" href="book.css">
+</head>
+<body>
+<nav class="topnav">
+  <div class="topnav-in">
+    <a class="topnav-brand" href="index.html">MIS 320 &middot; Principles of Management Information Systems</a>
+    <a class="dd-btn" href="syllabus.html" style="text-decoration:none">Syllabus</a>
+    <a class="dd-btn" href="schedule.html" style="text-decoration:none">Schedule</a>
+    <div class="dd">
+      <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddc">Chapters<span class="caret">&#9660;</span></button>
+      <div class="dd-menu" id="ddc">
+      <a href="preface.html"><span class="lbl">Start here</span>About this book</a>
+      <a href="glossary.html"><span class="lbl">Reference</span>Glossary, A to Z</a>
+      <a href="chapter1-what-is-mis.html"><span class="lbl">Chapter 1 &middot; Week 1</span>What Is MIS? &mdash; Spotify Wrapped</a>
+      <a href="chapter2-starbucks.html"><span class="lbl">Chapter 2 &middot; Week 2</span>The Value of Information &mdash; Starbucks</a>
+      <a href="chapter3-competitive-advantage.html"><span class="lbl">Chapter 3 &middot; Week 3</span>Technology &amp; Competitive Advantage &mdash; Zara</a>
+      <a href="chapter4-dominos.html"><span class="lbl">Chapter 4 &middot; Week 4</span>Business Processes &mdash; Domino's</a>
+      <a href="chapter5-healthcaregov.html"><span class="lbl">Chapter 5 &middot; Week 5</span>Systems Analysis &amp; the SDLC &mdash; Healthcare.gov</a>
+      <a href="chapter6-moneyball.html"><span class="lbl">Chapter 6 &middot; Week 6</span>Business Intelligence &mdash; Moneyball</a>
+      <a href="chapter7-walmart.html"><span class="lbl">Chapter 7 &middot; Week 7</span>What Data Is: Databases &mdash; Walmart</a>
+      <a href="chapter8-nike-sap.html"><span class="lbl">Chapter 8 &middot; Week 7</span>Enterprise Systems &mdash; Nike/SAP</a>
+      <a class="current" href="chapter9-changehealthcare.html"><span class="lbl">Chapter 9 &middot; Week 8</span>Cybersecurity &mdash; Change Healthcare</a>
+      <a href="chapter10-equifax.html"><span class="lbl">Chapter 10 &middot; Week 8</span>IT Governance &mdash; Equifax</a>
+      <a href="chapter11-software.html"><span class="lbl">Chapter 11 &middot; Week 9</span>Software Design &amp; Selection &mdash; Robles v. Domino's</a>
+      <a href="chapter12-ai-ml.html"><span class="lbl">Chapter 12 &middot; Week 10</span>AI, Machine Learning &amp; Bias &mdash; TikTok &amp; Amazon</a>
+      <a href="chapter13-cloud.html"><span class="lbl">Chapter 13 &middot; Week 10</span>The Cloud &amp; What Computing Costs &mdash; Netflix</a>
+      </div>
+    </div>
+    <div class="dd">
+      <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddl">Labs<span class="caret">&#9660;</span></button>
+      <div class="dd-menu" id="ddl">
+      <a href="lab1-genai.html"><span class="lbl">Lab 1 &middot; Week 1</span>GenAI for Thinking</a>
+      <a href="lab2-excel-basics.html"><span class="lbl">Lab 2 &middot; Week 2</span>Excel Basics: Meeting the Client</a>
+      <a href="lab3-excel-dataprep.html"><span class="lbl">Lab 3 &middot; Week 3</span>Excel Functions: One Question, One Formula</a>
+      <a href="lab4-excel-dataviz.html"><span class="lbl">Lab 4 &middot; Week 4</span>Data Visualization: Charts That Tell the Truth</a>
+      <a href="lab5-excel-analysis.html"><span class="lbl">Lab 5 &middot; Week 5</span>Data Analysis &amp; Mini Project</a>
+      <a href="lab6-tableau.html"><span class="lbl">Lab 6 &middot; Week 6</span>Tableau: Worksheets to a Dashboard</a>
+      <a href="lab7-sql.html"><span class="lbl">Lab 7 &middot; Week 7</span>SQL Fundamentals</a>
+      <a href="lab8-security.html"><span class="lbl">Lab 8 &middot; Week 8</span>Security &amp; Data Governance: The Audit</a>
+      <a href="lab9-ux.html"><span class="lbl">Lab 9 &middot; Week 9</span>UX Design: The Heuristic Evaluation</a>
+      <a href="lab10-ia.html"><span class="lbl">Lab 10 &middot; Week 10</span>Information Architecture: Making Sense of a Mess</a>
+      <a href="resume.html"><span class="lbl">After the labs</span>Turning the labs into a resume</a>
+      </div>
+    </div>
+    <div class="dd">
+      <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddd">Data<span class="caret">&#9660;</span></button>
+      <div class="dd-menu" id="ddd">
+      <a href="cascadia-sales-2025.xlsx"><span class="lbl">Workbook</span>Cascadia sales, clean (.xlsx)</a>
+      <a href="cascadia-sales-2025-RAW.xlsx"><span class="lbl">Workbook</span>Cascadia sales, RAW export for Lab 7 (.xlsx)</a>
+      <a href="cascadia-sales-2025.csv"><span class="lbl">Data</span>Flat CSV for Tableau</a>
+      <a href="cascadia.db"><span class="lbl">Database</span>SQLite database for the SQL lab</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main class="chapwrap">
+
+<header class="chaphead">
+  <p class="eyebrow">Chapter 9 &middot; Cybersecurity</p>
+  <h1>Cybersecurity: The <b>Missing Second Step</b> That Stopped American Healthcare</h1>
+  <p class="anchor">In February 2024 one login without a second security step let attackers into the
+  company that processes about a third of all United States medical claims. Within hours, hospitals
+  could not get paid and pharmacies could not confirm prescriptions. This chapter is about why the damage
+  was a business problem long before it was a data problem.</p>
+  <div class="concepts"><span class="clabel">Key concepts</span><span>The CIA triad</span><span>Ransomware</span><span>Multi-factor authentication</span><span>The kill chain</span><span>Least privilege and segmentation</span><span>Concentration risk</span><span>Business continuity</span><span>Third-party risk</span></div>
+</header>
+
+<div class="toc"><strong>Contents</strong>
+<a href="#protect">What security actually protects</a>
+<a href="#defense">How attacks work, and how defense works</a>
+<a href="#cases">Two attacks that came in sideways</a>
+<a href="#change">Main case. Change Healthcare: the day the claims stopped</a>
+<a href="#other">The downside: who absorbs a breach, and who does this work</a>
+<a href="#vocab">Vocabulary</a>
+<a href="#discussion">Discussion questions</a>
+<a href="#lab">From lecture to lab</a>
+<a href="#sources">Sources and further reading</a>
+<a href="#teaching">Teaching notes</a>
+</div>
+<p class="printbox"><span>Wanna go analog?</span><button type="button" onclick="window.print()" aria-label="Print this page or save it as a PDF">&#9113;&nbsp; Print here</button><span>or save it as a PDF; the navigation drops out</span></p>
+
+<p class="lede">Most Americans had never heard of Change Healthcare before February 2024. It is not a
+hospital or an insurer. It is the plumbing between them, and when it went offline, a third of the
+country's medical claims stopped moving.</p>
+
+<div class="objectives"><span class="obj-tag">Learning objectives</span>
+<p>By the end of this chapter you should be able to:</p>
+<ol>
+<li>Explain the three properties security protects (confidentiality, integrity, availability) and why availability comes first in a breach.</li>
+<li>Describe ransomware and double extortion, and explain why paying does not solve the problem.</li>
+<li>Read an attack as a kill chain and name the ordinary controls (MFA, least privilege, segmentation, backups) that break it.</li>
+<li>Explain concentration risk and third-party risk, and why a breach at a supplier is your breach.</li>
+<li>Say who bears the cost of a security failure, and why most of it sits off the company's books.</li>
+</ol>
+</div>
+
+<h2 id="protect"><span class="num">1</span>What security actually protects</h2>
+
+<p>Every chapter so far has assumed the system works. This one is about what happens when somebody
+deliberately stops it, and the first thing to fix is the idea that security is something that happens to
+computers.</p>
+
+<p>Security is a property of all five components at once, and the weakest one decides the outcome.
+Hardware can be seized or encrypted. Software carries the flaw that lets someone in. Data is what gets
+copied out. Networks are how an intruder moves from the one machine they reached to the ones they
+wanted. And people are, in almost every incident you will read about, both the way in and the only
+reason anyone notices. The chapter's case turns on a missing lock, nine days of unnoticed movement, and
+a decision nobody had made about how much of a country's medical billing should run through one
+building. Not one of those is a coding problem.</p>
+
+<h3>1.1 The three things security protects</h3>
+
+<p>So what does an attack actually take? Ask that about any attack and the answer is always one of three properties of information. Security people have a name for the set.</p>
+
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">The CIA triad</span>
+<p>Security protects three properties of information. <strong>Confidentiality</strong>: only
+authorized people can read it. <strong>Integrity</strong>: it cannot be altered without detection.
+<strong>Availability</strong>: the people who need it can reach it when they need it. Older breaches
+were mostly confidentiality failures, data read by the wrong people. Ransomware is primarily an
+<strong>availability</strong> attack: it does not read your data so much as lock it away from you,
+then charge for the key. Change Healthcare was both at once, availability first (systems down,
+claims frozen) and confidentiality second (193 million people's records taken). When you analyze any incident,
+name which of the three broke, because the defense and the damage differ completely for each.</p></div>
+
+<p>The CIA triad makes a deeper point: security is a property of information and operations, not of computers. A hospital whose billing system is encrypted by an attacker has lost availability just as
+completely as if the building had flooded. This is why security stopped being purely an IT topic and
+became a boardroom one, and why the people who manage it increasingly come from business, not only
+from engineering.</p>
+
+<div class="tryit" id="cia">
+  <div class="tryit-head">Quick quiz &middot; Which property was lost?</div>
+  <p class="tryit-intro">Five incidents. Say which of the three properties failed first, before you check.</p>
+  <div id="ciarows"></div>
+  <p class="tryit-note">Confidentiality: the wrong people can see it. Integrity: it was altered without detection. Availability: the people who need it cannot get to it. Most incidents eventually hit more than one; name the first.</p>
+</div>
+
+<script>
+(function(){
+  var host=document.getElementById('ciarows');
+  if(!host)return;
+  var F=["Confidentiality", "Integrity", "Availability"];
+  var R=[{"t": "Ransomware encrypts a hospital's scheduling system. No data leaves the building.", "a": "Availability", "why": "Nothing was stolen and nothing was changed, and the hospital still cannot see its patients. Availability is the property people forget until it is the only one that matters."}, {"t": "An employee's laptop with an unencrypted spreadsheet of customer Social Security numbers is stolen from a car.", "a": "Confidentiality", "why": "The data is intact and the company still has it. The problem is who else has it now."}, {"t": "An attacker changes the bank account number on a supplier's record so the next payment goes to them.", "a": "Integrity", "why": "The record was altered and nothing flagged it. The payment system worked perfectly on a fact that was no longer true."}, {"t": "A denial-of-service attack floods an online store's servers on the busiest shopping day of the year.", "a": "Availability", "why": "No data was touched. The store simply is not there for the customers who came, which on that day is the whole business."}, {"t": "A researcher finds a public web address that returns any patient's records if you guess the ID number.", "a": "Confidentiality", "why": "Nothing changed and nothing went down. Anyone who wants to look, can. This is the kind of exposure that is a breach whether or not anyone has looked yet."}];
+  R.forEach(function(r){
+    var row=document.createElement('div'); row.className='wrow';
+    row.innerHTML='<div class="wq">'+r.t+'</div><div class="wbtns">'
+      +F.map(function(f){return '<button type="button" data-f="'+f+'">'+f+'</button>';}).join('')
+      +'</div><div class="wout" role="status" aria-live="polite" hidden></div>';
+    host.appendChild(row);
+    var bs=row.querySelectorAll('button'), out=row.querySelector('.wout');
+    bs.forEach(function(b){
+      b.addEventListener('click',function(){
+        if(!out.hidden)return;
+        var ok=b.getAttribute('data-f')===r.a;
+        bs.forEach(function(x){x.disabled=true;});
+        b.className='you '+(ok?'right':'wrong');
+        if(!ok) bs.forEach(function(x){ if(x.getAttribute('data-f')===r.a) x.className='you right'; });
+        out.hidden=false; out.className='wout '+(ok?'yes':'no');
+        out.innerHTML='<b>'+r.a+'.</b> '+r.why;
+      });
+    });
+  });
+})();
+</script>
+
+<h3>1.2 Ransomware as a business</h3>
+
+<p>The attack in this chapter's case was ransomware, which is now the most common way a large
+organization loses availability, and the first thing to understand about it is that the people behind
+it are running a business.</p>
+
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Ransomware</span>
+<p><strong>Ransomware</strong> is malicious software that encrypts an organization's data and demands
+payment for the key. Modern ransomware adds a second threat, called double extortion. The attackers copy the data out
+first, so even a victim with perfect backups faces the choice of paying to keep the data off the
+internet. The crucial thing for a business student to understand is that
+ransomware is an <em>industry</em>, not a prank. Groups operate as ransomware-as-a-service:
+core operators build the malware and rent it to affiliates who carry out attacks and split the
+proceeds. It has revenue models, customer support, and, as Change Healthcare learned, dishonest
+partners.</p></div>
+
+<p>The aftermath of the main case reads like a case study in why paying does not buy safety. Change Healthcare, through
+a UnitedHealth subsidiary, paid the ALPHV/BlackCat group about $22 million for a promise to delete
+the stolen data. The core operators then took the entire payment and vanished, an exit scam, without
+paying the affiliate who had actually done the hacking. That affiliate still had a copy of the data,
+took it to a second ransomware group, RansomHub, and demanded a fresh ransom. The company had paid
+$22 million and protected nothing. This is the practical argument, not the moral one, against assuming a ransom payment solves the
+problem. You are trusting criminals to keep a promise, and nothing in their incentives protects you.</p>
+
+<h2 id="defense"><span class="num">2</span>How attacks work, and how defense works</h2>
+
+<p>Attacks are not single events. They are sequences, and that is the good news, because a sequence can
+be broken at any point. This section gives you the model analysts use to describe attackers and the handful of ordinary
+controls that interrupt it. It starts at the door the case's attackers walked through.</p>
+
+<h3>2.1 The missing control</h3>
+
+<p>Here is how the largest healthcare breach in US history, the main case of this chapter, began. Attackers logged into a Change
+Healthcare remote-access portal, a Citrix system, using a stolen username and password. That portal
+was not protected by multi-factor authentication. There was no second step, no code from a phone, no
+confirmation prompt. A password was the whole lock.</p>
+
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Multi-factor authentication (MFA)</span>
+<p>MFA requires more than one kind of proof to log in: something you know (a password), plus
+something you have (a phone or hardware key) or something you are (a fingerprint). Its entire purpose
+is to make a stolen password insufficient by itself, and stolen passwords are cheap and everywhere,
+harvested by the millions and sold on criminal markets. MFA is not exotic, expensive, or new. It is
+the single highest-value control most organizations can deploy, and its absence on one internet-facing
+portal is the root cause the company's own CEO named in sworn testimony to Congress.</p></div>
+
+<p>The attackers were then inside for about nine days before anyone noticed. They moved through the
+network and copied out roughly six terabytes of data, then deployed the ransomware that finally made
+their presence impossible to miss. Two failures, in sequence: a missing lock at the door, and
+nine days of movement inside that nobody detected. Hold that shape, because it has a name.</p>
+
+<h3>2.2 The kill chain, and where to break it</h3>
+
+<p>Two failures in sequence, a way in and then time to move around, is the general shape of a modern intrusion, and security analysts have a model for it.</p>
+
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">The kill chain, and breaking it</span>
+<p>Analysts describe intrusions as a <strong>kill chain</strong>: an ordered sequence of stages an attacker must
+complete. It runs from initial entry, to moving deeper (called lateral movement), to stealing or encrypting
+the data. (You do not need to memorize the stages. You need to see that there are stages, because
+each one is a place to stop the attack.) The model's value is that the attacker must succeed at every stage while the
+defender only has to break one, so security stacks controls in layers, <strong>defense in
+depth</strong>, assuming each can fail. Two design rules do most of the work. <strong>Least
+privilege</strong>: every account gets the minimum access its job needs, so a stolen credential is
+worth as little as possible. <strong>Network segmentation</strong>: systems are fenced into zones, so
+entry into one is not entry into all. Change Healthcare's attackers had nine days of lateral movement,
+which is a segmentation failure sitting behind the MFA failure. Break either link and the record
+breach does not happen.</p></div>
+<figure class="diagram" style="margin:1.8rem auto;max-width:470px">
+<svg viewBox="0 0 470 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="kcT kcD" style="width:100%;height:auto;font-family:var(--sans)">
+<title id="kcT">The kill chain, and where to break it</title>
+<desc id="kcD">Five boxes in a row joined by arrows, labelled entry, foothold, move deeper, take the data, and encrypt. Under each arrow a control that would have broken the chain at that point: multi-factor authentication, least privilege, segmentation, monitoring, and backups. The first two links are highlighted, with a note that at Change Healthcare both were missing.</desc>
+<defs><marker id="kca" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--text-light)"/></marker></defs>
+<rect x="12" y="70" width="78" height="46" fill="var(--warn-pale)" stroke="var(--text-dark)" stroke-width="1.2"/>
+<text x="51" y="89" text-anchor="middle" font-size="9.5" font-weight="700" fill="var(--text-dark)">ENTRY</text>
+<text x="51" y="104" text-anchor="middle" font-size="9" fill="var(--text-light)">stolen password</text>
+<path d="M92 93 L102 93" stroke="var(--text-light)" stroke-width="1.6" fill="none" marker-end="url(#kca)"/>
+<rect x="104" y="70" width="78" height="46" fill="var(--warn-pale)" stroke="var(--text-dark)" stroke-width="1.2"/>
+<text x="143" y="89" text-anchor="middle" font-size="9.5" font-weight="700" fill="var(--text-dark)">FOOTHOLD</text>
+<text x="143" y="104" text-anchor="middle" font-size="9" fill="var(--text-light)">first machine</text>
+<path d="M184 93 L194 93" stroke="var(--text-light)" stroke-width="1.6" fill="none" marker-end="url(#kca)"/>
+<rect x="196" y="70" width="78" height="46" fill="var(--warn-pale)" stroke="var(--text-dark)" stroke-width="1.2"/>
+<text x="235" y="89" text-anchor="middle" font-size="9.5" font-weight="700" fill="var(--text-dark)">MOVE DEEPER</text>
+<text x="235" y="104" text-anchor="middle" font-size="9" fill="var(--text-light)">nine days</text>
+<path d="M276 93 L286 93" stroke="var(--text-light)" stroke-width="1.6" fill="none" marker-end="url(#kca)"/>
+<rect x="288" y="70" width="78" height="46" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1.2"/>
+<text x="327" y="89" text-anchor="middle" font-size="9.5" font-weight="700" fill="var(--text-dark)">TAKE THE DATA</text>
+<text x="327" y="104" text-anchor="middle" font-size="9" fill="var(--text-light)">six terabytes</text>
+<path d="M368 93 L378 93" stroke="var(--text-light)" stroke-width="1.6" fill="none" marker-end="url(#kca)"/>
+<rect x="380" y="70" width="78" height="46" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1.2"/>
+<text x="419" y="89" text-anchor="middle" font-size="9.5" font-weight="700" fill="var(--text-dark)">ENCRYPT</text>
+<text x="419" y="104" text-anchor="middle" font-size="9" fill="var(--text-light)">the ransom note</text>
+<path d="M91 99 L103 87 M91 87 L103 99" stroke="var(--good)" stroke-width="2.4"/><path d="M97 102 L97 150" stroke="var(--good)" stroke-width="1.2" stroke-dasharray="3 3" fill="none"/>
+<text x="97" y="164" text-anchor="middle" font-size="9.5" font-weight="600" fill="var(--good)">MFA</text>
+<path d="M183 99 L195 87 M183 87 L195 99" stroke="var(--good)" stroke-width="2.4"/><path d="M189 102 L189 150" stroke="var(--good)" stroke-width="1.2" stroke-dasharray="3 3" fill="none"/>
+<text x="189" y="164" text-anchor="middle" font-size="9.5" font-weight="600" fill="var(--good)">least privilege</text>
+<path d="M275 99 L287 87 M275 87 L287 99" stroke="var(--good)" stroke-width="2.4"/><path d="M281 102 L281 150" stroke="var(--good)" stroke-width="1.2" stroke-dasharray="3 3" fill="none"/>
+<text x="281" y="164" text-anchor="middle" font-size="9.5" font-weight="600" fill="var(--good)">segmentation</text>
+<path d="M367 99 L379 87 M367 87 L379 99" stroke="var(--good)" stroke-width="2.4"/><path d="M373 102 L373 150" stroke="var(--good)" stroke-width="1.2" stroke-dasharray="3 3" fill="none"/>
+<text x="373" y="164" text-anchor="middle" font-size="9.5" font-weight="600" fill="var(--good)">monitoring</text>
+<path d="M419 122 L419 150" stroke="var(--good)" stroke-width="1.4" fill="none"/><path d="M412 132 L426 118 M412 118 L426 132" stroke="var(--good)" stroke-width="2"/><text x="419" y="178" text-anchor="middle" font-size="9.5" font-weight="600" fill="var(--good)">backups</text>
+<text x="235" y="40" text-anchor="middle" font-size="10.5" fill="var(--text-light)">The attacker must win every link. The defender has to break one.</text>
+<text x="235" y="196" text-anchor="middle" font-size="10" fill="var(--warn)" font-weight="600">At Change Healthcare the first three links held:</text><text x="235" y="210" text-anchor="middle" font-size="10" fill="var(--warn)" font-weight="600">no MFA on the portal, then nine days of movement.</text>
+<text x="235" y="240" text-anchor="middle" font-size="10" fill="var(--text-light)">Each green mark is an ordinary control. None is new. All were available.</text>
+</svg>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">
+Read the chain from left to right as the attacker did, then read the marks underneath as the controls that would have ended it. Multi-factor authentication stops the first link. Least privilege and segmentation stop the second and third; nine days of movement is a segmentation failure sitting behind an MFA failure. The attacker needed every link. The defender needed one.
+</figcaption>
+</figure>
+
+<p>Now run the whole Change Healthcare chain against a single question: at how many points could this have been stopped
+cheaply? MFA on one portal. Segmentation to contain the movement. Detection to catch nine days of an
+intruder. Each is ordinary, none is exotic, and any one of them breaks the chain. Nearly every breach
+you will read about is a failure to apply known controls, not the work of unstoppable genius. That is
+oddly good news: it means most security is a management problem, and management is learnable.</p>
+
+<h2 id="cases"><span class="num">3</span>Two attacks that came in sideways</h2>
+<p>Before the main case, here are two short ones, thirty-five years apart. Each one entered through something the victim did not think of as part of its own system: the network itself, and a file-transfer tool bought by somebody else. Read them with one question in mind,
+because it is the question section 5 will make national: what did the organization actually depend on
+that it had never listed anywhere?</p>
+
+<h3>3.1 Mini-case 1 &middot; 1988: the program that was only supposed to count</h3>
+
+<p>In November 1988 a graduate student at Cornell released a program onto the internet, which then
+connected a few tens of thousands of machines belonging mostly to universities, research labs and the
+military. His stated intention was to measure how big the network was. To spread, the program used
+known weaknesses in common software, and it included a mechanism meant to stop it copying itself onto a
+machine that already had it.</p>
+
+<p>That counting mechanism was wrong. The program reinfected machines repeatedly, and each copy consumed
+resources until the machine became unusable. Estimates at the time put the number of affected computers
+around six thousand, roughly a tenth of the internet as it then existed. Nothing was stolen and nothing
+was read. Machines simply stopped being able to do their work, and administrators disconnected from the
+network to save themselves, which broke the network further.</p>
+
+<p>Two things came out of the Morris worm. Its author became the first person convicted under the United States
+Computer Fraud and Abuse Act. And the incident led directly to the creation of the first coordinated computer emergency response
+team. It had become obvious that nobody was on the other end of the phone when something like this
+happened.</p>
+
+<p><strong>Where it came in: the network connection itself. The component: networks.</strong> Note what
+kind of failure this was, because it is the one students expect least. No confidentiality was lost. The
+harm was <em>availability</em>, and it arrived through the thing everybody had assumed was simply a
+convenience.</p>
+
+<div class="mcq"><b>Check yourself</b>Nothing was stolen in 1988 and the damage was still severe. Using
+the three properties in section 1, explain what an organization loses when a system is merely
+unavailable, and name one system where a day of unavailability would hurt you more than a leak
+would.
+<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>Availability. The worm read nothing and changed nothing; it simply copied itself so many times that the machines it reached could do no other work, and about a tenth of the internet stopped. Confidentiality was untouched. Integrity was untouched. What was lost was the ability to use the systems at all, for days, which is why the chapter says a breach is usually an availability problem before it is anything else. A security policy that only asks "what could be stolen?" would have rated this attack as harmless.</p></details></div>
+
+<h3>3.2 Mini-case 2 &middot; 2023: one flaw in a tool most victims had never bought</h3>
+
+<p>In the summer of 2023, employees at British Airways and the BBC learned their personal data had been
+stolen from a piece of software neither company had ever bought. MOVEit Transfer is a product for
+moving files securely between organizations. It is unglamorous
+software, used by around 1,700 organizations to shift payroll files, claims data and records between
+one company and another.</p>
+
+<p>In mid-2023 a criminal group exploited flaws in MOVEit. The pattern of the damage is the part worth
+studying. A UK payroll provider used MOVEit, and its clients included British Airways, the BBC and
+others. Those companies had not bought MOVEit and in many cases had never heard of it. Their employees'
+data was exposed anyway, because it had passed through a supplier's supplier. Across the whole event,
+thousands of organizations and tens of millions of individuals were affected.</p>
+
+<p>For most of the victims there was no negligence to point at in their own house. They had a vendor
+they had assessed, and that vendor had a vendor. The exposure lived two steps away from anything they
+controlled or could see.</p>
+
+<p><strong>Where it came in: a vendor's vendor. The component: people.</strong> The failure was not
+technical: it was that almost nobody maintained a list of which outside organizations touched their
+data, or of the organizations those organizations relied on. Section 5 names the job that exists to fix
+this, and it is a job a business graduate does.</p>
+
+<div class="mcq"><b>Check yourself</b>Name three outside companies that hold data about you through an
+organization you belong to rather than through you directly. Now say how you would find out who
+<em>their</em> suppliers are, and what that tells you about how hard this job is.
+<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>Any honest list works: a payroll processor that holds your bank details because your employer uses it; a cloud email provider your university contracted; a payments company behind a shop you buy from; a background-check firm your landlord hired. The point is that you did not choose any of them, most of them you cannot name, and each is a place your data can be taken from without anyone you deal with being attacked. That is exactly what happened to the BBC, British Airways, and thousands of others through MOVEit: a tool their payroll provider used, that they had never bought. Your system is bigger than the list of things you pay for.</p></details></div>
+
+<h3>3.3 What the two have in common</h3>
+
+<p>A network connection, and a file-transfer tool nobody remembers buying. In neither case did the attack arrive through the front door the organization was defending, and in neither case would a stronger password on the main system have helped.</p>
+
+<p>What the two share is a boundary problem. Both organizations had a mental picture of what their system was, and in both cases the real system was larger than the picture. The internet was part of Cornell's system. A supplier's supplier was part of the BBC's.</p>
+
+<p>Hold that idea as you read the main case, because Change Healthcare is the same problem seen from the other end. It was not the victim that had failed to map its dependencies. It <em>was</em> the dependency, for
+a third of American healthcare, and almost nobody using it had written that down either.</p>
+<h2 id="change"><span class="num">4</span>Main case &middot; Change Healthcare: the day the claims stopped</h2>
+
+<p>Let's begin at a pharmacy counter on the morning of 21 February 2024. The prescription is filled and
+sitting in the bag. The pharmacist scans it, waits for the insurer to confirm coverage, and the
+screen does nothing. Across the country the same screen is doing nothing in tens of thousands of
+clinics, hospitals, and pharmacies, and almost none of the people staring at it have heard of the
+company that just went dark. Change Healthcare is not a hospital or an insurer. It is the plumbing
+between them: a UnitedHealth Group subsidiary that processes roughly 15 billion healthcare
+transactions a year and touches about one in every three US patient records.
+When a doctor's office submits a claim or a pharmacy checks your coverage, that request very often
+passes through Change Healthcare.</p>
+
+<p>On February 21, 2024, the company discovered ransomware on its systems and did the only thing it
+could: it took itself offline. The effect was immediate and national. Pharmacies could not verify
+coverage or process claims for a large share of the country. Hospitals and physician practices could
+not submit claims, which meant they could not get paid. An American Medical Association survey that spring found that 80 percent of physician practices lost
+revenue from unpaid claims. Many small practices, which run on thin cash reserves, faced a real cash
+crisis: payroll for real staff, with the money that normally arrived from insurers simply not
+arriving.</p>
+
+<p>The data theft, when its scale became clear, set a record: about 193 million people's protected
+health information by the final count in July 2025, the largest healthcare breach in US history. But notice which harm came first and
+hit hardest. Before a single record was known to be misused, the attack had already frozen the cash
+flow of a large slice of American medicine. <strong>The business disruption was the disaster. The
+data breach was the aftermath.</strong> That ordering is the theme of this chapter.</p>
+
+<div class="callout"><strong>Why this case, and not an older one</strong>
+<p>The famous breaches of the last decade, Target and Equifax, were about stolen data. Change Healthcare is about a stopped business, which is where cybercrime has actually gone. Ransomware does not quietly
+copy your data and leave; it takes your operations hostage. Understanding that shift is the difference between thinking of security as an IT problem and
+thinking of it as a survival problem for the whole organization. That is exactly the shift a
+business degree is supposed to give you.</p></div>
+
+<div class="statrow">
+  <div class="stat"><b>1 in 3</b><span>US patient records touched</span></div>
+  <div class="stat"><b>~193M</b><span>people's data exposed</span></div>
+  <div class="stat"><b>9 days</b><span>attackers inside, undetected</span></div>
+  <div class="stat"><b>$22M</b><span>ransom paid, data leaked anyway</span></div>
+  <div class="stat"><b>~$3.1B</b><span>cost to UnitedHealth, 2024</span></div>
+</div>
+
+<h3>4.1 The business damage, not the data</h3>
+
+<p>UnitedHealth's own reporting put its direct costs for 2024 at about $3.1 billion. That number, large as it
+is, is the smallest part of the harm, because it is only the part that falls on the company big
+enough to absorb it. Trace the damage outward and it is almost entirely a business-operations story:</p>
+
+<p><strong>Provider cash flow.</strong> Thousands of practices and hospitals could not bill, so
+revenue stopped while payroll and rent did not. UnitedHealth advanced billions in emergency funding
+to providers precisely because the cash-flow damage threatened to close practices before any data
+was ever misused. A clinic does not need its patient records leaked to fail; it just needs to miss
+payroll twice.</p>
+
+<p><strong>Care itself.</strong> Prior authorizations, prescription approvals, and eligibility checks
+run through this plumbing. When it stopped, patients faced delays getting medications and treatments
+approved. The availability failure reached from a server all the way to a pharmacy counter.</p>
+
+<p><strong>Concentration risk, revealed.</strong> The reason one company's outage could do national
+damage is that the industry had quietly routed a third of its transactions through a single point.
+Nobody chose that risk deliberately; it accumulated through decades of consolidation. The attack turned an invisible structural fact into a visible one. "We depend on one vendor for
+something we cannot operate without" is now a risk that boards across every industry are
+re-examining.</p>
+
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Concentration risk and business continuity</span>
+<p><strong>Concentration risk</strong> is the danger created when too much of something critical
+depends on a single point: one vendor, one data center, one system. <strong>Business continuity
+planning</strong> is the discipline of preparing to keep operating when that point fails: backups,
+alternate vendors, manual fallback procedures, tested and ready before the crisis. The Change
+Healthcare outage was so damaging partly because so few providers had a plan B for a service they had
+assumed would always be there. Asking "what do we do the day this critical thing is gone?" is
+business continuity, and it is a business planning question, not a technical one.</p></div>
+
+<h3>4.2 The five components at Change Healthcare</h3>
+
+<p>Now that you have seen the whole system, here it is as five components, the way this course maps every case. Look at which row the attack came in through and which row the damage landed in. They were not the same row.</p>
+
+<table class="sumtable stack-sm">
+<tr><th>Component</th><th>In the breach</th><th>The lesson</th></tr>
+<tr><td data-label="Component"><strong>Hardware</strong></td><td data-label="In the breach">The servers taken offline, freezing a third of US claims</td><td data-label="The lesson">Availability is physical; when it is gone, the business stops</td></tr>
+<tr><td data-label="Component"><strong>Software</strong></td><td data-label="In the breach">Ransomware that encrypted operations; the Citrix portal without MFA</td><td data-label="The lesson">One unenforced setting was the whole failure</td></tr>
+<tr><td data-label="Component"><strong>Data</strong></td><td data-label="In the breach">6 TB exfiltrated; 193M people's health records</td><td data-label="The lesson">Concentrated data is a concentrated prize</td></tr>
+<tr><td data-label="Component"><strong>Networks</strong></td><td data-label="In the breach">Nine days of lateral movement no fence contained</td><td data-label="The lesson">Segmentation is what limits a foothold to a foothold</td></tr>
+<tr><td data-label="Component"><strong>People</strong></td><td data-label="In the breach">The stolen credential; the security procedures never updated after acquisition; the CEO before Congress</td><td data-label="The lesson">The decisive failures were management decisions, not code</td></tr>
+</table>
+
+<h3>4.3 What a business technology manager takes from this chapter</h3>
+
+<p>Strip the Change Healthcare case down to what you can reuse in any company. Four decisions came up in it, and each one is a decision you will be in the room for.</p>
+
+<p><strong>Ask what stopped before you ask what was stolen.</strong> Change Healthcare's data was taken, and the damage that mattered was the pharmacies and clinics that could not get paid for weeks. Security is an availability problem before it is a confidentiality one. When you plan for a breach, plan for the day the system is simply gone, because that is the day that costs the most.</p>
+
+<p><strong>Write down what you depend on, including the things you did not buy.</strong> The Morris worm came in through the network. MOVEit came in through a supplier's supplier. Change Healthcare was the dependency, for a third of American healthcare, and almost nobody using it had written that down. A list of the systems your business cannot run without is the cheapest security document there is, and most companies do not have one.</p>
+
+<p><strong>Put the boring control in place before the clever one.</strong> The breach began with one stolen password on a server that did not have multi-factor authentication turned on. Nothing sophisticated was required. Most of what stops a breach is a short list of unglamorous controls that somebody has to insist on, and insisting is a manager's job.</p>
+
+<p><strong>Decide, in advance, who can turn a system off.</strong> Change Healthcare shut everything down to stop the spread, which was the right call and cost billions. The person who makes that call has to exist before the morning it is needed, with the authority to make it and the plan for what happens next. If nobody has that job, the decision gets made by the attacker.</p>
+
+<h2 id="other"><span class="num">5</span>The downside: who absorbs a breach, and who does this work</h2>
+
+<p>The $3.1 billion UnitedHealth booked is the part of the cost that a large company could absorb. Follow the rest of it
+outward and it falls on people with far less capacity to carry it.</p>
+
+<p>Small medical practices, some of which took emergency loans or closed, because a company they had
+never chosen to depend on went dark. Patients who waited for medications while an eligibility check
+sat in a frozen queue. And 193 million people whose Social Security numbers, diagnoses, and treatment
+records are now somewhere they cannot retrieve, carrying a lifetime risk of identity theft and
+medical fraud that no credit-monitoring offer erases. Health data does not expire the way a credit
+card does; you cannot reissue a diagnosis.</p>
+
+<p>Keep this list for Wednesday's governance discussion. When a company decides how much to spend
+on security, much of the downside of underspending is exported, to patients, to small providers, to
+the public. Economists call that an externality, and it is the core reason security cannot be left
+entirely to each firm's private cost-benefit math. The company weighs its $3.1 billion; it does not
+weigh the closed clinic or the stolen medical history, because those never appear on its books. Part
+of the job of governance, and of regulation, is to represent the people who are not in the room when
+the security budget is set.</p>
+
+<h3>5.1 What business people actually do in security</h3>
+
+<p>Students often assume cybersecurity is a coding job they are unqualified for. Some of it is. But the field is short hundreds of thousands of workers in the US alone, and a large fraction of the
+open roles are business roles. Most of what determines whether an organization gets breached is
+decisions, not code. A few of the jobs a business graduate actually does:</p>
+
+<p><strong>Governance, risk, and compliance (GRC).</strong> Deciding which risks the organization
+will accept, reduce, or insure against, and proving to regulators and auditors that required controls
+exist. This is spreadsheets, policy, and judgment, not exploits, and it is one of the largest and
+best-paid corners of the field.</p>
+
+<p><strong>Third-party and vendor risk management.</strong> Change Healthcare was a vendor to the
+entire healthcare system; the Target breach a decade earlier came through an HVAC contractor. Someone
+has to assess whether the companies you depend on are secure, and that someone reads contracts and
+audit reports, not memory dumps.</p>
+
+<p><strong>Security awareness and training.</strong> Because phishing starts most breaches, the
+people who design how a workforce is trained and tested are doing frontline security work with no code
+at all.</p>
+
+<p><strong>Incident response coordination and business continuity.</strong> When an incident hits,
+someone has to run the response as a business operation: who is told, who decides, when regulators and
+customers are notified, how the company keeps functioning. That coordinator is often a manager, not an
+engineer.</p>
+
+<p><strong>The CISO.</strong> The Chief Information Security Officer sits on or near the executive
+team and answers to the board. The job is overwhelmingly about communicating risk in business terms,
+setting priorities against a budget, and building a culture, which is why a growing number of CISOs
+come from management backgrounds. Andrew Witty, the executive who testified to Congress about this
+breach, is not an engineer; he was the chief executive, and the breach was his problem.</p>
+
+<p>The takeaway for this course is this: the most important security decisions at Change Healthcare, enforce
+MFA everywhere, segment the network, keep an acquired company's defenses current, were management
+decisions that went unmade. You do not need to write malware to prevent the next one. You need to
+understand the business well enough to insist on the boring controls before the crisis, which is
+precisely the vantage point an MIS degree provides.</p>
+
+<div class="takeaways"><span class="obj-tag">Key takeaways</span>
+<ul>
+<li>A breach is an availability problem before it is a confidentiality problem. The first question is not what was stolen but what stopped.</li>
+<li>Attacks are sequences, and a sequence can be broken at any point. Nearly every breach is a failure to apply a known, boring control.</li>
+<li>One portal without multi-factor authentication was enough. Nine days inside, six terabytes out, and a third of American medicine's cash flow frozen.</li>
+<li>"We depend on one vendor for something we cannot operate without" is a risk every board is now re-examining, and most of them could not have named the vendor before.</li>
+<li>The company weighs its own cost. The patients, the small practices, and the 193 million people are not in the room, which is why security cannot be left to private cost-benefit math alone.</li>
+</ul>
+</div>
+
+<h2 id="vocab"><span class="num">6</span>Vocabulary</h2>
+
+<dl class="vocab">
+<div><dt>Confidentiality / integrity / availability</dt><dd>The three properties security protects; ransomware attacks availability first.</dd></div>
+<div><dt>Ransomware</dt><dd>Malware that encrypts data and demands payment; modern versions also steal it (double extortion).</dd></div>
+<div><dt>Multi-factor authentication</dt><dd>Requiring more than a password, so a stolen one is not enough.</dd></div>
+<div><dt>Kill chain</dt><dd>The ordered stages of an intrusion; defenders need to break only one.</dd></div>
+<div><dt>Lateral movement</dt><dd>An attacker spreading from a foothold deeper into a network.</dd></div>
+<div><dt>Least privilege</dt><dd>Every account gets the minimum access its job requires.</dd></div>
+<div><dt>Network segmentation</dt><dd>Fencing systems into zones to contain a compromise.</dd></div>
+<div><dt>Concentration risk</dt><dd>Danger from too much depending on a single vendor, system, or point.</dd></div>
+<div><dt>Business continuity planning</dt><dd>Preparing to keep operating when a critical dependency fails.</dd></div>
+<div><dt>Third-party (vendor) risk</dt><dd>The security exposure created by the outside companies you rely on.</dd></div>
+<div><dt>GRC</dt><dd>Governance, risk, and compliance: the business side of managing security.</dd></div>
+<div><dt>CISO</dt><dd>The executive who owns security and answers to the board, increasingly in business terms.</dd></div>
+</dl>
+
+<div class="tps">
+  <div class="tps-head"><span>Monday activity &middot; Pay the ransom?</span><span class="mins">20 minutes</span></div>
+  <div class="tps-body">
+    <p class="tps-setup">You lead Cascadia Outfitters. Ransomware has encrypted every system: point
+    of sale, inventory, member records, payroll. The stores are effectively closed. The attackers want
+    a payment to unlock everything, and they claim to have copied your member data and will publish it
+    unless you pay. Your backups are three weeks old. You know the Change Healthcare story: a $22
+    million payment that protected nothing.</p>
+    <div class="tps-q"><p>Do you pay? Commit to yes or no before you discuss, and name the one fact that would flip your answer.</p></div>
+    <div class="tps-steps">
+      <div class="tps-step"><div class="ph">Think <span>3 min</span></div><p>Decide, and write the single fact that would change your mind. If nothing would, say why you are that certain.</p></div>
+      <div class="tps-step"><div class="ph">Pair <span>5 min</span></div><p>Find someone who chose the opposite. Trade the facts that would flip you. Are they the same fact?</p></div>
+      <div class="tps-step"><div class="ph">Share <span>12 min</span></div><p>We will separate the operational question (can we recover without paying?) from the data question (will paying stop the leak?), because they have different answers.</p></div>
+    </div>
+    <div class="tps-note"><strong>Where this lands</strong>Paying is two decisions wearing one label.
+    On operations, good tested backups can make payment unnecessary, which is why prevention and backups
+    are the real answer and the decision is really made months earlier. On the stolen data, the Change
+    Healthcare exit scam is the whole lesson: paying buys a criminal's promise, and the incentives among
+    criminals do not protect you. The point students should leave with is that "do we pay?" is a bad
+    position to be in, and the work that matters, MFA, segmentation, backups, continuity planning,
+    happens long before the screen locks.</div>
+  </div>
+</div>
+
+<div class="ailight g">
+  <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
+  <div class="lighttext"><strong>Green light for this chapter's questions.</strong> Use AI to quiz
+  yourself on the triad, ransomware, and the kill chain, or as a sparring partner on the discussion
+  questions, your position first, per the Lab 1 rules. Never use AI to generate malware or working
+  attack code: that is a hard red light in this course and a crime outside it.</div>
+</div>
+
+<h2 id="discussion"><span class="num">7</span>Discussion questions</h2>
+<p>None of these get handed in. On Wednesday you run the discussion and I steer it, which means the
+class is only as good as what you walk in with. Read the chapter, pick the question you have the
+strongest opinion about, and be ready to say it first.</p>
+
+<ol class="dq">
+  <li>Walk the kill chain for this attack and name, at each stage, one ordinary control that would have
+  broken it. Then say which of those controls you would fund first with a limited budget, and why.
+  <span class="tag">Apply</span></li>
+
+  <li>The chapter argues the business disruption was the disaster and the data breach was the aftermath.
+  Test that claim against the evidence, then say whether it would still hold for an organization that is
+  not healthcare. Name one where it would not. <span class="tag">Analyze</span></li>
+
+  <li>Nobody decided that a third of American medical claims should pass through one company; it
+  accumulated. Name a single point of dependence at an organization you know, say what would happen the
+  day it disappeared, and explain why nobody has written that down.
+  <span class="tag">Systems</span></li>
+
+  <li>Design the third-party risk process you would want as a small medical practice with no IT staff.
+  What would you ask a vendor, what evidence would you accept, and what would you do about the vendors
+  your vendor uses? Be realistic about what a practice can actually do.
+  <span class="tag">Apply</span></li>
+
+  <li>UnitedHealth paid roughly $22 million and protected nothing, and the money went to people who then
+  cheated their own partner. Set out the case for paying and the case against, decide, then say what your
+  answer would be if the choice were between paying and a hospital closing.
+  <span class="tag tag-hard">Ethics</span></li>
+</ol>
+
+<h2 id="lab"><span class="num">8</span>From lecture to lab</h2>
+
+<div class="callout callout-bridge"><strong>Week 8 &middot; Lab 8</strong>
+<p>This chapter argues that most breaches are failures to apply ordinary controls, and that deciding
+which controls exist is a management job. <a href="lab8-security.html"><strong>Lab 8: Security and Data
+Governance: The Audit</strong></a> puts you in that job at Cascadia.</p>
+<p>Seven messages arrive at the co-op in one morning, and some of them are attacks. You will sort what each one is after using the CIA triad from section 1, catch the attacks the way this chapter says breaches are actually caught, by checking a claim against a record the sender does not control, and then choose the one control you would put in place first, from the same short list that would have stopped the breach in section 4. Every judgment in the lab is one from this chapter, at co-op scale.</p>
+  <a class="lablink" href="lab8-security.html">Go to Lab 8 &#8594;</a>
+</div>
+
+<h2 id="sources"><span class="num">9</span>Sources and further reading</h2>
+<ul class="sources">
+<li>Andrew Witty's testimony to Congress, May 2024, for the absence of multi-factor authentication on the compromised portal, the nine days of undetected access, and the ransom payment.</li>
+<li>UnitedHealth Group's quarterly reporting through 2024 and 2025, for the direct costs and the emergency funding advanced to providers. The figures were revised upward several times; check the current total.</li>
+<li>US Department of Health and Human Services breach reporting, for the number of individuals whose protected health information was affected, which was revised repeatedly through 2024 and 2025.</li>
+<li>American Medical Association survey work, spring 2024, for the share of physician practices reporting lost revenue.</li>
+<li>Contemporary reporting on the ALPHV/BlackCat exit scam and the subsequent RansomHub demand, for the aftermath described in section 1.</li>
+<li>Change Healthcare's 31 July 2025 notice to state attorneys general and to HHS, for the final count of 192.7 million individuals (the company says full deduplication was not possible, so the figure may overstate slightly); UnitedHealth's 2024 results, for the roughly $3.1 billion in cyberattack-related costs for the year and the more than $9 billion advanced to providers.</li>
+<li><strong>Verification note.</strong> Checked against sources in September 2026: the final affected count (raised from 190 to 193 million), the 2024 cost figure (raised from "above $2.8 billion" to about $3.1 billion), and the litigation status (a federal multidistrict case and the Nebraska attorney general's suit had both survived motions to dismiss by late 2025; no settlement or federal penalty had been announced by mid-2026). Andrew Witty stepped down as UnitedHealth's chief executive in May 2025, so the text now uses the past tense. The Morris worm and MOVEit details were checked against the authors' knowledge of the published accounts (Emsisoft's running totals for MOVEit) rather than re-searched.</li>
+<li>Accounts of the 1988 internet worm, including the subsequent prosecution and the creation of the first coordinated response team, for mini-case 1.</li>
+<li></li>
+<li>Reporting on the 2023 MOVEit Transfer exploitation, for the vendor-of-a-vendor pattern in mini-case 3. Totals for organizations and individuals affected rose for more than a year afterward.</li>
+<li>Testimony of Andrew Witty, UnitedHealth Group CEO, before US Senate and House committees (May 2024): the confirmation, under oath, that the Citrix portal lacked MFA and that security procedures had not been updated after the acquisition.</li>
+<li>BankInfoSecurity, <a href="https://www.bankinfosecurity.com/change-healthcares-mega-attack-1-year-later-a-27578">Change Healthcare's Mega Attack: One Year Later</a> (2025): timeline, the exit scam, and the RansomHub second-extortion attempt.</li>
+<li>HIPAA Journal, <a href="https://www.hipaajournal.com/change-healthcare-responding-to-cyberattack/">Change Healthcare Responding to Cyberattack</a>: the revised breach totals (100M to 190M) and settlement and litigation status.</li>
+<li>American Medical Association survey coverage, spring 2024: the finding that 80 percent of physician practices lost revenue from unpaid claims during the outage.</li>
+<li>Note on figures: costs and affected-person counts rose over 2024 and 2025 as forensic analysis continued; treat the numbers here as the best available scale, not a final ledger.</li>
+</ul>
+
+<h2 id="teaching"><span class="num">10</span>Teaching notes</h2>
+<p style="font-family:var(--sans);font-size:.95rem;color:var(--muted)">Written for whoever is running the sessions. Students are welcome to read them, but nothing here is required. Week 8 carries Chapters 9 and 10 together, and Wednesday of that week is Veterans Day, so the Monday plan below covers the concepts for both chapters and the second plan is written for whenever you teach the case.</p>
+
+<div class="plan"><div class="plan-head">Monday session plan &middot; 80 minutes &middot; shared with Chapter 10; this is the Chapter 9 half</div>
+<table>
+<tr><td class="t">0:00</td><td class="w">Open</td><td>Ask what happens at a hospital on the morning it cannot bill a single insurance claim. Let the room work out the cash-flow chain before you name it. Most students have never pictured a hospital as a business with a payroll, and that realization is the chapter.</td></tr>
+<tr><td class="t">0:06</td><td class="w">Lecture</td><td>The CIA triad, and the point that older breaches were confidentiality failures while ransomware is primarily an availability attack. Make them name which property broke in an incident from the news before you move on.</td></tr>
+<tr><td class="t">0:16</td><td class="w">Lecture</td><td>Ransomware as an industry rather than a prank: the service model, double extortion, and the practical argument against paying, which is that you are trusting criminals to keep a promise. The exit scam in section 4 makes this concrete later.</td></tr>
+<tr><td class="t">0:24</td><td class="w">Lecture</td><td>The kill chain on the board, stage by stage, pausing at each to ask what would have stopped it. Then least privilege and segmentation, and MFA as the single highest-value control most organizations can deploy. Land the good news: nearly every breach is a failure to apply known controls.</td></tr>
+<tr><td class="t">0:38</td><td class="w">Cases 1&#8211;2</td><td>The 1988 worm and MOVEit, about four minutes each. Name where each one came in and stop.</td></tr>
+<tr><td class="t">0:47</td><td class="w">Lecture</td><td>Hand over to Chapter 10: security is a set of decisions rather than a set of tools, with Equifax as the case where the tools existed and the decisions failed. Concentration risk is the bridge from this chapter.</td></tr>
+<tr><td class="t">1:02</td><td class="w">Think-pair-share</td><td>Pay the ransom? See the activity in section 6. Protect the silent minutes; the first instinct in the room is unanimous and the case complicates it.</td></tr>
+<tr><td class="t">1:16</td><td class="w">Close</td><td>Preview the lab: they play the security lead at Cascadia and make these calls themselves. Assign section 4 in both chapters.</td></tr>
+</table></div>
+
+<div class="plan"><div class="plan-head">Case session plan &middot; 80 minutes &middot; Change Healthcare, whenever you teach it</div>
+<table>
+<tr><td class="t">0:00</td><td class="w">Open</td><td>Two numbers and nothing else: one in three US patient records, and one password. Ask what could possibly connect them. Let the room guess before you walk the case.</td></tr>
+<tr><td class="t">0:08</td><td class="w">Walk the case</td><td>The portal without MFA, nine days of undetected movement, six terabytes out, then the ransomware. Keep naming the stage of the kill chain as each piece lands, and keep asking what a single control would have cost at that point.</td></tr>
+<tr><td class="t">0:22</td><td class="w">The damage</td><td>Order it deliberately: the claims stopped first, the data theft was found later. Walk the cash-flow chain out to small practices missing payroll, then to patients waiting on prior authorizations. The sentence to repeat is that the business disruption was the disaster and the breach was the aftermath.</td></tr>
+<tr><td class="t">0:36</td><td class="w">The ransom</td><td>The $22 million payment, the exit scam, the second demand. This is where the room's Monday instinct meets the evidence, so let them sit in it rather than resolving it for them.</td></tr>
+<tr><td class="t">0:46</td><td class="w">Concentration risk</td><td>Nobody chose to route a third of American healthcare through one company; it accumulated. Ask the room to name a single point their own employer or school depends on, and whether anyone has written it down.</td></tr>
+<tr><td class="t">0:54</td><td class="w">Think</td><td>All five discussion questions on screen. Silent individual work, one sentence on at least two.</td></tr>
+<tr><td class="t">1:00</td><td class="w">Pair and share</td><td>Groups settle on positions they can defend, then take the questions in front of the room. Circulate for a group that landed somewhere unusual on the ransom question and call on them first.</td></tr>
+<tr><td class="t">1:16</td><td class="w">Close and bridge</td><td>Back to the opening two numbers. Then the line to leave them with: the attackers did not need a new idea, they needed one door without a second lock. Bridge to Chapter 10, where a company had the tools and still failed.</td></tr>
+</table></div>
+
+</main>
+<!--NAVJS-->
+<script>
+(function(){
+  var btns=[].slice.call(document.querySelectorAll('.dd-btn'));
+  function closeAll(except){
+    btns.forEach(function(b){
+      var m=document.getElementById(b.getAttribute('data-dd'));
+      if(m&&m!==except){m.classList.remove('open');b.setAttribute('aria-expanded','false');}
+    });
+  }
+  btns.forEach(function(b){
+    b.addEventListener('click',function(e){
+      e.stopPropagation();
+      var m=document.getElementById(b.getAttribute('data-dd'));
+      var open=m.classList.contains('open');
+      closeAll();
+      if(!open){m.classList.add('open');b.setAttribute('aria-expanded','true');}
+    });
+  });
+  document.addEventListener('click',function(){closeAll();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeAll();});
+  document.querySelectorAll('.dd-menu').forEach(function(m){
+    m.addEventListener('click',function(e){e.stopPropagation();});
+  });
+})();
+</script>
+</body>
+</html>

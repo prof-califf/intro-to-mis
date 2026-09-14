@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chapter 7: What Data Is: Databases and Walmart | MIS 320</title>
+<meta name="description" content="What data actually is, why databases exist, and how Walmart built the biggest retail business in the world on top of one.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0e0e0d; --off-black:#1a1a18;
+  --magenta:#cc146d; --magenta-onblack:#f0348e; --magenta-dark:#c0146a; --magenta-pale:#fdeaf3;
+  --white:#ffffff; --off-white:#f6f4f1;
+  --text-dark:#0e0e0d; --text-muted:#3a3a38; --text-light:#6b6b68;
+  --border:#e0ddd8;
+  --warn:#b3261e; --warn-pale:#fdeceb;
+  --good:#1f7a53; --good-pale:#e8f4ee;
+  --sans:'Space Grotesk',sans-serif; --display:'Oswald',sans-serif;
+  --wrap:1180px; --col:46rem;
+  /* legacy aliases so existing markup keeps working */
+  --navy:#0e0e0d; --navy-soft:#1a1a18; --accent:#cc146d; --accent-deep:#c0146a;
+  --accent-pale:#fdeaf3; --cream:#ffffff; --cream-deep:#f6f4f1; --paper:#ffffff;
+  --ink:#0e0e0d; --muted:#6b6b68; --rule:#e0ddd8; --serif:'Space Grotesk',sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--white);color:var(--text-dark);
+  font-family:var(--sans);font-size:18.5px;line-height:1.7;-webkit-font-smoothing:antialiased}
+
+/* ---------- shell ---------- */
+.shell{max-width:var(--wrap);margin:0 auto;display:grid;grid-template-columns:15rem minmax(0,1fr);gap:3.5rem;padding:0 1.5rem 6rem}
+main{margin-left:auto;margin-right:auto;max-width:var(--col);padding-top:2.5rem}
+
+/* ---------- sidebar ---------- */
+.rail{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:2.5rem 0 3rem;border-right:1px solid var(--border)}
+.rail .book{font-family:var(--display);font-size:15px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--magenta);margin:0 0 .2rem}
+.rail .course{font-size:13.5px;color:var(--text-light);margin:0 0 1.75rem}
+.rail nav a{display:block;font-size:15px;line-height:1.35;color:var(--text-muted);text-decoration:none;padding:.42rem .8rem .42rem .85rem;border-left:2px solid transparent;margin-left:-.85rem}
+.rail nav a:hover{color:var(--magenta);border-left-color:var(--magenta)}
+.rail nav a.sub{font-size:14px;color:var(--text-light);padding-left:1.7rem}
+.rail .back{display:inline-block;margin-top:2rem;font-size:14px;color:var(--text-light);text-decoration:none}
+.rail .back:hover{color:var(--magenta)}
+.railtoggle{display:none}
+
+/* ---------- chapter head ---------- */
+.chaphead{border-bottom:3px solid var(--black);padding-bottom:1.6rem;margin-bottom:2.5rem}
+.eyebrow{font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--magenta);margin:0 0 .7rem}
+.chaphead h1{font-family:var(--display);font-weight:600;font-size:clamp(1.9rem,4.4vw,2.7rem);line-height:1.12;text-transform:uppercase;letter-spacing:.01em;margin:0 0 .6rem;color:var(--black)}
+.chaphead .anchor{font-size:16px;color:var(--text-light);margin:0}
+.chaphead .anchor strong{color:var(--text-muted);font-weight:500}
+.meta-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.2rem}
+.meta-row span{font-size:13px;letter-spacing:.03em;background:var(--off-white);border:1px solid var(--border);padding:.32rem .65rem;color:var(--text-muted)}
+.meta-row span.alt{background:var(--magenta-pale);border-color:#f6cfe1;color:var(--magenta-dark)}
+
+/* ---------- type ---------- */
+h2{font-family:var(--display);font-weight:600;font-size:1.72rem;line-height:1.22;text-transform:uppercase;letter-spacing:.01em;color:var(--black);margin:3.2rem 0 .9rem}
+h2 .num::before{content:"Section "}
+h2 .num{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;color:var(--magenta);display:block;margin-bottom:.4rem;text-transform:uppercase}
+h3{font-family:var(--display);font-weight:600;font-size:1.18rem;text-transform:uppercase;letter-spacing:.03em;color:var(--off-black);margin:2rem 0 .55rem}
+p{margin:0 0 1.05rem}
+a{color:var(--magenta-dark)}
+strong{font-weight:600;color:var(--black)}
+.lede{font-size:1.24rem;line-height:1.55;color:var(--text-muted)}
+code.inline{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--off-white);padding:.1em .35em;border:1px solid var(--border)}
+ul,ol{margin:0 0 1.15rem;padding-left:1.3rem}
+li{margin-bottom:.45rem}
+
+/* ---------- pull quote ---------- */
+.pull{margin:2.2rem 0;padding:0 0 0 1.4rem;border-left:3px solid var(--magenta)}
+.pull p{font-family:var(--display);font-weight:400;font-size:1.32rem;line-height:1.3;color:var(--black);margin:0 0 .5rem}
+.pull cite{font-style:normal;font-size:12.5px;color:var(--text-light)}
+
+/* ---------- callouts ---------- */
+.callout{border:1px solid var(--border);border-left:4px solid var(--magenta);background:var(--off-white);padding:1.15rem 1.3rem;margin:1.9rem 0}
+.callout > strong:first-child{display:block;font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--magenta);margin-bottom:.5rem}
+.callout p:last-child{margin-bottom:0}
+.callout-caution{border-left-color:var(--warn);background:var(--warn-pale)}
+.callout-caution strong:first-child{color:var(--warn)}
+.callout-bridge{border-left-color:var(--black);background:var(--off-white)}
+.callout-bridge strong:first-child{color:var(--black)}
+.callout-good{border-left-color:var(--good);background:var(--good-pale)}
+.callout-good strong:first-child{color:var(--good)}
+
+/* ---------- signature: value chain rail ---------- */
+.vc{margin:2.4rem 0;border:1px solid var(--border);background:var(--white);overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,.07)}
+.vc-head{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#fff;background:var(--black);padding:.7rem 1rem}
+.vc-strip{display:grid;grid-template-columns:repeat(5,1fr)}
+.vc-cell{padding:.85rem .7rem;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+.vc-cell:last-child{border-right:none}
+.vc-stage{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-light);display:block;margin-bottom:.3rem}
+.vc-cell p{font-size:15.5px;line-height:1.4;margin:0;color:var(--text-muted)}
+.vc-cell.broke{background:var(--magenta-pale)}
+.vc-cell.broke .vc-stage{color:var(--magenta)}
+.vc-cell.broke p{color:#8a1450}
+.vc-note{padding:.8rem 1rem;font-size:14px;color:var(--text-light);background:var(--off-white);border-top:1px solid var(--border)}
+.vc-note b{color:var(--magenta);font-weight:600}
+
+/* ---------- stat band ---------- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(8.5rem,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin:2rem 0}
+.stat{background:var(--white);padding:1rem .9rem}
+.stat b{display:block;font-family:var(--display);font-weight:700;font-size:1.8rem;color:var(--magenta);line-height:1.1}
+.stat span{display:block;font-size:13px;line-height:1.3;color:var(--text-light);margin-top:.3rem}
+
+/* ---------- timeline ---------- */
+.tl{list-style:none;padding:0;margin:1.8rem 0;border-left:2px solid var(--border)}
+.tl li{position:relative;padding:0 0 1.1rem 1.3rem;margin:0}
+.tl li:before{content:"";position:absolute;left:-5px;top:.55em;width:8px;height:8px;border-radius:50%;background:var(--magenta)}
+.tl li.bad:before{background:var(--warn)}
+.tl .when{font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--magenta);display:block}
+.tl li.bad .when{color:var(--warn)}
+
+/* ---------- vocabulary ---------- */
+.vocab{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin:1.8rem 0}
+.vocab div{background:var(--white);padding:.95rem 1rem}
+.vocab dt{font-family:var(--display);font-weight:600;font-size:15px;text-transform:uppercase;letter-spacing:.03em;color:var(--black);margin-bottom:.3rem}
+.vocab dd{margin:0;font-size:16.5px;line-height:1.5;color:var(--text-muted)}
+
+/* ---------- discussion questions ---------- */
+.dq{counter-reset:dq;margin:1.6rem 0 0;padding:0;list-style:none}
+.dq li{counter-increment:dq;position:relative;padding:1rem 0 1rem 2.6rem;border-top:1px solid var(--border)}
+.dq li:last-child{border-bottom:1px solid var(--border)}
+.dq li:before{content:counter(dq,decimal-leading-zero);position:absolute;left:0;top:1.05rem;font-family:var(--display);font-size:14.5px;font-weight:600;color:var(--magenta)}
+.tag{display:inline-block;font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:.2rem .5rem;margin-left:.5rem;vertical-align:.12em}
+.tag-hard{background:var(--warn);color:#fff}
+.tag-open{background:var(--black);color:#fff}
+.tag-warm{background:var(--magenta-pale);color:var(--magenta-dark)}
+
+/* ---------- sources ---------- */
+.sources{margin-top:3.5rem;padding-top:1.2rem;border-top:1px solid var(--border);font-size:14.5px;color:var(--text-light)}
+.sources h3{font-family:var(--display);font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin:0 0 .6rem}
+.sources li{margin-bottom:.35rem;line-height:1.5}
+
+/* ---------- responsive ---------- */
+@media (max-width:860px){
+  .shell{grid-template-columns:1fr;gap:0;padding:0 1.15rem 4rem}
+  .rail{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);padding:1.5rem 0 1rem;margin-bottom:.5rem}
+  .rail nav{display:none}
+  .rail nav.open{display:block;margin-top:.8rem}
+  .railtoggle{display:inline-block;font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--magenta);background:none;border:1px solid var(--border);padding:.4rem .7rem;cursor:pointer}
+  main{padding-top:1.2rem}
+  .vc-strip{grid-template-columns:repeat(2,1fr)}
+}
+:focus-visible{outline:2px solid var(--magenta);outline-offset:2px}
+
+/* ---------- prominent lab link ---------- */
+.lablink{display:inline-block;margin-top:.9rem;font-family:var(--display);font-size:14.5px;font-weight:600;
+  letter-spacing:.06em;text-transform:uppercase;text-decoration:none;background:var(--magenta);color:#fff;
+  padding:.6rem 1.15rem;border:none}
+.lablink:hover{background:var(--magenta-dark);color:#fff}
+.callout .lablink{margin-top:1rem}
+
+/* ---------- global top navigation with dropdowns ---------- */
+.topnav{position:sticky;top:0;z-index:100;background:var(--black);border-bottom:1px solid rgba(255,255,255,.14)}
+.topnav-in{max-width:var(--wrap);margin:0 auto;padding:.7rem 1.5rem;display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap}
+.topnav-brand{font-family:var(--display);font-size:16px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--magenta-onblack);text-decoration:none;margin-right:auto}
+.topnav-brand:hover{color:#fff}
+.dd{position:relative}
+.dd-btn{font-family:var(--display);font-size:14.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:#fff;background:none;border:1px solid rgba(255,255,255,.3);padding:.42rem .85rem;cursor:pointer}
+.dd-btn:hover,.dd-btn[aria-expanded="true"]{background:var(--magenta);border-color:var(--magenta)}
+.dd-btn .caret{font-size:11px;margin-left:.35rem}
+.dd-menu{display:none;position:absolute;right:0;top:calc(100% + .4rem);min-width:20rem;background:#fff;
+  border:1px solid var(--border);box-shadow:0 8px 30px rgba(0,0,0,.22);padding:.4rem 0;max-height:75vh;overflow-y:auto}
+.dd-menu.open{display:block}
+.dd-menu a{display:block;padding:.55rem 1rem;text-decoration:none;color:var(--text-dark);font-size:14.5px;line-height:1.35}
+.dd-menu a:hover{background:var(--magenta-pale);color:var(--magenta-dark)}
+.dd-menu a .lbl{display:block;font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--magenta);margin-bottom:.1rem}
+.dd-menu a.current{background:var(--off-white);border-left:3px solid var(--magenta)}
+.dd-menu a.soon{color:var(--text-light);pointer-events:none}
+.dd-menu a.soon .lbl{color:var(--text-light)}
+.dd-sep{margin:.35rem 0;border-top:1px solid var(--border)}
+@media (max-width:700px){
+  .topnav-in{padding:.6rem 1.15rem;gap:.6rem}
+  .topnav-brand{font-size:13.5px;width:100%;margin-right:0}
+  .dd{flex:1}
+  .dd-btn{width:100%;font-size:13px;padding:.4rem .5rem}
+  .dd-menu{right:auto;left:0;min-width:min(92vw,22rem)}
+}
+
+/* ---------- collapsible step-by-step help ---------- */
+.howto{margin:.7rem 0 1.1rem;border:1px solid var(--border);background:var(--off-white)}
+.howto>summary{cursor:pointer;padding:.6rem .9rem;font-family:var(--display);font-size:13px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--magenta-dark);list-style:none}
+.howto>summary::-webkit-details-marker{display:none}
+.howto>summary:before{content:"\25B8  ";font-size:11px}
+.howto[open]>summary:before{content:"\25BE  "}
+.howto>summary:hover{background:var(--magenta-pale)}
+.howto-body{padding:.3rem 1.1rem 1rem;border-top:1px solid var(--border);background:#fff}
+.howto-body ol{margin:.7rem 0;padding-left:1.3rem}
+.howto-body li{margin-bottom:.45rem;font-size:16.5px;line-height:1.5}
+.howto-body p{font-size:16.5px;margin:.6rem 0}
+.kbd{font-family:ui-monospace,Menlo,monospace;font-size:.85em;background:var(--off-white);
+  border:1px solid var(--border);border-radius:2px;padding:.1em .35em;white-space:nowrap}
+.mac{display:inline-block;font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;background:var(--black);color:#fff;padding:.1rem .4rem;margin-right:.35rem}
+.stuck{border:1px solid var(--border);border-left:4px solid var(--black);background:var(--off-white);
+  padding:1rem 1.2rem;margin:2rem 0 0}
+.stuck strong:first-child{display:block;font-family:var(--display);font-size:12.5px;font-weight:600;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--black);margin-bottom:.5rem}
+.stuck ol{margin:.5rem 0 0;padding-left:1.3rem}
+.stuck li{font-size:16.5px;margin-bottom:.35rem}
+
+/* ---------- AI traffic lights ---------- */
+.ailight{display:flex;gap:1rem;align-items:flex-start;border:1px solid var(--border);background:#fff;
+  padding:1rem 1.2rem;margin:1rem 0}
+.ailight .lamp{flex:0 0 auto;width:34px;background:#1c1c1a;border-radius:8px;padding:7px 0;
+  display:flex;flex-direction:column;align-items:center;gap:5px}
+.ailight .bulb{width:20px;height:20px;border-radius:50%;background:#2e2e2b;box-shadow:inset 0 2px 4px rgba(0,0,0,.6)}
+.ailight.g .bulb.b3{background:#2fae5f;box-shadow:0 0 10px rgba(47,174,95,.8),inset 0 -2px 3px rgba(0,0,0,.25)}
+.ailight.y .bulb.b2{background:#e6b93c;box-shadow:0 0 10px rgba(230,185,60,.8),inset 0 -2px 3px rgba(0,0,0,.25)}
+.ailight.r .bulb.b1{background:#d5453a;box-shadow:0 0 10px rgba(213,69,58,.8),inset 0 -2px 3px rgba(0,0,0,.25)}
+.ailight .lighttext{flex:1;min-width:0}
+.ailight .lighttext > strong:first-child{display:block;font-family:var(--display);font-size:13px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;margin-bottom:.3rem}
+.ailight.g .lighttext strong:first-child{color:#1e7c43}
+.ailight.y .lighttext strong:first-child{color:#a07a10}
+.ailight.r .lighttext strong:first-child{color:#a03434}
+.ailight p{margin:.2rem 0 0;font-size:16.5px;line-height:1.55}
+
+/* ---------- think-pair-share block ---------- */
+.tps{border:1px solid var(--black);background:#fff;margin:2.2rem 0}
+.tps-head{background:var(--black);color:#fff;padding:.6rem 1.1rem;font-family:var(--display);font-size:12.5px;
+  font-weight:600;letter-spacing:.2em;text-transform:uppercase;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.tps-head .mins{color:rgba(255,255,255,.7);letter-spacing:.1em}
+.tps-body{padding:1.1rem 1.25rem}
+.tps-setup{font-size:17px;line-height:1.6;margin:0 0 1rem}
+.tps-q{border-left:4px solid var(--magenta);background:var(--magenta-pale);padding:.8rem 1rem;margin:0 0 1.1rem}
+.tps-q p{margin:0;font-size:17px;line-height:1.5;font-weight:500}
+.tps-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border)}
+.tps-step{background:#fff;padding:.75rem .9rem}
+.tps-step .ph{font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--magenta);margin-bottom:.3rem;display:flex;justify-content:space-between}
+.tps-step .ph span{color:var(--text-light)}
+.tps-step p{margin:0;font-size:16px;line-height:1.45;color:var(--text-muted)}
+.tps-note{border-top:1px solid var(--border);margin-top:1.1rem;padding-top:.9rem;font-size:16px;color:var(--text-muted)}
+.tps-note strong{font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--black);display:block;margin-bottom:.35rem}
+@media(max-width:700px){.tps-steps{grid-template-columns:1fr}}
+
+/* ---------- Monday session plan (instructor-facing) ---------- */
+.plan{border:1px solid var(--border);background:var(--off-white);margin:2rem 0}
+.plan-head{background:var(--off-white);border-bottom:1px solid var(--border);padding:.55rem 1.05rem;
+  font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted)}
+.plan table{width:100%;border-collapse:collapse;background:#fff}
+.plan td{border-bottom:1px solid var(--border);padding:.6rem .9rem;font-size:15.5px;vertical-align:top;line-height:1.45}
+.plan tr:last-child td{border-bottom:none}
+.plan td.t{width:5.5rem;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--magenta);white-space:nowrap}
+.plan td.w{width:8rem;font-weight:600}
+@media(max-width:640px){.plan td.w{width:auto}}
+
+/* ---------- chapter depth: stat strip, TOC, key concept, summary table ---------- */
+.statrow{display:flex;flex-wrap:wrap;gap:1px;background:var(--border);border:1px solid var(--border);margin:1.6rem 0}
+.stat{flex:1 1 8rem;background:#fff;padding:.85rem 1rem;text-align:center}
+.stat b{display:block;font-family:var(--display);font-size:22px;font-weight:600;color:var(--magenta);line-height:1.1}
+.stat span{font-size:12.5px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;font-family:var(--display)}
+.toc{border:1px solid var(--border);background:var(--off-white);padding:1rem 1.25rem;margin:1.6rem 0;font-family:var(--sans);font-size:14.5px;line-height:2}
+.toc strong{display:block;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.3rem}
+.toc a{color:var(--text-dark);text-decoration:none;border-bottom:1px solid var(--border);margin-right:1rem;white-space:nowrap}
+@media (max-width:860px){.toc a{white-space:normal}}
+.toc a:hover{color:var(--magenta-dark);border-bottom-color:var(--magenta)}
+.kc{border:1px solid var(--border);border-left:4px solid var(--magenta);background:#fff;margin:1.4rem 0;padding:1rem 1.2rem}
+.kc .kc-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.15rem}
+.kc .kc-term{font-family:var(--display);font-size:17px;font-weight:600;display:block;margin-bottom:.45rem}
+.kc p{margin:0;font-size:17px;line-height:1.62}
+.sumtable{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:15.5px}
+.sumtable th{background:var(--black);color:#fff;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.55rem .8rem;text-align:left}
+.sumtable td{border:1px solid var(--border);padding:.6rem .8rem;vertical-align:top;line-height:1.5}
+.sumtable tr:nth-child(even) td{background:var(--off-white)}
+
+/* ---------- IS concepts chip strip ---------- */
+.concepts{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;margin:1.1rem 0 0}
+.concepts .clabel{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-right:.3rem}
+.concepts span:not(.clabel){font-family:var(--display);font-size:12.5px;font-weight:500;letter-spacing:.04em;border:1px solid var(--border);background:var(--off-white);padding:.22rem .6rem;color:var(--text-dark)}
+
+/* ported from ch2/ch3: check-yourself boxes, subheads, jump buttons, figures */
+.mcq{border-left:3px solid var(--magenta);background:var(--off-white);padding:.7rem 1rem;margin:1rem 0 1.6rem;font-family:var(--sans);font-size:.95rem}
+.mcq b{font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--magenta-dark);display:block;margin-bottom:.2rem}
+.jumprow{display:flex;flex-wrap:wrap;gap:.5rem;margin:.9rem 0 0}
+.jump{font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:var(--magenta);color:#fff;border:1px solid var(--magenta);padding:.5rem .9rem;text-decoration:none;display:inline-block}
+.jump:hover{background:var(--magenta-dark);border-color:var(--magenta-dark);color:#fff}
+main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transform:none;letter-spacing:0;color:var(--off-black);margin:2.1rem 0 .55rem;padding-left:.7rem;border-left:3px solid var(--magenta)}
+.pairline{font-family:var(--sans);font-size:.9rem;color:var(--text-light);margin:.4rem 0 0}
+.diagram{margin:1.6rem 0;text-align:center}
+.diagram img{border:1px solid var(--border)}
+.diagram figcaption{text-align:left}
+
+/* narrow screens: wide prose comparison tables stack into labelled cards. */
+@media (max-width:640px){
+  main table.stack-sm{display:block;width:100%;overflow-x:visible;border-collapse:separate;border-spacing:0}
+  table.stack-sm tr:first-child{display:none}
+  table.stack-sm tr{display:block;width:100%;border:1px solid var(--border);margin:0 0 .85rem;background:#fff}
+  table.stack-sm td{display:block;width:100%;border:none;border-bottom:1px solid var(--border);padding:.6rem .85rem;background:#fff!important}
+  table.stack-sm td:last-child{border-bottom:none}
+  table.stack-sm td::before{content:attr(data-label);display:block;font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--text-light);margin-bottom:.28rem}
+  table.stack-sm td:first-child{background:var(--black)!important;color:#fff;font-family:var(--display);letter-spacing:.06em;white-space:normal}
+  table.stack-sm td:first-child::before{content:none}
+  table.stack-sm td:first-child strong{color:#fff}
+}
+
+.tryit{border:1px solid var(--border);background:var(--white);box-shadow:0 2px 12px rgba(0,0,0,.06);margin:2rem 0;padding:0 0 1rem}
+.tryit-head{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#fff;background:var(--black);padding:.6rem 1rem}
+.tryit-intro{font-family:var(--sans);font-size:.97rem;color:var(--text-muted);margin:.9rem 1rem}
+.tryit-note{font-family:var(--sans);font-size:.9rem;color:var(--text-light);margin:.8rem 1rem 0;border-top:1px solid var(--border);padding-top:.7rem}
+.wrow{border-top:1px solid var(--border);padding:.75rem 1rem;display:grid;grid-template-columns:minmax(0,1fr);gap:.5rem 1rem;align-items:center}
+.wq{font-family:var(--sans);font-size:1rem;color:var(--text-dark)}
+.wbtns{display:flex;gap:.4rem;flex-wrap:wrap}
+.wbtns button{font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--off-white);border:1px solid var(--border);padding:.35rem .55rem;cursor:pointer;color:var(--text-dark)}
+.wbtns button:hover:not(:disabled){background:var(--magenta-pale);border-color:var(--magenta);color:var(--magenta-dark)}
+.wbtns button:disabled{opacity:.4;cursor:default}
+.wbtns button.you{opacity:1}
+.wbtns button.you.right{background:var(--good-pale);border-color:var(--good);color:var(--good)}
+.wbtns button.you.wrong{background:var(--warn-pale);border-color:var(--warn);color:var(--warn)}
+.wout{grid-column:1/-1;font-family:var(--sans);font-size:.95rem;line-height:1.5;padding:.6rem .8rem;border-left:3px solid var(--good);background:var(--good-pale);color:var(--text-dark)}
+.wout.no{border-left-color:var(--warn);background:var(--warn-pale)}
+.objectives{border:1px solid var(--border);border-left:4px solid var(--black);background:var(--off-white);padding:1rem 1.3rem;margin:1.6rem 0}
+.objectives .obj-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.4rem}
+.objectives ol{margin:.2rem 0 0 1.2rem;padding:0}
+.objectives li{margin:.3rem 0;font-size:16.5px;line-height:1.55}
+.takeaways{border:1px solid var(--border);border-left:4px solid var(--magenta);background:#fff;padding:1rem 1.3rem;margin:1.8rem 0}
+.takeaways .obj-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.4rem}
+.takeaways ul{margin:.2rem 0 0 1.2rem;padding:0}
+.takeaways li{margin:.35rem 0;font-size:16.5px;line-height:1.55}
+@media (max-width:860px){main{padding-left:1.25rem;padding-right:1.25rem}}
+</style>
+<link rel="stylesheet" href="book.css">
+</head>
+<body>
+<nav class="topnav">
+  <div class="topnav-in">
+    <a class="topnav-brand" href="index.html">MIS 320 &middot; Principles of Management Information Systems</a>
+    <a class="dd-btn" href="syllabus.html" style="text-decoration:none">Syllabus</a>
+    <a class="dd-btn" href="schedule.html" style="text-decoration:none">Schedule</a>
+    <div class="dd">
+      <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddc">Chapters<span class="caret">&#9660;</span></button>
+      <div class="dd-menu" id="ddc">
+      <a href="preface.html"><span class="lbl">Start here</span>About this book</a>
+      <a href="glossary.html"><span class="lbl">Reference</span>Glossary, A to Z</a>
+      <a href="chapter1-what-is-mis.html"><span class="lbl">Chapter 1 &middot; Week 1</span>What Is MIS? &mdash; Spotify Wrapped</a>
+      <a href="chapter2-starbucks.html"><span class="lbl">Chapter 2 &middot; Week 2</span>The Value of Information &mdash; Starbucks</a>
+      <a href="chapter3-competitive-advantage.html"><span class="lbl">Chapter 3 &middot; Week 3</span>Technology &amp; Competitive Advantage &mdash; Zara</a>
+      <a href="chapter4-dominos.html"><span class="lbl">Chapter 4 &middot; Week 4</span>Business Processes &mdash; Domino's</a>
+      <a href="chapter5-healthcaregov.html"><span class="lbl">Chapter 5 &middot; Week 5</span>Systems Analysis &amp; the SDLC &mdash; Healthcare.gov</a>
+      <a href="chapter6-moneyball.html"><span class="lbl">Chapter 6 &middot; Week 6</span>Business Intelligence &mdash; Moneyball</a>
+      <a class="current" href="chapter7-walmart.html"><span class="lbl">Chapter 7 &middot; Week 7</span>What Data Is: Databases &mdash; Walmart</a>
+      <a href="chapter8-nike-sap.html"><span class="lbl">Chapter 8 &middot; Week 7</span>Enterprise Systems &mdash; Nike/SAP</a>
+      <a href="chapter9-changehealthcare.html"><span class="lbl">Chapter 9 &middot; Week 8</span>Cybersecurity &mdash; Change Healthcare</a>
+      <a href="chapter10-equifax.html"><span class="lbl">Chapter 10 &middot; Week 8</span>IT Governance &mdash; Equifax</a>
+      <a href="chapter11-software.html"><span class="lbl">Chapter 11 &middot; Week 9</span>Software Design &amp; Selection &mdash; Robles v. Domino's</a>
+      <a href="chapter12-ai-ml.html"><span class="lbl">Chapter 12 &middot; Week 10</span>AI, Machine Learning &amp; Bias &mdash; TikTok &amp; Amazon</a>
+      <a href="chapter13-cloud.html"><span class="lbl">Chapter 13 &middot; Week 10</span>The Cloud &amp; What Computing Costs &mdash; Netflix</a>
+      </div>
+    </div>
+    <div class="dd">
+      <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddl">Labs<span class="caret">&#9660;</span></button>
+      <div class="dd-menu" id="ddl">
+      <a href="lab1-genai.html"><span class="lbl">Lab 1 &middot; Week 1</span>GenAI for Thinking</a>
+      <a href="lab2-excel-basics.html"><span class="lbl">Lab 2 &middot; Week 2</span>Excel Basics: Meeting the Client</a>
+      <a href="lab3-excel-dataprep.html"><span class="lbl">Lab 3 &middot; Week 3</span>Excel Functions: One Question, One Formula</a>
+      <a href="lab4-excel-dataviz.html"><span class="lbl">Lab 4 &middot; Week 4</span>Data Visualization: Charts That Tell the Truth</a>
+      <a href="lab5-excel-analysis.html"><span class="lbl">Lab 5 &middot; Week 5</span>Data Analysis &amp; Mini Project</a>
+      <a href="lab6-tableau.html"><span class="lbl">Lab 6 &middot; Week 6</span>Tableau: Worksheets to a Dashboard</a>
+      <a href="lab7-sql.html"><span class="lbl">Lab 7 &middot; Week 7</span>SQL Fundamentals</a>
+      <a href="lab8-security.html"><span class="lbl">Lab 8 &middot; Week 8</span>Security &amp; Data Governance: The Audit</a>
+      <a href="lab9-ux.html"><span class="lbl">Lab 9 &middot; Week 9</span>UX Design: The Heuristic Evaluation</a>
+      <a href="lab10-ia.html"><span class="lbl">Lab 10 &middot; Week 10</span>Information Architecture: Making Sense of a Mess</a>
+      <a href="resume.html"><span class="lbl">After the labs</span>Turning the labs into a resume</a>
+      </div>
+    </div>
+    <div class="dd">
+      <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddd">Data<span class="caret">&#9660;</span></button>
+      <div class="dd-menu" id="ddd">
+      <a href="cascadia-sales-2025.xlsx"><span class="lbl">Workbook</span>Cascadia sales, clean (.xlsx)</a>
+      <a href="cascadia-sales-2025-RAW.xlsx"><span class="lbl">Workbook</span>Cascadia sales, RAW export for Lab 7 (.xlsx)</a>
+      <a href="cascadia-sales-2025.csv"><span class="lbl">Data</span>Flat CSV for Tableau</a>
+      <a href="cascadia.db"><span class="lbl">Database</span>SQLite database for the SQL lab</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main class="chapwrap">
+
+<header class="chaphead">
+  <p class="eyebrow">Chapter 7 &middot; Databases</p>
+  <h1>Databases: How <b>Walmart</b> Built a Company on the Shape of Its Own Records</h1>
+  <p class="anchor">Every register in ten thousand stores writes down what just happened. That is not
+  unusual; every retailer does it. What Walmart did was decide what to record, arrange it so questions
+  were cheap to ask, and then hand the answers to its own suppliers. This chapter is about why the
+  arrangement matters more than the facts.</p>
+  <div class="concepts"><span class="clabel">Key concepts</span><span>What data is</span><span>Structured vs. unstructured data</span><span>Records, fields, and keys</span><span>The relational model</span><span>Normalization</span><span>OLTP vs. analytics</span><span>Data sharing as strategy</span></div>
+</header>
+
+<div class="toc"><strong>Contents</strong>
+<a href="#data">What data actually is</a>
+<a href="#tables">Why one grid breaks, and what replaces it</a>
+<a href="#cases">Two short failures of shape</a>
+<a href="#walmart">Main case. Walmart: a company built on a database</a>
+<a href="#other">The downside: what the basket reveals</a>
+<a href="#vocab">Vocabulary</a>
+<a href="#discussion">Discussion questions</a>
+<a href="#lab">From lecture to lab</a>
+<a href="#sources">Sources and further reading</a>
+<a href="#teaching">Teaching notes</a>
+</div>
+<p class="printbox"><span>Wanna go analog?</span><button type="button" onclick="window.print()" aria-label="Print this page or save it as a PDF">&#9113;&nbsp; Print here</button><span>or save it as a PDF; the navigation drops out</span></p>
+
+<p class="lede">Take the receipt from your last coffee or grocery run and count the facts on it. A store
+number, a date, a time, a register, a cashier. Then for every item a name, a quantity, a unit price, a
+line total. Then subtotal, tax, payment type, the last four digits of a card. A modest receipt easily
+holds thirty separate facts, and Walmart produces receipts like it at a rate of roughly 280 million
+customer visits a week.</p>
+
+<div class="objectives"><span class="obj-tag">Learning objectives</span>
+<p>By the end of this chapter you should be able to:</p>
+<ol>
+<li>Explain what data is, what it takes for a fact to become data, and why unrecorded facts cannot be managed.</li>
+<li>Distinguish structured, unstructured, and semi-structured data, and say which questions each makes cheap.</li>
+<li>Explain primary and foreign keys, and why normalization splits one grid into several tables.</li>
+<li>State the difference between operational (OLTP) and analytical use of data, and why the two are kept apart.</li>
+<li>Describe how Walmart turned its own data into a product for suppliers, and what that decision required of each component.</li>
+</ol>
+</div>
+
+<h2 id="data"><span class="num">1</span>What data actually is</h2>
+
+<p>Chapter 2 defined data by its role: raw recorded facts, the base layer that information and
+knowledge are built from. This chapter asks the more physical question. What is the stuff itself, and
+what has to be true of it before anyone can ask it anything?</p>
+
+<p>Notice where data sits among the five components. Data is the one component that is not bought and not
+built, but <em>accumulated</em>, one recorded fact at a time, according to rules somebody decided in
+advance. Hardware and software can be replaced over a weekend. The records cannot, because they are a
+history, and a history is the one thing money cannot buy in a hurry. That is Chapter 3's argument
+arriving from the other direction. Analytics and AI are things you do <em>to</em> data, so they inherit
+every decision made here.</p>
+
+<h3>1.1 What turns a fact into data</h3>
+
+<p>So what turns a fact into data? Two properties, and the rest of this chapter follows from them: the fact has to
+be recorded, and it has to be given a type.</p>
+
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Data</span>
+<p>Data is any recorded representation of a fact: a number, a piece of text, a date, a true/false
+flag, an image, a sound. Two properties matter more than any others. First, data is <strong>recorded</strong>:
+a sale that no system wrote down generates no data, no matter how real the sale was. Second, data has
+a <strong>type</strong>: the same marks on a screen mean different things depending on whether a
+system treats them as a number, text, or a date, and most data disasters begin with a type being
+wrong.</p></div>
+
+<h3>1.2 Kinds of data</h3>
+
+<p>Now, data comes in kinds, and the kinds determine what you can do with it:</p>
+
+<p><strong>Quantitative</strong> data is numeric and supports math: quantities, prices, temperatures,
+durations. <strong>Qualitative</strong> data is descriptive and supports grouping: a category, a
+state, a product name, a customer complaint. In your Cascadia work, revenue is quantitative and store
+name is qualitative, and you have already noticed that pivots treat the two completely differently:
+you sum one and group by the other.</p>
+
+<p>The second, bigger split is about shape, meaning how the data is organized:</p>
+
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Structured, unstructured, and semi-structured data</span>
+<p><strong>Structured data</strong> fits a fixed grid of rows and columns, where every row has the
+same fields and every field has a type: transactions, inventory counts, member records. It is the
+easiest data to query and the kind databases were invented for. <strong>Unstructured data</strong>
+has no fixed grid: emails, reviews, photos, call recordings, social posts. It is most of the data in
+the world by volume and historically the hardest to use; modern AI systems matter to business largely
+because they made unstructured data usable. <strong>Semi-structured data</strong> sits between: it
+has labels but not a rigid grid, like a JSON order from a website where one order has a delivery note
+and the next does not.</p></div>
+
+<p>Walmart works all three. The transaction stream is structured. The company also analyzes on the
+order of a hundred million social media keywords to hear what people near each store are saying,
+which is unstructured text being mined for structure. The skill of a data organization is largely the
+skill of moving facts rightward: from unstructured, to labeled, to fully structured, because
+structure is what makes questions cheap to ask.</p>
+
+<div class="tryit" id="shape">
+  <div class="tryit-head">Quick quiz &middot; Structured, unstructured, or semi-structured?</div>
+  <p class="tryit-intro">Five things a business might store. Decide what shape each one has before you check.</p>
+  <div id="shaperows"></div>
+  <p class="tryit-note">Ask whether every item has the same fields. If yes, it is structured. If it is free text or an image, unstructured. If it has tags but the tags vary from item to item, semi-structured.</p>
+</div>
+
+<script>
+(function(){
+  var host=document.getElementById('shaperows');
+  if(!host)return;
+  var F=["Structured", "Unstructured", "Semi-structured"];
+  var R=[{"t": "Every sale at the register: date, store, product, quantity, price.", "a": "Structured", "why": "Fixed fields, every row the same shape, each field a known type. This is the kind of data databases were invented for."}, {"t": "The voicemail a customer left complaining about a late delivery.", "a": "Unstructured", "why": "Audio with no fields. A person can understand it; a database cannot query it until something has turned it into data."}, {"t": "A product page saved as a web file, with tags for name and price but different extra tags on every product.", "a": "Semi-structured", "why": "Tags give it some structure, but the tags vary between items, so no fixed grid fits it. Most of the web looks like this."}, {"t": "The employee roster: name, hire date, store, hourly rate.", "a": "Structured", "why": "Same fields for every person. That it is about people rather than sales does not change its shape."}, {"t": "Ten thousand photos customers posted of their purchases, each with a caption.", "a": "Unstructured", "why": "The photo is the content and the caption is free text. Counting them is easy; asking what is in them requires a model."}];
+  R.forEach(function(r){
+    var row=document.createElement('div'); row.className='wrow';
+    row.innerHTML='<div class="wq">'+r.t+'</div><div class="wbtns">'
+      +F.map(function(f){return '<button type="button" data-f="'+f+'">'+f+'</button>';}).join('')
+      +'</div><div class="wout" role="status" aria-live="polite" hidden></div>';
+    host.appendChild(row);
+    var bs=row.querySelectorAll('button'), out=row.querySelector('.wout');
+    bs.forEach(function(b){
+      b.addEventListener('click',function(){
+        if(!out.hidden)return;
+        var ok=b.getAttribute('data-f')===r.a;
+        bs.forEach(function(x){x.disabled=true;});
+        b.className='you '+(ok?'right':'wrong');
+        if(!ok) bs.forEach(function(x){ if(x.getAttribute('data-f')===r.a) x.className='you right'; });
+        out.hidden=false; out.className='wout '+(ok?'yes':'no');
+        out.innerHTML='<b>'+r.a+'.</b> '+r.why;
+      });
+    });
+  });
+})();
+</script>
+
+<h3>1.3 Records, fields, and why format matters</h3>
+
+<p>Structured data has a standard anatomy, and you need three words for it, because you will use them in every lab from here on. A <strong>record</strong> is one complete fact-bundle: one sale,
+one member, one product. A <strong>field</strong> is one attribute inside it: the date, the quantity,
+the price. In a grid, records are rows and fields are columns. This vocabulary sounds trivial until
+you watch it fail.</p>
+
+<p>You are about to watch that anatomy fail. In this week's lab, the controller's RAW export hands you three of these. Prices stored as text with
+dollar signs, so they would not sum. Quantities that were blank instead of zero, which are not the
+same thing. And Washington spelled fourteen different ways, so groups split that should have merged.
+Every one of those problems is a <strong>format</strong> problem: the fact was fine, the
+representation was wrong. "March 3, 2025," "3/3/25," and "2025-03-03" are one fact wearing three
+costumes, and software, which matches representations rather than facts, treats them as three
+different days.</p>
+
+<div class="callout"><strong>The lesson under Lab 7</strong>
+<p>The cleaning this week's lab walks you through, standardizing formats, fixing types, resolving fourteen
+Washingtons into one, is exactly the discipline a database enforces automatically. A database column
+declared as a date refuses "March-ish"; a column declared numeric refuses "$18.00" with the sign. The
+mess you cleaned existed because the data was born in a system without rules. This chapter is about
+the systems with rules.</p></div>
+
+<h2 id="tables"><span class="num">2</span>Why one grid breaks, and what replaces it</h2>
+
+<p>So far in this chapter the facts have been sitting in a list. The natural next instinct is to put them all in one
+giant sheet: every sale, with the store's name and address and the product's name and price and
+supplier repeated on every row. For a few hundred rows that works, and everyone in this course has done
+it. Then it breaks, in three ways that have textbook names and one that does not.</p>
+
+<p>Before the mechanics, here is the reason this is a management topic and not a technical one. The structure you
+choose decides which questions are cheap to ask and which are effectively impossible, and nobody
+downstream can undo it. An analyst with a wrong-shaped database cannot analyze their way out of it, and
+neither can a machine learning model. In five-component terms, a bad data design makes data the weakest
+component, and the weakest component rule from Chapter 1 says the rest of the system is then limited by
+it however good it is.</p>
+
+<h3>2.1 The three ways one grid breaks</h3>
+
+<p>First, <strong>update anomalies</strong>: the Bellingham store's phone number lives on every one
+of its thousands of sale rows, so changing it means changing it thousands of times, and missing one
+means the sheet now disagrees with itself. Second, <strong>insertion anomalies</strong>: you cannot
+record a brand-new product until it has sold at least once, because product facts only live inside
+sale rows. Third, <strong>deletion anomalies</strong>: delete a store's only sale and you have also
+deleted everything you knew about the store. The single grid ties facts together that have different
+lifetimes, and the knots become errors.</p>
+
+<p>There is also a blunter, physical limit: one grid is edited by one person at a time and tops out around a
+million rows. Walmart's registers write millions of new rows an hour, from thousands of locations at
+once. No sheet survives contact with that.</p>
+
+<h3>2.2 The relational model</h3>
+
+<p>So what is the fix? Stop repeating facts. Give each kind of thing its own table, one for stores, one for
+products, one for sales, and connect the tables to each other with identifying numbers called keys.
+That design is the <strong>relational model</strong>, and the box names its parts.</p>
+
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">The relational database</span>
+<p>A relational database stores each kind of fact in its own <strong>table</strong>, one table for
+stores, one for products, one for sales, and connects them with keys. A <strong>primary key</strong>
+is a field that uniquely identifies each record in its table: store_id, product_id, sale_id. A <strong>foreign key</strong> is a field in one table that holds another table's primary key. Each sale row carries
+a store_id and a product_id, which is how a three-field sale row can "know" the store's address and
+the product's supplier without repeating them. Asking questions across tables by matching
+keys is called a <strong>join</strong>, and it is the move that makes the whole model work.</p></div>
+
+<p>Now run the Walmart receipt through that model. The one big grid becomes a sales table (thin rows: date, store_id,
+product_id, quantity, price), a stores table (one row per store, with the phone number stored
+exactly once), and a products table (one row per product, with its category and supplier). Each fact
+now lives in one place, updates happen once, and a new product can exist before it sells. The grid's
+three anomalies are not patched; they are structurally impossible.</p>
+
+<p>This is not an abstraction you have to take on faith, because you will build it yourself. The <a href="join-builder.html">join
+builder</a> lets you draw these key connections against the real Cascadia database, and Lab 7's
+final checkpoints, finding a supplier's products and a store's real problem, are joins you will
+write yourself.</p>
+
+<h3>2.3 Where the tables came from, and the decade nobody wanted them</h3>
+
+<p>The relational model is so standard now that it looks like a discovery about the nature of information rather than somebody's idea. It was somebody's idea, and it was resisted for years by the
+company best placed to build it.</p>
+
+<p>In June 1970, Edgar Codd, a mathematician at IBM's research laboratory in San Jose, published a paper
+called "A Relational Model of Data for Large Shared Data Banks." Its argument was that data should be
+stored as simple tables of rows and columns, related to each other by values, and that programs asking
+questions should not have to know how any of it was physically stored. You should be able to describe
+<em>what</em> you want rather than <em>how</em> to go and get it.</p>
+
+<p>At the time, databases worked the other way around. A programmer navigated to data by following pointers
+through a hierarchy, which meant every question had to be written against the storage layout, and
+changing the layout broke the programs. IBM sold a very successful product built exactly that way. Its
+research division had just published a paper explaining why that approach was the wrong one.</p>
+
+<p>IBM did eventually build a relational system, and its research project produced the query language
+that became SQL, the one you will write this week. But the company took years to bring a product to
+market, and it was a young outsider who read Codd's paper, took the idea seriously and shipped first,
+founding the company that became Oracle. Codd's employer had the paper, the researchers, the customers
+and the money, and still arrived late, because it already sold something the paper made obsolete.</p>
+
+<p>There are two things worth taking from that story. The first is that the thing you are about to be taught as
+self-evident was argued for, against opposition, by a named person, in living memory. The second is a
+pattern you will meet again and again in this book and in your career. The organization
+with the most to gain from an idea is frequently the one with the most to lose from it, and being
+right early is worth nothing by itself.</p>
+
+<figure class="diagram" style="margin:1.9rem auto;max-width:470px">
+<svg viewBox="0 0 470 396" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="nfT nfD"
+     style="width:100%;height:auto;font-family:var(--sans)">
+<title id="nfT">One grid becoming three tables</title>
+<desc id="nfD">At the top, a single wide table with columns for date, store, store phone, product and
+quantity, and three rows of sales. The store phone column holds the same value on every row and is
+shaded to show the repetition. An arrow points down to three smaller tables: a sales table holding date,
+store id, product id and quantity; a stores table holding store id, name and phone; and a products table
+holding product id, name and supplier. Lines connect the store id and product id fields in the sales
+table to the matching fields in the other two. A note says the phone number now exists in exactly one
+place.</desc>
+<defs><marker id="nfa" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+  <path d="M0 0 L10 5 L0 10 z" fill="var(--muted)"/></marker></defs>
+
+<text x="10" y="14" font-size="11" font-weight="700" fill="var(--ink)">ONE BIG SHEET</text>
+<text x="115" y="14" font-size="10" fill="var(--muted)">the phone number is written on every row</text>
+
+<rect x="10" y="22" width="450" height="19" fill="var(--black)"/>
+<rect x="182" y="41" width="104" height="57" fill="var(--magenta-pale)"/>
+<g font-size="9" fill="#fff" font-weight="700">
+  <text x="18" y="35">DATE</text><text x="78" y="35">STORE</text><text x="190" y="35">STORE PHONE</text>
+  <text x="294" y="35">PRODUCT</text><text x="410" y="35">QTY</text>
+</g>
+<g font-size="9" fill="var(--ink)">
+  <text x="18" y="54">3 Mar</text><text x="78" y="54">Bellingham</text><text x="190" y="54">(360) 555-0100</text><text x="294" y="54">Rain jacket</text><text x="410" y="54">1</text>
+  <text x="18" y="73">3 Mar</text><text x="78" y="73">Bellingham</text><text x="190" y="73">(360) 555-0100</text><text x="294" y="73">Wool socks</text><text x="410" y="73">2</text>
+  <text x="18" y="92">4 Mar</text><text x="78" y="92">Bellingham</text><text x="190" y="92">(360) 555-0100</text><text x="294" y="92">Rain jacket</text><text x="410" y="92">1</text>
+</g>
+<g stroke="var(--border)" stroke-width="1" fill="none">
+  <rect x="10" y="41" width="450" height="57"/><path d="M10 60 H460 M10 79 H460"/>
+  <path d="M70 41 V98 M182 41 V98 M286 41 V98 M400 41 V98"/>
+</g>
+
+<path d="M235 106 V132" fill="none" stroke="var(--muted)" stroke-width="1.6" marker-end="url(#nfa)"/>
+<text x="245" y="124" font-size="10" font-weight="600" fill="var(--magenta-dark)">split it up</text>
+
+<rect x="10" y="196" width="140" height="94" fill="#fff" stroke="var(--ink)" stroke-width="1.2"/>
+<rect x="10" y="196" width="140" height="18" fill="var(--black)"/>
+<text x="18" y="209" font-size="9.5" font-weight="700" fill="#fff">SALES</text>
+<g font-size="9" fill="var(--ink)">
+  <text x="18" y="228">date</text>
+  <text x="18" y="247">store_id</text>
+  <text x="18" y="266">product_id</text>
+  <text x="18" y="285">quantity</text>
+</g>
+
+<rect x="248" y="150" width="212" height="75" fill="#fff" stroke="var(--ink)" stroke-width="1.2"/>
+<rect x="248" y="150" width="212" height="18" fill="var(--black)"/>
+<text x="256" y="163" font-size="9.5" font-weight="700" fill="#fff">STORES</text>
+<g font-size="9" fill="var(--ink)">
+  <text x="256" y="182">store_id</text><text x="330" y="182" fill="var(--muted)">primary key</text>
+  <text x="256" y="199">name</text><text x="330" y="199">Bellingham</text>
+</g>
+<rect x="250" y="205" width="208" height="18" fill="var(--magenta-pale)"/>
+<g font-size="9" fill="var(--ink)"><text x="256" y="218">phone</text><text x="330" y="218">(360) 555-0100</text></g>
+
+<rect x="248" y="248" width="212" height="75" fill="#fff" stroke="var(--ink)" stroke-width="1.2"/>
+<rect x="248" y="248" width="212" height="18" fill="var(--black)"/>
+<text x="256" y="261" font-size="9.5" font-weight="700" fill="#fff">PRODUCTS</text>
+<g font-size="9" fill="var(--ink)">
+  <text x="256" y="280">product_id</text><text x="340" y="280" fill="var(--muted)">primary key</text>
+  <text x="256" y="297">name</text><text x="340" y="297">Rain jacket</text>
+  <text x="256" y="314">supplier</text><text x="340" y="314">Cascade Gear</text>
+</g>
+
+<path d="M150 243 C 195 243, 205 180, 246 180" fill="none" stroke="var(--magenta)" stroke-width="1.5"/>
+<circle cx="150" cy="243" r="2.6" fill="var(--magenta)"/><circle cx="246" cy="180" r="2.6" fill="var(--magenta)"/>
+<path d="M150 262 C 195 262, 205 278, 246 278" fill="none" stroke="var(--magenta)" stroke-width="1.5"/>
+<circle cx="150" cy="262" r="2.6" fill="var(--magenta)"/><circle cx="246" cy="278" r="2.6" fill="var(--magenta)"/>
+<text x="196" y="232" text-anchor="middle" font-size="8.5" fill="var(--magenta-dark)">foreign key</text>
+
+<text x="10" y="352" font-size="10.5" font-weight="600" fill="var(--magenta-dark)">The phone number now exists in exactly one place. (That is the whole idea of normalization.
+Everything else in this section is a consequence of it.)</text>
+<text x="10" y="368" font-size="10" fill="var(--muted)">Change it once and every sale that ever referred to it is correct, including the ones from 2019.</text>
+<text x="10" y="384" font-size="10" fill="var(--muted)">A new store can also exist before it has sold anything, which the sheet above made impossible.</text>
+</svg>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--muted);margin-top:.55rem;line-height:1.55">
+The shaded column is the whole argument. In the sheet, one fact about the Bellingham store is copied
+onto every row that mentions it, so the sheet can disagree with itself and there is no way to stop it.
+Below, the same fact sits in one row of one table, and the sales point at it. The three anomalies are not
+patched. They become impossible to express.
+</figcaption>
+</figure>
+
+<h3>2.4 Normalization</h3>
+
+<p>Splitting the one grid into tables so that each fact lives in exactly one place has a name,
+<strong>normalization</strong>, and it is less a technique than a habit of mind.</p>
+
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Normalization</span>
+<p>Normalization is the design discipline of splitting data into tables so that every fact is stored
+exactly once, in exactly one place. The working rule: every field in a table should describe the
+thing the table's primary key identifies, and nothing else. A store's phone number describes the
+store, so it belongs in the stores table, keyed by store_id, and nowhere else. Normalize well and
+consistency stops being a virtue you maintain and becomes a property the structure guarantees.
+Normalization has formal levels, called normal forms, that a database course will drill; for this
+course, the instinct matters more than the formalism: <em>if the same fact appears twice, the design
+is wrong.</em></p></div>
+
+<p>Normalization has a cost, and it is worth naming. A perfectly normalized database scatters
+a simple question across many tables, so answering "revenue by state last October" means joining
+sales to stores to a calendar. That is why analysts often build deliberately flattened copies of the
+data for reporting, accepting some duplication in exchange for fast questions. The design goal
+differs by purpose, which is the door into the next two sections: one shape for running the
+business, another for understanding it.</p>
+
+<h2 id="cases"><span class="num">3</span>Two short failures of shape</h2>
+<p>Before the main case, here are two short ones. In every one of them the facts existed, somebody needed an answer
+from those facts, and the answer was blocked by the <em>shape</em> the facts were stored in rather than
+by the facts themselves. They are separated by 130 years, which is the point. This is not a modern
+problem, and it did not stop being a problem when computers got fast.</p>
+
+<h3>3.1 Mini-case 1 &middot; 1890: the census that would have taken thirteen years</h3>
+
+<p>The United States Constitution requires a population count every ten years, and by the 1880s the
+counting had stopped working. The 1880 census was recorded on paper schedules and tallied by hundreds of
+clerks by hand, and the final tabulations were not finished until 1887. The population was growing
+faster than the clerks could count it. Officials estimated that the 1890 census, done the same way,
+would take about thirteen years, which meant the results would arrive after the census that was supposed
+to replace them.</p>
+
+<p>Herman Hollerith, who had worked on the 1880 count, proposed something that sounds obvious now and
+was not. Give every person a card, and give the card a fixed set of positions, where a hole in a
+particular place means a particular fact. Sex here. Age there. Occupation there. A machine passes pins
+through the card, the holes complete circuits, and counters advance.</p>
+
+<p>Look at what Hollerith's card actually is, in this chapter's terms. One card is a <strong>record</strong>. Each position on it is a
+<strong>field</strong>. Every card carries the same fields in the same order, which is what lets a
+machine handle them at all. Hollerith invented the row of a table forty years before there was a
+computer to put it in.</p>
+
+<p>The Census Bureau ran a competition in 1888 to decide who got the contract. Capturing the test data
+took the two other entrants 144.5 and 100.5 hours; it took Hollerith 72.5. Preparing that data for
+tabulation took them 44.5 and 55.5 hours; it took Hollerith 5.5. The gap on the second task is roughly
+tenfold, and the second task is the one this chapter is about, because it is not recording facts, it is
+getting answers out of them. A rough national count for 1890 came back in about six weeks. The company
+Hollerith founded on the proceeds eventually became IBM.</p>
+
+<p><strong>What the shape decided: whether the question could be answered at all. The component: data, at the level of the field.</strong> The 1880 data
+was not wrong. It was unstructured, and an unstructured fact is one that a person has to read.</p>
+
+<div class="mcq"><b>Check yourself</b>The census facts were identical in 1880 and 1890. Name the specific
+thing Hollerith changed, in the vocabulary of section 1, and explain why that change is what made the
+counting fast rather than the electricity.
+<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>The facts did not change; the shape did. In 1880 each answer was a mark on a paper schedule, readable by a person and countable only by a person. In 1890 each answer became a hole in a fixed position on a card: a field, with a type, in a record. That is the change. Once a fact has a position, a machine can find it, and once every record has the same positions, the machine can count across millions of them. Every database in this chapter is Hollerith's card with the paper removed.</p></details></div>
+
+<h3>3.2 Mini-case 2 &middot; 2020: the rows that fell off the bottom</h3>
+
+<p>During the pandemic, positive coronavirus test results in England traveled from testing laboratories
+to the contact tracing service through Public Health England. The laboratories sent results as text
+files. PHE loaded them into a spreadsheet template and passed the spreadsheet on.</p>
+
+<p>The template was saved in the old .xls format, which has a hard limit of 65,536 rows. Each test
+result occupied several rows, so the real ceiling was far lower. When a file reached the limit, the
+additional rows were not rejected with an error. They were silently discarded.</p>
+
+<p>Between 25 September and 2 October 2020, 15,841 positive cases were never passed to contact tracers.
+The people who tested positive were told. Their contacts were not, and by the time the gap was found
+most of them were past the window in which isolating would have helped. Reporting at the time put the
+number of untraced contacts near 48,000. A later economics study estimated that the delay was associated
+with more than a hundred thousand additional infections; treat that figure as an estimate rather than a
+count, because it is modeled rather than observed.</p>
+
+<p>This is section 2's argument about the single grid, played out at national scale, in a week. A spreadsheet is
+one big grid. It has a row limit, no rules about what a column may contain, no way to enforce that a
+result belongs to a person, and, crucially here, no obligation to complain when it drops something. A
+database would have refused the row and said so.</p>
+
+<p><strong>What the shape decided: whether anyone found out. The component: software.</strong> The failure was not that data was
+lost. It was that data was lost <em>quietly</em>, and a tool with rules is a tool that objects.</p>
+
+<div class="mcq"><b>Check yourself</b>You will spend this quarter working in spreadsheets, and this
+chapter is about databases. Name two properties a database has that a spreadsheet does not, and then
+name one situation where a spreadsheet is still the right choice.
+<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>The spreadsheet did what it was built to do. The file format Public Health England chose had a fixed limit on the number of rows, and when the case data exceeded it, the extra rows were silently dropped rather than flagged, so 16,000 positive tests never reached the contact tracers. A spreadsheet is a fine container for a few thousand rows that one person reads. It is the wrong container for a national count that grows every day, because it has no way to say "this is too big for me." A database would have taken the rows or refused them out loud. The failure was in choosing the container, not in using it.</p></details></div>
+
+<h3>3.3 What the two have in common</h3>
+
+<p>Put the two mini-cases side by side. In 1890 the facts had no structure, so no one could count them. In 2020 the wrong container was
+used for the volume, and it failed without saying so. Different centuries, different technologies, one
+finding: <strong>the facts were never the problem</strong>.</p>
+
+<p>There is a second thing the two share, and it matters more for your career than the first. In both cases the decision that caused the failure was made by a person, early, for a reason that was sound at
+the time, and it was made long before anyone could see the consequence. Somebody chose the fields. Somebody chose the file format. Those are not technical decisions that
+happen to have management consequences. They are management decisions that happen to be expressed in
+technology, and the chapter you are reading is about how to make them well.</p>
+<h2 id="walmart"><span class="num">4</span>Main case &middot; Walmart: a company built on a database</h2>
+
+<p>Imagine being a supplier in 1991 and being handed a login. Behind it is what sold, of your products,
+in every Walmart store, yesterday. No retailer had ever shown a supplier that. Walmart's founding
+advantages were about trucks and locations. Its modern advantage was built on
+the ideas in this chapter, and the pivotal move was one most companies would have considered
+unthinkable: it gave its data away.</p>
+
+<p>Four numbers set the scale of what that decision produced:</p>
+
+<div class="stats">
+  <div class="stat"><b>~10,900</b><span>stores worldwide</span></div>
+  <div class="stat"><b>~280M</b><span>customer visits weekly</span></div>
+  <div class="stat"><b>200+</b><span>data streams in the Data Caf&eacute;</span></div>
+  <div class="stat"><b>40 PB</b><span>of recent transaction data</span></div>
+</div>
+
+<h3>4.1 Giving the data away: Retail Link</h3>
+
+<p>Let's start with the decision itself. In 1991 the company launched <strong>Retail Link</strong>, a system that shares Walmart's own
+point-of-sale data with its suppliers. A supplier like Procter &amp; Gamble can see how its products
+are selling, store by store, day by day, and manage its own inventory against real demand instead of
+against guesses. Every supply chain suffers from the <strong>bullwhip effect</strong>: demand distortion
+that grows larger at each step up the chain, because each company guesses at what the next one will
+need and adds a margin for safety. Retail Link attacks the bullwhip at the root by replacing the guesses
+with shared records. Suppliers plan against actual sales, Walmart's shelves
+stay stocked without warehouses of padding, and the whole chain runs on one version of the truth.</p>
+
+<p>Whether giving away your most valuable data is genius or madness is your Monday activity, and it is an open question. What is not in question is the scale of what grew from it. Walmart's analytics hub, the Data Café, draws on more than 200 internal and external data streams,
+including roughly 40 petabytes of recent transaction data. Reporting from the mid-2010s described
+the company building a private cloud handling 2.5 petabytes an hour. The numbers age quickly; the
+design principle does not: <em>every register is a sensor, and the database is the instrument the
+whole company reads.</em></p>
+
+<p>One story from the Data Caf&eacute; makes the point better than the petabytes do. A grocery team
+watched sales in one category slump and could not explain it. Drilling into the data showed a pricing
+error: the products were listed higher than intended. The fix was trivial once seen. A company
+analyst put the underlying principle plainly, noting that insights arriving after a week of analysis
+are sales already lost. That is Chapter 2's timeliness dimension, operating at Walmart scale: the
+same information, a week late, is worth a fraction as much.</p>
+
+<h3>4.2 From records to answers: analytics</h3>
+
+<p>Everything in this chapter to this point has been about storing facts correctly. Analytics is about asking the facts
+questions, and the two jobs pull database design in opposite directions.</p>
+
+<p>This is also where the remaining four components arrive. A normalized database is useless sitting still: the
+<strong>networks</strong> carry every register's writes to the center and carry Retail Link's answers back
+out to thousands of suppliers, and the <strong>people</strong> are the ones who think of the question. The
+Data Caf&eacute; did not notice the pricing error. A grocery team did, and then had somewhere to look.</p>
+
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Transactions vs. analytics (OLTP and OLAP)</span>
+<p>An <strong>operational</strong> system, formally OLTP, online transaction processing, records
+events as they happen: a register writing sale rows, a website placing orders. It handles millions of
+tiny writes and must never lose one. An <strong>analytical</strong> system, formally OLAP, reads
+huge sweeps of history to answer questions: revenue by region by month, attach rate by store.
+Companies typically copy data from the first into a separate <strong>data warehouse</strong> shaped
+for the second, because a query scanning two years of sales should never slow down the registers
+recording today's. When you pivot in Excel, chart in Tableau, or write a GROUP BY in SQL, you are
+doing analytics; the database underneath did the transaction processing first.</p></div>
+
+<p>Seen through this lens, the labs in this course are one continuous story. Business intelligence asks
+what to measure; this chapter supplies the machinery those measurements come from. Your Tableau
+dashboard and your SQL queries are analytics
+running on structured, normalized, joined data, and the reason your questions are cheap to ask is
+that someone designed the tables so they would be. Analytics is not a separate world from databases.
+It is what databases are for.</p>
+
+<h3>4.3 What's next: where this has gone since, and it is not nostalgia</h3>
+
+<p>Retail Link has run for more than thirty years and still does, as the portal where suppliers manage
+orders. What Walmart retired, in 2024, was the reporting inside it. Supplier analytics moved onto a newer
+platform, launched in 2021 as Luminate and renamed Scintilla in 2025, built by a division created in 2021
+called Walmart Data Ventures. The name changes are not the interesting part. Three things about the move
+are.</p>
+
+<p><strong>First, the data became a business.</strong> In 1991 sharing point-of-sale records was a supply-chain
+decision that happened to involve data. There is now a division whose job is to create value from
+Walmart's records, and access to the good tiers is a product suppliers pay for. Chapter 3 argued that
+accumulated data is the component nobody can buy. Walmart's answer, three decades later, is to sell
+carefully chosen views of it while keeping the accumulation.</p>
+
+<p><strong>Second, the question a supplier asks changed from "how did I do" to "what should I do."</strong> The old platform
+reported what had happened. The new one adds recommendations. In 2025 Walmart began adding AI tools on top: a conversational
+interface so a supplier can ask the data a question in ordinary language, automatic summaries of
+customer survey results, and suggested actions rather than tables. That is
+Chapter 2's progression from data to information to knowledge, happening in public. None of those
+tools would have anything to work with if somebody had not decided in 1991 what to record.</p>
+
+<p><strong>Third, the scope widened.</strong> The platform now covers customer behavior and perception across
+roughly 140 million households, not just what moved off a shelf, and it is expanding into Canada and
+Mexico.</p>
+
+<p>Hold all of that beside section 5 before you decide how you feel about it. The same joins that let a
+supplier see which stores are underperforming let somebody infer what a household is going through. The
+capability is identical; only the question differs. And notice that nothing in this paragraph required a
+new invention. It required thirty years of somebody having decided, correctly, what was worth writing
+down.</p>
+
+<h3>4.4 The five components at Walmart</h3>
+
+<p>Now that you have seen the whole system, here it is as five components, the way this course maps every case. Look at which row the advantage lives in, and notice that it is the row Walmart chose to give away.</p>
+
+<table class="sumtable stack-sm">
+<tr><th>Component</th><th>At Walmart</th><th>What breaks if it fails</th></tr>
+<tr><td data-label="Component"><strong>Hardware</strong></td><td data-label="At Walmart">Registers and scanners in ~10,900 stores; the servers behind the Data Caf&eacute;</td><td data-label="What breaks if it fails">A store goes dark: no sales recorded, shelves restocked on guesswork</td></tr>
+<tr><td data-label="Component"><strong>Software</strong></td><td data-label="At Walmart">The transaction systems, Retail Link, the analytics platforms</td><td data-label="What breaks if it fails">Suppliers plan against stale numbers; the bullwhip returns</td></tr>
+<tr><td data-label="Component"><strong>Data</strong></td><td data-label="At Walmart">Structured transactions at continental scale; 40 PB of recent history</td><td data-label="What breaks if it fails">A type error or bad key propagates into every report downstream</td></tr>
+<tr><td data-label="Component"><strong>Networks</strong></td><td data-label="At Walmart">Every register streaming to the center; Retail Link reaching thousands of suppliers</td><td data-label="What breaks if it fails">The shared version of the truth stops being shared</td></tr>
+<tr><td data-label="Component"><strong>People</strong></td><td data-label="At Walmart">Analysts in the Data Caf&eacute;; the grocery team that chased the slump; suppliers reading Retail Link</td><td data-label="What breaks if it fails">Data nobody investigates is a cost, not an asset: the pricing error runs for months</td></tr>
+</table>
+
+<h3>4.5 What a business technology manager takes from this chapter</h3>
+
+<p>Strip the Walmart case down to what you can reuse in any company. Four decisions came up in it, and each one is a decision you will be in the room for.</p>
+
+<p><strong>Decide the shape of the data before you decide anything else.</strong> A fact recorded as a field with a type can be counted, joined, and questioned; the same fact typed into a note cannot. Hollerith's census and Public Health England's spreadsheet failed for the same reason at opposite ends of history: the facts existed and the container was wrong. When somebody proposes to collect something, ask what the record will look like, because that decides which questions will be cheap for the next twenty years.</p>
+
+<p><strong>Put each fact in one place, and connect the places with keys.</strong> One giant grid corrupts itself in three predictable ways, and the relational model exists to stop that. You will not design databases for a living, but you will approve them, and the question to ask is whether the same fact is stored twice anywhere, because if it is, the two copies will eventually disagree and nobody will know which is right.</p>
+
+<p><strong>Sharing data can be worth more than hoarding it.</strong> Walmart's most valuable move was handing suppliers a login to their own sales data, which no retailer had done before. The information was worth more in the suppliers' hands than locked in Bentonville, because the suppliers used it to stop guessing. Before you treat data as a secret, ask who could make a better decision with it and what that decision would be worth to you.</p>
+
+<p><strong>Remember that the shape is a management decision, not a technical one.</strong> Somebody chose the fields. Somebody chose the file format. Those choices were made early, for reasons that were sound at the time, by people who could not see the consequence, and every one of them is the kind of choice a manager signs off on. Chapter 6 was about what analytics does with data, and Chapter 12 will do the same for AI; none of it works if the decisions in this chapter were made badly.</p>
+
+<h2 id="other"><span class="num">5</span>The downside: what the basket reveals</h2>
+
+<p>A store's transaction database looks like the least sensitive data imaginable: no health records,
+no messages, just groceries. The discomfort arrives when you understand what joins and history do to
+innocent-looking records.</p>
+
+<p>A single basket says little. A year of baskets, keyed to one identity, says a great deal: a
+household's size, schedule, budget, diet, religion by what is never bought, health by what suddenly
+is. Retail analytics openly works this inference, and the industry's most famous cautionary tale is
+about exactly this. In 2012 the New York Times reported that Target's statisticians had built a
+model that guessed, from purchases like unscented lotion and supplements, which shoppers were
+pregnant, and mailed them baby coupons. A father in Minneapolis complained to a store manager that
+his teenage daughter was receiving them. She was pregnant. The store had known before he did. Nothing in that story required surveillance in the spy-movie sense.
+It required exactly what this chapter teaches: clean records, a stable key per customer, and a join
+across time.</p>
+
+<p>The lesson of this section is not that databases are sinister. It is that <strong>the power to join is the power
+to reveal</strong>, and the same design choices that make honest questions cheap make invasive ones
+cheap too. A company that holds well-structured data about people holds a capability, and somebody
+has to decide who may use it, for what, and what happens when it leaks. The
+second question of this course, what does the system make easier, and for whom, applies to a schema
+as much as to an algorithm.</p>
+
+<div class="takeaways"><span class="obj-tag">Key takeaways</span>
+<ul>
+<li>Data is not collected, it is designed. The shape you record facts in decides which questions are cheap, which contradictions are possible, and who can answer without asking you.</li>
+<li>One big grid works for a few hundred rows and breaks at scale, because every repeated fact is a place for two copies to disagree. Normalization puts each fact in exactly one place.</li>
+<li>A key is a promise: this value identifies exactly one thing. Most data failures in this chapter were broken promises about keys and formats, not broken software.</li>
+<li>Registers write data; analysts read a cleaned copy of it. Keeping the two apart is why a heavy query never slows a sale.</li>
+<li>Walmart's data became a business because a supplier could answer its own questions from Walmart's records without asking anyone. The data component carried the load; the other four made it deliverable.</li>
+</ul>
+</div>
+
+<h2 id="vocab"><span class="num">6</span>Vocabulary</h2>
+
+<dl class="vocab">
+<div><dt>Data</dt><dd>A recorded representation of a fact, with a type.</dd></div>
+<div><dt>Quantitative / qualitative</dt><dd>Numeric data you can do math on; descriptive data you group by.</dd></div>
+<div><dt>Structured data</dt><dd>Facts in a fixed grid of typed fields; what databases were built for.</dd></div>
+<div><dt>Unstructured data</dt><dd>Text, images, audio: no fixed grid; most of the world's data.</dd></div>
+<div><dt>Record / field</dt><dd>One complete fact-bundle; one attribute within it.</dd></div>
+<div><dt>Primary key</dt><dd>The field that uniquely identifies each record in a table.</dd></div>
+<div><dt>Foreign key</dt><dd>A field holding another table's primary key; how tables connect.</dd></div>
+<div><dt>Join</dt><dd>Answering a question across tables by matching keys.</dd></div>
+<div><dt>Normalization</dt><dd>Designing tables so every fact is stored exactly once.</dd></div>
+<div><dt>Update / insertion / deletion anomaly</dt><dd>The three ways a single big grid corrupts itself.</dd></div>
+<div><dt>OLTP</dt><dd>Systems that record events as they happen; many tiny writes.</dd></div>
+<div><dt>Data warehouse</dt><dd>A copy of operational data shaped for analytical questions.</dd></div>
+<div><dt>Analytics</dt><dd>Asking recorded facts questions; what databases are for.</dd></div>
+</dl>
+
+<div class="tps">
+  <div class="tps-head"><span>Monday activity &middot; The Retail Link question</span><span class="mins">12 minutes</span></div>
+  <div class="tps-body">
+    <p class="tps-setup">Since 1991, Walmart has shared its point-of-sale data, the record of what
+    actually sells, store by store, with its suppliers through Retail Link, at no charge. Chapter 3
+    spent a week arguing that hard-to-copy information is the root of competitive advantage. Walmart
+    hands its information to thousands of outside companies on purpose.</p>
+    <div class="tps-q"><p>Is giving away your most valuable data a brilliant strategy or a giveaway? Commit to one before you discuss.</p></div>
+    <div class="tps-steps">
+      <div class="tps-step"><div class="ph">Think <span>3 min</span></div><p>Pick a side and write the single strongest reason for it. Name who captures the value the sharing creates.</p></div>
+      <div class="tps-step"><div class="ph">Pair <span>5 min</span></div><p>Find someone on the other side. Each of you gets ninety seconds, uninterrupted. Then try to name one condition under which you would switch.</p></div>
+      <div class="tps-step"><div class="ph">Share <span>12 min</span></div><p>We will collect the switching conditions on the board; they are the real answer.</p></div>
+    </div>
+    <div class="tps-note"><strong>Where this lands</strong>The trap is treating "the data" as the asset.
+    The data ages worthless in weeks; the asset is the pipeline that makes more, and Walmart shares the
+    product while keeping the machine. Sharing also moves inventory work and risk onto suppliers, and it
+    deepens their dependence on Walmart's shelf. The strongest counter is that suppliers selling through
+    rivals carry Walmart-grade demand intelligence with them. Both sides survive scrutiny, which is why
+    the switching conditions matter more than the verdict.</div>
+  </div>
+</div>
+
+<div class="ailight g">
+  <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
+  <div class="lighttext"><strong>Green light for this chapter's questions.</strong> Use AI freely to
+  test your understanding: ask it to quiz you on keys and normalization, or to walk a table design with
+  you. For the discussion questions below, form your own position first, then use AI as a sparring
+  partner against it, per the Lab 1 rules.</div>
+</div>
+
+<h2 id="discussion"><span class="num">7</span>Discussion questions</h2>
+<p>None of these get handed in. On Wednesday you run the discussion and I steer it, which means the
+class is only as good as what you walk in with. Read the chapter, pick the question you have the
+strongest opinion about, and be ready to say it first.</p>
+
+<ol class="dq">
+  <li>Take a receipt from your own wallet or phone and design the tables. What belongs in the sales
+  table, what belongs somewhere else keyed by an id, and which fact on the receipt is hardest to place?
+  Defend that last one. <span class="tag">Apply</span></li>
+
+  <li>Explain to someone who has never used a database why storing a store's phone number on every sale
+  row eventually produces a sheet that disagrees with itself. Then explain what the relational model does
+  about it, without using the word normalization. <span class="tag">Analyze</span></li>
+
+  <li>Retail Link gives Walmart's demand data to its suppliers. Chapter 3 argued that advantage comes
+  from what rivals cannot copy, and Walmart handed its most valuable records away, yet the advantage held
+  for three decades. What exactly did the suppliers get, what did they still not have, and which of the
+  five components was the part nobody could take? <span class="tag">Systems</span></li>
+
+  <li>The Data Caf&eacute; found a pricing error in minutes that had been costing sales for a while
+  before that. List everything that had to already exist, across all five components, for that question
+  to be answerable quickly, and name the one component whose absence would have hidden the problem
+  longest. <span class="tag">Apply</span></li>
+
+  <li>Section 5 claims the power to join is the power to reveal. Construct a concrete example: two
+  harmless-looking tables that, joined on a shared key, produce something a person would not want known.
+  Then say who inside a company should have to approve that join, and what they would need to know to
+  decide. <span class="tag tag-hard">Ethics</span></li>
+</ol>
+
+<h2 id="lab"><span class="num">8</span>From lecture to lab</h2><div class="callout callout-bridge"><strong>Week 7 &middot; Lab 7</strong>
+<p><strong>Monday</strong> covered what data is, why one grid breaks, and how tables and keys replace it.
+<strong>Wednesday</strong> is Walmart, and Chapter 8's Nike case runs the same week.</p>
+<p>This week's lab, <a href="lab7-sql.html"><strong>Lab 7: SQL Fundamentals</strong></a>, is this chapter
+with your hands on it. The Cascadia database has the tables this chapter describes, with the keys this
+chapter defines, and the joins you write are the operation that makes the relational model worth having.
+The final checkpoints, finding a supplier's products and finding one store's real problem, are questions
+that would be impossible in a single grid and are three lines of SQL against a normalized one.</p>
+  <a class="lablink" href="lab7-sql.html">Go to Lab 7 &#8594;</a>
+</div>
+
+<h2 id="sources"><span class="num">9</span>Sources and further reading</h2>
+<ul class="sources">
+<li>Charles Duhigg, "How Companies Learn Your Secrets," <em>The New York Times Magazine</em>, 16 February 2012, for the Target pregnancy-prediction story in section 5.</li>
+<li>Edgar F. Codd, "A Relational Model of Data for Large Shared Data Banks," <em>Communications of the ACM</em>, June 1970. The paper that defined the model this chapter teaches. Six pages, and readable if you skip the algebra.</li>
+<li>U.S. Census Bureau history pages on Herman Hollerith and the tabulating machine, for the 1888 competition timings, the 1880 tabulation finishing in 1887, and the 1890 count coming in ahead of schedule.</li>
+<li>Contemporary reporting on the Public Health England data loss, September and October 2020, for the 15,841 cases, the .xls row limit, and the untraced contacts. Thiemo Fetzer's Warwick working paper models the downstream effect; its figures are estimates rather than counts.</li>
+<li>Walmart Data Ventures, "Introducing Scintilla" (February 2025), and trade reporting (Talk Business &amp; Politics, October 2023 and October 2024; Modern Retail, October 2024) on the retirement of the Decision Support reports inside Retail Link during 2024, the Luminate platform (launched September 2021) and its renaming to Scintilla, Walmart Data Ventures (formed February 2021), the 2025 addition of AI tools, and the expansion into Mexico and Canada. Platform names and figures here change yearly; check them before teaching from them.</li>
+<li>Walmart, 2026 Annual Report (April 2026), for the roughly 280 million weekly customer and member visits and the more than 10,900 stores.</li>
+<li>Walmart corporate materials and trade reporting on Retail Link since 1991 and on the Data Caf&eacute;, for the shared point-of-sale data, the data stream count, and the pricing-error story. Walmart's scale figures age quickly; check before teaching from them.</li>
+<li>The Y2K remediation effort is well documented in government and industry retrospectives; the useful framing for this chapter is that the successful ones are the ones nobody remembers.</li>
+<li><strong>Verification note.</strong> Checked against sources in September 2026: the Walmart scale figures (updated to the 2026 annual report), the Retail Link and Luminate/Scintilla timeline (corrected: the portal was not retired; the reporting inside it was, during 2024), the Data Ventures founding date (corrected from "around 2020" to February 2021). The Data Caf&eacute; figures (200 streams, 40 petabytes, 2.5 petabytes an hour) come from 2015 to 2017 coverage and are almost certainly out of date; they are kept as scale indicators from that period, as the text says. Not confirmed from a Walmart source: the "roughly 140 million households" figure for Scintilla's coverage. The Hollerith timings, the 1880 tabulation date, the Public Health England figures, and the Codd history were checked against the authors' knowledge of the published sources rather than re-searched.</li>
+<li>Bernard Marr, <a href="https://bernardmarr.com/walmart-big-data-analytics-at-the-worlds-biggest-retailer/">Walmart: Big Data analytics at the world's biggest retailer</a>: the Data Caf&eacute;, the 200+ streams and 40 petabyte figures, the 2.5 petabytes-per-hour cloud reporting, and the grocery pricing story, drawn from his interview with a Walmart analyst.</li>
+<li>SAS Insights, <a href="https://www.sas.com/en_us/insights/articles/analytics/how-walmart-makes-data-work-for-its-customers.html">How Walmart makes data work for its customers</a>: weekly customer volumes, social keyword analysis, and the company's own emphasis on cleansing data first.</li>
+<li>Datafloq, <a href="https://datafloq.com/read/big-data-walmart-big-numbers-40-petabytes/">Big Data at Walmart</a>: platform scale and the integration of internal and external datasets.</li>
+<li>Retail Link's history is documented across decades of supply chain literature; any account of vendor-managed inventory and the Walmart/P&amp;G partnership covers its origins. Note that Walmart's specific figures (petabytes, store counts) shift year to year; treat the numbers here as scale indicators, not current accounting.</li>
+</ul>
+
+<h2 id="teaching"><span class="num">10</span>Teaching notes</h2>
+<p style="font-family:var(--sans);font-size:.95rem;color:var(--muted)">Written for whoever is running the sessions. Students are welcome to read them, but nothing here is required. Note that this Monday carries Chapters 7 and 8 together, which makes it the heaviest of the quarter.</p>
+
+<div class="plan"><div class="plan-head">Monday session plan &middot; 80 minutes &middot; concepts, with the two short failures as illustrations</div>
+<table>
+<tr><td class="t">0:00</td><td class="w">Open</td><td>Hold up a receipt, real or on a slide. Ask how many separate facts are on it and count them out loud with the room. The number climbs past twenty fast, and everything in the session hangs off that pile of facts.</td></tr>
+<tr><td class="t">0:05</td><td class="w">Lecture</td><td>What data is: recorded, typed, quantitative against qualitative, then structured against unstructured. Then records and fields, and the point that format is not the same as fact. "March 3, 2025" and "3/3/25" are one fact in three costumes, and software matches representations rather than facts.</td></tr>
+<tr><td class="t">0:16</td><td class="w">Lecture</td><td>Why one grid breaks. Draw the receipt as a single wide sheet on the board and walk the three anomalies on it, pointing at the actual cells. Then draw it becoming three tables with keys. This is the single most important drawing of the session; do it slowly and let them copy it. The figure in section 2 is the same drawing if you would rather project it, but drawing it live is better, because the room watches the repetition disappear.</td></tr>
+<tr><td class="t">0:30</td><td class="w">Lecture</td><td>Normalization as one rule, that every field describes the thing the key identifies. Then name the cost plainly: a normalized database scatters a simple question across tables, which is why analysts build flattened copies. That tension sets up OLTP against analytics on Wednesday.</td></tr>
+<tr><td class="t">0:38</td><td class="w">Lecture</td><td>Codd in 1970 and what IBM did with it. Keep it to four minutes. The point is not the history, it is that the model students are about to treat as obvious was resisted for a decade by the company best placed to build it.</td></tr>
+<tr><td class="t">0:42</td><td class="w">Cases 1&#8211;2</td><td>The census and the rows that fell off the bottom, about four minutes each. Name what the shape decided in each one and stop. The comparison is the activity. If the room is quick, the 1888 competition timings are worth putting on the board: 5.5 hours against 44.5.</td></tr>
+<tr><td class="t">0:52</td><td class="w">Lecture</td><td>Chapter 8 at speed: ERP, CRM, SCM, silos, the bullwhip effect. The bridge is one sentence, that enterprise systems are what happens when a company insists on one database instead of twenty-seven.</td></tr>
+<tr><td class="t">1:06</td><td class="w">Think-pair-share</td><td>The Retail Link question. See the activity in section 6. Protect the silent minutes; the instinct in the room is unanimous and wrong, and it needs to be written down before it is challenged.</td></tr>
+<tr><td class="t">1:18</td><td class="w">Close</td><td>Preview Wednesday's double case, and tell them the SQL lab this week queries a real database with exactly the structures they just drew.</td></tr>
+</table></div>
+
+<div class="plan"><div class="plan-head">Wednesday session plan &middot; 80 minutes &middot; the Walmart case</div>
+<table>
+<tr><td class="t">0:00</td><td class="w">Open</td><td>One question: name the most valuable thing a retailer owns. Take answers, write them on the board, and note whether anybody says the records. Almost nobody does.</td></tr>
+<tr><td class="t">0:07</td><td class="w">Walk the case</td><td>Retail Link from 1991: what Walmart gave away, to whom, and what it got back. Keep naming which concept from Monday each piece is an instance of. The move to land is that sharing the demand signal attacks the bullwhip at its root, by replacing each link's guess with a record.</td></tr>
+<tr><td class="t">0:22</td><td class="w">Revisit Monday</td><td>They answered the Retail Link question on Monday without the case. Ask who wants to change their answer now, and make the ones who do say what specifically changed it. Then push the other side seriously: sharing point-of-sale data tells a supplier how much leverage it has and which of your stores are weak. What stops a supplier using it against Walmart? Get to the answer, which is that the relationship is asymmetric and the data is Walmart's to withdraw.</td></tr>
+<tr><td class="t">0:32</td><td class="w">Storing against asking</td><td>OLTP and analytics, the Data Caf&eacute;, and the pricing-error story. The sentence worth repeating is that insight arriving a week late is sales already lost, which is Chapter 2's timeliness dimension at continental scale.</td></tr>
+<tr><td class="t">0:42</td><td class="w">The turn</td><td>Section 5. Walk a year of one household's baskets and let the room work out what can be inferred. Nothing here requires surveillance; it requires clean records, a stable key, and a join. Tell the Target story here; it is in section 5.</td></tr>
+<tr><td class="t">0:52</td><td class="w">Think</td><td>All five discussion questions on screen. Silent individual work, one sentence on at least two. Protect this step.</td></tr>
+<tr><td class="t">0:58</td><td class="w">Pair</td><td>Groups of three or four settle on positions they can defend. Circulate for a group that landed somewhere unusual on the Retail Link or the inference question and call on them first.</td></tr>
+<tr><td class="t">1:08</td><td class="w">Share</td><td>Groups take the questions in front of the room. Ask for disagreement rather than answers.</td></tr>
+<tr><td class="t">1:17</td><td class="w">Close and bridge</td><td>Back to the opening board: does anyone want to change their answer about the most valuable thing a retailer owns? Then to Nike, where a company with one database still gets the demand signal catastrophically wrong.</td></tr>
+</table></div>
+
+</main>
+<!--NAVJS-->
+<script>
+(function(){
+  var btns=[].slice.call(document.querySelectorAll('.dd-btn'));
+  function closeAll(except){
+    btns.forEach(function(b){
+      var m=document.getElementById(b.getAttribute('data-dd'));
+      if(m&&m!==except){m.classList.remove('open');b.setAttribute('aria-expanded','false');}
+    });
+  }
+  btns.forEach(function(b){
+    b.addEventListener('click',function(e){
+      e.stopPropagation();
+      var m=document.getElementById(b.getAttribute('data-dd'));
+      var open=m.classList.contains('open');
+      closeAll();
+      if(!open){m.classList.add('open');b.setAttribute('aria-expanded','true');}
+    });
+  });
+  document.addEventListener('click',function(){closeAll();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeAll();});
+  document.querySelectorAll('.dd-menu').forEach(function(m){
+    m.addEventListener('click',function(e){e.stopPropagation();});
+  });
+})();
+</script>
+</body>
+</html>

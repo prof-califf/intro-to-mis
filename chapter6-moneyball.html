@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chapter 6: Business Intelligence: Moneyball | MIS 320</title>
+<meta name="description" content="The 2002 Oakland A's: how measuring the right thing beat three times the payroll, and what that has to do with dashboards, KPIs, and the co-op's hidden problem.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0e0e0d; --off-black:#1a1a18;
+  --magenta:#cc146d; --magenta-onblack:#f0348e; --magenta-dark:#c0146a; --magenta-pale:#fdeaf3;
+  --white:#ffffff; --off-white:#f6f4f1;
+  --text-dark:#0e0e0d; --text-muted:#3a3a38; --text-light:#6b6b68;
+  --border:#e0ddd8;
+  --warn:#b3261e; --warn-pale:#fdeceb;
+  --good:#1f7a53; --good-pale:#e8f4ee;
+  --sans:'Space Grotesk',sans-serif; --display:'Oswald',sans-serif;
+  --wrap:1180px; --col:46rem;
+  /* legacy aliases so existing markup keeps working */
+  --navy:#0e0e0d; --navy-soft:#1a1a18; --accent:#cc146d; --accent-deep:#c0146a;
+  --accent-pale:#fdeaf3; --cream:#ffffff; --cream-deep:#f6f4f1; --paper:#ffffff;
+  --ink:#0e0e0d; --muted:#6b6b68; --rule:#e0ddd8; --serif:'Space Grotesk',sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--white);color:var(--text-dark);
+  font-family:var(--sans);font-size:18.5px;line-height:1.7;-webkit-font-smoothing:antialiased}
+
+/* ---------- shell ---------- */
+.shell{max-width:var(--wrap);margin:0 auto;display:grid;grid-template-columns:15rem minmax(0,1fr);gap:3.5rem;padding:0 1.5rem 6rem}
+main{margin-left:auto;margin-right:auto;max-width:var(--col);padding-top:2.5rem}
+
+/* ---------- sidebar ---------- */
+.rail{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:2.5rem 0 3rem;border-right:1px solid var(--border)}
+.rail .book{font-family:var(--display);font-size:15px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--magenta);margin:0 0 .2rem}
+.rail .course{font-size:13.5px;color:var(--text-light);margin:0 0 1.75rem}
+.rail nav a{display:block;font-size:15px;line-height:1.35;color:var(--text-muted);text-decoration:none;padding:.42rem .8rem .42rem .85rem;border-left:2px solid transparent;margin-left:-.85rem}
+.rail nav a:hover{color:var(--magenta);border-left-color:var(--magenta)}
+.rail nav a.sub{font-size:14px;color:var(--text-light);padding-left:1.7rem}
+.rail .back{display:inline-block;margin-top:2rem;font-size:14px;color:var(--text-light);text-decoration:none}
+.rail .back:hover{color:var(--magenta)}
+.railtoggle{display:none}
+
+/* ---------- chapter head ---------- */
+.chaphead{border-bottom:3px solid var(--black);padding-bottom:1.6rem;margin-bottom:2.5rem}
+.eyebrow{font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--magenta);margin:0 0 .7rem}
+.chaphead h1{font-family:var(--display);font-weight:600;font-size:clamp(1.9rem,4.4vw,2.7rem);line-height:1.12;text-transform:uppercase;letter-spacing:.01em;margin:0 0 .6rem;color:var(--black)}
+.chaphead .anchor{font-size:16px;color:var(--text-light);margin:0}
+.chaphead .anchor strong{color:var(--text-muted);font-weight:500}
+.meta-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.2rem}
+.meta-row span{font-size:13px;letter-spacing:.03em;background:var(--off-white);border:1px solid var(--border);padding:.32rem .65rem;color:var(--text-muted)}
+.meta-row span.alt{background:var(--magenta-pale);border-color:#f6cfe1;color:var(--magenta-dark)}
+
+/* ---------- type ---------- */
+h2{font-family:var(--display);font-weight:600;font-size:1.72rem;line-height:1.22;text-transform:uppercase;letter-spacing:.01em;color:var(--black);margin:3.2rem 0 .9rem}
+h2 .num::before{content:"Section "}
+h2 .num{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;color:var(--magenta);display:block;margin-bottom:.4rem;text-transform:uppercase}
+h3{font-family:var(--display);font-weight:600;font-size:1.18rem;text-transform:uppercase;letter-spacing:.03em;color:var(--off-black);margin:2rem 0 .55rem}
+p{margin:0 0 1.05rem}
+a{color:var(--magenta-dark)}
+strong{font-weight:600;color:var(--black)}
+.lede{font-size:1.24rem;line-height:1.55;color:var(--text-muted)}
+code.inline{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--off-white);padding:.1em .35em;border:1px solid var(--border)}
+ul,ol{margin:0 0 1.15rem;padding-left:1.3rem}
+li{margin-bottom:.45rem}
+
+/* ---------- pull quote ---------- */
+.pull{margin:2.2rem 0;padding:0 0 0 1.4rem;border-left:3px solid var(--magenta)}
+.pull p{font-family:var(--display);font-weight:400;font-size:1.32rem;line-height:1.3;color:var(--black);margin:0 0 .5rem}
+.pull cite{font-style:normal;font-size:12.5px;color:var(--text-light)}
+
+/* ---------- callouts ---------- */
+.callout{border:1px solid var(--border);border-left:4px solid var(--magenta);background:var(--off-white);padding:1.15rem 1.3rem;margin:1.9rem 0}
+.callout > strong:first-child{display:block;font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--magenta);margin-bottom:.5rem}
+.callout p:last-child{margin-bottom:0}
+.callout-caution{border-left-color:var(--warn);background:var(--warn-pale)}
+.callout-caution strong:first-child{color:var(--warn)}
+.callout-bridge{border-left-color:var(--black);background:var(--off-white)}
+.callout-bridge strong:first-child{color:var(--black)}
+.callout-good{border-left-color:var(--good);background:var(--good-pale)}
+.callout-good strong:first-child{color:var(--good)}
+
+/* ---------- signature: value chain rail ---------- */
+.vc{margin:2.4rem 0;border:1px solid var(--border);background:var(--white);overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,.07)}
+.vc-head{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#fff;background:var(--black);padding:.7rem 1rem}
+.vc-strip{display:grid;grid-template-columns:repeat(5,1fr)}
+.vc-cell{padding:.85rem .7rem;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+.vc-cell:last-child{border-right:none}
+.vc-stage{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-light);display:block;margin-bottom:.3rem}
+.vc-cell p{font-size:15.5px;line-height:1.4;margin:0;color:var(--text-muted)}
+.vc-cell.broke{background:var(--magenta-pale)}
+.vc-cell.broke .vc-stage{color:var(--magenta)}
+.vc-cell.broke p{color:#8a1450}
+.vc-note{padding:.8rem 1rem;font-size:14px;color:var(--text-light);background:var(--off-white);border-top:1px solid var(--border)}
+.vc-note b{color:var(--magenta);font-weight:600}
+
+/* ---------- stat band ---------- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(8.5rem,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin:2rem 0}
+.stat{background:var(--white);padding:1rem .9rem}
+.stat b{display:block;font-family:var(--display);font-weight:700;font-size:1.8rem;color:var(--magenta);line-height:1.1}
+.stat span{display:block;font-size:13px;line-height:1.3;color:var(--text-light);margin-top:.3rem}
+
+/* ---------- timeline ---------- */
+.tl{list-style:none;padding:0;margin:1.8rem 0;border-left:2px solid var(--border)}
+.tl li{position:relative;padding:0 0 1.1rem 1.3rem;margin:0}
+.tl li:before{content:"";position:absolute;left:-5px;top:.55em;width:8px;height:8px;border-radius:50%;background:var(--magenta)}
+.tl li.bad:before{background:var(--warn)}
+.tl .when{font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--magenta);display:block}
+.tl li.bad .when{color:var(--warn)}
+
+/* ---------- vocabulary ---------- */
+.vocab{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin:1.8rem 0}
+.vocab div{background:var(--white);padding:.95rem 1rem}
+.vocab dt{font-family:var(--display);font-weight:600;font-size:15px;text-transform:uppercase;letter-spacing:.03em;color:var(--black);margin-bottom:.3rem}
+.vocab dd{margin:0;font-size:16.5px;line-height:1.5;color:var(--text-muted)}
+
+/* ---------- discussion questions ---------- */
+.dq{counter-reset:dq;margin:1.6rem 0 0;padding:0;list-style:none}
+.dq li{counter-increment:dq;position:relative;padding:1rem 0 1rem 2.6rem;border-top:1px solid var(--border)}
+.dq li:last-child{border-bottom:1px solid var(--border)}
+.dq li:before{content:counter(dq,decimal-leading-zero);position:absolute;left:0;top:1.05rem;font-family:var(--display);font-size:14.5px;font-weight:600;color:var(--magenta)}
+.tag{display:inline-block;font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:.2rem .5rem;margin-left:.5rem;vertical-align:.12em}
+.tag-hard{background:var(--warn);color:#fff}
+.tag-open{background:var(--black);color:#fff}
+.tag-warm{background:var(--magenta-pale);color:var(--magenta-dark)}
+
+/* ---------- sources ---------- */
+.sources{margin-top:3.5rem;padding-top:1.2rem;border-top:1px solid var(--border);font-size:14.5px;color:var(--text-light)}
+.sources h3{font-family:var(--display);font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin:0 0 .6rem}
+.sources li{margin-bottom:.35rem;line-height:1.5}
+
+/* ---------- responsive ---------- */
+@media (max-width:860px){
+  .shell{grid-template-columns:minmax(0,1fr);gap:0;padding:0 1.15rem 4rem}
+  .rail{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);padding:1.5rem 0 1rem;margin-bottom:.5rem}
+  .rail nav{display:none}
+  .rail nav.open{display:block;margin-top:.8rem}
+  .railtoggle{display:inline-block;font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--magenta);background:none;border:1px solid var(--border);padding:.4rem .7rem;cursor:pointer}
+  main{padding-top:1.2rem}
+  .vc-strip{grid-template-columns:repeat(2,1fr)}
+}
+:focus-visible{outline:2px solid var(--magenta);outline-offset:2px}
+
+/* ---------- prominent lab link ---------- */
+.lablink{display:inline-block;margin-top:.9rem;font-family:var(--display);font-size:14.5px;font-weight:600;
+  letter-spacing:.06em;text-transform:uppercase;text-decoration:none;background:var(--magenta);color:#fff;
+  padding:.6rem 1.15rem;border:none}
+.lablink:hover{background:var(--magenta-dark);color:#fff}
+.callout .lablink{margin-top:1rem}
+
+/* ---------- global top navigation with dropdowns ---------- */
+.topnav{position:sticky;top:0;z-index:100;background:var(--black);border-bottom:1px solid rgba(255,255,255,.14)}
+.topnav-in{max-width:var(--wrap);margin:0 auto;padding:.7rem 1.5rem;display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap}
+.topnav-brand{font-family:var(--display);font-size:16px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--magenta-onblack);text-decoration:none;margin-right:auto}
+.topnav-brand:hover{color:#fff}
+.dd{position:relative}
+.dd-btn{font-family:var(--display);font-size:14.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:#fff;background:none;border:1px solid rgba(255,255,255,.3);padding:.42rem .85rem;cursor:pointer}
+.dd-btn:hover,.dd-btn[aria-expanded="true"]{background:var(--magenta);border-color:var(--magenta)}
+.dd-btn .caret{font-size:11px;margin-left:.35rem}
+.dd-menu{display:none;position:absolute;right:0;top:calc(100% + .4rem);min-width:20rem;background:#fff;
+  border:1px solid var(--border);box-shadow:0 8px 30px rgba(0,0,0,.22);padding:.4rem 0;max-height:75vh;overflow-y:auto}
+.dd-menu.open{display:block}
+.dd-menu a{display:block;padding:.55rem 1rem;text-decoration:none;color:var(--text-dark);font-size:14.5px;line-height:1.35}
+.dd-menu a:hover{background:var(--magenta-pale);color:var(--magenta-dark)}
+.dd-menu a .lbl{display:block;font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--magenta);margin-bottom:.1rem}
+.dd-menu a.current{background:var(--off-white);border-left:3px solid var(--magenta)}
+.dd-menu a.soon{color:var(--text-light);pointer-events:none}
+.dd-menu a.soon .lbl{color:var(--text-light)}
+.dd-sep{margin:.35rem 0;border-top:1px solid var(--border)}
+@media (max-width:700px){
+  .topnav-in{padding:.6rem 1.15rem;gap:.6rem}
+  .topnav-brand{font-size:13.5px;width:100%;margin-right:0}
+  .dd{flex:1}
+  .dd-btn{width:100%;font-size:13px;padding:.4rem .5rem}
+  .dd-menu{right:auto;left:0;min-width:min(92vw,22rem)}
+}
+
+/* ---------- collapsible step-by-step help ---------- */
+.howto{margin:.7rem 0 1.1rem;border:1px solid var(--border);background:var(--off-white)}
+.howto>summary{cursor:pointer;padding:.6rem .9rem;font-family:var(--display);font-size:13px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--magenta-dark);list-style:none}
+.howto>summary::-webkit-details-marker{display:none}
+.howto>summary:before{content:"\25B8  ";font-size:11px}
+.howto[open]>summary:before{content:"\25BE  "}
+.howto>summary:hover{background:var(--magenta-pale)}
+.howto-body{padding:.3rem 1.1rem 1rem;border-top:1px solid var(--border);background:#fff}
+.howto-body ol{margin:.7rem 0;padding-left:1.3rem}
+.howto-body li{margin-bottom:.45rem;font-size:16.5px;line-height:1.5}
+.howto-body p{font-size:16.5px;margin:.6rem 0}
+.kbd{font-family:ui-monospace,Menlo,monospace;font-size:.85em;background:var(--off-white);
+  border:1px solid var(--border);border-radius:2px;padding:.1em .35em;white-space:nowrap}
+.mac{display:inline-block;font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;background:var(--black);color:#fff;padding:.1rem .4rem;margin-right:.35rem}
+.stuck{border:1px solid var(--border);border-left:4px solid var(--black);background:var(--off-white);
+  padding:1rem 1.2rem;margin:2rem 0 0}
+.stuck strong:first-child{display:block;font-family:var(--display);font-size:12.5px;font-weight:600;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--black);margin-bottom:.5rem}
+.stuck ol{margin:.5rem 0 0;padding-left:1.3rem}
+.stuck li{font-size:16.5px;margin-bottom:.35rem}
+
+/* ---------- AI traffic lights ---------- */
+.ailight{display:flex;gap:1rem;align-items:flex-start;border:1px solid var(--border);background:#fff;
+  padding:1rem 1.2rem;margin:1rem 0}
+.ailight .lamp{flex:0 0 auto;width:34px;background:#1c1c1a;border-radius:8px;padding:7px 0;
+  display:flex;flex-direction:column;align-items:center;gap:5px}
+.ailight .bulb{width:20px;height:20px;border-radius:50%;background:#2e2e2b;box-shadow:inset 0 2px 4px rgba(0,0,0,.6)}
+.ailight.g .bulb.b3{background:#2fae5f;box-shadow:0 0 10px rgba(47,174,95,.8),inset 0 -2px 3px rgba(0,0,0,.25)}
+.ailight.y .bulb.b2{background:#e6b93c;box-shadow:0 0 10px rgba(230,185,60,.8),inset 0 -2px 3px rgba(0,0,0,.25)}
+.ailight.r .bulb.b1{background:#d5453a;box-shadow:0 0 10px rgba(213,69,58,.8),inset 0 -2px 3px rgba(0,0,0,.25)}
+.ailight .lighttext{flex:1;min-width:0}
+.ailight .lighttext > strong:first-child{display:block;font-family:var(--display);font-size:13px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;margin-bottom:.3rem}
+.ailight.g .lighttext strong:first-child{color:#1e7c43}
+.ailight.y .lighttext strong:first-child{color:#a07a10}
+.ailight.r .lighttext strong:first-child{color:#a03434}
+.ailight p{margin:.2rem 0 0;font-size:16.5px;line-height:1.55}
+
+/* ---------- think-pair-share block ---------- */
+.tps{border:1px solid var(--black);background:#fff;margin:2.2rem 0}
+.tps-head{background:var(--black);color:#fff;padding:.6rem 1.1rem;font-family:var(--display);font-size:12.5px;
+  font-weight:600;letter-spacing:.2em;text-transform:uppercase;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.tps-head .mins{color:rgba(255,255,255,.7);letter-spacing:.1em}
+.tps-body{padding:1.1rem 1.25rem}
+.tps-setup{font-size:17px;line-height:1.6;margin:0 0 1rem}
+.tps-q{border-left:4px solid var(--magenta);background:var(--magenta-pale);padding:.8rem 1rem;margin:0 0 1.1rem}
+.tps-q p{margin:0;font-size:17px;line-height:1.5;font-weight:500}
+.tps-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border)}
+.tps-step{background:#fff;padding:.75rem .9rem}
+.tps-step .ph{font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--magenta);margin-bottom:.3rem;display:flex;justify-content:space-between}
+.tps-step .ph span{color:var(--text-light)}
+.tps-step p{margin:0;font-size:16px;line-height:1.45;color:var(--text-muted)}
+.tps-note{border-top:1px solid var(--border);margin-top:1.1rem;padding-top:.9rem;font-size:16px;color:var(--text-muted)}
+.tps-note strong{font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--black);display:block;margin-bottom:.35rem}
+@media(max-width:700px){.tps-steps{grid-template-columns:1fr}}
+
+/* ---------- Monday session plan (instructor-facing) ---------- */
+.plan{border:1px solid var(--border);background:var(--off-white);margin:2rem 0}
+.plan-head{background:var(--off-white);border-bottom:1px solid var(--border);padding:.55rem 1.05rem;
+  font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted)}
+.plan table{width:100%;border-collapse:collapse;background:#fff}
+.plan td{border-bottom:1px solid var(--border);padding:.6rem .9rem;font-size:15.5px;vertical-align:top;line-height:1.45}
+.plan tr:last-child td{border-bottom:none}
+.plan td.t{width:5.5rem;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--magenta);white-space:nowrap}
+.plan td.w{width:8rem;font-weight:600}
+@media(max-width:640px){.plan td.w{width:auto}}
+
+/* ---------- chapter depth: stat strip, TOC, key concept, summary table ---------- */
+.statrow{display:flex;flex-wrap:wrap;gap:1px;background:var(--border);border:1px solid var(--border);margin:1.6rem 0}
+.stat{flex:1 1 8rem;background:#fff;padding:.85rem 1rem;text-align:center}
+.stat b{display:block;font-family:var(--display);font-size:22px;font-weight:600;color:var(--magenta);line-height:1.1}
+.stat span{font-size:12.5px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;font-family:var(--display)}
+.toc{border:1px solid var(--border);background:var(--off-white);padding:1rem 1.25rem;margin:1.6rem 0;font-family:var(--sans);font-size:14.5px;line-height:2}
+.toc strong{display:block;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.3rem}
+.toc a{color:var(--text-dark);text-decoration:none;border-bottom:1px solid var(--border);margin-right:1rem;white-space:nowrap}
+.toc a:hover{color:var(--magenta-dark);border-bottom-color:var(--magenta)}
+.kc{border:1px solid var(--border);border-left:4px solid var(--magenta);background:#fff;margin:1.4rem 0;padding:1rem 1.2rem}
+.kc .kc-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.15rem}
+.kc .kc-term{font-family:var(--display);font-size:17px;font-weight:600;display:block;margin-bottom:.45rem}
+.kc p{margin:0;font-size:17px;line-height:1.62}
+.sumtable{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:15.5px}
+.sumtable th{background:var(--black);color:#fff;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.55rem .8rem;text-align:left}
+.sumtable td{border:1px solid var(--border);padding:.6rem .8rem;vertical-align:top;line-height:1.5}
+.sumtable tr:nth-child(even) td{background:var(--off-white)}
+
+/* ---------- IS concepts chip strip ---------- */
+.concepts{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;margin:1.1rem 0 0}
+.concepts .clabel{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-right:.3rem}
+.concepts span:not(.clabel){font-family:var(--display);font-size:12.5px;font-weight:500;letter-spacing:.04em;border:1px solid var(--border);background:var(--off-white);padding:.22rem .6rem;color:var(--text-dark)}
+
+/* mobile: wide tables scroll, long TOC anchors wrap */
+@media (max-width:860px){.toc a{white-space:normal}main table{display:block;overflow-x:auto;max-width:100%}}
+
+/* narrow screens: wide prose comparison tables stack into labelled cards.
+   Narrow data tables keep their grid so rows stay comparable. */
+@media (max-width:640px){
+  main table.stack-sm{display:block;width:100%;overflow-x:visible;border-collapse:separate;border-spacing:0}
+  table.stack-sm tr:first-child{display:none}
+  table.stack-sm tr{display:block;width:100%;border:1px solid var(--border);margin:0 0 .85rem;background:#fff}
+  table.stack-sm td{display:block;width:100%;border:none;border-bottom:1px solid var(--border);padding:.6rem .85rem;background:#fff!important}
+  table.stack-sm td:last-child{border-bottom:none}
+  table.stack-sm td::before{content:attr(data-label);display:block;font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--text-light);margin-bottom:.28rem}
+  table.stack-sm td:first-child{background:var(--black)!important;color:#fff;font-family:var(--display);letter-spacing:.06em;white-space:normal}
+  table.stack-sm td:first-child::before{content:none}
+  table.stack-sm td:first-child strong{color:#fff}
+}
+
+/* ported from ch3 */
+.mcq{border-left:3px solid var(--magenta);background:var(--off-white);padding:.7rem 1rem;margin:1rem 0 1.6rem;font-family:var(--sans);font-size:.95rem}
+.mcq b{font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--magenta-dark);display:block;margin-bottom:.2rem}
+.jumprow{display:flex;flex-wrap:wrap;gap:.5rem;margin:.9rem 0 0}
+.jump{font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:var(--magenta);color:#fff;border:1px solid var(--magenta);padding:.5rem .9rem;text-decoration:none;display:inline-block}
+.jump:hover{background:var(--magenta-dark);border-color:var(--magenta-dark);color:#fff}
+main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transform:none;letter-spacing:0;color:var(--off-black);margin:2.1rem 0 .55rem;padding-left:.7rem;border-left:3px solid var(--magenta)}
+
+.tryit{border:1px solid var(--border);background:var(--white);box-shadow:0 2px 12px rgba(0,0,0,.06);margin:2rem 0;padding:0 0 1rem}
+.tryit-head{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#fff;background:var(--black);padding:.6rem 1rem}
+.tryit-intro{font-family:var(--sans);font-size:.97rem;color:var(--text-muted);margin:.9rem 1rem}
+.tryit-note{font-family:var(--sans);font-size:.9rem;color:var(--text-light);margin:.8rem 1rem 0;border-top:1px solid var(--border);padding-top:.7rem}
+.wrow{border-top:1px solid var(--border);padding:.75rem 1rem;display:grid;grid-template-columns:minmax(0,1fr);gap:.5rem 1rem;align-items:center}
+.wq{font-family:var(--sans);font-size:1rem;color:var(--text-dark)}
+.wbtns{display:flex;gap:.4rem;flex-wrap:wrap}
+.wbtns button{font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--off-white);border:1px solid var(--border);padding:.35rem .55rem;cursor:pointer;color:var(--text-dark)}
+.wbtns button:hover:not(:disabled){background:var(--magenta-pale);border-color:var(--magenta);color:var(--magenta-dark)}
+.wbtns button:disabled{opacity:.4;cursor:default}
+.wbtns button.you{opacity:1}
+.wbtns button.you.right{background:var(--good-pale);border-color:var(--good);color:var(--good)}
+.wbtns button.you.wrong{background:var(--warn-pale);border-color:var(--warn);color:var(--warn)}
+.wout{grid-column:1/-1;font-family:var(--sans);font-size:.95rem;line-height:1.5;padding:.6rem .8rem;border-left:3px solid var(--good);background:var(--good-pale);color:var(--text-dark)}
+.wout.no{border-left-color:var(--warn);background:var(--warn-pale)}
+.objectives{border:1px solid var(--border);border-left:4px solid var(--black);background:var(--off-white);padding:1rem 1.3rem;margin:1.6rem 0}
+.objectives .obj-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.4rem}
+.objectives ol{margin:.2rem 0 0 1.2rem;padding:0}
+.objectives li{margin:.3rem 0;font-size:16.5px;line-height:1.55}
+.takeaways{border:1px solid var(--border);border-left:4px solid var(--magenta);background:#fff;padding:1rem 1.3rem;margin:1.8rem 0}
+.takeaways .obj-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.4rem}
+.takeaways ul{margin:.2rem 0 0 1.2rem;padding:0}
+.takeaways li{margin:.35rem 0;font-size:16.5px;line-height:1.55}
+.diagram{margin:1.6rem 0;text-align:center}
+.diagram figcaption{text-align:left}
+@media (max-width:860px){main{padding-left:1.25rem;padding-right:1.25rem}}
+</style>
+<link rel="stylesheet" href="book.css">
+</head>
+<body>
+<nav class="topnav">
+  <div class="topnav-in">
+    <a class="topnav-brand" href="index.html">MIS 320 &middot; Principles of Management Information Systems</a>
+    <a class="dd-btn" href="syllabus.html" style="text-decoration:none">Syllabus</a>
+    <a class="dd-btn" href="schedule.html" style="text-decoration:none">Schedule</a>
+    <div class="dd">
+      <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddc">Chapters<span class="caret">&#9660;</span></button>
+      <div class="dd-menu" id="ddc">
+      <a href="preface.html"><span class="lbl">Start here</span>About this book</a>
+      <a href="glossary.html"><span class="lbl">Reference</span>Glossary, A to Z</a>
+      <a href="chapter1-what-is-mis.html"><span class="lbl">Chapter 1 &middot; Week 1</span>What Is MIS? &mdash; Spotify Wrapped</a>
+      <a href="chapter2-starbucks.html"><span class="lbl">Chapter 2 &middot; Week 2</span>The Value of Information &mdash; Starbucks</a>
+      <a href="chapter3-competitive-advantage.html"><span class="lbl">Chapter 3 &middot; Week 3</span>Technology &amp; Competitive Advantage &mdash; Zara</a>
+      <a href="chapter4-dominos.html"><span class="lbl">Chapter 4 &middot; Week 4</span>Business Processes &mdash; Domino's</a>
+      <a href="chapter5-healthcaregov.html"><span class="lbl">Chapter 5 &middot; Week 5</span>Systems Analysis &amp; the SDLC &mdash; Healthcare.gov</a>
+      <a class="current" href="chapter6-moneyball.html"><span class="lbl">Chapter 6 &middot; Week 6</span>Business Intelligence &mdash; Moneyball</a>
+      <a href="chapter7-walmart.html"><span class="lbl">Chapter 7 &middot; Week 7</span>What Data Is: Databases &mdash; Walmart</a>
+      <a href="chapter8-nike-sap.html"><span class="lbl">Chapter 8 &middot; Week 7</span>Enterprise Systems &mdash; Nike/SAP</a>
+      <a href="chapter9-changehealthcare.html"><span class="lbl">Chapter 9 &middot; Week 8</span>Cybersecurity &mdash; Change Healthcare</a>
+      <a href="chapter10-equifax.html"><span class="lbl">Chapter 10 &middot; Week 8</span>IT Governance &mdash; Equifax</a>
+      <a href="chapter11-software.html"><span class="lbl">Chapter 11 &middot; Week 9</span>Software Design &amp; Selection &mdash; Robles v. Domino's</a>
+      <a href="chapter12-ai-ml.html"><span class="lbl">Chapter 12 &middot; Week 10</span>AI, Machine Learning &amp; Bias &mdash; TikTok &amp; Amazon</a>
+      <a href="chapter13-cloud.html"><span class="lbl">Chapter 13 &middot; Week 10</span>The Cloud &amp; What Computing Costs &mdash; Netflix</a>
+      </div>
+    </div>
+    <div class="dd">
+      <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddl">Labs<span class="caret">&#9660;</span></button>
+      <div class="dd-menu" id="ddl">
+      <a href="lab1-genai.html"><span class="lbl">Lab 1 &middot; Week 1</span>GenAI for Thinking</a>
+      <a href="lab2-excel-basics.html"><span class="lbl">Lab 2 &middot; Week 2</span>Excel Basics: Meeting the Client</a>
+      <a href="lab3-excel-dataprep.html"><span class="lbl">Lab 3 &middot; Week 3</span>Excel Functions: One Question, One Formula</a>
+      <a href="lab4-excel-dataviz.html"><span class="lbl">Lab 4 &middot; Week 4</span>Data Visualization: Charts That Tell the Truth</a>
+      <a href="lab5-excel-analysis.html"><span class="lbl">Lab 5 &middot; Week 5</span>Data Analysis &amp; Mini Project</a>
+      <a href="lab6-tableau.html"><span class="lbl">Lab 6 &middot; Week 6</span>Tableau: Worksheets to a Dashboard</a>
+      <a href="lab7-sql.html"><span class="lbl">Lab 7 &middot; Week 7</span>SQL Fundamentals</a>
+      <a href="lab8-security.html"><span class="lbl">Lab 8 &middot; Week 8</span>Security &amp; Data Governance: The Audit</a>
+      <a href="lab9-ux.html"><span class="lbl">Lab 9 &middot; Week 9</span>UX Design: The Heuristic Evaluation</a>
+      <a href="lab10-ia.html"><span class="lbl">Lab 10 &middot; Week 10</span>Information Architecture: Making Sense of a Mess</a>
+      <a href="resume.html"><span class="lbl">After the labs</span>Turning the labs into a resume</a>
+      </div>
+    </div>
+    <div class="dd">
+      <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddd">Data<span class="caret">&#9660;</span></button>
+      <div class="dd-menu" id="ddd">
+      <a href="cascadia-sales-2025.xlsx"><span class="lbl">Workbook</span>Cascadia sales, clean (.xlsx)</a>
+      <a href="cascadia-sales-2025-RAW.xlsx"><span class="lbl">Workbook</span>Cascadia sales, RAW export for Lab 7 (.xlsx)</a>
+      <a href="cascadia-sales-2025.csv"><span class="lbl">Data</span>Flat CSV for Tableau</a>
+      <a href="cascadia.db"><span class="lbl">Database</span>SQLite database for the SQL lab</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main class="chapwrap">
+
+<header class="chaphead">
+  <p class="eyebrow">Chapter 6 &middot; Business Intelligence and Analytics</p>
+  <h1>Business Intelligence: How <b>Oakland</b> Won by Measuring a Different Thing</h1>
+  <p class="anchor">In 2002 the Oakland Athletics lost their three best players, fielded one of the
+  cheapest rosters in baseball, and won 103 games. They did it with data everybody already had, in a
+  sport that had been recording it for a century. This chapter is about why choosing the measure is the
+  decision that matters, and why the advantage did not last.</p>
+  <div class="concepts"><span class="clabel">Key concepts</span><span>Business intelligence</span><span>Four kinds of analytics</span><span>Metrics and proxies</span><span>Measurement validity</span><span>Correlation and causation</span><span>Goodhart's law</span><span>Data warehouse and dashboards</span></div>
+</header>
+
+<div class="toc"><strong>Contents</strong>
+<a href="#bi">What business intelligence actually is</a>
+<a href="#traps">Reading numbers honestly</a>
+<a href="#cases">Two failures, two levels</a>
+<a href="#oakland">Main case. Oakland: the team that measured differently</a>
+<a href="#other">The downside: being measured</a>
+<a href="#vocab">Vocabulary</a>
+<a href="#discussion">Discussion questions</a>
+<a href="#lab">From lecture to lab</a>
+<a href="#sources">Sources and further reading</a>
+<a href="#teaching">Teaching notes</a>
+</div>
+<p class="printbox"><span>Wanna go analog?</span><button type="button" onclick="window.print()" aria-label="Print this page or save it as a PDF">&#9113;&nbsp; Print here</button><span>or save it as a PDF; the navigation drops out</span></p>
+
+<p class="lede">Baseball has more data per event than almost any business on earth, and it has been
+collecting it since the 1870s. In 2001 an entire industry was using that mountain of numbers to measure
+the wrong thing, and the number that would have told them so had been sitting in the same box score the
+whole time.</p>
+
+<div class="objectives"><span class="obj-tag">Learning objectives</span>
+<p>By the end of this chapter you should be able to:</p>
+<ol>
+<li>Place a question on the four levels of analytics (descriptive, diagnostic, predictive, prescriptive) and say what each level costs when it is wrong.</li>
+<li>Explain why every metric is a proxy, and test a metric for validity against the thing it is supposed to measure.</li>
+<li>Recognize correlation without causation and the small-sample problem in a business claim.</li>
+<li>State Goodhart's law and give an example of a metric that made a business worse.</li>
+<li>Explain how Oakland gained an advantage from the same data everyone had, and which component carried it.</li>
+</ol>
+</div>
+
+<h2 id="bi"><span class="num">1</span>What business intelligence actually is</h2>
+
+<p>The next two chapters are about getting facts into one place and keeping them consistent. This chapter is
+about what happens next, which is somebody asking the records a question. That sounds like the easy
+half. It is not, and the reason is that a question has to be asked in numbers, and choosing which
+number is a decision most organizations make once, by accident, and then live with for decades.</p>
+
+<p>In terms of the five components, everything in this chapter sits on top of the data component and is decided by the people component. The hardware and software of business intelligence are ordinary and purchasable,
+which Chapter 3 already told you means they cannot be the advantage. What cannot be bought is a person
+who asks whether the number everybody is staring at measures the thing everybody assumes it measures.
+That question is the entire chapter, and the case at the end is an organization that asked it while an
+industry with identical data did not.</p>
+
+<h3>1.1 Business intelligence, and the four levels of analytics</h3>
+
+<p>So what do we call this? Asking records a question has a name in business, and there is a standard way of sorting those questions by how much they ask.</p>
+
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Business intelligence &amp; analytics</span>
+<p><strong>Business intelligence (BI)</strong> is the practice of turning an organization's data into
+information that supports decisions: the systems, reports, and dashboards that tell a business what is
+happening. <strong>Analytics</strong> is the analytical work layered on top, and it comes in four
+kinds, in rising order of ambition. <strong>Descriptive</strong>: what happened? <strong>Diagnostic</strong>:
+why did it happen? <strong>Predictive</strong>: what will happen? <strong>Prescriptive</strong>: what
+should we do about it? A monthly sales report is descriptive. Drilling into why Bellingham's number
+moved is diagnostic. A forecast is predictive. A recommended reorder quantity is prescriptive.</p></div>
+
+<p>You have been doing this in the labs for four weeks without the vocabulary. Lab 2's totals were descriptive
+analytics. Lab 5's mini project, where something was wrong at Cascadia and you had to find out what,
+was diagnostic analytics, and the forecasting section was your first predictive step. The four levels matter because each level is worth more and costs more. Most organizations live on the bottom level, drowning in descriptive reports. (Most of you will spend
+your first job on the bottom two levels. That is not a demotion; it is where the work is.) The ones that move up are the ones that turn data into
+different decisions rather than prettier summaries.</p>
+<figure class="diagram" style="margin:1.8rem auto;max-width:470px">
+<svg viewBox="0 0 470 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="alT alD" style="width:100%;height:auto;font-family:var(--sans)">
+<title id="alT">The four levels of analytics</title>
+<desc id="alD">Four steps rising from left to right, labelled descriptive, diagnostic, predictive and prescriptive, with the question each one asks: what happened, why, what will happen, what should we do. Each step is wider and taller than the one before. A bar on the right, widening toward the top, is labelled cost of being wrong. Most organizations, a note says, live on the bottom step.</desc>
+<defs><marker id="ala" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--text-light)"/></marker></defs>
+<rect x="30" y="214" width="90" height="40" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1.2"/>
+<text x="75.0" y="232" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--text-dark)">DESCRIPTIVE</text>
+<text x="75.0" y="247" text-anchor="middle" font-size="9.5" fill="var(--text-light)">what happened?</text>
+<rect x="120" y="176" width="100" height="78" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1.2"/>
+<text x="170.0" y="194" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--text-dark)">DIAGNOSTIC</text>
+<text x="170.0" y="209" text-anchor="middle" font-size="9.5" fill="var(--text-light)">why?</text>
+<rect x="220" y="128" width="105" height="126" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1.2"/>
+<text x="272.5" y="146" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--text-dark)">PREDICTIVE</text>
+<text x="272.5" y="161" text-anchor="middle" font-size="9.5" fill="var(--text-light)">what will happen?</text>
+<rect x="325" y="70" width="110" height="184" fill="var(--magenta-pale)" stroke="var(--text-dark)" stroke-width="1.2"/>
+<text x="380.0" y="88" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--text-dark)">PRESCRIPTIVE</text>
+<text x="380.0" y="103" text-anchor="middle" font-size="9.5" fill="var(--text-light)">what should we do?</text>
+<text x="75" y="268" text-anchor="middle" font-size="9.5" fill="var(--magenta-dark)" font-weight="600">most organizations live here</text>
+<text x="380" y="222" text-anchor="middle" font-size="9" fill="var(--magenta-dark)" font-weight="600">a wrong answer here</text><text x="380" y="234" text-anchor="middle" font-size="9" fill="var(--magenta-dark)" font-weight="600">has already spent money</text>
+<path d="M452 254 L452 74" stroke="var(--magenta)" stroke-width="1.4" fill="none"/><path d="M448 82 L452 72 L456 82" fill="var(--magenta)"/>
+<text x="462" y="164" text-anchor="middle" font-size="10" font-weight="600" fill="var(--magenta-dark)" transform="rotate(-90 462 164)">cost of being wrong</text>
+<text x="235" y="292" text-anchor="middle" font-size="11" fill="var(--text-light)">Each level is worth more, costs more, and hurts more when it is wrong.</text>
+</svg>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">
+The shape is the argument. Each level asks a harder question than the one below it, and each answer is worth more. But the bar on the right climbs too: a bad description produces a bad slide, a bad prediction produces a bad forecast, and a bad prescription produces a forecast that has already acted. The organizations that climb are not the ones with the most data. They are the ones that turn each level into a different decision.
+</figcaption>
+</figure>
+
+<div class="tryit" id="rung">
+  <div class="tryit-head">Quick quiz &middot; Which of the four levels is this?</div>
+  <p class="tryit-intro">Five questions a manager might ask. Place each one on the four levels of analytics before you check.</p>
+  <div id="rungrows"></div>
+  <p class="tryit-note">The levels are in order of what they ask: what happened, why, what will happen, what should we do. Each one costs more to answer and costs more when it is wrong.</p>
+</div>
+
+<script>
+(function(){
+  var host=document.getElementById('rungrows');
+  if(!host)return;
+  var F=["Descriptive", "Diagnostic", "Predictive", "Prescriptive"];
+  var R=[{"t": "How many memberships did the Bellingham store sell last month?", "a": "Descriptive", "why": "A count of what happened. The answer is in the records and nobody has to interpret it."}, {"t": "Why did Bellingham's membership sales fall when every other store's rose?", "a": "Diagnostic", "why": "Looking for a cause. This requires comparing, slicing, and ruling things out, which is where the correlation trap starts."}, {"t": "How many memberships will Bellingham sell next quarter if nothing changes?", "a": "Predictive", "why": "A forecast. It is built from the past, so it is only as good as the assumption that the future will resemble the past."}, {"t": "Should we move the membership desk to the front of the store or retrain the staff?", "a": "Prescriptive", "why": "A recommendation that will spend money. This is the level where a wrong answer has already acted."}, {"t": "Which stores had the highest return rate on rain jackets this year?", "a": "Descriptive", "why": "A ranking of what happened. It feels analytical because it is sorted, but nobody has asked why yet."}];
+  R.forEach(function(r){
+    var row=document.createElement('div'); row.className='wrow';
+    row.innerHTML='<div class="wq">'+r.t+'</div><div class="wbtns">'
+      +F.map(function(f){return '<button type="button" data-f="'+f+'">'+f+'</button>';}).join('')
+      +'</div><div class="wout" role="status" aria-live="polite" hidden></div>';
+    host.appendChild(row);
+    var bs=row.querySelectorAll('button'), out=row.querySelector('.wout');
+    bs.forEach(function(b){
+      b.addEventListener('click',function(){
+        if(!out.hidden)return;
+        var ok=b.getAttribute('data-f')===r.a;
+        bs.forEach(function(x){x.disabled=true;});
+        b.className='you '+(ok?'right':'wrong');
+        if(!ok) bs.forEach(function(x){ if(x.getAttribute('data-f')===r.a) x.className='you right'; });
+        out.hidden=false; out.className='wout '+(ok?'yes':'no');
+        out.innerHTML='<b>'+r.a+'.</b> '+r.why;
+      });
+    });
+  });
+})();
+</script>
+
+<p>Baseball in 2001 was a perfect specimen of a descriptive-analytics industry. It had more data per
+event than almost any business on earth, a box score for every game since the 1870s, and it used that
+mountain of data mostly to describe, not to question. The questioning, when it came, came from outside:
+a night-shift statistician named Bill James had spent two decades publishing analyses, under the name
+<strong>sabermetrics</strong>, showing that some of baseball's most cherished numbers barely predicted
+winning. The A's were simply the first team desperate enough to act on it.</p>
+
+<h3>1.2 The wrong number on the scoreboard</h3>
+
+<p>For a century, the headline measure of a hitter was <strong>batting average</strong>: hits divided
+by at-bats. It is intuitive, traditional, and printed on the back of every card. It also has a design
+flaw: it ignores walks entirely. A player who draws a walk has reached base, avoided an out, and
+advanced the inning, and batting average records that event as if it never happened.</p>
+
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Metrics, proxies, and measurement validity</span>
+<p>A <strong>metric</strong> is a number chosen to stand in for something you actually care about, and
+that makes almost every metric a <strong>proxy</strong>. The thing baseball cares about is winning;
+wins come from runs; runs come from not making outs. <strong>Measurement validity</strong> asks: does
+the proxy actually track the thing? Batting average tracks run-scoring loosely. <strong>On-base percentage (OBP)</strong>, which counts every way of reaching base including walks, tracks it far
+more tightly. OBP is really measuring the avoidance of outs, and outs are the game's true scarce
+resource: you only get twenty-seven. The A's insight, distilled: the industry's headline metric had
+weak validity, a better one was sitting in the same box score, and nobody's prices reflected it.</p></div>
+
+<p>Notice what kind of insight the on-base percentage discovery was. It required no new technology, no new data, and no advanced
+math; OBP had been recorded for decades. It required someone to ask whether the number everyone stared
+at actually measured what they assumed it measured. That question, not the software, is the core skill
+of business intelligence, and it transfers directly: a store's revenue is a batting average. It tells
+you something happened. It does not tell you whether the underlying engine of the business, at Cascadia
+the membership relationship, is healthy or quietly failing.</p>
+
+<div class="pull"><p>The scoreboard was fine. The industry was reading the wrong line of it.</p></div>
+
+<h2 id="traps"><span class="num">2</span>Reading numbers honestly</h2>
+
+<p>Choosing the right measure is the first job of business intelligence. Reading it without fooling yourself is the second, and
+there are three traps that catch people who are perfectly competent at the arithmetic. Two of them are
+about what the numbers can and cannot tell you. The third is about what happens to a number once people
+know they are being judged by it.</p>
+
+<h3>2.1 Correlation, causation, and sample size</h3>
+
+<p>The first two traps are old, and both come from forgetting what a pattern in the numbers can and
+cannot prove.</p>
+
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Correlation, causation, and sample size</span>
+<p>Two numbers are <strong>correlated</strong> when they move together; <strong>causation</strong>
+means one actually drives the other. Team OBP correlates strongly with runs scored across a 162-game
+season, and there is a causal mechanism behind the correlation: not making outs extends innings. That
+combination, correlation plus a mechanism, tested across a large sample, is what earned the A's their
+confidence. But the same logic warns you where the model stops working. A five-game playoff series is a <strong>small
+sample</strong>, small enough for luck to swamp skill. That is why the 103-win A's could lose their playoff
+series, and why Beane himself said his approach could not be counted on in October. The lesson is symmetric: enough data makes patterns trustworthy, and small samples make even
+true patterns unreliable.</p></div>
+
+<p>Business runs on small samples more than it admits to. One viral month, one bad quarter, one focus
+group of nine people. The Cascadia connection is direct: your Lab 5 forecast extrapolated from months
+of data, and the honest analyst's question, there and everywhere, is whether the sample behind a
+pattern is large enough to bet on. A twenty-game winning streak is thrilling and it is also, as the
+A's themselves would tell you, partly a run of luck sitting on top of a good team.</p>
+
+<h3>2.2 When the metric becomes the target</h3>
+
+<p>There is a trap waiting inside every successful metric, and it has a name: <strong>Goodhart's
+law</strong>, usually stated as <em>when a measure becomes a target, it ceases to be a good
+measure</em>. The moment you pay people on a number, they optimize the number, not the thing it was a
+proxy for, and the gap between the two becomes the business's blind spot.</p>
+
+<p>Call centers that grade agents on average handle time get shorter calls and angrier customers,
+because the fastest way to end a call is to not solve the problem. Schools graded on test scores drift
+toward teaching the test. A sales team paid on units shipped will stuff the channel in December and eat
+returns in January. In every case the metric was a reasonable proxy right up until it became the
+target, and then the measured number improved while the real thing decayed. Baseball is not exempt: a
+hitter paid for OBP alone can learn to take walks in situations where swinging would win the game.</p>
+
+<p>Goodhart's law is why choosing metrics is a management decision, not a reporting chore. The professional habit
+is to pair every target with a counter-metric that catches the gaming: handle time with resolution
+rate, units shipped with returns. Keep this section in mind for the Monday activity,
+because your job there is to find one of these traps in the wild.</p>
+
+<h3>2.3 From the dugout to the dashboard</h3>
+
+<p>What did the Oakland A's revolution look like as an information system? It was unremarkably modest: public
+statistics, DePodesta's laptop, and spreadsheet models. The lesson is not the technology; it is the
+architecture, which is the same one every BI-capable business runs today, at larger scale.</p>
+
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">The BI stack: operational systems, warehouse, dashboard</span>
+<p>Operational systems, the registers and databases you will meet in the next two chapters, are built to record
+transactions quickly, one at a time. Analysis asks the opposite kind of question: patterns across
+millions of rows and months of history. So organizations copy operational data into a <strong>data
+warehouse</strong>, a database organized for analysis rather than transactions, and put
+<strong>dashboards</strong> on top: visual displays of the metrics that matter, updated continuously.
+The separation exists so that a heavy analytical query never slows down the register, and so that
+analysis runs on a cleaned, consistent copy, which after Lab 7 you know is not the copy the
+registers write.</p></div>
+
+<p>The last layer is <strong>self-service BI</strong>, tools like Tableau that let the analyst, rather
+than a programmer, explore the warehouse and build the dashboard. That is this week's lab, and it
+closes the loop on the course's longest-running thread. At Cascadia, revenue is the batting average:
+Bellingham's looked fine on every standard report. The member attach rate is the on-base percentage:
+the truer measure of the underlying engine, and the number that finally exposed the problem. You found
+it in a pivot table in Lab 5; this week you will make it impossible for a manager to miss, which is
+what a dashboard is for.</p>
+
+<div class="callout"><strong>The one-sentence version</strong>
+<p>BI is not having data. Everyone has data. BI is choosing the measure that tracks what you actually
+care about, and putting it where decisions get made.</p></div>
+
+<h2 id="cases"><span class="num">3</span>Two failures, two levels</h2>
+<p>Before the main case, here are two short ones, from opposite ends of the four levels in section 1. The first is a descriptive failure, the second prescriptive. Read them in order and watch the cost of being wrong grow. A bad description produces a bad slide. A bad prescription produces a bad forecast that has already spent your money.</p>
+
+<h3>3.1 Mini-case 1 &middot; 1986: the chart that did not show the thing it contained</h3>
+
+<p>The night before the Challenger launch, engineers at the contractor that built the shuttle's rocket
+boosters argued against flying. It was going to be unusually cold in Florida, and they believed the
+rubber seals between booster sections would be less able to seal at low temperature. They had data.
+Seals had been damaged on previous flights, and the damage had been recorded.</p>
+
+<p>What the engineers did not have was a picture that made the relationship visible. The charts taken into that
+teleconference presented the damaged flights, and did not plot damage against temperature across all
+the flights, including the ones with no damage at all. Read that way, the case looked like scattered
+incidents rather than a trend. The launch went ahead the next morning in near-freezing conditions and
+the shuttle was destroyed, killing all seven people aboard.</p>
+
+<p>Later analysis of those materials became a standard teaching example in how to display quantitative
+information, because the argument the engineers were making was <em>in</em> their data and was not
+<em>in</em> their charts. This is descriptive analytics failing at its only job.</p>
+
+<p><strong>The level: descriptive. The component: software, meaning the tool that displayed
+it.</strong> Nobody lacked the numbers, and nobody miscalculated. The presentation decided what a room
+full of decision-makers could see, which is worth remembering in a week when you are choosing what to
+put on a dashboard.</p>
+
+<div class="mcq"><b>Check yourself</b>The damaged flights were shown and the undamaged ones were left
+out. Explain why leaving out the cases where nothing happened destroys the ability to see a
+relationship, and name one chart you have made where you did the same thing without noticing.
+<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>Completeness. The chart showed only the flights with damage, so the reader could not see the relationship between temperature and damage, because half the evidence, every cold-weather flight that was damaged and every warm-weather flight that was fine, was either missing or not lined up with the rest. The data existed. The picture left it out. That is the descriptive level failing: not a wrong number, but a display that hid what the numbers contained. Tufte's redrawn version, all flights on one temperature axis, makes the danger obvious in a glance, which is the whole point of the descriptive level.</p></details></div>
+
+<h3>3.2 Mini-case 2 &middot; 2021: the algorithm that was allowed to spend</h3>
+
+<p>A model looks at a house and names a price, and a company wires the money, thousands of times, on the model's word. Zillow is a property website. In 2018 it started buying houses
+itself, using its own price estimates
+to decide what to pay, renovating them and selling them on. The estimate was no longer advice for a
+reader. It was an instruction to spend money.</p>
+
+<p>The model was not wildly wrong. It was wrong by a few percentage points, in a business where a few
+percentage points is the entire margin, and it was wrong in the same direction across thousands of
+houses at once. In November 2021 Zillow shut the business down, announced writedowns of up to $569
+million, and cut about a quarter of its staff.</p>
+
+<p>Compare Zillow with the other two mini-cases. A bad chart misleads a meeting. A bad forecast misleads a plan.
+A bad prescription buys seven thousand houses. The difference is not accuracy. It is how much authority
+somebody granted the output before anyone checked it.</p>
+
+<p><strong>The level: prescriptive. The component: people.</strong> The decision that cost the money was
+not made by the model. It was made by the executives who decided how far the model's answers could travel without a human
+in between. That is the same decision Chapter 4 asked you to make about handing steps to an agent.</p>
+
+<div class="mcq"><b>Check yourself</b>Zillow's estimate had been public for years before it was used to
+buy anything. Explain what changed about the same number when it stopped being displayed and started
+being acted on, and name the specific control you would have put between the model and the cheque.
+<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>Nothing changed about the estimate. What changed was the level it was operating at. As a number on a listing, the Zestimate was descriptive: a guess that a person read and weighed against everything else they knew. Once it was used to decide what Zillow itself would pay for a house, it became prescriptive: the number acted, with money, at scale, and nobody checked each decision. An estimate that is fine as information becomes dangerous as an instruction, because the errors that a person would have caught one at a time now pile up unchecked. That is why moving a model up the levels is a management decision, not a technical upgrade.</p></details></div>
+
+<h3>3.3 What the two have in common</h3>
+
+<p>Two failures, two levels, and neither was caused by bad arithmetic. The Challenger data was correct. Zillow's estimate was close. In both cases the numbers were fine and something around them was not: how they were displayed, and how much authority they were given.</p>
+
+<p>That is the argument of this chapter, stated in advance of the main case. Business intelligence is not a calculation problem.
+It is a series of judgments about what to measure, how to show it, what to compare it against, and how
+far to let it act on its own. The case that follows is what it looks like when an organization gets the
+first of those judgments right while an entire industry gets it wrong.</p>
+<h2 id="oakland"><span class="num">4</span>Main case &middot; Oakland: the team that measured differently</h2>
+
+<p>Let's begin with the problem Oakland faced. After the 2001 season, the Oakland Athletics lost their best hitter, Jason Giambi, to the New York
+Yankees on a seven-year, $120 million contract, and lost outfielder Johnny Damon and closer Jason
+Isringhausen the same winter. Oakland could not outbid anyone: its payroll of roughly $41 million was
+the third lowest in Major League Baseball, against the Yankees' roughly $125 million. By every
+conventional measure, the 2002 A's were supposed to collapse.</p>
+
+<p>General manager Billy Beane and his assistant Paul DePodesta could not buy the players everyone
+agreed were good, so they asked a more basic question: is everyone right about who is good? Baseball
+had a century of meticulous statistics and a settled consensus about which ones mattered. Beane and
+DePodesta treated that consensus as a hypothesis rather than a fact, tested it against the data, and
+found it wrong in an exploitable way. Then they built a roster out of the players the market had
+mispriced: a catcher with a damaged arm converted to first base, a sidearm reliever nobody wanted, and
+hitters who looked wrong and walked constantly.</p>
+
+<p>The result was 103 wins, a division title, and a twenty-game winning streak that set an American
+League record at the time, capped by a walk-off home run from Scott Hatteberg, the converted catcher. The season
+became Michael Lewis's book <em>Moneyball</em> and later the film. But strip away the baseball and what remains is the cleanest business intelligence case ever
+documented. An organization gained a competitive advantage not by having more data than its rivals,
+because everyone had the same data, but by measuring the right thing while everyone else measured
+the wrong one.</p>
+
+<div class="statrow">
+  <div class="stat"><b>~$41M</b><span>A's payroll, third lowest in MLB</span></div>
+  <div class="stat"><b>~$125M</b><span>Yankees payroll, the team they had to beat</span></div>
+  <div class="stat"><b>103&ndash;59</b><span>Oakland's record</span></div>
+  <div class="stat"><b>20</b><span>straight wins, an AL record until 2017</span></div>
+  <div class="stat"><b>1</b><span>question: what actually causes runs?</span></div>
+</div>
+
+<h3>4.1 Buying what the market mispriced</h3>
+
+<p>A mismeasured quality becomes a mispriced asset. Because the market paid for batting average, home
+runs, and how an athlete looked in uniform, players who merely got on base relentlessly came cheap.
+Hatteberg, coming off a career-threatening injury and hitting for modest averages, was exactly that.
+His on-base skills made him a bargain, and in 2002 he posted a .374 OBP and hit the home run that
+won game twenty of the streak. Reliever Chad Bradford threw underhand, looked unorthodox, got outs, and
+cost almost nothing. The roster was an arbitrage portfolio built on a market inefficiency: a price that
+had drifted away from the value it was supposed to track.</p>
+
+<p>Connect the A's story to Chapter 3. Porter would say the A's found a competitive advantage grounded in information. Everyone had the
+same raw data, but Oakland converted it into a truer model of value than its rivals used, which let
+a $41 million payroll buy roughly as much real production as teams spending three times more. And, exactly as Chapter 3 predicts, the advantage decayed as the
+information spread. Boston hired sabermetric thinkers and won the 2004 World Series; within a decade
+every front office employed analysts; and once everyone measured correctly, the edge returned to the
+teams with the most money. An information advantage is real, and it is rented, not owned.</p>
+
+<h3>4.2 What's next: what happened after everybody caught up</h3>
+
+<p>Chapter 3 predicted the ending of this story before you read it. An advantage built on information
+lasts exactly as long as the information stays scarce, and this one did not stay scarce, because
+Michael Lewis published a book explaining it.</p>
+
+<p>Boston hired the same kind of thinking and won the 2004 World Series, ending an eighty-six-year
+drought. Within about a decade every club in the league employed analysts, and the analytics
+departments that were novelties in 2002 became standard staffing. Once every team measured correctly,
+measuring correctly stopped being an edge, and the advantage flowed back to the clubs with the most
+money, which now spent it efficiently. Oakland, for its part, never won a World Series under Beane, and
+by the 2020s was among the lowest-payroll teams in the sport and left the city entirely.</p>
+
+<p>Then something happened in baseball that no chapter in this book has shown you yet: the analysis worked so well
+that the industry changed the rules to stop it.</p>
+
+<p>Teams had used the data to reposition fielders, moving three infielders to one side of the diamond
+against hitters whose spray charts said they almost always hit there. It worked. It also removed base
+hits that fans had paid to see, and the sport's offensive numbers fell. Before the 2023 season Major
+League Baseball banned the practice, requiring two infielders on each side of second base. Batting
+averages on balls in play rose that season.</p>
+
+<p>Stay with that rule change for a moment, because it applies well beyond baseball. An analytics program
+succeeded, its conclusions were adopted by everyone, the aggregate result was a worse product for the
+customer, and the governing body outlawed the conclusion. The same shape appears wherever a score or a
+recommendation is optimized hard enough. The question is what happens when optimization works, everyone does it, and the thing being
+optimized was not the thing anybody actually wanted.</p>
+
+<h3>4.3 The five components of the 2002 A's</h3>
+
+<p>Now that you have seen the whole system, here it is as five components, the way this course maps every case. Notice how little of it is technology. The advantage lived in the question, which is the people row.</p>
+
+<table class="sumtable stack-sm">
+<tr><th>Component</th><th>In the case</th><th>The lesson</th></tr>
+<tr><td data-label="Component"><strong>Hardware</strong></td><td data-label="In the case">A laptop and commodity computers; nothing exotic</td><td data-label="The lesson">The BI revolution was not a hardware story</td></tr>
+<tr><td data-label="Component"><strong>Software</strong></td><td data-label="In the case">Spreadsheets and statistical models on public data</td><td data-label="The lesson">The model encodes the insight; the tool is replaceable</td></tr>
+<tr><td data-label="Component"><strong>Data</strong></td><td data-label="In the case">A century of box scores every team also had</td><td data-label="The lesson">Advantage came from the question asked, not the data held</td></tr>
+<tr><td data-label="Component"><strong>Networks</strong></td><td data-label="In the case">Published statistics, available to every rival</td><td data-label="The lesson">Shared data means information advantages are temporary</td></tr>
+<tr><td data-label="Component"><strong>People</strong></td><td data-label="In the case">Beane choosing the model over a century of consensus</td><td data-label="The lesson">The scarce component was the willingness to trust a better measure</td></tr>
+</table>
+
+<h3>4.4 What a business technology manager takes from this chapter</h3>
+
+<p>Strip the Oakland case down to what you can reuse in any company. Four decisions came up in it, and each one is a decision you will be in the room for.</p>
+
+<p><strong>Choose the measure before you build the dashboard.</strong> Baseball had a century of accurate statistics and measured the wrong one. Everyone had the same data; Oakland asked a different question of it. When someone shows you a report, the first question is not whether the numbers are right but whether they are the numbers that matter for the decision, and that is a judgment the software cannot make.</p>
+
+<p><strong>Show the data so that the danger is visible.</strong> The Challenger engineers had the right numbers and drew a chart that hid the relationship. A description that leaves half the evidence off the page is not a description. Before a chart goes to a decision-maker, ask what a reader would conclude from it in five seconds, and whether that is what the data says.</p>
+
+<p><strong>Decide how much authority a number gets, and decide it on purpose.</strong> Zillow's estimate was fine as information and ruinous as an instruction. Moving a model from describing to deciding is a management decision, because the errors a person would catch one at a time now act at scale with nobody watching. Ask, for every number in the company, who is allowed to act on it without a person in between.</p>
+
+<p><strong>Expect the advantage to end when everybody catches up.</strong> By 2010 every team measured what Oakland measured, and the edge was gone; by 2023 the league changed the rules to undo what the measuring produced. A measurement advantage is real, and it is never permanent. The lasting advantage is the habit of asking whether the consensus is right, and that habit is a person, not a system.</p>
+
+<h2 id="other"><span class="num">5</span>The downside: being measured</h2>
+
+<p>The Moneyball story has winners it celebrates and costs it mentions quietly. The A's model worked
+partly by overruling scouts, professionals with decades of pattern-recognition that resisted
+quantification, and the analytics wave that followed thinned their ranks across the sport. Players
+experienced the shift too: to a model you are a row of numbers, and the qualities the numbers do not
+capture, leadership, resilience, how you play hurt, stop being priced. Some of that was the point;
+prejudice about how an athlete looked was exactly the noise OBP filtered out. But a measurement regime
+always sees some things by going blind to others, and the people inside it feel the blindness.</p>
+
+<p>Two honest footnotes belong in the Oakland case. The 2002 A's, for all 103 wins, lost in the first playoff
+round, and Beane's Oakland teams never won a World Series: analytics bought an edge, not a
+championship, and edges decay. And once every team adopted the same methods, the advantage flowed back
+to the largest payrolls, now spending efficiently. Measuring right is necessary. It is not, on its
+own, sufficient, and it is never permanent. Once every competitor measures the same thing, the
+question becomes who has more data to measure, which is where the advantage went.</p>
+
+<div class="takeaways"><span class="obj-tag">Key takeaways</span>
+<ul>
+<li>Business intelligence is not a calculation problem. It is a series of judgments about what to measure, how to show it, what to check it against, and how far to let it act alone.</li>
+<li>Every metric is a proxy. The first question is never what the number says; it is whether the number tracks the thing you actually care about.</li>
+<li>When a measure becomes a target, it stops being a good measure. Pair every target with a counter-metric that catches the gaming.</li>
+<li>The A's did not have more data than the Yankees. They had a truer model of value, and the market inefficiency it revealed lasted only until everyone else adopted it.</li>
+<li>A dashboard is a decision about what people will look at. The people who choose the metric, and how far its answers may travel without a human, are making the management decision.</li>
+</ul>
+</div>
+
+<h2 id="vocab"><span class="num">6</span>Vocabulary</h2>
+
+<dl class="vocab">
+<div><dt>Business intelligence (BI)</dt><dd>Systems and practices that turn organizational data into decision-ready information.</dd></div>
+<div><dt>Descriptive / diagnostic / predictive / prescriptive</dt><dd>The four kinds of analytics: what happened, why, what will, what to do.</dd></div>
+<div><dt>Metric / KPI</dt><dd>A number chosen to stand for something the business cares about; a key performance indicator is a metric elevated to a target.</dd></div>
+<div><dt>Proxy</dt><dd>What every metric secretly is: a stand-in for the real thing, valid only as far as it tracks it.</dd></div>
+<div><dt>Measurement validity</dt><dd>Whether a metric actually measures what it claims to.</dd></div>
+<div><dt>Sabermetrics</dt><dd>The empirical analysis of baseball; the movement that found the industry's measurement error.</dd></div>
+<div><dt>On-base percentage</dt><dd>Share of plate appearances reaching base; the undervalued, more valid measure.</dd></div>
+<div><dt>Market inefficiency</dt><dd>A gap between price and value, here created by an industry-wide measurement error.</dd></div>
+<div><dt>Correlation vs. causation</dt><dd>Moving together vs. one driving the other; trust correlations with a mechanism and a large sample.</dd></div>
+<div><dt>Small-sample problem</dt><dd>Patterns in little data mislead; a five-game series is a coin flip.</dd></div>
+<div><dt>Goodhart's law</dt><dd>When a measure becomes a target, it ceases to be a good measure.</dd></div>
+<div><dt>Data warehouse</dt><dd>A database organized for analysis, fed by copies of operational data.</dd></div>
+<div><dt>Dashboard / self-service BI</dt><dd>Visual metric displays, and the tools (like Tableau) that let analysts build them directly.</dd></div>
+</dl>
+
+<div class="tps">
+  <div class="tps-head"><span>Monday activity &middot; A metric that made a business worse</span><span class="mins">20 minutes</span></div>
+  <div class="tps-body">
+    <p class="tps-setup">Every organization you have ever worked for, bought from, or studied in runs on metrics. Somewhere
+in it, right now, someone is optimizing a reasonable-looking number at the expense of the thing it
+was supposed to measure. Wait times, ticket counts, grades, engagement,
+    units, stars.</p>
+    <div class="tps-q"><p>Name one metric, from a job, a business you know, or this university, that is actively making the real goal worse. What is the real goal, and how does optimizing the number damage it?</p></div>
+    <div class="tps-steps">
+      <div class="tps-step"><div class="ph">Think <span>3 min</span></div><p>Pick your metric and write the gap: the number says X is improving while the real thing does Y.</p></div>
+      <div class="tps-step"><div class="ph">Pair <span>5 min</span></div><p>Trade examples, then design the fix for your partner's case: a counter-metric that would catch the gaming.</p></div>
+      <div class="tps-step"><div class="ph">Share <span>12 min</span></div><p>We will collect the examples on the board and sort them: proxies that drifted, targets that got gamed, and samples too small to trust.</p></div>
+    </div>
+    <div class="tps-note"><strong>Where this lands</strong>Every example on the board is Goodhart's law wearing different clothes. Every fix is the same move
+the A's made: ask what the number is a proxy for, and measure closer to the real thing. That question is the whole chapter, and on Thursday you will point a dashboard at it.</div>
+  </div>
+</div>
+
+<div class="ailight g">
+  <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
+  <div class="lighttext"><strong>Green &middot; AI as coach and sparring partner</strong>
+  <p>Have an AI quiz you on the four kinds of analytics with fresh business examples until you can
+  classify them cold, or argue your discussion-question position against it, your position first, per
+  the Lab 1 rules. One warm-up worth doing: ask it to name three proxy metrics in an industry you care
+  about, then judge for yourself which would survive this chapter's validity test.</p></div>
+</div>
+
+<h2 id="discussion"><span class="num">7</span>Discussion questions</h2>
+<p>None of these get handed in. On Wednesday you run the discussion and I steer it, which means the
+class is only as good as what you walk in with. Read the chapter, pick the question you have the
+strongest opinion about, and be ready to say it first.</p>
+
+<ol class="dq">
+  <li>Name a metric your employer, your school, or a team you belong to reports regularly. Say what it
+  is a proxy for, then say one specific way the metric could improve while the thing it stands for got
+  worse. <span class="tag">Apply</span></li>
+
+  <li>The A's had no more data than any other team and no better technology. Explain to somebody who has
+  not read this chapter where the advantage actually came from, and then say why Chapter 3 would have
+  predicted it could not last. <span class="tag">Systems</span></li>
+
+  <li>Put the three failures in section 3 in order of how much damage a wrong answer caused, then
+  explain what determines that order. It is not accuracy. Name what it is, and give an example from your
+  own experience of a number that moved up that scale. <span class="tag">Analyze</span></li>
+
+  <li>Cascadia's revenue looked fine on every standard report while the member attach rate was
+  collapsing. Design the dashboard that would have caught it: name the three numbers on it, say who
+  looks at it and how often, and say what each one is a proxy for. <span class="tag">Apply</span></li>
+
+  <li>Baseball banned the defensive shift in 2023 because the analysis worked: teams optimized
+  correctly and the game got worse to watch. Was that ban a reasonable act or an admission that the
+  sport did not like the answer? Argue one side, then state the strongest objection to your own
+  position, and say what the equivalent decision would look like inside a company.
+  <span class="tag tag-hard">Ethics</span></li>
+</ol>
+
+<h2 id="lab"><span class="num">8</span>From lecture to lab</h2>
+
+<div class="callout callout-bridge"><strong>Week 6 &middot; Lab 6</strong>
+<p>This chapter argues that the work is choosing the measure and putting it where decisions get made.
+<a href="lab6-tableau.html"><strong>Lab 6: Tableau</strong></a> is the second half of that sentence.</p>
+<p>You already found Cascadia's real problem in Lab 5, in a pivot table, by digging. This week you build
+the view that would have made it impossible to miss in the first place. Keep mini-case 1 in mind while
+you do it: the Challenger engineers had the right data and the wrong picture, and the picture is what
+the room saw.</p>
+  <a class="lablink" href="lab6-tableau.html">Go to Lab 6 &#8594;</a>
+</div>
+
+<h2 id="sources"><span class="num">9</span>Sources and further reading</h2>
+<ul class="sources">
+<li>Michael Lewis, <em>Moneyball: The Art of Winning an Unfair Game</em> (2003), for the 2002 season, the payroll gap, Hatteberg and Bradford, and the front office argument. Read it as a source with a point of view rather than a neutral record.</li>
+<li>Bill James's <em>Baseball Abstract</em> series, for the sabermetric work that preceded the A's by two decades and which they were the first to act on at scale.</li>
+<li>Baseball-Reference, 2002 Oakland Athletics season page, for the record (103&ndash;59), the 13 August to 4 September winning streak, and player statistics including Hatteberg's .374 OBP; the USA Today MLB salary database for the 2002 payrolls (Oakland roughly $41 million, third lowest; the Yankees roughly $125 million). Payroll figures vary slightly between sources depending on what is counted. Cleveland's 22-game streak in 2017 passed Oakland's American League mark.</li>
+<li>Edward Tufte's analysis of the Challenger pre-launch charts in <em>Visual Explanations</em> (1997), and the Rogers Commission report (1986), for mini-case 1. Tufte's reading has been debated; the uncontested part is that the presented charts did not plot damage against temperature across all flights.</li>
+
+<li>Zillow's November 2021 announcement and contemporary reporting, for the closure of Zillow Offers, the writedowns of up to $569 million, and the workforce reduction.</li>
+<li>Major League Baseball's 2023 rule changes and subsequent reporting on their effect, for the shift restriction described at the end of section 4.</li>
+<li><strong>Verification note.</strong> Checked in September 2026 against the authors' knowledge of the published record rather than by new searches, because none of this chapter's figures are recent: the 2002 season and payroll numbers, the Challenger details, the Zillow figures, and the 2023 shift rule. Two wording corrections were made on that pass: the twenty-game streak was an American League record only until 2017, and the rise in batting average on balls in play came in the 2023 season itself, not the year after. The claim that Oakland's payroll bought "roughly as much real production as teams spending three times more" is the book's argument rather than a measured figure; treat it as an interpretation.</li>
+</ul>
+
+<h2 id="teaching"><span class="num">10</span>Teaching notes</h2>
+<p style="font-family:var(--sans);font-size:.95rem;color:var(--muted)">Written for whoever is running the sessions. Students are welcome to read them, but nothing here is required.</p>
+
+<div class="plan"><div class="plan-head">Monday session plan &middot; 80 minutes &middot; concepts, with the two failures as illustrations</div>
+<table>
+<tr><td class="t">0:00</td><td class="w">Open</td><td>Put two payroll numbers on the board, $41 million and $125 million, and ask what a fair season between those two teams looks like. Then say the cheap one won more games and stop. Do not explain. You are coming back to it on Wednesday.</td></tr>
+<tr><td class="t">0:05</td><td class="w">Lecture</td><td>What BI is and is not, then the four kinds of analytics walked on one example the room knows, such as last month's sales. Make them say which level each question sits on before you tell them.</td></tr>
+<tr><td class="t">0:18</td><td class="w">Lecture</td><td>Metrics, proxies and measurement validity, using batting average against on-base percentage. The line to land is that almost every metric is a proxy, and the job is asking whether the proxy tracks the thing. Then apply it out loud: a store's revenue is a batting average.</td></tr>
+<tr><td class="t">0:32</td><td class="w">Lecture</td><td>Correlation, causation and sample size, then Goodhart's law. Goodhart is the one they will use most in their careers, so spend the time and collect examples from the room before you give yours.</td></tr>
+<tr><td class="t">0:46</td><td class="w">Lecture</td><td>The BI stack: operational systems, warehouse, dashboard, self-service tools. Connect it straight to Lab 7's database and this week's Tableau lab, and to why analysis runs on a copy.</td></tr>
+<tr><td class="t">0:56</td><td class="w">Cases 1&#8211;2</td><td>Challenger and Zillow, about four minutes each. Name the level and the component and stop. The comparison is the activity. If time is short, Zillow alone will do the work, because the jump from advice to spending is the one students feel.</td></tr>
+<tr><td class="t">1:04</td><td class="w">Think-pair-share</td><td>A metric that made a business worse. See the activity in section 6. Protect the silent minutes; the good examples come from their own jobs and take a moment to surface.</td></tr>
+<tr><td class="t">1:18</td><td class="w">Close</td><td>Point them at section 4 and the discussion questions. Tell them Wednesday answers the payroll question from the opening.</td></tr>
+</table></div>
+
+<div class="plan"><div class="plan-head">Wednesday session plan &middot; 80 minutes &middot; the Oakland case</div>
+<table>
+<tr><td class="t">0:00</td><td class="w">Open</td><td>Return to Monday's two payroll numbers and ask how a team spending a third as much wins more games. Collect answers on the board. Somebody will say better scouting or luck. Leave both up there.</td></tr>
+<tr><td class="t">0:07</td><td class="w">Walk the case</td><td>The lost players, the question Beane and DePodesta asked, and the answer sitting in a box score everyone already had. The sentence to repeat is that they had no more data than anyone else, which is what makes this a measurement story rather than a data story.</td></tr>
+<tr><td class="t">0:22</td><td class="w">The arbitrage</td><td>Mispriced players as an information advantage. Run it against Chapter 3's three legs explicitly and let the room work out which one was always going to fail.</td></tr>
+<tr><td class="t">0:34</td><td class="w">The five components</td><td>Ask what technology the A's had. The answer is public data and a laptop, and that is the point: no component here was expensive or rare, and the advantage lived in the question.</td></tr>
+<tr><td class="t">0:42</td><td class="w">After everyone caught up</td><td>The decay, then the 2023 shift ban. Ask why a league would outlaw a correct conclusion, and push until somebody says that optimizing the metric made the product worse. That is Goodhart from Monday, at the scale of an entire industry.</td></tr>
+<tr><td class="t">0:52</td><td class="w">Think</td><td>All five discussion questions on screen. Silent individual work, one sentence on at least two. Protect this step.</td></tr>
+<tr><td class="t">0:58</td><td class="w">Pair</td><td>Groups of three or four settle on positions they can defend. Circulate for a group that landed somewhere unusual on the shift ban or on being measured, and call on them first.</td></tr>
+<tr><td class="t">1:08</td><td class="w">Share</td><td>Groups take the questions in front of the room. Ask for disagreement rather than answers.</td></tr>
+<tr><td class="t">1:17</td><td class="w">Close and bridge</td><td>Back to the opening board: does anyone still think it was luck? Then preview the lab, and Chapter 12, where the model stops being a spreadsheet and starts learning from the data on its own.</td></tr>
+</table></div>
+
+</main>
+<!--NAVJS-->
+<script>
+(function(){
+  var btns=[].slice.call(document.querySelectorAll('.dd-btn'));
+  function closeAll(except){
+    btns.forEach(function(b){
+      var m=document.getElementById(b.getAttribute('data-dd'));
+      if(m&&m!==except){m.classList.remove('open');b.setAttribute('aria-expanded','false');}
+    });
+  }
+  btns.forEach(function(b){
+    b.addEventListener('click',function(e){
+      e.stopPropagation();
+      var m=document.getElementById(b.getAttribute('data-dd'));
+      var open=m.classList.contains('open');
+      closeAll();
+      if(!open){m.classList.add('open');b.setAttribute('aria-expanded','true');}
+    });
+  });
+  document.addEventListener('click',function(){closeAll();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeAll();});
+  document.querySelectorAll('.dd-menu').forEach(function(m){
+    m.addEventListener('click',function(e){e.stopPropagation();});
+  });
+})();
+</script>
+</body>
+</html>
