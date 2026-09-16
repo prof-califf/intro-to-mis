@@ -2,7 +2,7 @@
 <html lang="en"><head>
 <meta name="robots" content="noindex, nofollow"><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lab 1 · GenAI for Thinking, Not Instead of It | MIS 320</title>
+<title>Lab 5 · Data Analysis: Why Are Members Disappearing? | MIS 320</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -61,7 +61,7 @@ p{margin:0 0 1.05rem}
 a{color:var(--magenta-dark)}
 strong{font-weight:600;color:var(--black)}
 .lede{font-size:1.24rem;line-height:1.55;color:var(--text-muted)}
-code.inline{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--off-white);padding:.1em .35em;border:1px solid var(--border)}
+code.inline{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--off-white);padding:.1em .35em;border:1px solid var(--border);overflow-wrap:anywhere}
 ul,ol{margin:0 0 1.15rem;padding-left:1.3rem}
 li{margin-bottom:.45rem}
 
@@ -240,7 +240,7 @@ li{margin-bottom:.45rem}
 .ailight .lighttext > strong:first-child{display:block;font-family:var(--display);font-size:13px;font-weight:600;
   letter-spacing:.14em;text-transform:uppercase;margin-bottom:.3rem}
 .ailight.g .lighttext strong:first-child{color:#1e7c43}
-.ailight.y .lighttext strong:first-child{color:#7a5c07}
+.ailight.y .lighttext strong:first-child{color:#a07a10}
 .ailight.r .lighttext strong:first-child{color:#a03434}
 .ailight p{margin:.2rem 0 0;font-size:16.5px;line-height:1.55}
 
@@ -334,11 +334,11 @@ input::placeholder{color:#6b6b68;opacity:1}.cp.done{border-left:4px solid var(--
     <div class="dd">
       <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddl">Labs<span class="caret">&#9660;</span></button>
       <div class="dd-menu" id="ddl">
-      <a class="current" href="lab1-genai.html"><span class="lbl">Lab 1 &middot; Week 1</span>GenAI for Thinking</a>
+      <a href="lab1-genai.html"><span class="lbl">Lab 1 &middot; Week 1</span>GenAI for Thinking</a>
       <a href="lab2-excel-basics.html"><span class="lbl">Lab 2 &middot; Week 2</span>Excel Basics: Meeting the Client</a>
       <a href="lab3-excel-dataprep.html"><span class="lbl">Lab 3 &middot; Week 3</span>Excel Functions: One Question, One Formula</a>
       <a href="lab4-excel-dataviz.html"><span class="lbl">Lab 4 &middot; Week 4</span>Data Visualization: Charts That Tell the Truth</a>
-      <a href="lab5-excel-analysis.html"><span class="lbl">Lab 5 &middot; Week 5</span>Data Analysis &amp; Mini Project</a>
+      <a class="current" href="lab5-excel-analysis.html"><span class="lbl">Lab 5 &middot; Week 5</span>Data Analysis &amp; Mini Project</a>
       <a href="lab6-tableau.html"><span class="lbl">Lab 6 &middot; Week 6</span>Tableau: Worksheets to a Dashboard</a>
       <a href="lab7-sql.html"><span class="lbl">Lab 7 &middot; Week 7</span>SQL Fundamentals</a>
       <a href="lab8-security.html"><span class="lbl">Lab 8 &middot; Week 8</span>Security &amp; Data Governance: The Audit</a>
@@ -362,211 +362,226 @@ input::placeholder{color:#6b6b68;opacity:1}.cp.done{border-left:4px solid var(--
 
 <main id="top" class="chapwrap">
 <header class="chaphead">
-  <p class="eyebrow">Lab 1 · Week 1</p>
-  <h1><b>GenAI</b> for Thinking, Not Instead of It</h1>
-  <div class="meta-row"><span>Lab session · 80 min</span><span class="alt"><a href="chapter1-what-is-mis.html" style="color:inherit;text-decoration:none">Pairs with Chapter 1 · What Is MIS? &#8594;</a></span></div>
+  <p class="eyebrow">Lab 5 · Week 5</p>
+  <h1><b>Data Analysis</b>: Why Are Members Disappearing?</h1>
+  <div class="meta-row"><span>Lab session · 80 min</span><span class="alt"><a href="chapter5-healthcaregov.html" style="color:inherit;text-decoration:none">Pairs with Chapter 5 · Systems Analysis &#8594;</a></span></div>
 </header>
-<p class="lede">Nobody hands a first grader a calculator. Not because calculators are bad,
-  but because the point of first grade arithmetic is not the answers. It is building the number sense
-  that lets you catch a wrong answer later, including a wrong answer from the calculator.</p>
+<p class="lede">Every chart you built in Lab 4 says Cascadia is healthy. The board thinks
+  something is wrong anyway, and they have sent you a memo asking you to settle it. Part A rehearses the
+  tools you will need. Part B hands you the memo, which asks for six specific numbers and then for your
+  recommendation. The numbers are the easy part.</p>
 
 <div class="toc"><strong>Contents</strong> <a href="#steps">The work</a> &nbsp;·&nbsp; <a href="#finish">Reflection &amp; certificate</a> &nbsp;·&nbsp; <a href="#submit">What to submit</a></div>
 <p class="printbox"><span>Wanna go analog?</span><button type="button" onclick="window.print()" aria-label="Print this page or save it as a PDF">&#9113;&nbsp; Print here</button><span>or save it as a PDF; the navigation drops out</span></p>
 
-  <p>That is where you are this quarter. This is a course, and the point of a course is that you leave
-  it able to do things you could not do before. So Labs 2 through 5, the four Excel labs, you do by
-  hand. Not because AI is bad, and not forever. Because the only way to get the skill is to build it,
-  and you cannot check an answer you do not know how to produce.</p>
-  <p>So this course does not ban AI, and it does not pretend AI is optional in the careers you are
-  heading into. It asks something harder: that you use it in ways that make you better at thinking,
-  and that you always remain the person who can tell when it is wrong. Today you learn the rules and
-  the three ways of using AI that actually build skill.</p>
+<div class="ailight r">
+  <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
+  <div class="lighttext"><strong>Red &middot; No AI in Labs 2 through 5</strong>
+  <p>AI use is not allowed in these four labs. That means no formula help, no error explanations, and
+  no AI checking your work. An AI tool can produce accurate responses to this lab in seconds, which is
+  exactly why it is not allowed: the AI's work never becomes your own.</p>
+  <p>These four labs build your Excel skills, which are critical in business settings. So, even though
+  it is tedious, this means typing every formula yourself. The goal is to be able to write a formula
+  like =SUM without thinking. If you get stuck, that is what the walkthrough steps, the hints, and your
+  lab professor are for.</p>
+  <p>AI comes back in Lab 6, where you will use it as a coach under the three lights from Lab 1.</p></div>
+</div>
 
-<div class="callout"><strong>First, how every lab in this course works</strong>
-<p>This is your first lab, so here is the shape of all ten. Read this part before you go any further.</p>
-<ol style="font-family:var(--sans);font-size:.9rem;margin:.6rem 0 .6rem 1.1rem;padding:0">
-<li style="margin-bottom:.35rem">You read and work through the lab from top to bottom. The actual work happens
-somewhere else: in Excel, in Tableau, in a query window, or on paper. This page does not do the work for you.</li>
-<li style="margin-bottom:.35rem">At the bottom of every lab is a list of <strong>checkpoints</strong>. Each one asks for
-a short answer, usually a single word or a number, that you get by doing the work. Scroll down and look at
-them now so you know what is coming.</li>
-<li style="margin-bottom:.35rem">Checkpoints open one at a time. Answer the first correctly and the second
-unlocks, and so on. A wrong answer costs you nothing, so guess freely. Every checkpoint has a hint button, and
-using it is not a penalty.</li>
-<li style="margin-bottom:.35rem">Your progress saves in this browser automatically, so you can close the tab and
-come back. It will not follow you to a different computer.</li>
-<li>Clear all the checkpoints, write the reflection, and the page generates a completion certificate.
-That PDF is what you turn in on Canvas.</li>
-</ol>
-<p style="font-family:var(--sans);font-size:.9rem;margin-bottom:.5rem"><strong>Try it here.</strong> This practice
-box works exactly like a real checkpoint, but it counts for nothing. Type the word <strong>ready</strong> and
-press Check.</p>
-<div class="cp" id="democp">
-  <p class="q">Practice &middot; Not scored. Type <strong>ready</strong> below and press Check.</p>
-  <input type="text" id="demoin" aria-label="Practice checkpoint">
-  <button onclick="demochk()">Check</button>
-  <button class="hintb" onclick="var h=document.getElementById('demoh');h.style.display=h.style.display==='block'?'none':'block'">Hint</button>
-  <p class="msg" id="demom"></p>
-  <p class="hint" id="demoh">The answer is the word ready. Real checkpoints are harder than this one.</p>
-</div>
-<script>
-function demochk(){var v=document.getElementById('demoin').value.trim().toLowerCase(),
- m=document.getElementById('demom'),d=document.getElementById('democp');
- if(v==='ready'){d.className='cp done';m.textContent='That is how a checkpoint works. The real ones are at the bottom of the page.';m.style.color='var(--good)'}
- else if(!v){m.textContent='Type something first.';m.style.color='#7d6608'}
- else{m.textContent='Not yet. Try the hint button.';m.style.color='#a03434'}}
-</script>
-</div>
+
+  <p>Work from the clean data: <a href="cascadia-sales-2025.xlsx" download>cascadia-sales-2025.xlsx</a>.</p>
 
 <div id="steps">
+
 <div class="callout callout-bridge"><strong>How the checkpoints work</strong>
-<p style="font-family:var(--sans);font-size:.95rem">These are the six real ones. Each matches something
-you read or did above. You do the actual work yourself, in Excel or on paper, then paste the answer here. Get it
-right and the next question opens up. There is no penalty for a wrong answer, so guess, check, and lean on the hint if
+<p style="font-family:var(--sans);font-size:.95rem">Here is how this works. Each checkpoint sits directly under the work that produces it. You do the actual work in your own file, then paste the answer here. Get it right and the
+next question opens up. There is no penalty for a wrong answer, so guess, check, and lean on the hint if
 you get stuck. That is what it is there for.</p>
 <p style="font-family:var(--sans);font-size:.95rem">Once you have cleared them all, write your reflection
 and download your certificate for Canvas. Your progress saves automatically in this browser, so you can close the tab and pick up where you left off. It does not follow you to a different computer or a private window, and clearing your browser data clears it. If you need to start this lab over, use the <button type="button" class="hintb" onclick="resetLab()">Reset this lab</button> button.</p>
-<div class="progress" id="prog">Checkpoint progress: 0 / 6</div>
+<div class="progress" id="prog">Checkpoint progress: 0 / 9</div>
 </div>
 
-<h2><span class="num">Part 1</span>The rules: three lights</h2>
+<h2><span class="num">Part A</span>Follow along, skills: pivots as instruments, what-if, forecasting</h2>
+<p class="note" style="font-family:var(--sans);font-size:.95rem;border-left:3px solid var(--magenta);padding:.5rem .8rem;background:var(--off-white)"><strong>Do Part A before you come to lab.</strong> It is a follow-along and takes about twenty-five minutes. Lab time is for Part B, which is the part you will want help with.</p>
+<h3>Follow along: the member pivot, click by click</h3>
+<div class="sh" id="step1"><span class="badge">Step 1</span><span class="ttl">Build the pivot</span></div>
+<p>The workbook opens with two tabs that matter: <code class="inline">Sales2025</code>, the data, and <code class="inline">Analyst</code>, where every checkpoint answer goes as a live formula, one per row, the same way as Lab 3. Leave both names as they are. Now click any cell in the data on <code class="inline">Sales2025</code>, Insert &#8594; PivotTable, new worksheet.</p>
 
-<p>Every use of AI in this course falls into one of three zones. When in doubt, ask which one you are
-in, and if you are still in doubt, ask us.</p>
-
-<div class="ailight g">
-  <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
-  <div class="lighttext"><strong>Green &middot; fine, with one exception</strong>
-  <p>Asking AI to explain a concept, quiz you, critique your reasoning, or help you understand an error
-  you then fix yourself. Green uses make you smarter and need no disclosure.</p>
-  <p>The exception is Labs 2 through 5, the four Excel labs. Those you do unaided, including the error
-  explanations. Four weeks, then green comes back.</p></div>
-</div>
-
-<div class="ailight y">
-  <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
-  <div class="lighttext"><strong>Yellow &middot; fine with disclosure</strong>
-  <p>AI drafts or outlines that you substantially rework in your own words, with a one-line note saying
-  how you used it. The thinking in the final product must be yours.</p></div>
-</div>
-
-<div class="ailight r">
-  <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
-  <div class="lighttext"><strong>Red &middot; never</strong>
-  <p>Submitting AI output as your own work, using AI on exams, and using AI to write the lab
-  reflections. The reflections exist to capture <em>your</em> thinking, and an AI-written one defeats
-  the entire purpose while being easier to spot than students expect.</p></div>
-</div>
-
-<div class="callout"><strong>You will see these lights all quarter</strong>
-<p>These traffic lights appear throughout the textbook, on chapters and labs, marking the moments where
-AI helps and the moments where it must stay closed. A green light next to an exercise means use AI
-freely, and usually names the role to use it in. Yellow means allowed with a disclosure line. Red means
-this one is you alone. When you see a light, that is the policy for that specific task, decided so you
-do not have to guess.</p></div>
+<div class="sh" id="step2"><span class="badge">Step 2</span><span class="ttl">Revenue by member status</span><span class="cpx">Answer goes in <b>Checkpoint 1</b></span></div>
+<p>Do this one twice, on purpose. First, on the <code class="inline">Analyst</code> tab, write it as a formula the way you did in Lab 3: <code class="inline">=SUMIF(</code>the <code class="inline">is_member</code> column<code class="inline">,"Y",</code>the <code class="inline">revenue</code> column<code class="inline">)</code>. Format that cell as Currency with 0 decimal places (Home &#8594; Number). Then go to your pivot and drag <code class="inline">is_member</code> to Rows and <code class="inline">revenue</code> to Values. Two rows appear, Y and N, with revenue beside each. The Y row should match your formula to the dollar. If it does not, one of them is wrong, and it is nearly always the range in the SUMIF. The formula is <em>Checkpoint 1</em>; the pivot is how you know it is right.</p>
 
 <div class="cpslot" data-cp="1"></div>
+
+<div class="sh" id="step3"><span class="badge">Step 3</span><span class="ttl">Switch from dollars to share of lines</span><span class="cpx">Answer goes in <b>Checkpoint 2</b></span></div>
+<p>Now measure lines instead of dollars: drag <code class="inline">sale_id</code>
+to Values (it lands as Count). Right-click a count value &#8594; Show Values As &#8594; % of Column
+Total. The Y row's percentage is <em>Checkpoint 2</em>.</p>
+
 <div class="cpslot" data-cp="2"></div>
 
-<div class="callout"><strong>The test behind the lights</strong>
-<p>Ask: is the thing being graded the thinking itself? If yes, the thinking must be yours. That single
-question sorts almost every case into the right zone.</p></div>
+<div class="sh" id="step4"><span class="badge">Step 4</span><span class="ttl">Name what you just built</span></div>
+<p>Note what you just built: the share of the co-op's business that has a member
+attached. Keep this pivot; you will use it in the mini project.</p>
 
-<h2><span class="num">Part 2</span>The three roles worth knowing</h2>
 
-<p>Most students arrive knowing exactly one way to use AI: "write it for me." That is the vending
-machine, and it is the one use this course restricts, because it does your thinking for you. Here are
-the three roles that do the opposite. Learn their names, we will use them all quarter.</p>
 
-<h3>The coach: it asks, you answer</h3>
-<p>A coach does not play the game for you. Tell an AI: <em>"Quiz me on the five components of MIS. One
-question at a time. When I get one wrong, give me a hint, not the answer."</em> Now the AI is doing
-what a good tutor does at two in the morning before an exam: making you retrieve, which is the thing
-that actually builds memory. Reading feels like learning. Retrieval is learning.</p>
-<p><strong>Try it now.</strong> Run that exact prompt in whatever AI you use, answer five questions,
-and notice how different it feels from reading the chapter again.</p>
+<ol>
+<li><strong>Two-dimensional pivots.</strong> Rows and Columns together: store by category, store by
+month. Practice Show Values As → % of Row Total and % of Column Total. The single most useful trick in
+analytical Excel, and the one Part B quietly depends on.</li>
+<li><strong>What-if, walked.</strong> Add a blank worksheet for this (right-click any tab &#8594;
+Insert &#8594; Worksheet) and build the co-op's three-cell attach model with me there, exactly:
+in <code class="inline">A1</code> type <code class="inline">Member lines</code>, in
+<code class="inline">A2</code> type <code class="inline">2494</code> (read it off your member pivot's
+Y count). In <code class="inline">B1</code> type <code class="inline">Total lines</code>, in
+<code class="inline">B2</code> type <code class="inline">2899</code>. In <code class="inline">C1</code>
+type <code class="inline">Attach rate</code>, in <code class="inline">C2</code> type
+<code class="inline">=A2/B2</code>; it shows about 86%. Now the question every what-if has the shape
+of: <em>what input produces the output I want?</em> Suppose the board wants a 90% attach rate. Data
+&#8594; What-If Analysis &#8594; Goal Seek: Set cell <code class="inline">C2</code>, To value
+<code class="inline">0.9</code>, By changing cell <code class="inline">A2</code>. OK. Excel rewrites
+A2 to about 2609: the co-op would need roughly 115 more member-attached sales. Leave it there; the model is a sandbox and the real numbers are still in your pivot. You have now used Goal Seek once, start to finish; Part B's last checkpoint
+asks you to aim this exact move at a harder question.</li>
+<li><strong>Forecasting, walked then judged.</strong> First build one more pivot (any cell in the data, Insert &#8594; PivotTable, new worksheet): <code class="inline">month</code> in Rows, <code class="inline">revenue</code> in Values, twelve rows. Then on your what-if worksheet copy that pivot's results as plain values:
+month numbers 1 through 12 down one column (say <code class="inline">E2:E13</code>), each month's
+revenue beside them (<code class="inline">F2:F13</code>). In an empty cell type
+<code class="inline">=FORECAST.LINEAR(13, F2:F13, E2:E13)</code>: predict the y for x = 13, January
+2026, from the year's straight-line trend. Press Enter and you have a forecast. Now the part that is
+actually graded: you charted this year in Lab 4 and know its shape, a January peak and a strong
+finish, so say in one sentence why fitting a straight line through a seasonal year and extending it
+is suspect. (No checkpoint: your sentence goes in the submission note. The formula was the easy part,
+which is the lesson.)</li>
+</ol>
+<details class="howto"><summary>How to make a pivot table</summary><div class="howto-body">
+<ol>
+<li>Click any single cell inside the data.</li>
+<li><strong>Insert</strong> tab, then <strong>PivotTable</strong>. <span class="mac">Mac</span> same menu, but the button may read <strong>Summarize with PivotTable</strong>.</li>
+<li>Excel guesses the data range. Check that it covers all the rows, then choose <strong>New Worksheet</strong> and click OK.</li>
+<li>A panel appears on the right with your column names. Drag a field into <strong>Rows</strong> to group by it, and drag a number into <strong>Values</strong> to total it.</li>
+<li>If Values shows a count instead of a sum, click it, choose <strong>Value Field Settings</strong>, and pick <strong>Sum</strong>. This catches almost everyone once.</li>
+</ol>
+<p><strong>If your pivot is empty:</strong> you probably selected a single cell outside the data before inserting. Undo and click inside the table first.</p>
+</div></details><details class="howto"><summary>How to use Goal Seek (it is well hidden)</summary><div class="howto-body">
+<ol>
+<li>You need a cell containing a <em>formula</em> whose result you want to force to a particular value, and another cell the formula depends on.</li>
+<li><strong>Data</strong> tab, then <strong>What-If Analysis</strong>, then <strong>Goal Seek</strong>. <span class="mac">Mac</span> same path, under the Data tab.</li>
+<li><strong>Set cell:</strong> the formula cell. <strong>To value:</strong> the number you want it to reach. <strong>By changing cell:</strong> the input cell.</li>
+<li>Click OK. Excel changes the input until the formula hits your target.</li>
+</ol>
+<p><strong>"Cell must contain a value" error:</strong> you put the formula in the wrong box. Set cell must hold a formula, By changing cell must hold a plain number.</p>
+</div></details>
+<h2><span class="num">Part B</span>The mini project: answer the board</h2>
+
+<p>Everything in Part A was rehearsal. The board's memo below asks for six numbers and then for your
+judgment about what they mean. Work through the six in order; each one is a checkpoint.</p>
+
+<div class="callout callout-caution"><strong>Memo from the board of directors</strong>
+<p><em>"Our membership office brought us two problems this quarter, both in our North Cascades region.
+Far fewer members there claimed their annual dividend than we expected, and fewer of them answered our
+member survey than in any of the last three quarters.</em></p>
+<p><em>Finance does not think anything is wrong. Revenue in that region is on plan and store traffic looks
+normal.</em></p>
+<p><em>We think the two sides are measuring different things. Every sale we ring up either has a member
+attached to it or does not, and nobody has ever looked at that by store. Please do that now, and tell
+us:</em></p>
+<ol>
+<li><em>For each of our eight stores, the share of its sales that had a member attached. Call that the
+store's <strong>member attach rate</strong>.</em></li>
+<li><em>Which store has the lowest attach rate, and what that rate is.</em></li>
+<li><em>What the next-lowest store's rate is, so we know whether the first store is unusual or whether
+we have a problem everywhere.</em></li>
+<li><em>At the lowest-attach-rate store, how many sales in 2025 had no member attached at all.</em></li>
+<li><em>Which other store's total revenue is closest to the lowest-attach-rate store's. We want to understand why this
+never showed up in a revenue report.</em></li>
+<li><em>How many of the lowest-attach-rate store's non-member sales would have had to become member sales to bring its
+attach rate to 87 percent, which is roughly where the rest of the co-op sits.</em></li>
+</ol>
+<p><em>Then write us one page: what you found, why our existing reports missed it, and what you
+recommend we do about it."</em></p></div>
+
+<div class="callout callout-good"><strong>What to hand in</strong>
+<p><strong>The six numbers</strong> go in Checkpoints 3 through 8 below, in the same order the board
+asked for them, and on your Analyst tab as live formulas.</p>
+<p><strong>The one-page memo</strong> is the graded thinking, and it has three parts:</p>
+<ol>
+<li><strong>What you found.</strong> Two or three sentences. Which store, what its attach rate is, and
+how far that is from everywhere else.</li>
+<li><strong>Why the existing reports missed it.</strong> One short paragraph. Your answer to Checkpoint 7
+is the clue: this store's revenue looks entirely normal next to its neighbours, so every revenue report
+the co-op runs shows it as healthy.</li>
+<li><strong>What you recommend.</strong> One action, with the number from Checkpoint 6 attached to it, so
+the board knows what it is buying.</li>
+</ol>
+<p>One thing you will <strong>not</strong> find: the dividend and survey numbers from the memo. Those
+came from the membership office's own systems and are not in your workbook. They are why the board is
+asking, not the evidence you answer with.</p></div>
+
+<details class="howto"><summary>How to compute a member attach rate</summary><div class="howto-body">
+<p>This is the only new calculation in Part B. Everything the board asked for is built from it.</p>
+<ol>
+<li>The board's worry is about <em>members</em>. Get one number per store that measures membership, not revenue: for each store, =COUNTIFS(store, name, is_member,"Y") divided by =COUNTIF(store, name). That ratio is the store's member attach rate. (Your Lab 3 summary block is this table, one column short.)</li>
+<li>Or the pivot version: rows = store, values = count of sale_id, columns = is_member, then compute the Y share per row in the cells beside the pivot.</li>
+<li>Now read the eight rates side by side. Seven of them will be similar and one will not. That is the board’s question 2, and everything after it measures how bad the gap is.</li>
+</ol>
+<p>Using these steps is not cheating; it is the method. The skill being graded is noticing that
+revenue could not answer the board's question and choosing a measure that could.</p>
+</div></details>
 
 <div class="cpslot" data-cp="3"></div>
-
-<h3>The sparring partner: it attacks, you defend</h3>
-<p>Write three sentences answering this: <em>should Cascadia Outfitters, a small gear co-op, spend
-money on AI tools this year?</em> Your opinion, your reasoning. Then tell the AI: <em>"Argue against
-this. Find my weakest claim and press on it."</em></p>
-<p>Your first answer is never your best answer. A sparring partner exposes the soft spots while the
-stakes are zero, which is exactly what a good study group does, except this one is available at any
-hour and never gets tired of you.</p>
-
-<h3>The calculator: it works fast, you check it</h3>
-<p>Back to where this lab started. A calculator is a wonderful thing in the hands of someone who knows
-arithmetic, and a trap in the hands of someone who does not, because the person who cannot estimate
-cannot notice a wrong answer. Every professional lives by the rule that follows: you can delegate the
-work, you can never delegate the checking. AI is the most powerful calculator ever built, and it can be
-wrong in ways a pocket calculator never was. The next section makes this concrete.</p>
-
 <div class="cpslot" data-cp="4"></div>
-
-<h2><span class="num">Part 3</span>The calculator test</h2>
-
-<p>Below are ten order lines from a Cascadia store. An AI was asked for the total and answered,
-instantly and confidently: <strong>"The total is $1,440.75."</strong></p>
-
-<div class="callout"><strong>The order lines</strong>
-<p style="font-family:ui-monospace,Menlo,monospace;font-size:.9rem;line-height:1.7">
-2 &times; $24.50 &nbsp;&nbsp; 1 &times; $189.95 &nbsp;&nbsp; 3 &times; $12.00 &nbsp;&nbsp; 1 &times; $449.00 &nbsp;&nbsp; 2 &times; $67.25<br>
-4 &times; $8.75 &nbsp;&nbsp; 1 &times; $95.00 &nbsp;&nbsp; 2 &times; $154.90 &nbsp;&nbsp; 1 &times; $22.35 &nbsp;&nbsp; 3 &times; $39.99</p></div>
-
-<p>Checkpoint 5 asks for the real total. Compute it yourself, in Excel or on paper. The point is not
-that AI is bad at arithmetic, some tools now do it well. The point is that the error, when it comes,
-will look exactly like the right answer, and the only person who catches it is the one who can still
-do first grade math.</p>
-
 <div class="cpslot" data-cp="5"></div>
+<div class="cpslot" data-cp="6"></div>
+<div class="cpslot" data-cp="7"></div>
+<div class="cpslot" data-cp="8"></div>
 
-<h2><span class="num">Part 4</span>The autopsy: what wrong looks like</h2>
+<div class="sh" id="step9"><span class="badge">Step 9</span><span class="ttl">Let the sheet flag the problem for you</span><span class="cpx">Answer goes in <b>Checkpoint 9</b></span></div>
+<p>You found the store by reading eight rates with your eyes. A board pack has to work when nobody
+is reading closely, so make the sheet do the noticing. Next to your eight attach rates, add a
+<code class="inline">status</code> column with the IF you learned in Lab 3, testing each rate against
+the 87 percent target from the memo:</p>
+<p><code class="inline">=IF(C2&lt;0.87,"Below target","On target")</code></p>
+<p>(C2 being wherever your first store's rate sits; if you typed the rate as 51.6 rather than 0.516,
+test against 87 instead.) Fill it down. Then count the flags:
+<code class="inline">=COUNTIF(D2:D9,"Below target")</code>. Read the result before you enter it,
+because it is not one. The memo's target catches a second store that your eyes skipped over, and that
+is the point of writing the rule down instead of eyeballing it: a rule applies the same standard to
+every row, every time, including the borderline ones. If the board wanted only the serious cases, you
+would tighten the rule with <code class="inline">AND</code>:
+<code class="inline">=IF(AND(C2&lt;0.87,C2&lt;0.7),"Investigate","Watch")</code> flags a store only when it
+misses the target by a wide margin.</p>
 
-<p>A student asked an AI to summarize the course's central rule and got this paragraph back:</p>
+<div class="cpslot" data-cp="9"></div>
 
-<div class="callout callout-caution"><strong>AI output, verbatim</strong>
-<p><em>"Information systems are built from five components: hardware, software, data, networks, and
-people. These components work together to turn raw data into decisions a business can act on. The key
-principle, sometimes called the weakest component rule, is that a system is only as strong as its
-strongest component, which is why companies invest heavily in their best-performing areas. When
-analyzing any system failure, start by identifying which component broke."</em></p></div>
-
-<p>It is fluent. It is confident. It is well organized. And it contains one factual error that reverses
-the meaning of the rule it is explaining. Checkpoint 6 asks you to find it, and here is why this
-exercise sits in Week 1: your first case is a system whose four technical components all worked, and whose
-output was wrong anyway because of one thing nobody checked. Learning to
-read AI output the way an editor reads a draft, trusting nothing on fluency alone, is the single most
-valuable AI skill this course teaches.</p>
-
+<div class="callout callout-bridge"><strong>Why this pairs with Nike</strong>
+<p>Nike's planners trusted a system whose numbers looked plausible while its demand signal was
+corrupted, and the gap between looked-fine and was-fine cost $100 million. Cascadia's board has the
+same gap on a co-op's scale: the revenue signal is healthy while the membership signal, the one the
+entire business model runs on, has quietly failed at one store. Finding a healthy-looking sick store
+is the analyst's version of the audit Nike never ran.</p></div>
 <div class="stuck"><strong>When you get stuck</strong>
-<p>Before raising your hand, try these in order.</p>
+<p>Before raising your hand, try these in order. Most problems in this lab are one of them.</p>
 <ol>
-<li>Re-read the checkpoint. Every answer in this lab is either a single word or a number.</li>
-<li>For checkpoint 5, lay the ten lines out in two Excel columns and multiply, do not do it in your
-head.</li>
-<li>For checkpoint 6, read the AI paragraph against the rule as Chapter 1 states it, one clause at a
-time.</li>
-<li>Use the hint button. It is part of the lab, not a penalty.</li>
+<li>Re-read the checkpoint question. Is it asking for a count, a total, or an average? Those are three different numbers.</li>
+<li>Check whether your number is plausible. If total revenue comes out as 12 or as 40 million, something is off by a lot and you can usually see where.</li>
+<li>Expand the grey "How to" box for that step. It has the exact clicks.</li>
+<li>Check the formula bar of the cell you think is wrong. Does it reference the range you meant?</li>
+<li>Use the hint button on the checkpoint. It is not a penalty, it is part of the lab.</li>
 <li>Ask a neighbour. Then raise your hand.</li>
 </ol></div></div>
-
-<div class="cpslot" data-cp="6"></div>
 
 <h2 id="finish"><span class="num">Finish</span>Reflection &amp; certificate</h2>
 
 <div class="ailight r">
   <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
   <div class="lighttext"><strong>Red &middot; Your reflection, your words</strong>
-  <p>Part 1 set this rule: AI never writes your reflection. Write the reflection below yourself. Do not ask an AI tool to write it, rewrite it, or clean it up.</p>
+  <p>Same rule as the rest of this lab. Write the reflection below yourself. Do not ask an AI tool to write it, rewrite it, or clean it up.</p>
   <p>This is the one part of the lab that shows your lab professor how you think. Rough is fine and typos are fine. It just has to be yours.</p></div>
 </div>
 
 <div class="certbox" id="reflectbox">
   <h3>One last thing before your certificate</h3>
-  <p style="font-family:var(--sans);font-size:.88rem">Choose a career field, perhaps one you plan to enter after graduation. Name one skill in that field that a human professional must be able to do without AI. Describe how an analyst would perform an autopsy on AI output to check it. Explain what could go wrong for someone who lets AI do that work from day one. Then name one way you plan to use AI as a coach this quarter.</p>
-  <p style="font-family:var(--sans);font-size:.88rem;color:var(--muted)">Seventy-five words is the minimum, but
+  <p style="font-family:var(--sans);font-size:.88rem">You just found a problem that every standard report concealed. In the career you are heading toward, what is one 'healthy-looking sick store': a metric that could look fine while something underneath it fails? What would you have to break out, segment, or cross-tab to catch it early?</p>
+  <p style="font-family:var(--sans);font-size:.88rem;color:var(--muted)">Fifty words is the minimum, but
   do not write to the counter. This prints as page 2 of your certificate, so it is the part your lab
   professor actually reads. Answer it like someone asked you the question out loud.</p>
   <textarea id="refl" rows="6" style="width:100%;font-family:var(--sans);font-size:.9rem;padding:.6rem;border:1px solid var(--rule);border-radius:2px" aria-label="Lab reflection"></textarea>
@@ -583,24 +598,20 @@ time.</li>
 </div>
 
 <h2 id="submit"><span class="num">Canvas</span>What to submit</h2>
-<p style="font-family:var(--sans);font-size:.92rem">Go to the <strong>Lab 1</strong> assignment in Canvas and
-upload two files.</p>
-<p style="font-family:var(--sans);font-size:.92rem"><strong>File 1: your completion certificate.</strong>
-Clear all six checkpoints above, write your reflection, type your name, and click Download certificate. It
-saves as a PDF. Upload that file. Your reflection prints as page 2, so you do not submit it separately.</p>
-<p style="font-family:var(--sans);font-size:.92rem"><strong>File 2: your coach session.</strong> This is the
-five-question quiz you ran in Part 2. Copy the text of that conversation out of the AI tool, paste it into a
-Word doc or a Google Doc, and upload it. Include both sides: the five questions it asked and the five
-answers you gave. At the top of the document, write which AI tool you used.</p>
-<p style="font-family:var(--sans);font-size:.92rem">Paste the text rather than taking screenshots. A screen
-reader can read text and cannot read a screenshot, which is a point this course returns to in Week 9.</p>
-<p style="font-family:var(--sans);font-size:.92rem">You are not graded on whether the AI gave good answers.
-You are graded on having run the session yourself.</p>
+<p style="font-family:var(--sans);font-size:.92rem">Go to the <strong>Lab 5</strong> assignment in Canvas and upload three files.</p>
+<p style="font-family:var(--sans);font-size:.92rem"><strong>File 1: your workbook</strong>, saved as
+<code class="inline">LAB5_Last_First.xlsx</code>. Your checkpoint answers go on the Analyst tab, one per
+numbered row in column B. Keep your Part A work and your investigation pivots on their own sheets so the
+working is visible. Formulas must be live in the cells; a typed-in number does not count.</p>
+<p style="font-family:var(--sans);font-size:.92rem"><strong>File 2: your one-page board memo</strong>, as a Word doc or a PDF.</p>
+<p style="font-family:var(--sans);font-size:.92rem"><strong>File 3: your completion certificate PDF.</strong> Clear all the checkpoints above, write
+your reflection, and click Download certificate. Your reflection prints as page 2, so you do not submit
+it separately.</p>
 </main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-const LAB="LAB1", QS=[{"q": "Checkpoint 1 \u00b7 The policy. A classmate pastes this week's discussion question into an AI and submits the answer unedited. Which light is that: green, yellow, or red?", "t": "txt", "a": "cmVk", "h": "Apply the test from Part 1: is the thing being graded the thinking itself? If it is, the thinking has to be theirs. Decide which zone that puts this in."}, {"q": "Checkpoint 2 \u00b7 In Lab 6 you ask an AI to explain why your Tableau chart is showing blanks, then fix it yourself. Which light?", "t": "txt", "a": "Z3JlZW4=", "h": "You found the problem, the AI explained it, and you did the fixing. Lab 6 is outside the four Excel labs, so the exception does not apply. Ask whether understanding your own mistake makes you sharper or does the work for you."}, {"q": "Checkpoint 3 \u00b7 The roles. You tell an AI: 'Quiz me on the five components of MIS, one question at a time, and when I miss one give me a hint instead of the answer.' Which role is the AI playing: coach, sparring partner, or calculator?", "t": "txt", "a": "Y29hY2g=", "h": "Re-read the three roles in Part 2. One of them is defined by making you retrieve the answer instead of handing it to you."}, {"q": "Checkpoint 4 \u00b7 Run the coach session from Part 2 with an AI tool: ask it to quiz you on the five components of MIS, one question at a time. Then answer the question below yourself, without using AI. Espresso machines report their own condition to headquarters. Which of the five components are the machines themselves: hardware, software, data, networks, or people?", "t": "txt", "a": "aGFyZHdhcmU=", "h": "Separate the physical object from what it produces. The reports it emits are data, and the path those reports travel is the network. That leaves one component for the machine itself."}, {"q": "Checkpoint 5 \u00b7 The calculator test. You gave an AI the ten order lines printed in the lab above and it answered, confidently: 'The total is $1,440.75.' Compute the real total yourself in Excel or on paper. What is it?", "t": "num", "a": "MTQ0MC41Nw==", "tol": 0.01, "h": "SUM of quantity times price for each line. The AI transposed two digits. It happens, it looks right, and nobody catches it except the person who checks."}, {"q": "Checkpoint 6 \u00b7 The autopsy. The AI paragraph printed above is fluent, confident, and contains one factual error about this course's central rule. One word appears where its opposite should be. What is the wrong word?", "t": "txt", "a": "c3Ryb25nZXN0", "h": "Find the sentence in the paragraph that states the course's central rule, then compare it word for word against how Chapter 1 states it. One word has been swapped for its own opposite."}];
+const LAB="LAB5", QS=[{"q": "Checkpoint 1 · Pivot revenue by is_member. Total revenue from member-attached sales, in dollars?", "t": "num", "a": "NjE3NDk5LjY=", "tol": 1, "h": "SUMIF on the Analyst tab first (is_member = Y, sum revenue), then is_member in Rows and revenue in Values in the pivot to check it. They must agree."}, {"q": "Checkpoint 2 · What share of all sales lines are member-attached, as a percent to one decimal?", "t": "num", "a": "ODYuMA==", "tol": 0.2, "h": "Count of lines by is_member, then Y / total. Show Values As → % of Column Total does it in one move."}, {"q": "Checkpoint 3 · Board question 2: which store has the LOWEST member attach rate?", "t": "txt", "a": "QmVsbGluZ2hhbQ==", "h": "The memo says revenue looks fine, so stop looking at revenue. What other measure appears in the memo? Break it out by store."}, {"q": "Checkpoint 4 · Board question 2: that store's member attach rate, as a percent to one decimal?", "t": "num", "a": "NTEuNg==", "tol": 0.2, "h": "Pivot: store in Rows, is_member in Columns, count of sale_id in Values, shown as % of Row Total."}, {"q": "Checkpoint 5 · Board question 3: the next-lowest store's attach rate, to one decimal?", "t": "num", "a": "ODYuOQ==", "tol": 0.2, "h": "Same pivot. Notice the size of the cliff between last place and second-to-last."}, {"q": "Checkpoint 6 · Board question 4: how many sales at the lowest-attach-rate store had no member attached?", "t": "num", "a": "MTY4", "tol": 0, "h": "Filter or COUNTIFS: store = Bellingham, is_member = N."}, {"q": "Checkpoint 7 · Board question 5: which OTHER store's total revenue is closest to the lowest-attach-rate store's?", "t": "txt", "a": "VGFjb21h", "h": "Revenue by store, sorted. The problem store sits comfortably mid-pack. The anomaly is invisible on every chart you built in Lab 4."}, {"q": "Checkpoint 8 · Board question 6: how many of the lowest-attach-rate store's non-member sales would have to become member sales to reach an 87% attach rate?", "t": "num", "a": "MTIz", "tol": 1, "h": "It has 347 total lines. What member count makes member/total reach 87%? Subtract the current member count. Goal Seek on a small model, or algebra (both are legitimate analyst moves."}, {"q": "Checkpoint 9 · With =IF(rate<0.87,\"Below target\",\"On target\") beside your eight store attach rates, how many stores are Below target?", "t": "num", "a": "Mg==", "tol": 0, "h": "Bellingham is far below. Look for the store just under 87 percent that a glance would call fine. COUNTIF the status column for \"Below target\"."}];
 const SKEY='mis320_'+LAB;
 let solved=new Set();
 function load(){try{const raw=localStorage.getItem(SKEY);if(!raw)return null;const s=JSON.parse(raw);
@@ -630,12 +641,12 @@ function render(){
  document.getElementById('prog').textContent='Checkpoint progress: '+solved.size+' / '+QS.length;
  const done=solved.size===QS.length;
  document.getElementById('reflectbox').className='certbox'+(done?' show':'');
- document.getElementById('certbox').className='certbox'+(done&&wc()>=75?' show':'');
+ document.getElementById('certbox').className='certbox'+(done&&wc()>=50?' show':'');
 }
 function wc(){const t=document.getElementById('refl');return t?t.value.trim().split(/\s+/).filter(Boolean).length:0}
 document.addEventListener('input',function(e){
  if(e.target&&e.target.id==='refl'){
-  const n=wc();document.getElementById('reflcount').textContent=n+' words'+(n<75?': '+(75-n)+' more to unlock your certificate':': certificate unlocked below');
+  const n=wc();document.getElementById('reflcount').textContent=n+' words'+(n<50?': '+(50-n)+' more to unlock your certificate':': certificate unlocked below');
   document.getElementById('certbox').className='certbox'+(solved.size===QS.length&&n>=50?' show':'');save();
  }
 });
@@ -654,7 +665,7 @@ function cert(){
  const n=document.getElementById('nm').value.trim();
  if(!n){document.getElementById('codeout').textContent='Enter your name first.';return}
  const r=document.getElementById('refl').value.trim();
- if(wc()<75){document.getElementById('codeout').textContent='Finish your 75-word reflection above first.';return}
+ if(wc()<50){document.getElementById('codeout').textContent='Finish your 50-word reflection above first.';return}
  const code=LAB+'-'+h32(n.toLowerCase()+'|'+LAB+'|'+QS.length);
  const d=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
  const {jsPDF}=window.jspdf;const p=new jsPDF({orientation:'landscape',unit:'pt',format:[560,380]});
@@ -669,7 +680,7 @@ function cert(){
  p.setFont('times','normal');p.setFontSize(13);
  p.text('completed all '+QS.length+' checkpoints of',280,198,{align:'center'});
  p.setFont('helvetica','bold');p.setFontSize(15);p.setTextColor(26,82,118);
- p.text('Lab 1 \u00B7 GenAI for Thinking, Not Instead of It',280,222,{align:'center'});
+ p.text('Lab 5 \u00B7 Data Analysis: Why Are Members Disappearing?',280,222,{align:'center'});
  p.setFont('helvetica','normal');p.setFontSize(11);p.setTextColor(90,90,90);
  p.text(d,280,252,{align:'center'});
  p.setFont('courier','bold');p.setFontSize(12);p.setTextColor(17,120,100);
@@ -682,7 +693,7 @@ function cert(){
  p.setTextColor(26,82,118);p.setFont('helvetica','bold');p.setFontSize(10);
  p.text('LAB REFLECTION \u00B7 '+n+' \u00B7 '+code,280,44,{align:'center'});
  p.setTextColor(60,60,60);p.setFont('times','italic');p.setFontSize(9);
- const promptLines=p.splitTextToSize('Prompt: Choose a career field, perhaps one you plan to enter after graduation. Name one skill in that field that a human professional must be able to do without AI. Describe how an analyst would perform an autopsy on AI output to check it. Explain what could go wrong for someone who lets AI do that work from day one. Then name one way you plan to use AI as a coach this quarter.',480);
+ const promptLines=p.splitTextToSize('Prompt: You just found a problem that every standard report concealed. In the career you are heading toward, what is one \'healthy-looking sick store\': a metric that could look fine while something underneath it fails? What would you have to break out, segment, or cross-tab to catch it early?',480);
  p.text(promptLines,40,70);
  p.setFont('times','normal');p.setFontSize(11);p.setTextColor(26,26,26);
  const lines=p.splitTextToSize(r,480);
