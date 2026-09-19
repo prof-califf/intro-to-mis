@@ -759,7 +759,137 @@ Healthcare outage was so damaging partly because so few providers had a plan B f
 assumed would always be there. Asking "what do we do the day this critical thing is gone?" is
 business continuity, and it is a business planning question, not a technical one.</p></div>
 
-<h3>4.2 The five components at Change Healthcare</h3>
+<h3>4.2 One door without a second step</h3>
+
+<p>Here is how it started, and the smallness of it is the point. On 12 February 2024, criminals logged
+into a Change Healthcare Citrix portal, which is the kind of service that lets staff reach their work
+desktops from somewhere else. They used stolen credentials, meaning a real username and a real
+password belonging to a real employee. The portal asked for nothing more. It did not require
+multi-factor authentication, the second step from section 2.1 that turns a stolen password into a
+useless one.</p>
+
+<p>That is not a sophisticated attack. There is no clever exploit in this story, no flaw nobody had
+heard of. Somebody had a working password and a door that only asked for a password. Everything else
+in this chapter, the national outage, the 193 million records, the billions of dollars, follows from
+that one missing setting.</p>
+
+<p>The obvious question is how a company of this size got there, and the answer is a management
+answer rather than a technical one. UnitedHealth had acquired Change Healthcare, and when the chief
+executive testified about the breach he said the attackers came in through Change's older systems,
+the ones not yet brought up to the parent company's standard. Buying a company means buying its
+servers, its defaults and its unfinished work. Somebody owns the job of raising an acquired
+company's controls to the standard of the buyer's, and until that job is finished the buyer holds the
+risk whether or not anyone has written it down anywhere.</p>
+
+<p>Carry that with you into any job where your employer is growing by acquisition, which is most large
+American companies. The integration plan will have a section on branding and a section on payroll
+systems. Ask what its section on security controls says, and ask what happens to the risk in the
+months before that section is finished.</p>
+
+<h3>4.3 Nine days</h3>
+
+<p>The attackers were inside from 12 February and did not set off the ransomware until 21 February.
+Nine days. Section 2.2 called this the part of the kill chain where defense still has every advantage,
+because an intruder who has just arrived cannot do much yet and has to move around to become
+dangerous. That is exactly what happened here. They moved through the network, found what was worth
+taking, and copied out roughly four terabytes of corporate and patient data before doing anything
+visible at all.</p>
+
+<p>Then on the morning of 21 February they encrypted the systems, and the company lost access to its
+own environment. Change Healthcare shut down its data centers to stop the ransomware spreading into
+the rest of UnitedHealth, which worked, and which is also why the outage was so total. Containment and
+availability were in direct conflict, and the company chose containment. It was the right call, and it
+is the reason the pharmacy screen in this section's opening paragraph did nothing.</p>
+
+<p>Two lessons sit in those nine days. The first is that the attackers built the damage you eventually
+see during a stretch when nothing appeared to be wrong. The second is that the attackers were doing
+something noisy and unusual for more than a week, and it did not raise an alarm anyone acted on.
+Detection is not a product you own. It is a question somebody has to be responsible for asking every
+day, which Chapter 10 takes up in detail.</p>
+
+<h3>4.4 The ransom, and what money buys from a criminal</h3>
+
+<p>UnitedHealth paid. Around 1 March, roughly $22 million in bitcoin went to a wallet linked to the
+ALPHV group, also called BlackCat, in exchange for a promise that the stolen data would be deleted.
+The chief executive later told Congress that the decision to pay was his and that it was one of the
+hardest he had ever made.</p>
+
+<p>Follow what the money actually bought. ALPHV took the payment and vanished, shutting down its own
+operation without paying the affiliate who had carried out the attack. That affiliate still had a copy
+of the data. He took it to a rival group, RansomHub, which then demanded a second ransom from
+UnitedHealth in April. UnitedHealth did not pay again, and patient data appeared on leak sites anyway.
+The company paid $22 million for the deletion of data that was never deleted.</p>
+
+<p>Students usually want a rule here, and the rule is not "never pay." Organizations facing the end of
+their ability to operate sometimes pay, and the FBI's advice against it is easier to follow from
+outside the room. The rule is narrower and more useful. A ransom payment buys a promise from a
+person whose entire business model is breaking promises, and it buys nothing that is enforceable
+afterward. So the payment decision is never the moment to start thinking about this. It is the moment
+you find out what you decided months earlier, when somebody chose whether to fund backups, network
+segmentation, detection, and a rehearsed plan for the day the screens go dark.</p>
+
+<h3>4.5 Bringing it back</h3>
+
+<p>Recovery was not a weekend. Electronic prescribing came back over the first weeks of March, the
+payment platform after that, and claims processing later still, with the tail of the disruption
+running for months at practices trying to submit a backlog through systems that had changed under
+them.</p>
+
+<p>In the meantime UnitedHealth put roughly $9 billion of interest-free advances into the hands of
+providers who could not bill, which is the clearest possible statement of what the damage actually
+was. The company was not compensating people for leaked records. It was keeping clinics solvent while
+the plumbing was rebuilt, because otherwise practices would have closed before the systems came back.
+Providers have been repaying those advances since, which is its own long story in medical practices
+you may end up working for.</p>
+
+<p>Notice what the recovery required that no security product supplies: decisions about who gets paid
+first, communication to hundreds of thousands of providers, staff working manual processes for weeks,
+and an executive team able to say what was happening while the investigation was still running.
+Chapter 10 will give this the name it deserves. Business continuity is not a document. It is whether
+the organization can still function on the day the technology cannot.</p>
+
+<h3>4.6 Who answered for it, and how the number grew</h3>
+
+<p>On 1 May 2024 the chief executive of UnitedHealth testified to Congress, confirmed the missing
+multi-factor authentication, confirmed the ransom, and took the questions. Federal health regulators
+had already opened an investigation in March, before the company had formally reported the breach at
+all, which tells you how visible the damage was from outside.</p>
+
+<p>Then watch the count of affected people move, because it teaches something about how these numbers
+work. The first filing used a placeholder of 500 individuals. By October 2024 the company had notified
+100 million. In January 2025 the figure was about 190 million. On 31 July 2025 it settled at 192.7
+million, which the chapter rounds to 193 million and which is close to two thirds of the population of
+the United States. It is the largest healthcare data breach in American history.</p>
+
+<p>That escalation is normal and worth expecting. Early breach numbers are not lies, they are the
+honest output of an investigation that has barely started, and they almost always go up. A manager who
+treats the first number as the real one will make promises in week two that look dishonest in month
+twelve. Say what you know, say when you will know more, and say plainly that the figure will change.</p>
+
+<h3>4.7 What has changed since, and what has not</h3>
+
+<p>The specific fix is not in dispute. Everyone who looked at this agreed that multi-factor
+authentication on remote access would have stopped it. In January 2025 federal regulators proposed
+the first substantial update to the HIPAA Security Rule in more than a decade, and it would require
+controls like this rather than leaving them to each organization's judgment. Then the argument
+started. More than a hundred hospital systems and provider groups asked for the proposal to be
+withdrawn, on the grounds of cost and burden, and the rule has been delayed.</p>
+
+<p>Hold that next to what the same organizations lived through in 2024. It is not hypocrisy, and you
+should not read it as one. The providers making that argument are frequently the small and
+mid-sized operations that this attack nearly bankrupted, and a compliance program they cannot afford
+is a real threat to them too. This is the genuine version of the security trade-off, with real
+budgets and real patients on both sides of it, and you will meet it in whatever industry you end up
+in.</p>
+
+<p>What has not changed at all is the shape that made one company's bad morning into a national
+event. A third of US patient records still pass through the same plumbing. Nobody has unwound the
+consolidation, because there is no mechanism that would, and each individual merger that produced it
+looked sensible on its own terms. Concentration risk is not a decision anyone makes. It is what a
+market arrives at when every participant optimizes separately, and noticing it before it fails is
+work that falls to people who understand both the business and the system.</p>
+
+<h3>4.8 The five components at Change Healthcare</h3>
 
 <p>Now that you have seen the whole system, here it is as five components, the way this course maps every case. Look at which row the attack came in through and which row the damage landed in. They were not the same row.</p>
 
@@ -772,7 +902,7 @@ business continuity, and it is a business planning question, not a technical one
 <tr><td data-label="Component"><strong>People</strong></td><td data-label="In the breach">The stolen credential; the security procedures never updated after acquisition; the CEO before Congress</td><td data-label="The lesson">The decisive failures were management decisions, not code</td></tr>
 </table>
 
-<h3>4.3 What a business technology manager takes from this chapter</h3>
+<h3>4.9 What a business technology manager takes from this chapter</h3>
 
 <p>Strip the Change Healthcare case down to what you can reuse in any company. Four decisions came up in it, and each one is a decision you will be in the room for.</p>
 
@@ -948,7 +1078,9 @@ Governance: The Audit</strong></a> puts you in that job at Cascadia.</p>
 <li>American Medical Association survey work, spring 2024, for the share of physician practices reporting lost revenue.</li>
 <li>Contemporary reporting on the ALPHV/BlackCat exit scam and the subsequent RansomHub demand, for the aftermath described in section 1.</li>
 <li>Change Healthcare's 31 July 2025 notice to state attorneys general and to HHS, for the final count of 192.7 million individuals (the company says full deduplication was not possible, so the figure may overstate slightly); UnitedHealth's 2024 results, for the roughly $3.1 billion in cyberattack-related costs for the year and the more than $9 billion advanced to providers.</li>
-<li><strong>Verification note.</strong> Checked against sources in September 2026: the final affected count (raised from 190 to 193 million), the 2024 cost figure (raised from "above $2.8 billion" to about $3.1 billion), and the litigation status (a federal multidistrict case and the Nebraska attorney general's suit had both survived motions to dismiss by late 2025; no settlement or federal penalty had been announced by mid-2026). Andrew Witty stepped down as UnitedHealth's chief executive in May 2025, so the text now uses the past tense. The Morris worm and MOVEit details were checked against the authors' knowledge of the published accounts (Emsisoft's running totals for MOVEit) rather than re-searched.</li>
+<li>UnitedHealth's congressional testimony of 1 May 2024 and contemporary reporting, for the attack anatomy in sections 4.2 to 4.4: entry through a Citrix remote-access portal on 12 February 2024 using stolen credentials with no multi-factor authentication, the attackers' statement that the compromised systems were Change's older ones not yet raised to the parent company's standard, roughly four terabytes of data copied out during the nine days before encryption, the payment of about $22 million in bitcoin around 1 March, the ALPHV exit scam that left the affiliate holding the data, and RansomHub's subsequent demand, which was not paid.</li>
+<li>HHS Office for Civil Rights, its Change Healthcare incident FAQ and its January 2025 Notice of Proposed Rulemaking on the HIPAA Security Rule, for section 4.7: the escalating notification counts (500, then 100 million, then about 190 million, then 192.7 million on 31 July 2025) and the proposal to require controls such as multi-factor authentication. The provider-side objections and the resulting delay are the live part of this story; check the rule's status before teaching it.</li>
+<li><strong>Verification note.</strong> Checked against sources in September 2026: the final affected count (raised from 190 to 193 million), the 2024 cost figure (raised from "above $2.8 billion" to about $3.1 billion), and the litigation status (a federal multidistrict case and the Nebraska attorney general's suit had both survived motions to dismiss by late 2025; no settlement or federal penalty had been announced by mid-2026). Andrew Witty stepped down as UnitedHealth's chief executive in May 2025, so the text now uses the past tense. Also confirmed in September 2026: the 12 February entry date and Citrix vector, the ransom sequence and exit scam, the roughly $9 billion of interest-free provider advances, and the HIPAA Security Rule proposal of 6 January 2025 together with the provider coalition that asked for its withdrawal in December 2025 and the delay that followed. The Morris worm and MOVEit details were checked against the authors' knowledge of the published accounts (Emsisoft's running totals for MOVEit) rather than re-searched.</li>
 <li>Accounts of the 1988 internet worm, including the subsequent prosecution and the creation of the first coordinated response team, for mini-case 1.</li>
 <li></li>
 <li>Reporting on the 2023 MOVEit Transfer exploitation, for the vendor-of-a-vendor pattern in mini-case 3. Totals for organizations and individuals affected rose for more than a year afterward.</li>
