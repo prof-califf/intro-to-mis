@@ -510,6 +510,79 @@ in the room for that question.</p>
 a machine for making the future resemble the labeled past.</em> When the past is what you want more
 of, that is a superpower. The next two sections are about when it is not.</p>
 
+<h3>1.3 Deep learning: when nobody writes the rules</h3>
+
+<p>Section 1.2 described what a model does. This one describes what almost every model you will meet
+now is made of, because the shape of the thing explains the management problem in the rest of the
+chapter. Nearly everything currently sold as AI, from the feed on your phone to the resume screener
+later in this chapter, is built on <strong>deep learning</strong>.</p>
+
+<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Neural networks and deep learning</span>
+<p>A <strong>neural network</strong> is a structure loosely modeled on how brains process information. It
+is built from layers of simple units. Each unit takes numbers from the layer before it, does one small
+calculation, and passes a result forward. The first layer receives the raw input, such as the pixel
+values of an image or the words of a resume. The last layer produces the output, such as "stop sign"
+or "not a match." The layers in between are called <strong>hidden layers</strong>, and they are where
+the network builds up whatever it is going to treat as meaningful. <strong>Deep learning</strong> just
+means a network with many hidden layers, sometimes hundreds. The depth is where the name comes from
+and where the capability comes from.</p></div>
+
+<p>Take the simplest possible version of the job: teaching a computer to tell a cat from anything
+else. You show it a picture and tell it "cat." You show it another and tell it "not a cat." You do
+that a few thousand times. Nobody writes down what a cat looks like. The network works out on its own
+which features go with the label, and settles on things like pointy ears, whiskers and a certain size
+and shape of eye, because those are what reliably came with "cat" in the pictures it saw.</p>
+
+<p>Two things in that paragraph are worth slowing down for. The first is that the network does not
+know what a cat is. It has learned what cats tended to look like in one particular pile of pictures,
+which is not the same claim and behaves differently at the edges. The second is that you chose the
+pile. Every feature it treats as important is a fact about the examples you handed it, and you may not
+have known you were making that decision while you were making it.</p>
+
+<p>Now change two words. Instead of cat and not a cat, label the examples hired and not hired, and
+feed it ten years of a company's resumes. The machinery does not change at all. It works out which
+features went with the label, and it has no way to know which of those features you would be
+embarrassed to write down as a rule. Section 4 is that exact system.</p>
+
+<p>Here is the part that matters to a manager. Think of every connection inside the network as a dial
+that can turn up or down, and a large modern network as having billions of them. Before training, the
+dials are set at random, so the answers are random too. Training is the process of showing the system
+an example, checking whether it was right, and nudging every relevant dial slightly toward a better
+answer. Do that a few million times and the dials settle into an arrangement that is reliably good at
+the task. Nobody tells the network what to look for. Nobody at the company can point at a dial and say
+what it is for.</p>
+
+<p>That is the difference from every system in the first eleven chapters of this book. Domino's
+delivery system does what somebody specified. Walmart's database answers what somebody designed it to
+answer. A deep learning system does what a few million examples pushed it toward, and the examples
+were chosen by people who mostly were not thinking about that question at the time. When you read, in
+section 2, that a model learned something nobody intended, do not picture a bug. Picture a set of
+dials that moved exactly as the arithmetic said they should, using the examples they were given.</p>
+
+<p>Deep learning took over for a specific and recent reason, and the date is worth knowing because
+your career will be lived entirely after it. Three things arrived together around 2012: enormous
+labeled datasets, produced by a decade of people putting tagged images, text and video on the
+internet; cheap parallel computing, because the graphics chips built for video games turned out to
+suit this arithmetic; and better training methods that made deep networks work in practice. In the
+2012 ImageNet competition, where systems compete to label images across a thousand categories, a deep
+network cut the error rate roughly in half against the previous year's best conventional system.
+Within two years every serious competitor had switched. That is where the era you are entering
+starts.</p>
+
+<p>One terminology trap, because the words get mixed up constantly and a manager who mixes them up
+buys the wrong thing. Deep learning describes <em>what the model is</em>: a network with many layers.
+Supervised learning, from 1.2, describes <em>how it was trained</em>: on labeled examples. They answer
+different questions, and every system has an answer to both. The feed and the hiring tool in this
+chapter are both deep networks trained on labeled examples of past human behavior. Ask both questions
+of any system somebody is selling you, because the second answer tells you whose past you are about
+to automate.</p>
+
+<p>The cost of the depth is the thing that recurs for the rest of this chapter. A rule you can read is
+a rule you can argue with, audit, and correct. Billions of dials are none of those things. That is not
+secrecy and it is not a company refusing to explain itself. It is what the technology is. Which means
+the only place left to look, when you want to know why a system decided something, is the data it
+learned from.</p>
+
 <h2 id="bias"><span class="num">2</span>Bias, proxies, and feedback loops</h2>
 
 <p>There are three ways machine-learning systems go wrong without anybody writing a bad instruction, and it is worth having all three named before you meet them in the cases. The examples can carry a skew. The thing you
@@ -935,7 +1008,9 @@ free, who is paying, and in what currency?</p>
 <div><dt>Artificial intelligence</dt><dd>Computers doing tasks that seem to require intelligence; today, mostly via machine learning.</dd></div>
 <div><dt>Machine learning</dt><dd>Learning patterns from examples instead of following hand-written rules.</dd></div>
 <div><dt>Training data / label</dt><dd>The historical examples a model learns from, and the outcome attached to each.</dd></div>
-<div><dt>Supervised / unsupervised</dt><dd>Learning from labeled outcomes vs. finding structure with no labels.</dd></div>
+<div><dt>Supervised / unsupervised</dt><dd>Learning from labeled outcomes vs. finding structure with no labels.</dd>
+<dt>Neural network / deep learning</dt>
+<dd>A neural network is a model built from layers of simple units, each passing a small calculation forward. Deep learning means a network with many such layers, whose behavior is set by training rather than by anyone writing rules.</dd></div>
 <div><dt>Inference</dt><dd>Using the trained model on new cases; where models earn their keep.</dd></div>
 <div><dt>Collaborative filtering</dt><dd>Predicting what you will want from patterns across everyone's past behavior; the recommendation engine's core.</dd></div>
 <div><dt>Training-data bias</dt><dd>A skew in the examples, faithfully learned and reproduced.</dd></div>
