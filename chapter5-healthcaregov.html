@@ -322,6 +322,34 @@ li{margin-bottom:.45rem}
 .qrow{grid-template-columns:1fr}
 .qbtns{flex-wrap:wrap}
 
+
+/* ---------- cost-of-a-late-fix budget toy (1.1) ---------- */
+.cb-intro{padding:.8rem 1rem 0;font-family:var(--sans);font-size:.95rem;line-height:1.55;color:var(--text-muted);margin:0}
+.cb-fs{border:0;margin:0;padding:.7rem 1rem 0;min-width:0}
+.cb-fs legend{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--text-light);padding:0}
+.cb-opt{display:flex;gap:.6rem;align-items:flex-start;padding:.42rem 0;border-top:1px solid var(--border)}
+.cb-opt:first-of-type{border-top:0}
+.cb-opt input{margin:.28rem 0 0;width:1.05rem;height:1.05rem;flex:0 0 auto;accent-color:var(--magenta)}
+.cb-opt label{font-family:var(--sans);font-size:.95rem;line-height:1.45;color:var(--text-dark);cursor:pointer}
+.cb-opt label b{font-weight:600}
+.cb-opt label i{font-style:normal;display:block;font-size:.85rem;color:var(--text-light);line-height:1.4}
+.cb-acts{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;padding:.9rem 1rem 0}
+.cb-acts button{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:var(--off-white);border:1px solid var(--border);padding:.45rem .7rem;cursor:pointer;color:var(--text-dark)}
+.cb-acts button:hover:enabled{background:var(--magenta-pale);border-color:var(--magenta);color:var(--magenta-dark)}
+.cb-acts button:disabled{opacity:.45;cursor:not-allowed}
+.cb-count{font-family:var(--sans);font-size:.88rem;color:var(--text-light)}
+.cb-map{border-top:1px solid var(--border);margin-top:.9rem;padding:.9rem 1rem 0}
+.cb-svgwrap{overflow-x:auto}
+.cb-read{font-family:var(--sans);font-size:.92rem;line-height:1.55;color:var(--text-muted);margin:.6rem 0 0;min-height:2.6em}
+.cb-bill{margin:.8rem 1rem 0;padding:.7rem .85rem;border-left:3px solid var(--magenta);background:var(--magenta-pale)}
+.cb-bill span.hd{display:block;font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--text-light);margin-bottom:.35rem}
+.cb-bill ol{margin:.2rem 0 0 1.1rem;padding:0}
+.cb-bill li{margin:.45rem 0;font-size:.93rem;line-height:1.5;color:var(--text-dark)}
+.cb-bill li b.ok{color:var(--good)}
+.cb-bill li b.miss{color:var(--magenta-dark)}
+.cb-total{margin:.7rem 0 0;font-size:.95rem;font-weight:600;color:var(--text-dark)}
+@media(max-width:640px){.cb-opt label i{font-size:.82rem}}
+
 /* check-yourself boxes and subheads, matching ch2/ch3 */
 .mcq{border-left:3px solid var(--magenta);background:var(--off-white);padding:.7rem 1rem;margin:1rem 0 1.6rem;font-family:var(--sans);font-size:.95rem}
 .mcq b{font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--magenta-dark);display:block;margin-bottom:.2rem}
@@ -461,14 +489,13 @@ organized? Which parts of the information system do we build? Which parts can we
 see (and what do they actually need to see)? Put the analysis and design together and you have <strong>systems analysis and design</strong>, which is what this
 chapter is about.</p>
 
-<p>To further your understanding of systems analysis and design, think of building a house. Analysis is the conversation with the family about how many bedrooms
-they need and whether anyone uses a wheelchair. Design is the blueprint. Nobody pours concrete until
-both are done, because concrete is expensive to move. Software is the same, except that often individuals and businesses skip the
-first two steps far more often than builders do, and that is where most of this chapter's disasters
-come from.</p>
+<p>Think of building a house. Analysis is the conversation with the family about how many bedrooms they need
+and whether anyone uses a wheelchair. Design is the blueprint. Nobody pours concrete until both are done,
+because concrete is expensive to move. Software is the same, except that people skip the first two steps far
+more often than builders do, and that is where most of this chapter's disasters come from.</p>
 
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Systems analysis and design</span>
-<p><strong>Analysis</strong> answers what the system must do and for whom. What it produces is a list of requirements. <strong>Design</strong> answers how the system will do it. What it produces is a plan for the data, software, hardware, networks, and people. Neither step writes any code. Both are where the expensive decisions get made, because everything built afterwards assumes those decisions were right.</p></div>
+<p>Notice that neither step writes any code, and that both are where the expensive decisions get made,
+because everything built afterwards assumes those decisions were right.</p>
 
 <h3>1.1 The cheapest place to be wrong</h3>
 
@@ -491,29 +518,251 @@ because by then everything else has been built on the assumption that somebody h
 weakest component rule usually gets taught as a fact about running systems. It is at least as true about
 building them, and analysis is the phase where you choose which component will be the weak one.</p>
 
-<div class="callout">
-  <strong>The core idea</strong>
-  <p>Every system is built twice: once in the specification, and once in the code. Building it well the
-  second time cannot rescue a bad job the first time. Most large failures you will read about in this course
-  are failures of the first build, discovered during the second.</p>
+<p>Put it this way. You build every system twice, once in the specification and once in the code, and
+building it well the second time cannot rescue a bad job the first time. Nearly every large failure you
+will read about in this course is a failure of the first build, discovered during the second. So the
+question worth asking on any project you join is not whether the team is careful. It is where the team is
+spending its attention, and how early.</p>
+
+<div class="tryit" id="costtoy">
+  <div class="tryit-head">Build it yourself &middot; Spend the review budget</div>
+  <p class="cb-intro">Your university is replacing course registration. It has to be live for spring
+  registration, and that date comes from the academic calendar, so it does not move. Four mistakes are
+  already in this project and you do not know what they are. You have three units of review effort to spend
+  and five things to spend them on. Pick three, run the project, and see what each mistake cost you at the
+  point you found it.</p>
+
+  <fieldset class="cb-fs">
+    <legend>Choose three</legend>
+    <div id="cbopts"></div>
+  </fieldset>
+
+  <div class="cb-acts">
+    <button type="button" id="cbrun">Run the project</button>
+    <button type="button" id="cbreset">Start over</button>
+    <span class="cb-count" id="cbcount">0 of 3 chosen</span>
+  </div>
+
+  <div class="cb-map">
+    <div id="cbsvg" class="cb-svgwrap"></div>
+    <p class="cb-read" id="cbread" role="status" aria-live="polite">Choose three checks, then run the project.</p>
+  </div>
+
+  <div class="cb-bill" id="cbbill" hidden></div>
+
+  <p class="tryit-note">Every mistake you did not catch was found on launch day, by a student. That is not
+  a harder mistake than the others. It is the same mistake, four phases later.</p>
 </div>
+
+<script>
+(function(){
+  var optHost=document.getElementById('cbopts');
+  if(!optHost)return;
+
+  var STOPS=['Requirements','Design','Build','Test','Launch day'];
+  var ABBR=['REQ','DESIGN','BUILD','TEST','LAUNCH'];
+  var COST=[1,10,100,1000,10000];
+
+  var CHECKS=[
+    {id:'gate',n:'A stage gate before build starts',
+     d:'A scheduled review that is allowed to refuse to pass the project.'},
+    {id:'spec',n:'An interface specification review',
+     d:'Write down exactly what data crosses the boundary between two systems.'},
+    {id:'proto',n:'A prototype put in front of real students',
+     d:'Not a demo. Real people trying to finish the real task, watched.'},
+    {id:'load',n:'A load test against the expected peak',
+     d:'Run the built system at the volume you expect on the busiest morning.'},
+    {id:'stage',n:'A staged rollout, five percent first',
+     d:'Turn it on for a small group, watch, then expand or switch it off.'}
+  ];
+
+  var DEFECTS=[
+    {id:'units',lab:'Credit hour',
+     t:'The registrar and the billing system disagree about what counts as a credit hour. Nobody wrote down which definition crosses the boundary between them.',
+     by:[{c:'spec',s:0}],
+     caught:'The specification review put both definitions on one page, somebody noticed they were different, and it was settled in a meeting.',
+     missed:'Every part-time student is billed at the wrong rate. Finance reverses the charges by hand, and the registrar stops trusting the numbers the system gives her.'},
+    {id:'capacity',lab:'Peak load',
+     t:'Nobody ever said how many students would register in the first hour. Registration opens for everyone at once, at six in the morning.',
+     by:[{c:'gate',s:0}],
+     trap:'load',
+     trapmsg:'You bought the load test, and it could not catch this one. A load test needs a number to test against, and nobody ever wrote one down. A missing requirement does not just produce a missing feature. It produces a missing test.',
+     caught:'The gate asked what number the system was being built for, got no answer, and refused to pass. The number got written that week.',
+     missed:'The system falls over ten minutes into the busiest hour of the term, and the add/drop deadline does not move to accommodate it.'},
+    {id:'holds',lab:'Holds rule',
+     t:'Three weeks before launch, a new rule requires students to clear every account hold before they can see the catalog at all.',
+     by:[{c:'proto',s:0},{c:'stage',s:3}],
+     caught:'Somebody watched a real student hit the wall and asked the question the rule had never been asked: does a hold need to block browsing, or only enrolling?',
+     missed:'A student with a five dollar library fine cannot see a single course. The help desk absorbs the entire first week.'},
+    {id:'transcript',lab:'Transcript',
+     t:'The design has the course page load each student\u2019s full transcript to check prerequisites. It is fast with fifty students on it.',
+     by:[{c:'load',s:2},{c:'stage',s:3}],
+     caught:'It showed up the moment the system was run at something like real volume, and the page was changed to ask a smaller question.',
+     missed:'Page loads pass thirty seconds once everyone is on. Students start submitting twice, which makes it worse.'}
+  ];
+
+  var BEST={plan:['gate','spec','stage'],total:2002};
+
+  var chosen={},ran=false;
+
+  CHECKS.forEach(function(c){
+    var w=document.createElement('div'); w.className='cb-opt';
+    var inp=document.createElement('input');
+    inp.type='checkbox'; inp.id='cb-'+c.id; inp.value=c.id;
+    var lab=document.createElement('label');
+    lab.setAttribute('for','cb-'+c.id);
+    lab.innerHTML='<b>'+c.n+'</b><i>'+c.d+'</i>';
+    inp.addEventListener('change',function(){
+      if(inp.checked) chosen[c.id]=true; else delete chosen[c.id];
+      sync();
+    });
+    w.appendChild(inp); w.appendChild(lab); optHost.appendChild(w);
+  });
+
+  var runBtn=document.getElementById('cbrun'),
+      resetBtn=document.getElementById('cbreset'),
+      countEl=document.getElementById('cbcount'),
+      readEl=document.getElementById('cbread'),
+      billEl=document.getElementById('cbbill'),
+      svgHost=document.getElementById('cbsvg');
+
+  function count(){var n=0;for(var k in chosen)n++;return n;}
+
+  function sync(){
+    var n=count();
+    countEl.textContent=n+' of 3 chosen';
+    runBtn.disabled=(n!==3);
+    if(!ran){
+      readEl.textContent = n===3
+        ? 'Three chosen. Run the project.'
+        : (n<3 ? 'Choose '+(3-n)+' more.' : 'That is more than three. Take one back.');
+    }
+  }
+
+  function resolve(){
+    return DEFECTS.map(function(d){
+      var hit=null;
+      d.by.forEach(function(b){
+        if(chosen[b.c] && (hit===null || b.s<hit.s)) hit=b;
+      });
+      return {d:d, stop: hit? hit.s : 4, by: hit? hit.c : null};
+    });
+  }
+
+  function drawSVG(rows){
+    var x0=128, gap=68.5, top=48, rh=42;
+    var desc='Four mistakes, each shown on a track running from requirements to launch day. ';
+    var p='';
+    for(var i=0;i<5;i++){
+      var x=x0+i*gap;
+      p+='<text x="'+x.toFixed(0)+'" y="22" text-anchor="middle" font-size="9.5" font-weight="700" fill="var(--muted)">'+ABBR[i]+'</text>';
+      p+='<line x1="'+x.toFixed(0)+'" y1="30" x2="'+x.toFixed(0)+'" y2="'+(top+rows.length*rh-18)+'" stroke="var(--border)" stroke-width="1"/>';
+    }
+    rows.forEach(function(r,i){
+      var y=top+i*rh;
+      var cx=x0+r.stop*gap;
+      var late=(r.stop===4);
+      p+='<text x="8" y="'+(y+4)+'" font-size="10.5" font-weight="600" fill="var(--ink)">'+r.d.lab+'</text>';
+      p+='<line x1="'+x0+'" y1="'+y+'" x2="'+cx.toFixed(0)+'" y2="'+y+'" stroke="'+(late?'var(--magenta)':'var(--good)')+'" stroke-width="2.5"/>';
+      p+='<circle cx="'+cx.toFixed(0)+'" cy="'+y+'" r="6" fill="'+(late?'var(--magenta)':'var(--good)')+'"/>';
+      p+='<text x="'+cx.toFixed(0)+'" y="'+(y+18)+'" text-anchor="middle" font-size="9.5" fill="var(--muted)">'+COST[r.stop].toLocaleString()+'</text>';
+      desc+=r.d.lab+' was found at '+STOPS[r.stop]+' and cost '+COST[r.stop]+'. ';
+    });
+    var h=top+rows.length*rh+8;
+    svgHost.innerHTML='<svg viewBox="0 0 470 '+h+'" xmlns="http://www.w3.org/2000/svg" role="img" '+
+      'aria-labelledby="cbT cbD" style="width:100%;height:auto;font-family:var(--sans)">'+
+      '<title id="cbT">Where each mistake was found, and what it cost there</title>'+
+      '<desc id="cbD">'+desc+'Each step to the right costs about ten times the one before it.</desc>'+
+      p+'</svg>';
+  }
+
+  function run(){
+    if(count()!==3) return;
+    ran=true;
+    var rows=resolve();
+    drawSVG(rows);
+    var total=0, late=0;
+    rows.forEach(function(r){ total+=COST[r.stop]; if(r.stop===4) late++; });
+
+    var items=rows.map(function(r){
+      var head, body;
+      if(r.by){
+        head='<b class="ok">Found at '+STOPS[r.stop]+', cost '+COST[r.stop].toLocaleString()+'.</b> ';
+        body=r.d.t+' '+r.d.caught;
+      }else{
+        head='<b class="miss">Found on launch day, cost '+COST[4].toLocaleString()+'.</b> ';
+        body=r.d.t+' '+r.d.missed;
+        if(r.d.trap && chosen[r.d.trap]) body+=' '+r.d.trapmsg;
+      }
+      return '<li>'+head+body+'</li>';
+    }).join('');
+
+    var verdict;
+    if(total<=BEST.total){
+      verdict='That is the cheapest plan available. You spent your three units on a gate that would not pass a project with a blank in it, a specification review, and a rollout small enough to fail safely. Nothing reached a student.';
+    }else if(late===0){
+      verdict='Nothing reached launch day, which is the thing that matters most. The gap between your bill and the cheapest one is the price of catching things late rather than early.';
+    }else{
+      verdict='Look at the size of the launch-day line against everything else. '+
+        (late===1?'One mistake':late+' mistakes')+' survived to the end, and '+
+        (late===1?'it':'they')+' cost more than the whole rest of the project put together. The mistake did not get worse. It just got later.';
+    }
+
+    billEl.hidden=false;
+    billEl.innerHTML='<span class="hd">The bill</span><ol>'+items+'</ol>'+
+      '<p class="cb-total">Total: '+total.toLocaleString()+' units. Cheapest available: '+BEST.total.toLocaleString()+'.</p>';
+    readEl.textContent=verdict;
+  }
+
+  function reset(){
+    ran=false; chosen={};
+    optHost.querySelectorAll('input').forEach(function(i){i.checked=false;});
+    billEl.hidden=true; billEl.innerHTML='';
+    svgHost.innerHTML='';
+    sync();
+    readEl.textContent='Choose three checks, then run the project.';
+  }
+
+  runBtn.addEventListener('click',run);
+  resetBtn.addEventListener('click',reset);
+  sync();
+})();
+</script>
+
+<p>Run it more than once. The plan that looks most responsible, buying the three earliest checks, is not
+the cheapest available. One check that catches two mistakes late can beat two that each catch one early,
+when the alternative is letting something reach a student. You will meet that trade again in section 2.9,
+and a company gets it wrong in section 3.2.</p>
 
 <h3>1.2 Feasibility, requirements, and scope creep</h3>
 
-<p>Three ideas do most of the work in this section, and all three are ways of asking early questions about how to build an information system
-that somebody will otherwise ask late. The first thing you really need is a <strong>feasibility analysis</strong>, which asks, before anything is
-built, whether the project should exist at all. To do that, you need to figure out <strong>system requirements</strong> which are statements about what the
-system must do, written down before anyone builds it. Once these things are in place, businesses often struggle with <strong>scope creep</strong>, which is what happens to
-system requirements after the feasibility and requirements are settled on. Things change. Changes keep arriving, each one reasonable, and nobody adjusts
-the schedule. The two boxes below give each its full definition.</p>
+<p>Three ideas do most of the work in analysis, and all three are ways of asking early a question somebody
+will otherwise ask late.</p>
+
+<p>The first is <strong>feasibility analysis</strong>, which asks whether the project should exist at all,
+before anyone commits to building it. It runs on three axes. <em>Technical</em>: can this be built, with the
+people and the technology we can actually get? <em>Economic</em>: is it worth what it will cost? And
+<em>operational</em>: will this organization use it the way we are assuming, on this schedule? The third
+axis is the one that gets waved through, because it is the only one that requires somebody to say something
+unwelcome about their own employer.</p>
+
+<p>The second is the <strong>system requirement</strong>, a statement of what the system must do, written
+down before anybody builds anything. Requirements are the hardest thing a project produces, because they
+ask people to state a need they have never had to put into words. When a large project fails, this is
+usually where it failed: the team built exactly what was specified, and what was specified was a
+misunderstanding. Section 2.5 comes back to how they are gathered and written.</p>
+
+<p>The third is <strong>scope creep</strong>, which is what happens to requirements after the estimates are
+fixed. Changes keep arriving, each one reasonable on its own, and nobody moves the schedule to pay for
+them. Scope creep is rarely the result of anybody behaving badly. It is the result of every
+<strong>stakeholder</strong>, meaning every group with a stake in the system, pushing requirements in while
+no one person owns the whole.</p>
 
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Feasibility and scope creep</span>
-<p>Before the SDLC begins, feasibility analysis asks whether the project should exist at all, on three axes: <strong>technical</strong> (can it be built?), <strong>economic</strong> (is it worth what it costs?), and <strong>operational</strong> (will the organization actually use it as intended, on this schedule?). Healthcare.gov passed the first, never seriously ran the second, and failed the third before a line of code existed: the launch date was set by law, not by the work. <strong>Scope creep</strong> is the slow expansion of what the system must do after estimates are fixed. The late
-requirement forcing users to create accounts before browsing is scope creep in its natural habitat,
-arriving with good intentions and no schedule adjustment. Every <strong>stakeholder</strong>, each group with a stake in the system: insurers, states, regulators, the uninsured public, pushed requirements in, and no one owned the whole.</p></div>
-
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Requirements</span>
-<p>A requirement is a statement of what a system must do, written before anyone builds anything, and requirements are the hardest artifact in software because they demand that people articulate needs they have never had to state. Most catastrophic projects fail here, not in the code: the system that gets built faithfully implements a misunderstanding. Healthcare.gov’s late decision to force account creation before browsing, which multiplied load on the weakest part of the system, was a requirements change arriving after the architecture was set.</p></div>
+<p>Feasibility analysis asks whether a project should exist at all, on three axes: technical, economic, and
+operational. Scope creep is the slow expansion of what the system must do after the estimates are fixed. The
+two are connected. An operational answer of "only if the date moves" is the finding that would stop scope
+creep from being free, which is why it is the finding that gets softened.</p></div>
 
 <p>Analysis also decides how to build the system in a sequence that keeps the risk survivable, which is
 what section 2 is about.</p>
@@ -524,11 +773,9 @@ what section 2 is about.</p>
 what is needed, deciding how to build it, building it, checking it, turning it on, and keeping it
 running. That sequence is called the <strong>software development life cycle (SDLC)</strong>. The important thing to note about the SDLC is that each phase has a question attached, and skipping the question does not skip the consequence.</p>
 
-<p>Where information systems projects differ in the SDLC is in how they go through each phase. One approach to systems analysis finishes each phase completely before starting the next. The other takes a small piece of the system, runs it through all six phases in a few weeks, then does it again with the next piece. That is the difference between two commonly used approaches to systems development: waterfall and agile.</p>
-
-<p>One thing to keep in mind as you read through the phases. A systems project is not just building
-software. It is assembling an information system, which means all five components have to arrive at
-the same moment and fit each other. The hardware has to be sized for a load somebody estimated. The
+<p>Keep one thing in mind as you read through the phases. A systems project is not just building software.
+It is assembling an information system, which means all five components have to arrive at the same moment
+and fit each other. The hardware has to be sized for a load somebody estimated. The
 software has to be written to a specification somebody wrote. The data structures have to be agreed on
 with whoever owns the data. The network connections have to be negotiated with other organizations. And
 the people have to be trained to use the result. Software is the component teams talk about most,
@@ -551,16 +798,18 @@ the six activities and you can translate whatever your employer calls them.) Her
   <li><strong>Maintenance</strong>, fix, extend, and eventually retire it.</li>
 </ol>
 
-<p>The phases are essentially a checklist of questions that must be answered by a systems analyst and designer, not a calendar. What varies between
-methodologies is <em>how many times you go through the phases</em>. Two different methods emphasize two different approaches to the SDLC: A <strong>waterfall</strong> approach runs
-through all six phases one time, for the whole system. An <strong>agile</strong> approach runs through each phase many times on small parts of the systems project, so that each pass produces something real and each mistake is small. For the main case in this chapter, Healthcare.gov ran through the SDLC once, at national scale, on a fixed political deadline.</p>
+<p>The phases are a checklist of questions somebody has to answer, not a calendar. What varies between
+methods is how many times you go through them, which is the subject of 2.3.</p>
 
 <h3>2.2 The phase that never ends</h3>
 
-<p>Students, and a surprising number of executives, treat launch day as the end of a project. But launch day is closer to the beginning of a system's life, the point where it starts interacting with and supporting real people. Across a system's life, most of the money is spent after launch day, not before, and industry estimates commonly put maintenance at more than half of total lifetime cost. As we will see later, Healthcare.gov did not finish in December 2013. It has been maintained, changed and re-tested every year since.</p>
+<p>Students, and a surprising number of executives, treat launch day as the end of a project. It is closer
+to the beginning of the system's life, the point where it starts serving real people. Most of the money is
+spent after launch day rather than before, and industry estimates commonly put maintenance above half of
+total lifetime cost.</p>
 
-<p>Maintenance should not be thought of as a one-time activity. Systems maintenance comes in four kinds, and only the first is what most people
-picture:</p>
+<p>Maintenance is also not one activity. It comes in four kinds, and only the first is the one you are
+probably picturing:</p>
 
 <ul>
   <li><strong>Corrective.</strong> Fixing defects that reached production.</li>
@@ -580,17 +829,17 @@ organization that never does it cannot learn from its own projects, which is why
 appearing in this chapter across sixty years.</p>
 
 <h3>2.3 Waterfall versus agile, properly</h3>
-<p>The two methodologies mentioned above deserve more than a sentence, because choosing between them is a decision a systems designer or analyst
-will actually face. <strong>Waterfall</strong> runs through each of the phases once, in order, with signed-off documents
-at each phase. Its strength is predictability: fixed scope, fixed price, a contract a government can
-procure against, which is exactly why federal contracting pushed Healthcare.gov toward it. Its weakness
-is that all learning arrives at the end, when it is most expensive to act on. <strong>Agile</strong> inverts the bet. Work proceeds in <strong>sprints</strong> of one to four weeks, each ending in working software a real user can react to. A <strong>product owner</strong> continuously re-ranks what gets built next, so
-the plan absorbs learning instead of resisting it. Its weakness is the mirror image: scope and
-cost are uncertain up front, which contracts and legislatures hate.</p>
-<p>So which one should a business use? The honest rule is this: waterfall suits stable, well-understood requirements (a payroll migration); agile
-suits discovery (anything customer-facing being built for the first time). A national insurance
-marketplace nobody had ever built, for users nobody had met, was a discovery problem procured as a
-stable one. The recovery team's six weeks of ship-test-fix loops was, in everything but name, agile: adopted at last, under duress, in production.</p>
+<p>Choosing between the two is a decision you will actually face. <strong>Waterfall</strong> runs through the
+phases once, in order, with signed-off documents at each one. Its strength is predictability: fixed scope,
+fixed price, a contract an organization can procure against. Its weakness is that all learning arrives at
+the end, when acting on it is most expensive. <strong>Agile</strong> inverts the bet. Work proceeds in
+<strong>sprints</strong> of one to four weeks, each ending in working software a real user can react to, and a
+<strong>product owner</strong> re-ranks what gets built next, so the plan absorbs learning instead of resisting
+it. Its weakness is the mirror image: scope and cost are uncertain up front, which contracts and
+legislatures hate.</p>
+<p>The rule is this. Waterfall suits stable, well-understood requirements, such as a payroll migration.
+Agile suits discovery, meaning anything customer-facing being built for the first time. So the question to
+ask is not which method is better but how much of this system somebody already knows.</p>
 
 <figure class="diagram" style="margin:1.8rem auto;max-width:470px">
 <svg viewBox="0 0 470 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="wfT wfD"
@@ -690,12 +939,13 @@ exactly when.
 </figcaption>
 </figure>
 
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Waterfall and agile</span>
-<p>Waterfall builds in sequential phases, requirements through testing, each completed before the next begins; it assumes you can know the requirements up front. Agile builds in short cycles, shipping small working slices and correcting course from real feedback; it assumes you cannot. Neither is virtue. Waterfall suits stable, regulated, contract-bound work; agile suits uncertainty. Healthcare.gov ran waterfall against maximal uncertainty with a fixed public deadline, which is the worst available pairing, and the rescue that followed was agile in everything but name.</p></div>
+<p>Neither one is a virtue, and you should be suspicious of anyone who presents them that way. They are two
+different bets about how much you can know in advance, and the only question worth asking is which bet the
+work in front of you supports.</p>
 
 <h3>2.4 Where these phases came from, and the sentence everyone misquotes</h3>
 
-<p>It is worth knowing that this argument is nearly sixty years old, because you are going to hear it
+<p>This argument is nearly sixty years old, which is worth knowing, because you are going to hear it
 presented as new every few years for the rest of your career.</p>
 
 <ul>
@@ -723,25 +973,25 @@ attempt to do the job twice.</p>
 proposed fix, gave the diagram his name, and built four decades of contracting practice on it. Then a
 later generation rebelled against "Royce's waterfall" without reading Royce either.</p>
 
-<p>There are two things you should take from that. The smaller one is a fact you can use: the founding document of
-waterfall says waterfall does not work. The larger one is about how ideas travel. A diagram is portable
-and a caveat is not, so the diagram survives the journey and the caveat does not. You will watch this
-happen to a framework in your own career, and it is worth being the person in the room who has read the
-original.</p>
+<p>Take two things from that. The smaller one is a fact you can use: the founding document of waterfall says
+waterfall does not work. The larger one is about how ideas travel. A diagram is portable and a caveat is
+not, so the diagram survives the journey and the caveat does not. You will watch this happen to some
+framework in your own career, and it is worth being the person who has read the original.</p>
 
-<h3 id="requirements">2.5 Requirements: the part everyone rushes</h3>
+<h3 id="requirements">2.5 Requirements: what they are, and where they come from</h3>
 
-<p>So what exactly is a requirement? A <strong>requirement</strong> is a statement of something the system must do or some quality it must
-have. <em>Functional</em> requirements describe behavior: "the system shall determine subsidy eligibility from
-household income and size." <em>Non-functional</em> requirements describe qualities: how fast, how many at once,
-how secure, how available. Non-functional requirements are the ones organizations often skip, and they are the ones
-that produce spectacular public failures, because you cannot see them missing until load arrives.</p>
+<p>A <strong>requirement</strong> is a statement of something the system must do, or some quality it must have.
+<em>Functional</em> requirements describe behavior: "the system shall determine subsidy eligibility from
+household income and size." <em>Non-functional</em> requirements describe qualities: how fast, how many at
+once, how secure, how available. The non-functional ones are what organizations skip, and they are what
+produce spectacular public failures, because you cannot see them missing until load arrives.</p>
 
-<p>In the main case, Healthcare.gov's most consequential missing requirement was a single number. The
-government agency in charge, the Centers for Medicare and Medicaid Services (CMS), issued task orders to
-build the federal marketplace and the data hub while key technical requirements were still unknown, including which states the system would have to serve and, critically, how many people might
-enroll. In other words, CMS signed contracts to build a thing whose size nobody had specified. Every capacity
-decision downstream (servers, database design, queueing) inherited that blank.</p>
+<p>Missing non-functional requirements are also the ones that spread. A functional requirement nobody wrote
+produces one feature nobody built. A non-functional requirement nobody wrote, such as how many people will
+use this at once, gets inherited by everything downstream: how many servers to buy, how to structure the
+database, what to do with people who arrive while the system is busy. Each of those decisions has to assume
+a number. If nobody supplied one, each team assumes its own, and nobody finds out whose was wrong until the
+real number shows up.</p>
 
 <div class="callout callout-caution">
   <strong>Watch for this pattern</strong>
@@ -751,11 +1001,9 @@ decision downstream (servers, database design, queueing) inherited that blank.</
   untouchable. Quality was the only side left free to give.</p>
 </div>
 
-<h3>2.6 How requirements are actually gathered</h3>
-
-<p>Now, where do requirements come from? They do not arrive on their own. Somebody goes and gets them, and the work has a name,
-<strong>requirements elicitation</strong>. How the analyst goes about it decides what they come back with. The standard methods each have a characteristic blind spot, which is why serious
-projects use several.</p>
+<p>Requirements also do not arrive on their own. Somebody goes and gets them, and the work has a name,
+<strong>requirements elicitation</strong>. Each standard method has a characteristic blind spot, which is why
+serious projects use several.</p>
 
 <ul>
   <li><strong>Interviews.</strong> Ask people what they need. Fast and essential, and limited by the
@@ -771,23 +1019,20 @@ projects use several.</p>
   criticizing a thing than describing one, which is the single most useful fact in this section.</li>
 </ul>
 
-<p>The person who does this work has a job title, and it is the one many of you will hold:
-<strong>business analyst</strong>. The role sits between the people who need the system and the people
-who will build it, and its output is the specification that everything downstream depends on. It is
-the translation job from Chapter 1, performed at the phase where translation is cheapest.</p>
+<p>The person who does this work has a job title, and it is one many of you will hold:
+<strong>business analyst</strong>. The role sits between the people who need the system and the people who
+will build it, and its output is the specification everything downstream depends on.</p>
 
-<p>Now notice what none of these methods can produce on its own. Every one of them collects requirements from
-somebody who already exists and can be asked. Healthcare.gov's users were, by definition, people who
-had never bought insurance this way before, and many of whom had never had insurance at all. There was
-no current process to observe and no experienced user to interview. That is precisely the situation
-where prototypes and pilots stop being good practice and become the only honest source of information,
-and it is the situation in which the project ran neither.</p>
+<p>Notice what none of these methods can do on its own. Every one collects requirements from somebody who
+already exists and can be asked. When a system is for people who have never done this before, there is no
+process to observe and no experienced user to interview, and prototypes and pilots stop being good practice
+and become the only honest source of information. Hold that until the main case.</p>
 
-<h3>2.7 Writing a requirement down</h3>
+<h3>2.6 Writing a requirement down</h3>
 
-<p>Gathering a requirement and recording it are different jobs, and the second one is where projects
-quietly go wrong. A requirement that lives in somebody's memory of a meeting is not a requirement. The
-standard way to write one is the <strong>user story</strong>, and the format is deliberately rigid:</p>
+<p>Gathering a requirement and recording it are different jobs, and the second is where projects quietly
+go wrong. A requirement that lives in somebody's memory of a meeting is not a requirement. The standard way
+to write one down is the <strong>user story</strong>, and the format is deliberately rigid:</p>
 
 <p style="font-family:var(--sans);background:var(--off-white);border-left:3px solid var(--magenta);padding:.8rem 1rem;margin:1.1rem 0">
 As a <em>[kind of person]</em>, I want <em>[to do something]</em>, so that <em>[I get some result]</em>.</p>
@@ -801,20 +1046,19 @@ have forced the argument to happen earlier.</p>
 <p>A story on its own is still not enough, because two people can agree with a sentence and mean
 different things by it. So each story carries <strong>acceptance criteria</strong>: specific,
 checkable conditions that decide whether it is finished. Not "the site should be fast," which nobody can
-pass or fail, but "a page returns in under two seconds with fifty thousand people using the site at
-once." That is a testable statement, and notice that writing it requires knowing the number of people,
-which is the requirement CMS never had.</p>
+pass or fail, but "a page returns in under two seconds with fifty thousand people on the site at once."
+Notice what writing that sentence required: a number. It is the number CMS never had.</p>
 
 <p><strong>The rule to remember: a requirement nobody can test is not a requirement, it is a hope.</strong>
 Teams also agree on a <strong>definition of done</strong>, a standing checklist that applies to everything,
 covering things like code review, tests written, and documentation updated, so that "done" means the
 same thing in March as it does in September.</p>
 
-<h3>2.8 Deciding what not to build</h3>
+<h3>2.7 Deciding what not to build</h3>
 
-<p>Every project asks for more than it can have, so somebody on the project has to choose. If a team does
-this by argument in a meeting, the result is whatever the most senior person wants. If it does this with
-a method, the result is something the team can defend later.</p>
+<p>Every project asks for more than it can have, so somebody has to choose, and one day that will be you.
+If you do it by argument in a meeting, the result is whatever the most senior person in the room wants. If
+you do it with a method, the result is something you can defend later.</p>
 
 <p>The common method is <strong>MoSCoW</strong>, which sorts every requirement into four boxes:</p>
 
@@ -828,15 +1072,14 @@ a method, the result is something the team can defend later.</p>
   an argument.</li>
 </ul>
 
-<p>The related idea is the <strong>minimum viable product</strong>, the smallest version that delivers
-real value to a real user, released so you can learn from what happens. It is frequently misused as a
-polite word for unfinished. The distinction is whether you are shipping less in order to learn
-something, or shipping less because you ran out of time.</p>
+<p>The related idea is the <strong>minimum viable product</strong>, the smallest version that delivers real
+value to a real user, released so you can learn from what happens. It is often misused as a polite word for
+unfinished. The distinction is whether you are shipping less in order to learn something, or shipping less
+because you ran out of time.</p>
 
-<p>Now read the recovery in section 4.2 with this in front of you. The rescue team did not have better
-technology than the original one. What it had was permission to decide that some things were Could-haves
-and say so out loud. That is prioritization, performed under emergency conditions, eight weeks after the
-moment when it would have been cheap.</p>
+<p>Keep that fourth box in mind when you read the rescue in the main case. The team that fixed
+Healthcare.gov did not have better technology than the team that broke it. It had permission to move things
+into the fourth box and say so out loud.</p>
 
 <p>Prioritizing once is not enough, because requirements keep arriving. So what stops scope creep? Not
 willpower. A procedure. First, agree on a <strong>baseline</strong> of what is being built.
@@ -846,19 +1089,19 @@ Healthcare.gov's launch was a substantial change to the system's busiest path. R
 that late are not automatically wrong. Requirements that arrive that late without anyone pricing them
 are.</p>
 
-<h3>2.9 Testing is not one thing</h3>
+<h3>2.8 Testing is not one thing</h3>
 
-<p>"We tested it" is not a statement a manager should accept, because testing happens at four different
-levels and they catch entirely different problems. A project can do three of them thoroughly and fail
-on the fourth.</p>
+<p>"We tested it" is not a statement you should accept, because testing happens at four different levels
+and they catch entirely different problems. A project can do three of them thoroughly and fail on the
+fourth.</p>
 
-<table class="comptable">
+<table class="comptable stack-sm">
 <caption>The four levels of testing</caption>
 <tr><th>Level</th><th>What it checks</th><th>What it cannot catch</th></tr>
-<tr><td>Unit</td><td>One piece of code does what its author intended, on its own</td><td>Anything about how that piece talks to another piece</td></tr>
-<tr><td>Integration</td><td>Two or more parts work correctly together, including systems owned by other organizations</td><td>Whether the assembled whole behaves under real conditions</td></tr>
-<tr><td>System</td><td>The whole thing, end to end, including how it behaves under expected load</td><td>Whether it fits the way people actually work</td></tr>
-<tr><td>User acceptance</td><td>Real users, doing real tasks, decide whether it is fit to release</td><td>Nothing, but only if the users are real and the tasks are real</td></tr>
+<tr><td data-label="Level">Unit</td><td data-label="What it checks">One piece of code does what its author intended, on its own</td><td data-label="What it cannot catch">Anything about how that piece talks to another piece</td></tr>
+<tr><td data-label="Level">Integration</td><td data-label="What it checks">Two or more parts work correctly together, including systems owned by other organizations</td><td data-label="What it cannot catch">Whether the assembled whole behaves under real conditions</td></tr>
+<tr><td data-label="Level">System</td><td data-label="What it checks">The whole thing, end to end, including how it behaves under expected load</td><td data-label="What it cannot catch">Whether it fits the way people actually work</td></tr>
+<tr><td data-label="Level">User acceptance</td><td data-label="What it checks">Real users, doing real tasks, decide whether it is fit to release</td><td data-label="What it cannot catch">Nothing, but only if the users are real and the tasks are real</td></tr>
 </table>
 
 <p>Now take the two failures from section 3 and place them on that table. Mars Climate Orbiter passed unit testing
@@ -867,33 +1110,31 @@ across the boundary. Healthcare.gov, which you will meet in section 4, had no re
 its testing and was destroyed by none of these four, because the thing that failed was not the software
 but the decision to give it to everyone at once, and nobody tests a rollout.</p>
 
-<p>Load testing deserves its own sentence, since it is the one that produces public humiliation.
-Non-functional requirements are only checkable by testing under the volume you expect, and if nobody
-ever specified the volume, as at Healthcare.gov, there is no load test that can be designed. Missing
-requirements do not just produce missing features. They produce missing tests.</p>
+<p>Load testing deserves its own sentence, because it is the level that turns a missing requirement into a
+missing test. You can only test under the volume somebody specified. Where nobody specified one, there is no
+load test that can be designed, and the gap is invisible, because the test plan looks complete and passes.
+Missing requirements do not just produce missing features. They produce missing tests.</p>
 
-<h3 id="integration">2.10 Integration: the connection nobody owned</h3>
+<p><span id="integration"></span>Integration testing deserves a second look, because it raises a question
+testing alone cannot answer: whose job is the boundary? Most systems of any size are several systems, built
+by different teams or companies, exchanging data across boundaries. Each boundary is a place where two
+groups can both be right and the result still be wrong, because each tested against its own understanding
+of what crosses.</p>
 
-<p>Healthcare.gov was never one system. It was a federal marketplace that had to talk in real time to the
-IRS, the Social Security Administration, the Department of Homeland Security, and dozens of private insurers,
-to answer one question: who is this person and what are they entitled to? Each connection was a hand-off
-point between two organizations. Hand-offs are where systems fail, and someone has to own each one.</p>
+<p>So somebody has to own the whole, and that role has a name. The <strong>systems integrator</strong> is the
+party accountable for making independently built components work as one system. It is not the same job as
+building the biggest piece, and it cannot be done part-time by whoever happens to be largest.</p>
 
-<p>Nobody did. The Inspector General's review found that CMS awarded 60 contracts across
-33 different companies, and never designated any one of them as the project lead. The agency
-"missed the opportunity," in the IG's language, to name a single point of contact
-responsible for integrating the contractors' work and communicating a common goal. The gap was not
-merely unfilled but actively misunderstood: CMS believed the contractor CGI was serving as
-lead integrator, while CGI did not share that understanding of its role.</p>
+<p>Where the role is vacant, a distinctive failure follows, and it does not look like failure until the end.
+Every vendor delivers its own piece to its own specification. Every piece passes its own tests. The
+assembled system does not work, nobody has breached a contract, and there is no clause to invoke. The main
+case has this in its most expensive published form, plus the version that makes it worse: the role was not
+merely empty, it was believed to be filled.</p>
 
-<p>This is the <strong>systems integrator</strong> problem, and it is not unique to government. Any project
-with multiple vendors needs one accountable party for the whole. Where that role is vacant, each vendor
-delivers its own piece correctly and the assembled system does not work, and no one has breached a contract.</p>
+<h3 id="rollout">2.9 Rollout strategy: how you turn it on</h3>
 
-<h3 id="rollout">2.11 Rollout strategy: how you turn it on</h3>
-
-<p>Finally, the system has to be turned on. There are four ways to move users from an old world to a new one, and choosing among them is a risk
-decision, not a technical one:</p>
+<p>Finally, the system has to be turned on. You have four ways to move users from an old world to a new
+one, and choosing among them is a risk decision rather than a technical one:</p>
 
 <ul>
   <li><strong>Direct cutover ("big bang")</strong>, everyone moves at once. Cheapest, fastest, and the only
@@ -904,17 +1145,14 @@ decision, not a technical one:</p>
   <li><strong>Pilot conversion</strong>, one region, office, or user group first, then expand.</li>
 </ul>
 
-<p>CMS chose direct cutover for Healthcare.gov: every feature, available to every American, on
-one date. A pilot was available and obvious. One state, or federal employees, or a limited
-regional beta months ahead of the deadline. CMS did not take it. The consequence of big bang is that the first
-honest test of the system is also the moment of maximum public exposure, and there is nothing to roll back to.</p>
-
-<div class="callout callout-caution">
-  <strong>The most repeated failure in this book</strong>
-  <p>A big-bang cutover of a system whose requirements were never settled is the single most repeated
-  failure pattern in this book, and it appears at companies with far more money than CMS. Learn the
-  shape of it now.</p>
-</div>
+<p>Notice that the four are not equally risky, and that the riskiest one is the cheapest to plan and the
+most expensive to be wrong about. The consequence of direct cutover is that the first honest test of the
+system is also the moment of maximum public exposure, and there is nothing to return to. A big-bang cutover
+of a system whose requirements were never settled is the most repeated failure pattern in this book. It is
+about to appear in section 3.2, at a company with a great deal of money and very good engineers, and again
+in section 4 at national scale. Learn the shape of it now, because when you hear "big bang" in a meeting the
+useful question is short: what is the fallback? If the answer is that there is none, ask again, because the
+first answer is usually optimistic.</p>
 
 <h2 id="cases"><span class="num">3</span>Two short failures, two phases</h2>
 <p>Before the main case, here are two short ones. The chapter has just claimed that the cost of fixing a mistake
@@ -949,24 +1187,22 @@ organization is responsible for noticing that it does not.
 
 <h3>3.2 Mini-case 2 &middot; 2024: the update that went everywhere at once</h3>
 
-<p>Early on 19 July 2024, airport check-in screens around the world went blue at the same moment, and
-gate agents reached for pens. CrowdStrike sells security software that runs deep inside Windows,
-which is what lets it stop attacks and also what makes it dangerous when it is wrong. That morning
-the company released a
-routine content update to that software. It went out to customers worldwide at essentially the same
+<p>Early on 19 July 2024, airport check-in screens around the world went blue at the same moment and gate
+agents reached for pens. CrowdStrike sells security software that runs deep inside Windows, which is what
+lets it stop attacks and also what makes it dangerous when it is wrong. That morning the company released a
+routine content update to that software, and it went to customers worldwide at essentially the same
 moment.</p>
 
-<p>The update contained a fault that caused Windows machines to crash on startup, and then crash again
-on the next startup, so the machines could not be repaired remotely. Microsoft later estimated that
-about 8.5 million devices were affected. Airlines grounded flights and reverted to handwritten boarding
-passes. Hospitals postponed procedures. Broadcasters went off air. Because the machines would not boot,
-much of the recovery had to be done by a person physically visiting each one.</p>
+<p>The update carried a fault that crashed Windows machines on startup, and again on the next startup, so
+they could not be repaired remotely. Microsoft later estimated about 8.5 million devices were affected.
+Airlines grounded flights and went back to handwritten boarding passes, hospitals postponed procedures, and
+broadcasters went off air. Because the machines would not boot, much of the recovery had to be done by a
+person physically visiting each one.</p>
 
-<p>The software had been through testing. What it had not been through was a rollout. Content updates
-of this kind went to everyone at once, which meant there was no group of customers who would have hit
-the fault first and no interval in which anyone could have noticed and stopped it. Among the changes the
-company committed to afterwards was releasing these updates in stages and letting customers choose when
-to take them.</p>
+<p>The software had been through testing. What it had not been through was a rollout. Updates of this kind
+went to everyone at once, so there was no group of customers who would hit the fault first and no interval
+in which anyone could notice and stop it. Among the changes the company committed to afterwards were
+releasing these updates in stages and letting customers choose when to take them.</p>
 
 <p><strong>The phase it escaped: deployment. The component: software, released without a rollout.</strong>
 Every customer was, in effect, in the first wave. Read that against the four rollout strategies in
@@ -976,7 +1212,7 @@ section 2, and note that the remedy adopted afterwards was one of them, availabl
 update leaves customers exposed to a threat that is already circulating. Make the strongest version of
 that argument, then say what it would take to hold both things at once: fast protection and a staged
 release.
-<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>The argument for speed is real: a security update that arrives a day late leaves every machine exposed for a day. But the argument does not survive the numbers. The update was correct on almost every machine and wrong on a class of them, and a phased rollout to one percent of customers would have found that class in minutes, with the other 99 percent still running. The delay to protect against a threat that had not yet appeared was worth hours; the outage that actually happened cost airlines, hospitals, and banks days. So the special case does not exempt security software from rollout strategy. It changes the size of the first phase, not whether there is one. Nobody tests a rollout, which is exactly why a rollout has to be staged.</p></details></div>
+<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>The argument for speed is real: an update that arrives a day late leaves every machine exposed for a day. It does not survive the numbers. The update was correct on almost every machine and wrong on a class of them, and a staged rollout to one percent would have found that class in minutes with the other 99 percent still running. The delay was worth hours; the outage cost airlines, hospitals, and banks days. So the special case does not exempt security software from rollout strategy. It changes the size of the first wave, not whether there is one.</p></details></div>
 
 <div class="tryit" id="phasecheck">
   <div class="tryit-head">Quick quiz &middot; Which phase did it escape?</div>
@@ -1042,20 +1278,125 @@ becomes expensive because it survives.</p>
 <p>Now read the main case with one idea in front of you. Healthcare.gov is not one of these two failures. It is both of them at once, plus a rollout with nothing to fall back to, at national scale, on a date set by law.</p>
 <h2 id="healthcaregov"><span class="num">4</span>Main case &middot; Healthcare.gov: the first day</h2>
 
-<p>On the morning of 2 October 2013, in a government crisis meeting, somebody read out how many people
-had managed to buy insurance through the new federal website on its first day. Six. Across five
-insurers. The site had cost roughly half a billion dollars and millions of people had tried to use
-it. Healthcare.gov was the insurance marketplace created by the Affordable Care Act. Residents of the
-36 states that had not built their own exchange were supposed to come to this one website, compare plans,
-learn whether they qualified for a subsidy, and enroll. The political stakes were enormous: Congress had
-shut down the federal government that same morning in an attempt to defund the law, but the technical
-job was, on its face, unremarkable. Show people a catalog. Check their eligibility. Take an order.</p>
+<p>You now have every concept this case needs. Here it is in the order it happened, which is the only order
+in which it makes sense. Start with the dates, because the dates are the argument. The decisions that
+settled the outcome are three years older than the day you have heard about.</p>
 
-<p>The site failed within two hours. Demand of roughly 250,000 simultaneous users, about
-five times what had been planned for, brought the site down almost immediately after launch.
-Most visitors met crashes, timeouts, and errors for the rest of the week. Internal notes from the
-government's own crisis meetings recorded the tally bluntly: as of the morning of
-October 2, six enrollments had been completed, spread across five different insurers.</p>
+<ul class="tl">
+  <li><span class="when">Mar 2010</span>The Affordable Care Act becomes law. It requires health insurance marketplaces to be running by 1 January 2014, with enrollment opening 1 October 2013.</li>
+  <li><span class="when">Sep 2011</span>CMS contracts for development of the federal marketplace, with key requirements still unwritten.</li>
+  <li><span class="when">2012&ndash;2013</span>Contracts multiply. No lead systems integrator is ever named.</li>
+  <li class="bad"><span class="when">Sep 2013</span>Governance reviews are delayed. The decision is made to launch on schedule with the full feature set.</li>
+  <li class="bad"><span class="when">Oct 1, 2013</span>Launch. Down within two hours. Six enrollments completed.</li>
+  <li class="bad"><span class="when">Early Oct</span>The site is largely unusable. The failure becomes a national political event.</li>
+  <li><span class="when">Late Oct</span>One accountable leader named. Technology leadership restructured. A small team is given authority to prioritize.</li>
+  <li><span class="when">Nov&ndash;Dec</span>Roughly 400 defects resolved in six weeks. Concurrency raised to 25,000, response time to about a second.</li>
+  <li><span class="when">Mar 2014</span>First open enrollment closes with 5.4 million plan selections through the federal marketplace.</li>
+</ul>
+
+<h3>4.1 Before the technology: a deadline that came from a law</h3>
+
+<p>In March 2010 the Affordable Care Act became law. Among many other things, it required that health
+insurance marketplaces be operating by 1 January 2014, with enrollment opening on 1 October 2013. States
+could build their own marketplace or leave it to the federal government. Thirty-six of them left it to the
+federal government, which meant that the Centers for Medicare and Medicaid Services, an agency whose
+existing job was paying claims, now had to build a consumer shopping website for most of the country.</p>
+
+<p>Read that as a feasibility question, using the three axes from section 1.2. Technically it was
+demanding but ordinary: show people a catalog, check their eligibility, take an order. Economically nobody
+seriously asked, because the law had already decided. Operationally it was in trouble from the first day,
+and this is the part worth slowing down for. The launch date did not come from the work. It came from a
+statute, which meant it could not move, which meant that of the three sides of the iron triangle two were
+fixed before anyone estimated anything. There was one side left.</p>
+
+<p>Notice also what this does to the people component. The organization that had to make the judgment calls
+did not employ many people who had built a consumer website, so the judgment was bought rather than held.
+That is a legitimate thing to do, and it is also the decision that everything after this follows from.</p>
+
+<h3>4.2 What they built, and what they expected from it</h3>
+
+<p>The thing being built was not one system. The federal marketplace had to answer one question about each
+visitor, in real time, while that visitor waited: who is this person, and what are they entitled to? No
+single agency holds that answer. Income is at the IRS. Identity is at the Social Security Administration.
+Immigration status is at the Department of Homeland Security. Whether somebody qualifies for Medicaid
+instead is a state question. The plans and prices belong to private insurers.</p>
+
+<p>So the marketplace was really a set of live connections to organizations that CMS did not control, each
+one a hand-off, assembled under contract. By 2013 CMS had awarded 60 contracts across 33 different
+companies.</p>
+
+<figure class="diagram" style="margin:1.8rem auto;max-width:470px">
+<svg viewBox="0 0 470 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fanT fanD"
+     style="width:100%;height:auto;font-family:var(--sans)">
+<title id="fanT">One marketplace, five live connections, and an owner that was never named</title>
+<desc id="fanD">A box on the left labelled federal marketplace has five lines running to five boxes on the
+right: the Internal Revenue Service for household income, the Social Security Administration for identity,
+the Department of Homeland Security for immigration status, thirty-six state Medicaid agencies for
+eligibility, and private insurers for plans and enrollment. A dashed rectangle drawn around all five
+connections is labelled lead systems integrator, never assigned, sixty contracts across thirty-three
+companies.</desc>
+<defs><marker id="fna" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+  <path d="M0 0 L10 5 L0 10 z" fill="var(--muted)"/></marker></defs>
+
+<rect x="4" y="86" width="116" height="62" fill="var(--magenta-pale)" stroke="var(--ink)" stroke-width="1.4"/>
+<text x="62" y="110" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--ink)">FEDERAL</text>
+<text x="62" y="123" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--ink)">MARKETPLACE</text>
+<text x="62" y="138" text-anchor="middle" font-size="9" fill="var(--muted)">Healthcare.gov</text>
+
+<rect x="300" y="14" width="166" height="32" fill="#fff" stroke="var(--ink)" stroke-width="1.2"/>
+<text x="308" y="29" font-size="10.5" font-weight="700" fill="var(--ink)">IRS</text>
+<text x="308" y="41" font-size="9" fill="var(--muted)">household income</text>
+<rect x="300" y="58" width="166" height="32" fill="#fff" stroke="var(--ink)" stroke-width="1.2"/>
+<text x="308" y="73" font-size="10.5" font-weight="700" fill="var(--ink)">SOCIAL SECURITY</text>
+<text x="308" y="85" font-size="9" fill="var(--muted)">identity</text>
+<rect x="300" y="102" width="166" height="32" fill="#fff" stroke="var(--ink)" stroke-width="1.2"/>
+<text x="308" y="117" font-size="10.5" font-weight="700" fill="var(--ink)">HOMELAND SECURITY</text>
+<text x="308" y="129" font-size="9" fill="var(--muted)">immigration status</text>
+<rect x="300" y="146" width="166" height="32" fill="#fff" stroke="var(--ink)" stroke-width="1.2"/>
+<text x="308" y="161" font-size="10.5" font-weight="700" fill="var(--ink)">36 STATE AGENCIES</text>
+<text x="308" y="173" font-size="9" fill="var(--muted)">Medicaid eligibility</text>
+<rect x="300" y="190" width="166" height="32" fill="#fff" stroke="var(--ink)" stroke-width="1.2"/>
+<text x="308" y="205" font-size="10.5" font-weight="700" fill="var(--ink)">PRIVATE INSURERS</text>
+<text x="308" y="217" font-size="9" fill="var(--muted)">plans, prices, enrollment</text>
+
+<path d="M120 112 L200 112 L200 30 L296 30" fill="none" stroke="var(--muted)" stroke-width="1.3" marker-end="url(#fna)"/>
+<path d="M120 114 L214 114 L214 74 L296 74" fill="none" stroke="var(--muted)" stroke-width="1.3" marker-end="url(#fna)"/>
+<path d="M120 118 L296 118" fill="none" stroke="var(--muted)" stroke-width="1.3" marker-end="url(#fna)"/>
+<path d="M120 122 L214 122 L214 162 L296 162" fill="none" stroke="var(--muted)" stroke-width="1.3" marker-end="url(#fna)"/>
+<path d="M120 124 L200 124 L200 206 L296 206" fill="none" stroke="var(--muted)" stroke-width="1.3" marker-end="url(#fna)"/>
+
+<rect x="134" y="2" width="180" height="230" fill="none" stroke="var(--magenta)" stroke-width="1.6" stroke-dasharray="6 5"/>
+<text x="224" y="252" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--magenta-dark)">LEAD SYSTEMS INTEGRATOR</text>
+<text x="224" y="266" text-anchor="middle" font-size="10" fill="var(--magenta-dark)">never assigned</text>
+<text x="224" y="286" text-anchor="middle" font-size="9.5" fill="var(--muted)">60 contracts &middot; 33 companies</text>
+<text x="235" y="312" text-anchor="middle" font-size="11" fill="var(--muted)">Every line is a hand-off. Every hand-off needs a name.</text>
+</svg>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--muted);margin-top:.55rem;line-height:1.55">
+The dashed box is the point. It encloses the work that had to be somebody's job, and it is empty. Each of
+the five connections had a contractor who could deliver its own end correctly and pass its own tests, and
+the assembled result still had to work, which was nobody's deliverable. This is what section 2.8 described
+in the abstract, drawn at the scale it actually happened.
+</figcaption>
+</figure>
+
+<p>Now the expectation, which matters more than it looks. It would be convenient to say everyone involved
+knew this was going badly. They did not. The job really was unremarkable in its parts, each contractor
+really was competent at its own piece, and the pieces really were being delivered. Senior people believed
+the site would open and work, and said so in public. That belief was the predictable result of a structure
+in which everybody could see their own piece working and nobody was responsible for the whole. If you do
+not believe the expectation, the launch is just a fact. It is a lesson only if you can see why intelligent
+people held it.</p>
+
+<h3>4.3 October 1, 2013</h3>
+
+<p>Four million people visited on the first day. The site failed within about two hours. Demand of roughly
+250,000 simultaneous users, around five times what had been planned for, took it down almost immediately,
+and most visitors met crashes, timeouts, and errors for the rest of the week. Congress had shut down the
+federal government that same morning in an attempt to defund the law, so the launch happened in front of the
+largest possible audience.</p>
+
+<p>The next morning, in a government crisis meeting, somebody read out the number of people who had managed
+to buy insurance on day one. Six. Across five insurers.</p>
 
 <div class="stats">
   <div class="stat"><b>4M</b><span>visitors on day one</span></div>
@@ -1064,138 +1405,77 @@ October 2, six enrollments had been completed, spread across five different insu
   <div class="stat"><b>33</b><span>contractors, no lead</span></div>
 </div>
 
-<p>It would be comfortable to file this away as a story about a website that couldn't handle traffic.
-That reading is wrong, and the rest of this chapter is about why. Capacity was a symptom. The disease was
-a set of decisions made over three years about how to <em>analyze, specify, sequence, and govern</em> the
-building of a system: decisions that had already determined the outcome before a single user arrived.</p>
+<h3>4.4 The diagnosis: four breaks, none of them code</h3>
 
-<h3>4.1 Where it actually broke: governance</h3>
+<p>It would be comfortable to file this away as a website that could not handle traffic. That reading is
+wrong in a way that would cost you money if you carried it into a job. Capacity was a symptom. Underneath it
+were four decisions, and you have met all four already as concepts.</p>
 
-<p>Section 2 has already shown three of the breaks: a capacity requirement nobody wrote, an integration
-nobody owned, and a rollout with nothing to fall back to. The fourth is governance, and it is where
-analysis either holds or collapses. A project has scheduled
-moments where leadership must review evidence and decide whether to proceed, <strong>stage gates</strong>.
-Their whole value is that they are allowed to say no.</p>
+<p><strong>A requirement nobody wrote.</strong> CMS issued task orders to build the marketplace and the data
+hub while key technical requirements were still unknown, including which states it would serve and how many
+people might enroll. Contracts were signed to build a thing whose size nobody had specified, so every
+capacity decision inherited a blank and no load test could be designed against a number that did not
+exist.</p>
 
-<p>On Healthcare.gov, they said yes. With months left before launch, CMS raised concerns about the lead contractor's performance without
-taking steps to hold it accountable. The agency moved staff into the contractor's offices in
-September 2013, delayed the governance reviews that would have surfaced the problems, and proceeded
-without the required approvals. It decided nonetheless to launch on schedule with the full feature
-set. CMS postponed the very reviews that existed to stop the launch, <em>because</em> the launch
-was near.</p>
+<p><strong>An integration nobody owned.</strong> The Inspector General's review found that CMS awarded those
+60 contracts across 33 companies and never designated any one of them as the project lead. The agency
+"missed the opportunity," in the review's language, to name a single point of contact responsible for
+integrating the contractors' work. Worse than vacant, the role was misunderstood: CMS believed the
+contractor CGI was serving as lead integrator, and CGI did not share that understanding of its role.</p>
 
-<p>The contracting structure removed the last brake. CMS did not check the federal past-performance database before awarding to CGI Federal, a contractor
-with prior missteps at the department. For five of the six main contracts, it chose contract types
-that placed the risk of cost overruns on the government rather than the vendor. The financial results followed: the six
-major contracts grew from $464 million to $824 million, with one alone rising from $58 million to $207
+<p><strong>A rollout with nothing to fall back to.</strong> CMS chose direct cutover. Every feature,
+available to every American, on one date. A pilot was available and obvious: one state, or federal
+employees, or a limited regional beta months ahead of the deadline. It was not taken.</p>
+
+<p><strong>Gates that were not allowed to say no.</strong> This is the fourth break and the one that let the
+other three survive. With months left, CMS raised concerns about the lead contractor's performance without
+holding it accountable, moved staff into the contractor's offices in September 2013, delayed the governance
+reviews that would have surfaced the problems, and proceeded without the required approvals. Read that
+order again. The reviews that existed to stop the launch were postponed <em>because</em> the launch was
+near.</p>
+
+<p>The contracting structure removed the last brake. CMS did not check the federal past-performance database
+before awarding to CGI Federal, a contractor with prior missteps at the department. For five of the six main
+contracts it chose contract types that put the risk of cost overruns on the government rather than the
+vendor. Those six contracts grew from $464 million to $824 million, one of them from $58 million to $207
 million.</p>
 
-<p>Notice what is absent from this account. No one wrote catastrophically bad code. The failure lives in
-requirements never specified, a role never assigned, a rollout never staged, and gates never enforced. Those
-are all decisions made by managers, not engineers, which is exactly why this material sits in a business
-school course.</p>
+<p>Notice what is absent. Nobody wrote catastrophically bad code. The failure lives in a requirement never
+specified, a role never assigned, a rollout never staged, and gates never enforced, which are decisions made
+by managers rather than engineers. That is why this material sits in a business school course.</p>
 
-<h3>4.2 The recovery, and what it proves</h3>
+<h3>4.5 The recovery, and what it proves</h3>
 
-<p>The repair is as instructive as the failure, because it shows the problem was tractable all along.
-Management was centralized under a single accountable leader, Jeffrey Zients, in late
-October. The White House CTO restructured the technology leadership,
-replaced underperforming staff and contractors, and recruited senior engineers from industry.
-A small "tiger team" was given one narrow mandate and the authority to prioritize ruthlessly.</p>
+<p>The repair is as instructive as the failure, because it shows the problem was solvable the whole time.
+In late October, management was centralized under a single accountable leader, Jeffrey Zients. The White
+House technology leadership was restructured, underperforming staff and contractors were replaced, and
+senior engineers were recruited from industry. A small team was given one narrow mandate and the authority
+to prioritize ruthlessly.</p>
 
-<ul class="tl">
-  <li class="bad"><span class="when">Oct 1, 2013</span>Launch. Site down within two hours; six enrollments completed.</li>
-  <li class="bad"><span class="when">Early Oct</span>Site taken largely offline as unusable. Failure becomes a national political event.</li>
-  <li><span class="when">Late Oct</span>Single accountable leader named; tech leadership restructured; tiger team formed.</li>
-  <li><span class="when">Nov–Dec</span>Roughly 400 defects resolved over six weeks, concurrency raised to 25,000 users, response time brought to about one second.</li>
-  <li><span class="when">Dec 1</span>System handling about 35,000 concurrent users.</li>
-  <li><span class="when">Winter</span>Enrollment climbs from roughly 27,000 in October to about 975,000 in December alone.</li>
-</ul>
+<p>Over roughly six weeks, about 400 defects were resolved, concurrency was raised to 25,000 users, and
+response time was brought to about one second. By 1 December the system was handling something like 35,000
+concurrent users. Federal marketplace enrollment went from 26,794 in October to roughly 975,000 in December
+alone, and the first open enrollment period closed in March 2014 with 5.4 million plan selections.</p>
 
 <p>Six weeks. The same law, the same insurers, the same essential technical problem. What changed was
 accountability, prioritization, and permission to ship less. Shipping less is not free: every feature
-deferred and every shortcut taken to make the site work in December became <strong>technical debt</strong>,
-a cost the organization pays later in exchange for moving now. Under those circumstances it was the
-right trade, and it was still a debt. Every one of those changes is an analysis-and-governance
-decision, and every one was available in 2011.</p>
+deferred and every shortcut taken to make the site work in December became <strong>technical debt</strong>, a
+cost the organization pays later in exchange for moving now. It was the right trade, and it was still a
+debt.</p>
 
 <div class="callout callout-good">
   <strong>The durable lesson</strong>
-  <p>The tiger team did not do anything that could not have been done during the original build. It made
-  decisions that the original governance structure was not organized to make: name one owner, cut scope to what
-  works, test under real load, ship in stages. Failure here was not a technical limit. It was an organizational
-  choice, and organizational choices can be made differently.</p>
+  <p>The rescue team did nothing that could not have been done during the original build. It made decisions
+  the original governance structure was not organized to make: name one owner, cut scope to what works, test
+  under real load, ship in stages. The failure was not a technical limit. It was an organizational choice,
+  and organizational choices can be made differently.</p>
 </div>
 
-<h3>4.3 What's next: systems analysis in 2026, and what did not change</h3>
+<h3>4.6 The five components at Healthcare.gov</h3>
 
-<p>This case is from 2013, and you are entitled to ask whether any of it still applies. There are two
-answers, and they point in different directions.</p>
-
-<p><strong>The cost of doing it properly has collapsed.</strong> Almost every failure in this chapter
-was expensive to prevent at the time and is nearly free to prevent now.</p>
-
-<ul>
-  <li><strong>The pilot is now a setting.</strong> A <em>feature flag</em> lets a team release something
-  to one percent of users, watch what happens, and expand or switch it off within minutes. CMS was told a
-  pilot would cost months it did not have. Today the pilot costs an afternoon, which removes the last
-  respectable excuse for direct cutover.</li>
-  <li><strong>Releases go out in stages.</strong> The tooling to give an update to one percent of
-  customers, watch, and expand exists and is standard. CrowdStrike had it available and did not use it
-  for the class of update that failed, which is why its own remedy afterwards was to start.</li>
-  <li><strong>Capacity is rented by the minute.</strong> Load testing against a realistic volume no
-  longer requires buying the hardware to test with, which is how Chapter 1's Spotify example ran.</li>
-  <li><strong>Systems watch themselves.</strong> Monitoring now routes an alert to a named person who is
-  on duty and treats an unanswered alert as its own failure, rather than sending mail nobody reads.</li>
-</ul>
-
-<p><strong>And yet projects still fail.</strong> Not as often at this scale, but often enough that the
-industry keeps producing case studies. That is the part worth explaining, and the explanation is in this
-chapter: none of the tools above touches the things that actually broke here. No pipeline tells you which
-states the system must serve. No feature flag tells you that nobody owns the integration. No monitoring
-system tells a government that a legal deadline is not a project plan. The tooling removed the excuses
-and left the decisions exactly where they were.</p>
-
-<p>AI has sharpened that rather than softened it. When writing code was the slow part, requirements could
-hide behind the build. Now that a model can produce a working draft in an afternoon, the specification is
-a larger share of what is left, not a smaller one, and an AI that builds the wrong system builds it
-faster. Chapter 4 made this point about processes; it is the same point about projects.</p>
-
-<h3>4.4 What happened next, which is not a happy ending</h3>
-
-<p>The failure had institutional consequences, and they are worth following, because most textbooks stop
-at the recovery.</p>
-
-<p>Britain had created the Government Digital Service in 2011 to build public services in-house rather
-than through contractors. In 2014, directly in response to Healthcare.gov, the United States created two
-similar organizations: the United States Digital Service inside the Executive Office of the President,
-and 18F inside the General Services Administration, named after the agency's address at 1800 F Street.
-Both hired designers, engineers and product managers as government employees, and both worked on the
-procurement practices this chapter has been criticizing.</p>
-
-<p>They built things you have probably used. Login.gov, the single sign-on for federal services.
-cloud.gov. The U.S. Web Design System, which is why federal websites now look and behave alike. 18F
-supported the IRS in building Direct File, free online tax filing, which ran for two filing seasons before
-the IRS closed it in November 2025.</p>
-
-<p>In January 2025 an executive order reorganized the United States Digital Service into the United
-States DOGE Service. On 1 March 2025, weeks before its eleventh anniversary, 18F was eliminated and its
-staff laid off. By the end of 2025 the DOGE Service itself had stopped operating as a single organization,
-with its remaining staff placed inside other agencies.</p>
-
-<p>Set that beside the rest of the chapter without deciding how you feel about it yet. The lesson
-Healthcare.gov taught in 2013 was that capability has to live inside the organization that needs it,
-because you cannot contract for judgment. The institutional response lasted about eleven years. Whether
-that is evidence the response was wrong, evidence that this kind of capability is unusually hard to
-sustain, or evidence of something else entirely is a genuine question, and the answer is not obvious.
-What is not in question is the finding underneath it, which is older than the agencies and outlived
-them: somebody has to own the whole, and that somebody has to be allowed to say no.</p>
-
-<h3>4.5 The five components at Healthcare.gov</h3>
-
-<p>Now that you have seen the whole system, here it is as five components, the way this course maps every case. Look at which rows failed. The software mostly worked; it was every other row that was late, wrong, or belonged to somebody who had not been asked.</p>
-
-<p>Every chapter maps its case onto the same five components. The point of the exercise is to locate the break, because a system is only as strong as its weakest component, no matter how strong the others are.</p>
+<p>Every chapter maps its case onto the same five components, because a system is only as strong as its
+weakest one. Look at which rows broke. The software mostly worked. Every other row was late, wrong, or
+belonged to somebody who had not been asked.</p>
 
 <div class="vc">
   <div class="vc-head">The Five Components · Healthcare.gov</div>
@@ -1209,17 +1489,99 @@ them: somebody has to own the whole, and that somebody has to be allowed to say 
   <div class="vc-note">Break located at <b>Software</b> and <b>People</b>. The data was good, and the hardware shortfall was downstream of a requirement no person wrote. </div>
 </div>
 
-<h3>4.6 What a business technology manager takes from this chapter</h3>
+<h3>4.7 What happened next, which is not a tidy ending</h3>
 
-<p>Strip the Healthcare.gov case down to what you can reuse in any project. Four decisions came up in it, and each one is a decision you will be in the room for.</p>
+<p>The failure had institutional consequences, and they are worth following, because most textbooks stop at
+the recovery.</p>
 
-<p><strong>Write the requirements down, including the ones that sound obvious.</strong> Nobody wrote down how many people the site had to serve at once, so contracts were signed to build a thing whose size nobody had specified. The requirement that feels too obvious to state is the one that will not get tested. If a number matters, it goes on paper before anyone builds anything.</p>
+<p>Britain had created the Government Digital Service in 2011 to build public services with government
+employees rather than contractors. In 2014, directly in response to Healthcare.gov, the United States
+created two similar organizations. One was the United States Digital Service, inside the Executive Office of
+the President. The other was 18F, inside the General Services Administration, named for the agency's address
+at 1800 F Street. Both hired designers, engineers and product managers onto the public payroll, and both
+worked on the procurement practices this chapter has been criticizing.</p>
 
-<p><strong>Give every connection an owner.</strong> The site depended on real-time links to the IRS, Social Security, and Homeland Security, and no single person owned the whole chain. Every hand-off between two teams or two organizations is a place a system fails, and the cheapest fix in the book is a name next to each one.</p>
+<p>They built things you have probably used: Login.gov, the single sign-on for federal services; cloud.gov;
+and the U.S. Web Design System, which is why federal websites now look and behave alike. 18F supported the
+IRS in building Direct File, free online tax filing, which ran for two filing seasons.</p>
 
-<p><strong>Never launch everything to everyone on a date you cannot move.</strong> A pilot was available and obvious: one state, or federal employees, months ahead of the deadline. It was not taken. Every rollout strategy in section 2 was cheaper than the one CMS chose, and this is the single most repeated failure in this book. When you hear "big bang," ask what the fallback is, and if there is none, ask again.</p>
+<p>Then the arrangement came apart, and it is worth being precise, because the loose version of this story
+is wrong in both directions. In January 2025 an executive order renamed the Digital Service as the United
+States DOGE Service and created a temporary organization inside it, due to dissolve on 4 July 2026. On 1
+March 2025, weeks before its eleventh anniversary, 18F was eliminated and its staff laid off. In early
+November 2025 the IRS told its Direct File partner states the service would not run in the 2026 filing
+season and that no future date had been set. Later that month the head of the Office of Personnel Management
+said the temporary organization no longer existed as a centralized entity, while a spokesperson said it did
+and named an acting administrator. The renamed Digital Service itself continued, and in April 2026 one of
+its directors described it as growing, with roughly 90 staff placed across agencies.</p>
 
-<p><strong>Make sure somebody is allowed to say no.</strong> The reviews that existed to stop the launch were postponed because the launch was near. Governance is not paperwork; it is the decision, made in advance, about who can stop a project and on what evidence. If the answer is nobody, the project will launch on the date regardless of what the tests say, because that is what a deadline does to an organization with no brake.</p>
+<p>Set that beside the rest of the chapter without deciding how you feel about it yet. The lesson
+Healthcare.gov taught in 2013 was that capability has to live inside the organization that needs it, because
+you cannot contract for judgment. Of the two organizations built on that lesson, one lasted about eleven
+years and the other still exists under a different name and a different mandate. Whether that is evidence
+the response was wrong, evidence that this capability is unusually hard to sustain, or evidence of something
+else is a real question, and this book will not hand you the answer. What is not in question is the finding
+underneath it, which is older than both agencies: somebody has to own the whole, and that somebody has to be
+allowed to say no.</p>
+
+<h3>4.8 What's next: systems analysis in 2026</h3>
+
+<p>This case is from 2013, and you are entitled to ask whether any of it still applies. There are two
+answers and they point in different directions.</p>
+
+<p><strong>The cost of doing it properly has collapsed.</strong> Almost every failure in this chapter was
+expensive to prevent at the time and is close to free to prevent now.</p>
+
+<ul>
+  <li><strong>The pilot is now a setting.</strong> A <em>feature flag</em> lets a team release something to
+  one percent of users, watch, and expand or switch it off within minutes. CMS was told a pilot would cost
+  months it did not have. Today it costs an afternoon, which removes the last respectable excuse for direct
+  cutover.</li>
+  <li><strong>Releases go out in stages.</strong> The tooling to give an update to one percent of customers
+  and then expand is standard, which is why the company in section 3.2 had it available and why its own
+  remedy afterwards was to start using it.</li>
+  <li><strong>Capacity is rented by the minute.</strong> Load testing against a realistic volume no longer
+  requires buying the hardware to test with, which is how Chapter 1's Spotify example ran.</li>
+  <li><strong>Systems watch themselves.</strong> Monitoring now routes an alert to a named person who is on
+  duty and treats an unanswered alert as its own failure, rather than sending mail nobody reads.</li>
+</ul>
+
+<p><strong>And yet projects still fail.</strong> Not as often at this scale, but often enough that the
+industry keeps producing case studies, and the explanation is the whole chapter: none of the tools above
+touches what actually broke here. No pipeline tells you which states the system must serve. No feature flag
+tells you nobody owns the integration. No monitoring system tells a government that a legal deadline is not
+a project plan. The tooling removed the excuses and left the decisions exactly where they were.</p>
+
+<p>AI has sharpened that rather than softened it. When writing code was the slow part, a vague requirement
+could hide behind the build, because the build took long enough for somebody to notice. Now that a model can
+produce a working draft in an afternoon, the specification is a larger share of what is left, not a smaller
+one, and a model that builds the wrong system builds it faster and more convincingly. Chapter 4 made this
+point about processes. It is the same point about projects.</p>
+
+<h3>4.9 What a business technology manager takes from this chapter</h3>
+
+<p>Strip the case down to what you can reuse anywhere. Four decisions came up in it, and you will be in the
+room for every one of them.</p>
+
+<p><strong>Write the requirements down, including the ones that sound obvious.</strong> Nobody wrote down how
+many people the site had to serve at once, so contracts were signed to build a thing whose size nobody had
+specified. The requirement that feels too obvious to state is the one that will not get tested. If a number
+matters, it goes on paper before anyone builds anything.</p>
+
+<p><strong>Give every connection an owner.</strong> The site depended on live links to the IRS, Social
+Security, and Homeland Security, and no single person owned the whole chain. Every hand-off between two
+teams or two organizations is a place a system fails, and the cheapest fix in this book is a name next to
+each one.</p>
+
+<p><strong>Never launch everything to everyone on a date you cannot move.</strong> A pilot was available and
+obvious and was not taken. Every rollout strategy in section 2.9 was cheaper than the one CMS chose. When
+you hear "big bang," ask what the fallback is, and if there is none, ask again.</p>
+
+<p><strong>Make sure somebody is allowed to say no.</strong> The reviews that existed to stop the launch were
+postponed because the launch was near. Governance is not paperwork. It is the decision, made in advance,
+about who can stop a project and on what evidence. If the answer is nobody, the project will launch on the
+date regardless of what the tests say, because that is what a deadline does to an organization with no
+brake.</p>
 
 <h2 id="other"><span class="num">5</span>The downside: who waited</h2>
 <p>The engineering story has a human side that is easy to lose. The people refreshing Healthcare.gov on October 1 were not users testing a product. They were people
@@ -1229,10 +1591,9 @@ uninsured, and the enrollment deadline bearing down on the project was also bear
 this course says a launch failed, keep asking the second question: failed for whom, and what did the
 failure cost people who had no seat in any status meeting. The contractors were paid for the overruns.
 The waiting was done by the public.</p>
-<p>It is also worth saying who was inside the recovery: a small team with clear ownership, real usage
-data, and permission to tell the truth about what was broken. The lesson students most reliably take
-from this case is that the difference between the three years and the eight weeks was not talent. It
-was structure, honesty, and the political cover to have both.</p>
+<p>It is worth saying who was inside the recovery too: a small team with clear ownership, real usage data,
+and permission to tell the truth about what was broken. The difference between the three years and the six
+weeks was not talent. It was structure, honesty, and the political cover to have both.</p>
 <div class="takeaways"><span class="obj-tag">Key takeaways</span>
 <ul>
 <li>Requirements are the cheapest place to be wrong, because analysis is where you choose which of the five components will be the weak one.</li>
@@ -1247,28 +1608,23 @@ was structure, honesty, and the political cover to have both.</p>
 
 <dl class="vocab">
 <div><dt>User story</dt><dd>A requirement written as: as a kind of person, I want to do something, so that I get some result. The third clause is the one people drop.</dd></div>
-<div><dt>Acceptance criteria</dt><dd>Specific, checkable conditions that decide whether a requirement is finished. A requirement nobody can test is not a requirement.</dd></div>
+<div><dt>Acceptance criteria</dt><dd>Specific, checkable conditions that decide whether a requirement is finished. A requirement nobody can test is not a requirement, it is a hope.</dd></div>
 <div><dt>MoSCoW</dt><dd>Sorting requirements into must have, should have, could have, and won't have this time.</dd></div>
 <div><dt>Minimum viable product</dt><dd>The smallest version that delivers real value to a real user, released in order to learn from what happens.</dd></div>
 <div><dt>Change request</dt><dd>A new or altered requirement arriving after the baseline is agreed, priced in time and money, and approved or refused by someone accountable.</dd></div>
-<div><dt>Post-implementation review</dt><dd>Asking, months after launch, whether the system delivered what was promised and what to do differently next time.</dd></div>
-
 <div><dt>Business analyst</dt><dd>The person who gathers requirements and specifies what a system must do, working between the people who need it and the people who will build it.</dd></div>
 <div><dt>Requirements elicitation</dt><dd>The work of finding out what a system must do, through interviews, observation, document analysis, workshops, and prototypes. Each method has a different blind spot.</dd></div>
-<div><dt>Integration testing</dt><dd>Checking that two or more parts work correctly together, including systems owned by other organizations. The level that would have caught the Mars Climate Orbiter.</dd></div>
-<div><dt>User acceptance testing</dt><dd>Real users doing real tasks, deciding whether a system is fit to release.</dd></div>
+<div><dt>Integration testing</dt><dd>Checking that two or more parts work correctly together, including systems owned by other organizations. The level that would have caught the Mars Climate Orbiter. <em>User acceptance testing</em> is the level above it: real users doing real tasks, deciding whether the system is fit to release.</dd></div>
 <div><dt>Iron triangle</dt><dd>Scope, schedule, and quality. Fix any two of them and the third moves on its own.</dd></div>
 
   <div><dt>Systems analysis</dt><dd>Determining what a system must do and for whom, before construction begins; its output is the requirements.</dd></div>
   <div><dt>Systems design</dt><dd>Determining how a system will meet its requirements: how its data, software, hardware, networks, and people fit together; its output is the plan the builders work from.</dd></div>
   <div><dt>SDLC</dt><dd>The phased sequence from planning through maintenance that structures system development.</dd></div>
-  <div><dt>Functional requirement</dt><dd>A statement of behavior the system must perform.</dd></div>
-  <div><dt>Non-functional requirement</dt><dd>A required quality: speed, capacity, availability, security.</dd></div>
+  <div><dt>Functional requirement</dt><dd>A statement of behavior the system must perform. A <em>non-functional</em> requirement states a required quality instead: speed, capacity, availability, security.</dd></div>
   <div><dt>Waterfall</dt><dd>One pass through the phases with document sign-offs; predictable, and all learning arrives at the end.</dd></div>
 <div><dt>Agile / sprint</dt><dd>Short cycles each ending in working software; a product owner re-ranks priorities as learning arrives.</dd></div>
 <div><dt>Systems integrator</dt><dd>The party accountable for making independently built components work as one system.</dd></div>
-  <div><dt>Direct cutover</dt><dd>Moving all users to a new system at once, with no fallback. "Big bang."</dd></div>
-  <div><dt>Pilot conversion</dt><dd>Deploying to a limited group first to surface defects at low exposure.</dd></div>
+  <div><dt>Direct cutover</dt><dd>Moving all users to a new system at once, with no fallback. "Big bang." Its opposite is <em>pilot conversion</em>, deploying to a limited group first so defects surface at low exposure.</dd></div>
   <div><dt>Stage gate</dt><dd>A scheduled review with authority to halt a project before the next phase.</dd></div>
   
   <div><dt>Technical debt</dt><dd>Future cost incurred by shipping a shortcut now.</dd></div>
@@ -1327,18 +1683,20 @@ strongest opinion about, and be ready to say it first.</p>
 
 <h2 id="sources"><span class="num">9</span>Sources and further reading</h2>
 <ul class="sources">
-<li>Office of Inspector General, U.S. Department of Health and Human Services, <em>HealthCare.gov: Case Study of CMS Management of the Federal Marketplace</em> (OEI-06-14-00350, February 2016): the 60 contracts across 33 companies, the absent lead systems integrator, the misunderstanding over CGI's role, the delayed governance reviews, and the contract growth from $464 million to $824 million.</li>
-<li>Government Accountability Office, <em>Healthcare.gov: Ineffective Planning and Oversight Practices Underscore the Need for Improved Contract Management</em>, GAO-14-694 (July 2014), for task orders issued while key requirements, including expected enrollment volume, were still unknown, and the $840 million spent across 62 contracts by early 2014.</li>
+<li>Office of Inspector General, U.S. Department of Health and Human Services, <a href="https://oig.hhs.gov/oei/reports/oei-06-14-00350.asp" target="_blank" rel="noopener"><em>HealthCare.gov: Case Study of CMS Management of the Federal Marketplace</em></a> (OEI-06-14-00350, issued 22 February 2016). Supports the 60 contracts across 33 companies, the absent lead systems integrator, the misunderstanding over CGI's role, the past-performance database and contract-type findings, the delayed governance reviews, and the contract growth from $464 million to $824 million. The case study runs from passage of the ACA in 2010 through the second open enrollment period, and is the single best document on this case.</li>
+<li>Government Accountability Office, <a href="https://www.gao.gov/products/gao-14-694" target="_blank" rel="noopener"><em>Healthcare.gov: Ineffective Planning and Oversight Practices Underscore the Need for Improved Contract Management</em></a>, GAO-14-694 (published 30 July 2014). Supports the task orders issued while key requirements were still unknown, including the number and composition of states and the number of potential enrollees, and the roughly $840 million spent as of March 2014. GAO's own contract figures differ slightly from the OIG's because the two counted different sets of contracts over different periods; where this chapter gives a contract number it is the OIG's.</li>
 <li>House Oversight Committee release of the CMS "war room" meeting notes, October 2013, for the six enrollments across five insurers as of the morning of 2 October; and contemporary reporting on the launch and the roughly 250,000 concurrent users against a plan built for far fewer.</li>
 <li>Steven Brill, "Code Red," <em>Time</em>, 10 March 2014, and other accounts of the rescue by Jeffrey Zients and the technology team assembled in late October 2013, for the defect count, the concurrency and response-time targets. HHS enrollment reports (ASPE, November 2013 to January 2014) for the 26,794 federal marketplace enrollments in October and the roughly 975,000 in December.</li>
-<li>UK Government Digital Service (2011), the United States Digital Service and 18F (both 2014), for the institutional response to Healthcare.gov; and reporting on the January 2025 executive order reorganizing the Digital Service into the United States DOGE Service and the elimination of 18F on 1 March 2025; IRS notice to states of 3 November 2025 that Direct File would not run in the 2026 filing season; reporting from November 2025 on the DOGE Service ceasing to operate as a central organization. This is recent and contested; check the current position before teaching it.</li>
+<li>UK Government Digital Service (2011), the United States Digital Service and 18F (both 2014), for the institutional response to Healthcare.gov. For what happened after: the executive order of January 2025 renaming the Digital Service as the United States DOGE Service and creating a temporary organization inside it with a stated dissolution date of 4 July 2026; the elimination of 18F on 1 March 2025; the IRS notice to partner states in the first week of November 2025 that Direct File would not be available for the 2026 filing season, with no future date set; and reporting from late November 2025 in which the head of the Office of Personnel Management described the temporary organization as no longer existing as a centralized entity while a spokesperson said it did and named an acting administrator. The roughly 90 staff figure is from an April 2026 interview with one of the Digital Service's directors. <strong>This passage is the most perishable thing in the chapter.</strong> It is recent, contested, and reported through news organizations rather than primary documents, and the 4 July 2026 date has now passed. Recheck it before each term.</li>
 <li>Winston W. Royce, "Managing the Development of Large Software Systems," <em>Proceedings, IEEE WESCON</em>, August 1970: the phase diagram, the sentence calling that implementation risky and an invitation to failure, and the "attempt to do the job twice" recommendation. Short, readable, widely available, and worth reading in the original.</li>
 <li>Fred Brooks, <em>The Mythical Man-Month</em> (1975), for Brooks's law and the OS/360 experience behind it. The 1968 NATO conference at Garmisch is the usual citation for the terms "software crisis" and "software engineering."</li>
-<li>The Agile Manifesto (2001), agilemanifesto.org. Seventeen authors, four values, twelve principles; it takes two minutes to read.</li>
-<li>NASA, <em>Mars Climate Orbiter Mishap Investigation Board Phase I Report</em>, 10 November 1999: the pound-force seconds against newton-seconds mismatch between ground software and navigation software.</li>
+<li><a href="https://agilemanifesto.org/" target="_blank" rel="noopener">The Agile Manifesto</a> (2001). Seventeen authors, four values, twelve principles. It takes two minutes to read, and reading the original is the point of section 2.4.</li>
+<li>NASA, <a href="https://llis.nasa.gov/llis_lib/pdf/1009464main1_0641-mr.pdf" target="_blank" rel="noopener"><em>Mars Climate Orbiter Mishap Investigation Board Phase I Report</em></a>, 10 November 1999. Supports the pound-force seconds against newton-seconds mismatch between ground software and navigation software, and the board's finding that the root cause was the failure of the process to catch the error rather than the error itself.</li>
 
-<li>CrowdStrike's own post-incident materials and contemporary reporting on the 19 July 2024 outage, for the content update, the Windows boot failures, Microsoft's estimate of roughly 8.5 million affected devices, the sectors disrupted, and the company's commitment afterwards to staged deployment and customer control over update timing.</li>
-<li><strong>Verification note.</strong> Checked against sources in September 2026: the OIG and GAO figures (60 contracts across 33 companies, $464 million to $824 million, $58 million to $207 million, $840 million across 62 contracts), the October and December enrollment figures, the 18F and DOGE Service dates, and the end of Direct File. Corrected on that pass: the enrollment timeline had the 975,000 figure a month early; the Mars Climate Orbiter, CrowdStrike, Royce, Brooks, and NATO 1968 details were checked against the authors' knowledge of the published reports rather than re-searched. Two figures rest on contemporary reporting rather than a primary document: the roughly 250,000 concurrent users on 1 October (against a plan variously reported as 50,000 to 60,000), and the recovery milestones (400 defects, 25,000 then 35,000 concurrent users), which come from the recovery team's own progress reports and Brill's account. The "half a billion dollars" at launch is a rounded figure; GAO's $840 million covers spending through early 2014 including the repair.</li>
+<li>CrowdStrike, <a href="https://www.crowdstrike.com/falcon-content-update-remediation-and-guidance-hub/" target="_blank" rel="noopener">Remediation and Guidance Hub: Channel File 291 Incident</a>, including the published Root Cause Analysis and its executive summary (6 August 2024). Supports the content update of 19 July 2024, the field-count mismatch that produced the crash, and the two commitments this chapter relies on: staged deployment of this class of update and customer control over when to take it. Microsoft's estimate of roughly 8.5 million affected devices is Microsoft's, published separately, and is an estimate rather than a count. The sector-by-sector disruption is from contemporary reporting.</li>
+<li><strong>Verification note.</strong> Last checked September 2026. Confirmed against the primary documents linked above: the OIG figures (60 contracts across 33 companies, $464 million to $824 million, $58 million to $207 million), the GAO finding that task orders were issued with expected enrollment unknown, the Mars Climate Orbiter unit mismatch, and CrowdStrike's own account of the 19 July 2024 update and the remedies it adopted.
+<br><br>Corrected on this pass: the account of what happened to the Digital Service after January 2025 previously said the organization had stopped operating as a single body by the end of 2025. That conflated two things. What was reported is that the temporary organization created inside it was described as no longer centralized, while the renamed Digital Service itself continued and was later described as growing. The chapter now says that, and says who said which.
+<br><br>Named as unconfirmed, because this book would rather tell you than guess. Three numbers rest on contemporary reporting rather than a primary document: the roughly 250,000 concurrent users on 1 October 2013 (against a plan variously reported as 50,000 to 60,000); the recovery milestones of about 400 defects, then 25,000 and 35,000 concurrent users, which come from the recovery team's own progress reports and from Brill's account; and the four million visitors on day one. The "roughly half a billion dollars" at launch is a rounded figure and is not a line item in any filing; GAO's $840 million covers spending through March 2014 and includes the repair. Where a number here cannot be traced to a primary document, this book says so, which in a chapter about specifying things precisely is the least it can do.</li>
 </ul>
 
 </main>
