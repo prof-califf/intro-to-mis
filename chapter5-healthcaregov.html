@@ -427,7 +427,7 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 <a href="#discussion">Discussion questions</a>
 <a href="#lab">From lecture to lab</a>
 <a href="#sources">Sources and further reading</a>
-<a href="#teaching">Teaching notes</a>
+
 </div>
 <p class="printbox"><span>Wanna go analog?</span><button type="button" onclick="window.print()" aria-label="Print this page or save it as a PDF">&#9113;&nbsp; Print here</button><span>or save it as a PDF; the navigation drops out</span></p>
 
@@ -1274,19 +1274,6 @@ was structure, honesty, and the political cover to have both.</p>
   <div><dt>Technical debt</dt><dd>Future cost incurred by shipping a shortcut now.</dd></div>
 </dl>
 
-<div class="tps">
-  <div class="tps-head"><span>Monday activity &middot; Which check was missing?</span><span class="mins">12 minutes</span></div>
-  <div class="tps-body">
-    <p class="tps-setup">Two failures, two phases. A spacecraft lost because nobody wrote down which unit crossed the boundary between two teams. A security update pushed to 8.5 million machines at once, with no staged rollout and nothing to fall back to.</p>
-    <div class="tps-q"><p>For each one, name the single cheapest check that would have caught it, and say which phase that check belongs to. Then rank the three by how easy the check would have been to skip.</p></div>
-    <div class="tps-steps">
-      <div class="tps-step"><div class="ph">Think <span>3 min</span></div><p>Write one check per failure. A check is something a named person does at a named moment, not a wish for more care.</p></div>
-      <div class="tps-step"><div class="ph">Pair <span>4 min</span></div><p>Compare with a neighbor. Where you disagree, it is usually because you put the check in different phases. Work out which of you is right.</p></div>
-      <div class="tps-step"><div class="ph">Share <span>5 min</span></div><p>We collect the checks on the board, sorted by phase, and look at what the column shapes tell us.</p></div>
-    </div>
-    <div class="tps-note"><strong>Where this lands</strong>Two things usually emerge. First, every check the room names is small: a line in a specification, one borough for a month, a second person reading a checklist. That is the tenfold arithmetic from section 1 seen from the cheap end. Second, the easiest checks to skip are the ones that protect against something that has not happened yet, which is every check on the list. Push on the ranking question, because it is really a question about organizations rather than about projects: a check survives only if somebody's job is to perform it and somebody else notices when they do not. Carry that into Wednesday and ask which checks CMS had, and which of them were postponed because the launch was near.</div>
-  </div>
-</div>
 <div class="ailight g">
   <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
   <div class="lighttext"><strong>AI and these questions</strong>
@@ -1353,38 +1340,6 @@ strongest opinion about, and be ready to say it first.</p>
 <li>CrowdStrike's own post-incident materials and contemporary reporting on the 19 July 2024 outage, for the content update, the Windows boot failures, Microsoft's estimate of roughly 8.5 million affected devices, the sectors disrupted, and the company's commitment afterwards to staged deployment and customer control over update timing.</li>
 <li><strong>Verification note.</strong> Checked against sources in September 2026: the OIG and GAO figures (60 contracts across 33 companies, $464 million to $824 million, $58 million to $207 million, $840 million across 62 contracts), the October and December enrollment figures, the 18F and DOGE Service dates, and the end of Direct File. Corrected on that pass: the enrollment timeline had the 975,000 figure a month early; the Mars Climate Orbiter, CrowdStrike, Royce, Brooks, and NATO 1968 details were checked against the authors' knowledge of the published reports rather than re-searched. Two figures rest on contemporary reporting rather than a primary document: the roughly 250,000 concurrent users on 1 October (against a plan variously reported as 50,000 to 60,000), and the recovery milestones (400 defects, 25,000 then 35,000 concurrent users), which come from the recovery team's own progress reports and Brill's account. The "half a billion dollars" at launch is a rounded figure; GAO's $840 million covers spending through early 2014 including the repair.</li>
 </ul>
-
-<h2 id="teaching"><span class="num">10</span>Teaching notes</h2>
-<p style="font-family:var(--sans);font-size:.95rem;color:var(--muted)">Written for whoever is running the sessions. Students are welcome to read them, but nothing here is required.</p>
-
-<div class="plan"><div class="plan-head">Monday session plan &middot; 80 minutes &middot; concepts, with the two short failures as illustrations</div>
-<table>
-<tr><td class="t">0:00</td><td class="w">Open</td><td>Ask the room to name a project they have seen go wrong, at work, in a club, on a group assignment. Take four or five onto the board. Do not analyze them; you are coming back at the close to ask which phase each one failed in.</td></tr>
-<tr><td class="t">0:05</td><td class="w">Lecture</td><td>Why analysis exists, and the arithmetic that justifies it: a misunderstanding caught in analysis costs a conversation, the same one caught after go-live costs rework and hearings, and the cost rises about tenfold per phase. Put that number on the board and leave it there all session.</td></tr>
-<tr><td class="t">0:14</td><td class="w">Lecture</td><td>Feasibility on three axes, and scope creep. Make operational feasibility the one they remember: Healthcare.gov failed it before any code existed, because the date came from a law rather than from the work.</td></tr>
-<tr><td class="t">0:22</td><td class="w">Lecture</td><td>The SDLC phases as a checklist of questions rather than a calendar, then waterfall against agile. Put the two diagrams from section 2 side by side and make the room say what each shape claims: in one, mistakes travel downhill and get costlier; in the other, a wrong turn costs one sprint. Resist letting agile become the hero. The honest rule is that waterfall suits stable requirements and agile suits discovery, and the sin was pairing waterfall with maximum uncertainty and a fixed public date.</td></tr>
-<tr><td class="t">0:32</td><td class="w">Lecture</td><td>Maintenance as most of the life cycle, and the four kinds. The one to land is preventive, because deferring it is where technical debt comes from and students will not have thought of it as work at all.</td></tr>
-<tr><td class="t">0:37</td><td class="w">Lecture</td><td>Requirements, functional and non-functional. Non-functional is the part to slow down on, because those are the ones organizations skip and you cannot see them missing until load arrives.</td></tr>
-<tr><td class="t">0:43</td><td class="w">Exercise</td><td>User stories. Put a bad one on the board with the "so that" clause missing, and make the room supply it. Then ask for acceptance criteria for "the site should be fast" and refuse every answer that cannot be passed or failed. Five minutes, and it is the most transferable skill in the session.</td></tr>
-<tr><td class="t">0:48</td><td class="w">Lecture</td><td>MoSCoW and the minimum viable product, then baseline and change request as the actual control on scope creep. Flag that Wednesday's recovery is this method applied under emergency conditions.</td></tr>
-<tr><td class="t">0:53</td><td class="w">Lecture</td><td>Rollout strategies: direct cutover, parallel, phased, pilot. Have the room rank them by risk and by cost before you do, and make the point that these two rankings are opposites.</td></tr>
-<tr><td class="t">0:58</td><td class="w">Cases 1&#8211;2</td><td>Mars Climate Orbiter and CrowdStrike, about four minutes each. If the room is quick, run two or three rows of the "Which phase did it escape?" check on screen, hands up before revealing. The trap answer is testing, every time. Name the phase each one escaped and stop there. Do not draw the comparison; that is the activity. The detail worth landing on CrowdStrike is that the update had been tested and was correct for almost every machine that received it.</td></tr>
-<tr><td class="t">1:06</td><td class="w">Think-pair-share</td><td>Which check was missing? See the activity in section 6. Protect the silent three minutes.</td></tr>
-<tr><td class="t">1:18</td><td class="w">Close</td><td>Back to the opening board. For each project they named, ask which phase it failed in and whether the fix existed one phase earlier. Assign section 4, Healthcare.gov, and the discussion questions.</td></tr>
-</table></div>
-
-<div class="plan"><div class="plan-head">Wednesday session plan &middot; 80 minutes &middot; the Healthcare.gov case</div>
-<table>
-<tr><td class="t">0:00</td><td class="w">Open</td><td>Put up two numbers and nothing else: four million visitors, six enrollments. Ask what they think went wrong. Almost every room says the servers. Write that answer on the board and tell them you are coming back to it.</td></tr>
-<tr><td class="t">0:08</td><td class="w">Walk the case</td><td>The three years before the launch: enrollment volume never specified, 60 contracts and no lead integrator, the late requirement to create an account before browsing, direct cutover with no pilot. Keep naming which phase each decision belongs to. Then return to the board and retire the server answer: capacity was the symptom.</td></tr>
-<tr><td class="t">0:26</td><td class="w">Governance</td><td>The stage gates that existed to stop the launch, postponed because the launch was near. This is Chapter 4's question about who is permitted to stop a process, and here nobody was. Ask who, on the org chart, could have.</td></tr>
-<tr><td class="t">0:36</td><td class="w">The recovery</td><td>Six weeks, one accountable leader, permission to ship less. Ask what the tiger team did that could not have been done in 2011. The answer is nothing, and that is the lesson.</td></tr>
-<tr><td class="t">0:46</td><td class="w">Think</td><td>All five discussion questions on screen. Silent individual work, one sentence on at least two. Protect this step.</td></tr>
-<tr><td class="t">0:52</td><td class="w">Pair</td><td>Groups of three or four settle on positions they can defend. Circulate for a group that landed somewhere unusual on the immovable-deadline question and call on them first.</td></tr>
-<tr><td class="t">1:04</td><td class="w">Share</td><td>Groups take the questions in front of the room. Ask for disagreement rather than answers.</td></tr>
-<tr><td class="t">1:10</td><td class="w">Then and now</td><td>Four minutes on what has changed since 2013: the pilot is now a feature flag, deployment is automated, capacity is rented, systems alert a named person. Then the harder half: projects still fail, because none of those tools decides which states the system must serve or who owns the integration. If you have time, the 2014 creation of USDS and 18F and what happened to them in 2025 is worth raising, but present it as an open question rather than a verdict.</td></tr>
-<tr><td class="t">1:16</td><td class="w">Close and bridge</td><td>The people refreshing the site were not testing a product. Then preview the lab, and Chapter 8, where Nike makes the same rollout choice on a $400 million system and gets the same class of result.</td></tr>
-</table></div>
 
 </main>
 <!--NAVJS-->

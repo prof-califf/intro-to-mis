@@ -432,7 +432,7 @@ a.jump+a.jump:hover{background:var(--magenta-pale);border-color:var(--magenta);c
 <a href="#discussion">Discussion questions</a>
 <a href="#lab">From lecture to lab</a>
 <a href="#sources">Sources and further reading</a>
-<a href="#teaching">Teaching notes</a>
+
 </div>
 <p class="printbox"><span>Wanna go analog?</span><button type="button" onclick="window.print()" aria-label="Print this page or save it as a PDF">&#9113;&nbsp; Print here</button><span>or save it as a PDF; the navigation drops out</span></p>
 <p class="lede">A company that sells a four-dollar drink built one of the most valuable customer datasets
@@ -579,6 +579,10 @@ sends you back for more data.</desc>
 <tr><td data-label="Dimension">Consistency</td><td data-label="The question a manager asks">Does it agree with itself across systems?</td><td data-label="What it looks like when it fails">Two departments report the same thing and get different totals. One may be right, but nobody knows which, so neither number gets used.</td></tr>
 <tr><td data-label="Dimension">Relevance</td><td data-label="The question a manager asks">Does it have anything to do with this decision?</td><td data-label="What it looks like when it fails">A flawless report on something nobody is deciding about. Accurate, complete, on time, consistent, and worthless.</td></tr>
 </table>
+<p>Completeness Is any of it missing? A customer survey went only to people who still use the product. The ones who quit, the ones you most need to hear from, are not in the data at all.</p>
+<p>Timeliness Does it arrive while the decision is still open? A report about what happened Tuesday arrives Thursday. Every number in it is right, and every decision it could have helped has already been made.</p>
+<p>Consistency Does it agree with itself across systems? Two departments report the same thing and get different totals. One may be right, but nobody knows which, so neither number gets used.</p>
+<p>Relevance Does it have anything to do with this decision? A flawless report on something nobody is deciding about. Accurate, complete, on time, consistent, and worthless. ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
 <p>Notice that only the first one is about numbers being wrong. The other four leave the numbers perfectly correct and still make them useless, which is why "is the data accurate?" is not the same question as "can we act on this?"</p>
 <div class="tryit" id="qual">
 <div class="tryit-head">Try it · Which dimension failed?</div>
@@ -698,6 +702,10 @@ Photograph via Wikimedia Commons.
 <tr><td data-label="member">m_88213</td><td data-label="store">109</td><td data-label="time">2026-02-21 14:32</td><td data-label="item">Venti cold brew</td><td data-label="customization">&#8212;</td><td data-label="channel">in store</td><td data-label="price">5.75</td><td data-label="stars">12</td></tr>
 <tr><td data-label="member">m_88213</td><td data-label="store">412</td><td data-label="time">2026-02-24 08:07</td><td data-label="item">Grande latte</td><td data-label="customization">oat milk, extra shot</td><td data-label="channel">mobile order</td><td data-label="price">6.25</td><td data-label="stars">13</td></tr>
 </table>
+<p>m_88213 412 2026-02-18 08:09 Grande latte oat milk, extra shot mobile order 6.25 13</p>
+<p>m_88213 412 2026-02-19 08:11 Grande latte oat milk, extra shot mobile order 6.25 13</p>
+<p>m_88213 109 2026-02-21 14:32 Venti cold brew --- in store 5.75 12</p>
+<p>m_88213 412 2026-02-24 08:07 Grande latte oat milk, extra shot mobile order 6.25 13 -------------------------------------------------------------------------------------------------------------</p>
 <p>One column changed, and everything downstream of it changed with it. Any single row here is still just data: somebody bought a latte. But because the rows can now be connected to each other, a pattern appears that no single row contains. Same member, same store, same drink, three mornings running, all before half past eight. That is information. Add experience about what the pattern means, that weekday morning regulars are the most valuable customers a coffee company has and the easiest to lose quietly, and you have knowledge, the level where somebody can act.</p>
 <p>Look at what those columns make possible, one at a time. The <em>member</em> column is the whole game: it lets every other column be connected across visits, and without it none of what follows exists. <em>Time</em> plus <em>store</em> says she is a weekday morning regular at one store, so an offer should arrive Sunday night rather than Tuesday at noon, and store 412 should be staffed for her and the several hundred people like her. <em>Customization</em> is the difference between knowing she bought a latte and knowing she buys oat milk every time, which decides what that store keeps in the fridge and makes any promotion involving dairy irrelevant to her. <em>Channel</em> says she orders ahead, so her drink can be slotted into the queue before she arrives. <em>Price</em> says she reliably spends about a dollar above the base drink, which is worth knowing before anyone offers her a discount she did not need. And Saturday afternoon at a different store on a cold brew is the row that says her weekday pattern is a routine rather than a preference, which is the sort of distinction that separates a useful offer from an annoying one.</p>
 <p>Notice also what the rows still do not contain. Not why she came, not whether she was alone, not whether the fourth latte was for a coworker. The system has an account, not a person, which is a limitation and data that the Starbucks doesn't have. There is still a limit here.</p>
@@ -752,13 +760,16 @@ Credit: NomadGo and Starbucks.
 <p>Notice what the pitch was about: more counts, more often, at less cost. That is a quantity argument. The one quality claim, 99 percent accuracy, was the vendor's own figure, measured in conditions the vendor chose. Nobody had established what the accuracy would be in a dim cooler full of lookalike cartons, which is where the system was about to spend its working life.</p>
 <p>The counting system did not work. Baristas and managers reported that it confused similar products, missed items entirely, and contributed to both shortages and overstocking, the opposite of the problem it was bought to solve. Reuters documented persistent miscounting by February 2026. Asked about the complaints, Starbucks told Reuters the tool had improved product availability. On 19 May 2026, nine months into the rollout, Starbucks retired it in a one-line internal newsletter and went back to counting by hand. The announcement and its promotional video were removed from the company's website.</p>
 <p>Three ideas from the first half of this chapter explain the failure, and the order matters, because each one caused the next.</p>
+<p>How the NomadGo counting system failed, in order</p>
 <table class="comptable stack-sm">
-<caption>How the NomadGo counting system failed, in order</caption>
-<tr><th>Failure</th><th>What the cameras and model did</th><th>Which idea it broke</th><th>What that looked like in a store</th></tr>
-<!-- ROW 1 IS MISSING: lost when this table was flattened. Restore the first failure before publishing. -->
-<tr><td data-label="Failure">2</td><td data-label="What the cameras and model did">Produced eight times more counts than manual counting did, all of them suspect.</td><td data-label="Which idea it broke"><strong>Too much</strong> information</td><td data-label="What that looked like in a store">The replenishment order goes out on the wrong number, no two percent arrives, and instead of one weekly count somebody trusted, the store now has dozens of counts to verify by hand.</td></tr>
-<tr><td data-label="Failure">3</td><td data-label="What the cameras and model did">Changed no decisions, while every part of it kept costing money.</td><td data-label="Which idea it broke">The <strong>value test</strong>, failing on both halves</td><td data-label="What that looked like in a store">The shift supervisor stops opening the app. Cameras, software license, training, and rechecking labor keep billing every week until somebody in Seattle decides to stop.</td></tr>
+<tbody>
+<tr class="odd">
+<td>Failure What the cameras and model did Which idea it broke What that looked like in a store</td>
+</tr>
+</tbody>
 </table>
+<p>2 Produced eight times more counts than manual counting did, all of them suspect. <strong>Too much</strong> information The replenishment order goes out on the wrong number, no two percent arrives, and instead of one weekly count somebody trusted, the store now has dozens of counts to verify by hand.</p>
+<p>3 Changed no decisions, while every part of it kept costing money. The <strong>value test</strong>, failing on both halves The shift supervisor stops opening the app. Cameras, software license, training, and rechecking labor keep billing every week until somebody in Seattle decides to stop. ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
 <div class="callout callout-caution"><strong>The order is the lesson</strong>
 <p>That failure was predictable: telling whole milk from two percent from oat milk on a dim shelf at an angle is a known weak spot of computer vision, and a milk cooler is close to a worst case for it. What was not predictable is a management decision. Starbucks knew how to test carefully; it had just tried Green Dot Assist in 35 stores before expanding. Somebody chose eleven thousand stores instead of fifty, accepted a vendor's accuracy figure as the standard, and decided how long to keep paying while baristas rechecked by hand. The technology decided whether the counts were right. People decided how much that mattered.</p></div>
 <div class="tryit" id="rescue">
@@ -771,14 +782,16 @@ Credit: NomadGo and Starbucks.
 <h3>7.8 The five components at Starbucks</h3>
 <p>Now that you have seen the whole system since around 2011, here it is as the five components. Look at where the value lived and where the failure lived. The value was in the data: fifteen years of purchases with a name attached. The failure was also in the data: counts that were wrong, produced by software that could not tell one carton from another, and it broke the system at the people, when a shift supervisor stopped opening the app. Same component, opposite result, and the difference was whether the information was good enough to make a decision with.</p>
 <table class="comptable stack-sm">
-<caption>The five components at Starbucks</caption>
-<tr><th>Component</th><th>At Starbucks</th><th>What breaks if it fails</th><th>In the NomadGo failure</th></tr>
-<!-- HARDWARE ROW IS MISSING: lost when this table was flattened. Restore before publishing. -->
-<tr><td data-label="Component"><strong>Software</strong></td><td data-label="At Starbucks">The app, Deep Brew models, SmartQueue, scheduling systems</td><td data-label="What breaks if it fails">Wrong offers, drinks made in the wrong order, staffing that misses the rush</td><td data-label="In the NomadGo failure">Failed. The model could not tell one carton from another on a dim shelf at an angle.</td></tr>
-<tr><td data-label="Component"><strong>Data</strong></td><td data-label="At Starbucks">100M+ weekly transactions, member histories, shot logs, weather</td><td data-label="What breaks if it fails">Garbage in: every level of decision inherits the error</td><td data-label="In the NomadGo failure">Failed as a result. Counts that were wrong went out to the ordering system as if they were right.</td></tr>
-<tr><td data-label="Component"><strong>Networks</strong></td><td data-label="At Starbucks">Store connectivity, and the rented computing that carries orders and machine readings</td><td data-label="What breaks if it fails">Mobile ordering dies, and a third of U.S. transactions with it</td><td data-label="In the NomadGo failure">Worked. The bad counts arrived everywhere on time.</td></tr>
-<tr><td data-label="Component"><strong>People</strong></td><td data-label="At Starbucks">Baristas working the queue, analysts reading the output, executives betting the menu</td><td data-label="What breaks if it fails">Nobody trusts the numbers, so nobody acts on them, and the system is decoration</td><td data-label="In the NomadGo failure">Where it finally broke. Supervisors stopped opening the app, and nine months later somebody in Seattle stopped paying for it.</td></tr>
+<tbody>
+<tr class="odd">
+<td>Component At Starbucks What breaks if it fails In the NomadGo failure</td>
+</tr>
+</tbody>
 </table>
+<p><strong>Software</strong> The app, Deep Brew models, SmartQueue, scheduling systems Wrong offers, drinks made in the wrong order, staffing that misses the rush Failed. The model could not tell one carton from another on a dim shelf at an angle.</p>
+<p><strong>Data</strong> 100M+ weekly transactions, member histories, shot logs, weather Garbage in: every level of decision inherits the error Failed as a result. Counts that were wrong went out to the ordering system as if they were right.</p>
+<p><strong>Networks</strong> Store connectivity, and the rented computing that carries orders and machine readings Mobile ordering dies, and a third of U.S. transactions with it Worked. The bad counts arrived everywhere on time.</p>
+<p><strong>People</strong> Baristas working the queue, analysts reading the output, executives betting the menu Nobody trusts the numbers, so nobody acts on them, and the system is decoration Where it finally broke. Supervisors stopped opening the app, and nine months later somebody in Seattle stopped paying for it. ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
 <p>The weakest component rule from Chapter 1 applies with no modification. The sophistication of Deep Brew buys nothing if the store's network is down, and perfect uptime buys nothing if the model behind the offers is learning from corrupted data. You just watched the rule operate: two components failed, three worked perfectly, and the counting system still died.</p>
 <h3>7.9 What a business manager takes from this chapter</h3>
 <p>Go back to the question this chapter opened with. Information is worth something when it helps somebody decide, and its value is the size of the decision it helped. Everything in this chapter is that one test applied at different scales:</p>
@@ -819,19 +832,7 @@ Credit: NomadGo and Starbucks.
 <div><dt>Prompt injection</dt><dd>Tricking an AI that is connected to company records into handing over information it should not, using an instruction hidden in an ordinary-looking input such as a form field or a support ticket.</dd></div>
 <div><dt>Human in the loop</dt><dd>Keeping a person positioned to catch what an automated system cannot, before its output becomes an action.</dd></div>
 </dl>
-<div class="tps">
-<div class="tps-head"><span>Wednesday activity · Killing the fix</span><span class="mins">20 minutes</span></div>
-<div class="tps-body">
-<p class="tps-setup">Starbucks knew its inventory counts were unreliable, so in 2025 it piloted NomadGo, a phone-based system that scanned shelves and counted stock automatically. The pilot ran about eight months. In May 2026 Starbucks killed it.</p>
-<div class="tps-q"><p>Was cancelling NomadGo a technology failure, or a correct decision that the information was not worth what it cost?</p></div>
-<div class="tps-steps">
-<div class="tps-step"><div class="ph">Think <span>3 min</span></div><p>Pick one and write the strongest single reason for it. Consider what decision a better inventory count would actually have changed.</p></div>
-<div class="tps-step"><div class="ph">Pair <span>5 min</span></div><p>Find someone who picked the other one. Each of you gets ninety seconds to make your case without interruption.</p></div>
-<div class="tps-step"><div class="ph">Share <span>12 min</span></div><p>We will hear one pair who disagreed and see whether either moved.</p></div>
-</div>
-<div class="tps-note"><strong>Where this lands</strong>Both positions are defensible, which is why it works as a discussion. Push the room toward the chapter’s test: information has value only when it changes a decision. Ask what a store manager would have done differently with a perfect count, and whether that difference was worth the cost of the system, the training, and the process change around it.</div>
-</div>
-</div>
+
 <div class="ailight g">
 <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
 <div class="lighttext"><strong>AI and these questions</strong>
@@ -890,30 +891,6 @@ computing at all, and what decision does each one change?</p>
 <li>Reuters reporting of February 2026 on worker complaints of miscounting, and of May 2026 on the retirement of Automated Counting, together with contemporary coverage in Fortune and elsewhere. These supply the September 2025 deployment, the vendor's eight-times-faster and 99 percent accuracy claims, the peppermint syrup bottle in Starbucks' own promotional video, the company's February 2026 statement that the tool had improved availability, and the 19 May 2026 internal newsletter retiring it.</li>
 <li><strong>Verification note.</strong> The Starbucks operating figures in section 7, including the Rewards membership count, the share of revenue from members, the Mobile Order and Pay share, the Deep Brew transaction volume, the SmartQueue result and the cold beverage share, are drawn from secondary summaries rather than from Starbucks' own filings. They are consistent with published reporting but have not been confirmed against the company's quarterly results. Check them against Starbucks investor relations before relying on any single number in class, and expect the membership figure in particular to have moved: it has been reported between roughly 34 and 35.5 million across 2025 and 2026.</li>
 </ul>
-<h2 id="teaching"><span class="num">12</span>Teaching notes</h2>
-<p style="font-family:var(--sans);font-size:.95rem;color:var(--muted)">Written for whoever is running the sessions. Students are welcome to read them, but nothing here is required.</p>
-<div class="plan"><div class="plan-head">Monday session plan · 80 minutes · concepts, with the two small cases as illustrations</div>
-<table>
-<tr><td class="t">0:00</td><td class="w">Open</td><td>Recap the five components in two minutes, then the question this chapter answers: what makes information worth money? Tell them Wednesday is Starbucks, so today is the toolkit they will use on it.</td></tr>
-<tr><td class="t">0:04</td><td class="w">Lecture</td><td>The DIKW hierarchy. Build it live with the exam example: 62, then 62 points on the midterm, then that is a low score and low scores predict trouble, then I should change how I study. Name connectedness and usefulness as the two things that move you up, and note that reaching knowledge usually sends you back for more data.</td></tr>
-<tr><td class="t">0:16</td><td class="w">Lecture</td><td>What information is for: communication, process support, decision making. Then the three decision levels and structured versus unstructured. Walk the decision-levels table on screen.</td></tr>
-<tr><td class="t">0:28</td><td class="w">Lecture</td><td>The value test. Weather data yes, shot data yes, hat data no. Push them to state the test in their own words before you put it on the slide.</td></tr>
-<tr><td class="t">0:36</td><td class="w">Case 1</td><td>Snow's cholera map. Project the map itself and let the room find the cluster before you say anything; that is the whole argument for drawing it. The decision changed was one pump handle. Then the brewery workers and the Hampstead widow: chasing the exception is what confirmed the pattern.</td></tr>
-<tr><td class="t">0:46</td><td class="w">Lecture</td><td>Why more is not better: the data growth numbers, the data center buildout, and the two to three percent that ever gets analyzed. Then too little, enough, too much, then information quality and the five dimensions. Run the Which dimension failed exercise from the chapter on screen, one situation at a time, hands up before you reveal.</td></tr>
-<tr><td class="t">0:56</td><td class="w">Case 2</td><td>The Hawk Fire map. Start with the orange glow on the ridge: real data, and useless, because you cannot act on it. Then the phone map with the blue dot. Land the counterfactual: most of what that map did was tell the majority of Reno to stay home, which is worth more than it sounds and is invisible when it works.</td></tr>
-<tr><td class="t">1:04</td><td class="w">Lecture</td><td>The value of information in the AI age, quickly: a model can only learn from what was recorded, and it uses a bad number as confidently as a good one. Then by-product data. The interface that serves the customer is the instrument that collects the data. This is the hinge into Wednesday.</td></tr>
-<tr><td class="t">1:15</td><td class="w">Close</td><td>Assign the reading: section 7, Starbucks, plus the discussion questions. Tell them Wednesday runs think, pair, share and they should arrive with positions.</td></tr>
-</table></div>
-<div class="plan"><div class="plan-head">Wednesday session plan · 80 minutes · the Starbucks case</div>
-<table>
-<tr><td class="t">0:00</td><td class="w">Open</td><td>One question to start: what does Starbucks actually sell? Take a few answers, then put up the exchange, 34.2 million members handing over a complete purchase record for free drinks and shorter lines, and ask who got the better end of it. Hold the answer.</td></tr>
-<tr><td class="t">0:08</td><td class="w">Walk the case</td><td>Three levels on one pool of data: the barista's queue, the district manager's report, the menu decision. Then by-product data, then Deep Brew as what the data does. Keep naming which concept from Monday each piece is an instance of.</td></tr>
-<tr><td class="t">0:25</td><td class="w">The turn</td><td>NomadGo. Put the September 2025 press release on screen first, let them read the claims, eight times more counts and two to three hours saved per store per week, and ask whether it passes the value test. Then tell them it was killed nine months later. Work the quality failure and the too-much failure together: eight times more counting produced eight times more numbers nobody could trust.</td></tr>
-<tr><td class="t">0:40</td><td class="w">Think</td><td>All five discussion questions on screen. Silent individual work: one sentence on at least two of them. Protect this step.</td></tr>
-<tr><td class="t">0:46</td><td class="w">Pair</td><td>Groups of three or four settle on positions they can defend. Circulate for a group that landed somewhere unusual on the AI question or the ethics question; call on them first.</td></tr>
-<tr><td class="t">0:58</td><td class="w">Share</td><td>Groups take the questions in front of the room, and ask for disagreement rather than answers. The AI question, about what a company spent the previous decade collecting, is the one worth the most time.</td></tr>
-<tr><td class="t">1:12</td><td class="w">Close and bridge</td><td>The second question this course asks: what does the system make easier, for whom, and at whose expense? Surveillance, habit, and scheduling, briefly. Then Lab 2, where Cascadia starts paying them for exactly this judgment about which numbers are worth computing.</td></tr>
-</table></div>
 </main>
 <!--NAVJS-->
 <script>

@@ -418,7 +418,7 @@ in what currency?</p>
 <a href="#discussion">Discussion questions</a>
 <a href="#lab">From lecture to lab</a>
 <a href="#sources">Sources and further reading</a>
-<a href="#teaching">Teaching notes</a>
+
 </div>
 <p class="printbox"><span>Wanna go analog?</span><button type="button" onclick="window.print()" aria-label="Print this page or save it as a PDF">&#9113;&nbsp; Print here</button><span>or save it as a PDF; the navigation drops out</span></p>
 
@@ -705,7 +705,49 @@ from a rival, freeing the company to spend its effort on what differentiates it.
   <div class="stat"><b>&times;2</b><span>projected by 2030, roughly Japan's annual usage</span></div>
 </div>
 
-<h3>4.1 Seven years to zero data centers</h3>
+<h3>4.1 The three days that started it</h3>
+
+<p>Before the outage, Netflix had already tried being its own landlord. It built two data centers, side
+by side, and kept running out of room. Streaming had launched in 2007 and its demand was spiky in a
+way DVD shipping never was, so the company would finish a build, fill it, and start the next one. The
+lesson it drew afterward is the one worth teaching: Netflix was not good at building data centers, and
+it had no particular reason to become good at it.</p>
+
+<p>Then August 2008 supplied the argument that no capacity plan could. A database corruption stopped
+DVD shipments for three days. Read what the company took from that, because it is not "our database
+broke." Members with DVDs at home could still watch them during those three days. If the same thing
+happened to streaming, viewing would simply stop for everyone at once. The failure was small and the
+implication was not, and the implication is what moved the decision.</p>
+
+<p>The diagnosis named a shape rather than a product. Netflix decided it had to move away from
+vertically scaled single points of failure, which means big relational databases in a building the
+company owned, toward distributed systems spread across machines it did not. Notice that this is a
+design decision first and a purchasing decision second. The cloud was how Netflix executed it, not why
+it was needed.</p>
+
+<h3>4.2 Renting from the competitor</h3>
+
+<p>Netflix chose Amazon Web Services, and you should sit up at that sentence rather than read past it.
+Amazon sells video. Prime Video competes for the same evenings and the same subscriptions. Netflix
+decided to run its entire business on computers owned and operated by a rival, and has done so for
+more than fifteen years.</p>
+
+<p>That decision only makes sense if you apply Chapter 11's build-or-rent rule honestly. Rent what is
+a commodity, build what differentiates you. Computing capacity was becoming a commodity, sold by the
+hour, available to Netflix and to everyone else on the same terms. Owning racks of it was never going
+to be the reason somebody subscribed. So Netflix rented the commodity from whoever ran it best, put
+the saved attention into the product, and accepted the strategic discomfort that came with the
+invoice.</p>
+
+<p>Accepting it is not the same as ignoring it. The risk in that arrangement is real: a supplier who
+is also a competitor sets your prices, sees your capacity patterns, and can change terms. Netflix
+manages that risk the way every company should manage a dependency it cannot remove, by keeping the
+part that matters most out of the arrangement entirely. Section 4.5 is that part. Before you get
+there, notice that the company made the uncomfortable choice deliberately, in public, and could
+explain it. A dependency you have chosen and can justify is a strategy. The same dependency arrived at
+by drift is an exposure.</p>
+
+<h3>4.3 Seven years to zero data centers</h3>
 
 <p>The migration took seven years, finishing in early January 2016 when Netflix shut down the last
 data-center pieces serving its streaming product. The company is candid about why it took so long:
@@ -717,14 +759,30 @@ servers and petabytes of storage in minutes. The proof-of-concept moment came th
 6, 2016, Netflix switched on service in more than 130 additional countries at once, a launch its own
 racks could never have absorbed.</p>
 
-<p>One more habit came out of the rebuild, and it belongs in your vocabulary as culture, not
-technology. A Christmas Eve 2012 outage in an AWS load-balancing service burned Netflix badly, and the company
-turned the lesson into a habit: assume everything fails. It built tools, famously including one
-called Chaos Monkey, that deliberately break pieces of its own production systems, so engineers are
-forced to design for the failure before it happens for real. Chapter 9 called the rehearsed plan
-for the bad day business continuity. Netflix automated the rehearsal.</p>
+<h3>4.4 Assume everything fails</h3>
 
-<h3>4.2 The part Netflix built anyway</h3>
+<p>On Christmas Eve 2012, a maintenance process at AWS was run against production by mistake and
+deleted data an elastic load balancing service depended on. Traffic stopped on a few load balancers
+just after noon Pacific time. Netflix streaming started failing within minutes, first on a few device
+types, then on games consoles and mobile devices by mid-afternoon. It happened on one of the heaviest
+viewing nights of the year, and Netflix could not fix it, because the broken part belonged to
+somebody else.</p>
+
+<p>The useful thing is what Netflix did with that experience, and it is a management practice rather
+than a technology. The company decided to stop treating failure as an event to be prevented and start
+treating it as a condition to be survived. Its engineers built tools that deliberately break pieces of
+its own live production systems, the best known of which is called Chaos Monkey, which switches off
+running servers at random during working hours. If a service cannot survive losing a machine at two in
+the afternoon on a Tuesday, the team finds out on a Tuesday afternoon while everybody is at their
+desks, instead of on Christmas Eve.</p>
+
+<p>Chapter 9 gave you the term for the written plan covering the bad day: business continuity. Most
+organizations write that plan, file it, and discover on the bad day which parts of it were wishes.
+Netflix automated the rehearsal so the plan could not quietly rot. That is the transferable idea here,
+and it costs a decision rather than a budget. Somebody has to be willing to let a system break on
+purpose, on a normal day, in front of everyone, because the alternative is finding out later.</p>
+
+<h3>4.5 The part Netflix built anyway</h3>
 
 <p>Here is the detail that turns the Netflix case from a cloud advertisement into a strategy lesson.
 Everything that happens before you press Play, sign-in, search, recommendations, billing, runs on
@@ -741,7 +799,53 @@ computing: rent it, even from a rival. The predictable, colossal, quality-defini
 capability by capability, by the same differentiator test, at every scale from Cascadia's registers
 to a third of the internet's evening traffic.</p>
 
-<h3>4.3 The five components at Netflix</h3>
+<h3>4.6 What it costs, and who does the arithmetic</h3>
+
+<p>Netflix has never published what it pays Amazon. Around the time the migration finished, the company
+said it expected to spend more than $800 million on technology and development in 2016, up from $651
+million the year before, which tells you the order of magnitude without breaking out the rent.
+Netflix has also been consistent that cost reduction was not why it moved. It moved for availability
+and elasticity, and it says it got both.</p>
+
+<p>That is an important qualification, because the cloud was sold to a generation of managers as a way
+to save money and a large number of them have since done the arithmetic and disagreed. The clearest
+worked example is 37signals, which runs Basecamp. The company says it spent about $3.2 million on
+cloud services in 2022, bought roughly $700,000 of its own servers, moved its applications onto them
+without hiring anyone new, and cut its annual bills by around $2 million. Dropbox made a bigger version
+of the same move years earlier. Investors have a name for the pattern now, the cloud paradox: the
+rented infrastructure that makes a young company fast becomes a permanent charge against its margins
+once its demand is large and predictable.</p>
+
+<p>Hold the two stories next to each other and they do not actually conflict, which is the lesson.
+Renting wins when demand is spiky, uncertain, or growing faster than you can buy. Owning wins when
+demand is large, steady and forecastable, because then you are paying a margin for flexibility you no
+longer use. Netflix's own split says exactly this. It rents the part that spikes and it owns the part
+that is enormous and predictable. Nothing about that requires you to have an opinion about the cloud
+in general. It requires you to know which of those two descriptions fits the workload in front of
+you, and to be willing to redo the sum when it changes.</p>
+
+<h3>4.7 What has changed since, and what has not</h3>
+
+<p>Netflix now serves a business that did not exist when it started this: hundreds of millions of paid
+memberships, its own studio output, live events, games and advertising, all on rented computers and
+its own delivery network. The architecture held while the company became something else, which is the
+strongest argument anyone has made for the rebuild being worth seven years.</p>
+
+<p>What has not changed is the exposure. Section 2 opened with the October 2025 failure in AWS's
+largest region and the long list of services that fell over with it. Renting from one landlord still
+means inheriting that landlord's worst morning, and the insurance against it is still the expensive
+kind: designing to run in more than one region, or with more than one provider, and paying for
+capacity you hope never to use. Netflix bought that insurance early and kept paying for it. Most
+companies decide they cannot afford it, which is a legitimate decision and only a decision if somebody
+actually made it.</p>
+
+<p>The newest pressure on the arithmetic is the one section 2.2 costed out. The same providers are now
+buying accelerators for AI workloads on a scale that is reshaping electricity demand, and that shows
+up in prices, in waiting lists for capacity, and in the politics of where the next building goes. When
+you approve a system in five years, the question will not be whether to use the cloud. It will be
+which parts, in whose buildings, powered how, and at what price when the contract renews.</p>
+
+<h3>4.8 The five components at Netflix</h3>
 
 <p>Now that you have seen the whole system, here it is as five components, the way this course maps every case, and the last time the book draws this table. Look at how many rows Netflix rents from a competitor, and which one it refused to.</p>
 
@@ -754,7 +858,7 @@ to a third of the internet's evening traffic.</p>
 <tr><td data-label="Component"><strong>People</strong></td><td data-label="In the case">Engineers who break things on purpose; FinOps; the neighbors</td><td data-label="The lesson">Every rented machine still has humans deciding, and absorbing</td></tr>
 </table>
 
-<h3>4.4 What a business technology manager takes from this chapter</h3>
+<h3>4.9 What a business technology manager takes from this chapter</h3>
 
 <p>Strip the Netflix case down to what you can reuse in any company. Four decisions came up in it, and each one is a decision you will be in the room for.</p>
 
@@ -830,27 +934,6 @@ and answer for the trend line: Chapter 6's measurement-validity problem, with a 
 <div><dt>Data-center externalities</dt><dd>Energy, water, noise, and grid strain landing on neighbors of the buildout.</dd></div>
 </dl>
 
-<div class="tps">
-  <div class="tps-head"><span>Wednesday activity &middot; Where does the co-op's data live?</span><span class="mins">20 minutes</span></div>
-  <div class="tps-body">
-    <p class="tps-setup">Cascadia has outgrown the back-office server running its member database and
-    point-of-sale backend. Three options. A major cloud provider's Oregon region: cheapest, most capable, and you now know what
-a bad region morning looks like. A small regional provider running on hydropower: greener and local,
-pricier, fewer services, less certain to exist in ten years. Or buying new servers for the back
-office again: owned, but patched by whom, exactly? The
-    co-op's members vote on values as well as budgets.</p>
-    <div class="tps-q"><p>Which do you recommend, and what is the single fact from this quarter, a number, a case, a lab finding, that most drives your choice?</p></div>
-    <div class="tps-steps">
-      <div class="tps-step"><div class="ph">Think <span>3 min</span></div><p>Choose, and write your driving fact. It must be something you can cite, not a vibe.</p></div>
-      <div class="tps-step"><div class="ph">Pair <span>5 min</span></div><p>Find a different choice. Stress-test each other with Week 8: whichever option you picked, who patches it, and what is the plan for its bad morning?</p></div>
-      <div class="tps-step"><div class="ph">Share <span>12 min</span></div><p>We will map the answers to the quarter: TCO from Chapter 11, continuity from Chapter 9, the physical bill from today, and the co-op's values, which are a real constraint, not decoration.</p></div>
-    </div>
-    <div class="tps-note"><strong>Where this lands</strong>All three are defensible, which is the point of the last activity of the quarter. This is not a
-technology question with a right answer. It is a management question with trade-offs you can now
-name, price, and defend. That was the course.</div>
-  </div>
-</div>
-
 <div class="ailight g">
   <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
   <div class="lighttext"><strong>Green &middot; AI as coach and sparring partner</strong>
@@ -893,11 +976,11 @@ strongest opinion about, and be ready to say it first.</p>
 
 <h2 id="lab"><span class="num">8</span>From lecture to lab</h2>
 
-<div class="callout callout-bridge"><strong>Week 10</strong>
+<div class="callout callout-bridge"><strong>Week 10 &middot; Lab 10</strong>
 <p>This is the last chapter, and the lab that goes with it is the one that ties the quarter together.
 You have built Cascadia's spreadsheets, queried its database, charted its problem, audited its
 security. This week you decide where all of it should live.</p>
-<p>Take the three questions from mini-case 3 into it. Wherever the co-op's data ends up, it is in a
+<p>Take the three questions from mini-case 2 into it. Wherever the co-op's data ends up, it is in a
 building somewhere, and somebody's typo away from being unavailable. The question the lab asks is not
 "cloud or not", which Chapter 11's rule already settled for a commodity like storage. It is which
 capabilities the co-op should rent, which it should own, and what it should be able to survive.</p>
@@ -914,42 +997,18 @@ model of your own. (Also: is a hotdog a sandwich? Lab has an answer.)</p>
 <li>Netflix's published material on Open Connect, for the content delivery network and its traffic share.</li>
 <li>International Energy Agency, <em>Energy and AI</em> (2025), for the 2024 data-center electricity figures, the 2030 projection, the national shares, and the growth rates. The IEA updates these annually; use the current edition.</li>
 <li>Amazon Web Services' October 2025 summary of the US-East-1 event, for section 2.</li>
-<li>Contemporary reporting on the OVHcloud Strasbourg fire of 10 March 2021, including the company's statements on backups, for mini-case 3.</li>
+<li>Contemporary reporting on the OVHcloud Strasbourg fire of 10 March 2021, including the company's statements on backups, for mini-case 2.</li>
 <li>Accounts of Salesforce's founding and its early "no software" positioning, for mini-case 1. Marc Benioff's <em>Behind the Cloud</em> (2009) is the insider version and should be read as one.</li>
 <li>Reporting on data-center electricity and water use in Ireland and Virginia, and on local siting disputes, for section 5. These figures move quickly and vary by source; check before teaching them.</li>
 <li>Netflix Technology Blog / About Netflix, <a href="https://about.netflix.com/en/news/completing-the-netflix-cloud-migration">Completing the Netflix Cloud Migration</a> (February 2016): the 2008 database corruption, the seven-year timeline, the cloud-native rebuild, the growth figures, and the January 2016 global launch.</li>
+<li>Netflix Technology Blog, its post-mortem of the Christmas Eve 2012 Elastic Load Balancing outage, and its published work on chaos engineering, for section 4.4. The company also said around the migration's completion that it expected to spend over $800 million on technology and development in 2016, against $651 million in 2015; it has never published what it pays Amazon.</li>
+<li>37signals' own "cloud exit" posts by David Heinemeier Hansson, for section 4.6: roughly $3.2 million of cloud spending in 2022, about $700,000 of servers bought, and annual bills cut by around $2 million. These are the company's own figures and it is arguing a case; Dropbox's earlier move off AWS and Andreessen Horowitz's "cost of cloud" paper are the other two pieces usually cited in this debate. All three are worth reading against Netflix's statement that cost reduction was not why it moved.</li>
 <li>Netflix Open Connect documentation and industry coverage: the company-owned CDN carrying the entirety of Netflix's video traffic from appliances inside ISPs, at tens of terabits per second of peak.</li>
 <li>International Energy Agency, <a href="https://www.iea.org/reports/energy-and-ai">Energy and AI</a> (2025): the 415 TWh / ~1.5% figure for 2024, the ~945 TWh 2030 base case, the growth rates, the US share, and the role of AI-accelerated servers.</li>
 <li>Reporting on the October 2025 AWS US-East-1 outage (major outlets and AWS's own post-incident summary): the DNS fault involving DynamoDB and the day of cascading disruption across thousands of services.</li>
 <li>Netflix Technology Blog on the Christmas Eve 2012 ELB outage and the Simian Army: the origin of chaos engineering as institutional habit.</li>
 <li><strong>Verification note.</strong> Checked in September 2026 against the authors' knowledge of the published sources rather than by new searches, because none of the figures here had a reason to move: the IEA's <em>Energy and AI</em> figures (415 TWh and about 1.5 percent in 2024; about 945 TWh in the 2030 base case; roughly 12 percent annual growth since 2017; the United States at around 45 percent), the Netflix migration dates and growth figures from the company's own February 2016 post, the S3 and OVHcloud incidents, and Salesforce's 1999 founding. The Ireland and Virginia shares are 2023 estimates and will move; the IEA's next edition will supersede the 2024 figures, so check both before teaching in 2027. Also fixed on that pass: section cross-references that used an older numbering, and a continuity reference that pointed to Chapter 12 instead of Chapter 9.</li>
 </ul>
-
-<h2 id="teaching"><span class="num">10</span>Teaching notes</h2>
-<p style="font-family:var(--sans);font-size:.95rem;color:var(--muted)">Written for whoever is running the sessions. Students are welcome to read them, but nothing here is required. This is the last lecture of the quarter; the Wednesday plan ends on the callback to Week 1.</p>
-
-<div class="plan"><div class="plan-head">Monday session plan &middot; 80 minutes &middot; concepts, with the two answers as illustrations</div>
-<table>
-<tr><td class="t">0:00</td><td class="w">Open</td><td>Ask where, physically, the last thing they streamed was. Collect guesses on the board. Nobody knows, and by Wednesday everyone will.</td></tr>
-<tr><td class="t">0:06</td><td class="w">Lecture</td><td>Strip the vapour from the word: other people's data centers, rented by the hour. IaaS, PaaS, SaaS as layers of pre-assembly, then capex to opex and elasticity. Land the five-components point that the hardware component just became a utility, and that renting transfers none of the responsibility for the data or the decisions.</td></tr>
-<tr><td class="t">0:20</td><td class="w">Lecture</td><td>Concentration risk in its computing version, with the October 2025 US-East-1 morning as the fresh example. Then lock-in and egress as Chapter 3's switching costs implemented in infrastructure. Ask who in the room noticed that morning, and what they were trying to do.</td></tr>
-<tr><td class="t">0:32</td><td class="w">Lecture</td><td>The physical bill. Walk the IEA numbers from 415 terawatt-hours to the projected doubling, then localize: a fifth of Ireland, a quarter of Virginia. Then water, then who lives next door. Be honest that a single stream costs very little; the argument is about scale.</td></tr>
-<tr><td class="t">0:46</td><td class="w">Cases 1&#8211;2</td><td>Salesforce and the Strasbourg fire, about four minutes each. Name the answer each gave and stop.</td></tr>
-<tr><td class="t">0:54</td><td class="w">Think-pair-share</td><td>Where does the co-op's data live? See the activity in section 6.</td></tr>
-<tr><td class="t">1:14</td><td class="w">Close</td><td>Assign section 4. Tell them Wednesday is the last case and it ends where the course began.</td></tr>
-</table></div>
-
-<div class="plan"><div class="plan-head">Wednesday session plan &middot; 80 minutes &middot; the Netflix case, and the last session of the quarter</div>
-<table>
-<tr><td class="t">0:00</td><td class="w">Open</td><td>One sentence on the board: Netflix runs on computers owned by Amazon, which sells a competing streaming service. Ask why a company would do that. Hold the answers.</td></tr>
-<tr><td class="t">0:07</td><td class="w">Walk the case</td><td>The 2008 corruption, the conclusion, and the seven-year migration. The point to land is that Netflix refused the easy path of moving its systems unchanged, because that moves your problems along with your servers. Then the proof: 130 countries in a day.</td></tr>
-<tr><td class="t">0:22</td><td class="w">The part it built</td><td>Open Connect. Everything before Play is rented; the video itself is not. Run Chapter 11's build-buy-subscribe rule over the split and let the room see it resolve. This is the whole course's build-versus-rent argument in one company.</td></tr>
-<tr><td class="t">0:34</td><td class="w">Chaos Monkey</td><td>The tool that breaks production on purpose. Connect it to Chapter 9's business continuity: Netflix automated the rehearsal. Ask what it would take for their employer to deliberately break something to find out.</td></tr>
-<tr><td class="t">0:42</td><td class="w">The other side</td><td>Section 5. Who lives next to the data center, and what a FinOps or vendor-strategy role actually does. Make the point that the people who plan, site, buy and account for computing are business graduates, and that the bills get paid the way they decide.</td></tr>
-<tr><td class="t">0:52</td><td class="w">Think, pair, share</td><td>The five discussion questions. Silent work, then groups, then the room. Circulate for a group that argued Netflix should never have rented from a rival and call on them first.</td></tr>
-<tr><td class="t">1:10</td><td class="w">The last callback</td><td>Trace one Spotify Wrapped play through all five components: from a phone, over a network, into a pipeline, onto a rented GPU, and back. Name each bill along the way. That is Week 1's specimen, seen with everything the quarter added, and it is a fair preview of the final.</td></tr>
-<tr><td class="t">1:18</td><td class="w">Close</td><td>Back to the opening sentence. Then the course's last line: every system in this book worked. The question was always for whom, at what cost, and who decided.</td></tr>
-</table></div>
 
 </main>
 <!--NAVJS-->

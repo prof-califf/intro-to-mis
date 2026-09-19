@@ -416,7 +416,7 @@ a customer.</p>
 <a href="#discussion">Discussion questions</a>
 <a href="#lab">From lecture to lab</a>
 <a href="#sources">Sources and further reading</a>
-<a href="#teaching">Teaching notes</a>
+
 </div>
 <p class="printbox"><span>Wanna go analog?</span><button type="button" onclick="window.print()" aria-label="Print this page or save it as a PDF">&#9113;&nbsp; Print here</button><span>or save it as a PDF; the navigation drops out</span></p>
 
@@ -670,7 +670,7 @@ it. The company made three arguments. The ADA, a 1990 law about physical places 
 does not reach websites and apps at all. No federal regulations existed telling businesses what an
 accessible website even is. And Mr. Robles was not shut out of Domino's, because he could always
 order by phone. Keep those three arguments in mind; a federal appeals court is going to answer each
-one, and the answers now bind every business with a website.</p>
+one, and the answers now shape how every business with a website gets advised.</p>
 
 <div class="statrow">
   <div class="stat"><b>2</b><span>channels that failed him: website and app</span></div>
@@ -680,7 +680,105 @@ one, and the answers now bind every business with a website.</p>
   <div class="stat"><b>1,000s</b><span>of web-accessibility suits now filed each year</span></div>
 </div>
 
-<h3>4.1 The ruling, and what it now binds</h3>
+<h3>4.1 What the software actually did to him</h3>
+
+<p>Start with the mechanics, because the whole case turns on them and they are not complicated. Mr.
+Robles used JAWS, the most widely used screen reader on Windows, and VoiceOver, the screen reader
+built into the iPhone. Both work the same way. They do not look at the picture on the screen the way
+you do. They read the labels and structure underneath it, and then speak them.</p>
+
+<p>So a button works if somebody wrote a label on it. An image means something if somebody wrote alt
+text for it. A form field can be filled in if somebody connected the label to the box. When those
+labels are missing, the screen reader has nothing to say. It does not announce "this site is broken."
+It announces "button," or nothing, over and over, while the user tries to guess what the page
+contains.</p>
+
+<figure class="diagram" style="margin:1.8rem auto;max-width:470px">
+<svg viewBox="0 0 470 268" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="srT srD"
+     style="width:100%;height:auto;font-family:var(--sans)">
+<title id="srT">The same order page, seen two ways</title>
+<desc id="srD">Two panels side by side showing five rows of the same pizza ordering page. The left
+panel, what the page shows, has a product photo, the item name and price, a size selector, an order
+button and a coupon link. The right panel, what an unlabeled page gives a screen reader, has the same
+five rows, but the photo is announced only as graphic, the size selector as edit text blank, the
+button as button and the link as link. Only the row containing real text survives in both panels.</desc>
+
+<text x="0" y="12" font-size="10.5" font-weight="700" fill="var(--ink)">WHAT THE PAGE SHOWS</text>
+<text x="252" y="12" font-size="10.5" font-weight="700" fill="var(--ink)">WHAT THE READER IS GIVEN</text>
+
+<rect x="0" y="22" width="218" height="214" fill="none" stroke="var(--rule)" stroke-width="1"/>
+<rect x="252" y="22" width="218" height="214" fill="none" stroke="var(--rule)" stroke-width="1"/>
+
+<rect x="14" y="34" width="60" height="34" fill="var(--off-white)" stroke="var(--ink)" stroke-width="1"/>
+<path d="M14 68 L34 48 L48 60 L60 50 L74 62" fill="none" stroke="var(--ink)" stroke-width="1"/>
+<text x="266" y="56" font-size="11" fill="var(--muted)">"graphic"</text>
+
+<text x="14" y="98" font-size="11" fill="var(--ink)">Large pepperoni, $12.99</text>
+<text x="266" y="98" font-size="11" fill="var(--ink)">"Large pepperoni, $12.99"</text>
+
+<rect x="14" y="112" width="96" height="22" fill="var(--off-white)" stroke="var(--ink)" stroke-width="1"/>
+<text x="20" y="127" font-size="10.5" fill="var(--ink)">Size: Large</text>
+<text x="266" y="127" font-size="11" fill="var(--muted)">"edit text, blank"</text>
+
+<rect x="14" y="154" width="96" height="24" fill="var(--magenta)" stroke="var(--ink)" stroke-width="1"/>
+<text x="62" y="170" font-size="10.5" font-weight="700" fill="var(--white)" text-anchor="middle">Add to order</text>
+<text x="266" y="170" font-size="11" fill="var(--muted)">"button"</text>
+
+<text x="14" y="212" font-size="11" fill="var(--magenta)" text-decoration="underline">Online-only coupon</text>
+<text x="266" y="212" font-size="11" fill="var(--muted)">"link"</text>
+
+<text x="0" y="258" font-size="10.5" fill="var(--muted)">Same page. Same five rows. One of them still works.</text>
+</svg>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--muted);margin-top:.55rem;line-height:1.55"><strong style="color:var(--ink)">The interface is the labels, not the picture.</strong>
+The right column is the entire ordering system for a customer using a screen reader. Nothing in it is
+broken in the way an outage is broken, and nothing about it is expensive to fix. Every word missing
+from it is a label a developer did not write, and the one row that survives is the one where somebody
+happened to type real text.</figcaption>
+</figure>
+
+<p>That is what Domino's site and app did. The website's images lacked alt text. The app had buttons
+with no labels, which is a failure against Apple's own published guidance for iOS developers. Mr.
+Robles tried more than once, and he could not build his pizza and finish the order. He also could not
+claim a discount that existed only online, which matters legally as well as practically: the company
+was offering something to its digital customers that it was not offering to him.</p>
+
+<p>Keep hold of what the fix would have been. Nobody was asking Domino's to build a separate site for
+blind customers, or to invent anything. The remedy is to label the controls and describe the images in
+the software the company already had. That is the same work Chapter 12 will call an accessibility
+requirement, and it is cheapest when it is part of how the team builds, rather than a project somebody
+funds later under a court order.</p>
+
+<h3>4.2 Three defenses, and what happened to each</h3>
+
+<p>Domino's made three arguments, and each one is a version of something you will hear in a real
+meeting. Take them one at a time.</p>
+
+<p><strong>"The law does not cover this."</strong> The ADA is a 1990 statute about places of public
+accommodation, and Domino's argued that a website is not a place. The Ninth Circuit answered with what
+lawyers call a nexus: the website and app connect customers to the goods and services of physical
+restaurants, of which Domino's had thousands, so Title III reaches them. Note the reasoning, because
+it generalizes past this case. Courts read a statute by what it was for, not by the technology that
+existed when it was written.</p>
+
+<p><strong>"Nobody told us what the rules are."</strong> This was the strongest argument, and the
+district court accepted it at first. There were no federal regulations defining an accessible
+commercial website, so, Domino's said, holding the company to an unwritten standard would violate due
+process. The appeals court rejected it, and the reasoning is worth keeping. The obligation in the
+statute is to communicate effectively with disabled customers. That obligation is the notice. A court
+can then order compliance with WCAG as the remedy for breaking it, without WCAG ever having been
+turned into a federal rule.</p>
+
+<p><strong>"He could have phoned us."</strong> Domino's argued that a telephone line meant Mr. Robles
+was not excluded. On the evidence in front of it, the district court did not accept that the phone was
+an adequate substitute. Think about what the argument actually asks. Everyone else may order at two in
+the morning, in thirty seconds, with the online-only price. You may call, wait, and pay more. An
+alternative channel is only equivalent if it delivers the same thing on the same terms, and the
+company's own pricing had already conceded that it did not.</p>
+
+<p>The pattern across all three is the one to carry into your career. Each defense was a reason the
+company should not have to do the work, and none of them was a claim that the work was hard.</p>
+
+<h3>4.3 The ruling, and what it now binds</h3>
 
 <p>The district court initially sided with Domino's on procedure, reasoning that without federal
 web-accessibility regulations, courts should wait for the Department of Justice to define the rules.
@@ -702,7 +800,29 @@ that was freely available the whole time. The cheapest moment to meet it was bef
 
 <div class="pull"><p>The interface is a legal surface. Domino's learned it from a pizza order; every business with a website inherited the lesson.</p></div>
 
-<h3>4.2 Since the ruling</h3>
+<h3>4.4 Six years, and what the record actually shows</h3>
+
+<p>Follow the calendar. Mr. Robles filed in September 2016. The district court dismissed in 2017. The
+Ninth Circuit reversed in January 2019. The Supreme Court declined to take the appeal in October 2019.
+In June 2021, back at the district court, the judge granted summary judgment for Mr. Robles on the
+website, ordered Domino's to bring it into line with WCAG, and awarded him $4,000 in statutory damages
+under California's civil rights act. The parties settled in June 2022, on undisclosed terms. Six years
+of litigation, over an order for a pizza.</p>
+
+<p>Now a caution about a number you will meet the moment you search for this case. Many articles state
+that fixing the website would have cost Domino's about $38,000, usually next to an estimate of
+millions spent on lawyers. That comparison is irresistible and you should not use it, because the
+figure does not appear in the court record. It seems to have entered circulation through a single 2019
+social media post and has been repeated ever since without a source. Domino's litigation spending,
+its remediation cost and the settlement amount are all undisclosed. The only dollar figure the public
+record establishes is the $4,000.</p>
+
+<p>That is worth a moment in a course about information. The argument for accessibility does not need
+an invented number, and using one hands the other side an easy way to dismiss the whole point. What
+the record does establish is strong enough: a company spent six years and an undisclosed amount of
+legal effort defending its right not to label its buttons, and was ordered to label them anyway.</p>
+
+<h3>4.5 Since the ruling</h3>
 
 <p>The Ninth Circuit's decision stood, and the practical standard businesses are held to is the WCAG
 guidance that was freely available the whole time. Web-accessibility suits in the United States have
@@ -724,7 +844,7 @@ at all.</p>
 2026: the interface is a legal surface, and the cheapest moment to meet the standard is before anybody
 has to ask.</p>
 
-<h3>4.3 The five components at Domino's, again</h3>
+<h3>4.6 The five components at Domino's, again</h3>
 
 <p>Now that you have seen the whole system, here it is as five components, the way this course maps every case. Compare it with the Chapter 4 table for the same company. The rows are the same; the question asked of them is different.</p>
 
@@ -737,7 +857,7 @@ has to ask.</p>
 <tr><td data-label="Component"><strong>People</strong></td><td data-label="In the case">Builders who never tested with a screen reader; a customer who sued</td><td data-label="The lesson">The users you do not picture will find you eventually</td></tr>
 </table>
 
-<h3>4.4 What a business technology manager takes from this chapter</h3>
+<h3>4.7 What a business technology manager takes from this chapter</h3>
 
 <p>Strip the Robles case down to what you can reuse in any company. Four decisions came up in it, and each one is a decision you will be in the room for.</p>
 
@@ -793,30 +913,10 @@ chosen, and who has to live with it?</em></p>
 <div><dt>Build vs. buy vs. subscribe</dt><dd>Own your differentiator; rent your commodities.</dd></div>
 </dl>
 
-<div class="tps">
-  <div class="tps-head"><span>Wednesday activity &middot; Pick a point-of-sale system for Cascadia</span><span class="mins">20 minutes</span></div>
-  <div class="tps-body">
-    <p class="tps-setup">The co-op's registers are aging out, and three finalists remain.
-    <strong>SwiftRegister</strong> (SaaS): $79 per store per month, slick, running tomorrow, but its
-    member-lookup screen fails basic screen-reader tests and it cannot talk to the membership
-    database without a custom bridge. <strong>CoopSuite</strong> (packaged): $60,000 up front plus
-    annual support, integrates natively with membership, WCAG-conformant, six-month implementation.
-    <strong>OpenTill</strong> (open source): free license, fully flexible, accessible if configured
-    correctly, but the co-op would own every problem and has no developer on staff.</p>
-    <div class="tps-q"><p>Which do you recommend to the board? Commit before discussing, and name the requirement you are knowingly sacrificing.</p></div>
-    <div class="tps-steps">
-      <div class="tps-step"><div class="ph">Think <span>3 min</span></div><p>Choose, and write down the requirement you sacrificed. "Nothing" is not available.</p></div>
-      <div class="tps-step"><div class="ph">Pair <span>5 min</span></div><p>Find a different choice. Attack each other's pick with TCO first, then with the Robles test.</p></div>
-      <div class="tps-step"><div class="ph">Share <span>12 min</span></div><p>We will build the comparison table on the board and watch the cheap option get expensive: the bridge, the retrofit, the lawsuit exposure, the staff time.</p></div>
-    </div>
-    <div class="tps-note"><strong>Where this lands</strong>There is a defensible case for two of the three, and the argument is the point: every software selection is a trade made explicit or a trade made by accident. The one indefensible move after this chapter is treating the accessibility failure as a footnote, because section 4 priced that footnote. Sticker price is the smallest number in the decision.</div>
-  </div>
-</div>
-
 <div class="ailight g">
   <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
   <div class="lighttext"><strong>Green &middot; AI as coach and sparring partner</strong>
-  <p>Two good uses this week. Have an AI play the vendor: give it one of the activity's three systems
+  <p>Two good uses this week. Have an AI play the vendor: give it a system you have had to use at work or school
   and run a mock scripted demo, pressing it on integration and accessibility until it squirms. And draft your own requirements list first, then ask an AI what you missed. Its additions will be
 generic, and deciding which generic requirements actually apply to a member co-op is exactly the
 selection judgment this chapter is teaching.</p></div>
@@ -866,6 +966,8 @@ the launch date moves.</p>
 
 <h2 id="sources"><span class="num">9</span>Sources and further reading</h2>
 <ul class="sources">
+<li>Robles v. Domino's Pizza LLC, 913 F.3d 898 (9th Cir. 2019), the Supreme Court's denial of certiorari in October 2019, and the district court's summary judgment of 23 June 2021, for the nexus holding, the fair-notice reasoning, the order to conform to WCAG, and the $4,000 in statutory damages under California's Unruh Act. The parties settled in June 2022 on undisclosed terms, and the claims about the mobile app were never decided on the merits.</li>
+<li><strong>A number to avoid.</strong> Many secondary accounts say remediation would have cost Domino's about $38,000. That figure is not in the filings reviewed for this chapter and appears to originate in a 2019 social media post. Domino's litigation spending, its remediation cost and the settlement terms are all undisclosed. Section 4.4 says so deliberately; if a student brings the figure to class, this is the source discussion to have.</li>
 <li>Christopher B. Califf, Saonee Sarker and Suprateek Sarker, "The Bright and Dark Sides of Technostress: A Mixed-Methods Study Involving Healthcare IT," <em>MIS Quarterly</em> 44(2), 2020, pp. 809&ndash;856, for the two kinds of technology stress described in section 1.</li>
 <li><em>Robles v. Domino's Pizza LLC</em>, Ninth Circuit Court of Appeals, January 2019, and the Supreme Court's denial of certiorari, October 2019, for the two holdings in section 4.</li>
 <li>Web Content Accessibility Guidelines (WCAG), World Wide Web Consortium, for the four principles in section 1. The guidelines themselves are readable and worth an hour.</li>
@@ -882,33 +984,6 @@ the launch date moves.</p>
 <li>US Department of Justice, interim final rule of 20 April 2026 extending the Title II web-accessibility compliance dates to 26 April 2027 (large public entities) and 26 April 2028 (smaller ones); the National Federation of the Blind's suit over the delay; and law-firm tallies of 2025 web-accessibility litigation (more than 3,100 federal Title III suits), for the "Since the ruling" passage.</li>
 <li><strong>Verification note.</strong> Checked in September 2026: the DOJ deadline extension (the chapter had described the 2024 rule as due on a deadline; it now records the April 2026 delay), the European Accessibility Act's June 2025 application date, and the 2025 lawsuit counts. The Robles procedural history, the Palm Beach ballot and the Sonos figures were checked against the authors' knowledge of the published record rather than re-searched. Also fixed on that pass: section cross-references that used an older numbering, and a "Since the ruling" passage that had been stranded after the discussion questions and is now back inside section 4.</li>
 </ul>
-
-<h2 id="teaching"><span class="num">10</span>Teaching notes</h2>
-<p style="font-family:var(--sans);font-size:.95rem;color:var(--muted)">Written for whoever is running the sessions. Students are welcome to read them, but nothing here is required. This chapter follows Exam 2, so the Monday plan opens gently.</p>
-
-<div class="plan"><div class="plan-head">Monday session plan &middot; 80 minutes &middot; concepts, with the two interfaces as illustrations</div>
-<table>
-<tr><td class="t">0:00</td><td class="w">Open</td><td>Ask everyone to close their eyes and order a pizza in their head using only what a screen reader would say aloud. Then play thirty seconds of a screen reader on a cluttered site. The room understands the case before you state it.</td></tr>
-<tr><td class="t">0:06</td><td class="w">Lecture</td><td>Kinds of software and where it comes from: system against application, custom against packaged against SaaS. Land the point that Domino's ordering system was custom and owned, which makes the gap in it a gap in the company's own decisions.</td></tr>
-<tr><td class="t">0:16</td><td class="w">Lecture</td><td>The interface decides who gets in: the command line to the graphical interface as a market-expansion story, then usability as three measurable properties. Make them put a number on each for an app they use.</td></tr>
-<tr><td class="t">0:28</td><td class="w">Lecture</td><td>Accessibility and WCAG's four principles, then the two facts that move it from charity to strategy: one in six people, and the curb-cut effect. Collect curb-cut examples from the room before you give yours.</td></tr>
-<tr><td class="t">0:40</td><td class="w">Lecture</td><td>Selection: requirements before demos, scripted demos on your data, total cost of ownership, references, pilot. Then build, buy or subscribe as Chapter 3's commodity-versus-differentiator rule. Keep it brisk; Chapter 8 already showed the nine-figure version of getting this wrong.</td></tr>
-<tr><td class="t">0:52</td><td class="w">Cases 1&#8211;2</td><td>The ballot and the app, about four minutes each. Name what decided the outcome and stop. Sonos is the one to connect forward, because it went backwards on accessibility and paid for it without a lawsuit.</td></tr>
-<tr><td class="t">1:00</td><td class="w">Think-pair-share</td><td>Pick a point-of-sale system for Cascadia. See the activity in section 6.</td></tr>
-<tr><td class="t">1:16</td><td class="w">Close</td><td>Assign section 4 and the discussion questions. Preview the lab: they test real interfaces the way Robles experienced them.</td></tr>
-</table></div>
-
-<div class="plan"><div class="plan-head">Wednesday session plan &middot; 80 minutes &middot; the Robles case</div>
-<table>
-<tr><td class="t">0:00</td><td class="w">Open</td><td>Put Domino's three defenses on the board without comment: the ADA is about buildings, there are no regulations, he could have phoned. Ask the room which one they find most convincing. Hold the answers.</td></tr>
-<tr><td class="t">0:08</td><td class="w">Walk the case</td><td>What Robles tried to do and could not, the suit in 2016, the district court siding with Domino's on procedure, and the Ninth Circuit reversing in 2019. Take the two holdings one at a time and make the room say what each one now binds.</td></tr>
-<tr><td class="t">0:24</td><td class="w">The three defenses</td><td>Return to the board and take each defense apart with the court's reasoning. The one to slow down on is "there are no rules yet", because it is one of the most expensive sentences in business and students will hear it in their first year of work.</td></tr>
-<tr><td class="t">0:36</td><td class="w">Since the ruling</td><td>Thousands of suits a year, the 2024 federal rule for public bodies, the 2025 European act, and Sonos as the market's version. The direction is settled; ask what a company that started building today should do differently from one that started in 2015.</td></tr>
-<tr><td class="t">0:46</td><td class="w">Who software forgets</td><td>Section 5. Robles is the visible case of a general pattern. Ask for examples of software that forgot a group of users, and keep them until somebody names one they belong to.</td></tr>
-<tr><td class="t">0:54</td><td class="w">Think</td><td>All five discussion questions on screen. Silent individual work, one sentence on at least two.</td></tr>
-<tr><td class="t">1:00</td><td class="w">Pair and share</td><td>Groups settle on positions they can defend, then take the questions in front of the room. Circulate for a group that found one of Domino's defenses persuasive and call on them first.</td></tr>
-<tr><td class="t">1:16</td><td class="w">Close and bridge</td><td>The line to leave them with: the interface is a legal surface. Then preview the cloud chapter, where a company rents everything from its fiercest competitor except the one thing that touches the customer.</td></tr>
-</table></div>
 
 </main>
 <!--NAVJS-->
