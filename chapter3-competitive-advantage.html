@@ -672,6 +672,107 @@ retailers on earth.</p>
 
 <p>Overall, then, remember two things at once. Hardware, software, and networks are essential parts of modern business. No company runs without them. The people who understand the essential components and knows what data is worth collecting and who can think creatively about how to use the data and technology to improve business processes are the ones who will thrive in a modern business.</p>
 
+
+<div class="tryit" id="decay">
+  <div class="tryit-head">Try it &middot; Run an advantage forward eight years</div>
+  <p class="tryit-intro">Your lead over rivals in year 0, how fast they copy it, and how much your
+  system learns from its own operation each year. Three numbers, eight years. Start with the four
+  strategies at the bottom, then argue with the sliders.</p>
+  <div id="decaybox"></div>
+  <p class="tryit-note">Only one shape in here ends higher than it starts, and it is the one that
+  begins worst. That is the whole argument of this chapter, and it is why patient companies win
+  arguments they appear to be losing in year 1.</p>
+  <noscript><p class="tryit-intro">This one needs JavaScript. The model: advantage in year t equals
+  your head start times (1 minus the copy rate) to the power t, plus what the system has learned by
+  then. Bought technology has no second term.</p></noscript>
+</div>
+
+<script>
+(function(){
+  var host = document.getElementById('decaybox');
+  if(!host) return;
+  var YRS = 9;
+  var v = {head:6, copy:60, learn:0};
+  var PRESETS = [
+    {n:'Buy the best system on the market', s:{head:6, copy:60, learn:0}},
+    {n:'Buy it, then redesign the work around it', s:{head:6, copy:25, learn:0}},
+    {n:'Redesign, and record what the work produces', s:{head:3, copy:25, learn:9}},
+    {n:'Redesign, record, and feed it back in', s:{head:3, copy:25, learn:15}}
+  ];
+  var SL = [
+    {k:'head',  label:'Head start in year 0', min:0, max:10, step:1,  fmt:function(x){ return x; }},
+    {k:'copy',  label:'How fast rivals copy it', min:0, max:90, step:5, fmt:function(x){ return x + '% a year'; }},
+    {k:'learn', label:'What the system learns per year', min:0, max:20, step:1, fmt:function(x){ return (x/10).toFixed(1); }}
+  ];
+
+  function series(){
+    var out = [];
+    for(var t = 0; t < YRS; t++){
+      out.push(Math.min(10, v.head * Math.pow(1 - v.copy/100, t) + (v.learn/10) * t));
+    }
+    return out;
+  }
+
+  function draw(){
+    var a = series(), start = a[0], end = a[YRS-1];
+    var h = '<div style="padding:0 1rem">';
+    SL.forEach(function(s){
+      h += '<label style="display:flex;align-items:center;gap:.6rem;font-family:var(--sans);font-size:.95rem;margin:.35rem 0">'
+        +  '<span style="flex:0 0 9.5rem">' + s.label + '</span>'
+        +  '<input type="range" min="' + s.min + '" max="' + s.max + '" step="' + s.step + '" value="' + v[s.k]
+        +  '" data-k="' + s.k + '" style="flex:1 1 auto;min-width:0">'
+        +  '<span style="flex:0 0 4.5rem;text-align:right;font-weight:600">' + s.fmt(v[s.k]) + '</span></label>';
+    });
+
+    h += '<div style="border-top:1px solid var(--border);margin-top:.9rem;padding-top:.9rem">';
+    h += '<div style="display:flex;align-items:flex-end;gap:3px;height:120px">';
+    a.forEach(function(y, t){
+      var pct = Math.max(2, y*10);
+      h += '<div style="flex:1 1 0;text-align:center">'
+        +  '<div style="background:' + (t === YRS-1 ? 'var(--accent)' : 'var(--ink)')
+        +  ';height:' + pct + 'px;opacity:' + (0.35 + 0.65*(y/10)) + '"></div>'
+        +  '<div style="font-family:var(--sans);font-size:10px;color:var(--text-light);padding-top:3px">' + t + '</div></div>';
+    });
+    h += '</div>';
+    h += '<p style="font-family:var(--sans);font-size:.85rem;color:var(--text-light);margin:.2rem 0 .7rem">Years from now. Bar height is how far ahead of rivals you are.</p>';
+
+    var msg;
+    if(end >= start && v.learn > 0){
+      msg = 'Year 0 you are at ' + start.toFixed(1) + ' and year 8 you are at ' + end.toFixed(1)
+          + '. Rivals are copying you the whole time and it does not matter, because the thing they are copying is last year\u2019s version of a system that has been learning since. They can buy what you bought. They cannot buy what it recorded.';
+    } else if(v.learn > 0){
+      msg = 'The learning is real but it is losing the race: you end at ' + end.toFixed(1) + ' against ' + start.toFixed(1)
+          + ' in year 0. Either slow the copying down or record more of what the work produces. One of those is a legal department and the other is a design decision.';
+    } else if(v.copy >= 50){
+      msg = 'By year 3 you are at ' + a[3].toFixed(1) + ' and by year 8 there is nothing left. This is the default outcome for anything bought, because the vendor who sold it to you will sell it to them, and this is why "we have the best system" is not a strategy.';
+    } else {
+      msg = 'Slower copying buys you years, not permanence: ' + start.toFixed(1) + ' down to ' + end.toFixed(1)
+          + '. A better arrangement of the work is genuinely harder to copy than a purchase, and it still ends at zero, because nothing here is accumulating.';
+    }
+    h += '<p aria-live="polite" style="font-family:var(--sans);font-size:.95rem;margin:0 0 .8rem">' + msg + '</p>';
+
+    h += '<p style="font-family:var(--sans);font-size:.9rem;color:var(--text-light);margin:0 0 .3rem">Four strategies:</p><p style="margin:0">';
+    PRESETS.forEach(function(p, i){
+      h += '<button type="button" data-p="' + i + '" style="font-family:var(--sans);font-size:.85rem;background:var(--white);border:1px solid var(--border);padding:.3rem .6rem;margin:0 .35rem .35rem 0;cursor:pointer">' + p.n + '</button>';
+    });
+    h += '</p></div></div>';
+    host.innerHTML = h;
+
+    host.querySelectorAll('input[type=range]').forEach(function(r){
+      r.addEventListener('input', function(){ v[r.getAttribute('data-k')] = +r.value; draw(); });
+    });
+    host.querySelectorAll('button[data-p]').forEach(function(b){
+      b.addEventListener('click', function(){
+        var s = PRESETS[+b.getAttribute('data-p')].s;
+        v.head = s.head; v.copy = s.copy; v.learn = s.learn;
+        draw();
+      });
+    });
+  }
+  draw();
+})();
+</script>
+
 <h2 id="cases"><span class="num">3</span>Two mini-cases, one old question</h2>
 
 <p>The two mini-cases below show what happens when a company has the technology, but lacked the creative vision for the future. The first mini-case is about Blockbuster. Its advantage was never copied. Its store network was rare and expensive to match right up to the end. But Blockbuster lost anyway, because customers stopped wanting what the stores provided. The second is Zoom. In 2020 it had the best product in a market that suddenly everyone needed. Within two years, everyone had a product about as good as Zoom because software is the easiest thing in the world to imitate. That is section 2's story with a company name on it: a failure on the third part of the test, hard to imitate.</p>
