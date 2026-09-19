@@ -345,6 +345,36 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 .swb-acts button:hover{background:var(--magenta-pale);border-color:var(--magenta);color:var(--magenta-dark)}
 .swb-reveal{font-family:var(--sans);font-size:.95rem;line-height:1.55;margin:.7rem 1rem 0;padding:.7rem .85rem;border-left:3px solid var(--magenta);background:var(--magenta-pale);color:var(--text-dark)}
 @media(max-width:640px){.swb-row{grid-template-columns:minmax(0,1fr)}}
+.mt-pick{display:flex;gap:.4rem;flex-wrap:wrap;padding:0 1rem}
+.mt-pick button{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;background:var(--off-white);border:1px solid var(--border);padding:.45rem .7rem;cursor:pointer;color:var(--text-dark)}
+.mt-pick button:hover{background:var(--magenta-pale);border-color:var(--magenta);color:var(--magenta-dark)}
+.mt-pick button.on{background:var(--black);border-color:var(--black);color:#fff}
+.mt-years{padding:.9rem 1rem .2rem;font-family:var(--sans);font-size:.93rem;color:var(--text-muted)}
+.mt-years input{width:100%;margin-top:.35rem;accent-color:var(--magenta)}
+.mt-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem;padding:.6rem 1rem 0}
+.mt-panel{border:1px solid var(--border);background:var(--white);padding:.6rem .75rem}
+.mt-report{border-left:3px solid var(--good)}
+.mt-hidden{border-left:3px solid var(--magenta)}
+.mt-ptitle{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--text-light);margin-bottom:.4rem}
+.mt-line{margin:0 0 .5rem;font-family:var(--sans);font-size:.92rem;line-height:1.45}
+.mt-line b{display:block;font-size:.95rem}
+.mt-line.good b{color:var(--good)}
+.mt-line.bad b{color:var(--magenta)}
+.mt-line span{color:var(--text-muted)}
+.mt-foot{margin:.5rem 0 0;font-size:.86rem;color:var(--text-light);font-family:var(--sans)}
+.mt-empty{margin:0;font-family:var(--sans);font-size:.9rem;color:var(--text-light)}
+.mt-bars{padding:.9rem 1rem 0}
+.mt-bar{display:grid;grid-template-columns:10.5rem minmax(0,1fr);gap:.6rem;align-items:center;margin-bottom:.4rem}
+.mt-blab{font-family:var(--sans);font-size:.9rem;color:var(--text-dark)}
+.mt-blab i{color:var(--text-light);font-style:normal;font-size:.82rem}
+.mt-btrack{background:var(--off-white);border:1px solid var(--border);height:14px;display:block}
+.mt-bfill{display:block;height:100%;background:var(--text-light);transition:width .25s ease}
+.mt-bfill.up{background:var(--good)}
+.mt-bfill.down{background:var(--magenta)}
+.mt-bar.untracked .mt-btrack{border-style:dashed}
+.mt-split{font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--text-light);margin:.7rem 0 .45rem;border-top:1px solid var(--border);padding-top:.5rem}
+.mt-read{padding:0 1rem;font-family:var(--sans);font-size:.92rem;color:var(--text-muted);min-height:2.4em}
+@media(max-width:640px){.mt-grid{grid-template-columns:minmax(0,1fr)}.mt-bar{grid-template-columns:8rem minmax(0,1fr)}}
 .objectives{border:1px solid var(--border);border-left:4px solid var(--black);background:var(--off-white);padding:1rem 1.3rem;margin:1.6rem 0}
 .objectives .obj-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.4rem}
 .objectives ol{margin:.2rem 0 0 1.2rem;padding:0}
@@ -826,6 +856,163 @@ it as a statement of what the company measured. The promise is about the clock, 
 only as a box arriving on time.
 (<a href="https://www.youtube.com/watch?v=le1iJ2mIns4" target="_blank" rel="noopener">watch on YouTube</a>)</figcaption>
 </figure>
+
+
+<div class="tryit mtrap" id="mtrap">
+  <div class="tryit-head">Play with it &middot; Manage to one number</div>
+  <p class="tryit-intro">You run a delivery restaurant. Head office wants one number on the Monday
+  report, and every store manager's bonus is attached to it. Pick the number, then push it for as many
+  years as you like.</p>
+
+  <div class="mt-pick" role="group" aria-label="Choose the one measure to manage to">
+    <button type="button" data-m="speed" aria-pressed="false">Delivery time</button>
+    <button type="button" data-m="volume" aria-pressed="false">Orders per hour</button>
+    <button type="button" data-m="cost" aria-pressed="false">Cost per order</button>
+    <button type="button" data-m="quality" aria-pressed="false">Defect rate</button>
+  </div>
+
+  <div class="mt-years">
+    <label for="mtyears">Years of managing to it: <b id="mtyearsout">0</b></label>
+    <input type="range" id="mtyears" min="0" max="30" step="1" value="0">
+  </div>
+
+  <div class="mt-grid">
+    <div class="mt-panel mt-report">
+      <div class="mt-ptitle">The Monday report</div>
+      <div id="mtreport"><p class="mt-empty">Pick a number above.</p></div>
+    </div>
+    <div class="mt-panel mt-hidden">
+      <div class="mt-ptitle">Not on the report</div>
+      <div id="mtoff"><p class="mt-empty">Nothing yet.</p></div>
+    </div>
+  </div>
+
+  <div id="mtbars" class="mt-bars"></div>
+  <p class="mt-read" id="mtread" role="status" aria-live="polite"></p>
+
+  <p class="tryit-note">Push any of the four for thirty years and the same thing happens: the number you
+  chose goes up and everything you did not choose goes down, including the two nobody ever put on a
+  report. The trap is not that the company picked the wrong number. It is that a process records what
+  somebody decided to record, so the report can be honest, accurate, and green while the business rots
+  in the places the process was never asked to watch.</p>
+</div>
+
+<script>
+(function(){
+  var pickbox=document.getElementById('mtrap'); if(!pickbox) return;
+  var METRICS=[
+    {k:"speed",   label:"Delivery time",      good:"22 min average, down from 31"},
+    {k:"volume",  label:"Orders per hour",    good:"41 an hour at peak, up from 26"},
+    {k:"cost",    label:"Cost per order",     good:"$4.10 an order, down from $6.30"},
+    {k:"quality", label:"Defect rate",        good:"1.1% of orders remade, down from 4.4%"}
+  ];
+  var TRACKED=[
+    {k:"speed",   label:"Delivery time"},
+    {k:"volume",  label:"Orders per hour"},
+    {k:"cost",    label:"Cost per order"},
+    {k:"quality", label:"Food quality"}
+  ];
+  var UNTRACKED=[
+    {k:"safety",  label:"Driver safety"},
+    {k:"strain",  label:"Crew strain"}
+  ];
+  // effect per year, in index points, for each choice
+  var EFFECT={
+    speed:   {speed:+1.7, volume:+0.4, cost:-0.2, quality:-1.4, safety:-1.6, strain:-1.1},
+    volume:  {speed:-0.8, volume:+1.7, cost:-0.5, quality:-1.2, safety:-0.7, strain:-1.7},
+    cost:    {speed:-0.7, volume:-0.3, cost:+1.7, quality:-1.5, safety:-0.8, strain:-1.5},
+    quality: {speed:-0.9, volume:-0.4, cost:-1.1, quality:+1.6, safety:-0.1, strain:-0.6}
+  };
+  var CONSEQ={
+    quality:"The recipe changes to whatever cooks fastest and costs least. Nobody decides this in a meeting; it happens one substitution at a time.",
+    speed:"Orders take longer, and the store stops promising a time it cannot hit.",
+    volume:"Fewer orders get out the door in the same hour, because the crew is working around something.",
+    cost:"Each order costs more to produce, and head office starts asking why.",
+    safety:"Drivers take the turn they should not take. This is the one that hurts somebody outside the company.",
+    strain:"The crew works at a pace set by a number, and the good people leave first."
+  };
+  var chosen=null, years=0;
+  var vals={};
+  function reset(){ ["speed","volume","cost","quality","safety","strain"].forEach(function(k){ vals[k]=60; }); }
+  reset();
+
+  var btns=pickbox.querySelectorAll('.mt-pick button');
+  btns.forEach(function(b){
+    b.addEventListener('click',function(){
+      chosen=b.getAttribute('data-m');
+      btns.forEach(function(x){ x.setAttribute('aria-pressed', String(x===b)); x.className=(x===b?'on':''); });
+      draw();
+    });
+  });
+  var slider=document.getElementById('mtyears');
+  slider.addEventListener('input',function(){
+    years=parseInt(slider.value,10);
+    document.getElementById('mtyearsout').textContent=years;
+    draw();
+  });
+
+  function clamp(v){ return Math.max(6, Math.min(100, v)); }
+
+  function draw(){
+    reset();
+    if(chosen){
+      var e=EFFECT[chosen];
+      for(var k in e){ if(e.hasOwnProperty(k)) vals[k]=clamp(60+e[k]*years); }
+    }
+    var bars='';
+    function row(item, untracked){
+      var v=vals[item.k];
+      var tone = (chosen && item.k===chosen) ? 'up' : (v<60 ? 'down' : 'flat');
+      bars+='<div class="mt-bar'+(untracked?' untracked':'')+'">'+
+            '<span class="mt-blab">'+item.label+(untracked?' <i>(not measured)</i>':'')+'</span>'+
+            '<span class="mt-btrack"><span class="mt-bfill '+tone+'" style="width:'+v+'%"></span></span>'+
+            '</div>';
+    }
+    TRACKED.forEach(function(i){ row(i,false); });
+    bars+='<div class="mt-split">Nobody put these on a report</div>';
+    UNTRACKED.forEach(function(i){ row(i,true); });
+    document.getElementById('mtbars').innerHTML=bars;
+
+    var rep=document.getElementById('mtreport'), off=document.getElementById('mtoff');
+    if(!chosen){
+      rep.innerHTML='<p class="mt-empty">Pick a number above.</p>';
+      off.innerHTML='<p class="mt-empty">Nothing yet.</p>';
+      document.getElementById('mtread').textContent='';
+      return;
+    }
+    var m=METRICS.filter(function(x){return x.k===chosen;})[0];
+    if(years===0){
+      rep.innerHTML='<p class="mt-line good"><b>'+m.label+'</b><span>at the starting point</span></p>';
+      off.innerHTML='<p class="mt-empty">Nothing has moved yet. Drag the slider.</p>';
+      document.getElementById('mtread').textContent='';
+      return;
+    }
+    rep.innerHTML='<p class="mt-line good"><b>'+m.label+'</b><span>'+m.good+'</span></p>'+
+      '<p class="mt-foot">Target met every quarter for '+years+' year'+(years===1?'':'s')+'. '+
+      'Nothing else appears on this report, so nothing else is discussed.</p>';
+
+    var hurt=[];
+    ["quality","speed","volume","cost","safety","strain"].forEach(function(k){
+      if(k===chosen) return;
+      if(vals[k] < 60 - 4) hurt.push(k);
+    });
+    if(!hurt.length){
+      off.innerHTML='<p class="mt-empty">Nothing yet. Keep pushing.</p>';
+    } else {
+      off.innerHTML=hurt.slice(0,4).map(function(k){
+        var lab=(TRACKED.concat(UNTRACKED)).filter(function(x){return x.k===k;})[0].label;
+        return '<p class="mt-line bad"><b>'+lab+'</b><span>'+CONSEQ[k]+'</span></p>';
+      }).join('');
+    }
+    var worst=hurt.length? hurt[0] : null;
+    document.getElementById('mtread').textContent =
+      years>=20 && worst
+        ? 'After '+years+' years the report is still green, and by now the thing that is failing has been failing for so long that people inside the company assume it was always like that.'
+        : (worst ? 'The report is green. '+hurt.length+' other things are getting worse, and none of them are on it.' : '');
+  }
+  draw();
+})();
+</script>
 
 <h3>2.4 Redesigning a process: improvement or reengineering?</h3>
 
