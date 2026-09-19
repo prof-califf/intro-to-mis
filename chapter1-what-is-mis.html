@@ -506,6 +506,92 @@ part worth your attention.</p>
 <p>It is important to remember that while each component is important, an information system cannot function unless all five components are working. This leads to the idea of <strong>the weakest component rule</strong>.</p>
 <div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">The weakest component rule</span>
 <p>A system is only as good as its weakest component. Four can be excellent and the fifth can still ruin the whole system, quietly, while the output still looks convincing. When a system fails, check all five before assigning blame. You will do exactly that on a real failure in every chapter of this book.</p></div>
+
+<div class="tryit" id="weakest">
+  <div class="tryit-head">Try it &middot; The weakest component rule</div>
+  <p class="tryit-intro">Rate the five components of one system from 0 to 10. Then watch what it
+  actually delivers. Try making four of them perfect.</p>
+  <div id="weakbox"></div>
+  <p class="tryit-note">The average is what people quote in meetings. The minimum is what customers
+  get. Every case in this book is somebody discovering the difference.</p>
+  <noscript><p class="tryit-intro">This one needs JavaScript. The point it makes: a system scored 10,
+  10, 10, 10, 2 delivers a 2, not an 8.4.</p></noscript>
+</div>
+
+<script>
+(function(){
+  var host = document.getElementById('weakbox');
+  if(!host) return;
+  var C = [
+    {k:'hardware', label:'Hardware', weak:'The machines cannot keep up, so everything above them waits.'},
+    {k:'software', label:'Software', weak:'The programs do not do what the work actually requires.'},
+    {k:'data',     label:'Data',     weak:'The facts going in are wrong, missing, or out of date.'},
+    {k:'networks', label:'Networks', weak:'Nothing reaches anything else, so the parts cannot act as one system.'},
+    {k:'people',   label:'People',   weak:'Nobody was trained, nobody trusts it, or nobody acts on what it says.'}
+  ];
+  var v = {hardware:8, software:8, data:8, networks:8, people:8};
+  var PRESETS = [
+    {n:'Wrapped, on a good day', s:{hardware:9, software:9, data:9, networks:8, people:8}},
+    {n:'Bought great software, trained nobody', s:{hardware:8, software:10, data:8, networks:8, people:2}},
+    {n:'Everything works, the data is junk', s:{hardware:9, software:9, data:2, networks:9, people:8}}
+  ];
+
+  function draw(){
+    var vals = C.map(function(c){ return v[c.k]; });
+    var min = Math.min.apply(null, vals);
+    var avg = vals.reduce(function(a,b){ return a+b; }, 0) / vals.length;
+    var weakest = C.filter(function(c){ return v[c.k] === min; });
+
+    var h = '<div style="padding:0 1rem">';
+    C.forEach(function(c){
+      h += '<label style="display:flex;align-items:center;gap:.6rem;font-family:var(--sans);font-size:.95rem;margin:.35rem 0">'
+        +  '<span style="flex:0 0 5.5rem">' + c.label + '</span>'
+        +  '<input type="range" min="0" max="10" step="1" value="' + v[c.k] + '" data-k="' + c.k + '" style="flex:1 1 auto;min-width:0">'
+        +  '<span style="flex:0 0 1.6rem;text-align:right;font-weight:600">' + v[c.k] + '</span></label>';
+    });
+
+    h += '<div style="border-top:1px solid var(--border);margin-top:.9rem;padding-top:.8rem">';
+    h += '<p style="font-family:var(--sans);font-size:.9rem;color:var(--text-light);margin:0 0 .2rem">What the average would predict</p>';
+    h += '<div style="background:var(--border);height:14px;width:100%"><div style="background:var(--text-light);height:14px;width:' + (avg*10) + '%"></div></div>';
+    h += '<p style="font-family:var(--sans);font-size:.9rem;color:var(--text-light);margin:.1rem 0 .7rem">' + avg.toFixed(1) + '</p>';
+    h += '<p style="font-family:var(--sans);font-size:.9rem;color:var(--text-muted);margin:0 0 .2rem">What the system actually delivers</p>';
+    h += '<div style="background:var(--border);height:22px;width:100%"><div style="background:var(--magenta);height:22px;width:' + (min*10) + '%"></div></div>';
+    h += '<p style="font-family:var(--sans);font-size:.9rem;color:var(--text-muted);margin:.1rem 0 .6rem">' + min + '</p>';
+
+    var msg;
+    if(min === 10){
+      msg = 'Nothing is holding it back. This is rarer than any vendor will tell you, and it does not stay true for long.';
+    } else if(weakest.length === 1){
+      msg = 'Weakest component: <strong>' + weakest[0].label + '</strong>. ' + weakest[0].weak
+          + ' Raising any of the other four changes the average and changes nothing else.';
+    } else {
+      msg = 'Two components are tied at the bottom: <strong>'
+          + weakest.map(function(c){ return c.label; }).join(' and ')
+          + '</strong>. Fixing one still leaves the other holding the ceiling where it is.';
+    }
+    h += '<p aria-live="polite" style="font-family:var(--sans);font-size:.95rem;margin:.2rem 0 .8rem">' + msg + '</p>';
+
+    h += '<p style="font-family:var(--sans);font-size:.9rem;color:var(--text-light);margin:0 0 .3rem">Try one of these:</p><p style="margin:0">';
+    PRESETS.forEach(function(p, i){
+      h += '<button type="button" data-p="' + i + '" style="font-family:var(--sans);font-size:.85rem;background:var(--white);border:1px solid var(--border);padding:.3rem .6rem;margin:0 .35rem .35rem 0;cursor:pointer">' + p.n + '</button>';
+    });
+    h += '</p></div></div>';
+    host.innerHTML = h;
+
+    host.querySelectorAll('input[type=range]').forEach(function(r){
+      r.addEventListener('input', function(){ v[r.getAttribute('data-k')] = +r.value; draw(); });
+    });
+    host.querySelectorAll('button[data-p]').forEach(function(b){
+      b.addEventListener('click', function(){
+        var s = PRESETS[+b.getAttribute('data-p')].s;
+        C.forEach(function(c){ v[c.k] = s[c.k]; });
+        draw();
+      });
+    });
+  }
+  draw();
+})();
+</script>
 <figure class="diagram" style="margin:1.8rem 0">
 <svg aria-labelledby="looptitle loopdesc" role="img" style="width:100%;height:auto;font-family:var(--sans)" viewbox="0 0 740 250" xmlns="http://www.w3.org/2000/svg">
 <title id="looptitle">The five components as one loop: a play becomes your Wrapped</title>
