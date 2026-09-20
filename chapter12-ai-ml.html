@@ -338,6 +338,18 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 .diagram{margin:1.6rem 0;text-align:center}
 .diagram figcaption{text-align:left}
 @media (max-width:860px){main{padding-left:1.25rem;padding-right:1.25rem}}
+
+/* ---------- collapsible sources ---------- */
+.srcbox{border:1px solid var(--border);border-radius:6px;background:#fff;margin:3.2rem 0 1.5rem;padding:0 1.25rem}
+.srcbox>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.9rem 0}
+.srcbox>summary::-webkit-details-marker{display:none}
+.srcbox>summary::after{content:"\25BE";color:var(--magenta);font-size:.75rem;line-height:1;flex:0 0 auto;transition:transform .15s ease}
+.srcbox[open]>summary::after{transform:rotate(180deg)}
+.srcbox>summary h2,.srcbox>summary h3{margin:0;padding:0;border:0;font-size:1.15rem;letter-spacing:.02em}
+.srcbox>summary:hover h2,.srcbox>summary:hover h3{color:var(--magenta-dark)}
+.srcbox>summary:focus-visible{outline:2px solid var(--magenta);outline-offset:3px}
+.srcbox .sources{margin-top:0;padding-top:0;border-top:0;padding-bottom:1.1rem}
+@media print{.srcbox{border:0;padding:0}.srcbox>summary::after{display:none}}
 </style>
 <link rel="stylesheet" href="book.css">
 </head>
@@ -1082,7 +1094,8 @@ the authority to say no, and what would they need to see before saying it?</p>
   <a class="lablink" href="lab1-genai.html">Back to Lab 1 &#8594;</a>
 </div>
 
-<h2 id="sources"><span class="num">9</span>Sources and further reading</h2>
+<details class="srcbox">
+<summary><h2 id="sources"><span class="num">9</span>Sources and further reading</h2></summary>
 <ul class="sources">
 <li>TikTok's published description of how the For You feed selects videos, for the signals and their relative weight in section 4.</li>
 <li>Reuters reporting, October 2018, on Amazon's experimental recruiting models, for the ten years of training data, the penalty attached to the word "women's", the attempt to neutralize those terms, and the decision to shut the project down.</li>
@@ -1104,6 +1117,7 @@ the authority to say no, and what would they need to see before saying it?</p>
 <li>NIST AI Risk Management Framework 1.0 (2023): the voluntary US framework many organizations use to structure the governance program section 5 describes.</li>
 <li>The McKinsey figure attributing roughly 35 percent of Amazon's sales to recommendations is a widely circulated 2013 estimate, not an Amazon disclosure; treat it as an estimate.</li>
 </ul>
+</details>
 
 </main>
 <!--NAVJS-->
@@ -1130,6 +1144,18 @@ the authority to say no, and what would they need to see before saying it?</p>
   document.querySelectorAll('.dd-menu').forEach(function(m){
     m.addEventListener('click',function(e){e.stopPropagation();});
   });
+})();
+</script>
+
+<script>
+/* a collapsed <details> does not print; open them all first */
+(function(){
+  function openAll(){ document.querySelectorAll('details').forEach(function(d){ d.open = true; }); }
+  window.addEventListener('beforeprint', openAll);
+  if (window.matchMedia) {
+    var mq = window.matchMedia('print');
+    if (mq.addEventListener) mq.addEventListener('change', function(e){ if (e.matches) openAll(); });
+  }
 })();
 </script>
 </body>

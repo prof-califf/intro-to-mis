@@ -338,6 +338,18 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 .diagram{margin:1.6rem 0;text-align:center}
 .diagram figcaption{text-align:left}
 @media (max-width:860px){main{padding-left:1.25rem;padding-right:1.25rem}}
+
+/* ---------- collapsible sources ---------- */
+.srcbox{border:1px solid var(--border);border-radius:6px;background:#fff;margin:3.2rem 0 1.5rem;padding:0 1.25rem}
+.srcbox>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.9rem 0}
+.srcbox>summary::-webkit-details-marker{display:none}
+.srcbox>summary::after{content:"\25BE";color:var(--magenta);font-size:.75rem;line-height:1;flex:0 0 auto;transition:transform .15s ease}
+.srcbox[open]>summary::after{transform:rotate(180deg)}
+.srcbox>summary h2,.srcbox>summary h3{margin:0;padding:0;border:0;font-size:1.15rem;letter-spacing:.02em}
+.srcbox>summary:hover h2,.srcbox>summary:hover h3{color:var(--magenta-dark)}
+.srcbox>summary:focus-visible{outline:2px solid var(--magenta);outline-offset:3px}
+.srcbox .sources{margin-top:0;padding-top:0;border-top:0;padding-bottom:1.1rem}
+@media print{.srcbox{border:0;padding:0}.srcbox>summary::after{display:none}}
 </style>
 <link rel="stylesheet" href="book.css">
 </head>
@@ -979,7 +991,8 @@ the room saw.</p>
   <a class="lablink" href="lab6-tableau.html">Go to Lab 6 &#8594;</a>
 </div>
 
-<h2 id="sources"><span class="num">9</span>Sources and further reading</h2>
+<details class="srcbox">
+<summary><h2 id="sources"><span class="num">9</span>Sources and further reading</h2></summary>
 <ul class="sources">
 <li>Michael Lewis, <em>Moneyball</em> (2003), for the internal account used in sections 4.3 and 4.4: the scouting meetings, the decision to replace Jason Giambi's production in the aggregate rather than with one player, and the mid-season trade that settled who would play first base. It is a journalist's account written with the front office's cooperation, so read it as their version of events; participants have disputed parts of it, and the film compresses further.</li>
 <li>The 2002 record, the payrolls and the twenty-game streak are in the standard baseball reference databases; Cleveland broke the American League streak record with twenty-two in 2017. The Athletics played their final Oakland game in September 2024 and are scheduled to open in Las Vegas in 2028, so section 4.5 needs a date check each year.</li>
@@ -992,6 +1005,7 @@ the room saw.</p>
 <li>Major League Baseball's 2023 rule changes and subsequent reporting on their effect, for the shift restriction described at the end of section 4.</li>
 <li><strong>Verification note.</strong> Checked in September 2026 against the authors' knowledge of the published record rather than by new searches, because none of this chapter's figures are recent: the 2002 season and payroll numbers, the Challenger details, the Zillow figures, and the 2023 shift rule. Two wording corrections were made on that pass: the twenty-game streak was an American League record only until 2017, and the rise in batting average on balls in play came in the 2023 season itself, not the year after. The claim that Oakland's payroll bought "roughly as much real production as teams spending three times more" is the book's argument rather than a measured figure; treat it as an interpretation.</li>
 </ul>
+</details>
 
 </main>
 <!--NAVJS-->
@@ -1018,6 +1032,18 @@ the room saw.</p>
   document.querySelectorAll('.dd-menu').forEach(function(m){
     m.addEventListener('click',function(e){e.stopPropagation();});
   });
+})();
+</script>
+
+<script>
+/* a collapsed <details> does not print; open them all first */
+(function(){
+  function openAll(){ document.querySelectorAll('details').forEach(function(d){ d.open = true; }); }
+  window.addEventListener('beforeprint', openAll);
+  if (window.matchMedia) {
+    var mq = window.matchMedia('print');
+    if (mq.addEventListener) mq.addEventListener('change', function(e){ if (e.matches) openAll(); });
+  }
 })();
 </script>
 </body>

@@ -337,6 +337,18 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 .takeaways ul{margin:.2rem 0 0 1.2rem;padding:0}
 .takeaways li{margin:.35rem 0;font-size:16.5px;line-height:1.55}
 @media (max-width:860px){main{padding-left:1.25rem;padding-right:1.25rem}}
+
+/* ---------- collapsible sources ---------- */
+.srcbox{border:1px solid var(--border);border-radius:6px;background:#fff;margin:3.2rem 0 1.5rem;padding:0 1.25rem}
+.srcbox>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.9rem 0}
+.srcbox>summary::-webkit-details-marker{display:none}
+.srcbox>summary::after{content:"\25BE";color:var(--magenta);font-size:.75rem;line-height:1;flex:0 0 auto;transition:transform .15s ease}
+.srcbox[open]>summary::after{transform:rotate(180deg)}
+.srcbox>summary h2,.srcbox>summary h3{margin:0;padding:0;border:0;font-size:1.15rem;letter-spacing:.02em}
+.srcbox>summary:hover h2,.srcbox>summary:hover h3{color:var(--magenta-dark)}
+.srcbox>summary:focus-visible{outline:2px solid var(--magenta);outline-offset:3px}
+.srcbox .sources{margin-top:0;padding-top:0;border-top:0;padding-bottom:1.1rem}
+@media print{.srcbox{border:0;padding:0}.srcbox>summary::after{display:none}}
 </style>
 <link rel="stylesheet" href="book.css">
 </head>
@@ -1034,7 +1046,8 @@ is blank, you have found the co-op's version of an unpatched server.</p>
   <a class="lablink" href="lab8-security.html">Go to Lab 8 &#8594;</a>
 </div>
 
-<h2 id="sources"><span class="num">9</span>Sources and further reading</h2>
+<details class="srcbox">
+<summary><h2 id="sources"><span class="num">9</span>Sources and further reading</h2></summary>
 <ul class="sources">
 <li>US Government Accountability Office, <a href="https://www.gao.gov/products/gao-18-559">Data Protection: Actions Taken by Equifax and Federal Agencies in Response to the 2017 Breach</a> (2018): the timeline, the unapplied Apache Struts patch, the failed scan, and the expired certificate that blinded detection.</li>
 <li>US House Committee on Oversight and Government Reform, <a href="https://oversight.house.gov/report/committee-releases-report-revealing-new-information-equifax-data-breach/"><em>The Equifax Data Breach</em></a> (December 2018): the majority-staff report, and the source used here for the dates of the US-CERT alert and the internal notice, the age and design of the ACIS dispute portal, the 19-month figure for the inactive monitoring device, the count of expired certificates, and the finding that the breach was preventable.</li>
@@ -1046,6 +1059,7 @@ is blank, you have found the co-op's version of an unpatched server.</p>
 <li>NIST Cybersecurity Framework and ISACA's COBIT, for section 2 and for the mapping in 4.7. Both are freely readable and worth ten minutes each, because seeing how plain the language is removes most of the mystique.</li>
 <li><strong>Verification note.</strong> Checked 18 September 2026. Confirmed against sources: the Struts fix of 7 March 2017 and CVE-2017-5638, the US-CERT alert of 8 March and internal notice of 9 March, the clean scan of 15 March, the 13 May intrusion, the 29 July certificate renewal and 30 July shutdown, the 7 September disclosure, roughly 147 million people, 76 days, at least 324 expired certificates with 79 on business-critical domains, the 2019 settlement figures, the two insider-trading convictions, the February 2020 indictment, and the $1.25 billion of additional security spending announced for 2018 to 2020. <strong>Two figures to watch.</strong> The House committee reports the monitoring device inactive for 19 months; the GAO puts the certificate's expiry at about ten months before the breach. The chapter uses the House figure and says the two differ. The 2015 internal audit findings on patching and asset inventory come from reporting on that audit rather than from a published copy of it; treat the detail as well attested but secondary. <strong>Goes stale:</strong> the Horizon inquiry's remaining volumes, any federal privacy legislation, and Equifax's own security reporting.</li>
 </ul>
+</details>
 
 </main>
 <!--NAVJS-->
@@ -1072,6 +1086,18 @@ is blank, you have found the co-op's version of an unpatched server.</p>
   document.querySelectorAll('.dd-menu').forEach(function(m){
     m.addEventListener('click',function(e){e.stopPropagation();});
   });
+})();
+</script>
+
+<script>
+/* a collapsed <details> does not print; open them all first */
+(function(){
+  function openAll(){ document.querySelectorAll('details').forEach(function(d){ d.open = true; }); }
+  window.addEventListener('beforeprint', openAll);
+  if (window.matchMedia) {
+    var mq = window.matchMedia('print');
+    if (mq.addEventListener) mq.addEventListener('change', function(e){ if (e.matches) openAll(); });
+  }
 })();
 </script>
 </body>

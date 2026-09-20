@@ -357,6 +357,18 @@ a.jump+a.jump:hover{background:var(--magenta-pale);border-color:var(--magenta);c
 .takeaways ul{margin:.2rem 0 0 1.2rem;padding:0}
 .takeaways li{margin:.35rem 0;font-size:16.5px;line-height:1.55}
 @media (max-width:860px){main{padding-left:1.25rem;padding-right:1.25rem}}
+
+/* ---------- collapsible sources ---------- */
+.srcbox{border:1px solid var(--border);border-radius:6px;background:#fff;margin:3.2rem 0 1.5rem;padding:0 1.25rem}
+.srcbox>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.9rem 0}
+.srcbox>summary::-webkit-details-marker{display:none}
+.srcbox>summary::after{content:"\25BE";color:var(--magenta);font-size:.75rem;line-height:1;flex:0 0 auto;transition:transform .15s ease}
+.srcbox[open]>summary::after{transform:rotate(180deg)}
+.srcbox>summary h2,.srcbox>summary h3{margin:0;padding:0;border:0;font-size:1.15rem;letter-spacing:.02em}
+.srcbox>summary:hover h2,.srcbox>summary:hover h3{color:var(--magenta-dark)}
+.srcbox>summary:focus-visible{outline:2px solid var(--magenta);outline-offset:3px}
+.srcbox .sources{margin-top:0;padding-top:0;border-top:0;padding-bottom:1.1rem}
+@media print{.srcbox{border:0;padding:0}.srcbox>summary::after{display:none}}
 </style>
 <link href="book.css" rel="stylesheet"/>
 </head>
@@ -1013,7 +1025,8 @@ client for the first time, which makes this chapter's question immediate: which 
 computing at all, and what decision does each one change?</p>
 <a class="lablink" href="lab2-excel-basics.html">Go to Lab 2 →</a>
 </div>
-<h2 id="sources"><span class="num">11</span>Sources and further reading</h2>
+<details class="srcbox">
+<summary><h2 id="sources"><span class="num">11</span>Sources and further reading</h2></summary>
 <ul class="sources">
 <li>Jess Ramos, "Why We Must Focus on the Data," <em>Big Data Energy</em> (Substack), 3 September 2026, for the argument that a company's data strategy is its AI strategy, and for the three problems in section 5: stale data, prompt injection and data-layer security, and AI workload. Ramos writes for practitioners and the post promotes a vendor video series; the arguments in section 5 are hers, the mapping onto this chapter's concepts is ours.</li>
 <li>NomadGo and Starbucks announcement, September 3, 2025, for the deployment scale, the eight-times-faster claim, the 99 percent accuracy figure, and the statement that the technology had been tested in a sandbox for several years.</li>
@@ -1047,6 +1060,7 @@ trains you to interrogate. Treat it as an example rather than as evidence.</li>
 <li>Reuters reporting of February 2026 on worker complaints of miscounting, and of May 2026 on the retirement of Automated Counting, together with contemporary coverage in Fortune and elsewhere. These supply the September 2025 deployment, the vendor's eight-times-faster and 99 percent accuracy claims, the peppermint syrup bottle in Starbucks' own promotional video, the company's February 2026 statement that the tool had improved availability, and the 19 May 2026 internal newsletter retiring it.</li>
 <li><strong>Verification note.</strong> The Starbucks operating figures in section 7, including the Rewards membership count, the share of revenue from members, the Mobile Order and Pay share, the Deep Brew transaction volume, the SmartQueue result and the cold beverage share, are drawn from secondary summaries rather than from Starbucks' own filings. They are consistent with published reporting but have not been confirmed against the company's quarterly results. Check them against Starbucks investor relations before relying on any single number in class, and expect the membership figure in particular to have moved: it has been reported between roughly 34 and 35.5 million across 2025 and 2026.</li>
 </ul>
+</details>
 </main>
 <!--NAVJS-->
 <script>
@@ -1072,6 +1086,18 @@ trains you to interrogate. Treat it as an example rather than as evidence.</li>
   document.querySelectorAll('.dd-menu').forEach(function(m){
     m.addEventListener('click',function(e){e.stopPropagation();});
   });
+})();
+</script>
+
+<script>
+/* a collapsed <details> does not print; open them all first */
+(function(){
+  function openAll(){ document.querySelectorAll('details').forEach(function(d){ d.open = true; }); }
+  window.addEventListener('beforeprint', openAll);
+  if (window.matchMedia) {
+    var mq = window.matchMedia('print');
+    if (mq.addEventListener) mq.addEventListener('change', function(e){ if (e.matches) openAll(); });
+  }
 })();
 </script>
 </body>

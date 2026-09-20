@@ -337,6 +337,18 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 .takeaways ul{margin:.2rem 0 0 1.2rem;padding:0}
 .takeaways li{margin:.35rem 0;font-size:16.5px;line-height:1.55}
 @media (max-width:860px){main{padding-left:1.25rem;padding-right:1.25rem}}
+
+/* ---------- collapsible sources ---------- */
+.srcbox{border:1px solid var(--border);border-radius:6px;background:#fff;margin:3.2rem 0 1.5rem;padding:0 1.25rem}
+.srcbox>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.9rem 0}
+.srcbox>summary::-webkit-details-marker{display:none}
+.srcbox>summary::after{content:"\25BE";color:var(--magenta);font-size:.75rem;line-height:1;flex:0 0 auto;transition:transform .15s ease}
+.srcbox[open]>summary::after{transform:rotate(180deg)}
+.srcbox>summary h2,.srcbox>summary h3{margin:0;padding:0;border:0;font-size:1.15rem;letter-spacing:.02em}
+.srcbox>summary:hover h2,.srcbox>summary:hover h3{color:var(--magenta-dark)}
+.srcbox>summary:focus-visible{outline:2px solid var(--magenta);outline-offset:3px}
+.srcbox .sources{margin-top:0;padding-top:0;border-top:0;padding-bottom:1.1rem}
+@media print{.srcbox{border:0;padding:0}.srcbox>summary::after{display:none}}
 </style>
 <link rel="stylesheet" href="book.css">
 </head>
@@ -966,7 +978,8 @@ the launch date moves.</p>
 <p><a class="lablink" href="lab9-ux.html">Go to Lab 9: UX Design &#8594;</a></p>
 </div>
 
-<h2 id="sources"><span class="num">9</span>Sources and further reading</h2>
+<details class="srcbox">
+<summary><h2 id="sources"><span class="num">9</span>Sources and further reading</h2></summary>
 <ul class="sources">
 <li>Robles v. Domino's Pizza LLC, 913 F.3d 898 (9th Cir. 2019), the Supreme Court's denial of certiorari in October 2019, and the district court's summary judgment of 23 June 2021, for the nexus holding, the fair-notice reasoning, the order to conform to WCAG, and the $4,000 in statutory damages under California's Unruh Act. The parties settled in June 2022 on undisclosed terms, and the claims about the mobile app were never decided on the merits.</li>
 <li><strong>A number to avoid.</strong> Many secondary accounts say remediation would have cost Domino's about $38,000. That figure is not in the filings reviewed for this chapter and appears to originate in a 2019 social media post. Domino's litigation spending, its remediation cost and the settlement terms are all undisclosed. Section 4.4 says so deliberately; if a student brings the figure to class, this is the source discussion to have.</li>
@@ -986,6 +999,7 @@ the launch date moves.</p>
 <li>US Department of Justice, interim final rule of 20 April 2026 extending the Title II web-accessibility compliance dates to 26 April 2027 (large public entities) and 26 April 2028 (smaller ones); the National Federation of the Blind's suit over the delay; and law-firm tallies of 2025 web-accessibility litigation (more than 3,100 federal Title III suits), for the "Since the ruling" passage.</li>
 <li><strong>Verification note.</strong> Checked in September 2026: the DOJ deadline extension (the chapter had described the 2024 rule as due on a deadline; it now records the April 2026 delay), the European Accessibility Act's June 2025 application date, and the 2025 lawsuit counts. The Robles procedural history, the Palm Beach ballot and the Sonos figures were checked against the authors' knowledge of the published record rather than re-searched. Also fixed on that pass: section cross-references that used an older numbering, and a "Since the ruling" passage that had been stranded after the discussion questions and is now back inside section 4.</li>
 </ul>
+</details>
 
 </main>
 <!--NAVJS-->
@@ -1012,6 +1026,18 @@ the launch date moves.</p>
   document.querySelectorAll('.dd-menu').forEach(function(m){
     m.addEventListener('click',function(e){e.stopPropagation();});
   });
+})();
+</script>
+
+<script>
+/* a collapsed <details> does not print; open them all first */
+(function(){
+  function openAll(){ document.querySelectorAll('details').forEach(function(d){ d.open = true; }); }
+  window.addEventListener('beforeprint', openAll);
+  if (window.matchMedia) {
+    var mq = window.matchMedia('print');
+    if (mq.addEventListener) mq.addEventListener('change', function(e){ if (e.matches) openAll(); });
+  }
 })();
 </script>
 </body>

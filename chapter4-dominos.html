@@ -379,6 +379,18 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 .takeaways ul{margin:.2rem 0 0 1.2rem;padding:0}
 .takeaways li{margin:.35rem 0;font-size:16.5px;line-height:1.55}
 @media (max-width:860px){main{padding-left:1.25rem;padding-right:1.25rem}}
+
+/* ---------- collapsible sources ---------- */
+.srcbox{border:1px solid var(--border);border-radius:6px;background:#fff;margin:3.2rem 0 1.5rem;padding:0 1.25rem}
+.srcbox>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.9rem 0}
+.srcbox>summary::-webkit-details-marker{display:none}
+.srcbox>summary::after{content:"\25BE";color:var(--magenta);font-size:.75rem;line-height:1;flex:0 0 auto;transition:transform .15s ease}
+.srcbox[open]>summary::after{transform:rotate(180deg)}
+.srcbox>summary h2,.srcbox>summary h3{margin:0;padding:0;border:0;font-size:1.15rem;letter-spacing:.02em}
+.srcbox>summary:hover h2,.srcbox>summary:hover h3{color:var(--magenta-dark)}
+.srcbox>summary:focus-visible{outline:2px solid var(--magenta);outline-offset:3px}
+.srcbox .sources{margin-top:0;padding-top:0;border-top:0;padding-bottom:1.1rem}
+@media print{.srcbox{border:0;padding:0}.srcbox>summary::after{display:none}}
 </style>
 <link rel="stylesheet" href="book.css">
 </head>
@@ -1822,7 +1834,8 @@ first.</p>
   <a class="lablink" href="lab4-excel-dataviz.html">Go to Lab 4 &#8594;</a>
 </div>
 
-<h2 id="sources"><span class="num">9</span>Sources and further reading</h2>
+<details class="srcbox">
+<summary><h2 id="sources"><span class="num">9</span>Sources and further reading</h2></summary>
 <ul class="sources">
 <li>Michael Hammer, <a href="https://hbr.org/1990/07/reengineering-work-dont-automate-obliterate" target="_blank" rel="noopener">"Reengineering Work: Don't Automate, Obliterate"</a>, <em>Harvard Business Review</em>, July&ndash;August 1990: the Ford accounts payable case, the five hundred against five comparison, the original twenty percent target, invoiceless processing, the fourteen matched data items, and the phrase itself.</li>
 <li>National Transportation Safety Board, <a href="https://www.ntsb.gov/investigations/AccidentReports/Reports/AIR2504.pdf" target="_blank" rel="noopener"><em>In-Flight Separation of Left Mid Exit Door Plug</em></a> (AIR-25-04, adopted 24 June 2025, published 10 July 2025), with the <a href="https://www.ntsb.gov/investigations/Pages/DCA24MA063.aspx" target="_blank" rel="noopener">investigation docket</a>. Supports the missing bolts, the panel being opened at Renton on 18 September 2023 for rivet repair without the required documentation, the altitude at separation, the absent removal document, the door-team staffing, and the probable cause finding that Boeing failed to provide adequate training, guidance and oversight for its parts removal process. Reporting on Alaska Airlines flight 1282, January 2024 to July 2025, for the missing bolts, the absent removal document, the door-team staffing at Renton, and the finding on training and oversight.</li>
@@ -1853,6 +1866,7 @@ end of the thirty-minute guarantee, the December 2007 "You Got 30 Minutes" sloga
 figure and settlement in the Kinder case, and the Target settlement date. All are consistently reported
 in secondary sources; confirm before quoting any figure from them.</li>
 </ul>
+</details>
 
 
 </main>
@@ -1880,6 +1894,18 @@ in secondary sources; confirm before quoting any figure from them.</li>
   document.querySelectorAll('.dd-menu').forEach(function(m){
     m.addEventListener('click',function(e){e.stopPropagation();});
   });
+})();
+</script>
+
+<script>
+/* a collapsed <details> does not print; open them all first */
+(function(){
+  function openAll(){ document.querySelectorAll('details').forEach(function(d){ d.open = true; }); }
+  window.addEventListener('beforeprint', openAll);
+  if (window.matchMedia) {
+    var mq = window.matchMedia('print');
+    if (mq.addEventListener) mq.addEventListener('change', function(e){ if (e.matches) openAll(); });
+  }
 })();
 </script>
 </body>

@@ -337,6 +337,18 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 .takeaways ul{margin:.2rem 0 0 1.2rem;padding:0}
 .takeaways li{margin:.35rem 0;font-size:16.5px;line-height:1.55}
 @media (max-width:860px){main{padding-left:1.25rem;padding-right:1.25rem}}
+
+/* ---------- collapsible sources ---------- */
+.srcbox{border:1px solid var(--border);border-radius:6px;background:#fff;margin:3.2rem 0 1.5rem;padding:0 1.25rem}
+.srcbox>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.9rem 0}
+.srcbox>summary::-webkit-details-marker{display:none}
+.srcbox>summary::after{content:"\25BE";color:var(--magenta);font-size:.75rem;line-height:1;flex:0 0 auto;transition:transform .15s ease}
+.srcbox[open]>summary::after{transform:rotate(180deg)}
+.srcbox>summary h2,.srcbox>summary h3{margin:0;padding:0;border:0;font-size:1.15rem;letter-spacing:.02em}
+.srcbox>summary:hover h2,.srcbox>summary:hover h3{color:var(--magenta-dark)}
+.srcbox>summary:focus-visible{outline:2px solid var(--magenta);outline-offset:3px}
+.srcbox .sources{margin-top:0;padding-top:0;border-top:0;padding-bottom:1.1rem}
+@media print{.srcbox{border:0;padding:0}.srcbox>summary::after{display:none}}
 </style>
 <link rel="stylesheet" href="book.css">
 </head>
@@ -1039,7 +1051,8 @@ that would be impossible in a single grid and are three lines of SQL against a n
   <a class="lablink" href="lab7-sql.html">Go to Lab 7 &#8594;</a>
 </div>
 
-<h2 id="sources"><span class="num">9</span>Sources and further reading</h2>
+<details class="srcbox">
+<summary><h2 id="sources"><span class="num">9</span>Sources and further reading</h2></summary>
 <ul class="sources">
 <li>Charles Duhigg, "How Companies Learn Your Secrets," <em>The New York Times Magazine</em>, 16 February 2012, for the Target pregnancy-prediction story in section 5.</li>
 <li>Edgar F. Codd, "A Relational Model of Data for Large Shared Data Banks," <em>Communications of the ACM</em>, June 1970. The paper that defined the model this chapter teaches. Six pages, and readable if you skip the algebra.</li>
@@ -1055,6 +1068,7 @@ that would be impossible in a single grid and are three lines of SQL against a n
 <li>Datafloq, <a href="https://datafloq.com/read/big-data-walmart-big-numbers-40-petabytes/">Big Data at Walmart</a>: platform scale and the integration of internal and external datasets.</li>
 <li>Retail Link's history is documented across decades of supply chain literature; any account of vendor-managed inventory and the Walmart/P&amp;G partnership covers its origins. Note that Walmart's specific figures (petabytes, store counts) shift year to year; treat the numbers here as scale indicators, not current accounting.</li>
 </ul>
+</details>
 
 </main>
 <!--NAVJS-->
@@ -1081,6 +1095,18 @@ that would be impossible in a single grid and are three lines of SQL against a n
   document.querySelectorAll('.dd-menu').forEach(function(m){
     m.addEventListener('click',function(e){e.stopPropagation();});
   });
+})();
+</script>
+
+<script>
+/* a collapsed <details> does not print; open them all first */
+(function(){
+  function openAll(){ document.querySelectorAll('details').forEach(function(d){ d.open = true; }); }
+  window.addEventListener('beforeprint', openAll);
+  if (window.matchMedia) {
+    var mq = window.matchMedia('print');
+    if (mq.addEventListener) mq.addEventListener('change', function(e){ if (e.matches) openAll(); });
+  }
 })();
 </script>
 </body>

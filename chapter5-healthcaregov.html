@@ -380,6 +380,18 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 .takeaways ul{margin:.2rem 0 0 1.2rem;padding:0}
 .takeaways li{margin:.35rem 0;font-size:16.5px;line-height:1.55}
 @media (max-width:860px){main{padding-left:1.25rem;padding-right:1.25rem}}
+
+/* ---------- collapsible sources ---------- */
+.srcbox{border:1px solid var(--border);border-radius:6px;background:#fff;margin:3.2rem 0 1.5rem;padding:0 1.25rem}
+.srcbox>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.9rem 0}
+.srcbox>summary::-webkit-details-marker{display:none}
+.srcbox>summary::after{content:"\25BE";color:var(--magenta);font-size:.75rem;line-height:1;flex:0 0 auto;transition:transform .15s ease}
+.srcbox[open]>summary::after{transform:rotate(180deg)}
+.srcbox>summary h2,.srcbox>summary h3{margin:0;padding:0;border:0;font-size:1.15rem;letter-spacing:.02em}
+.srcbox>summary:hover h2,.srcbox>summary:hover h3{color:var(--magenta-dark)}
+.srcbox>summary:focus-visible{outline:2px solid var(--magenta);outline-offset:3px}
+.srcbox .sources{margin-top:0;padding-top:0;border-top:0;padding-bottom:1.1rem}
+@media print{.srcbox{border:0;padding:0}.srcbox>summary::after{display:none}}
 </style>
 <link rel="stylesheet" href="book.css">
 </head>
@@ -1683,7 +1695,8 @@ strongest opinion about, and be ready to say it first.</p>
   <a class="lablink" href="lab5-excel-analysis.html">Go to Lab 5 &#8594;</a>
 </div>
 
-<h2 id="sources"><span class="num">9</span>Sources and further reading</h2>
+<details class="srcbox">
+<summary><h2 id="sources"><span class="num">9</span>Sources and further reading</h2></summary>
 <ul class="sources">
 <li>Office of Inspector General, U.S. Department of Health and Human Services, <a href="https://oig.hhs.gov/oei/reports/oei-06-14-00350.asp" target="_blank" rel="noopener"><em>HealthCare.gov: Case Study of CMS Management of the Federal Marketplace</em></a> (OEI-06-14-00350, issued 22 February 2016). Supports the 60 contracts across 33 companies, the absent lead systems integrator, the misunderstanding over CGI's role, the past-performance database and contract-type findings, the delayed governance reviews, and the contract growth from $464 million to $824 million. The case study runs from passage of the ACA in 2010 through the second open enrollment period, and is the single best document on this case.</li>
 <li>Government Accountability Office, <a href="https://www.gao.gov/products/gao-14-694" target="_blank" rel="noopener"><em>Healthcare.gov: Ineffective Planning and Oversight Practices Underscore the Need for Improved Contract Management</em></a>, GAO-14-694 (published 30 July 2014). Supports the task orders issued while key requirements were still unknown, including the number and composition of states and the number of potential enrollees, and the roughly $840 million spent as of March 2014. GAO's own contract figures differ slightly from the OIG's because the two counted different sets of contracts over different periods; where this chapter gives a contract number it is the OIG's.</li>
@@ -1700,6 +1713,7 @@ strongest opinion about, and be ready to say it first.</p>
 <br><br>Corrected on this pass: the account of what happened to the Digital Service after January 2025 previously said the organization had stopped operating as a single body by the end of 2025. That conflated two things. What was reported is that the temporary organization created inside it was described as no longer centralized, while the renamed Digital Service itself continued and was later described as growing. The chapter now says that, and says who said which.
 <br><br>Named as unconfirmed, because this book would rather tell you than guess. Three numbers rest on contemporary reporting rather than a primary document: the roughly 250,000 concurrent users on 1 October 2013 (against a plan variously reported as 50,000 to 60,000); the recovery milestones of about 400 defects, then 25,000 and 35,000 concurrent users, which come from the recovery team's own progress reports and from Brill's account; and the four million visitors on day one. The "roughly half a billion dollars" at launch is a rounded figure and is not a line item in any filing; GAO's $840 million covers spending through March 2014 and includes the repair. Where a number here cannot be traced to a primary document, this book says so, which in a chapter about specifying things precisely is the least it can do.</li>
 </ul>
+</details>
 
 </main>
 <!--NAVJS-->
@@ -1726,6 +1740,18 @@ strongest opinion about, and be ready to say it first.</p>
   document.querySelectorAll('.dd-menu').forEach(function(m){
     m.addEventListener('click',function(e){e.stopPropagation();});
   });
+})();
+</script>
+
+<script>
+/* a collapsed <details> does not print; open them all first */
+(function(){
+  function openAll(){ document.querySelectorAll('details').forEach(function(d){ d.open = true; }); }
+  window.addEventListener('beforeprint', openAll);
+  if (window.matchMedia) {
+    var mq = window.matchMedia('print');
+    if (mq.addEventListener) mq.addEventListener('change', function(e){ if (e.matches) openAll(); });
+  }
 })();
 </script>
 </body>

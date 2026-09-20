@@ -361,6 +361,18 @@ li{margin-bottom:.45rem}
 @media (max-width:860px){main{padding-left:1.25rem;padding-right:1.25rem}}
 /* subheads with the pink bar, matching the other chapters */
 main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transform:none;letter-spacing:0;color:var(--off-black);margin:2.1rem 0 .55rem;padding-left:.7rem;border-left:3px solid var(--magenta)}
+
+/* ---------- collapsible sources ---------- */
+.srcbox{border:1px solid var(--border);border-radius:6px;background:#fff;margin:3.2rem 0 1.5rem;padding:0 1.25rem}
+.srcbox>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.9rem 0}
+.srcbox>summary::-webkit-details-marker{display:none}
+.srcbox>summary::after{content:"\25BE";color:var(--magenta);font-size:.75rem;line-height:1;flex:0 0 auto;transition:transform .15s ease}
+.srcbox[open]>summary::after{transform:rotate(180deg)}
+.srcbox>summary h2,.srcbox>summary h3{margin:0;padding:0;border:0;font-size:1.15rem;letter-spacing:.02em}
+.srcbox>summary:hover h2,.srcbox>summary:hover h3{color:var(--magenta-dark)}
+.srcbox>summary:focus-visible{outline:2px solid var(--magenta);outline-offset:3px}
+.srcbox .sources{margin-top:0;padding-top:0;border-top:0;padding-bottom:1.1rem}
+@media print{.srcbox{border:0;padding:0}.srcbox>summary::after{display:none}}
 </style>
 <link href="book.css" rel="stylesheet"/></head><body>
 <nav class="topnav">
@@ -944,7 +956,8 @@ first checkpoint-and-certificate lab, so you learn the mechanics before they cou
   chapter and lab in the book.</p>
 </div>
 <div class="sources">
-<h3 id="sources">Sources and further reading</h3>
+<details class="srcbox">
+<summary><h3 id="sources">Sources and further reading</h3></summary>
 <ul>
 <li>World Economic Forum, <a href="https://weforum.org/publications/the-future-of-jobs-report-2025/digest/" target="_blank" rel="noopener"><em>The Future of Jobs Report 2025</em></a>, January 2025, chapter 3 (skills outlook), for the employer survey cited in section 2: analytical thinking as the top core skill, technology skills as the fastest-growing, and the finding that a combination of both is increasingly required.</li>
 <li>Lenny Rachitsky, "Why Netflix is betting on systems thinkers, not specialists, in the AI era," interview with Elizabeth Stone, Chief Product and Technology Officer at Netflix, <em>Lenny's Podcast</em>, 19 July 2026. The systems-thinking remarks begin at about 13:27. Source for the claim in section 3.</li>
@@ -966,6 +979,7 @@ in section 2.</li>
 <li>Sebastian Ankargren, Joel Persson and Mårten Schultzberg, <a href="https://engineering.atspotify.com/2026/8/when-can-llms-replace-humans-in-a-b-tests">"When Can LLMs Replace Humans in A/B Tests?"</a>, Spotify Engineering, August 2026. The source for the AI discussion in the Wrapped case section. Technical in places, but the opening summary and the closing section are readable and worth it.</li>
 <li>Sam Illingworth, <a href="https://theslowai.substack.com/p/stop-calling-them-soft-skills-human-skills-ai" target="_blank" rel="noopener">"Stop Calling Them Soft Skills: Why Judgement, Empathy and Critical Thinking Are the Skills AI Cannot Replace"</a>, Slow AI, February 2026. The source for the translation idea in the Wrapped case section. His section on translation is worth reading in full.</li>
 </ul>
+</details>
 </div>
 </main><!--NAVJS-->
 <script>
@@ -991,6 +1005,18 @@ in section 2.</li>
   document.querySelectorAll('.dd-menu').forEach(function(m){
     m.addEventListener('click',function(e){e.stopPropagation();});
   });
+})();
+</script>
+
+<script>
+/* a collapsed <details> does not print; open them all first */
+(function(){
+  function openAll(){ document.querySelectorAll('details').forEach(function(d){ d.open = true; }); }
+  window.addEventListener('beforeprint', openAll);
+  if (window.matchMedia) {
+    var mq = window.matchMedia('print');
+    if (mq.addEventListener) mq.addEventListener('change', function(e){ if (e.matches) openAll(); });
+  }
 })();
 </script>
 </body></html>

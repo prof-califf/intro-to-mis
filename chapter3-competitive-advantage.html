@@ -355,6 +355,18 @@ a.jump+a.jump:hover{background:var(--magenta-pale);border-color:var(--magenta);c
 .takeaways ul{margin:.2rem 0 0 1.2rem;padding:0}
 .takeaways li{margin:.35rem 0;font-size:16.5px;line-height:1.55}
 @media (max-width:860px){main{padding-left:1.25rem;padding-right:1.25rem}}
+
+/* ---------- collapsible sources ---------- */
+.srcbox{border:1px solid var(--border);border-radius:6px;background:#fff;margin:3.2rem 0 1.5rem;padding:0 1.25rem}
+.srcbox>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.9rem 0}
+.srcbox>summary::-webkit-details-marker{display:none}
+.srcbox>summary::after{content:"\25BE";color:var(--magenta);font-size:.75rem;line-height:1;flex:0 0 auto;transition:transform .15s ease}
+.srcbox[open]>summary::after{transform:rotate(180deg)}
+.srcbox>summary h2,.srcbox>summary h3{margin:0;padding:0;border:0;font-size:1.15rem;letter-spacing:.02em}
+.srcbox>summary:hover h2,.srcbox>summary:hover h3{color:var(--magenta-dark)}
+.srcbox>summary:focus-visible{outline:2px solid var(--magenta);outline-offset:3px}
+.srcbox .sources{margin-top:0;padding-top:0;border-top:0;padding-bottom:1.1rem}
+@media print{.srcbox{border:0;padding:0}.srcbox>summary::after{display:none}}
 </style>
 <link rel="stylesheet" href="book.css">
 </head>
@@ -1276,7 +1288,8 @@ part of it quietly breaks.</p>
   <a class="lablink" href="lab3-excel-dataprep.html">Go to Lab 3 &#8594;</a>
 </div>
 
-<h2 id="sources"><span class="num">9</span>Sources and further reading</h2>
+<details class="srcbox">
+<summary><h2 id="sources"><span class="num">9</span>Sources and further reading</h2></summary>
 <ul class="sources">
 
 <li>Reuters and eMarketer coverage of Inditex quarterly results and the European fast-fashion slowdown, 2025 and 2026, together with reporting on Shein's 2026 Hong Kong listing and its valuation against Inditex, for the competitive picture in section 5. These figures move every quarter; check them before you rely on them.</li>
@@ -1300,6 +1313,7 @@ part of it quietly breaks.</p>
 <li><strong>Verification note.</strong> Checked against sources in September 2026: the Caro and Gallien figures, the 2024 and 2025 logistics plan (900 million euros a year), the first-quarter 2026 results and capital expenditure estimate, the 22 May 2026 Bloomberg interview, the Zara India results for the year to March 2026, Shein's September 2026 Hong Kong listing, the 2024 transport emissions, the Zoom usage figures, and the unsold-stock comparison. Not confirmed from any text source found, because they appear in the Context video rather than in print: the share of Bangladesh production Inditex flew in 2024 (about a quarter), the 160,000-tonne emissions estimate for that route, and the worker pay figures (under 1 percent in four years against 9 percent inflation). Treat those three as reported by Context and Bloomberg rather than as independently checked, and re-check them against the video before quoting. Also unconfirmed here: the size and operating hours of the Arteixo hub, and the two-day delivery target, both taken from trade coverage.</li>
 
   </ul>
+</details>
 
 </main>
 <!--NAVJS-->
@@ -1331,5 +1345,17 @@ part of it quietly breaks.</p>
 })();
 </script>
 
+
+<script>
+/* a collapsed <details> does not print; open them all first */
+(function(){
+  function openAll(){ document.querySelectorAll('details').forEach(function(d){ d.open = true; }); }
+  window.addEventListener('beforeprint', openAll);
+  if (window.matchMedia) {
+    var mq = window.matchMedia('print');
+    if (mq.addEventListener) mq.addEventListener('change', function(e){ if (e.matches) openAll(); });
+  }
+})();
+</script>
 </body>
 </html>
