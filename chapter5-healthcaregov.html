@@ -381,6 +381,16 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 .takeaways li{margin:.35rem 0;font-size:16.5px;line-height:1.55}
 @media (max-width:860px){main{padding-left:1.25rem;padding-right:1.25rem}}
 
+/* ---------- video (same rules as Chapter 4) ---------- */
+.vidbox{margin:1.7rem 0}
+.vidframe{position:relative;width:100%;padding-top:56.25%;background:var(--off-white);border:1px solid var(--border)}
+.vidframe iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
+.vidbox figcaption{font-family:var(--sans);font-size:.82rem;color:var(--muted);margin-top:.5rem;text-align:left}
+
+/* ---------- TEMPORARY media slots: delete this rule once every slot is filled ---------- */
+.mediaslot{margin:1.7rem 0;padding:1rem 1.15rem;border:2px dashed var(--magenta);border-radius:6px;font-family:var(--sans);font-size:.88rem;line-height:1.5;color:var(--muted);background:#fff}
+.mediaslot b{color:var(--magenta-dark)}
+
 /* ---------- collapsible sources ---------- */
 .srcbox{border:1px solid var(--border);border-radius:6px;background:#fff;margin:3.2rem 0 1.5rem;padding:0 1.25rem}
 .srcbox>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.9rem 0}
@@ -455,7 +465,7 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
   <p class="eyebrow">Chapter 5 &middot; Systems Analysis and the Life Cycle</p>
   <h1>Systems Analysis: Why <b>Healthcare.gov</b> Failed Before Anyone Wrote a Line of Code</h1>
   <p class="anchor">A website that had cost roughly half a billion dollars opened to four million
-  people and enrolled six of them. Nobody wrote catastrophically bad code. This chapter is about the
+  people and enrolled six of them. The code was unfinished and barely tested on launch day, but the code is not where the story starts. This chapter is about the
   decisions made three years earlier that had already settled the outcome.</p>
 <div class="concepts"><span class="clabel">Key concepts</span><span>SDLC</span><span>Requirements</span><span>Feasibility</span><span>Waterfall vs. agile</span><span>Rollout strategies</span><span>Scope creep</span><span>Stakeholders</span></div>
 </header>
@@ -464,7 +474,7 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 <a href="#sdlc"><span class="tnum">2.</span> The software development life cycle</a>
 <a href="#cases"><span class="tnum">3.</span> Two short failures, two phases</a>
 <a href="#healthcaregov"><span class="tnum">4.</span> Main case. Healthcare.gov: the first day</a>
-<a href="#other"><span class="tnum">5.</span> The downside: who waited</a>
+<a href="#other"><span class="tnum">5.</span> The downside: who gets asked</a>
 <a href="#vocab"><span class="tnum">6.</span> Vocabulary</a>
 <a href="#discussion"><span class="tnum">7.</span> Discussion questions</a>
 <a href="#lab"><span class="tnum">8.</span> From lecture to lab</a>
@@ -473,9 +483,10 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 </div>
 <p class="printbox"><span>Wanna go analog?</span><button type="button" onclick="window.print()" aria-label="Print this page or save it as a PDF">&#9113;&nbsp; Print here</button><span>or save it as a PDF; the navigation drops out</span></p>
 
-<p class="lede">On the morning of October 1, 2013, the United States government launched a website that
-had cost roughly half a billion dollars to build. Four million people visited it that day. Six of them
-managed to buy health insurance.</p>
+<p class="lede">The website was Healthcare.gov, and the people who built it were not careless. Every
+contractor delivered its own piece, and most of the pieces worked. That is what makes it the most useful
+failure in this book so far. A system can be built competently, one piece at a time, and still fail,
+because the decisions that matter most are made before anyone builds anything. Managers make them.</p>
 
 <div class="objectives"><span class="obj-tag">Learning objectives</span>
 <p>By the end of this chapter you should be able to:</p>
@@ -745,7 +756,7 @@ spending its attention, and how early.</p>
 
 <p>Run it more than once. The plan that looks most responsible, buying the three earliest checks, is not
 the cheapest available. One check that catches two mistakes late can beat two that each catch one early,
-when the alternative is letting something reach a student. You will meet that trade again in section 2.9,
+when the alternative is letting something reach a student. You will meet that trade again in section 2.6,
 and a company gets it wrong in section 3.2.</p>
 
 <h3>1.2 Feasibility, requirements, and scope creep</h3>
@@ -764,7 +775,7 @@ unwelcome about their own employer.</p>
 down before anybody builds anything. Requirements are the hardest thing a project produces, because they
 ask people to state a need they have never had to put into words. When a large project fails, this is
 usually where it failed: the team built exactly what was specified, and what was specified was a
-misunderstanding. Section 2.5 comes back to how they are gathered and written.</p>
+misunderstanding. The next three subsections cover how requirements are gathered, how they are written down, and how a team decides which ones to drop.</p>
 
 <p>The third is <strong>scope creep</strong>, which is what happens to requirements after the estimates are
 fixed. Changes keep arriving, each one reasonable on its own, and nobody moves the schedule to pay for
@@ -777,6 +788,117 @@ no one person owns the whole.</p>
 operational. Scope creep is the slow expansion of what the system must do after the estimates are fixed. The
 two are connected. An operational answer of "only if the date moves" is the finding that would stop scope
 creep from being free, which is why it is the finding that gets softened.</p></div>
+
+<h3 id="requirements">1.3 Requirements: what they are, and where they come from</h3>
+
+<p>Requirements come in two kinds. Some describe what the system must do, and some describe a quality it must have.
+<em>Functional</em> requirements describe behavior: "the system shall determine subsidy eligibility from
+household income and size." <em>Non-functional</em> requirements describe qualities: how fast, how many at
+once, how secure, how available. The non-functional ones are what organizations skip, and they are what
+produce spectacular public failures, because you cannot see them missing until load arrives.</p>
+
+<p>Missing non-functional requirements are also the ones that spread. A functional requirement nobody wrote
+produces one feature nobody built. A non-functional requirement nobody wrote, such as how many people will
+use this at once, gets inherited by everything downstream. How many servers to buy. How to structure the
+database. What to do with people who arrive while the system is busy. Each of those decisions has to assume
+a number. If nobody supplied one, each team assumes its own, and nobody finds out whose was wrong until the
+real number shows up.</p>
+
+<div class="callout callout-caution">
+  <strong>Watch for this pattern</strong>
+  <p>When a deadline is fixed by forces outside the project (a law, an earnings call, a trade show), requirements
+  become the only variable left that leadership can quietly compress. Scope, schedule, and quality form a
+  triangle, usually called the <strong>iron triangle</strong>: fix two and the third moves on its own. On Healthcare.gov, schedule and scope were both politically
+  untouchable. Quality was the only side left free to give.</p>
+</div>
+
+<p>Requirements also do not arrive on their own. Somebody goes and gets them, and the work has a name,
+<strong>requirements elicitation</strong>. Each standard method has a characteristic blind spot, which is why
+serious projects use several.</p>
+
+<ul>
+  <li><strong>Interviews.</strong> Ask people what they need. Fast and essential, and limited by the
+  fact that people describe the job they think they do rather than the job they do.</li>
+  <li><strong>Observation.</strong> Watch the work happen. Slow, and the only method that reliably finds
+  the workarounds, the second spreadsheet, and the step everybody performs and nobody mentions.</li>
+  <li><strong>Document analysis.</strong> Read the forms, reports, and rules the current process
+  produces. Good for regulated work, and it tells you what was true when the document was written.</li>
+  <li><strong>Workshops.</strong> Put the disagreeing parties in one room and make them settle it in
+  front of each other. Expensive in calendar time, and the only method that surfaces conflicts between
+  stakeholders rather than collecting them separately.</li>
+  <li><strong>Prototypes.</strong> Show people something and watch them react. People are far better at
+  criticizing a thing than describing one, which is the single most useful fact in this section.</li>
+</ul>
+
+<p>The person who does this work has a job title, and it is one many of you will hold:
+<strong>business analyst</strong>. The role sits between the people who need the system and the people who
+will build it, and its output is the specification everything downstream depends on.</p>
+
+<p>Notice what none of these methods can do on its own. Every one collects requirements from somebody who
+already exists and can be asked. When a system is for people who have never done this before, there is no
+process to observe and no experienced user to interview, and prototypes and pilots stop being good practice
+and become the only honest source of information. Hold that until the end of the chapter.</p>
+
+<h3>1.4 Writing a requirement down</h3>
+
+<p>Gathering a requirement and recording it are different jobs, and the second is where projects quietly
+go wrong. A requirement that lives in somebody's memory of a meeting is not a requirement. The standard way
+to write one down is the <strong>user story</strong>, and the format is deliberately rigid:</p>
+
+<p style="font-family:var(--sans);background:var(--off-white);border-left:3px solid var(--magenta);padding:.8rem 1rem;margin:1.1rem 0">
+As a <em>[kind of person]</em>, I want <em>[to do something]</em>, so that <em>[I get some result]</em>.</p>
+
+<p>The third clause is the one that matters and the one people drop. "As a shopper, I want to create an
+account" is not a user story, because it never says what the account is for. Written properly, "so that
+I can see the prices I qualify for" invites the obvious question: does the shopper need an account
+before seeing prices, or after? Healthcare.gov answered that late and wrongly, and the format would
+have forced the argument to happen earlier.</p>
+
+<p>A story on its own is still not enough, because two people can agree with a sentence and mean
+different things by it. So each story carries <strong>acceptance criteria</strong>: specific,
+checkable conditions that decide whether it is finished. Not "the site should be fast," which nobody can
+pass or fail, but "a page returns in under two seconds with fifty thousand people on the site at once."
+Notice what writing that sentence required: a number. It is the number CMS never had.</p>
+
+<p><strong>The rule to remember: a requirement nobody can test is not a requirement, it is a hope.</strong>
+Teams also agree on a <strong>definition of done</strong>, a standing checklist that applies to everything,
+covering things like code review, tests written, and documentation updated, so that "done" means the
+same thing in March as it does in September.</p>
+
+<h3>1.5 Deciding what not to build</h3>
+
+<p>Every project asks for more than it can have, so somebody has to choose, and one day that will be you.
+If you do it by argument in a meeting, the result is whatever the most senior person in the room wants. If
+you do it with a method, the result is something you can defend later.</p>
+
+<p>The common method is <strong>MoSCoW</strong>, which sorts every requirement into four boxes:</p>
+
+<ul>
+  <li><strong>Must have.</strong> Without it the system has no reason to exist. On Healthcare.gov, a
+  person can compare plans and enroll in one.</li>
+  <li><strong>Should have.</strong> Important, and the system is still usable without it for a while.</li>
+  <li><strong>Could have.</strong> Desirable, and the first thing dropped when time runs short.</li>
+  <li><strong>Won't have, this time.</strong> Explicitly excluded, written down, and agreed. This box is
+  the one teams skip, and it is the most useful of the four, because an excluded requirement stops being
+  an argument.</li>
+</ul>
+
+<p>The related idea is the <strong>minimum viable product</strong>, the smallest version that delivers real
+value to a real user, released so you can learn from what happens. It is often misused as a polite word for
+unfinished. The distinction is whether you are shipping less in order to learn something, or shipping less
+because you ran out of time.</p>
+
+<p>Keep that fourth box in mind when you read the rescue in the main case. The team that fixed
+Healthcare.gov did not have better technology than the team that broke it. It had permission to move things
+into the fourth box and say so out loud.</p>
+
+<p>Prioritizing once is not enough, because requirements keep arriving. So what stops scope creep? Not
+willpower. A procedure. First, agree on a <strong>baseline</strong> of what is being built.
+Then require every addition to arrive as a <strong>change request</strong> that names its cost in time and money, and
+gets approved or refused by someone accountable. The account-creation mandate that arrived weeks before
+Healthcare.gov's launch was a substantial change to the system's busiest path. Requirements that arrive
+that late are not automatically wrong. Requirements that arrive that late without anyone pricing them
+are.</p>
 
 <p>Analysis also decides how to build the system in a sequence that keeps the risk survivable, which is
 what section 2 is about.</p>
@@ -992,118 +1114,7 @@ waterfall does not work. The larger one is about how ideas travel. A diagram is 
 not, so the diagram survives the journey and the caveat does not. You will watch this happen to some
 framework in your own career, and it is worth being the person who has read the original.</p>
 
-<h3 id="requirements">2.5 Requirements: what they are, and where they come from</h3>
-
-<p>A <strong>requirement</strong> is a statement of something the system must do, or some quality it must have.
-<em>Functional</em> requirements describe behavior: "the system shall determine subsidy eligibility from
-household income and size." <em>Non-functional</em> requirements describe qualities: how fast, how many at
-once, how secure, how available. The non-functional ones are what organizations skip, and they are what
-produce spectacular public failures, because you cannot see them missing until load arrives.</p>
-
-<p>Missing non-functional requirements are also the ones that spread. A functional requirement nobody wrote
-produces one feature nobody built. A non-functional requirement nobody wrote, such as how many people will
-use this at once, gets inherited by everything downstream. How many servers to buy. How to structure the
-database. What to do with people who arrive while the system is busy. Each of those decisions has to assume
-a number. If nobody supplied one, each team assumes its own, and nobody finds out whose was wrong until the
-real number shows up.</p>
-
-<div class="callout callout-caution">
-  <strong>Watch for this pattern</strong>
-  <p>When a deadline is fixed by forces outside the project (a law, an earnings call, a trade show), requirements
-  become the only variable left that leadership can quietly compress. Scope, schedule, and quality form a
-  triangle, usually called the <strong>iron triangle</strong>: fix two and the third moves on its own. On Healthcare.gov, schedule and scope were both politically
-  untouchable. Quality was the only side left free to give.</p>
-</div>
-
-<p>Requirements also do not arrive on their own. Somebody goes and gets them, and the work has a name,
-<strong>requirements elicitation</strong>. Each standard method has a characteristic blind spot, which is why
-serious projects use several.</p>
-
-<ul>
-  <li><strong>Interviews.</strong> Ask people what they need. Fast and essential, and limited by the
-  fact that people describe the job they think they do rather than the job they do.</li>
-  <li><strong>Observation.</strong> Watch the work happen. Slow, and the only method that reliably finds
-  the workarounds, the second spreadsheet, and the step everybody performs and nobody mentions.</li>
-  <li><strong>Document analysis.</strong> Read the forms, reports, and rules the current process
-  produces. Good for regulated work, and it tells you what was true when the document was written.</li>
-  <li><strong>Workshops.</strong> Put the disagreeing parties in one room and make them settle it in
-  front of each other. Expensive in calendar time, and the only method that surfaces conflicts between
-  stakeholders rather than collecting them separately.</li>
-  <li><strong>Prototypes.</strong> Show people something and watch them react. People are far better at
-  criticizing a thing than describing one, which is the single most useful fact in this section.</li>
-</ul>
-
-<p>The person who does this work has a job title, and it is one many of you will hold:
-<strong>business analyst</strong>. The role sits between the people who need the system and the people who
-will build it, and its output is the specification everything downstream depends on.</p>
-
-<p>Notice what none of these methods can do on its own. Every one collects requirements from somebody who
-already exists and can be asked. When a system is for people who have never done this before, there is no
-process to observe and no experienced user to interview, and prototypes and pilots stop being good practice
-and become the only honest source of information. Hold that until the main case.</p>
-
-<h3>2.6 Writing a requirement down</h3>
-
-<p>Gathering a requirement and recording it are different jobs, and the second is where projects quietly
-go wrong. A requirement that lives in somebody's memory of a meeting is not a requirement. The standard way
-to write one down is the <strong>user story</strong>, and the format is deliberately rigid:</p>
-
-<p style="font-family:var(--sans);background:var(--off-white);border-left:3px solid var(--magenta);padding:.8rem 1rem;margin:1.1rem 0">
-As a <em>[kind of person]</em>, I want <em>[to do something]</em>, so that <em>[I get some result]</em>.</p>
-
-<p>The third clause is the one that matters and the one people drop. "As a shopper, I want to create an
-account" is not a user story, because it never says what the account is for. Written properly, "so that
-I can see the prices I qualify for" invites the obvious question: does the shopper need an account
-before seeing prices, or after? Healthcare.gov answered that late and wrongly, and the format would
-have forced the argument to happen earlier.</p>
-
-<p>A story on its own is still not enough, because two people can agree with a sentence and mean
-different things by it. So each story carries <strong>acceptance criteria</strong>: specific,
-checkable conditions that decide whether it is finished. Not "the site should be fast," which nobody can
-pass or fail, but "a page returns in under two seconds with fifty thousand people on the site at once."
-Notice what writing that sentence required: a number. It is the number CMS never had.</p>
-
-<p><strong>The rule to remember: a requirement nobody can test is not a requirement, it is a hope.</strong>
-Teams also agree on a <strong>definition of done</strong>, a standing checklist that applies to everything,
-covering things like code review, tests written, and documentation updated, so that "done" means the
-same thing in March as it does in September.</p>
-
-<h3>2.7 Deciding what not to build</h3>
-
-<p>Every project asks for more than it can have, so somebody has to choose, and one day that will be you.
-If you do it by argument in a meeting, the result is whatever the most senior person in the room wants. If
-you do it with a method, the result is something you can defend later.</p>
-
-<p>The common method is <strong>MoSCoW</strong>, which sorts every requirement into four boxes:</p>
-
-<ul>
-  <li><strong>Must have.</strong> Without it the system has no reason to exist. On Healthcare.gov, a
-  person can compare plans and enroll in one.</li>
-  <li><strong>Should have.</strong> Important, and the system is still usable without it for a while.</li>
-  <li><strong>Could have.</strong> Desirable, and the first thing dropped when time runs short.</li>
-  <li><strong>Won't have, this time.</strong> Explicitly excluded, written down, and agreed. This box is
-  the one teams skip, and it is the most useful of the four, because an excluded requirement stops being
-  an argument.</li>
-</ul>
-
-<p>The related idea is the <strong>minimum viable product</strong>, the smallest version that delivers real
-value to a real user, released so you can learn from what happens. It is often misused as a polite word for
-unfinished. The distinction is whether you are shipping less in order to learn something, or shipping less
-because you ran out of time.</p>
-
-<p>Keep that fourth box in mind when you read the rescue in the main case. The team that fixed
-Healthcare.gov did not have better technology than the team that broke it. It had permission to move things
-into the fourth box and say so out loud.</p>
-
-<p>Prioritizing once is not enough, because requirements keep arriving. So what stops scope creep? Not
-willpower. A procedure. First, agree on a <strong>baseline</strong> of what is being built.
-Then require every addition to arrive as a <strong>change request</strong> that names its cost in time and money, and
-gets approved or refused by someone accountable. The account-creation mandate that arrived weeks before
-Healthcare.gov's launch was a substantial change to the system's busiest path. Requirements that arrive
-that late are not automatically wrong. Requirements that arrive that late without anyone pricing them
-are.</p>
-
-<h3>2.8 Testing is not one thing</h3>
+<h3>2.5 Testing is not one thing</h3>
 
 <p>"We tested it" is not a statement you should accept, because testing happens at four different levels
 and they catch entirely different problems. A project can do three of them thoroughly and fail on the
@@ -1145,7 +1156,7 @@ assembled system does not work, nobody has breached a contract, and there is no 
 case has this in its most expensive published form, plus the version that makes it worse: the role was not
 merely empty, it was believed to be filled.</p>
 
-<h3 id="rollout">2.9 Rollout strategy: how you turn it on</h3>
+<h3 id="rollout">2.6 Rollout strategy: how you turn it on</h3>
 
 <p>Finally, the system has to be turned on. You have four ways to move users from an old world to a new
 one, and choosing among them is a risk decision rather than a technical one:</p>
@@ -1180,6 +1191,20 @@ earlier and would have cost almost nothing there. Both had working code.</p>
 Nine months later it reached Mars, fired its engine to enter orbit, and was never heard from again. It
 had come in far too low and broke apart in the atmosphere.</p>
 
+<!-- ===== MEDIA SLOT (Image). To fill: drop the file next to this chapter, delete the
+     div.mediaslot below, and uncomment the figure. Caption is a draft in the book's voice. ===== -->
+<div class="mediaslot"><b>Image slot.</b> Artist's rendering or pre-launch photo of the Mars Climate Orbiter.<br/><b>Source:</b> NASA/JPL. NASA imagery is public domain; Wikimedia Commons has several.<br/><b>Why here:</b> Matches Chapters 2 and 3, which each open a mini-case with a picture.</div>
+<!--
+<figure class="diagram" style="margin:1.7rem 0">
+<img alt="TODO: 40 to 110 words describing what is actually in the image, per the accessibility standard in qa-workflow.md section 9." src="mars-climate-orbiter.jpg" style="max-height:320px;width:auto;max-width:100%;height:auto;display:block;margin:0 auto;border:1px solid var(--rule)"/>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--muted);margin-top:.55rem;line-height:1.55">
+Look for the fault in this picture and you will not find it, because it was never in the hardware. Every part of the spacecraft did what it was told. What was wrong was a number crossing between two pieces of software, and no photograph can show a unit nobody wrote down.
+<br/><br/>
+Mars Climate Orbiter. NASA/JPL, public domain.
+</figcaption>
+</figure>
+-->
+
 <p>The investigation found no broken equipment and no failed component. Ground software built by
 Lockheed Martin reported the force of each small thruster firing in pound-force seconds, the unit used
 in the United States. The navigation software at NASA's Jet Propulsion Laboratory read those numbers as
@@ -1197,7 +1222,7 @@ nine months of flight, and was found by the planet.</p>
 <div class="mcq"><b>Check yourself</b>Two teams, each competent, each testing its own software
 successfully. Name the specific document that should have existed between them, and say who in an
 organization is responsible for noticing that it does not.
-<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>Unit testing: each team tested its own software against its own specification, and each passed, because each was internally consistent. What was missing was integration testing, the test that runs the two together across the boundary and checks whether what one sends is what the other expects. That test would have caught the units in an afternoon, because a value in pounds-force fed to software expecting newtons is off by a factor of about 4.5, which is not subtle. The cheap phase was requirements: one line in the interface specification saying which unit crossed the boundary. It was never written, so nobody tested for it, and a spacecraft went into the atmosphere of Mars.</p></details></div>
+<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>The missing document is an interface specification: one line saying which unit crosses the boundary between the two programs. Each team tested its own software against its own specification, and each passed, because each was internally consistent. Noticing that nothing governs the boundary is the job of whoever owns the whole system, which is the systems integrator from section 2.5, working from requirements a business analyst wrote down. The same gap also meant there was no integration testing, the test that runs the two together across the boundary and checks whether what one sends is what the other expects. That test would have caught the units in an afternoon, because a value in pounds-force fed to software expecting newtons is off by a factor of about 4.5, which is not subtle. The cheap phase was requirements: one line in the interface specification saying which unit crossed the boundary. It was never written, so nobody tested for it, and a spacecraft went into the atmosphere of Mars.</p></details></div>
 
 <h3>3.2 Mini-case 2 &middot; 2024: the update that went everywhere at once</h3>
 
@@ -1206,6 +1231,20 @@ agents reached for pens. CrowdStrike sells security software that runs deep insi
 lets it stop attacks and also what makes it dangerous when it is wrong. That morning the company released a
 routine content update to that software, and it went to customers worldwide at essentially the same
 moment.</p>
+
+<!-- ===== MEDIA SLOT (Image). To fill: drop the file next to this chapter, delete the
+     div.mediaslot below, and uncomment the figure. Caption is a draft in the book's voice. ===== -->
+<div class="mediaslot"><b>Image slot.</b> Airport departure boards or check-in screens showing the Windows blue screen, 19 July 2024.<br/><b>Source:</b> Wikimedia Commons has several photos from that morning under Creative Commons licenses; check the licence on the one you pick and credit it the way Chapter 3 credits the Blockbuster photo.<br/><b>Why here:</b> The picture makes "everyone at once" visible, which is the whole mini-case.</div>
+<!--
+<figure class="diagram" style="margin:1.7rem 0">
+<img alt="TODO: 40 to 110 words describing what is actually in the image." src="crowdstrike-airport-2024.jpg" style="max-height:320px;width:auto;max-width:100%;height:auto;display:block;margin:0 auto;border:1px solid var(--rule)"/>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--muted);margin-top:.55rem;line-height:1.55">
+Every one of these screens received the same update in the same few minutes, which is the case in one picture. A staged release would have put a small share of machines like these in the first wave, and the fault would have been found there.
+<br/><br/>
+TODO: place, date, photographer. Photograph via Wikimedia Commons, licence TODO.
+</figcaption>
+</figure>
+-->
 
 <p>The update carried a fault that crashed Windows machines on startup, and again on the next startup, so
 they could not be repaired remotely. Microsoft later estimated about 8.5 million devices were affected.
@@ -1388,7 +1427,7 @@ companies.</desc>
 <figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--muted);margin-top:.55rem;line-height:1.55">
 The dashed box is the point. It encloses the work that had to be somebody's job, and it is empty. Each of
 the five connections had a contractor who could deliver its own end correctly and pass its own tests, and
-the assembled result still had to work, which was nobody's deliverable. This is what section 2.8 described
+the assembled result still had to work, which was nobody's deliverable. This is what section 2.5 described
 in the abstract, drawn at the scale it actually happened.
 </figcaption>
 </figure>
@@ -1408,6 +1447,20 @@ people held it.</p>
 and most visitors met crashes, timeouts, and errors for the rest of the week. Congress had shut down the
 federal government that same morning in an attempt to defund the law, so the launch happened in front of the
 largest possible audience.</p>
+
+<!-- ===== MEDIA SLOT (Image). To fill: drop the file next to this chapter, delete the
+     div.mediaslot below, and uncomment the figure. Caption is a draft in the book's voice. ===== -->
+<div class="mediaslot"><b>Image slot.</b> Screenshot of Healthcare.gov as visitors saw it in the first week of October 2013 (the home page, or the "please wait" holding page).<br/><b>Source:</b> Internet Archive Wayback Machine capture from 1 to 7 October 2013. Federal government content is public domain.<br/><b>Why here:</b> Chapter 2 opens its main case with a photo of the real thing; this is the closest equivalent for a website.</div>
+<!--
+<figure class="diagram" style="margin:1.7rem 0">
+<img alt="TODO: describe the page, its wording, and what a visitor could and could not do from it." src="healthcaregov-oct-2013.png" style="max-height:380px;width:auto;max-width:100%;height:auto;display:block;margin:0 auto;border:1px solid var(--rule)"/>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--muted);margin-top:.55rem;line-height:1.55">
+The page is calm, and the design is clean. Everything that went wrong that week was behind it, in the connections to five other organizations and in a capacity number nobody had written down. A screenshot shows the one component everybody could see, which is part of why so many people blamed it.
+<br/><br/>
+Healthcare.gov, October 2013. Internet Archive capture, TODO date. U.S. government work, public domain.
+</figcaption>
+</figure>
+-->
 
 <p>The next morning, in a government crisis meeting, somebody read out the number of people who had managed
 to buy insurance on day one. Six. Across five insurers.</p>
@@ -1454,7 +1507,8 @@ contracts it chose contract types that put the risk of cost overruns on the gove
 vendor. Those six contracts grew from $464 million to $824 million, one of them from $58 million to $207
 million.</p>
 
-<p>Notice what is absent. Nobody wrote catastrophically bad code. The failure lives in a requirement never
+<p>Notice what is absent from that list. The code had real defects, and section 4.6 shows them, but they
+were what an unfinished, untested system looks like, not the reason it was unfinished and untested. The failure lives in a requirement never
 specified, a role never assigned, a rollout never staged, and gates never enforced, which are decisions made
 by managers rather than engineers. That is why this material sits in a business school course.</p>
 
@@ -1465,6 +1519,19 @@ In late October, management was centralized under a single accountable leader, J
 House technology leadership was restructured, underperforming staff and contractors were replaced, and
 senior engineers were recruited from industry. A small team was given one narrow mandate and the authority
 to prioritize ruthlessly.</p>
+
+<!-- ===== MEDIA SLOT (Video). To fill: drop the file next to this chapter, delete the
+     div.mediaslot below, and uncomment the figure. Caption is a draft in the book's voice. ===== -->
+<div class="mediaslot"><b>Video slot.</b> A short clip from late October 2013, when the failure became a public problem and the rescue began. Two options: (1) President Obama's Rose Garden remarks on the website, 21 October 2013, which are public domain on the Obama White House archive and its YouTube channel; or (2) a launch-week news segment, for example from PBS NewsHour, which posts full segments on YouTube.<br/><b>Source:</b> Paste the 11-character YouTube ID into both VIDEO_ID spots. Use the youtube-nocookie embed, as Chapters 1, 3 and 4 do.<br/><b>Why here:</b> Chapter 4 puts its second video at the same point in its case, the turn from failure to fix. If you use the remarks, keep the caption about the system, not the politics.</div>
+<!--
+<figure class="vidbox">
+<div class="vidframe">
+<iframe src="https://www.youtube-nocookie.com/embed/VIDEO_ID" title="TODO: descriptive title" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+<figcaption>TODO: who, what, when. Watch it for what is being promised and by whom: the fix is announced as a matter of effort and talent, and the chapter's argument is that it turned out to be a matter of ownership and permission to ship less.
+(<a href="https://www.youtube.com/watch?v=VIDEO_ID" target="_blank" rel="noopener">watch on YouTube</a>)</figcaption>
+</figure>
+-->
 
 <p>Over roughly six weeks, about 400 defects were resolved, concurrency was raised to 25,000 users, and
 response time was brought to about one second. By 1 December the system was handling something like 35,000
@@ -1488,19 +1555,25 @@ debt.</p>
 <h3>4.6 The five components at Healthcare.gov</h3>
 
 <p>Every chapter maps its case onto the same five components, because a system is only as strong as its
-weakest one. Look at which rows broke. The software mostly worked. Every other row was late, wrong, or
-belonged to somebody who had not been asked.</p>
+weakest one. Healthcare.gov is unusual, because every row shows damage. The useful question is which
+damage was a cause and which was a symptom.</p>
+
+<p>The software had real problems. A month before launch, the lead contractor warned CMS in writing that
+the schedule left too little time to test the system properly, and that the data hub the site depended on was intermittently
+unavailable. After launch,
+the files the site sent to insurers were often wrong, with enrollments duplicated, missing, or carrying the
+wrong details. All of that is true, and all of it traces back to the same row.</p>
 
 <div class="vc">
   <div class="vc-head">The Five Components · Healthcare.gov</div>
   <div class="vc-strip">
     <div class="vc-cell"><span class="vc-stage">Hardware</span><p>Sized for a number nobody had specified; buckled at 250,000 users. A symptom, not the disease.</p></div>
-    <div class="vc-cell broke"><span class="vc-stage">Software</span><p>Sixty contracts of components, each defensible alone, that never worked as one system.</p></div>
-    <div class="vc-cell"><span class="vc-stage">Data</span><p>Income, household, identity: held by IRS, SSA, DHS. Accurate and available.</p></div>
+    <div class="vc-cell broke"><span class="vc-stage">Software</span><p>Unfinished and barely tested at launch. Real defects, fixed within weeks once somebody owned the whole.</p></div>
+    <div class="vc-cell"><span class="vc-stage">Data</span><p>Source records at the IRS, SSA, and DHS were sound. The enrollment files sent to insurers often were not.</p></div>
     <div class="vc-cell"><span class="vc-stage">Networks</span><p>Real-time links to the IRS, SSA, and DHS. The connections existed; ownership of them didn't.</p></div>
     <div class="vc-cell broke"><span class="vc-stage">People</span><p>33 contractors, no integrator, gates waved through. Accountability diffused to zero.</p></div>
   </div>
-  <div class="vc-note">Break located at <b>Software</b> and <b>People</b>. The data was good, and the hardware shortfall was downstream of a requirement no person wrote. </div>
+  <div class="vc-note">Root break at <b>People</b>; the damage showed up first in <b>Software</b>. An unfinished, untested system with nobody responsible for the whole is what a missing integrator and a squeezed schedule produce. The hardware shortfall and the bad enrollment files are downstream of the same decisions.</div>
 </div>
 
 <h3>4.7 What happened next, which is not a tidy ending</h3>
@@ -1588,7 +1661,7 @@ teams or two organizations is a place a system fails, and the cheapest fix in th
 each one.</p>
 
 <p><strong>Never launch everything to everyone on a date you cannot move.</strong> A pilot was available and
-obvious and was not taken. Every rollout strategy in section 2.9 was cheaper than the one CMS chose. When
+obvious and was not taken. Every rollout strategy in section 2.6 was cheaper than the one CMS chose. When
 you hear "big bang," ask what the fallback is, and if there is none, ask again.</p>
 
 <p><strong>Make sure somebody is allowed to say no.</strong> Recall what CMS did with its own reviews as
@@ -1597,17 +1670,60 @@ about who can stop a project and on what evidence. If the answer is nobody, the 
 date regardless of what the tests say, because that is what a deadline does to an organization with no
 brake.</p>
 
-<h2 id="other"><span class="num">5</span>The downside: who waited</h2>
-<p>The engineering story has a human side that is easy to lose. The people refreshing Healthcare.gov on October 1 were not users testing a product. They were people
-without health insurance, many attempting to buy it for the first time in their lives, some with
-conditions that had made them uninsurable until that morning. Every week the site did not work was a week they stayed
-uninsured, and the enrollment deadline bearing down on the project was also bearing down on them. When
-this course says a launch failed, keep asking the second question: failed for whom, and what did the
-failure cost people who had no seat in any status meeting. The contractors were paid for the overruns.
-The waiting was done by the public.</p>
-<p>It is worth saying who was inside the recovery too: a small team with clear ownership, real usage data,
-and permission to tell the truth about what was broken. The difference between the three years and the six
-weeks was not talent. It was structure, honesty, and the political cover to have both.</p>
+<h2 id="other"><span class="num">5</span>The downside: who gets asked</h2>
+
+<p>Everything in this chapter assumes somebody asks the right people what the system must do. In
+practice, the people who will use a system every day are often the last ones asked, and sometimes they
+are never asked at all. That is the downside of systems analysis as most organizations practice it. The
+method is sound. The guest list is the problem.</p>
+
+<h3>5.1 The people at the screen</h3>
+
+<p>Think about who is in the room when requirements get written. The organization buying the system sends
+the people who approved the budget, the people who will report on the results, and the IT staff who will
+run it. The vendor sends analysts and engineers. The people who will spend their whole shift typing into
+the system are usually somewhere else, doing the work it is supposed to support. Nobody planned to leave
+them out. They were busy, and the meeting happened anyway.</p>
+
+<p>Hospitals are a clear example. When I studied how nurses use electronic medical records for my
+dissertation, nurses told me the same thing again and again: the programmers never asked them, and the
+programmers did not understand nursing.</p>
+<!-- TODO (Chris): one more sentence or a short participant quote here would make this land.
+     Only what the dissertation data supports. -->
+
+<p>When a system does not fit the work, people do not stop working. They work around it. They write
+things on paper and type them in later. They copy an earlier entry and change one line. They keep a second
+list the system never sees. Section 1.3 said observation is the only elicitation method that reliably finds
+workarounds. This is the other side of that point. A system built without observation creates new
+workarounds of its own, and every one is a place where the record and the real work drift apart.</p>
+
+<p>That drift has a cost the people who bought the system rarely see. The data is now being entered by
+people who do not trust the screen, and they enter what it will accept rather than what happened. The
+reports built on that data still look precise. They are measuring the workaround.</p>
+
+<h3>5.2 Healthcare.gov: nobody to ask</h3>
+
+<p>Healthcare.gov had a harder version of the same problem. Section 1.3 pointed out that every elicitation
+method collects requirements from somebody who already exists and can be asked. The people refreshing the
+site on October 1 were people without health insurance, many trying to buy it for the first time in their
+lives, some with conditions that had made them uninsurable until that morning. There was no experienced
+user to interview and no existing process to observe. A pilot was the only honest way to learn what these
+people needed, and section 4.4 described what happened to the pilot.</p>
+
+<p>Every week the site did not work was a week they stayed uninsured, and the deadline that pressured the
+project pressured them too. None of them had a seat in any status meeting. The contractors were paid for
+the overruns. The waiting was done by the public.</p>
+
+<p>Notice who was inside the recovery, too: a small team with clear ownership, real usage data, and
+permission to tell the truth about what was broken. Real usage data matters here. It is the closest a team
+can get to asking millions of people at once what they need. The difference between the three years and
+the six weeks was not talent. It was structure, honesty, and the political cover to have both.</p>
+
+<p>So when this course says a system failed, keep asking the second question: failed for whom? And before
+that, ask the question this section is about: who was asked? On any project you join, find out whether
+anyone has watched the people who will use it do their jobs. If nobody has, you already know where the
+first workarounds will be.</p>
+
 <div class="takeaways"><span class="obj-tag">Key takeaways</span>
 <ul>
 <li>Requirements are the cheapest place to be wrong, because analysis is where you choose which of the five components will be the weak one.</li>
@@ -1652,7 +1768,7 @@ weeks was not talent. It was structure, honesty, and the political cover to have
   The Wednesday discussion grades your reasoning, and everyone in the room can tell the difference.</p></div>
 </div>
 <h2 id="discussion"><span class="num">7</span>Discussion questions</h2>
-<p>None of these get handed in. On Wednesday you run the discussion and I steer it, which means the
+<p>These are the questions for the case that we will discuss in class. None of them get handed in. On Wednesday you run the discussion and I steer it, which means the
 class is only as good as what you walk in with. Read the chapter, pick the question you have the
 strongest opinion about, and be ready to say it first.</p>
 
@@ -1701,6 +1817,7 @@ strongest opinion about, and be ready to say it first.</p>
 <li>Office of Inspector General, U.S. Department of Health and Human Services, <a href="https://oig.hhs.gov/oei/reports/oei-06-14-00350.asp" target="_blank" rel="noopener"><em>HealthCare.gov: Case Study of CMS Management of the Federal Marketplace</em></a> (OEI-06-14-00350, issued 22 February 2016). Supports the 60 contracts across 33 companies, the absent lead systems integrator, the misunderstanding over CGI's role, the past-performance database and contract-type findings, the delayed governance reviews, and the contract growth from $464 million to $824 million. The case study runs from passage of the ACA in 2010 through the second open enrollment period, and is the single best document on this case.</li>
 <li>Government Accountability Office, <a href="https://www.gao.gov/products/gao-14-694" target="_blank" rel="noopener"><em>Healthcare.gov: Ineffective Planning and Oversight Practices Underscore the Need for Improved Contract Management</em></a>, GAO-14-694 (published 30 July 2014). Supports the task orders issued while key requirements were still unknown, including the number and composition of states and the number of potential enrollees, and the roughly $840 million spent as of March 2014. GAO's own contract figures differ slightly from the OIG's because the two counted different sets of contracts over different periods; where this chapter gives a contract number it is the OIG's.</li>
 <li>House Oversight Committee release of the CMS "war room" meeting notes, October 2013, for the six enrollments across five insurers as of the morning of 2 October; and contemporary reporting on the launch and the roughly 250,000 concurrent users against a plan built for far fewer.</li>
+<li>House Oversight and Government Reform Committee, <a href="https://oversight.house.gov/release/obamacare-contractor-warned-hhs-september-healthcare-gov-problems" target="_blank" rel="noopener">release of CGI Federal's 6 September 2013 status report</a> (30 October 2013), for the contractor's warning that the compressed schedule left too little time for performance, functional, system, and integration testing, and that hub services were intermittently unavailable. <a href="https://www.nextgov.com/digital-government/2013/12/about-10-percent-obamacare-enrollment-files-have-errors/75122/" target="_blank" rel="noopener">Nextgov, December 2013</a>, for CMS's account of the errors in the "834" enrollment files sent to insurers: files never sent, duplicates, and files with wrong details.</li>
 <li>Steven Brill, "Code Red," <em>Time</em>, 10 March 2014, and other accounts of the rescue by Jeffrey Zients and the technology team assembled in late October 2013, for the defect count, the concurrency and response-time targets. HHS enrollment reports (ASPE, November 2013 to January 2014) for the 26,794 federal marketplace enrollments in October and the roughly 975,000 in December.</li>
 <li>UK Government Digital Service (2011), the United States Digital Service and 18F (both 2014), for the institutional response to Healthcare.gov. For what happened after: the executive order of January 2025 renaming the Digital Service as the United States DOGE Service and creating a temporary organization inside it with a stated dissolution date of 4 July 2026; the elimination of 18F on 1 March 2025; the IRS notice to partner states in the first week of November 2025 that Direct File would not be available for the 2026 filing season, with no future date set; and reporting from late November 2025 in which the head of the Office of Personnel Management described the temporary organization as no longer existing as a centralized entity while a spokesperson said it did and named an acting administrator. The roughly 90 staff figure is from an April 2026 interview with one of the Digital Service's directors. <strong>This passage is the most perishable thing in the chapter.</strong> It is recent, contested, and reported through news organizations rather than primary documents, and the 4 July 2026 date has now passed. Recheck it before each term.</li>
 <li>Winston W. Royce, "Managing the Development of Large Software Systems," <em>Proceedings, IEEE WESCON</em>, August 1970: the phase diagram, the sentence calling that implementation risky and an invitation to failure, and the "attempt to do the job twice" recommendation. Short, readable, widely available, and worth reading in the original.</li>
