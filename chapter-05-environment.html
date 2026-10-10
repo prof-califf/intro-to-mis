@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-K9V6CZ9N83"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-K9V6CZ9N83');
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 5 · Environment · Intro to AI in Business | MIS 201</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>:root{
+  --yellow:#E4FF32;
+  --pink:#FF3D8A; --pinktext:#D61F69;
+  --ink:#14181D;
+  --dark:#0E1116;
+  --gray:#5A626C;
+  --lightgray:#9AA1AB;
+  --bg:#FCFCFA;
+  --rule:#E7E7E2;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;font-size:16px;line-height:1.7;color:var(--ink);background:var(--bg);}
+.wrap{max-width:860px;margin:0 auto;padding:0 24px;}
+.nav{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--rule);z-index:10;}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;}
+.brand{font-family:'Fraunces',serif;font-weight:600;font-size:1.05rem;color:var(--ink);text-decoration:none;}
+.brand b{color:var(--pinktext);font-weight:700;}
+.nav a.navlink{font-size:.85rem;color:var(--gray);text-decoration:none;margin-left:20px;}
+.nav a.navlink:hover{color:var(--pinktext);}
+.masthead{background:var(--dark);color:#fff;padding:64px 0 56px;}
+.eyebrow{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--lightgray);margin-bottom:18px;}
+.masthead h1{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(2rem,5vw,3rem);line-height:1.15;}
+.masthead h1 b{color:var(--yellow);font-weight:700;}
+.masthead .kicker{margin-top:18px;color:#C9CED6;max-width:640px;}
+.factline{margin-top:26px;font-size:.9rem;color:var(--pink);}
+.contents{border:1px solid var(--rule);background:#fff;padding:24px 28px;margin:48px 0 8px;}
+.contents .label{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gray);margin-bottom:12px;}
+.contents ol{list-style:none;counter-reset:toc;}
+.contents li{counter-increment:toc;padding:5px 0;}
+.contents li::before{content:counter(toc);font-family:'Fraunces',serif;color:var(--pinktext);font-weight:600;margin-right:12px;}
+.contents a{color:var(--ink);text-decoration:none;}
+.contents a:hover{color:var(--pinktext);}
+.contents .secs{border-top:1px solid var(--rule);margin-top:22px;padding-top:18px;}
+.contents ul.seclist{list-style:none;display:flex;flex-direction:column;gap:4px;margin:0;}
+.contents ul.seclist li{counter-increment:none;padding:2px 0;}
+.contents ul.seclist li::before{content:none;margin:0;}
+.contents ul.seclist a{font-size:.92rem;}
+.contents ul.seclist a .sn{font-family:'Fraunces',serif;color:var(--pinktext);font-weight:600;margin-right:7px;}
+.contents ul.seclist a:hover .sn{color:var(--ink);}
+section[id],h3.sub[id]{scroll-margin-top:68px;}
+section{padding:44px 0 8px;}
+.shead{display:flex;align-items:baseline;gap:16px;border-bottom:2px solid var(--pink);padding-bottom:10px;margin-bottom:26px;}
+.shead .num,.shead h2{font-family:'Fraunces',serif;font-weight:600;font-size:1.6rem;line-height:1.2;}
+.shead .num{color:var(--pink);}
+p{margin-bottom:1.1em;}
+p.lead{font-size:1.05rem;}
+a.inline{color:var(--pinktext);}
+.masthead a.inline,.foot a.inline,.concept a.inline,.ticket a.inline,.verdict a.inline,.howto a.inline,.rhythm a.inline,.graphbox a.inline{color:var(--pink);}
+h3{font-family:'Fraunces',serif;font-weight:600;font-size:1.15rem;margin:1.6em 0 .6em;}
+.concept{background:var(--dark);color:#E7EAEF;padding:20px 24px;margin:26px 0;border-left:4px solid var(--yellow);}
+.concept .term{font-family:'Fraunces',serif;font-weight:600;color:var(--yellow);font-size:1.02rem;margin-bottom:6px;}
+.concept p{margin-bottom:0;font-size:.95rem;line-height:1.65;}
+.callout{border:1px solid var(--rule);background:#fff;border-top:3px solid var(--pink);padding:22px 26px;margin:26px 0;}
+.callout .label{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--pinktext);margin-bottom:10px;}
+.callout p:last-child{margin-bottom:0;}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);margin:26px 0;}
+.fact{background:#fff;padding:20px;}
+.fact .big{font-family:'Fraunces',serif;font-weight:700;font-size:1.9rem;color:var(--ink);}
+.fact .big em{font-style:normal;color:var(--pink);}
+.fact .small{font-size:.85rem;color:var(--gray);margin-top:4px;line-height:1.5;}
+@media(max-width:640px){.facts{grid-template-columns:1fr;}}
+.fourq{margin:26px 0;}
+.fourq .q{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--rule);}
+.fourq .q:last-child{border-bottom:none;}
+.fourq .qn{font-family:'Fraunces',serif;font-weight:600;color:var(--pinktext);min-width:20px;}
+.fourq p{margin-bottom:0;}
+.terms{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);margin:26px 0;}
+.term-card{background:#fff;padding:18px 20px;}
+.term-card .t{font-family:'Fraunces',serif;font-weight:600;color:var(--ink);margin-bottom:4px;}
+.term-card p{font-size:.9rem;color:var(--gray);margin-bottom:0;line-height:1.6;}
+@media(max-width:640px){.terms{grid-template-columns:1fr;}}
+.ticket{background:var(--dark);color:#E7EAEF;padding:30px 32px;margin:26px 0;}
+.ticket .label{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--yellow);margin-bottom:14px;}
+.ticket ol{padding-left:20px;}
+.ticket li{margin-bottom:14px;line-height:1.65;}
+.ticket li:last-child{margin-bottom:0;}
+.steps{margin:26px 0;}
+.step{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--rule);}
+.step:last-child{border-bottom:none;}
+.step .sn{font-family:'Fraunces',serif;font-weight:600;color:var(--pinktext);font-size:1.2rem;min-width:24px;}
+.step p{margin-bottom:0;}
+.nextbar{margin:56px 0 0;border-top:1px solid var(--rule);padding:28px 0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.nextbar a{font-family:'Fraunces',serif;font-weight:600;color:var(--ink);text-decoration:none;}
+.nextbar a:hover{color:var(--pinktext);}
+.nextbar .dir{display:block;font-family:'Inter',sans-serif;font-weight:400;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gray);margin-bottom:4px;}
+.foot{background:var(--dark);color:#C9CED6;margin-top:64px;padding:40px 0;}
+.foot .brand{color:#fff;display:block;margin-bottom:6px;}
+.foot .brand b{color:var(--yellow);}
+.foot .tiny{display:block;font-size:.75rem;color:var(--lightgray);font-family:'Inter',sans-serif;font-weight:400;margin-bottom:4px;}
+.foot .fine{font-size:.82rem;color:var(--lightgray);margin-top:12px;}
+
+/* ---- lab widgets ---- */
+.tool{border:1px solid var(--rule);background:#fff;padding:26px 28px;margin:26px 0;}
+.tool .label{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gray);margin-bottom:14px;}
+.tool input[type=text]{width:100%;padding:10px 12px;border:1px solid var(--rule);font-family:'Inter',sans-serif;font-size:.95rem;background:var(--bg);}
+.tool input[type=text]:focus{outline:2px solid var(--pink);outline-offset:-1px;}
+.chip{font-family:'Inter',sans-serif;font-size:.82rem;font-weight:600;padding:6px 14px;border:1px solid var(--rule);background:#fff;color:var(--gray);cursor:pointer;border-radius:999px;}
+.chip:hover{border-color:var(--pink);color:var(--pinktext);}
+.chip:focus-visible{outline:2px solid var(--pink);outline-offset:2px;}
+.chip.on{background:var(--dark);color:var(--yellow);border-color:var(--dark);}
+.chips{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.btn{font-family:'Inter',sans-serif;font-weight:600;font-size:.9rem;padding:10px 20px;background:var(--dark);color:var(--yellow);border:none;cursor:pointer;}
+.btn:hover{background:#1B222B;}
+.btn:focus-visible{outline:2px solid var(--pink);outline-offset:2px;}
+.btn.alt{background:#fff;color:var(--ink);border:1px solid var(--rule);}
+.btn.alt:hover{border-color:var(--pink);color:var(--pinktext);}
+.verdict{background:var(--dark);color:#E7EAEF;padding:26px 28px;margin-top:22px;}
+.verdict .label{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--yellow);margin-bottom:12px;}
+.verdict .read{font-size:.95rem;line-height:1.65;}
+.verdict .read b{color:var(--yellow);}
+.bars{display:grid;gap:10px;margin:14px 0 18px;}
+.bar{display:grid;grid-template-columns:190px 1fr 44px;gap:12px;align-items:center;font-size:.85rem;}
+.bar .track{height:10px;background:#242C36;border-radius:999px;overflow:hidden;}
+.bar .fill{height:100%;background:var(--pink);width:0%;transition:width .3s ease;border-radius:999px;}
+.bar.safe .fill{background:var(--yellow);}
+.bar .n{text-align:right;color:var(--lightgray);}
+@media(max-width:560px){.bar{grid-template-columns:1fr;gap:4px;}.bar .n{text-align:left;}}
+.meter{display:grid;grid-template-columns:130px 1fr 54px;gap:12px;align-items:center;font-size:.9rem;margin:8px 0;}
+.meter .track{height:14px;background:#EFEFEA;border:1px solid var(--rule);border-radius:999px;overflow:hidden;}
+.meter .fill{height:100%;width:50%;transition:width .35s ease;border-radius:999px;background:var(--pink);}
+.meter.good .fill{background:var(--ink);}
+.meter .n{text-align:right;color:var(--gray);font-variant-numeric:tabular-nums;}
+.simcard{border:1px solid var(--rule);background:var(--bg);padding:16px 18px;cursor:pointer;text-align:left;font-family:'Inter',sans-serif;font-size:.92rem;line-height:1.55;color:var(--ink);width:100%;}
+.simcard:hover{border-color:var(--pink);}
+.simcard:focus-visible{outline:2px solid var(--pink);outline-offset:2px;}
+.simcard .tag{display:block;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--gray);margin-bottom:6px;}
+.simgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:16px 0;}
+@media(max-width:680px){.simgrid{grid-template-columns:1fr;}}
+.slider-row{display:grid;grid-template-columns:170px 1fr 120px;gap:14px;align-items:center;margin:14px 0;font-size:.92rem;}
+.slider-row output{text-align:right;color:var(--gray);font-variant-numeric:tabular-nums;}
+input[type=range]{width:100%;accent-color:var(--pink);}
+@media(max-width:560px){.slider-row{grid-template-columns:1fr;gap:6px;}.slider-row output{text-align:left;}}
+select{padding:9px 12px;border:1px solid var(--rule);background:#fff;font-family:'Inter',sans-serif;font-size:.92rem;color:var(--ink);}
+.equiv{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);margin:18px 0 4px;}
+.equiv .cell{background:#fff;padding:16px 18px;}
+.equiv .cell .v{font-family:'Fraunces',serif;font-weight:700;font-size:1.4rem;}
+.equiv .cell .v em{font-style:normal;color:var(--pink);}
+.equiv .cell .k{font-size:.82rem;color:var(--gray);margin-top:2px;}
+@media(max-width:560px){.equiv{grid-template-columns:1fr;}}
+.graphbox{background:var(--dark);border:1px solid var(--rule);margin:18px 0;}
+.graphbox svg{display:block;width:100%;height:auto;}
+.gnode{cursor:pointer;}
+.gnode circle{stroke:#39424D;stroke-width:1.5;fill:#1B222B;transition:all .2s ease;}
+.gnode text{font-family:'Inter',sans-serif;font-size:11px;fill:#C9CED6;pointer-events:none;}
+.gnode.drug circle{stroke:var(--yellow);}
+.gnode.disease circle{stroke:var(--pink);}
+.gnode.sel circle{fill:var(--yellow);stroke:var(--yellow);}
+.gnode.sel text{fill:var(--dark);font-weight:700;}
+.gnode.lit circle{fill:#2A3440;stroke:#fff;}
+.gedge{stroke:#333D49;stroke-width:1.5;transition:all .2s ease;}
+.gedge.lit{stroke:var(--yellow);stroke-width:2.5;}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:.8rem;color:var(--gray);padding:12px 16px;border-top:1px solid var(--rule);background:#fff;}
+.legend span::before{content:'';display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;border:2px solid var(--gray);vertical-align:-1px;}
+.legend .l-drug::before{border-color:var(--yellow);background:#1B222B;}
+.legend .l-disease::before{border-color:var(--pink);background:#1B222B;}
+.legend .l-mid::before{border-color:#39424D;background:#1B222B;}
+.ranked{margin:14px 0 0;}
+.ranked .r{display:grid;grid-template-columns:1fr 60px;gap:10px;padding:9px 0;border-bottom:1px solid #242C36;font-size:.9rem;align-items:center;}
+.ranked .r:last-child{border-bottom:none;}
+.ranked .r .s{text-align:right;color:var(--yellow);font-variant-numeric:tabular-nums;font-weight:600;}
+.probe{border:1px solid var(--rule);background:var(--bg);padding:16px 18px;margin:12px 0;}
+.probe .ptext{font-family:'Fraunces',serif;font-size:1rem;margin-bottom:10px;}
+.probe .pwhy{font-size:.85rem;color:var(--gray);margin-bottom:12px;}
+.roundinfo{font-size:.85rem;color:var(--gray);margin-bottom:8px;}
+.stack{margin:16px 0 0;}
+.lyr{display:grid;grid-template-columns:1fr 92px;gap:12px;align-items:center;padding:11px 12px;border:1px solid var(--rule);margin-bottom:7px;background:var(--bg);}
+.lyr.off{opacity:1;border-style:dashed;background:#fff;}
+.lyr .ln{font-size:.88rem;line-height:1.4;}
+.lyr .sub{display:block;font-size:.78rem;color:var(--gray);margin-top:2px;}
+.lyr .amt{text-align:right;font-variant-numeric:tabular-nums;font-weight:700;font-size:.95rem;}
+.lyr.off .amt{color:var(--pinktext);}
+.total{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:baseline;border-top:2px solid var(--ink);padding-top:12px;margin-top:4px;}
+.total .big{font-family:'Fraunces',serif;font-weight:700;font-size:1.6rem;}
+.total .big em{font-style:normal;color:var(--pink);}
+/* ---- dropdown navigation (chapters / labs) ---- */
+.nav .navlinks{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.nav a.navlink{margin-left:0;padding:6px 10px}
+.dd{position:relative}
+.dd-btn{font:inherit;font-size:.85rem;font-weight:600;color:#fff;background:var(--dark);border:1px solid var(--dark);border-radius:4px;padding:7px 14px;cursor:pointer}
+.dd-btn:hover,.dd-btn[aria-expanded="true"]{background:var(--pinktext);border-color:var(--pinktext);color:#fff}
+.dd-btn .caret{color:var(--yellow)}
+.dd-btn .caret{font-size:.7rem;margin-left:.3rem}
+.dd-menu{display:none;position:absolute;right:0;top:calc(100% + 6px);min-width:19rem;background:var(--bg);border:1px solid var(--rule);border-radius:6px;box-shadow:0 10px 30px rgba(0,0,0,.18);padding:.35rem 0;max-height:75vh;overflow-y:auto;z-index:50}
+.dd-menu.open{display:block}
+.dd-menu a{display:block;padding:.5rem 1rem;text-decoration:none;color:var(--ink);font-size:.9rem;line-height:1.35}
+.dd-menu a:hover{background:#F3F3EE;color:var(--pinktext)}
+.dd-menu a .lbl{display:block;font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--pinktext);margin-bottom:.1rem}
+.dd-menu a.current{background:#F3F3EE;border-left:3px solid var(--pink)}
+@media (max-width:640px){
+  .nav .wrap{flex-wrap:wrap;gap:8px}
+  .nav .navlinks{width:100%;justify-content:flex-start}
+  .dd-menu{right:auto;left:0;min-width:min(92vw,20rem)}
+}
+
+h3.sub{font-family:'Fraunces',serif;font-weight:600;font-size:1.15rem;margin:1.8em 0 .8em;padding-bottom:6px;border-bottom:1px solid var(--pink);color:var(--ink)}
+h3.sub span{color:var(--pinktext);margin-right:10px}
+
+table.risk{width:100%;border-collapse:collapse;margin:16px 0 8px;font-size:.9rem}
+table.risk th{text-align:left;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gray);border-bottom:2px solid var(--pink);padding:8px 10px}
+table.risk td{padding:9px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
+table.risk tr.grp td{background:#F3F3EE;font-family:'Fraunces',serif;font-weight:600;font-size:.95rem}
+.tablenote{font-size:.85rem;color:var(--gray);margin-bottom:20px}
+@media (max-width:640px){table.risk{display:block;overflow-x:auto;font-size:.82rem}}
+
+table.pred td b{color:var(--pinktext)}
+table.pred td:first-child{width:46%}
+
+.tablecap{font-size:.88rem;color:var(--gray);margin:14px 0 4px}
+ul.ideas,ul.decide{margin:0 0 1.1em;padding-left:1.4em}
+ul.ideas li,ul.decide li{margin-bottom:.7em;padding-left:.3em}
+figure.diagram{margin:22px 0}
+figure.diagram figcaption{font-size:.85rem;color:var(--gray);line-height:1.55;margin-top:8px}
+
+/* print */
+.printbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:14px 0 6px;font-size:.9rem;color:var(--gray)}
+.printbar button{font-family:'Inter',sans-serif;font-weight:600;font-size:.85rem;padding:8px 14px;background:var(--dark);color:var(--yellow);border:none;border-radius:6px;cursor:pointer}
+.printbar button:hover{background:#242C36}
+@media print{
+  nav,.topnav,.printbar,.nextbar,footer.foot{display:none !important}
+  body{background:#fff;color:#000}
+  main.wrap{max-width:none;padding:0}
+  header.masthead{background:#fff !important;color:#000 !important;padding:0 0 12px}
+  header.masthead h1,header.masthead .kicker,header.masthead .eyebrow{color:#000 !important}
+  header.masthead h1 b{color:#000 !important}
+  a{color:#000;text-decoration:none}
+  a.inline::after{content:" (" attr(href) ")";font-size:.75em;color:#555;word-break:break-all}
+  details{display:block}
+  details>summary{list-style:none}
+  details:not([open])>*:not(summary){display:block}
+  .concept,.callout,.term-card,.ticket,figure.diagram{break-inside:avoid;page-break-inside:avoid}
+  .concept{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  h2,h3{break-after:avoid;page-break-after:avoid}
+  svg{max-width:100% !important}
+}
+</style>
+<style>
+.tryit details{border-top:1px dashed var(--rule);padding:10px 0;}
+.tryit details:first-of-type{border-top:none;}
+.tryit summary{cursor:pointer;font-weight:600;font-size:.95rem;}
+.tryit p{margin:8px 0 2px;font-size:.9rem;color:var(--gray);}
+.srcnote{border:1px solid var(--rule);border-radius:10px;padding:14px 18px;margin:30px 0;background:#fff;font-size:.9rem;}
+.srcnote summary{cursor:pointer;font-weight:700;color:var(--ink);}
+.srcnote p{margin:10px 0 2px;color:var(--gray);}
+</style>
+<style>
+  .srcnote{border:1px solid var(--rule);border-radius:10px;background:#fff;padding:0;margin:34px 0}
+  .srcnote > summary{cursor:pointer;padding:14px 20px;font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:1rem;color:var(--ink);list-style:none}
+  .srcnote > summary::-webkit-details-marker{display:none}
+  .srcnote > summary::after{content:"\25BE";float:right;color:var(--pinktext);font-size:.8rem}
+  .srcnote[open] > summary::after{content:"\25B4"}
+  .srcnote .srcbody{padding:0 20px 18px}
+  .srcnote .srcintro{font-size:.9rem;color:var(--gray);margin:0 0 14px;padding-bottom:12px;border-bottom:1px solid var(--rule)}
+  .srcnote dl{margin:0}
+  .srcnote dt{font-family:'Inter',Arial,sans-serif;font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--pinktext);font-weight:700;margin:14px 0 4px}
+  .srcnote dd{margin:0;font-size:.9rem;line-height:1.55;color:var(--gray)}
+  .srcnote > p, .srcnote .srcbody > p{font-size:.9rem;line-height:1.55;color:var(--gray)}
+  .srcnote .srcfoot{margin-top:18px;padding-top:12px;border-top:1px solid var(--rule);font-size:.86rem;color:var(--gray)}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Site">
+  <div class="wrap">
+    <a class="brand" href="index.html">Intro to <b>AI</b> in Business</a>
+    <div class="navlinks">
+      <a class="navlink" href="index.html">Contents</a>
+      <a class="navlink" href="syllabus.html">Syllabus</a>
+      <a class="navlink" href="rules.html">Rules</a>
+      <a class="navlink" href="schedule.html">Schedule</a>
+      <div class="dd"><button class="dd-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="ddc" data-dd="ddc">Chapters<span class="caret" aria-hidden="true">▾</span></button>
+<div class="dd-menu" id="ddc">
+<a href="about.html"><span class="lbl">Start here</span>About this book</a>
+          <a href="chapter-01-what-is-ai.html"><span class="lbl">Chapter 1 · Week 2</span>What Is AI?</a>
+<a href="chapter-02-human.html"><span class="lbl">Chapter 2 · Week 3</span>Seemingly Human</a>
+<a href="chapter-03-systems.html"><span class="lbl">Chapter 3 · Week 3</span>Systems That Know You</a>
+<a href="chapter-04-medicine.html"><span class="lbl">Chapter 4 · Week 4</span>Medicine</a>
+<a href="chapter-05-environment.html" class="current" aria-current="page"><span class="lbl">Chapter 5 · Week 5</span>Environment</a>
+<a href="chapter-06-hiring-lending.html"><span class="lbl">Chapter 6 · Week 6</span>Bias: Hiring &amp; Lending</a>
+<a href="chapter-07-transportation.html"><span class="lbl">Chapter 7 · Week 7</span>Transportation</a>
+<a href="chapter-08-ethics-war.html"><span class="lbl">Chapter 8 · Week 8</span>Ethics &amp; War</a>
+<a href="chapter-09-economy.html"><span class="lbl">Chapter 9 · Week 9</span>The Economy</a>
+<a href="chapter-10-truth.html"><span class="lbl">Chapter 10 · Week 10</span>Truth</a>
+<a href="chapter-11-rules.html"><span class="lbl">Chapter 11 · Week 10</span>Who Makes the Rules?</a>
+<a href="chapter-12-future.html"><span class="lbl">Chapter 12 · Week 10</span>The Future</a>
+</div></div>
+      <div class="dd"><button class="dd-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="ddl" data-dd="ddl">Labs<span class="caret" aria-hidden="true">▾</span></button>
+<div class="dd-menu" id="ddl">
+<a href="lab-00-first-contact.html"><span class="lbl">Lab 0 · Day 1</span>First Contact</a>
+<a href="chapter-01-what-is-ai-lab.html"><span class="lbl">Lab 1 · Week 2</span>Inside the Machine</a>
+<a href="chapter-02-human-lab.html"><span class="lbl">Lab 2 &amp; 3 · Week 3</span>Build the Bot, Train the Feed</a>
+<a href="chapter-04-medicine-lab.html"><span class="lbl">Lab 4 · Week 4</span>Inside the Graph</a>
+<a href="chapter-05-environment-lab.html"><span class="lbl">Lab 5 · Week 5</span>The Footprint Machine</a>
+<a href="chapter-06-hiring-lending-lab.html"><span class="lbl">Lab 6 · Week 6</span>You Are the Auditor</a>
+<a href="chapter-07-transportation-lab.html"><span class="lbl">Lab 7 · Week 7</span>You Are the City Council</a>
+<a href="chapter-08-ethics-war-lab.html"><span class="lbl">Lab 8 · Week 8 · Monday, then at home</span>The Red Lines</a>
+<a href="chapter-09-economy-lab.html"><span class="lbl">Lab 9 · Week 9</span>Run the Firm</a>
+</div></div>
+    </div>
+  </div>
+</nav>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Western Washington University · MIS 201 · Chapter 5</div>
+    <h1>The Machine Has a <b>Body</b></h1>
+    <p class="kicker">Every prompt we send runs somewhere physical: a building full of hot chips, drawing power from a real grid, cooled by real water, next to a real town. The cost of one prompt is tiny. The cost of billions of prompts a day, forever, is an industry building nuclear reactors. This chapter follows the answer back to the building, and then to the strangest fact in the story: the number that would settle the argument is one the companies have, and mostly don't publish.</p>
+    <p class="factline">Data centers · training vs. inference · externalities · the disclosure gap</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+<div class="printbar">
+  <button type="button" onclick="window.print()">Wanna go analog? Print or save as a PDF</button>
+  <span>Links print with full web addresses; the try-it answers print open.</span>
+</div>
+
+<div class="contents">
+  <div class="label">Learning objectives</div>
+  <ol>
+    <li>Explain why nearly everything we do online already runs in a data center, and what AI changes about those buildings.</li>
+    <li>Separate training cost from inference cost, and show why the multiplication matters more than the query.</li>
+    <li>Define an externality and find one in the AI buildout and one in your own week.</li>
+    <li>Describe the disclosure gap: what has been published, by whom, how to read it (scopes and medians), and what still hasn't.</li>
+    <li>Decide on the buildout with the two easy exits closed, and name what your decision costs.</li>
+  </ol>
+  <div class="secs">
+    <div class="label">Chapter sections</div>
+    <ul class="seclist">
+      <li><a href="#s1"><span class="sn">1</span>The question, and the point of this chapter</a></li>
+      <li><a href="#s2"><span class="sn">2</span>The concepts: the building, the two costs, the neighbor's bill, and the fog</a></li>
+      <li><a href="#s3"><span class="sn">3</span>The case: the buildout</a></li>
+      <li><a href="#s4"><span class="sn">4</span>Decide: right-size what we control, demand disclosure for what we don't</a></li>
+      <li><a href="#s5"><span class="sn">5</span>Key terms</a></li>
+    </ul>
+  </div>
+</div>
+<section id="s1">
+  <div class="shead"><span class="num">1</span><h2>The question, and the point of this chapter</h2></div>
+  <p class="lead">Most of this book asks what AI systems do to people. This chapter asks what running them does to everything else. Nearly everything we do online, from streaming a show to backing up a photo, already happens in a data center: a building full of hot computers, drawing real power, cooled with real water, next to a real town. The cloud is a marketing word for other people's buildings. AI didn't invent that footprint, but it is making it bigger and changing its shape, and every prompt we send adds to it. The answer comes back feeling weightless. It isn't. It has a wattage, a water bill, and a street address.</p>
+  <p>So the week comes down to two questions. What does AI cost the physical world, and who pays? And the one that turns out to matter more: why is the first question so hard to answer?</p>
+  <p><strong>The point of this chapter, in one sentence:</strong> AI's physical cost is small per prompt and enormous in total, part of it is paid by people who never sent a prompt, and the number that would settle every argument about it is a number the companies have and mostly choose not to publish.</p>
+  <p>The case is the buildout, the largest infrastructure spending spree in the history of software, told through one nuclear plant and one electric bill. In the lab, you'll read what researchers and companies have measured about AI's energy and water, then what they've measured about the things you already do every day, like streaming, YouTube, TikTok, and gaming. Then you'll build a technology impact calculator with Claude and put all of it next to a flight, a burger, and a golf course.</p>
+</section>
+
+<section id="s2">
+  <div class="shead"><span class="num">2</span><h2>The concepts: the building, the two costs, the neighbor's bill, and the fog</h2></div>
+
+  <h3 class="sub" id="s2-1"><span>2.1</span> The data center: where everything already lives</h3>
+  <p>Start with something that isn't AI at all. Every show we stream, every photo that backs up to the cloud, every email, map, and social feed runs in a <strong>data center</strong>: a building full of computers that other people use over the internet. For most of computing's history, companies ran their own server rooms. Starting in 2006, when Amazon began renting out computing power, followed later by Microsoft and Google, that work moved into a small number of enormous shared buildings run by a few companies. That's what "the cloud" means. Concentrating the work made each task far more efficient, and for years those gains held the total steady. By <a class="inline" href="https://newscenter.lbl.gov/2025/01/15/berkeley-lab-report-evaluates-increase-in-electricity-demand-from-data-centers/" target="_blank" rel="noopener">Lawrence Berkeley National Laboratory's count</a>, US data centers used about 58 terawatt-hours of electricity in 2014, and roughly 60 through 2016.</p>
+
+  <figure class="diagram">
+    <!-- Image slot: a data center campus seen from the road. Washington has one of the country's big clusters, in Quincy and East Wenatchee; a Creative Commons photo from Wikimedia Commons, or a company press image, would work. Add attribution to the caption, then uncomment.
+    <img src="data-center-campus.jpg" alt="A row of long, windowless data center buildings with cooling equipment on the roofs, beside farmland." loading="lazy" style="max-width:440px;width:100%;height:auto;display:block;margin:0 auto;border:1px solid var(--rule)">
+    -->
+    <figcaption>A data center campus. From the road it looks like a warehouse. Inside is where the streaming, the photo backups, and the chatbot answers happen, and where the power and water bills land. [Image pending: insert a licensed photo with attribution.]</figcaption>
+  </figure>
+  <p>So here's a fair starting point before we get to AI: all of us already have a data center footprint. An hour of streaming video, counting the data center, the network, and the screen, came to roughly 36 grams of CO2 in the International Energy Agency's <a class="inline" href="https://www.iea.org/commentaries/the-carbon-footprint-of-streaming-video-fact-checking-the-headlines" target="_blank" rel="noopener">2019 estimate</a>, and most of that is the screen and the network, not the building. Google's own figure for a median text prompt to its Gemini app, counting only Google's side, is about 0.03 grams. The two numbers draw their boundaries differently, so the comparison is rough. It isn't close, though. One evening of streaming outweighs a lot of ordinary questions to a chatbot. That doesn't make AI free. It means the useful question is never whether something uses a data center, because almost everything does. The question is how much, for what, and who's counting.</p>
+
+  <h3 class="sub" id="s2-2"><span>2.2</span> What's different about data centers in the AI era</h3>
+  <p>Then the line started climbing. US data center electricity reached 76 terawatt-hours in 2018 and 176 in 2023, about 4.4 percent of the country's electricity, and the Berkeley Lab report says demand more than doubled between 2017 and 2023, largely because of servers built for AI. Four things changed.</p>
+  <p><strong>The chips.</strong> An AI chip, the kind Chapter 1's ImageNet team bought for $500 in 2012, now costs tens of thousands of dollars, and a modern AI data center holds tens of thousands of them, wired together, running near their limit around the clock.</p>
+  <p><strong>The heat and the water.</strong> Chips that run hard get hot, and cooling them takes fans, chilled water, or both. So an AI data center needs three things from wherever it lands: a lot of electricity, delivered without interruption; water, or the power to run cooling that doesn't use water; and land near a grid connection big enough to carry the load.</p>
+
+  <figure class="diagram">
+    <!-- Image slot: cooling equipment: rooftop chillers, cooling towers, or an aisle of server racks with cooling pipes. A Creative Commons photo or a company press image. Add attribution to the caption, then uncomment.
+    <img src="data-center-cooling.jpg" alt="Rows of server racks in a long aisle, with cooling pipes running overhead." loading="lazy" style="max-width:440px;width:100%;height:auto;display:block;margin:0 auto;border:1px solid var(--rule)">
+    -->
+    <figcaption>The heat has to go somewhere. Nearly every watt the chips use comes back out as heat, and fans, chilled water, or evaporating water carry it out of the building. This is where the water in this chapter goes. [Image pending: insert a licensed photo with attribution.]</figcaption>
+  </figure>
+  <p><strong>Every answer is made fresh.</strong> A streaming service mostly sends a file that already exists. A generative model computes a new answer every time anyone asks, one word at a time. That's why a request costs more than a stream of the same length would suggest, and why the cost grows with every new user.</p>
+  <p><strong>The hardware turns over.</strong> Every server eventually becomes electronic waste, and the world already makes a lot of it: a record 62 million tonnes in 2022, with less than a quarter documented as properly recycled, according to the UN's <a class="inline" href="https://www.unitar.org/about/news-stories/press/global-e-waste-monitor-2024-electronic-waste-rising-five-times-faster-documented-e-waste-recycling" target="_blank" rel="noopener">Global E-waste Monitor</a>. A 2024 study in <em>Nature Computational Science</em> <a class="inline" href="https://www.technologyreview.com/2024/10/28/1106316/ai-e-waste/" target="_blank" rel="noopener">estimated</a> that generative AI alone could add 1.2 to 5 million tonnes by 2030, as faster chips push older ones out.</p>
+
+  <figure class="diagram">
+    <!-- Image slot: a pile of discarded electronics (old monitors, circuit boards, cables). Use a photo of the waste itself, not of people working in it. The UN's Global E-waste Monitor press images or a Creative Commons photo. Add attribution to the caption, then uncomment.
+    <img src="e-waste-pile.jpg" alt="A heap of discarded computer monitors, keyboards, circuit boards, and tangled cables." loading="lazy" style="max-width:440px;width:100%;height:auto;display:block;margin:0 auto;border:1px solid var(--rule)">
+    -->
+    <figcaption>Where hardware goes after its last job. Most of the world's e-waste is phones, screens, laptops, and appliances, not AI servers, and less than a quarter of it is documented as properly recycled. [Image pending: insert a licensed photo with attribution.]</figcaption>
+  </figure>
+  <p>Now put a size on it. A single large AI data center is now planned in the hundreds of megawatts, and the largest campuses in the gigawatts. One gigawatt is roughly the output of one nuclear reactor. By the International Energy Agency's count, data centers worldwide used about 415 terawatt-hours of electricity in 2024, around 1.5 percent of all the electricity on Earth, and the IEA expects about 945 by 2030, with AI the main driver. In the United States, the Berkeley Lab report projected somewhere between 6.7 and 12 percent of national electricity by 2028. The width of that range is this chapter's subject.</p>
+  <p>Keep one more number beside those, because it cuts the other way. Even with that growth, the IEA expects data centers to account for less than a tenth of the world's growth in electricity demand through 2030, behind things like air conditioning and electric vehicles, and it expects the United States and China to account for nearly 80 percent of the data center growth. The pressure is real, and it's concentrated: particular grids and particular towns carry most of it.</p>
+  <p><strong>Data center.</strong> The building where our digital lives already run, and where AI now runs too: chips, power, cooling, and a street address with neighbors. What people get wrong: they picture "the cloud" as nowhere, or they think AI invented the footprint. It's somewhere, it was already large, and AI is changing both its size and its shape: hotter chips, answers computed fresh, and hardware that turns over faster. Every question in this chapter starts by finding the building.</p>
+
+
+  <figure class="diagram">
+    <svg viewBox="0 0 760 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="dca-t dca-d" style="width:100%;max-width:760px;height:auto;display:block;margin:0 auto">
+      <title id="dca-t">Where the watts go inside an AI data center</title>
+      <desc id="dca-d">A cutaway of a data center building. Power comes in from the grid on the left to a substation, then to rows of server racks full of AI chips in the middle, which turn nearly all of it into heat. Cooling systems on the right remove that heat using fans, chilled water, and evaporation, which is where the water goes. A label at the bottom shows the rough split: most of the electricity runs the chips, a smaller share runs cooling and power delivery, and every watt ends as heat.</desc>
+      <rect x="150" y="40" width="590" height="230" rx="8" fill="#FFFFFF" stroke="#E3E3DD"/>
+      <text x="160" y="30" font-family="Inter,Arial,sans-serif" font-size="11" fill="#5A626C" font-weight="600">THE BUILDING</text>
+      <text x="14" y="30" font-family="Inter,Arial,sans-serif" font-size="11" fill="#5A626C" font-weight="600">1 · POWER IN</text>
+      <rect x="14" y="120" width="110" height="70" rx="6" fill="#0E1116"/>
+      <text x="69" y="150" font-family="Inter,Arial,sans-serif" font-size="12" fill="#FFFFFF" text-anchor="middle">the grid</text><text x="69" y="170" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#9AA1AB" text-anchor="middle">gas, coal, nuclear,</text><text x="69" y="184" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#9AA1AB" text-anchor="middle">wind, solar</text>
+      <path d="M126,155 L160,155" stroke="#14181D" stroke-width="1.5" marker-end="url(#dca-ar)"/>
+      <defs><marker id="dca-ar" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#14181D"/></marker></defs>
+      <rect x="166" y="125" width="84" height="60" rx="6" fill="#F4F5F2" stroke="#E3E3DD"/>
+      <text x="208" y="150" font-family="Inter,Arial,sans-serif" font-size="11.5" fill="#14181D" text-anchor="middle">substation</text><text x="208" y="166" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#5A626C" text-anchor="middle">and backup</text><text x="208" y="179" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#5A626C" text-anchor="middle">generators</text>
+      <path d="M252,155 L282,155" stroke="#14181D" stroke-width="1.5" marker-end="url(#dca-ar)"/>
+      <text x="286" y="72" font-family="Inter,Arial,sans-serif" font-size="11" fill="#5A626C" font-weight="600">2 · THE RACKS</text>
+      <g>
+        <rect x="286" y="84" width="36" height="150" rx="3" fill="#0E1116"/><rect x="330" y="84" width="36" height="150" rx="3" fill="#0E1116"/><rect x="374" y="84" width="36" height="150" rx="3" fill="#0E1116"/><rect x="418" y="84" width="36" height="150" rx="3" fill="#0E1116"/><rect x="462" y="84" width="36" height="150" rx="3" fill="#0E1116"/>
+        <rect x="290" y="92" width="28" height="6" fill="#FF3D8A"/><rect x="290" y="104" width="28" height="6" fill="#FF3D8A"/><rect x="290" y="116" width="28" height="6" fill="#FF3D8A"/>
+        <rect x="334" y="92" width="28" height="6" fill="#FF3D8A"/><rect x="334" y="104" width="28" height="6" fill="#FF3D8A"/><rect x="334" y="116" width="28" height="6" fill="#FF3D8A"/>
+        <rect x="378" y="92" width="28" height="6" fill="#FF3D8A"/><rect x="378" y="104" width="28" height="6" fill="#FF3D8A"/><rect x="378" y="116" width="28" height="6" fill="#FF3D8A"/>
+        <rect x="422" y="92" width="28" height="6" fill="#FF3D8A"/><rect x="422" y="104" width="28" height="6" fill="#FF3D8A"/><rect x="422" y="116" width="28" height="6" fill="#FF3D8A"/>
+        <rect x="466" y="92" width="28" height="6" fill="#FF3D8A"/><rect x="466" y="104" width="28" height="6" fill="#FF3D8A"/><rect x="466" y="116" width="28" height="6" fill="#FF3D8A"/>
+      </g>
+      <text x="392" y="252" font-family="Inter,Arial,sans-serif" font-size="11.5" fill="#14181D" text-anchor="middle">thousands of AI chips, running hot</text><text x="392" y="266" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#5A626C" text-anchor="middle" font-style="italic">nearly every watt in becomes heat</text>
+      <path d="M502,155 L536,155" stroke="#FF3D8A" stroke-width="1.5" marker-end="url(#dca-ar2)"/>
+      <defs><marker id="dca-ar2" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#FF3D8A"/></marker></defs>
+      <text x="540" y="72" font-family="Inter,Arial,sans-serif" font-size="11" fill="#5A626C" font-weight="600">3 · COOLING</text>
+      <rect x="540" y="84" width="186" height="150" rx="6" fill="#F4F5F2" stroke="#E3E3DD"/>
+      <text x="633" y="110" font-family="Inter,Arial,sans-serif" font-size="11.5" fill="#14181D" text-anchor="middle">fans and chilled water</text><text x="633" y="128" font-family="Inter,Arial,sans-serif" font-size="11.5" fill="#14181D" text-anchor="middle">carry the heat out</text><text x="633" y="158" font-family="Inter,Arial,sans-serif" font-size="11.5" fill="#14181D" text-anchor="middle">evaporative towers</text><text x="633" y="176" font-family="Inter,Arial,sans-serif" font-size="11.5" fill="#14181D" text-anchor="middle">use water to dump it</text><text x="633" y="206" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#D61F69" text-anchor="middle" font-style="italic">this is where the water goes</text>
+      <text x="14" y="300" font-family="Inter,Arial,sans-serif" font-size="11" fill="#5A626C">Rough split of the electricity: most of it runs the chips; a smaller share runs cooling and power delivery. All of it ends as heat.</text>
+    </svg>
+    <figcaption>Where the watts go. Power comes in from whatever the local grid burns, the chips turn almost all of it into heat, and the cooling system's job is to get that heat out of the building, often with water. The "AI" in an AI data center is the middle panel; the environmental cost is all three.</figcaption>
+  </figure>
+  <h3 class="sub" id="s2-3"><span>2.3</span> Two costs: training and inference</h3>
+  <p>To think clearly about AI's footprint, split it into two pieces that behave completely differently.</p>
+  <p><strong>Training</strong> is the cost of teaching the model: weeks or months of thousands of chips running flat out on most of the internet, until the billions of numbers inside the model stop being wrong. For a frontier model it's an energy bill in the gigawatt-hours and a money bill in the hundreds of millions of dollars. It's a big number. But it's paid once per model, and then spread across everything that model ever does.</p>
+  <p><strong>Inference</strong> is the cost of answering: every prompt, from every user, forever. Each one is tiny. In August 2025 Google published the first detailed measurement from a major company: the median text prompt to its Gemini app used <a class="inline" href="https://cloud.google.com/blog/products/infrastructure/measuring-the-environmental-impact-of-ai-inference" target="_blank" rel="noopener">0.24 watt-hours</a> of electricity and about 0.26 milliliters of water, which Google compared to nine seconds of television and five drops. OpenAI's chief executive gave a similar figure for an average ChatGPT query in a blog post that June, about 0.34 watt-hours. Independent researchers at Epoch AI landed near 0.3. So for an ordinary question to an ordinary chatbot, the honest number is a few tenths of a watt-hour: about what a microwave uses in a single second.</p>
+  <p>Then why does anyone care? Because of the multiplication. Let's do it.</p>
+  <p class="tablecap"><strong>Table 1 · The multiplication.</strong> Company-reported and independent figures for a typical text prompt, scaled up. The per-prompt numbers are the companies' own; the scale-up is arithmetic.</p>
+  <table class="risk pred">
+    <thead><tr><th>Scale</th><th>Energy per day at 0.3 Wh a prompt, 20 prompts a person</th><th>Roughly the same as</th></tr></thead>
+    <tbody>
+      <tr><td><b>You</b></td><td>6 Wh</td><td>Charging your phone halfway</td></tr>
+      <tr><td><b>This class</b> (45 people)</td><td>270 Wh</td><td>One load of laundry, washed cold</td></tr>
+      <tr><td><b>All of WWU</b> (about 16,000)</td><td>96 kWh</td><td>Three US homes for a day</td></tr>
+      <tr><td><b>800 million people</b>, every day, for a year</td><td>1.75 TWh</td><td>The yearly electricity of roughly 160,000 US homes</td></tr>
+    </tbody>
+  </table>
+  <p>Now two things that make the table an underestimate. First, the 0.3 figure is for a short text answer from a mid-sized model. Ask a frontier "reasoning" model to think for a minute before it answers, and independent estimates run to tens of watt-hours for a single reply; for those models, no company has published a number. Second, most AI use isn't a person typing a question. It's AI built into search results, email, spreadsheets, customer service, and code, firing on every keystroke whether you asked or not. That use is invisible to you and enormous in aggregate. The IEA's growth figures come from counting chips shipped and power drawn, not from adding up chat prompts, and that is why the total keeps rising even as each prompt gets cheaper. Google's own report says the energy of its median prompt fell 33 times in a year. Google's total electricity use went up anyway.</p>
+  <p>And a short text answer is the cheap end. An AI image costs more, a five-second AI video can cost thousands of times more than a text answer, and turning on reasoning multiplies the cost of text again. In the lab, you put those numbers side by side yourself.</p>
+  <figure class="diagram">
+    <svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="tit tid" style="width:100%;max-width:760px;height:auto;display:block;margin:0 auto">
+      <title id="tit">Training versus inference over the life of a model</title>
+      <desc id="tid">A chart with time along the bottom. On the left, a tall narrow dark bar labeled training: one big cost, paid once. To its right, a long pink band that starts thin and grows wider across the rest of the chart, labeled inference: a small cost, every prompt, forever, growing with users. A label near the right edge reads: the area under the pink band overtakes the dark bar.</desc>
+      <line x1="40" y1="190" x2="730" y2="190" stroke="#14181D" stroke-width="1.5"/>
+      <text x="730" y="210" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="11" fill="#5A626C">time →</text>
+      <rect x="60" y="40" width="34" height="150" fill="#0E1116"/>
+      <text x="77" y="30" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-size="14" font-weight="700" fill="#14181D">Training</text>
+      <text x="77" y="225" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" fill="#5A626C">one big cost, paid once</text>
+      <path d="M110,190 L110,182 C300,176 500,150 730,96 L730,190 Z" fill="#FF3D8A" opacity="0.85"/>
+      <text x="420" y="60" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-size="14" font-weight="700" fill="#14181D">Inference</text>
+      <text x="420" y="78" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" fill="#5A626C">a small cost, every prompt, forever, growing with users</text>
+      <text x="600" y="176" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="600" fill="#fff">this area wins</text>
+    </svg>
+    <figcaption>The shape of the two costs. Training is the tall bar everyone argues about. Inference is the band that gets wider every time a company adds users or wires AI into another product, and it's where the bill lives.</figcaption>
+  </figure>
+  <p><strong>Training vs. inference.</strong> Training: the one-time cost of building the model. Inference: the recurring cost of every answer. What people get wrong: they argue about the query. "A prompt uses less than a lightbulb" and "a prompt is boiling the oceans" are both about the query, and neither is the story. The story is small times billions times forever, and the second, invisible kind of use nobody counts as "using AI."</p>
+
+  <h3 class="sub" id="s2-4"><span>2.4</span> The externality: the neighbor's bill</h3>
+  <p>Here's the concept from this chapter you'll use most for the rest of the course. An <strong>externality</strong> is a cost, or a benefit, of an activity that falls on someone who wasn't part of the deal. Your prompt is free to you and profitable to the company. If the data center that answered it raises the electric bill of a family two counties away, that family paid for your prompt and never got a say. Economists have had the word for a century. Pollution is the classic example. Data centers are the current one.</p>
+  <p>Let's look at what happened. The biggest US grid is called PJM. It covers all or part of thirteen states, from Illinois to New Jersey, and it hosts more data centers than anywhere else on Earth. Once a year PJM runs an auction where power plants get paid to promise capacity for a future year, and that cost goes onto everyone's bill. In the auction for 2025 to 2026, the price jumped roughly nine times. PJM's independent market monitor, whose job is to watch the market for exactly this, <a class="inline" href="https://ieefa.org/resources/projected-data-center-growth-spurs-pjm-capacity-prices-factor-10" target="_blank" rel="noopener">estimated</a> that data centers were responsible for 63 percent of the increase, about $9.3 billion passed to customers. In July 2026, the <a class="inline" href="https://www.industrialinfo.com/iirenergy/industry-news/article/report-data-centers-create-about-us63-billion-in-electric-costs-for-pjm-customers--360334" target="_blank" rel="noopener">auction</a> for 2028 to 2029 cleared $16.4 billion, and the same monitor attributed about $6.3 billion of it to data centers. PJM would say only that the monitor's numbers are the monitor's own.</p>
+  <p>Now the other edge, because this chapter wouldn't be honest without it. A June 2026 working paper from the Electric Power Research Institute, an industry-funded lab, looked at 2015 through 2024 and found the opposite of what everyone assumed: over that decade, each doubling of data center capacity was associated with retail electricity prices going <a class="inline" href="https://fortune.com/2026/07/26/data-centers-electricity-costs-cheaper-7billion-buildout-ai-demand/" target="_blank" rel="noopener"><em>down</em></a> about 3.5 percent. Why? A grid has huge fixed costs, and a big new customer spreads them over more kilowatt-hours. The paper's own author warns the pattern reverses if the grid builds for AI demand that doesn't show up. So the externality can run in either direction, and which direction depends on a bet about the future that nobody on the residential side of the bill was asked to place.</p>
+
+  <figure class="diagram">
+    <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="dcb-t dcb-d" style="width:100%;max-width:760px;height:auto;display:block;margin:0 auto">
+      <title id="dcb-t">How a data center's demand ends up on a neighbor's bill</title>
+      <desc id="dcb-d">A flow from left to right. A data center adds large new demand to a regional grid. The grid operator must buy or build more capacity, and the cost of that capacity is spread across everyone on the grid through rates. The last box is a household that never used the data center, whose electricity bill rises. A note explains that this is an externality: a cost paid by people who were not part of the deal.</desc>
+      <rect x="14" y="60" width="150" height="110" rx="6" fill="#0E1116"/>
+      <text x="89" y="96" font-family="Inter,Arial,sans-serif" font-size="12" fill="#FFFFFF" text-anchor="middle">a new data center</text><text x="89" y="116" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#9AA1AB" text-anchor="middle">needs as much power</text><text x="89" y="130" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#9AA1AB" text-anchor="middle">as a small city,</text><text x="89" y="144" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#9AA1AB" text-anchor="middle">all day, every day</text>
+      <path d="M166,115 L196,115" stroke="#14181D" stroke-width="1.5" marker-end="url(#dcb-ar)"/>
+      <defs><marker id="dcb-ar" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#14181D"/></marker></defs>
+      <rect x="200" y="60" width="160" height="110" rx="6" fill="#FFFFFF" stroke="#E3E3DD"/>
+      <text x="280" y="96" font-family="Inter,Arial,sans-serif" font-size="12" fill="#14181D" text-anchor="middle">the grid operator</text><text x="280" y="116" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#5A626C" text-anchor="middle">must buy or build</text><text x="280" y="130" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#5A626C" text-anchor="middle">more capacity, and</text><text x="280" y="144" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#5A626C" text-anchor="middle">more power lines</text>
+      <path d="M362,115 L392,115" stroke="#14181D" stroke-width="1.5" marker-end="url(#dcb-ar)"/>
+      <rect x="396" y="60" width="160" height="110" rx="6" fill="#FFFFFF" stroke="#E3E3DD"/>
+      <text x="476" y="96" font-family="Inter,Arial,sans-serif" font-size="12" fill="#14181D" text-anchor="middle">the cost is spread</text><text x="476" y="116" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#5A626C" text-anchor="middle">across every customer</text><text x="476" y="130" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#5A626C" text-anchor="middle">through electricity</text><text x="476" y="144" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#5A626C" text-anchor="middle">rates</text>
+      <path d="M558,115 L588,115" stroke="#FF3D8A" stroke-width="1.5" marker-end="url(#dcb-ar2)"/>
+      <defs><marker id="dcb-ar2" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#FF3D8A"/></marker></defs>
+      <rect x="592" y="60" width="154" height="110" rx="6" fill="#FF3D8A"/>
+      <text x="669" y="96" font-family="Inter,Arial,sans-serif" font-size="12" fill="#FFFFFF" text-anchor="middle">a household</text><text x="669" y="116" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#FFFFFF" text-anchor="middle">that never used</text><text x="669" y="130" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#FFFFFF" text-anchor="middle">the data center</text><text x="669" y="150" font-family="Inter,Arial,sans-serif" font-size="12" fill="#FFFFFF" font-weight="700" text-anchor="middle">pays more</text>
+      <text x="14" y="210" font-family="Inter,Arial,sans-serif" font-size="11" fill="#5A626C">An externality: a cost paid by people who were not part of the deal. The data center's owner and its customers get the benefit;</text><text x="14" y="226" font-family="Inter,Arial,sans-serif" font-size="11" fill="#5A626C">the neighbors get part of the bill. Whether they should is a policy question, and <a class="inline" href="#s2-7">section 2.7</a> is about who gets to answer it.</text>
+    </svg>
+    <figcaption>The neighbor's bill, as a flow. Nothing in it requires anyone to behave badly. It's what happens when a very large new customer joins a shared system whose costs are split by rule.</figcaption>
+  </figure>
+  <p><strong>Externality.</strong> A cost or benefit that falls on someone outside the transaction. The neighboring town's higher power bill is one; so is a cheaper bill from a grid that spread its costs wider. What people get wrong: they think an externality is a side effect. It's a transfer. Someone pays, someone gains, and the whole point of the word is that the person paying didn't agree to.</p>
+
+  <h3 class="sub" id="s2-5"><span>2.5</span> The disclosure gap: the fog, and who benefits from it</h3>
+  <p>Now the part that trains the skill this course keeps sharpening. Try to find the per-prompt energy cost of the AI product you use most. Here's what you'll find. Google has published one number, for one product, measured one way. OpenAI's CEO gave a figure in a blog post, without the method. Mistral, a French company, published a full life-cycle estimate for one of its models in 2025. For the current frontier models from OpenAI, Anthropic, xAI, and most others, there is no first-party number at all, and every figure you'll see is an outside estimate. That is the <strong>disclosure gap</strong>: the absence of standard, published footprint data for the products that use the most.</p>
+  <p>Why the fog? Because disclosure is voluntary, the accounting rules are unsettled, and the companies hold the data. What counts: just the chips, or the cooling too? The idle servers waiting for peak load? Measured on which model, at what length of prompt, on which day? Every one of those choices moves the number, and the parties making the choices have preferences about what the number should look like. Even Google's number, the best we have, drew immediate criticism: it counts the water used on site to cool the chips, and leaves out the far larger amount of water used to generate the electricity in the first place. Google's five drops is a real measurement and an incomplete one, and both of those things are true.</p>
+  <p>The accounting rules add to the fog. Companies sort their emissions into three <strong>scopes</strong>. Scope 1 is what they burn themselves, like backup diesel generators. Scope 2 is the electricity they buy. Scope 3 is everything upstream and downstream, including the <strong>embodied carbon</strong> in a building's concrete and steel and in its chips, released before anything is switched on. Scopes 1 and 2 are where a company can show progress by buying clean power. Scope 3 is where a buildout shows up. Microsoft's 2024 sustainability report is the clearest <a class="inline" href="https://www.theregister.com/2024/05/16/microsoft_co2_emissions/" target="_blank" rel="noopener">example</a>: its Scope 1 and 2 emissions were down 6.3 percent from 2020, its Scope 3 emissions were up 30.9 percent, and its total was up 29.1 percent, which the company attributed mainly to building more data centers and the materials and hardware inside them. Microsoft gets credit for publishing that. It's what disclosure looks like when it works: the uncomfortable number is in the report.</p>
+  <p>Even a published number needs reading twice. Google's 0.24 watt-hours is a <strong>median</strong>: the middle prompt, with half above it and half below. A median is a sensible way to describe a typical request, and it says nothing about the heavy ones, the long reasoning sessions and the agents running for minutes, which is where much of the energy may sit. The total bill depends on the <strong>mean</strong>, the average across every request, and on how many requests there are. A <a class="inline" href="https://arxiv.org/abs/2603.00068" target="_blank" rel="noopener">2026 study</a> by Kai Ebert, Boris Gamazaychikov, Philipp Hacker, and Sasha Luccioni notes that the companies publishing per-prompt figures have not said how many prompts they serve or what a representative one looks like, and it calls for the full spread and the query volume, model by model. Choosing which statistic to publish is itself a decision.</p>
+  <p>This should feel familiar. In Chapter 4 we saw that a graph can only predict what research recorded. Here, the public can only judge what companies disclose, and the record has a shape someone chose. Who benefits from the fog? Ask it the way Question 2 asks it. A company with no published number can't be held to one. A critic with no published number can pick the scariest estimate. A utility with no published number can forecast whatever justifies the plant it wants to build. The fog has customers on every side.</p>
+  <p>Some governments have started pushing. On August 27, 2026, New Jersey's governor, Mikie Sherrill, signed a <a class="inline" href="https://news.bloomberglaw.com/states-of-play/new-jersey-joins-states-cracking-down-on-data-center-energy-use" target="_blank" rel="noopener">law</a> requiring data centers to report their energy and water use to state regulators every six months, saying the companies "treat their usage statistics like a trade secret." Notice the level: that's the building, not the prompt. The 2026 study found the same pattern around the world. Where rules exist, they mostly count facilities, not models, and no government yet requires companies to publish per-model inference energy for the public to see.</p>
+
+  <figure class="diagram">
+    <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="dcc-t dcc-d" style="width:100%;max-width:760px;height:auto;display:block;margin:0 auto">
+      <title id="dcc-t">The three scopes, and where a buildout shows up</title>
+      <desc id="dcc-d">Three labeled columns. Scope 1 is what a company burns itself, such as backup generators. Scope 2 is the electricity it buys. Scope 3 is everything upstream and downstream, including the concrete, steel, and chips of a new building. Beneath them, Microsoft's 2024 report in three bars: Scopes 1 and 2 down 6.3 percent from 2020, Scope 3 up 30.9 percent, total up 29.1 percent. A note reads: clean power buys progress in Scopes 1 and 2; a buildout shows up in Scope 3.</desc>
+      <text x="14" y="24" font-family="Inter,Arial,sans-serif" font-size="11" fill="#5A626C" font-weight="600">WHAT EACH SCOPE COUNTS</text>
+      <rect x="14" y="34" width="230" height="86" rx="6" fill="#FFFFFF" stroke="#E3E3DD"/>
+      <text x="28" y="56" font-family="Inter,Arial,sans-serif" font-size="12.5" fill="#14181D" font-weight="700">Scope 1</text><text x="28" y="76" font-family="Inter,Arial,sans-serif" font-size="11" fill="#5A626C">what the company burns itself:</text><text x="28" y="92" font-family="Inter,Arial,sans-serif" font-size="11" fill="#5A626C">backup diesel generators, vehicles</text>
+      <rect x="264" y="34" width="230" height="86" rx="6" fill="#FFFFFF" stroke="#E3E3DD"/>
+      <text x="278" y="56" font-family="Inter,Arial,sans-serif" font-size="12.5" fill="#14181D" font-weight="700">Scope 2</text><text x="278" y="76" font-family="Inter,Arial,sans-serif" font-size="11" fill="#5A626C">the electricity it buys:</text><text x="278" y="92" font-family="Inter,Arial,sans-serif" font-size="11" fill="#5A626C">the grid mix, or clean power on paper</text>
+      <rect x="514" y="34" width="232" height="86" rx="6" fill="#0E1116"/>
+      <text x="528" y="56" font-family="Inter,Arial,sans-serif" font-size="12.5" fill="#E4FF32" font-weight="700">Scope 3</text><text x="528" y="76" font-family="Inter,Arial,sans-serif" font-size="11" fill="#C9CED6">everything upstream and downstream:</text><text x="528" y="92" font-family="Inter,Arial,sans-serif" font-size="11" fill="#C9CED6">concrete, steel, chips, and the</text><text x="528" y="108" font-family="Inter,Arial,sans-serif" font-size="11" fill="#C9CED6">carbon released before switch-on</text>
+      <text x="14" y="150" font-family="Inter,Arial,sans-serif" font-size="11" fill="#5A626C" font-weight="600">MICROSOFT, 2024 REPORT, CHANGE SINCE 2020</text>
+      <line x1="380" y1="164" x2="380" y2="268" stroke="#E3E3DD"/>
+      <rect x="330" y="172" width="50" height="22" fill="#9AA1AB"/><text x="322" y="187" font-family="Inter,Arial,sans-serif" font-size="11.5" fill="#14181D" text-anchor="end">Scopes 1 and 2   −6.3%</text>
+      <rect x="380" y="206" width="246" height="22" fill="#FF3D8A"/><text x="634" y="221" font-family="Inter,Arial,sans-serif" font-size="11.5" fill="#14181D">Scope 3   +30.9%</text>
+      <rect x="380" y="240" width="232" height="22" fill="#0E1116"/><text x="620" y="255" font-family="Inter,Arial,sans-serif" font-size="11.5" fill="#14181D">Total   +29.1%</text>
+      <text x="14" y="290" font-family="Inter,Arial,sans-serif" font-size="11" fill="#5A626C">Buying clean power shows progress in Scopes 1 and 2. A buildout shows up in Scope 3, which is why the total went the other way.</text>
+    </svg>
+    <figcaption>The three scopes, with Microsoft's own 2024 numbers. Both halves of the report are true at once: less direct pollution, more total emissions, and the difference is the buildings.</figcaption>
+  </figure>
+  <p><strong>Disclosure gap.</strong> The absence of standardized, published footprint data for AI products; the reason honest estimates for the same question can differ by a factor of ten. What people get wrong: they treat the disagreement as a debate about facts. It's a debate conducted in the absence of facts that specific parties could publish and don't. The critical move isn't picking a side. It's asking who benefits from not knowing.</p>
+
+
+  <div class="tool">
+    <div class="label">The fog · one prompt, and what gets counted</div>
+    <p style="font-size:.92rem">One text prompt to a frontier model. The stages below are all real parts of what it costs; the question this section asks is which of them anybody publishes. Switch between the number a company reports and the number that exists, and watch the same prompt change size.</p>
+    <div class="chips">
+      <button type="button" class="chip on" id="fg-a" aria-pressed="true">What gets reported</button>
+      <button type="button" class="chip" id="fg-b" aria-pressed="false">What is actually spent</button>
+    </div>
+    <div class="stack" id="fg-stack"></div>
+    <div class="total"><span id="fg-label">Reported per prompt</span><span class="big" id="fg-total"><em>0.24</em> Wh</span></div>
+    <div class="verdict" id="fg-out" aria-live="polite"></div>
+    <p style="font-size:.85rem;color:var(--gray);margin-top:10px">Illustrative numbers in the right order of magnitude, built from the published estimates this section discusses. The point is the shape of the gap, not the decimals.</p>
+  </div>
+
+  <h3 class="sub" id="s2-6"><span>2.6</span> Right-sizing and the waste factor: the lever, and who holds it</h3>
+  <p>If the multiplication is the problem, where's the lever? Mostly not in personal guilt. Your yearly chatbot use plausibly costs less energy than a few hot showers, and in the lab you'll build the calculator that shows you why. The decisions that move gigawatts are made somewhere else.</p>
+  <p><strong>Right-sizing</strong> means matching the model to the task. A small model answering a simple question can use a tenth or less of the energy of a frontier model answering the same question just as well; the same estimates that put a reasoning reply in the tens of watt-hours put a lean model's reply well under one. The <strong>waste factor</strong> is everything we run that we didn't need: the answer regenerated and never read, the giant model summoned to fix a comma, the AI summary bolted onto a search you didn't want summarized. Both levers are real. And notice who's holding them. You choose which model you open. A product team chooses which model runs by default for a hundred million users, and whether the AI fires on every keystroke. A regulator chooses whether anyone has to publish the number. One of those three moves gigawatts.</p>
+  <p>Some researchers want to hand part of that dial back to users. The same 2026 study proposes a right to use a "green model": a setting, chosen once, that always routes you to the most energy-efficient model that can handle the task, with reasoning off by default and a visible energy cost when you turn it on. Notice what that proposal assumes: that the default, not the user, is where the energy is decided.</p>
+  <p><strong>Right-sizing and the waste factor.</strong> Right-sizing: the smallest model that does the job well. Waste factor: compute spent on outputs nobody needed. What people get wrong: they treat this as a personal virtue, like turning off lights. It's mostly a product decision. The default model in a product used by a hundred million people is the single biggest efficiency setting in the building, and the user never sees the dial.</p>
+
+  <h3 class="sub" id="s2-7"><span>2.7</span> Regulate the building, not the buzzword</h3>
+  <p>If AI's footprint is the problem, the obvious fix looks like an AI environmental law, and there have been attempts. In 2024, members of Congress introduced the Artificial Intelligence Environmental Impacts Act, which would have set up a <a class="inline" href="https://www.scientificamerican.com/article/generative-ai-could-generate-millions-more-tons-of-e-waste-by-2030" target="_blank" rel="noopener">voluntary reporting system</a> for AI's environmental effects. It did not become law. This chapter argues for a wider target: rules for the physical footprint of all technology, with AI inside them, not beside them.</p>
+  <p>Here's the case. First, the buildings are shared. Streaming, cloud storage, social feeds, and AI can run on the same kind of hardware in the same kind of building, and as the 2026 study above points out, a facility's meter can't tell which workload used the power. Second, some of the heaviest digital loads aren't AI at all. In February 2024, the US Energy Information Administration estimated that cryptocurrency mining used 0.6 to 2.3 percent of the country's electricity. When the agency tried an emergency survey of miners' power use, an industry group and a mining company sued, and the government <a class="inline" href="https://datacenterdynamics.com/en/news/us-doe-cancels-plan-to-survey-crypto-miners-electricity-use-deletes-data" target="_blank" rel="noopener">dropped the survey</a> and agreed to destroy the data it had collected. That's the disclosure gap from <a class="inline" href="#s2-5">section 2.5</a> with no AI involved. Third, the hardware problem belongs to everyone: most of those 62 million tonnes of e-waste are phones, screens, laptops, and appliances, not AI servers. And fourth, "AI" is partly a marketing label. A rule keyed to the word invites companies to argue their way in or out of it.</p>
+  <p>A technology-wide rule already has a model. The European Union's Energy Efficiency Directive requires every data center drawing 500 kilowatts or more to report energy use and other sustainability measures to a central EU database, whatever runs inside it. New Jersey's August 2026 law covers data centers, not just AI companies. Both regulate the building. The same idea could extend to devices and services: an efficiency label like the ones on refrigerators, which is exactly what the AI Energy Score was modeled on, applied to any heavy digital service.</p>
+  <p>Now the strongest objection, and it comes from this chapter too. A building-level number hides what matters most inside the building. A data center running quick searches and one running long reasoning sessions can report similar totals while doing very different work per request, which is why the <a class="inline" href="https://arxiv.org/abs/2603.00068" target="_blank" rel="noopener">2026 study</a> argues for model-level disclosure on top of facility rules. So the defensible position has two layers: a floor for all of technology, where every large data center, mining operation, and device maker reports energy, water, and waste, and product-level labels for the services where one request can cost thousands of times another, with AI first in line. The cost is real. It means paperwork for every tech company, including ones that never touched AI, and a fight with industries that have already shown they will sue rather than report.</p>
+  <p><strong>Technology-neutral regulation.</strong> Rules written around the physical footprint, meaning the building, the grid connection, and the device, rather than the kind of software running on it. What people get wrong: they think singling out AI is the tough option. A rule that only counts AI leaves streaming, mining, and hardware waste uncounted, and gives every company a reason to argue its workload isn't really AI. The tough option is counting everything, then asking for more detail where one request can cost thousands of times another.</p>
+
+  <div class="callout tryit">
+    <div class="label">Try it · practice for Friday's quiz. Five situations, none from this chapter's case. For each, name the concept: training, inference, externality, disclosure gap, or right-sizing. Decide, then click.</div>
+    <details><summary>1. A company spends four months and $300 million running 50,000 chips to build its next model.</summary><p><strong>Training.</strong> One big cost, paid once, then spread across everything the model ever does. The number sounds scary and it's the smaller story.</p></details>
+    <details><summary>2. An email app adds a "summarize this thread" button that runs automatically on every email you open.</summary><p><strong>Inference, and the invisible kind.</strong> Nobody typed a prompt. It fires on every open, for every user, forever. This is where the multiplication lives, and it's why prompt-counting undercounts.</p></details>
+    <details><summary>3. A county approves a data center; two years later, households in the next county see a capacity charge on their bills.</summary><p><strong>Externality.</strong> A cost landing on people who weren't part of the deal. Notice it's the next county: the one that got the tax revenue isn't the one paying.</p></details>
+    <details><summary>4. Two respected research groups estimate the footprint of the same chatbot and differ by ten times. Neither has the company's data.</summary><p><strong>Disclosure gap.</strong> The disagreement isn't a scientific controversy. It's a missing number that one party has and hasn't published.</p></details>
+    <details><summary>5. A university's help desk routes password resets to a small model and only sends complex questions to the large one.</summary><p><strong>Right-sizing, and the trap item.</strong> The same answer, a fraction of the energy, and notice who made the decision: not the students, the product team. That's the lever this chapter says matters most.</p></details>
+  </div>
+</section>
+
+<section id="s3">
+  <div class="shead"><span class="num">3</span><h2>The case: the buildout</h2></div>
+  <h3 class="sub" id="s3-background"><span>Background</span> The biggest construction project in the country</h3>
+  <p class="lead">On September 20, 2024, a power company called Constellation <a class="inline" href="https://www.cbsnews.com/amp/news/restart-three-mile-island-microsoft" target="_blank" rel="noopener">announced</a> it would restart a nuclear reactor in Pennsylvania that had been shut down for five years because it lost money. The plant was Three Mile Island. Yes, that Three Mile Island: the site of the worst nuclear accident in American history, in 1979. The reactor being restarted, Unit 1, wasn't the one that failed. But the name was the point of the headline, and the customer was the point of the story. Microsoft had signed a twenty-year contract to buy the plant's entire output, 835 megawatts, to power its data centers.</p>
+  <p>Here's what happened around it. A month later Google <a class="inline" href="https://www.nucnet.org/news/google-signs-world-first-deal-to-buy-power-from-small-modular-reactors-for-data-centres-10-2-2024" target="_blank" rel="noopener">announced a deal</a> with a startup called Kairos Power to build a fleet of small nuclear reactors for the same purpose. Amazon bought a data center campus next to another Pennsylvania nuclear plant. Meta went looking for its own. Restarting Three Mile Island is a $1.6 billion project, backed by a <a class="inline" href="https://world-nuclear-news.org/articles/constellation-secures-usd1-billion-loan-for-reactor-restart" target="_blank" rel="noopener">$1 billion federal loan</a>, now aiming to come online as early as 2027 under the plant's new name, the Crane Clean Energy Center. When software companies start commissioning nuclear plants, the machine has stopped being a metaphor.</p>
+  <p>And the reactor is a rounding error in the spending. The four largest cloud companies, Amazon, Microsoft, Google's parent Alphabet, and Meta, have each guided to <a class="inline" href="https://thenextweb.com/news/alphabet-amazon-meta-q1-2026-earnings-ai-cloud" target="_blank" rel="noopener">capital spending</a> on the order of $125 billion to $200 billion this year, most of it on data centers. Together that's roughly $650 billion to $725 billion in a single year, by Bloomberg's February count and the Financial Times's tally after spring earnings. McKinsey has projected $7 trillion in data-center construction worldwide by 2030. That's spending on the scale of national highway systems, by companies that a decade ago sold search ads and cloud storage.</p>
+  <p>The buildout also has neighbors, and by 2026 the neighbors had noticed. Polls found a majority of Americans expected their electricity bill to rise if a data center was built nearby, and local opposition was delaying or blocking projects across the country. In New Jersey alone, <a class="inline" href="https://newjerseymonitor.com/2026/08/27/data-centers-water-energy-use-law/" target="_blank" rel="noopener">more than three dozen towns</a> voted to block new data centers. Section 2.4 gave the PJM numbers. States started acting: New Jersey <a class="inline" href="https://news.bgov.com/daily-tax-report-state/new-jersey-joins-states-cracking-down-on-data-center-energy-use" target="_blank" rel="noopener">passed a law in July 2026</a> putting large data centers in their own rate class so they pay for their own grid upgrades, and in August <a class="inline" href="https://newjerseymonitor.com/2026/08/27/data-centers-water-energy-use-law/" target="_blank" rel="noopener">a second one</a> requiring them to report their energy and water use. In March 2026, seven companies, Amazon, Google, Meta, Microsoft, OpenAI, Oracle, and xAI, signed a voluntary <a class="inline" href="https://www.kwtx.com/2026/03/09/amazon-google-meta-others-agree-foot-bill-ai-power-demands-under-new-white-house-deal/" target="_blank" rel="noopener">pledge</a> at the White House to build, bring, or buy the electricity their data centers need and cover the grid upgrades themselves rather than passing the cost to ratepayers. Voluntary is the word to sit on. It has no enforcement.</p>
+
+  <p>The neighbors' list goes beyond the bill. Near Memphis, xAI's supercomputer was found running dozens of methane gas generators that an environmental law group says regulators never approved, according to <a class="inline" href="https://www.technologyreview.com/2025/05/20/1116327/ai-energy-usage-climate-footprint-big-tech/" target="_blank" rel="noopener">MIT Technology Review</a>. Water is the sharpest worry where it is already scarce, which is why the same magazine <a class="inline" href="https://www.technologyreview.com/2025/05/20/1116287/ai-data-centers-nevada-water-reno-computing-environmental-impact/" target="_blank" rel="noopener">followed the data center boom into the Nevada desert</a>. And the tax breaks that bring the buildings in are paid for by everyone else: in Washington, the governor proposed <a class="inline" href="https://columbiabasinherald.com/news/2026/feb/02/washington-lawmakers-push-to-regulate-data-centers/" target="_blank" rel="noopener">ending one data center tax break</a> to save the state about $63 million. None of this is unique to AI. The same buildings run streaming and cloud storage, and section 2.7's crypto miners sued rather than report their power use. But AI is the reason so many are being built so fast.</p>
+
+  <figure class="diagram">
+    <!-- Image slot: data center buildings directly beside houses, such as in Loudoun County, Virginia, the largest data center market in the country. A Creative Commons photo from Wikimedia Commons. Add attribution to the caption, then uncomment.
+    <img src="data-center-neighbors.jpg" alt="Large gray data center buildings directly behind a row of suburban houses." loading="lazy" style="max-width:440px;width:100%;height:auto;display:block;margin:0 auto;border:1px solid var(--rule)">
+    -->
+    <figcaption>The neighbors. In parts of Northern Virginia, data centers sit across the street from houses. The bill, the noise, and the transmission lines are the part of the buildout that never shows up in a prompt. [Image pending: insert a licensed photo with attribution.]</figcaption>
+  </figure>
+  <figure class="diagram">
+    <img src="three-mile-island.jpg" alt="Aerial view of Three Mile Island: two tall cooling towers, two round reactor buildings, offices, and parking lots on an island in the Susquehanna River." loading="lazy" style="max-width:440px;width:100%;height:auto;display:block;margin:0 auto;border:1px solid var(--rule)">
+    <figcaption>Three Mile Island, Pennsylvania. Unit 1 is being restarted for Microsoft; Unit 2, which partially melted down in 1979, never ran again. <span style="color:var(--gray)">Photo: U.S. Department of Energy, public domain, via Wikimedia Commons.</span></figcaption>
+  </figure>
+  <h3 class="sub" id="s3-the-other-edge"><span>The other edge:</span> AI as a customer for clean power</h3>
+  <p>There's a better story inside the buildout, and it deserves the same care as the costs. AI companies need enormous amounts of power that never switches off, and they can pay for it on long contracts. That has made them some of the most important customers clean energy has. A reactor that closed for lack of buyers is coming back because Microsoft signed for twenty years, and Google is backing a new generation of small reactors. By the International Energy Agency's <a class="inline" href="https://www.iea.org/reports/energy-and-ai/energy-supply-for-ai" target="_blank" rel="noopener">projection</a>, renewables will meet nearly half of the growth in data center electricity through 2030, some of it financed by tech companies' power contracts, and nuclear's role grows toward the end of the decade. AI can also cut energy directly: in 2016, Google <a class="inline" href="https://deepmind.google/blog/deepmind-ai-reduces-google-data-centre-cooling-bill-40/" target="_blank" rel="noopener">said</a> DeepMind's software reduced the energy used to cool its data centers by up to 40 percent.</p>
+  <p>Now the counterweight. Today, by the IEA's count, the electricity data centers actually use is about 30 percent coal, 27 percent renewables, 26 percent natural gas, and 15 percent nuclear, and gas and coal together are expected to meet more than 40 percent of the growth to 2030. In the United States, <a class="inline" href="https://restservice.epri.com/publicattachment/97025" target="_blank" rel="noopener">EPRI's projections</a> have natural gas dominating new supply under current policies. And notice the IEA's careful wording: it counts the power a building actually draws from its local grid, not the clean power a company has bought on paper somewhere else. Those can be very different numbers, which is <a class="inline" href="#s2-5">section 2.5</a>'s lesson again.</p>
+  <p>So the buildout is speeding up two things at once: the clean-energy buildout and the demand for fossil power. Which one wins isn't a fact about AI. It's a set of choices about where buildings go, what power they're required to buy, and what they're required to report, which is why <a class="inline" href="#s2-7">section 2.7</a> matters.</p>
+  <p><strong>The five critical AI questions, run on this case:</strong></p>
+
+  <h3 class="sub" id="s3-what-this-ai-is-and-how-it-w"><span>What this AI is, and how it works</span> Question 1: what is the AI system, and what does it do?</h3>
+  <p>This week the "system" isn't one model. It's the substrate every model runs on: the chips, the buildings, the power, and the water behind both training and inference, owned by a handful of companies. Let's run the AI systems model on the buildout itself:</p>
+  <ul class="ideas">
+    <li><strong>Data:</strong> the demand forecast. Every reactor, every transmission line, and every capacity auction rests on a guess about how much AI people will use in 2030, and the guess is made by the companies selling the AI.</li>
+    <li><strong>Model:</strong> not one model but all of them, from the lean ones that answer in a fraction of a watt-hour to the reasoning ones that don't publish a number, plus the invisible AI wired into search, email, and code.</li>
+    <li><strong>Output:</strong> answers, images, code, and a physical footprint: hundreds of megawatts per campus, and a demand curve that utilities are now building to.</li>
+    <li><strong>Feedback loop:</strong> more users justify more buildings, more buildings lower the cost per answer, cheaper answers get wired into more products, which brings more use. Efficiency per prompt fell 33 times in a year at Google and total demand rose. That loop has a name in economics, and Chapter 9 gives it.</li>
+    <li><strong>Humans:</strong> the product teams setting the default model, the utilities forecasting the load, the regulators deciding who pays for the wires, the county boards approving the permits, and the families two counties over who see the capacity charge and never sent a prompt.</li>
+  </ul>
+
+  <h3 class="sub" id="s3-who-benefits-and-who-doesn-t"><span>Who benefits, and who doesn't</span> Question 2: why does it exist, and who benefits?</h3>
+  <p>The buildout exists because the companies expect the models to pay for it many times over, and because they believe the company with the most compute wins. Who benefits: shareholders first, if the bet pays. The construction trades and chip makers, immediately, whether it pays or not. The towns that host the buildings get tax revenue and a few hundred permanent jobs; the county next door gets the capacity charge. In Washington, the governor's workgroup found data centers in Quincy and East Wenatchee <a class="inline" href="https://www.spokesman.com/stories/2026/jan/25/are-data-centers-raising-your-energy-bill-wa-lawma/" target="_blank" rel="noopener">raised property values and helped fund local infrastructure</a>, while the state's tax break for them was costing enough that the governor proposed cutting it. And the nuclear industry, which spent a decade closing plants for lack of customers, suddenly has one with a twenty-year contract and a federal loan. If you want to know why Three Mile Island is coming back, don't ask about safety or climate. Ask who needed 835 megawatts, every hour, for twenty years, and could pay for it.</p>
+
+  <h3 class="sub" id="s3-when-it-fails-who-finds-out"><span>When it fails, who finds out</span> Question 3: what happens when it fails, and who finds out?</h3>
+  <p>Two failures, in opposite directions, and both are slow. The first: demand shows up, the grid wasn't ready, and the cost shows up on residential bills as capacity charges that arrive years after the ribbon-cutting, with no line item that says "data center." Who finds out? The <a class="inline" href="https://www.industrialinfo.com/news/article/report-data-centers-create-about-us63-billion-in-electric-costs-for-pjm-customers--360334" target="_blank" rel="noopener">market monitor</a>, in an annual report most people never read, and the families, on a bill they can't decode. The second: demand doesn't show up. The grid built for a boom that fizzled, and the fixed costs get spread over fewer kilowatt-hours, which is the <a class="inline" href="https://restservice.epri.com/publicattachment/98650" target="_blank" rel="noopener">EPRI paper's</a> warning turned real; the investor Mark Cuban's phrase for the empty buildings was <a class="inline" href="https://247wallst.com/investing/2026/07/22/mark-cuban-a-lot-of-data-centers-are-going-to-be-turned-into-pickleball-courts/" target="_blank" rel="noopener">pickleball courts</a>. Who finds out? Everyone, late, on the same bill. Either way the failure arrives in a utility rate case, not a headline, and because nobody publishes per-prompt costs, even then nobody can say for sure which prompt, which product, or which company put it there. This is the book's clearest case of a failure designed to be hard to see.</p>
+
+  <h3 class="sub" id="s3-business-implications"><span>Business implications</span> What this means for a company that runs on AI</h3>
+  <p>Most businesses will never build a data center, but almost every one now buys compute from someone who did, and the case lands on their desks in three ways. First, cost: inference is a bill that grows with use, so a company that puts a chatbot in front of every customer has signed up for a utility it doesn't control the price of. Right-sizing, <a class="inline" href="#s2-6">section 2.6</a>, is the lever, and it's a product decision, not an engineering afterthought. Second, reporting: a growing number of customers, investors, and now states ask for a company's AI footprint, and the honest answer for most is "our vendor won't tell us," which is a weak answer to give a regulator. Third, location: where the compute runs decides what it burns, and a company can choose a provider and a region the way it chooses a shipping partner. The costs of doing this are a smaller default model, a harder vendor conversation, and a number in a report that someone can hold you to. The cost of ignoring it is being the company whose customers' chatbot ran on the plant that raised the neighborhood's bill.</p>
+  <h3 class="sub" id="s3-societal-implications"><span>Societal implications</span> Question 4: who's saying that, and how would we know?</h3>
+  <p>Three claims, three sources, each with something to gain. "Data centers are raising your bill" is said by PJM's market monitor, whose job is to find problems, and by consumer advocates, who exist to say it; the $9.3 billion figure is theirs. "Data centers lowered your bill for a decade" is said in a <a class="inline" href="https://www.publicpower.org/node/30525" target="_blank" rel="noopener">working paper</a> from a research institute funded by the electric industry; their finding is real and it stops in 2024. "It's not AI, it's bad market design" is said by SemiAnalysis, an industry research firm whose customers build data centers, and they argue the PJM price spike came from the auction's rules more than the load. Every one of those is checkable, and here's what would settle it: a per-product energy disclosure from the companies, and a per-customer cost allocation from the grid. One of those the companies could publish tomorrow. The other is what New Jersey's laws are starting to force, one building at a time. Watch both. By December, either more companies will have published a number, or they won't, and that outcome is itself the answer to Question 4.</p>
+
+  <h3 class="sub" id="s3-how-to-make-it-beneficial"><span>How to make it beneficial</span> Question 5: keep it, fix it, or drop it, and what does that cost?</h3>
+  <ul class="decide">
+    <li><strong>Keep building:</strong> this is the case the companies make. The benefits are real (Chapter 4 just showed you one), and the alternative to building here may be building on someone else's grid with worse rules. The cost is that every unpriced externality in this chapter keeps landing where it lands, the demand forecast that justifies the reactor is written by the people selling the AI, and a town that wanted to say no doesn't get to.</li>
+    <li><strong>Fix it:</strong> three fixes, each with a price. Require disclosure of energy, water, and waste for every large data center and every heavy digital service, AI or not, with per-product detail where requests vary most, which costs the companies numbers they can then be held to. Put large data centers in their own rate class, as New Jersey did, which costs the companies the subsidy they've been getting and may send some buildings to other states. Put the town in the room before the permit, which costs speed, and speed is what the race rewards. The voluntary pledge is the companies offering fix two without the enforcement.</li>
+    <li><strong>Drop it:</strong> a moratorium, or a town simply saying no. More than three dozen New Jersey towns have voted to block new data centers, and <a class="inline" href="https://news.bgov.com/daily-tax-report-state/new-jersey-joins-states-cracking-down-on-data-center-energy-use" target="_blank" rel="noopener">New York</a> became the first state to ban new data center development for a year. The case for it: a town that says no keeps its water, its grid capacity, its land, and its leverage, and refusal is the one move that forces the industry back with a better offer. The cost, said out loud: the tax revenue and jobs the town would have had, the tools that run on the compute, and the chance the building moves somewhere with fewer rules and a dirtier grid.</li>
+  </ul>
+  <div class="concept">
+    <div class="term">How to make it good</div>
+    <p>There is no free version of the buildout, and no version where it's only AI's problem. <em>Fix</em> it before the next building, not after: disclosure of energy, water, and waste for every large data center, whatever runs inside; a separate rate class so the neighbor's bill doesn't pay for the data center's power; and the town in the room before the permit, with a real right to say no. <em>Drop</em> the largest model for the smallest task, because right-sizing is the lever a company actually controls. <em>Keep</em> what's left only on those terms. The cost is numbers the companies can be held to, a subsidy they lose, slower permits, and some buildings that never get built, which is what a good version looks like.</p>
+  </div>
+  <h3 class="sub" id="s3-thinking-critically"><span>Thinking critically</span> The five critical AI questions, on this case, by you</h3>
+  <div class="ticket">
+    <div class="label">Thinking critically · for Monday's discussion · midterm week: the midterm is Wednesday, and Lab 5 is take-home · one question each, answered by you, not by the chapter</div>
+    <ol>
+      <li><strong>What is it, and what does it do?</strong> This week's system is a building, not a model. Draw the five parts for a data center anyway (what's the data, the model, the output, the loop, the humans?) and say which part the environmental cost actually lives in.</li>
+      <li><strong>Why does it exist, and who benefits?</strong> The neighbor's bill is an externality: the owner and the customers benefit, someone else pays. Name three parties who benefit from a new data center and three who pay, and say whether any name appears on both lists.</li>
+      <li><strong>What happens when it fails, and who finds out?</strong> The disclosure gap means the number that matters is one nobody publishes. Name the number, say who has it, and say who would have to find out for it to change; then say what it would take for that to happen in Whatcom County.</li>
+      <li><strong>Who's saying that, and how would we know?</strong> Microsoft's report says emissions are down and up in the same document, and both are true. Pick one company's clean-power claim from the news this month and say what scope it's about, who's saying it, and what would settle it.</li>
+      <li><strong>Keep it, fix it, or drop it, and what does that cost?</strong> Right-sizing is the lever a company actually controls. For one AI use you're part of (at work, at school, on your phone), keep, fix, or drop it on cost grounds, and say what the fix costs in the one thing the chapter says companies won't give up: convenience.</li>
+    </ol>
+  </div>
+  <div class="concept">
+    <div class="term">The takeaway from the case</div>
+    <p>Notice where the argument actually lives. Not in your single prompt, which is a few tenths of a watt-hour, and not only in AI, since the same buildings run your streaming, your games, and your cloud backups. The argument lives in the multiplication, in the bill two counties over, and in the fact that the one number that would settle it is a number the companies have and mostly won't publish. Run the five questions and the environmental debate stops being "AI is boiling the oceans" versus "a prompt is nothing," and becomes: which building, whose grid, who pays, who published, and what would it cost to fix. (As of September 15, 2026. The capacity auctions, the disclosures, and the reactor's restart date will all move.)</p>
+  </div>
+</section>
+
+<section id="s4">
+  <div class="shead"><span class="num">4</span><h2>Decide: right-size what we control, demand disclosure for what we don't</h2></div>
+  <p>Deciding here means resisting the two easy exits. Exit one: "AI is an environmental catastrophe, log off." That doesn't survive the per-prompt numbers, or an honest comparison to the rest of a digital life; for many people streaming and gaming are the bigger bill, and they run in the same buildings. Exit two: "a prompt is a rounding error, nothing to see." That doesn't survive the multiplication, the buildout, or the capacity charge in Ohio. The defensible position lives between them and has two parts, and the lab puts numbers on both: right-size what we control, and demand disclosure for what we don't. Say both halves, and when you demand disclosure, demand it of the whole building, not just the part with AI in the name. Then say what each costs you, because "the companies should publish their numbers" is free to say and "I'll use the small model by default" is not.</p>
+  <h3 class="sub" id="s4-1"><span>4.1</span> Three takeaways</h3>
+  <h3>Argue about the multiplication, not the query</h3>
+  <p>Whoever is arguing about a single prompt, on either side, is arguing about the wrong number. The per-prompt figure is small and published. The total is large and growing, and it's driven by product defaults and invisible use, not by your questions. From now on, when someone quotes a per-query number at you, the trained reflex is to ask: times how many, times how often, chosen by whom?</p>
+  <h3>Find the building, then find the bill</h3>
+  <p>Every AI system in this book has a street address. When the next data center is announced near you, and one will be, the questions are the same ones we ran this week: whose grid, whose water, who gets the tax revenue, who gets the capacity charge, and who was in the room when the permit was signed. The word for the cost that lands outside the room is externality, and you'll use it in five more chapters.</p>
+  <h3>The fog is the finding</h3>
+  <p>When the two sides of a debate differ by a factor of ten and neither has the company's data, don't pick a side. Ask who has the number and why they haven't published it. Chapter 4 said a graph can only predict what research recorded. This chapter says the public can only judge what companies disclose. The habit is the same: look at the shape of the record before you trust anything drawn from it.</p>
+</section>
+
+<section id="s5">
+  <div class="shead"><span class="num">5</span><h2>Key terms</h2></div>
+  <div class="terms">
+    <div class="term-card"><div class="t">Data center</div><p>The physical building where nearly everything online already runs, and where AI now runs too. "The cloud" is a marketing word for it.</p></div>
+    <div class="term-card"><div class="t">Training</div><p>The one-time cost of building a model: thousands of chips, weeks or months, an energy bill in the gigawatt-hours. Paid once, then spread across everything the model does.</p></div>
+    <div class="term-card"><div class="t">Inference</div><p>The recurring cost of every answer, forever. Tiny per prompt, enormous in total, and growing with every product that wires AI in by default.</p></div>
+    <div class="term-card"><div class="t">The multiplication</div><p>Small, times billions, times forever. The reason the query is never the story, and the reason Google's total went up while its per-prompt number fell 33 times.</p></div>
+    <div class="term-card"><div class="t">Externality</div><p>A cost or benefit that falls on someone outside the transaction. The neighboring county's capacity charge; also the cheaper bill from a grid that spread its fixed costs. This course's most reusable economics concept.</p></div>
+    <div class="term-card"><div class="t">Capacity market</div><p>PJM's yearly auction where power plants are paid to promise future supply. Its cost goes on every bill in thirteen states, and it's where data center demand showed up first.</p></div>
+    <div class="term-card"><div class="t">Disclosure gap</div><p>The absence of standardized, published footprint data for AI products. A fog with beneficiaries on every side, and the reason honest estimates disagree by ten times.</p></div>
+    <div class="term-card"><div class="t">Scope 3 and embodied carbon</div><p>Scope 1 is what a company burns, Scope 2 the electricity it buys, Scope 3 everything else, including the carbon built into concrete, steel, and chips. The buildout shows up in Scope 3.</p></div>
+    <div class="term-card"><div class="t">Median vs. mean</div><p>The median is the middle request; the mean is the average of all of them. A median can look tiny while a heavy tail drives the total. Always ask which one you're reading.</p></div>
+    <div class="term-card"><div class="t">Technology-neutral regulation</div><p>Rules aimed at the physical footprint of all technology, the building, the grid connection, the device, rather than at AI alone. The EU's rule for every data center over 500 kW is one model.</p></div>
+    <div class="term-card"><div class="t">Right-sizing</div><p>Matching model size to task. The biggest efficiency lever in the building, and the product team holds it, not the user.</p></div>
+    <div class="term-card"><div class="t">Waste factor</div><p>Compute spent on outputs nobody needed: unread regenerations, oversized models on trivial tasks, AI summaries nobody asked for.</p></div>
+    <div class="term-card"><div class="t">The buildout</div><p>The 2024 to 2030 spending spree on AI data centers, on the order of hundreds of billions of dollars a year, restarting nuclear plants and reshaping grids. The main case.</p></div>
+  </div>
+</section>
+
+
+
+<details class="srcnote">
+  <summary>Sources &amp; verification</summary>
+  <div class="srcbody">
+    <p class="srcintro">Re-verified 16 September 2026, with corrections to the capital-spending figures, the attribution of the $6.3 billion estimate, and the EPRI date. The Harvard Salata poll, the SemiAnalysis argument and McKinsey's $7 trillion are carried from the 15 September check. The auctions, disclosures and restart date will move.</p>
+    <dl>
+      <dt>Per-prompt figures</dt>
+      <dd>Google's median Gemini Apps text prompt (0.24 Wh, 0.26 mL water, 0.03 gCO<sub>2</sub>e, and the 33x one-year reduction) is from Google's August 2025 technical paper and blog post (linked; Elsworth et al., arXiv 2508.15734), and is Google's own measurement; the on-site-only water critique is as reported in coverage of the paper (implicator.ai and others, August 2025). The 0.34 Wh ChatGPT figure is from Sam Altman's June 2025 blog post; the roughly 0.3 Wh figure is Epoch AI's February 2025 estimate; Mistral's life-cycle disclosure is July 2025. "Tens of watt-hours" for reasoning replies is a range of independent estimates as of mid-2026, not a company figure, and no first-party number exists for current OpenAI, Anthropic or xAI flagships. Table 1 is arithmetic on 0.3 Wh; the household equivalent uses about 10,800 kWh per US home per year.</dd>
+
+      <dt>Totals</dt>
+      <dd>IEA, <i>Energy and AI</i> (April 2025): 415 TWh in 2024 to about 945 TWh in 2030, data centers under a tenth of global demand growth, and the US and China near 80 percent of data center growth. Lawrence Berkeley National Laboratory, <i>2024 United States Data Center Energy Usage Report</i> (December 2024, linked): 58 TWh in 2014, about 60 through 2016, 76 in 2018, 176 (4.4 percent) in 2023, more than doubling 2017 to 2023 largely from AI servers, and 6.7 to 12 percent by 2028.</dd>
+
+      <dt>Comparisons and e-waste (2.1&ndash;2.3)</dt>
+      <dd>Amazon Web Services' 2006 launch is historical. The 36 gCO<sub>2</sub> per streaming hour is the IEA's revised 2019 estimate (Kamiya, IEA commentary, updated December 2020, linked), which includes devices and networks, so the comparison with Google's data-center-side 0.03 gCO<sub>2</sub>e is flagged as rough in the text. <i>Global E-waste Monitor 2024</i> (UNITAR and ITU, March 2024, linked): 62 Mt in 2022, 22.3 percent documented as recycled; Wang et al., "E-waste challenges of generative artificial intelligence," <i>Nature Computational Science</i>, October 2024 (via MIT Technology Review, linked): 1.2 to 5.0 Mt cumulative by 2030. MIT Technology Review, "We did the math on AI's energy footprint," May 20, 2025 (linked): 114 J, 6,706 J, 2,282 J, 3.4 MJ and the 700x comparison. Ebert, Gamazaychikov, Hacker and Luccioni, "The Global Landscape of Environmental AI Regulation," arXiv 2603.00068 (FAccT 2026, linked), for the AI Energy Score reasoning average (about 30x), the missing query-volume and representative-prompt data, the facility-versus-model finding and the green-model proposal.</dd>
+
+      <dt>Disclosure (2.5)</dt>
+      <dd>Microsoft 2024 Environmental Sustainability Report (FY2023) as reported by The Register, May 16, 2024 (linked): Scope 1 and 2 down 6.3 percent, Scope 3 up 30.9 percent, total up 29.1 percent from 2020. New Jersey's disclosure law and Governor Sherrill's quotation as reported by Bloomberg Law, August 27, 2026 (linked).</dd>
+
+      <dt>The buildout</dt>
+      <dd>Constellation's September 20, 2024 announcement (835 MW, 20-year Microsoft agreement, Crane Clean Energy Center; $1.6 billion cost estimate and the $1 billion DOE loan closed November 2025, as reported by World Nuclear News and others; the restart target moved from 2028 to as early as 2027, and Constellation sought further FERC help in April 2026). Google and Kairos Power, October 2024. Amazon's Susquehanna campus, March 2024. The 2026 capital-spending figures are the companies' own guidance as reported after first-quarter earnings (Amazon about $200 billion, Alphabet $180 to 190 billion, Meta $125 to 145 billion, Microsoft near $190 billion by the <i>Financial Times</i>'s tally), with the roughly $650 billion total from Bloomberg (February 2026) and roughly $725 billion from the FT (spring 2026), both as reported (linked). These will move with each earnings call. McKinsey's $7 trillion by 2030 is via Fortune (linked).</dd>
+
+      <dt>Rates and who pays</dt>
+      <dd>PJM's independent market monitor (Monitoring Analytics) on the 2025/26 capacity auction, 63 percent and $9.3 billion, via IEEFA and New Jersey reporting (linked). The July 14, 2026 auction for 2028/29 ($16.4 billion cleared, about $6.3 billion attributed to data centers by Monitoring Analytics, and PJM's response) as reported by IIR News, July 17, 2026 (linked). The EPRI working paper (Watten, Bistline and Blanford, "Have Data Centers Raised Your Electric Bill?", released June 18, 2026; 3.5 percent per doubling in the main model, 2015 to 2024; EPRI brief linked), also covered by Fortune, July 26, 2026 (linked). <b>An earlier draft's Virginia 13 percent figure was removed because it could not be traced to a primary source.</b> SemiAnalysis, March 2026, on market design. New Jersey's S731 data center tariff law, signed July 7, 2026. The Ratepayer Protection Pledge, signed at the White House on March 4, 2026 by Amazon, Google, Meta, Microsoft, OpenAI, Oracle and xAI, with "build, bring, or buy" as its language (KWTX and others, linked; some outlets date the ceremony March 5). The Harvard Salata Institute YouGov poll via Fortune. Mark Cuban's "pickleball courts" is from the All-In podcast, July 2026 (confirmed via 24/7 Wall St. and TheStreet).</dd>
+
+      <dt>The other edge</dt>
+      <dd>IEA, <i>Energy and AI</i>, "Energy supply for AI" (April 2025, linked): today's mix of about 30 percent coal, 27 percent renewables, 26 percent gas and 15 percent nuclear, measured as electricity physically consumed rather than contracted; renewables meeting nearly half of growth to 2030; gas and coal over 40 percent; nuclear rising late in the decade. Google and DeepMind's July 20, 2016 announcement of up to 40 percent lower cooling energy (linked). EPRI's state-level data center projections brief (2026, linked) on natural gas under reference policies.</dd>
+
+      <dt>Rules (2.7)</dt>
+      <dd>The Artificial Intelligence Environmental Impacts Act of 2024 and its voluntary reporting system as described by <i>Scientific American</i> (linked). The EIA's February 2024 estimate of 0.6 to 2.3 percent for crypto mining, and the lawsuit, settlement and data destruction as reported by DatacenterDynamics, Fortune and Bloomberg, February and March 2024 (linked). The EU Energy Efficiency Directive's 500 kW reporting threshold, the facility-level limits, and the appliance-label origin of the AI Energy Score from Ebert et al. (2026, linked).</dd>
+    </dl>
+    <p class="srcfoot">Re-checked 10 October 2026 against the sources: the New Jersey reporting law and the Sherrill quotation (New Jersey Monitor, 27 August 2026), the July 2026 PJM auction ($16.4 billion, $6.3 billion attributed to data centers by Monitoring Analytics; Industrial Info Resources, 17 July 2026), the EPRI working paper (3.5 percent per doubling; EPRI brief and American Public Power Association, June 2026), the Ratepayer Protection Pledge (seven signers, 4 March 2026), Ebert et al. (arXiv 2603.00068, FAccT 2026), the Three Mile Island restart (AP via CBS News; World Nuclear News on the $1 billion loan and the 2027 target), Google and Kairos (NucNet, 15 October 2024), and Mark Cuban's line (24/7 Wall St., 22 July 2026). Added the same day, all linked in the case: the New Jersey towns and New York's one-year ban (New Jersey Monitor; Bloomberg Government), xAI's Memphis generators and the Nevada desert reporting (MIT Technology Review, May 2025), and Washington's workgroup findings and tax-break proposal (Spokesman-Review, January 2026; Columbia Basin Herald, February 2026). Not re-checked in this pass: the capital-spending totals, McKinsey's $7 trillion, the Harvard Salata poll, and the SemiAnalysis argument, which carry the September checks above. Outbound links have not been click-tested. Found an error? Tell your instructor; corrections are course content.</p>
+  </div>
+</details>
+
+<div class="nextbar">
+  <a href="chapter-04-medicine-lab.html"><span class="dir">← Back</span>Lab 4 · Inside the Graph</a>
+  <a href="chapter-05-environment-lab.html" style="text-align:right;"><span class="dir">Next →</span>Lab 5 · The Footprint Machine</a>
+</div>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="tiny">Western Washington University</span>Intro to <b>AI</b> in Business</a>
+    <p class="fine">A free, critical field guide to AI, for the people who'll live with it, not just build it.</p>
+    <p class="fine"><a class="inline" href="https://cbe.wwu.edu/dsci/management-information-systems" target="_blank" rel="noopener">Management Information Systems</a> · <a class="inline" href="https://cbe.wwu.edu/dsci" target="_blank" rel="noopener">Department of Decision Sciences</a> · <a class="inline" href="https://cbe.wwu.edu" target="_blank" rel="noopener">College of Business &amp; Economics</a></p>
+    <p class="fine">MIS 201 · <a class="inline" href="about.html">About this book</a> · <a class="inline" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a></p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var btns=[].slice.call(document.querySelectorAll('.dd-btn'));
+  function closeAll(){btns.forEach(function(b){var m=document.getElementById(b.getAttribute('data-dd'));if(m){m.classList.remove('open');b.setAttribute('aria-expanded','false');}});}
+  btns.forEach(function(b){b.addEventListener('click',function(e){e.stopPropagation();var m=document.getElementById(b.getAttribute('data-dd'));var open=m.classList.contains('open');closeAll();if(!open){m.classList.add('open');b.setAttribute('aria-expanded','true');}});});
+  document.addEventListener('click',closeAll);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeAll();});
+  document.querySelectorAll('.dd-menu').forEach(function(m){m.addEventListener('click',function(e){e.stopPropagation();});});
+})();
+</script>
+
+<script>
+(function(){
+  var stack = document.getElementById('fg-stack');
+  if(!stack) return;
+  var L = [
+    {n:"The chips doing the work", s:"the GPU cycles that answer your question", v:0.24, rep:true},
+    {n:"The rest of the machine", s:"CPU, memory, networking, storage in the same rack", v:0.10, rep:true},
+    {n:"Cooling", s:"keeping the hall at temperature, all day, whether or not you prompt", v:0.14, rep:false},
+    {n:"Idle capacity", s:"servers kept warm for peak load, because nobody queues for a chatbot", v:0.16, rep:false},
+    {n:"Water", s:"on site for cooling, plus the far larger amount used to generate the power", v:0, rep:false, unit:"separate"},
+    {n:"Embodied carbon", s:"concrete, steel, and the chips themselves, spent before switch-on", v:0.09, rep:false},
+    {n:"Training, amortized", s:"one model's training run, divided across the prompts it will ever serve", v:0.05, rep:false}
+  ];
+  var full = false;
+  var a = document.getElementById('fg-a'), b = document.getElementById('fg-b');
+  var totalEl = document.getElementById('fg-total'), labelEl = document.getElementById('fg-label'), out = document.getElementById('fg-out');
+
+  function draw(){
+    stack.innerHTML = '';
+    var sum = 0;
+    L.forEach(function(x){
+      var counted = x.rep || full;
+      if(counted) sum += x.v;
+      var d = document.createElement('div');
+      d.className = 'lyr' + (counted ? '' : ' off');
+      var amt = x.unit === 'separate'
+        ? (counted ? 'counted' : 'not in Wh')
+        : (counted ? x.v.toFixed(2) + ' Wh' : 'not counted');
+      d.innerHTML = '<div class="ln">' + x.n + '<span class="sub">' + x.s + '</span></div><div class="amt">' + amt + '</div>';
+      stack.appendChild(d);
+    });
+    totalEl.innerHTML = '<em>' + sum.toFixed(2) + '</em> Wh';
+    labelEl.textContent = full ? 'Actually spent per prompt' : 'Reported per prompt';
+    a.classList.toggle('on', !full); a.setAttribute('aria-pressed', full ? 'false' : 'true');
+    b.classList.toggle('on', full);  b.setAttribute('aria-pressed', full ? 'true' : 'false');
+    out.innerHTML = full
+      ? '<div class="label">The number that exists</div>' +
+        '<div class="read">More than double the reported figure, and none of the added lines are exotic. Cooling, idle capacity, the concrete, and a slice of the training run are all ordinary costs of running the service. They sit outside the number because the accounting rules do not force them in and the company chooses the boundary.</div>' +
+        '<div class="read" style="margin-top:12px">Water is the sharpest case. Google publishes an on-site cooling figure, which is a real measurement, and it leaves out the much larger volume used to generate the electricity upstream. The published number is honest and incomplete at the same time, which is the hardest kind of number to argue with.</div>' +
+        '<div class="read" style="margin-top:12px">And the embodied-carbon line is the one that shows up in Scope 3, which is why Microsoft\u2019s total emissions rose while its Scope 1 and 2 fell. Same company, same year, two true stories.</div>'
+      : '<div class="label">The number you can find</div>' +
+        '<div class="read">This is roughly the shape of a published per-prompt figure: the chips, and the machine around them. It is not a lie. It is a boundary, drawn by the party that benefits from where it sits.</div>' +
+        '<div class="read" style="margin-top:12px">Now press the other button and watch the same prompt get bigger without anything about the prompt changing.</div>';
+  }
+  a.addEventListener('click', function(){ full = false; draw(); });
+  b.addEventListener('click', function(){ full = true; draw(); });
+  draw();
+})();
+</script>
+</body>
+</html>
