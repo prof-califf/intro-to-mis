@@ -737,7 +737,7 @@ someone accountable.</p>
 
 <p>Almost no system stands alone. Course registration has to send credit hours to billing, check holds
 from the business office, read prerequisites from transcripts, and pass class lists to the learning
-management system faculty use. Each of those connections is an <strong>interface</strong>: a boundary
+management system faculty use, such as Canvas. Each of those connections is an <strong>interface</strong>: a boundary
 where one system hands data to another.</p>
 
 <p>Every interface needs an <strong>interface specification</strong>, a written agreement about exactly
@@ -751,7 +751,8 @@ its own system against its own understanding of what crosses. <strong>Integratio
 or more systems together to check that what one sends is what the other expects. It catches the mismatch,
 but only if somebody has decided to do it. That somebody has a name. The <strong>systems
 integrator</strong> is the party accountable for making independently built components work as one
-system. It is not the same job as building the biggest piece, and it cannot be done part-time by whoever
+system. In plain terms, it is the one person or company whose job is making sure all the pieces fit
+together. It is not the same job as building the biggest piece, and it cannot be done part-time by whoever
 happens to be largest.</p>
 
 <p>Where the role is vacant, a distinctive failure follows, and it does not look like failure until the
@@ -778,11 +779,11 @@ produces one missing feature. A missing non-functional requirement, such as how 
 system at once, gets passed down into every later decision. How many servers to rent. How to structure the
 database. What to do with people who arrive while the system is busy. Each of those decisions has to assume
 a number. If nobody supplied one, each team assumes its own, and nobody finds out whose was wrong until the
-real number shows up. Nobody can test for it either, because a load test needs a number to test against.
+real number shows up. Nobody can test for it either. A <em>load test</em> runs the system with as many people as it expects on its busiest day, and it needs a number to test against.
 <strong>A missing requirement does not just produce a missing feature. It produces a missing test.</strong></p>
 
 <p>Teams also agree on a <strong>definition of done</strong>, a standing checklist that applies to every
-piece of work: code reviewed, tests written, and documentation updated. It makes "done" mean the same thing
+piece of work: code checked by a second programmer, tests written, and documentation updated. It makes "done" mean the same thing
 in March as it does in September.</p>
 
 <h3>2.5 Systems design: How will the data be organized?</h3>
@@ -869,7 +870,7 @@ them.</p>
 <p>Most of a modern system is bought, not built. <strong>Off-the-shelf software</strong>, sometimes called
 commercial off-the-shelf or COTS, is a product sold to many organizations, each of which sets it up for its
 own use. More and more of it is now rented rather than owned, as <strong>software as a service</strong>
-(SaaS): the vendor runs the software on its own servers, and you use it through a browser for a
+(SaaS): the vendor runs the software on its own computers, called servers, and you use it through a browser for a
 subscription fee. Universities commonly buy registration as one part of a larger student information system
 from a vendor, rather than writing it themselves.</p>
 
@@ -1046,13 +1047,13 @@ maintenance above half of total lifetime cost.</p>
 probably picturing:</p>
 
 <ul>
-  <li><strong>Corrective.</strong> Fixing defects that reached production.</li>
+  <li><strong>Corrective.</strong> Fixing defects that real users have run into.</li>
   <li><strong>Adaptive.</strong> Keeping up with a changing world outside the system: a new tax rule, a
   new browser, a supplier changing a data format.</li>
   <li><strong>Perfective.</strong> Improving what already works, because users have asked or because the
   team has learned something.</li>
   <li><strong>Preventive.</strong> Work done now to stop a future failure. It is the easiest to defer,
-  it never shows up as a visible benefit, and deferring it is how technical debt accumulates.</li>
+  it never shows up as a visible benefit, and putting it off is how <strong>technical debt</strong> builds up: problems left for later, which cost more the longer they wait.</li>
 </ul>
 
 <p>One more activity belongs in the maintenance phase, and businesses almost always skip it. A <strong>post-implementation review</strong>
@@ -1257,7 +1258,7 @@ Mars Climate Orbiter during acoustic testing, May 1998. NASA, public domain, via
 </figure>
 
 <p>The investigation found no broken equipment and no failed component. Ground software built by
-Lockheed Martin reported the force of each small thruster firing in pound-force seconds, the unit used
+Lockheed Martin reported the push from each small thruster firing in pound-force seconds, the unit used
 in the United States. The navigation software at NASA's Jet Propulsion Laboratory read those numbers as
 newton-seconds, the metric unit. One pound-force is about 4.45 newtons, so every reading was wrong by
 that factor, consistently, for nine months.</p>
@@ -1283,7 +1284,7 @@ organization is responsible for noticing that it does not.
 same moment. That blue screen is what Windows shows when it crashes so badly it cannot keep running, and
 people call it the "blue screen of death." Gate agents reached for pens. CrowdStrike sells security software that runs deep inside Windows, which is what
 lets it stop attacks and also what makes it dangerous when it is wrong. That morning the company released a
-routine content update to that software, and it went to customers worldwide at essentially the same
+routine content update to that software, a small file that tells it which new threats to look for, and it went to customers worldwide at essentially the same
 moment.</p>
 
 <figure class="diagram" style="margin:1.7rem 0">
@@ -1302,7 +1303,7 @@ Baggage claim at LaGuardia Airport, New York, 19 July 2024. Photograph by Smishr
 <p>The update carried a fault that crashed Windows machines on startup, and again on the next startup, so
 they could not be repaired remotely. Microsoft later estimated about 8.5 million devices were affected.
 Airlines grounded flights and went back to handwritten boarding passes, hospitals postponed procedures, and
-broadcasters went off air. Because the machines would not boot, much of the recovery had to be done by a
+broadcasters went off air. Because the machines would not start up, much of the recovery had to be done by a
 person physically visiting each one.</p>
 
 <p>The software had been through testing. What it had not been through was a rollout. Updates of this kind
@@ -1705,8 +1706,8 @@ federal marketplace.</p>
 
 <p>Same law, same insurers, same basic technical problem. What changed was ownership, priorities, and
 permission to ship less. Shipping less is not free. Every feature postponed and every shortcut taken to make
-the site work in December became <strong>technical debt</strong>, a cost the organization pays later in
-exchange for moving now. It was the right trade, and it was still a debt.</p>
+the site work in December became technical debt, the problems-left-for-later from section 3.2, which the
+organization pays for later in exchange for moving now. It was the right trade, and it was still a debt.</p>
 
 <div class="callout callout-good">
   <strong>The overall lesson</strong>
@@ -1754,7 +1755,7 @@ employees rather than contractors. In 2014, directly in response to Healthcare.g
 created two similar organizations. One was the United States Digital Service, inside the Executive Office of
 the President. The other was 18F, inside the General Services Administration, named for the agency's address
 at 1800 F Street. Both hired designers, engineers and product managers onto the public payroll, and both
-worked on the procurement practices this chapter has been criticizing.</p>
+worked on the way government buys technology, which this chapter has been criticizing.</p>
 
 <p>They built things you have probably used: Login.gov, the single sign-on for federal services; cloud.gov;
 and the U.S. Web Design System, which is why federal websites now look and behave alike. 18F supported the
@@ -1795,8 +1796,8 @@ in this case was expensive to prevent in 2013 and is close to free to prevent no
   <li><strong>Releases go out in stages.</strong> The tooling to give an update to one percent of customers
   and then expand is standard, which is why the company in section 4.2 had it available and why its own
   remedy afterwards was to start using it.</li>
-  <li><strong>Capacity is rented by the minute.</strong> Load testing against a realistic volume no longer
-  requires buying the hardware to test with, which is how Chapter 1's Spotify example ran.</li>
+  <li><strong>Capacity is rented by the minute.</strong> Cloud providers rent out computing power by the
+  minute, so a load test at full volume no longer requires buying the hardware to test with, which is how Chapter 1's Spotify example ran.</li>
   <li><strong>Systems watch themselves.</strong> Monitoring now sends an alert to a named person who is on
   duty, and treats an unanswered alert as its own failure, instead of sending mail nobody reads.</li>
 </ul>
