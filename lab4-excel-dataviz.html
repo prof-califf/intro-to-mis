@@ -510,9 +510,10 @@ the average? You could read it off the chart and color those bars by hand, and t
 hand every time the numbers change. Or you can use the IF from Labs 2 and 3 and let the chart apply the
 rule itself.</p>
 <ol>
-<li>Copy your pivot's store names and revenues as plain values to a blank area. Put stores in column A
-(A2 to A9) and revenue in column B (B2 to B9). A chart cannot take a second series from inside a pivot, so
-this copy is the chart's data from now on.</li>
+<li>Copy your pivot's store names and revenues, click a blank area, and paste them as values: right-click
+&#8594; Paste Special &#8594; Values. Put stores in column A (A2 to A9) and revenue in column B (B2 to B9).
+A chart cannot take a second series from inside a pivot, so this copy is the chart's data from now on.
+Pasted values are a snapshot: if the pivot changes later, this copy does not.</li>
 <li>In <code class="inline">C1</code> type the header <code class="inline">below average</code>. In
 <code class="inline">C2</code> type <code class="inline">=IF(B2&lt;AVERAGE($B$2:$B$9),B2,NA())</code> and
 fill it down to C9.</li>
@@ -520,7 +521,7 @@ fill it down to C9.</li>
 <code class="inline">#N/A</code>, which Excel refuses to plot. That is the trick: the IF asks the
 chart only to display the bars you want highlighted.</li>
 <li>Select A1:C9 and insert a clustered bar chart. Two series appear. Right-click the second series,
-Format Data Series, set Series Overlap to 100%, and give it a color that stands out. The
+Format Data Series, set Series Overlap to 100%, and change its color to red. The
 below-average stores are now marked, and if a number changes, the marks move by themselves.</li>
 </ol>
 <p><strong>What the formula is doing:</strong> the test compares each store to
@@ -579,8 +580,10 @@ drag <code class="inline">unit_price</code> into Values as well, so the pivot ha
 nothing. Click it &#8594; Value Field Settings &#8594; <strong>Average</strong>. Now each row is one
 product, with the total units it sold and its average price. That is thirty-five things measured twice,
 which is exactly what a scatter plot needs.</p>
-<p>Select the two number columns, then Insert &#8594; Scatter (the first option, markers only, no lines
-connecting them; a scatter has no sequence to connect). Put quantity on the horizontal axis and average
+<p>Excel will not build a scatter plot from a pivot table, so this chart needs the same move as Step 5.
+Copy the pivot's two number columns, click a blank area, and paste them as values: right-click &#8594;
+Paste Special &#8594; Values. Select the two pasted columns, then Insert &#8594; Scatter (the first option,
+markers only, no lines connecting them; a scatter has no sequence to connect). Put quantity on the horizontal axis and average
 price on the vertical.</p>
 <p><strong>What you are looking at:</strong> the cloud slopes down to the right. Cheap products sell in
 volume and expensive ones do not, which every retailer believes and this chart lets you check. No bar
