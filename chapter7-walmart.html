@@ -349,6 +349,27 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 .srcbox>summary:focus-visible{outline:2px solid var(--magenta);outline-offset:3px}
 .srcbox .sources{margin-top:0;padding-top:0;border-top:0;padding-bottom:1.1rem}
 @media print{.srcbox{border:0;padding:0}.srcbox>summary::after{display:none}}
+
+/* ---------- ch7 normalization toy ---------- */
+.toy-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:.5rem 1rem;margin:.4rem 1rem .8rem}
+.toy-field{display:flex;flex-direction:column;gap:.2rem;font-family:var(--sans);font-size:.95rem}
+.toy-field label{font-weight:600;color:var(--text-dark)}
+.toy-field select{font-family:var(--sans);font-size:.95rem;padding:.35rem .4rem;border:1px solid var(--border);background:#fff;color:var(--text-dark);max-width:100%}
+.toy-tables{display:grid;grid-template-columns:repeat(auto-fit,minmax(9.5rem,1fr));gap:.6rem;margin:.4rem 1rem .6rem}
+.toy-tbl{border:1px solid var(--border);background:#fff;font-family:var(--sans);font-size:.88rem}
+.toy-tbl b{display:block;background:var(--black);color:#fff;font-family:var(--display);font-size:11px;letter-spacing:.12em;padding:.35rem .6rem}
+.toy-tbl ul{list-style:none;margin:0;padding:.4rem .6rem}
+.toy-tbl li{padding:.15rem 0;border-bottom:1px solid var(--border)}
+.toy-tbl li:last-child{border-bottom:none}
+.toy-tbl li.key{color:var(--text-light);font-style:italic}
+.toy-run{font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:var(--magenta);color:#fff;border:1px solid var(--magenta);padding:.55rem 1rem;cursor:pointer}
+.toy-run:hover{background:var(--magenta-dark);border-color:var(--magenta-dark)}
+.toy-out{margin:.6rem 1rem 0;font-family:var(--sans);font-size:.95rem;line-height:1.5}
+.toy-out ol{margin:.3rem 0 0 1.2rem;padding:0}
+.toy-out li{margin:.35rem 0;padding:.45rem .7rem;border-left:3px solid var(--good);background:var(--good-pale);color:var(--text-dark)}
+.toy-out li.fail{border-left-color:var(--warn);background:var(--warn-pale)}
+.toy-score{font-weight:600;margin:.4rem 0}
+.toy-stale{color:var(--text-light);font-style:italic;margin:.4rem 0}
 </style>
 <link rel="stylesheet" href="book.css">
 </head>
@@ -415,35 +436,35 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
   unusual; every retailer does it. What Walmart did was decide what to record, arrange it so questions
   were cheap to ask, and then hand the answers to its own suppliers. This chapter is about why the
   arrangement matters more than the facts.</p>
-  <div class="concepts"><span class="clabel">Key concepts</span><span>What data is</span><span>Structured vs. unstructured data</span><span>Records, fields, and keys</span><span>The relational model</span><span>Normalization</span><span>OLTP vs. analytics</span><span>Data sharing as strategy</span></div>
+  <div class="concepts"><span class="clabel">Key concepts</span><span>Facts vs. data</span><span>Quantitative vs. qualitative</span><span>Structured vs. unstructured data</span><span>Records, fields, and keys</span><span>Databases and the DBMS</span><span>The relational model</span><span>Normalization</span><span>OLTP vs. analytics</span><span>Data sharing as strategy</span></div>
 </header>
 
 <div class="toc"><strong>Contents</strong>
 <a href="#data"><span class="tnum">1.</span> What data actually is</a>
-<a href="#tables"><span class="tnum">2.</span> Why one grid breaks, and what replaces it</a>
-<a href="#cases"><span class="tnum">3.</span> Two short failures of shape</a>
-<a href="#walmart"><span class="tnum">4.</span> Main case. Walmart: a company built on a database</a>
-<a href="#other"><span class="tnum">5.</span> The downside: what the basket reveals</a>
-<a href="#vocab"><span class="tnum">6.</span> Vocabulary</a>
-<a href="#discussion"><span class="tnum">7.</span> Discussion questions</a>
-<a href="#lab"><span class="tnum">8.</span> From lecture to lab</a>
-<a href="#sources"><span class="tnum">9.</span> Sources and further reading</a>
-
+<a href="#spreadsheet"><span class="tnum">2.</span> Why one big spreadsheet breaks</a>
+<a href="#tables"><span class="tnum">3.</span> Beyond the spreadsheet: databases</a>
+<a href="#cases"><span class="tnum">4.</span> Mini-cases: two failures of shape</a>
+<a href="#walmart"><span class="tnum">5.</span> Main case. Walmart: a company built on a database</a>
+<a href="#other"><span class="tnum">6.</span> The downside: what the basket reveals</a>
+<a href="#vocab"><span class="tnum">7.</span> Vocabulary</a>
+<a href="#discussion"><span class="tnum">8.</span> Discussion questions</a>
+<a href="#lab"><span class="tnum">9.</span> From lecture to lab</a>
+<a href="#sources"><span class="tnum">10.</span> Sources and further reading</a>
 </div>
 <p class="printbox"><span>Wanna go analog?</span><button type="button" onclick="window.print()" aria-label="Print this page or save it as a PDF">&#9113;&nbsp; Print here</button><span>or save it as a PDF; the navigation drops out</span></p>
 
 <p class="lede">Take the receipt from your last coffee or grocery run and count the facts on it. A store
 number, a date, a time, a register, a cashier. Then for every item a name, a quantity, a unit price, a
 line total. Then subtotal, tax, payment type, the last four digits of a card. A modest receipt easily
-holds thirty separate facts, and Walmart produces receipts like it at a rate of roughly 280 million
-customer visits a week.</p>
+holds thirty separate facts, and Walmart serves roughly 280 million customers a week, in its stores
+and online.</p>
 
 <div class="objectives"><span class="obj-tag">Learning objectives</span>
 <p>By the end of this chapter you should be able to:</p>
 <ol>
-<li>Explain what data is, what it takes for a fact to become data, and why unrecorded facts cannot be managed.</li>
-<li>Distinguish structured, unstructured, and semi-structured data, and say which questions each makes cheap.</li>
-<li>Explain primary and foreign keys, and why normalization splits one grid into several tables.</li>
+<li>Explain the difference between a fact and data, what it takes for a fact to become data, and why unrecorded facts cannot be managed.</li>
+<li>Distinguish quantitative from qualitative data, and structured, unstructured, and semi-structured data, and say which questions each makes cheap.</li>
+<li>Explain why one big spreadsheet breaks, what a database and a database management system add, and how primary keys, foreign keys, and normalization split one spreadsheet into several tables.</li>
 <li>State the difference between operational (OLTP) and analytical use of data, and why the two are kept apart.</li>
 <li>Describe how Walmart turned its own data into a product for suppliers, and what that decision required of each component.</li>
 </ol>
@@ -451,9 +472,16 @@ customer visits a week.</p>
 
 <h2 id="data"><span class="num">1</span>What data actually is</h2>
 
-<p>Chapter 2 defined data by its role: raw recorded facts, the base layer that information and
-knowledge are built from. This chapter asks the more physical question. What is the stuff itself, and
-what has to be true of it before anyone can ask it anything?</p>
+<p>Chapter 2 treated data as the raw material of information. Chapter 3 treated it as an advantage that
+builds up over time and that rivals cannot buy. Both chapters took the data itself for granted. This
+chapter does not, because before anyone can value data or compete on it, somebody has to decide what
+gets written down, in what form, and where it lives.</p>
+
+<p>Those decisions are usually made early, by people who do not think of them as decisions. Every
+report, dashboard, and AI model the organization builds later inherits them. That is why "what is
+data, exactly?" is a management question and not a technical one. A manager who cannot answer it will
+approve systems that record the wrong things and then wonder why the numbers disagree. A manager who
+can answer it knows where to look when they do.</p>
 
 <p>Notice where data sits among the five components. Data is the one component that is not bought and not
 built, but <em>accumulated</em>, one recorded fact at a time, according to rules somebody decided in
@@ -464,44 +492,83 @@ every decision made here.</p>
 
 <h3>1.1 What turns a fact into data</h3>
 
-<p>So what turns a fact into data? Two properties, and the rest of this chapter follows from them: the fact has to
-be recorded, and it has to be given a type.</p>
+<p>Start with the word <strong>fact</strong>. A fact is something that is true about the world, whether
+or not anyone notices it. A customer bought two coffees at 8:14 this morning. A store in Bellingham is
+open until ten. A rain jacket weighs 900 grams. Facts happen constantly, and most of them are never
+written down.</p>
 
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Data</span>
-<p>Data is any recorded representation of a fact: a number, a piece of text, a date, a true/false
-flag, an image, a sound. Two properties matter more than any others. First, data is <strong>recorded</strong>:
-a sale that no system wrote down generates no data, no matter how real the sale was. Second, data has
-a <strong>type</strong>: the same marks on a screen mean different things depending on whether a
-system treats them as a number, text, or a date, and most data disasters begin with a type being
-wrong.</p></div>
+<p><strong>Data</strong> is a recorded representation of a fact: a number, a piece of text, a date, a
+true/false flag, an image, a sound. Two properties turn a fact into data, and the rest of this chapter
+follows from them.</p>
 
-<h3>1.2 Kinds of data</h3>
+<p><strong>First, data is recorded.</strong> A fact that no system wrote down produces no data, no matter
+how real it was. Here is an example. A customer comes in for a medium rain jacket, finds the rack empty,
+and leaves. That lost sale really happened. But the register records sales, not requests, so the lost
+sale leaves no trace. A report on jacket demand will show only the jackets that were in stock to be
+sold, so it will understate demand exactly where the shortage was worst. What a system does not record,
+nobody can manage.</p>
 
-<p>Now, data comes in kinds, and the kinds determine what you can do with it:</p>
+<p><strong>Second, data has a type.</strong> The type tells a system what kind of value it is holding,
+usually a number, text, a date, or true/false, and the type decides what the system will do with it.
+The same marks on a screen mean different things depending on their type. Here is an example. The ZIP
+code 02134 stored as a number becomes 2134, because numbers do not have leading zeros, and a Boston
+address now points nowhere. A more expensive example comes from genetics. Spreadsheet software reads the
+gene name MARCH1 as the date March 1 and quietly converts it. That conversion damaged so many research
+files that in 2020 the committee that names human genes renamed 27 of them, so MARCH1 became MARCHF1.
+Most data disasters begin with a type being wrong, and the software almost never says so.</p>
 
-<p><strong>Quantitative</strong> data is numeric and supports math: quantities, prices, temperatures,
-durations. <strong>Qualitative</strong> data is descriptive and supports grouping: a category, a
-state, a product name, a customer complaint. In your Cascadia work, revenue is quantitative and store
-name is qualitative, and you have already noticed that pivots treat the two completely differently:
-you sum one and group by the other.</p>
+<h3>1.2 Kinds of data: quantitative and qualitative</h3>
 
-<p>The second, bigger split is about shape, meaning how the data is organized:</p>
+<p>Once a fact is recorded, the next question is what kind of value it is. There are two kinds, and they
+support completely different operations.</p>
 
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Structured, unstructured, and semi-structured data</span>
-<p><strong>Structured data</strong> fits a fixed grid of rows and columns, where every row has the
-same fields and every field has a type: transactions, inventory counts, member records. It is the
-easiest data to query and the kind databases were invented for. <strong>Unstructured data</strong>
-has no fixed grid: emails, reviews, photos, call recordings, social posts. It is most of the data in
-the world by volume and historically the hardest to use; modern AI systems matter to business largely
-because they made unstructured data usable. <strong>Semi-structured data</strong> sits between: it
-has labels but not a rigid grid, like a JSON order from a website where one order has a delivery note
-and the next does not.</p></div>
+<p><strong>Quantitative</strong> data is numeric data you can do arithmetic on. You can add it, average
+it, and ask which value is bigger. Quantities, prices, temperatures, and durations are quantitative. For
+example, on a grocery receipt the quantity (2) and the unit price ($4.99) are quantitative, and
+multiplying them gives the line total.</p>
 
-<p>Walmart works all three. The transaction stream is structured. The company also analyzes on the
-order of a hundred million social media keywords to hear what people near each store are saying,
-which is unstructured text being mined for structure. The skill of a data organization is largely the
-skill of moving facts rightward: from unstructured, to labeled, to fully structured, because
-structure is what makes questions cheap to ask.</p>
+<p><strong>Qualitative</strong> data describes a quality or a category. You cannot do arithmetic on it,
+but you can group, count, and filter by it. Product names, store names, payment types, colors, and
+customer complaints are qualitative. On the same receipt, the product name (oat milk) and the payment
+type (debit card) are qualitative. Nobody adds two payment types together, but you can count how many
+sales used each one.</p>
+
+<p>In the Cascadia workbook, revenue is quantitative and store name is qualitative, which is why a pivot
+table treats them so differently: you sum one and group by the other.</p>
+
+<p>The tricky case is a number that is not quantitative. A ZIP code, a store number, a phone number, and
+a student ID are all written in digits, but adding two of them produces nonsense. They are labels that
+happen to use numbers. Store one as a number and the software will happily total your ZIP codes. This is
+where the two properties in 1.1 meet: what kind of value something is decides which type it should be
+given.</p>
+
+<h3>1.3 How data is organized: structured, unstructured, and semi-structured</h3>
+
+<p>Quantitative and qualitative describe a single value. Structure describes how many values are
+organized together, which this book calls the data's <strong>shape</strong>. These are two different
+questions, and a manager needs both.</p>
+
+<p><strong>Structured data</strong> fits a fixed grid of rows and columns, where every row has the same
+fields and every field has a type. Sales transactions, inventory counts, and an employee roster are
+structured. For example, every row in a sales table has a date, a store, a product, a quantity, and a
+price, in the same order. Structured data usually mixes both kinds of value: quantity and price are
+quantitative, while store and product are qualitative. It is the easiest data to ask questions of, and
+it is the kind databases were invented for.</p>
+
+<p><strong>Unstructured data</strong> has no fixed grid. Emails, product reviews, photos, call
+recordings, and social media posts are unstructured. For example, a review might say "Waited 40 minutes
+at pickup and the bag was missing an item." Unstructured data is mostly qualitative, and any numbers
+inside it are trapped. That review contains a quantity, 40 minutes, but you cannot average it across
+ten thousand reviews until something pulls it out and gives it a field of its own. Unstructured data is
+most of the data in the world by volume. It was historically the hardest to use, and modern AI matters
+to business largely because it made this kind usable.</p>
+
+<p><strong>Semi-structured data</strong> sits between the two. It has labels, but not a rigid grid. For example, a website might save each online order as a labeled file. Every order has an order number
+and a list of items. But one order also has a delivery note and a gift message, and the next has
+neither. The labels let software find things. The variation means no single table fits every record.</p>
+
+<p>Much of the work in a data-driven organization is moving facts in one direction: from unstructured, to
+labeled, to fully structured. Structure is what makes questions cheap to ask.</p>
 
 <div class="tryit" id="shape">
   <div class="tryit-head">Quick quiz &middot; Structured, unstructured, or semi-structured?</div>
@@ -538,113 +605,87 @@ structure is what makes questions cheap to ask.</p>
 })();
 </script>
 
-<h3>1.3 Records, fields, and why format matters</h3>
+<h3>1.4 Structured data: records, fields, and why format matters</h3>
 
-<p>Structured data has a standard anatomy, and you need three words for it, because you will use them in every lab from here on. A <strong>record</strong> is one complete fact-bundle: one sale,
-one member, one product. A <strong>field</strong> is one attribute inside it: the date, the quantity,
-the price. In a grid, records are rows and fields are columns. This vocabulary sounds trivial until
-you watch it fail.</p>
+<p>Structured data has a standard anatomy, and you need three words for it, because you will use them in
+every lab from here on. A <strong>record</strong> is one complete bundle of facts about one thing: one
+sale, one member, one product. A <strong>field</strong> is one attribute inside it: the date, the
+quantity, the price. In a table, records are rows and fields are columns. The third word is
+<strong>format</strong>, the exact way a value is written: $18.00 or 18, "2025-03-03" or "3/3/25". This
+vocabulary sounds trivial until you watch it fail.</p>
 
-<p>You are about to watch that anatomy fail. In this week's lab, the controller's RAW export hands you three of these. Prices stored as text with
-dollar signs, so they would not sum. Quantities that were blank instead of zero, which are not the
-same thing. And Washington spelled fourteen different ways, so groups split that should have merged.
-Every one of those problems is a <strong>format</strong> problem: the fact was fine, the
-representation was wrong. "March 3, 2025," "3/3/25," and "2025-03-03" are one fact wearing three
-costumes, and software, which matches representations rather than facts, treats them as three
-different days.</p>
+<p>Lab 7's RAW export shows what failure looks like. Prices are stored as text with dollar signs, so they
+will not sum. Quantities are blank instead of zero, which is not the same thing. And Washington is spelled
+fourteen different ways, so groups that should merge stay split. Every one of those is a format problem:
+the fact was fine, and the representation was wrong. "March 3, 2025," "3/3/25," and "2025-03-03" are one
+fact wearing three costumes. Software matches representations rather than facts, so it treats them as
+three different days.</p>
 
-<div class="callout"><strong>The lesson under Lab 7</strong>
-<p>The cleaning this week's lab walks you through, standardizing formats, fixing types, resolving fourteen
-Washingtons into one, is exactly the discipline a database enforces automatically. A database column
-declared as a date refuses "March-ish"; a column declared numeric refuses "$18.00" with the sign. The
-mess you cleaned existed because the data was born in a system without rules. This chapter is about
-the systems with rules.</p></div>
+<p>A database prevents most of this by enforcing rules at the moment data is written. A column declared
+as a date refuses "March-ish," and a column declared as a number refuses "$18.00." The mess in the RAW
+export exists because the data was born in a system without rules. The next two sections explain why
+that matters as the data grows, and what a system with rules looks like.</p>
 
-<h2 id="tables"><span class="num">2</span>Why one grid breaks, and what replaces it</h2>
+<h2 id="spreadsheet"><span class="num">2</span>Why one big spreadsheet breaks</h2>
 
-<p>So far in this chapter the facts have been sitting in a list. The natural next instinct is to put them all in one
-giant sheet: every sale, with the store's name and address and the product's name and price and
-supplier repeated on every row. For a few hundred rows that works, and everyone in this course has done
-it. Then it breaks, in three ways that have textbook names and one that does not.</p>
+<p>So far the data in this chapter has been one fact at a time, or a single list of facts. The natural
+next step is to put everything in one big spreadsheet. Every sale gets its own row, and the store's
+name, address, and phone number and the product's name, price, and supplier are repeated on every row.
+For a few hundred rows that works, and everyone in this course has built one. Then it breaks, in three
+ways that have textbook names and one that does not.</p>
 
-<p>Before the mechanics, here is the reason this is a management topic and not a technical one. The structure you
-choose decides which questions are cheap to ask and which are effectively impossible, and nobody
-downstream can undo it. An analyst with a wrong-shaped database cannot analyze their way out of it, and
-neither can a machine learning model. In five-component terms, a bad data design makes data the weakest
-component, and the weakest component rule from Chapter 1 says the rest of the system is then limited by
-it however good it is.</p>
+<p>First, here is why this is a management topic and not a technical one. The way data is organized
+decides which questions are cheap to ask and which are effectively impossible, and nobody downstream can
+undo it. An analyst with badly organized data cannot analyze their way out of it, and neither can a
+machine learning model. In five-component terms, a bad data design makes data the weakest component, and
+the weakest component rule from Chapter 1 says the whole system is then limited by it, however good the
+rest is.</p>
 
-<h3>2.1 The three ways one grid breaks</h3>
+<h3>2.1 The three ways one big spreadsheet breaks</h3>
 
-<p>First, <strong>update anomalies</strong>: the Bellingham store's phone number lives on every one
-of its thousands of sale rows, so changing it means changing it thousands of times, and missing one
-means the sheet now disagrees with itself. Second, <strong>insertion anomalies</strong>: you cannot
-record a brand-new product until it has sold at least once, because product facts only live inside
-sale rows. Third, <strong>deletion anomalies</strong>: delete a store's only sale and you have also
-deleted everything you knew about the store. The single grid ties facts together that have different
-lifetimes, and the knots become errors.</p>
+<p>Database designers call these failures <strong>anomalies</strong>, meaning places where the data can
+end up contradicting itself. First, <strong>update anomalies</strong>: the Bellingham store's phone number
+lives on every one of its thousands of sale rows, so changing it means changing it thousands of times, and
+missing one means the spreadsheet now disagrees with itself. Second, <strong>insertion anomalies</strong>:
+you cannot record a brand-new product until it has sold at least once, because product facts only live
+inside sale rows. Third, <strong>deletion anomalies</strong>: delete a store's only sale and you have also
+deleted everything you knew about the store. The single spreadsheet ties together facts that have
+different lifetimes, and those ties turn into errors.</p>
 
-<p>There is also a blunter, physical limit: one grid is edited by one person at a time and tops out around a
-million rows. Walmart's registers write millions of new rows an hour, from thousands of locations at
-once. No sheet survives contact with that.</p>
+<h3>2.2 The fourth problem: size, sharing, and no rules</h3>
 
-<h3>2.2 The relational model</h3>
+<p>The fourth problem has no textbook name because it is physical. A spreadsheet is built to be edited by
+one person, or a few, at a time, and a modern Excel sheet stops at about a million rows. A large
+retailer's registers write new rows every second, from thousands of locations at once. And a spreadsheet
+will accept anything in any cell. It has no way to insist that a price is a number or that a sale belongs
+to a store that exists. When the data is small and one careful person owns it, that freedom is
+convenient. When the data is large and many people depend on it, that freedom is how errors get in.</p>
 
-<p>So what is the fix? Stop repeating facts. Give each kind of thing its own table, one for stores, one for
-products, one for sales, and connect the tables to each other with identifying numbers called keys.
-That design is the <strong>relational model</strong>, and the box names its parts.</p>
+<h2 id="tables"><span class="num">3</span>Beyond the spreadsheet: databases</h2>
 
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">The relational database</span>
-<p>A relational database stores each kind of fact in its own <strong>table</strong>, one table for
-stores, one for products, one for sales, and connects them with keys. A <strong>primary key</strong>
-is a field that uniquely identifies each record in its table: store_id, product_id, sale_id. A <strong>foreign key</strong> is a field in one table that holds another table's primary key. Each sale row carries
-a store_id and a product_id, which is how a three-field sale row can "know" the store's address and
-the product's supplier without repeating them. Asking questions across tables by matching
-keys is called a <strong>join</strong>, and it is the move that makes the whole model work.</p></div>
+<p>A <strong>database</strong> is an organized collection of related data, stored so that many people and
+programs can use it at once, under rules about what the data may contain. The software that stores the
+data, enforces the rules, and answers questions is called a <strong>database management system</strong>,
+or <strong>DBMS</strong>. Oracle, Microsoft SQL Server, PostgreSQL, and SQLite, which runs the Cascadia
+database, are all database management systems. Most of them answer questions written in
+<strong>SQL</strong>, short for Structured Query Language, which you will write in Lab 7.</p>
 
-<p>Now run the Walmart receipt through that model. The one big grid becomes a sales table (thin rows: date, store_id,
-product_id, quantity, price), a stores table (one row per store, with the phone number stored
-exactly once), and a products table (one row per product, with its category and supplier). Each fact
-now lives in one place, updates happen once, and a new product can exist before it sells. The grid's
-three anomalies are not patched; they are structurally impossible.</p>
+<p>What makes a database different from a big spreadsheet is not mainly its size. It is the rules. A
+database knows that a column holds dates, so it refuses "March-ish." It knows that a sale must belong to a
+store that exists, so it refuses a sale for a store it has never heard of. And when it cannot store
+something, it says so instead of dropping it quietly. Most business databases organize their rules
+around one design, the relational model.</p>
 
-<p>This is not an abstraction you have to take on faith, because you will build it yourself. The <a href="join-builder.html">join
-builder</a> lets you draw these key connections against the real Cascadia database, and Lab 7's
-final checkpoints, finding a supplier's products and a store's real problem, are joins you will
-write yourself.</p>
+<h3>3.1 Tables and keys: the relational database</h3>
 
-<h3>2.3 Where the tables came from, and the decade nobody wanted them</h3>
-
-<p>The relational model is so standard now that it looks like a discovery about the nature of information rather than somebody's idea. It was somebody's idea, and it was resisted for years by the
-company best placed to build it.</p>
-
-<p>In June 1970, Edgar Codd, a mathematician at IBM's research laboratory in San Jose, published a paper
-called "A Relational Model of Data for Large Shared Data Banks." Its argument was that data should be
-stored as simple tables of rows and columns, related to each other by values, and that programs asking
-questions should not have to know how any of it was physically stored. You should be able to describe
-<em>what</em> you want rather than <em>how</em> to go and get it.</p>
-
-<p>At the time, databases worked the other way around. A programmer navigated to data by following pointers
-through a hierarchy, which meant every question had to be written against the storage layout, and
-changing the layout broke the programs. IBM sold a very successful product built exactly that way. Its
-research division had just published a paper explaining why that approach was the wrong one.</p>
-
-<p>IBM did eventually build a relational system, and its research project produced the query language
-that became SQL, the one you will write this week. But the company took years to bring a product to
-market, and it was a young outsider who read Codd's paper, took the idea seriously and shipped first,
-founding the company that became Oracle. Codd's employer had the paper, the researchers, the customers
-and the money, and still arrived late, because it already sold something the paper made obsolete.</p>
-
-<p>There are two things worth taking from that story. The first is that the thing you are about to be taught as
-self-evident was argued for, against opposition, by a named person, in living memory. The second is a
-pattern you will meet again and again in this book and in your career. The organization
-with the most to gain from an idea is frequently the one with the most to lose from it, and being
-right early is worth nothing by itself.</p>
+<p>The whole idea fits in one sentence: <strong>store each fact in exactly one place</strong>. In the big
+spreadsheet, the Bellingham store's phone number is written on every row that mentions Bellingham. In a
+relational database it is written once, and every sale points to it. The figure shows the move.</p>
 
 <figure class="diagram" style="margin:1.9rem auto;max-width:470px">
 <svg viewBox="0 0 470 396" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="nfT nfD"
      style="width:100%;height:auto;font-family:var(--sans)">
-<title id="nfT">One grid becoming three tables</title>
+<title id="nfT">One big spreadsheet becoming three tables</title>
 <desc id="nfD">At the top, a single wide table with columns for date, store, store phone, product and
 quantity, and three rows of sales. The store phone column holds the same value on every row and is
 shaded to show the repetition. An arrow points down to three smaller tables: a sales table holding date,
@@ -712,8 +753,7 @@ place.</desc>
 <circle cx="150" cy="262" r="2.6" fill="var(--magenta)"/><circle cx="246" cy="278" r="2.6" fill="var(--magenta)"/>
 <text x="196" y="232" text-anchor="middle" font-size="8.5" fill="var(--magenta-dark)">foreign key</text>
 
-<text x="10" y="352" font-size="10.5" font-weight="600" fill="var(--magenta-dark)">The phone number now exists in exactly one place. (That is the whole idea of normalization.
-Everything else in this section is a consequence of it.)</text>
+<text x="10" y="352" font-size="10.5" font-weight="600" fill="var(--magenta-dark)">The phone number now exists in exactly one place.</text>
 <text x="10" y="368" font-size="10" fill="var(--muted)">Change it once and every sale that ever referred to it is correct, including the ones from 2019.</text>
 <text x="10" y="384" font-size="10" fill="var(--muted)">A new store can also exist before it has sold anything, which the sheet above made impossible.</text>
 </svg>
@@ -725,279 +765,550 @@ patched. They become impossible to express.
 </figcaption>
 </figure>
 
-<h3>2.4 Normalization</h3>
+<p>A <strong>relational database</strong> stores each kind of thing in its own <strong>table</strong>:
+one table for stores, one for products, one for sales. A table looks like a sheet in a spreadsheet, but
+it holds only one kind of thing. Every row is a record of that one thing, and every column is a field.
+For example, the stores table has one row per store, with columns for the store's id, name, city, and
+phone number.</p>
 
-<p>Splitting the one grid into tables so that each fact lives in exactly one place has a name,
-<strong>normalization</strong>, and it is less a technique than a habit of mind.</p>
+<p>The tables are connected by keys. A <strong>primary key</strong> is a field whose value identifies
+exactly one record in its table and never repeats. For example, store_id 12 means the Bellingham store
+and nothing else. Even if two stores were both named "Downtown," their ids would still tell them apart. A
+<strong>foreign key</strong> is a field in one table that holds the primary key of a record in another
+table. For example, each row in the sales table carries a store_id and a product_id. The sale row does
+not repeat the store's phone number or the product's supplier. It holds two small numbers that point to
+where those facts live.</p>
 
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Normalization</span>
-<p>Normalization is the design discipline of splitting data into tables so that every fact is stored
-exactly once, in exactly one place. The working rule: every field in a table should describe the
-thing the table's primary key identifies, and nothing else. A store's phone number describes the
-store, so it belongs in the stores table, keyed by store_id, and nowhere else. Normalize well and
-consistency stops being a virtue you maintain and becomes a property the structure guarantees.
-Normalization has formal levels, called normal forms, that a database course will drill; for this
-course, the instinct matters more than the formalism: <em>if the same fact appears twice, the design
-is wrong.</em></p></div>
+<p>Asking a question across tables by matching keys is called a <strong>join</strong>. For example, to
+list every sale with the store's city beside it, the database matches each sale's store_id to the row in
+the stores table with the same store_id, and reads the city from there. The join is the move that makes
+the whole model work: facts stored once, combined whenever someone asks.</p>
 
-<p>Normalization has a cost, and it is worth naming. A perfectly normalized database scatters
-a simple question across many tables, so answering "revenue by state last October" means joining
-sales to stores to a calendar. That is why analysts often build deliberately flattened copies of the
-data for reporting, accepting some duplication in exchange for fast questions. The design goal
-differs by purpose, which is the door into the next two sections: one shape for running the
-business, another for understanding it.</p>
+<p>Run a receipt through that model and the one big spreadsheet becomes three tables. The sales table has
+thin rows: date, store_id, product_id, quantity, and price. The stores table has one row per store, with
+the phone number stored exactly once. The products table has one row per product, with its category and
+supplier. Each fact now lives in one place, updates happen once, and a new product can exist before it
+sells. The spreadsheet's three anomalies are not patched. They become impossible to express.</p>
 
-<h2 id="cases"><span class="num">3</span>Two short failures of shape</h2>
-<p>Before the main case, here are two short ones. In every one of them the facts existed, somebody needed an answer
-from those facts, and the answer was blocked by the <em>shape</em> the facts were stored in rather than
-by the facts themselves. They are separated by 130 years, which is the point. This is not a modern
-problem, and it did not stop being a problem when computers got fast.</p>
+<p>This is not an abstraction you have to take on faith, because you will build it yourself. The <a href="join-builder.html">join
+builder</a> lets you draw these key connections against the real Cascadia database, and Lab 7's
+final checkpoints, finding a supplier's products and a store's real problem, are joins you will
+write yourself.</p>
 
-<h3>3.1 Mini-case 1 &middot; 1890: the census that would have taken thirteen years</h3>
+<h3>3.2 Normalization</h3>
+
+<p>Splitting one big spreadsheet into tables so that each fact lives in exactly one place has a name:
+<strong>normalization</strong>. It is less a technique than a habit of mind, and its working rule is
+short. Every field in a table should describe the thing that the table's primary key identifies, and
+nothing else. A store's phone number describes the store, so it belongs in the stores table and nowhere
+else. Normalize well and consistency stops being something people have to remember. It becomes
+something the structure guarantees.</p>
+
+<p>Normalization has formal levels, called normal forms, that a database course will drill. For this
+course the instinct matters more than the formal rules: <em>if the same fact appears twice, the design is
+probably wrong.</em> The word "fact" is doing careful work in that sentence, and the toy below is built
+around the place where people get it wrong.</p>
+
+<div class="tryit" id="normtoy">
+  <div class="tryit-head">Try it &middot; Where does each fact belong?</div>
+  <p class="tryit-intro">Every field starts where it sits in one big spreadsheet: in the sales table.
+  Move each one to the table it describes, then run the five tests. Before you run them, predict which
+  test you expect to fail last.</p>
+  <div class="toy-fields" id="toyfields"></div>
+  <div class="toy-tables" id="toytables" aria-hidden="true"></div>
+  <p style="margin:.4rem 1rem 0"><button type="button" class="toy-run" id="toyrun">Run the five tests</button></p>
+  <div class="toy-out" id="toyout" role="status" aria-live="polite"></div>
+  <p class="tryit-note">When all five pass, paste your three tables into an AI model and ask it to find
+  one fact you have still stored in the wrong place, and to argue for its answer. Then decide whether it
+  is right.</p>
+</div>
+
+<script>
+(function(){
+  var host=document.getElementById('toyfields'); if(!host)return;
+  var F=[
+    {k:'date', l:'Sale date'},
+    {k:'qty', l:'Quantity sold'},
+    {k:'price', l:'Price the customer paid'},
+    {k:'city', l:'Store city'},
+    {k:'phone', l:'Store phone'},
+    {k:'pname', l:'Product name'},
+    {k:'supp', l:'Product supplier'}
+  ];
+  var TN={S:'Sales',T:'Stores',P:'Products'};
+  var KEYS={S:['sale_id (primary key)','store_id (foreign key)','product_id (foreign key)'],
+            T:['store_id (primary key)'], P:['product_id (primary key)']};
+  function evalDesign(d){
+    var r=[];
+    var t0=['date','qty'].filter(function(k){return d[k]!=='S';});
+    r.push({t:'Two customers buy rain jackets in Bellingham on the same day.', ok:!t0.length,
+      why: !t0.length ? 'Each sale gets its own row in the sales table, with its own date and quantity.'
+        : 'The sale date and quantity describe one sale, but the '+TN[d[t0[0]]].toLowerCase()+' table has one row per '+(d[t0[0]]==='T'?'store':'product')+'. The second sale has nowhere to go without overwriting the first.'});
+    r.push({t:'The Bellingham store changes its phone number.', ok:d.phone==='T',
+      why: d.phone==='T' ? 'One edit, in one row of the stores table. Every sale that points at Bellingham is now correct, including last year\'s.'
+        : d.phone==='S' ? 'The phone number is copied onto every Bellingham sale row, so the change takes thousands of edits, and missing one leaves the data disagreeing with itself. That is an update anomaly.'
+        : 'The phone number now sits on product rows, but a product does not have a phone number. Which store\'s number would a rain jacket carry?'});
+    var p2=['pname','supp'].filter(function(k){return d[k]!=='P';});
+    r.push({t:'A new trail mix arrives, and none has sold yet.', ok:!p2.length,
+      why: !p2.length ? 'The trail mix gets its own row in the products table today, before anyone buys it.'
+        : (p2.some(function(k){return d[k]==='S';}) ? 'Product facts live inside sale rows, so a product cannot exist until somebody buys it. That is an insertion anomaly.'
+        : 'Product facts sit on store rows, so each store row can describe only one product. Adding the trail mix means overwriting something else.')});
+    var p3=['city','phone'].filter(function(k){return d[k]!=='T';});
+    r.push({t:'A new store\'s only sale is refunded, and the sale row is deleted.', ok:!p3.length,
+      why: !p3.length ? 'The store\'s row is untouched. Deleting a sale deletes a sale, nothing more.'
+        : (p3.some(function(k){return d[k]==='S';}) ? 'The only record that the store existed was on that sale row. Delete the sale and you have deleted what you knew about the store. That is a deletion anomaly.'
+        : 'Store facts sit on product rows, so what you know about a store now depends on which products happen to exist.')});
+    r.push({t:'The rain jacket\'s price goes up from $89 to $99 next month.', ok:d.price==='S',
+      why: d.price==='S' ? 'Each sale keeps the price that was actually paid, so last March still shows $89 a jacket.'
+        : d.price==='P' ? 'There is one price per product, so raising it rewrites history. Every jacket sold last March now reports $99, and last March\'s revenue grows by money nobody collected. The price a customer paid is a fact about the sale, not about the product.'
+        : 'A store does not charge one price for everything it sells. Every product at that store would now share a single price.'});
+    return r;
+  }
+  window.__ch7toyEval=evalDesign;
+  var sel={};
+  F.forEach(function(f){
+    var row=document.createElement('div'); row.className='toy-field';
+    var id='toy-'+f.k;
+    row.innerHTML='<label for="'+id+'">'+f.l+'</label><select id="'+id+'">'
+      +['S','T','P'].map(function(t){return '<option value="'+t+'">'+TN[t]+' table</option>';}).join('')+'</select>';
+    host.appendChild(row);
+    sel[f.k]=row.querySelector('select');
+    sel[f.k].addEventListener('change',function(){draw(); stale();});
+  });
+  var tbl=document.getElementById('toytables'), out=document.getElementById('toyout');
+  function design(){var d={}; F.forEach(function(f){d[f.k]=sel[f.k].value;}); return d;}
+  function draw(){
+    var d=design();
+    tbl.innerHTML=['S','T','P'].map(function(t){
+      var items=KEYS[t].map(function(k){return '<li class="key">'+k+'</li>';}).join('')
+        +F.filter(function(f){return d[f.k]===t;}).map(function(f){return '<li>'+f.l.toLowerCase()+'</li>';}).join('');
+      return '<div class="toy-tbl"><b>'+TN[t].toUpperCase()+'</b><ul>'+items+'</ul></div>';
+    }).join('');
+  }
+  function stale(){ if(out.innerHTML){ out.innerHTML='<p class="toy-stale">You changed the design. Run the tests again.</p>'; } }
+  document.getElementById('toyrun').addEventListener('click',function(){
+    var r=evalDesign(design()), n=r.filter(function(x){return x.ok;}).length;
+    var html='<p class="toy-score">Your design passes '+n+' of 5 tests.</p><ol>'
+      +r.map(function(x){return '<li class="'+(x.ok?'pass':'fail')+'"><b>'+(x.ok?'Pass. ':'Fail. ')+'</b>'+x.t+' '+x.why+'</li>';}).join('')+'</ol>';
+    if(n===5) html+='<p class="toy-score">Every fact now lives in the table it describes. Notice that a product can also have a current list price, and that belongs in the products table. It is a different fact from the price a customer paid, and a good design keeps both.</p>';
+    out.innerHTML=html;
+  });
+  draw();
+})();
+</script>
+
+
+<p>Normalization has a cost, and it is worth naming. A perfectly normalized database scatters a simple
+question across many tables, so answering "revenue by state last October" means joining sales to stores
+to a calendar. That is why analysts often build deliberately flattened copies of the data for reporting,
+accepting some repetition in exchange for fast questions. The right design depends on the purpose, which
+leads to the next distinction: one shape for running the business, another for understanding it.</p>
+
+<h3>3.3 Running the business and understanding it: OLTP and analytics</h3>
+
+<p>Two very different jobs use the same data. The first job is recording what happens. An
+<strong>operational</strong> system, formally called <strong>OLTP</strong> (online transaction
+processing), records events as they happen: a register writing sale rows, a website placing orders, a
+warehouse confirming a delivery. It handles millions of tiny writes, and it must never lose one. For
+example, when you tap your card at a register, an OLTP system writes your sale in a fraction of a second
+and moves on to the next customer.</p>
+
+<p>The second job is understanding what happened. An <strong>analytical</strong> system, sometimes called
+<strong>OLAP</strong> (online analytical processing), reads huge sweeps of history to answer questions
+such as revenue by region by month, or which stores sell the most rain jackets per customer. For example,
+a regional manager asking how last winter compared with the winter before needs two years of sales at
+once, not the latest one.</p>
+
+<p>The two jobs pull the design in opposite directions, so companies usually keep them apart. They copy
+data from the operational system into a separate <strong>data warehouse</strong>, a store of historical
+data shaped for analytical questions. That way a query scanning two years of sales never slows down the
+registers recording today's. When you pivot in Excel, chart in Tableau, or write a GROUP BY in SQL, you
+are doing analytics. The database underneath did the transaction processing first.</p>
+
+<h3>3.4 Where database tables came from, and the decade nobody wanted them</h3>
+
+<p>The relational model is so standard now that it looks like a discovery about the nature of
+information rather than somebody's idea. It was somebody's idea, and for years it was resisted by the
+company best placed to build it.</p>
+
+<p>In June 1970, Edgar Codd, a mathematician at IBM's research laboratory in San Jose, published a paper
+called "A Relational Model of Data for Large Shared Data Banks." Its argument was that data should be
+stored as simple tables of rows and columns, related to each other by values, and that programs asking
+questions should not have to know how any of it was physically stored. You should be able to describe
+<em>what</em> you want rather than <em>how</em> to go and get it.</p>
+
+<p>At the time, databases worked the other way around. A programmer reached data by following links
+through a hierarchy, which meant every question had to be written against the storage layout, and
+changing the layout broke the programs. IBM sold a very successful product built exactly that way. Its
+own research division had just published a paper arguing that the approach was wrong.</p>
+
+<p>IBM did eventually build a relational system. Its research project, System R, produced the query
+language that became SQL, the one you will write in Lab 7. But the company was slow to turn that research
+into a product. A small company founded by Larry Ellison read the published research, took it seriously,
+and got a relational database to market first. That company was later renamed Oracle. IBM's flagship
+relational product, DB2, did not ship until 1983, thirteen years after Codd's paper. IBM had the paper,
+the researchers, the customers, and the money, and still arrived late, because it already sold something
+the paper argued against.</p>
+
+<p>There are two things worth taking from that story. The first is that the design you are learning as
+obvious was argued for, against opposition, by a named person, within living memory. The second is a
+pattern you will meet again in this book and in your career. The organization with the most to gain from
+an idea is often the one with the most to lose from it, and being right early is worth nothing by
+itself.</p>
+
+<h2 id="cases"><span class="num">4</span>Mini-cases: two failures of shape</h2>
+<p>Before the main case, here are two short mini-cases. In each one the facts existed, somebody needed an
+answer from them, and the answer was blocked by the <em>shape</em> of the data, meaning how it was
+structured and stored, rather than by the facts themselves. The two are separated by 130 years, which is
+the point. This is not a modern problem, and it did not stop being a problem when computers got fast.</p>
+
+<h3>4.1 Mini-case 1 &middot; 1890: the census that might not have finished in time</h3>
 
 <p>The United States Constitution requires a population count every ten years, and by the 1880s the
-counting had stopped working. The 1880 census was recorded on paper schedules and tallied by hundreds of
-clerks by hand, and the final tabulations were not finished until 1887. The population was growing
-faster than the clerks could count it. Officials estimated that the 1890 census, done the same way,
-would take about thirteen years, which meant the results would arrive after the census that was supposed
-to replace them.</p>
+counting had stopped working. The 1880 census was recorded on paper schedules and tallied by hand by
+hundreds of clerks, and the full tabulation took about seven years. The population was growing faster
+than the clerks could count it. Officials worried that the 1890 census, counted the same way, might not
+be finished before the 1900 census began.</p>
 
 <p>Herman Hollerith, who had worked on the 1880 count, proposed something that sounds obvious now and
 was not. Give every person a card, and give the card a fixed set of positions, where a hole in a
 particular place means a particular fact. Sex here. Age there. Occupation there. A machine passes pins
-through the card, the holes complete circuits, and counters advance.</p>
+through the card, the holes complete electrical circuits, and counters advance.</p>
 
-<p>Look at what Hollerith's card actually is, in this chapter's terms. One card is a <strong>record</strong>. Each position on it is a
-<strong>field</strong>. Every card carries the same fields in the same order, which is what lets a
-machine handle them at all. Hollerith invented the row of a table forty years before there was a
-computer to put it in.</p>
+<figure class="diagram" style="margin:1.9rem auto;max-width:560px">
+<img src="census-1890-tabulator.jpg" width="622" height="480" loading="lazy" style="width:100%;height:auto"
+ alt="A black-and-white engraving from Scientific American, 1890. A woman in a long dress sits at a wooden desk operating a Hollerith tabulating machine. Above the desk is a tall cabinet with rows of round dials. She holds a sheet of paper in one hand and works a small press on the desk with the other. Tall stacks of bundled cards sit on the floor beside the desk, and other clerks work at machines in the background. The caption on the engraving reads Electrical Counting Machines.">
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--muted);margin-top:.55rem;line-height:1.55">
+A census clerk at one of Hollerith's machines, from <em>Scientific American</em>'s coverage of the 1890
+count. The rows of dials above the desk are the counters. Each dial could only count a fact that sat in
+the same position on every card, which is why the bundles stacked beside the desk had to share one
+layout. The machine did not make the census fast. The fixed positions did.
+<br><br>Engraving, <em>Scientific American</em>, August 1890. Public domain, via Wikimedia Commons.
+</figcaption>
+</figure>
+
+
+<p>Look at what Hollerith's card actually is, in this chapter's terms. One card is a <strong>record</strong>.
+Each position on it is a <strong>field</strong>. Every card carries the same fields in the same order,
+which is what lets a machine handle them at all. Hollerith invented the row of a table decades before
+there was a computer to put it in.</p>
 
 <p>The Census Bureau ran a competition in 1888 to decide who got the contract. Capturing the test data
 took the two other entrants 144.5 and 100.5 hours; it took Hollerith 72.5. Preparing that data for
 tabulation took them 44.5 and 55.5 hours; it took Hollerith 5.5. The gap on the second task is roughly
 tenfold, and the second task is the one this chapter is about, because it is not recording facts, it is
 getting answers out of them. A rough national count for 1890 came back in about six weeks. The company
-Hollerith founded on the proceeds eventually became IBM.</p>
+Hollerith founded eventually became part of IBM.</p>
 
-<p><strong>What the shape decided: whether the question could be answered at all. The component: data, at the level of the field.</strong> The 1880 data
-was not wrong. It was unstructured, and an unstructured fact is one that a person has to read.</p>
+<p><strong>What the data's shape decided: whether the question could be answered at all. The component:
+data, at the level of the field.</strong> The 1880 data was not wrong. It was unstructured, and an
+unstructured fact is one that a person has to read.</p>
 
 <div class="mcq"><b>Check yourself</b>The census facts were identical in 1880 and 1890. Name the specific
 thing Hollerith changed, in the vocabulary of section 1, and explain why that change is what made the
 counting fast rather than the electricity.
 <details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>The facts did not change; the shape did. In 1880 each answer was a mark on a paper schedule, readable by a person and countable only by a person. In 1890 each answer became a hole in a fixed position on a card: a field, with a type, in a record. That is the change. Once a fact has a position, a machine can find it, and once every record has the same positions, the machine can count across millions of them. Every database in this chapter is Hollerith's card with the paper removed.</p></details></div>
 
-<h3>3.2 Mini-case 2 &middot; 2020: the rows that fell off the bottom</h3>
+<h3>4.2 Mini-case 2 &middot; 2020: the rows that fell off the bottom</h3>
 
 <p>During the pandemic, positive coronavirus test results in England traveled from testing laboratories
-to the contact tracing service through Public Health England. The laboratories sent results as text
-files. PHE loaded them into a spreadsheet template and passed the spreadsheet on.</p>
+to the contact tracing service through Public Health England (PHE). The laboratories sent results as text
+files. An automatic process at PHE pulled those files into Excel templates, which were then uploaded to
+the system the contact tracers used.</p>
 
-<p>The template was saved in the old .xls format, which has a hard limit of 65,536 rows. Each test
-result occupied several rows, so the real ceiling was far lower. When a file reached the limit, the
-additional rows were not rejected with an error. They were silently discarded.</p>
+<p>The process used the old .xls file format, which has a hard limit of 65,536 rows. Each test result
+took up several rows, so in practice each template could hold only about 1,400 cases. When a file reached the limit, the additional
+rows were not rejected with an error. They were silently left out.</p>
 
-<p>Between 25 September and 2 October 2020, 15,841 positive cases were never passed to contact tracers.
-The people who tested positive were told. Their contacts were not, and by the time the gap was found
-most of them were past the window in which isolating would have helped. Reporting at the time put the
-number of untraced contacts near 48,000. A later economics study estimated that the delay was associated
-with more than a hundred thousand additional infections; treat that figure as an estimate rather than a
-count, because it is modeled rather than observed.</p>
+<p>Between 25 September and 2 October 2020, 15,841 positive cases were not passed to contact tracers on
+time. The people who tested positive were told. Their contacts were not, and referrals to contact tracing
+were delayed by up to a week, during a fast-growing second wave. Reporting at the time put the number of
+close contacts who were not reached near 48,000. A later study by two economists estimated that the delay
+was associated with more than a hundred thousand additional infections. Treat that figure as an estimate
+rather than a count, because it is modeled rather than observed.</p>
 
-<p>This is section 2's argument about the single grid, played out at national scale, in a week. A spreadsheet is
-one big grid. It has a row limit, no rules about what a column may contain, no way to enforce that a
-result belongs to a person, and, crucially here, no obligation to complain when it drops something. A
-database would have refused the row and said so.</p>
+<figure class="diagram" style="margin:1.9rem auto;max-width:520px">
+<svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="xlT xlD"
+     style="width:100%;height:auto;font-family:var(--sans)">
+<title id="xlT">Rows falling off the bottom of an .xls file</title>
+<desc id="xlD">On the left, a tall column of spreadsheet rows numbered 1, 2, 3, then 65,534, 65,535 and
+65,536. A thick line under row 65,536 is labelled row limit of the .xls format. Below the line, three
+faded rows numbered 65,537, 65,538 and onward are drawn with dashed outlines, labelled discarded, with no
+error, no warning and no count of what was lost. On the right, a box labelled a database at the same point
+says it either stores the row or refuses it and reports an error.</desc>
+<g font-size="10" fill="var(--ink)">
+  <rect x="20" y="20" width="200" height="22" fill="var(--black)"/>
+  <text x="30" y="35" fill="#fff" font-weight="700">ROW</text><text x="90" y="35" fill="#fff" font-weight="700">LAB RESULT</text>
+  <g stroke="var(--border)" fill="#fff"><rect x="20" y="42" width="200" height="20"/><rect x="20" y="62" width="200" height="20"/><rect x="20" y="82" width="200" height="20"/></g>
+  <text x="30" y="56">1</text><text x="90" y="56">result data</text>
+  <text x="30" y="76">2</text><text x="90" y="76">result data</text>
+  <text x="30" y="96">3</text><text x="90" y="96">result data</text>
+  <text x="30" y="118" fill="var(--muted)">...</text>
+  <g stroke="var(--border)" fill="#fff"><rect x="20" y="124" width="200" height="20"/><rect x="20" y="144" width="200" height="20"/><rect x="20" y="164" width="200" height="20"/></g>
+  <text x="30" y="138">65,534</text><text x="90" y="138">result data</text>
+  <text x="30" y="158">65,535</text><text x="90" y="158">result data</text>
+  <text x="30" y="178">65,536</text><text x="90" y="178">result data</text>
+</g>
+<path d="M14 186 H226" stroke="var(--magenta)" stroke-width="3"/>
+<text x="20" y="201" font-size="10" font-weight="700" fill="var(--magenta-dark)">row limit of the .xls format</text>
+<g opacity=".4" font-size="10" fill="var(--muted)">
+  <g fill="none" stroke="var(--muted)" stroke-dasharray="4 3"><rect x="20" y="210" width="200" height="20"/><rect x="20" y="234" width="200" height="20"/><rect x="20" y="258" width="200" height="20"/></g>
+  <text x="30" y="224">65,537</text><text x="90" y="224">result data</text>
+  <text x="30" y="248">65,538</text><text x="90" y="248">result data</text>
+  <text x="30" y="272">...</text>
+</g>
+<text x="236" y="226" font-size="10.5" font-weight="700" fill="var(--ink)">Discarded.</text>
+<text x="236" y="242" font-size="10" fill="var(--muted)">No error. No warning.</text>
+<text x="236" y="257" font-size="10" fill="var(--muted)">No count of what was lost.</text>
+<rect x="262" y="40" width="222" height="110" fill="var(--off-white)" stroke="var(--border)"/>
+<rect x="262" y="40" width="222" height="22" fill="var(--black)"/>
+<text x="272" y="55" font-size="10" font-weight="700" fill="#fff">A DATABASE AT THE SAME POINT</text>
+<g font-size="10" fill="var(--ink)">
+  <text x="272" y="82">Stores the row,</text>
+  <text x="272" y="100">or refuses it and reports</text>
+  <text x="272" y="118">an error that someone sees.</text>
+  <text x="272" y="140" fill="var(--muted)">Either way, nothing disappears quietly.</text>
+</g>
+</svg>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--muted);margin-top:.55rem;line-height:1.55">
+The line is not the failure. Every container has a limit, including every database. The failure is what
+happened below the line: nothing at all. The rows past the limit were simply not there, and no part of
+the process announced it, so the gap was found days later.
+</figcaption>
+</figure>
 
-<p><strong>What the shape decided: whether anyone found out. The component: software.</strong> The failure was not that data was
-lost. It was that data was lost <em>quietly</em>, and a tool with rules is a tool that objects.</p>
+
+<p>This is section 2's argument about the single spreadsheet, played out at national scale, in a week.
+A spreadsheet is one big table. It has a row limit, no rules about what a column may contain, no way to
+enforce that a result belongs to a person, and, most important here, no obligation to complain when it
+drops something. A database would have stored the row or refused it and said so.</p>
+
+<p><strong>What the container decided: whether anyone found out. The component: software.</strong> The
+failure was not that data was lost. It was that data was lost <em>quietly</em>, and a tool with rules is a
+tool that objects.</p>
 
 <div class="mcq"><b>Check yourself</b>You will spend this quarter working in spreadsheets, and this
 chapter is about databases. Name two properties a database has that a spreadsheet does not, and then
 name one situation where a spreadsheet is still the right choice.
-<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>The spreadsheet did what it was built to do. The file format Public Health England chose had a fixed limit on the number of rows, and when the case data exceeded it, the extra rows were silently dropped rather than flagged, so 16,000 positive tests never reached the contact tracers. A spreadsheet is a fine container for a few thousand rows that one person reads. It is the wrong container for a national count that grows every day, because it has no way to say "this is too big for me." A database would have taken the rows or refused them out loud. The failure was in choosing the container, not in using it.</p></details></div>
+<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>First, a database enforces rules: a column has a type, a key must be unique, and a sale must point to a store that exists, so bad values are refused when they are written. Second, a database reports what it cannot do. When a write fails, it returns an error instead of quietly dropping the row, which is exactly what the .xls file did not do. Databases also let many people work at once and hold far more rows, which also counts. A spreadsheet is still the right choice for a small amount of data that one person owns and reads, such as a budget, a quick analysis, or a list of a few hundred items. Public Health England's mistake was not using a spreadsheet. It was using one for a national count that grew every day.</p></details></div>
 
-<h3>3.3 What the two have in common</h3>
+<h3>4.3 What the two have in common</h3>
 
-<p>Put the two mini-cases side by side. In 1890 the facts had no structure, so no one could count them. In 2020 the wrong container was
-used for the volume, and it failed without saying so. Different centuries, different technologies, one
-finding: <strong>the facts were never the problem</strong>.</p>
+<p>Put the two mini-cases side by side. In 1890 the facts had no structure, so no one could count them. In
+2020 the facts were put in the wrong container for their volume, and it failed without saying so.
+Different centuries, different technologies, one finding: <strong>the facts were never the problem</strong>.</p>
 
-<p>There is a second thing the two share, and it matters more for your career than the first. In both cases the decision that caused the failure was made by a person, early, for a reason that was sound at
-the time, and it was made long before anyone could see the consequence. Somebody chose the fields. Somebody chose the file format. Those are not technical decisions that
-happen to have management consequences. They are management decisions that happen to be expressed in
-technology, and the chapter you are reading is about how to make them well.</p>
-<h2 id="walmart"><span class="num">4</span>Main case &middot; Walmart: a company built on a database</h2>
+<p>There is a second thing the two share, and it matters more for your career than the first. In both cases
+the decision that caused the failure was made by a person, early, for a reason that was sound at the time,
+and it was made long before anyone could see the consequence. Somebody chose the fields. Somebody chose
+the file format. Those are not technical decisions that happen to have management consequences. They are
+management decisions that happen to be expressed in technology, and the chapter you are reading is about
+how to make them well.</p>
+<h2 id="walmart"><span class="num">5</span>Main case &middot; Walmart: a company built on a database</h2>
 
-<p>Imagine being a supplier in 1991 and being handed a login. Behind it is what sold, of your products,
-in every Walmart store, yesterday. No retailer had ever shown a supplier that. Walmart's founding
-advantages were about trucks and locations. Its modern advantage was built on
-the ideas in this chapter, and the pivotal move was one most companies would have considered
-unthinkable: it gave its data away.</p>
+<p>Imagine being a supplier in the early 1990s and being given access to a new system. Behind it is what
+sold, of your products, in every Walmart store, yesterday. Almost no retailer shared that kind of data
+with suppliers at the time, and Walmart provided it free. Walmart's founding advantages were about trucks
+and locations. Its modern advantage was built on the ideas in this chapter, and the pivotal move was one
+most companies would have considered unthinkable: it gave its data away.</p>
 
 <p>Four numbers set the scale of what that decision produced:</p>
 
 <div class="stats">
   <div class="stat"><b>~10,900</b><span>stores worldwide</span></div>
-  <div class="stat"><b>~280M</b><span>customer visits weekly</span></div>
-  <div class="stat"><b>200+</b><span>data streams in the Data Caf&eacute;</span></div>
-  <div class="stat"><b>40 PB</b><span>of recent transaction data</span></div>
+  <div class="stat"><b>~280M</b><span>customers served each week</span></div>
+  <div class="stat"><b>200+</b><span>data streams in the Data Caf&eacute; (2017)</span></div>
+  <div class="stat"><b>30 min</b><span>to analyze a problem, down from 2.5 weeks (2017)</span></div>
 </div>
 
-<h3>4.1 Giving the data away: Retail Link</h3>
+<figure class="diagram" style="margin:1.9rem auto;max-width:600px">
+<img src="walmart-checkout-lanes.jpg" width="960" height="720" loading="lazy" style="width:100%;height:auto"
+ alt="Checkout lanes inside a Walmart store in Vegreville, Alberta, in 2021. Numbered signs marked 4, 6 and 7 hang above the lanes. A customer in a plaid jacket stands at a counter with a shopping cart, and racks of candy and snacks line each lane. A sign on the back wall thanks customers for choosing the Vegreville Walmart Supercentre.">
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--muted);margin-top:.55rem;line-height:1.55">
+Checkout lanes at a Walmart in Vegreville, Alberta, in 2021. Every sale rung up here is written as a
+record that carries the store, the register, the time, and each item, which is how a sale in Alberta
+can be compared with one in Arkansas the next morning. Multiply these lanes by about 10,900 stores and
+you have the operational side of this case.
+<br><br>Photograph: Rowanswiki, via Wikimedia Commons, CC0 (public domain dedication).
+</figcaption>
+</figure>
 
-<p>Let's start with the decision itself. In 1991 the company launched <strong>Retail Link</strong>, a system that shares Walmart's own
-point-of-sale data with its suppliers. A supplier like Procter &amp; Gamble can see how its products
-are selling, store by store, day by day, and manage its own inventory against real demand instead of
-against guesses. Every supply chain suffers from the <strong>bullwhip effect</strong>: demand distortion
-that grows larger at each step up the chain, because each company guesses at what the next one will
-need and adds a margin for safety. Retail Link attacks the bullwhip at the root by replacing the guesses
-with shared records. Suppliers plan against actual sales, Walmart's shelves
-stay stocked without warehouses of padding, and the whole chain runs on one version of the truth.</p>
 
-<p>Whether giving away your most valuable data is genius or madness is an open question, and worth arguing from both sides. What is not in question is the scale of what grew from it. Walmart's analytics hub, the Data Café, draws on more than 200 internal and external data streams,
-including roughly 40 petabytes of recent transaction data. Reporting from the mid-2010s described
-the company building a private cloud handling 2.5 petabytes an hour. The numbers age quickly; the
-design principle does not: <em>every register is a sensor, and the database is the instrument the
+<h3>5.1 Giving the data away: Retail Link</h3>
+
+<p>Start with the decision to share sales data with suppliers. In the early 1990s Walmart introduced
+<strong>Retail Link</strong>, a system that shares Walmart's own point-of-sale data with its suppliers.
+A supplier like Procter &amp; Gamble can see how its products are selling, store by store, day by day,
+and manage its own inventory against real demand instead of guesses. Every supply chain suffers from
+the <strong>bullwhip effect</strong>: demand distortion that grows larger at each step up the chain,
+because each company guesses at what the next one will need and adds a margin for safety. Retail Link
+attacks the bullwhip at the root by replacing the guesses with shared records. Suppliers plan against
+actual sales, Walmart's shelves stay stocked without warehouses of padding, and the whole chain runs on
+one version of the truth.</p>
+
+<p>Whether giving away your most valuable data is genius or madness is an open question, and worth
+arguing from both sides. What is not in question is the scale of what grew from it. By 2017 Walmart's
+analytics hub, the Data Caf&eacute;, drew on more than 200 streams of internal and external data,
+including transactions, weather, and social media, and was reported to be processing about 2.5
+petabytes of data an hour. Walmart said the hub had cut the time to analyze a problem from about two and
+a half weeks to about 30 minutes. Those numbers are nearly a decade old and certainly bigger now; the
+design principle has not changed: <em>every register is a sensor, and the database is the instrument the
 whole company reads.</em></p>
 
 <p>One story from the Data Caf&eacute; makes the point better than the petabytes do. A grocery team
-watched sales in one category slump and could not explain it. Drilling into the data showed a pricing
-error: the products were listed higher than intended. The fix was trivial once seen. A company
-analyst put the underlying principle plainly, noting that insights arriving after a week of analysis
-are sales already lost. That is Chapter 2's timeliness dimension, operating at Walmart scale: the
-same information, a week late, is worth a fraction as much.</p>
+watched sales in one product category decline and could not explain it. Working through the Data
+Caf&eacute;'s data, the team found a pricing error: products were priced too high in some regions. The
+fix was simple once someone could see the problem. Walmart's own reason for wanting speed was lost sales.
+An answer that arrives weeks late arrives after the customers have already shopped somewhere else. That is
+Chapter 2's timeliness dimension, operating at Walmart scale: the same information, weeks late, is worth a
+fraction as much.</p>
 
-<h3>4.2 From records to answers: analytics</h3>
+<h3>5.2 From records to answers: analytics at Walmart</h3>
 
-<p>Everything in this chapter to this point has been about storing facts correctly. Analytics is about asking the facts
-questions, and the two jobs pull database design in opposite directions.</p>
+<p>Section 3.3 drew a line between systems that record the business and systems that help people
+understand it. Walmart's history follows that line. The registers in every store are the operational
+side: they write each sale the moment it happens. Retail Link's reports and the Data Caf&eacute; are the
+analytical side: they read years of those sales to answer questions. Keeping the two apart is why a
+supplier's heavy report never slows down a checkout lane.</p>
 
-<p>This is also where the remaining four components arrive. A normalized database is useless sitting still: the
-<strong>networks</strong> carry every register's writes to the center and carry Retail Link's answers back
-out to thousands of suppliers, and the <strong>people</strong> are the ones who think of the question. The
-Data Caf&eacute; did not notice the pricing error. A grocery team did, and then had somewhere to look.</p>
-
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Transactions vs. analytics (OLTP and OLAP)</span>
-<p>An <strong>operational</strong> system, formally OLTP, online transaction processing, records
-events as they happen: a register writing sale rows, a website placing orders. It handles millions of
-tiny writes and must never lose one. An <strong>analytical</strong> system, formally OLAP, reads
-huge sweeps of history to answer questions: revenue by region by month, attach rate by store.
-Companies typically copy data from the first into a separate <strong>data warehouse</strong> shaped
-for the second, because a query scanning two years of sales should never slow down the registers
-recording today's. When you pivot in Excel, chart in Tableau, or write a GROUP BY in SQL, you are
-doing analytics; the database underneath did the transaction processing first.</p></div>
+<p>This is also where the remaining four components arrive. A normalized database is useless sitting
+still. The <strong>networks</strong> carry every register's writes to the center and carry Retail Link's
+answers back out to thousands of suppliers. The <strong>people</strong> are the ones who think of the
+question. The Data Caf&eacute; did not notice the pricing error. A grocery team did, and then had
+somewhere to look.</p>
 
 <p>Seen through this lens, the labs in this course are one continuous story. Business intelligence asks
-what to measure; this chapter supplies the machinery those measurements come from. Your Tableau
-dashboard and your SQL queries are analytics
-running on structured, normalized, joined data, and the reason your questions are cheap to ask is
-that someone designed the tables so they would be. Analytics is not a separate world from databases.
-It is what databases are for.</p>
+what to measure; this chapter supplies the machinery those measurements come from. Your Tableau dashboard
+and your SQL queries are analytics running on structured, normalized, joined data, and the reason your
+questions are cheap to ask is that someone designed the tables so they would be. Analytics is not a
+separate world from databases. It is what databases are for.</p>
 
-<h3>4.3 What's next: where this has gone since, and it is not nostalgia</h3>
+<h3>5.3 What's next: where this has gone since</h3>
 
-<p>Retail Link has run for more than thirty years and still does, as the portal where suppliers manage
-orders. What Walmart retired, in 2024, was the reporting inside it. Supplier analytics moved onto a newer
-platform, launched in 2021 as Luminate and renamed Scintilla in 2025, built by a division created in 2021
-called Walmart Data Ventures. The name changes are not the interesting part. Three things about the move
-are.</p>
+<p>Retail Link has run for about three decades and still does, as the portal suppliers sign in through.
+What Walmart retired was the reporting inside it. In October 2023 Walmart told suppliers it was phasing
+out the Decision Support System inside Retail Link, which it shut off on 1 March 2024, and moved supplier
+reporting onto a newer platform. That platform launched in September 2021 as Walmart Luminate and was
+renamed Scintilla in 2025. It is run by Walmart Data Ventures, a division created in February 2021. The
+name changes are not the interesting part. Three things about the move are.</p>
 
-<p><strong>First, the data became a business.</strong> In 1991 sharing point-of-sale records was a supply-chain
-decision that happened to involve data. There is now a division whose job is to create value from
-Walmart's records, and access to the good tiers is a product suppliers pay for. Chapter 3 argued that
-accumulated data is the component nobody can buy. Walmart's answer, three decades later, is to sell
-carefully chosen views of it while keeping the accumulation.</p>
+<p><strong>First, the data became a business.</strong> In the early 1990s sharing point-of-sale records was
+a supply-chain decision that happened to involve data. There is now a division whose job is to create value
+from Walmart's records. A basic tier of Scintilla is free, and the fuller tier is a paid subscription.
+Chapter 3 argued that accumulated data is the component nobody can buy. Walmart's answer, three decades
+later, is to sell carefully chosen views of it while keeping the accumulation.</p>
 
-<p><strong>Second, the question a supplier asks changed from "how did I do" to "what should I do."</strong> The old platform
-reported what had happened. The new one adds recommendations. In 2025 Walmart began adding AI tools on top: a conversational
-interface so a supplier can ask the data a question in ordinary language, automatic summaries of
-customer survey results, and suggested actions rather than tables. That is
-Chapter 2's progression from data to information to knowledge, happening in public. None of those
-tools would have anything to work with if somebody had not decided in 1991 what to record.</p>
+<p><strong>Second, the question a supplier asks changed from "how did I do" to "what should I do."</strong>
+That is how the head of Walmart Data Ventures described the change in 2024. The old reports showed what had
+happened. The new platform adds recommendations. In late 2025 Walmart announced AI tools on top: a
+conversational tool to help suppliers understand the data, automatic summaries of customer survey results,
+and suggested marketing actions. That is Chapter 2's progression from data to information to knowledge,
+happening in public. None of those tools would have anything to work with if somebody had not decided,
+decades ago, what to record.</p>
 
-<p><strong>Third, the scope widened.</strong> The platform now covers customer behavior and perception across
-roughly 140 million households, not just what moved off a shelf, and it is expanding into Canada and
-Mexico.</p>
+<p><strong>Third, the scope widened.</strong> The platform now covers how customers shop and what they say
+in surveys, not just what moved off a shelf. It launched in Mexico and Canada in 2024, and in 2026 Walmart
+announced it would extend Scintilla to Sam's Club.</p>
 
-<p>Hold all of that beside section 5 before you decide how you feel about it. The same joins that let a
+<p>Hold all of that beside section 6 before you decide how you feel about it. The same joins that let a
 supplier see which stores are underperforming let somebody infer what a household is going through. The
-capability is identical; only the question differs. And notice that nothing in this paragraph required a
-new invention. It required thirty years of somebody having decided, correctly, what was worth writing
-down.</p>
+capability is identical; only the question differs. And notice that nothing in this subsection required a
+new invention. It required three decades of somebody deciding, correctly, what was worth writing down.</p>
 
-<h3>4.4 The five components at Walmart</h3>
+<h3>5.4 The five components at Walmart</h3>
 
 <p>Now that you have seen the whole system, here it is as five components, the way this course maps every case. Look at which row the advantage lives in, and notice that it is the row Walmart chose to give away.</p>
 
 <table class="sumtable stack-sm">
 <tr><th>Component</th><th>At Walmart</th><th>What breaks if it fails</th></tr>
 <tr><td data-label="Component"><strong>Hardware</strong></td><td data-label="At Walmart">Registers and scanners in ~10,900 stores; the servers behind the Data Caf&eacute;</td><td data-label="What breaks if it fails">A store goes dark: no sales recorded, shelves restocked on guesswork</td></tr>
-<tr><td data-label="Component"><strong>Software</strong></td><td data-label="At Walmart">The transaction systems, Retail Link, the analytics platforms</td><td data-label="What breaks if it fails">Suppliers plan against stale numbers; the bullwhip returns</td></tr>
-<tr><td data-label="Component"><strong>Data</strong></td><td data-label="At Walmart">Structured transactions at continental scale; 40 PB of recent history</td><td data-label="What breaks if it fails">A type error or bad key propagates into every report downstream</td></tr>
-<tr><td data-label="Component"><strong>Networks</strong></td><td data-label="At Walmart">Every register streaming to the center; Retail Link reaching thousands of suppliers</td><td data-label="What breaks if it fails">The shared version of the truth stops being shared</td></tr>
-<tr><td data-label="Component"><strong>People</strong></td><td data-label="At Walmart">Analysts in the Data Caf&eacute;; the grocery team that chased the slump; suppliers reading Retail Link</td><td data-label="What breaks if it fails">Data nobody investigates is a cost, not an asset: the pricing error runs for months</td></tr>
+<tr><td data-label="Component"><strong>Software</strong></td><td data-label="At Walmart">The transaction systems, Retail Link, Scintilla, the analytics platforms</td><td data-label="What breaks if it fails">Suppliers plan against stale numbers; the bullwhip returns</td></tr>
+<tr><td data-label="Component"><strong>Data</strong></td><td data-label="At Walmart">Structured transaction records from every register, plus 200+ outside data streams</td><td data-label="What breaks if it fails">A type error or bad key spreads into every report downstream</td></tr>
+<tr><td data-label="Component"><strong>Networks</strong></td><td data-label="At Walmart">Every register sending to the center; Retail Link reaching thousands of suppliers</td><td data-label="What breaks if it fails">The shared version of the truth stops being shared</td></tr>
+<tr><td data-label="Component"><strong>People</strong></td><td data-label="At Walmart">Analysts in the Data Caf&eacute;; the grocery team that chased the decline; suppliers reading the reports</td><td data-label="What breaks if it fails">Data nobody investigates is a cost, not an asset: the pricing error runs for months</td></tr>
 </table>
 
-<h3>4.5 What a business technology manager takes from this chapter</h3>
+<h3>5.5 What a business technology manager takes from this chapter</h3>
 
 <p>Strip the Walmart case down to what you can reuse in any company. Four decisions came up in it, and each one is a decision you will be in the room for.</p>
 
 <p><strong>Decide the shape of the data before you decide anything else.</strong> A fact recorded as a field with a type can be counted, joined, and questioned; the same fact typed into a note cannot. Hollerith's census and Public Health England's spreadsheet failed for the same reason at opposite ends of history: the facts existed and the container was wrong. When somebody proposes to collect something, ask what the record will look like, because that decides which questions will be cheap for the next twenty years.</p>
 
-<p><strong>Put each fact in one place, and connect the places with keys.</strong> One giant grid corrupts itself in three predictable ways, and the relational model exists to stop that. You will not design databases for a living, but you will approve them, and the question to ask is whether the same fact is stored twice anywhere, because if it is, the two copies will eventually disagree and nobody will know which is right.</p>
+<p><strong>Put each fact in one place, and connect the places with keys.</strong> One big spreadsheet corrupts itself in three predictable ways, and the relational model exists to stop that. You will not design databases for a living, but you will approve them. The question to ask is whether the same fact is stored twice anywhere. If it is, the two copies will eventually disagree, and nobody will know which is right.</p>
 
-<p><strong>Sharing data can be worth more than hoarding it.</strong> Walmart's most valuable move was handing suppliers a login to their own sales data, which no retailer had done before. The information was worth more in the suppliers' hands than locked in Bentonville, because the suppliers used it to stop guessing. Before you treat data as a secret, ask who could make a better decision with it and what that decision would be worth to you.</p>
+<p><strong>Sharing data can be worth more than hoarding it.</strong> Walmart's most valuable move was handing suppliers access to their own sales data, which almost no retailer did at the time. The information was worth more in the suppliers' hands than locked in Bentonville, because the suppliers used it to stop guessing. Before you treat data as a secret, ask who could make a better decision with it and what that decision would be worth to you.</p>
 
 <p><strong>Remember that the shape is a management decision, not a technical one.</strong> Somebody chose the fields. Somebody chose the file format. Those choices were made early, for reasons that were sound at the time, by people who could not see the consequence, and every one of them is the kind of choice a manager signs off on. Chapter 6 was about what analytics does with data, and Chapter 12 will do the same for AI; none of it works if the decisions in this chapter were made badly.</p>
 
-<h2 id="other"><span class="num">5</span>The downside: what the basket reveals</h2>
+<h2 id="other"><span class="num">6</span>The downside: what the basket reveals</h2>
 
 <p>A store's transaction database looks like the least sensitive data imaginable: no health records,
 no messages, just groceries. The discomfort arrives when you understand what joins and history do to
 innocent-looking records.</p>
 
-<p>A single basket says little. A year of baskets, keyed to one identity, says a great deal: a
-household's size, schedule, budget, diet, religion by what is never bought, health by what suddenly
-is. Retail analytics openly works this inference, and the industry's most famous cautionary tale is
-about exactly this. In 2012 the New York Times reported that Target's statisticians had built a
-model that guessed, from purchases like unscented lotion and supplements, which shoppers were
-pregnant, and mailed them baby coupons. A father in Minneapolis complained to a store manager that
-his teenage daughter was receiving them. She was pregnant. The store had known before he did. Nothing in that story required surveillance in the spy-movie sense.
-It required exactly what this chapter teaches: clean records, a stable key per customer, and a join
-across time.</p>
+<p>A single basket says little. A year of baskets, linked to one customer, says a great deal: a
+household's size, schedule, budget, and diet, and sometimes its religion by what is never bought or its
+health by what suddenly is. Retail analytics openly works this way, and the industry's most famous
+cautionary tale is about exactly this. In 2012 the <em>New York Times</em> reported that Target's
+statisticians had built a model that guessed, from purchases like unscented lotion and supplements, which
+shoppers were pregnant, so the company could send them baby coupons. According to the <em>Times</em>, a
+father near Minneapolis complained to a store manager that his teenage daughter was receiving them, and
+later learned she was pregnant. Nothing in that story required surveillance in the spy-movie sense. It
+required exactly what this chapter teaches: clean records, a stable key per customer, and a join across
+time.</p>
 
-<p>The lesson of this section is not that databases are sinister. It is that <strong>the power to join is the power
-to reveal</strong>, and the same design choices that make honest questions cheap make invasive ones
-cheap too. A company that holds well-structured data about people holds a capability, and somebody
-has to decide who may use it, for what, and what happens when it leaks. The
-second question of this course, what does the system make easier, and for whom, applies to a schema
-as much as to an algorithm.</p>
+<p>Walmart's version of this question is current, not historical. Scintilla lets brands aim ads at
+groups of Walmart shoppers. In 2025 the head of Walmart Data Ventures gave an example of how the
+targeting works: a brand could aim a health product at customers who had shopped for natural or
+gluten-free foods. In December 2024 Walmart also completed its $2.3 billion purchase of the TV maker
+Vizio, saying the deal would help advertisers reach customers through Walmart Connect, its advertising
+business. A smart TV records what a household watches. In 2017, years before Walmart owned it, Vizio
+paid $2.2 million to settle charges from the Federal Trade Commission and New Jersey that it had collected
+viewing data from 11 million TVs without viewers' consent.</p>
+
+<p>None of this shows that Walmart has done anything wrong, and this chapter takes no side on whether
+advertising built on purchase data is good or bad for shoppers. The systems question is the one this
+chapter can answer. Once viewing records and purchase records can be matched to the same household, what
+can the join reveal, and who decides which joins are allowed?</p>
+
+<p>The lesson of this section is not that databases are sinister. It is that <strong>the power to join is
+the power to reveal</strong>, and the same design choices that make honest questions cheap make invasive
+ones cheap too. A company that holds well-structured data about people holds a capability, and somebody
+has to decide who may use it, for what, and what happens when it leaks. The second question of this
+course, what does the system make easier, and for whom, applies to a database design as much as to an
+algorithm.</p>
 
 <div class="takeaways"><span class="obj-tag">Key takeaways</span>
 <ul>
+<li>A fact becomes data only when it is recorded and given a type. What nobody records, nobody can manage, and a wrong type corrupts data quietly.</li>
 <li>Data is not collected, it is designed. The shape you record facts in decides which questions are cheap, which contradictions are possible, and who can answer without asking you.</li>
-<li>One big grid works for a few hundred rows and breaks at scale, because every repeated fact is a place for two copies to disagree. Normalization puts each fact in exactly one place.</li>
+<li>One big spreadsheet works for a few hundred rows and breaks at scale, because every repeated fact is a place for two copies to disagree. Normalization puts each fact in exactly one place, and keys connect the places.</li>
 <li>A key is a promise: this value identifies exactly one thing. Most data failures in this chapter were broken promises about keys and formats, not broken software.</li>
-<li>Registers write data; analysts read a cleaned copy of it. Keeping the two apart is why a heavy query never slows a sale.</li>
+<li>Registers write data; analysts read a copy of it. Keeping the two apart is why a heavy query never slows a sale.</li>
 <li>Walmart's data became a business because a supplier could answer its own questions from Walmart's records without asking anyone. The data component carried the load; the other four made it deliverable.</li>
 </ul>
 </div>
 
-<h2 id="vocab"><span class="num">6</span>Vocabulary</h2>
+<h2 id="vocab"><span class="num">7</span>Vocabulary</h2>
 
 <dl class="vocab">
+<div><dt>Fact</dt><dd>Something true about the world, whether or not anyone records it.</dd></div>
 <div><dt>Data</dt><dd>A recorded representation of a fact, with a type.</dd></div>
 <div><dt>Quantitative / qualitative</dt><dd>Numeric data you can do math on; descriptive data you group by.</dd></div>
 <div><dt>Structured data</dt><dd>Facts in a fixed grid of typed fields; what databases were built for.</dd></div>
 <div><dt>Unstructured data</dt><dd>Text, images, audio: no fixed grid; most of the world's data.</dd></div>
+<div><dt>Semi-structured data</dt><dd>Labeled data whose labels vary from record to record.</dd></div>
 <div><dt>Record / field</dt><dd>One complete fact-bundle; one attribute within it.</dd></div>
+<div><dt>Database</dt><dd>An organized collection of related data, shared by many users, with rules about what it may contain.</dd></div>
+<div><dt>Database management system (DBMS)</dt><dd>The software that stores a database, enforces its rules, and answers questions.</dd></div>
+<div><dt>Table</dt><dd>A grid of records about one kind of thing, one record per row.</dd></div>
 <div><dt>Primary key</dt><dd>The field that uniquely identifies each record in a table.</dd></div>
 <div><dt>Foreign key</dt><dd>A field holding another table's primary key; how tables connect.</dd></div>
 <div><dt>Join</dt><dd>Answering a question across tables by matching keys.</dd></div>
 <div><dt>Normalization</dt><dd>Designing tables so every fact is stored exactly once.</dd></div>
-<div><dt>Update / insertion / deletion anomaly</dt><dd>The three ways a single big grid corrupts itself.</dd></div>
+<div><dt>Update / insertion / deletion anomaly</dt><dd>The three ways one big spreadsheet contradicts itself.</dd></div>
 <div><dt>OLTP</dt><dd>Systems that record events as they happen; many tiny writes.</dd></div>
+<div><dt>OLAP / analytical system</dt><dd>Systems that read large amounts of history to answer questions.</dd></div>
 <div><dt>Data warehouse</dt><dd>A copy of operational data shaped for analytical questions.</dd></div>
 <div><dt>Analytics</dt><dd>Asking recorded facts questions; what databases are for.</dd></div>
 </dl>
@@ -1010,7 +1321,7 @@ as much as to an algorithm.</p>
   partner against it, per the Lab 1 rules.</div>
 </div>
 
-<h2 id="discussion"><span class="num">7</span>Discussion questions</h2>
+<h2 id="discussion"><span class="num">8</span>Discussion questions</h2>
 <p>None of these get handed in. On Wednesday you run the discussion and I steer it, which means the
 class is only as good as what you walk in with. Read the chapter, pick the question you have the
 strongest opinion about, and be ready to say it first.</p>
@@ -1021,7 +1332,7 @@ strongest opinion about, and be ready to say it first.</p>
   Defend that last one. <span class="tag">Apply</span></li>
 
   <li>Explain to someone who has never used a database why storing a store's phone number on every sale
-  row eventually produces a sheet that disagrees with itself. Then explain what the relational model does
+  row eventually produces a spreadsheet that disagrees with itself. Then explain what the relational model does
   about it, without using the word normalization. <span class="tag">Analyze</span></li>
 
   <li>Retail Link gives Walmart's demand data to its suppliers. Chapter 3 argued that advantage comes
@@ -1034,39 +1345,44 @@ strongest opinion about, and be ready to say it first.</p>
   to be answerable quickly, and name the one component whose absence would have hidden the problem
   longest. <span class="tag">Apply</span></li>
 
-  <li>Section 5 claims the power to join is the power to reveal. Construct a concrete example: two
+  <li>Section 6 claims the power to join is the power to reveal. Construct a concrete example: two
   harmless-looking tables that, joined on a shared key, produce something a person would not want known.
   Then say who inside a company should have to approve that join, and what they would need to know to
   decide. <span class="tag tag-hard">Ethics</span></li>
 </ol>
 
-<h2 id="lab"><span class="num">8</span>From lecture to lab</h2><div class="callout callout-bridge"><strong>Week 7 &middot; Lab 7</strong>
-<p><strong>Monday</strong> covered what data is, why one grid breaks, and how tables and keys replace it.
+<h2 id="lab"><span class="num">9</span>From lecture to lab</h2><div class="callout callout-bridge"><strong>Week 7 &middot; Lab 7</strong>
+<p><strong>Monday</strong> covered what data is, why one big spreadsheet breaks, and how a database's tables and keys replace it.
 <strong>Wednesday</strong> is Walmart, and Chapter 8's Nike case runs the same week.</p>
 <p>This week's lab, <a href="lab7-sql.html"><strong>Lab 7: SQL Fundamentals</strong></a>, is this chapter
 with your hands on it. The Cascadia database has the tables this chapter describes, with the keys this
 chapter defines, and the joins you write are the operation that makes the relational model worth having.
 The final checkpoints, finding a supplier's products and finding one store's real problem, are questions
-that would be impossible in a single grid and are three lines of SQL against a normalized one.</p>
+that would be impossible in one big spreadsheet and are three lines of SQL against a normalized database.</p>
   <a class="lablink" href="lab7-sql.html">Go to Lab 7 &#8594;</a>
 </div>
 
 <details class="srcbox">
-<summary><h2 id="sources"><span class="num">9</span>Sources and further reading</h2></summary>
+<summary><h2 id="sources"><span class="num">10</span>Sources and further reading</h2></summary>
 <ul class="sources">
-<li>Charles Duhigg, "How Companies Learn Your Secrets," <em>The New York Times Magazine</em>, 16 February 2012, for the Target pregnancy-prediction story in section 5.</li>
-<li>Edgar F. Codd, "A Relational Model of Data for Large Shared Data Banks," <em>Communications of the ACM</em>, June 1970. The paper that defined the model this chapter teaches. Six pages, and readable if you skip the algebra.</li>
-<li>U.S. Census Bureau history pages on Herman Hollerith and the tabulating machine, for the 1888 competition timings, the 1880 tabulation finishing in 1887, and the 1890 count coming in ahead of schedule.</li>
-<li>Contemporary reporting on the Public Health England data loss, September and October 2020, for the 15,841 cases, the .xls row limit, and the untraced contacts. Thiemo Fetzer's Warwick working paper models the downstream effect; its figures are estimates rather than counts.</li>
-<li>Walmart Data Ventures, "Introducing Scintilla" (February 2025), and trade reporting (Talk Business &amp; Politics, October 2023 and October 2024; Modern Retail, October 2024) on the retirement of the Decision Support reports inside Retail Link during 2024, the Luminate platform (launched September 2021) and its renaming to Scintilla, Walmart Data Ventures (formed February 2021), the 2025 addition of AI tools, and the expansion into Mexico and Canada. Platform names and figures here change yearly; check them before teaching from them.</li>
-<li>Walmart, 2026 Annual Report (April 2026), for the roughly 280 million weekly customer and member visits and the more than 10,900 stores.</li>
-<li>Walmart corporate materials and trade reporting on Retail Link since 1991 and on the Data Caf&eacute;, for the shared point-of-sale data, the data stream count, and the pricing-error story. Walmart's scale figures age quickly; check before teaching from them.</li>
-<li>The Y2K remediation effort is well documented in government and industry retrospectives; the useful framing for this chapter is that the successful ones are the ones nobody remembers.</li>
-<li><strong>Verification note.</strong> Checked against sources in September 2026: the Walmart scale figures (updated to the 2026 annual report), the Retail Link and Luminate/Scintilla timeline (corrected: the portal was not retired; the reporting inside it was, during 2024), the Data Ventures founding date (corrected from "around 2020" to February 2021). The Data Caf&eacute; figures (200 streams, 40 petabytes, 2.5 petabytes an hour) come from 2015 to 2017 coverage and are almost certainly out of date; they are kept as scale indicators from that period, as the text says. Not confirmed from a Walmart source: the "roughly 140 million households" figure for Scintilla's coverage. The Hollerith timings, the 1880 tabulation date, the Public Health England figures, and the Codd history were checked against the authors' knowledge of the published sources rather than re-searched.</li>
-<li>Bernard Marr, <a href="https://bernardmarr.com/walmart-big-data-analytics-at-the-worlds-biggest-retailer/">Walmart: Big Data analytics at the world's biggest retailer</a>: the Data Caf&eacute;, the 200+ streams and 40 petabyte figures, the 2.5 petabytes-per-hour cloud reporting, and the grocery pricing story, drawn from his interview with a Walmart analyst.</li>
-<li>SAS Insights, <a href="https://www.sas.com/en_us/insights/articles/analytics/how-walmart-makes-data-work-for-its-customers.html">How Walmart makes data work for its customers</a>: weekly customer volumes, social keyword analysis, and the company's own emphasis on cleansing data first.</li>
-<li>Datafloq, <a href="https://datafloq.com/read/big-data-walmart-big-numbers-40-petabytes/">Big Data at Walmart</a>: platform scale and the integration of internal and external datasets.</li>
-<li>Retail Link's history is documented across decades of supply chain literature; any account of vendor-managed inventory and the Walmart/P&amp;G partnership covers its origins. Note that Walmart's specific figures (petabytes, store counts) shift year to year; treat the numbers here as scale indicators, not current accounting.</li>
+<li>Walmart Inc., <a href="https://www.sec.gov/Archives/edgar/data/104169/000010416926000055/wmt-20260131.htm" target="_blank" rel="noopener">Form 10-K for fiscal 2026</a> (filed 2026), Item 1, for the roughly 280 million customers served each week and the more than 10,900 stores in 19 countries. The same figures appear in Walmart's <a href="https://corporate.walmart.com/news/2026/04/23/walmart-releases-2026-annual-report-and-proxy-statement" target="_blank" rel="noopener">2026 annual report release</a>, 23 April 2026.</li>
+<li>Kim Souza, <a href="https://talkbusiness.net/2017/08/wal-mart-works-to-use-big-data-to-improve-checkout-process-manage-supply-chain/" target="_blank" rel="noopener">"Wal-Mart works to use big data to improve checkout process, manage supply chain,"</a> <em>Talk Business &amp; Politics</em>, 10 August 2017, for the Data Caf&eacute; (Collaborative Analytics Facilities for Enterprise), its 200+ data streams, the 2.5 petabytes an hour, the cut in analysis time from 2.5 weeks to about 30 minutes, and the grocery pricing story. The article draws on a Walmart blog post from the same week.</li>
+<li>For Retail Link's origins: <a href="https://supplychainbrain.com/articles/17724-the-second-wave-of-retail-data-sharing-everyone-wins" target="_blank" rel="noopener">"The Second Wave of Retail Data-Sharing: Everyone Wins,"</a> in <em>SupplyChainBrain</em>, notes that Walmart introduced the system in the early 1990s and provided the data free of charge. Accounts disagree on the exact launch year, so this chapter says "early 1990s."</li>
+<li><a href="https://talkbusiness.net/2023/10/walmart-requiring-all-suppliers-to-move-to-luminate-data-service/" target="_blank" rel="noopener">"Walmart requiring all suppliers to move to Luminate data service,"</a> <em>Talk Business &amp; Politics</em>, October 2023, for the phase-out of the Decision Support System inside Retail Link as of 1 March 2024, and the free Basic and paid Charter tiers.</li>
+<li>Walmart Data Ventures, <a href="https://www.walmartdataventures.com/insights/articles/introducing-scintilla" target="_blank" rel="noopener">"Introducing Scintilla"</a> (2025), the company's own timeline: Walmart Data Ventures formed February 2021, Walmart Luminate launched September 2021, launches in Mexico and Canada in 2024, renamed Scintilla in 2025.</li>
+<li><a href="https://www.retailtouchpoints.com/topics/data-analytics/how-walmarts-data-insights-are-helping-its-suppliers-make-the-right-moves-in-tough-times" target="_blank" rel="noopener">"How Walmart's Data Insights are Helping its Suppliers,"</a> <em>Retail TouchPoints</em>, 3 October 2024, for the rename and for Mark Hardy's description of the shift from "how did I do" to "what should I do."</li>
+<li>Mitchell Parton, <a href="https://www.modernretail.co/technology/walmart-develops-ai-tools-to-help-suppliers-better-understand-customer-data/" target="_blank" rel="noopener">"Walmart develops AI tools to help suppliers better understand customer data,"</a> <em>Modern Retail</em>, 29 October 2025, for the conversational tool, the AI survey summaries, the marketing recommendations, and Hardy's example of targeting customers who shopped for natural or gluten-free foods (section 6). And <a href="https://www.modernretail.co/technology/walmart-extends-scintilla-data-platform-to-sams-club/" target="_blank" rel="noopener">"Walmart extends Scintilla data platform to Sam's Club,"</a> <em>Modern Retail</em>, August 2026.</li>
+<li>Walmart, <a href="https://corporate.walmart.com/news/2024/12/03/walmart-completes-acquisition-of-vizio" target="_blank" rel="noopener">"Walmart Completes Acquisition of VIZIO,"</a> 3 December 2024, for the acquisition and its link to Walmart Connect. The $2.3 billion price is reported in <a href="https://talkbusiness.net/2024/12/walmart-completes-2-3-billion-acquisition-of-vizio/" target="_blank" rel="noopener"><em>Talk Business &amp; Politics</em></a>, December 2024.</li>
+<li>Federal Trade Commission, <a href="https://ftc.gov/news-events/news/press-releases/2017/02/vizio-pay-22-million-ftc-state-new-jersey-settle-charges-it-collected-viewing-histories-11-million" target="_blank" rel="noopener">"VIZIO to Pay $2.2 Million to FTC, State of New Jersey to Settle Charges It Collected Viewing Histories on 11 Million Smart Televisions without Users' Consent,"</a> February 2017.</li>
+<li>Charles Duhigg, <a href="https://www.nytimes.com/2012/02/19/magazine/shopping-habits.html" target="_blank" rel="noopener">"How Companies Learn Your Secrets,"</a> <em>The New York Times Magazine</em>, 16 February 2012, for the Target pregnancy-prediction story in section 6. The father's story is as the <em>Times</em> reported it.</li>
+<li>Edgar F. Codd, <a href="https://doi.org/10.1145/362384.362685" target="_blank" rel="noopener">"A Relational Model of Data for Large Shared Data Banks,"</a> <em>Communications of the ACM</em> 13(6), June 1970, pages 377 to 387. The paper that defined the model this chapter teaches. Eleven pages, and readable if you skip the algebra.</li>
+<li>IBM, <a href="https://www.ibm.com/history/relational-database" target="_blank" rel="noopener">"The relational database,"</a> IBM's own history of Codd's work, System R, and the commercial race, including Oracle reaching the market first and DB2 shipping in 1983.</li>
+<li>U.S. Census Bureau, <a href="https://www.census.gov/about/history/bureau-history/census-innovations/technology/hollerith-machine.html" target="_blank" rel="noopener">"The Hollerith Machine,"</a> for the 1888 competition timings. The roughly seven-year tabulation of 1880 and the six-week rough count for 1890 are from <a href="https://www.americanscientist.org/node/5144" target="_blank" rel="noopener">"How Herman Hollerith Counted America and the World,"</a> <em>American Scientist</em>, November to December 2023.</li>
+<li>Leo Kelion, <a href="https://www.bbc.com/news/technology-54423988" target="_blank" rel="noopener">"Excel: Why using Microsoft's tool caused Covid-19 results to be lost,"</a> BBC News, 5 October 2020, for the automatic process that loaded lab files into Excel templates, the old .xls format and its row limit, and each result taking several rows, so each template held about 1,400 cases. <a href="https://www.theregister.com/2020/10/05/excel_england_coronavirus_contact_error/" target="_blank" rel="noopener"><em>The Register</em>, 5 October 2020</a>, for Public Health England's statement on the 15,841 cases and the estimate of up to 48,000 untraced contacts.</li>
+<li>Thiemo Fetzer and Thomas Graeber, <a href="https://doi.org/10.1073/pnas.2100814118" target="_blank" rel="noopener">"Measuring the scientific effectiveness of contact tracing: Evidence from a natural experiment,"</a> <em>Proceedings of the National Academy of Sciences</em> 118(33), 2021. Their earlier working paper gives the estimate of more than 125,000 additional infections. These are modeled estimates, not counts.</li>
+<li><a href="https://www.theverge.com/2020/8/6/21355674/human-genes-rename-microsoft-excel-misreading-dates" target="_blank" rel="noopener">"Scientists rename human genes to stop Microsoft Excel from misreading them as dates,"</a> <em>The Verge</em>, 6 August 2020, for the 27 renamed genes and MARCH1 becoming MARCHF1 (section 1.1).</li>
+<li>Images. The 1890 census engraving is from <em>Scientific American</em>, August 1890, public domain, via <a href="https://commons.wikimedia.org/wiki/File:1890_Census_Hollerith_Electrical_Counting_Machines_Sci_Amer.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>. The Vegreville checkout photograph is by Rowanswiki, CC0, via <a href="https://commons.wikimedia.org/wiki/File:Checkouts_Walmart_Vegreville_2021.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>.</li>
+<li><strong>Verification note.</strong> Checked against sources in October 2026. Corrected in this pass: Retail Link's launch is now "early 1990s" rather than 1991, because sources disagree on the year; the claim that no retailer had shared such data is softened to "almost no retailer"; Codd's paper is eleven pages, not six; the 1890 "thirteen years" estimate is replaced by the better-supported worry that the count would not finish before 1900; the Oracle and IBM history no longer says Ellison read Codd's paper specifically; the PHE delay is described as up to a week. Removed because no reliable source confirms it: the "40 petabytes" figure and the "roughly 140 million households" figure for Scintilla. The Data Caf&eacute; figures date from 2017 and are labeled that way. Walmart's platform names and scale figures change yearly; check them before teaching from them.</li>
 </ul>
 </details>
 

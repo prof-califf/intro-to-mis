@@ -12,7 +12,7 @@
 
   gtag('config', 'G-QKT9X7ZMMV');
 </script>
-<title>Chapter 6: Business Intelligence: Moneyball | MIS 320</title>
+<title>Chapter 6: Business Analytics: Moneyball | MIS 320</title>
 <meta name="description" content="The 2002 Oakland A's: how measuring the right thing beat three times the payroll, and what that has to do with dashboards, KPIs, and the co-op's hidden problem.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -273,6 +273,11 @@ li{margin-bottom:.45rem}
 .toc a{display:block;color:var(--text-dark);text-decoration:none;border-bottom:1px solid var(--border);padding:.32rem 0;white-space:normal}
 .toc a:last-of-type{border-bottom:0;padding-bottom:0}
 .toc a:hover{color:var(--magenta-dark);border-bottom-color:var(--magenta)}
+.cite{font-size:.68em;line-height:0;margin-left:.1em}
+.cite a{color:var(--magenta-dark);text-decoration:none;font-weight:600}
+.srcnum{display:inline-block;min-width:1.6rem;font-weight:700;color:var(--magenta-dark)}
+.defn{border-left:3px solid var(--magenta);padding:.15rem 0 .15rem 1rem;margin:1.2rem 0}
+.aside{font-size:.9rem;color:var(--text-light);margin-top:-.4rem}
 .kc{border:1px solid var(--border);border-left:4px solid var(--magenta);background:#fff;margin:1.4rem 0;padding:1rem 1.2rem}
 .kc .kc-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.15rem}
 .kc .kc-term{font-family:var(--display);font-size:17px;font-weight:600;display:block;margin-bottom:.45rem}
@@ -410,20 +415,20 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 <main class="chapwrap">
 
 <header class="chaphead">
-  <p class="eyebrow">Chapter 6 &middot; Business Intelligence and Analytics</p>
-  <h1>Business Intelligence: How <b>Oakland</b> Won by Measuring a Different Thing</h1>
+  <p class="eyebrow">Chapter 6 &middot; Business Analytics</p>
+  <h1>Business Analytics: How the <b>Oakland A's</b> Won by Measuring a Different Thing</h1>
   <p class="anchor">In 2002 the Oakland Athletics lost their three best players, fielded one of the
   cheapest rosters in baseball, and won 103 games. They did it with data everybody already had, in a
   sport that had been recording it for a century. This chapter is about why choosing the measure is the
   decision that matters, and why the advantage did not last.</p>
-  <div class="concepts"><span class="clabel">Key concepts</span><span>Business intelligence</span><span>Four kinds of analytics</span><span>Metrics and proxies</span><span>Measurement validity</span><span>Correlation and causation</span><span>Goodhart's law</span><span>Data warehouse and dashboards</span></div>
+  <div class="concepts"><span class="clabel">Key concepts</span><span>Big data</span><span>Business analytics</span><span>Four types of analytics</span><span>Metrics and proxies</span><span>Correlation and causation</span><span>Sample size</span><span>Goodhart's law</span><span>Dashboards</span><span>Data storytelling</span></div>
 </header>
 
 <div class="toc"><strong>Contents</strong>
-<a href="#bi"><span class="tnum">1.</span> What business intelligence actually is</a>
-<a href="#traps"><span class="tnum">2.</span> Reading numbers honestly</a>
-<a href="#cases"><span class="tnum">3.</span> Two failures, two levels</a>
-<a href="#oakland"><span class="tnum">4.</span> Main case. Oakland: the team that measured differently</a>
+<a href="#bi"><span class="tnum">1.</span> Big data, and what business analytics does with it</a>
+<a href="#traps"><span class="tnum">2.</span> Reading and showing numbers honestly</a>
+<a href="#cases"><span class="tnum">3.</span> Mini-cases: when people shape the numbers</a>
+<a href="#oakland"><span class="tnum">4.</span> Main case. The Oakland A's: the team that measured differently</a>
 <a href="#other"><span class="tnum">5.</span> The downside: being measured</a>
 <a href="#vocab"><span class="tnum">6.</span> Vocabulary</a>
 <a href="#discussion"><span class="tnum">7.</span> Discussion questions</a>
@@ -433,88 +438,135 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 </div>
 <p class="printbox"><span>Wanna go analog?</span><button type="button" onclick="window.print()" aria-label="Print this page or save it as a PDF">&#9113;&nbsp; Print here</button><span>or save it as a PDF; the navigation drops out</span></p>
 
-<p class="lede">Baseball has more data per event than almost any business on earth, and it has been
-collecting it since the 1870s. In 2001 an entire industry was using that mountain of numbers to measure
-the wrong thing, and the number that would have told them so had been sitting in the same box score the
-whole time.</p>
+<p class="lede">Every organization you will work for has more data than it can use. This chapter is about the part
+that is still scarce: a person who knows which question to ask of the data, which number to trust, and
+how to show the answer so that somebody acts on it.</p>
 
 <div class="objectives"><span class="obj-tag">Learning objectives</span>
 <p>By the end of this chapter you should be able to:</p>
 <ol>
-<li>Place a question on the four levels of analytics (descriptive, diagnostic, predictive, prescriptive) and say what each level costs when it is wrong.</li>
+<li>Explain what big data is, and the difference between business intelligence and business analytics.</li>
+<li>Place a question on the four types of analytics (descriptive, diagnostic, predictive, prescriptive), give a business example of each, and say what each costs when it is wrong.</li>
 <li>Explain why every metric is a proxy, and test a metric for validity against the thing it is supposed to measure.</li>
-<li>Recognize correlation without causation and the small-sample problem in a business claim.</li>
-<li>State Goodhart's law and give an example of a metric that made a business worse.</li>
-<li>Explain how Oakland gained an advantage from the same data everyone had, and which component carried it.</li>
+<li>Recognize correlation without causation, a confounding variable, and the small-sample problem in a business claim.</li>
+<li>State Goodhart's law, and explain how a dashboard and a chart can each steer what a decision-maker sees.</li>
+<li>Explain how the Oakland A's gained an advantage from the same data everyone had, and which component carried it.</li>
 </ol>
 </div>
 
-<h2 id="bi"><span class="num">1</span>What business intelligence actually is</h2>
+<h2 id="bi"><span class="num">1</span>Big data, and what business analytics does with it</h2>
 
-<p>The next two chapters are about getting facts into one place and keeping them consistent. This chapter is
-about what happens next, which is somebody asking the records a question. That sounds like the easy
-half. It is not, and the reason is that a question has to be asked in numbers, and choosing which
-number is a decision most organizations make once, by accident, and then live with for decades.</p>
+<p>You have probably heard of <strong>big data</strong>. No, not the band. Since cloud computing made storage cheap, companies and other organizations have been able to collect and keep data on almost anything. Every click on a website, every swipe of a loyalty card, every scan at a register, and every reading from a sensor on a delivery truck can be stored. That is big data. People usually describe it with three words. There is a lot of it (<em>volume</em>). It arrives constantly (<em>velocity</em>). And it comes in many shapes, from tidy tables to photos and free text (<em>variety</em>).</p>
 
-<p>In terms of the five components, everything in this chapter sits on top of the data component and is decided by the people component. The hardware and software of business intelligence are ordinary and purchasable,
-which Chapter 3 already told you means they cannot be the advantage. What cannot be bought is a person
-who asks whether the number everybody is staring at measures the thing everybody assumes it measures.
-That question is the entire chapter, and the case at the end is an organization that asked it while an
-industry with identical data did not.</p>
+<p class="aside">About the band: Big Data named itself after the same idea, and its 2014 hit <a href="https://www.youtube.com/watch?v=cDSBYhfoON4" target="_blank" rel="noopener">&ldquo;Dangerous&rdquo;</a> makes decent background music for this chapter.</p>
 
-<h3>1.1 Business intelligence, and the four levels of analytics</h3>
+<p>Collecting all of that is no longer the hard part. The hard part is what happens next, when somebody asks the data a question. So this chapter looks inside one component of an information system, the data component, and follows what happens there after the data is stored.</p>
 
-<p>So what do we call this? Asking records a question has a name in business, and there is a standard way of sorting those questions by how much they ask.</p>
+<p>In five-component terms, everything in this chapter sits on top of the data and is decided by the people. The hardware and software are ordinary and you can buy them, which Chapter 3 already told you means they cannot be the advantage. What you cannot buy is a person who asks whether the number everybody is staring at measures what everybody assumes it measures. That question runs through the whole chapter.</p>
 
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Business intelligence &amp; analytics</span>
-<p><strong>Business intelligence (BI)</strong> is the practice of turning an organization's data into
-information that supports decisions: the systems, reports, and dashboards that tell a business what is
-happening. <strong>Analytics</strong> is the analytical work layered on top, and it comes in four
-kinds, in rising order of ambition. <strong>Descriptive</strong>: what happened? <strong>Diagnostic</strong>:
-why did it happen? <strong>Predictive</strong>: what will happen? <strong>Prescriptive</strong>: what
-should we do about it? A monthly sales report is descriptive. Drilling into why Bellingham's number
-moved is diagnostic. A forecast is predictive. A recommended reorder quantity is prescriptive.</p></div>
+<h3>1.1 Business intelligence and business analytics</h3>
 
-<p>You have been doing this in the labs for four weeks without the vocabulary. Lab 2's totals were descriptive
-analytics. Lab 5's mini project, where something was wrong at Cascadia and you had to find out what,
-was diagnostic analytics, and the forecasting section was your first predictive step. The four levels matter because each level is worth more and costs more. Most organizations live on the bottom level, drowning in descriptive reports. (Most of you will spend
-your first job on the bottom two levels. That is not a demotion; it is where the work is.) The ones that move up are the ones that turn data into
-different decisions rather than prettier summaries.</p>
+<p>Two names get used for this work, and students mix them up because professionals do too. Here is the difference.</p>
+
+<p class="defn"><strong>Business intelligence (BI)</strong> is the set of systems and reports that turn an organization's data into information about what is happening: the data warehouse, the standard reports, the dashboards. <strong>Business analytics</strong> is the wider practice of using that data to answer questions, including why something happened, what will happen next, and what to do about it.</p>
+
+<p>The simplest way to hold the two apart is this. BI is mostly the pipes and the display. Business analytics is the questioning. In practice the line is blurry, and many companies use either name for the whole thing. This book uses <strong>business analytics</strong> for the practice, and keeps "BI" for the tools, as in a BI dashboard or the BI team.</p>
+
+<p>You have been doing business analytics in the labs for four weeks without calling it that. Lab 2's totals described what happened. Lab 5's mini project, where something was wrong at Cascadia and you had to find out what, asked why. Lab 5's forecasting section asked what would happen next. Those are three of the four types of analytics, and the four types are the backbone of this chapter.</p>
+
+<p>Analysts sort questions into <strong>four types of analytics</strong>, in rising order of ambition. <strong>Descriptive</strong> analytics asks what happened. <strong>Diagnostic</strong> analytics asks why it happened. <strong>Predictive</strong> analytics asks what will happen. <strong>Prescriptive</strong> analytics asks what you should do about it. The figure shows them as four steps, and sections 1.2 to 1.5 take one step each.</p>
+
 <figure class="diagram" style="margin:1.8rem auto;max-width:470px">
 <svg viewBox="0 0 470 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="alT alD" style="width:100%;height:auto;font-family:var(--sans)">
-<title id="alT">The four levels of analytics</title>
-<desc id="alD">Four steps rising from left to right, labelled descriptive, diagnostic, predictive and prescriptive, with the question each one asks: what happened, why, what will happen, what should we do. Each step is wider and taller than the one before. A bar on the right, widening toward the top, is labelled cost of being wrong. Most organizations, a note says, live on the bottom step.</desc>
-<defs><marker id="ala" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--text-light)"/></marker></defs>
+<title id="alT">The four types of analytics</title>
+<desc id="alD">Four steps rising from left to right, labelled descriptive, diagnostic, predictive and prescriptive, with the question each one asks: what happened, why, what will happen, what should we do. Each step is wider and taller than the one before, and each carries the number of the section that covers it, 1.2 to 1.5. A bar on the right, rising toward the top, is labelled cost of being wrong. A note says most organizations live on the first step.</desc>
 <rect x="30" y="214" width="90" height="40" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1.2"/>
 <text x="75.0" y="232" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--text-dark)">DESCRIPTIVE</text>
 <text x="75.0" y="247" text-anchor="middle" font-size="9.5" fill="var(--text-light)">what happened?</text>
 <rect x="120" y="176" width="100" height="78" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1.2"/>
 <text x="170.0" y="194" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--text-dark)">DIAGNOSTIC</text>
 <text x="170.0" y="209" text-anchor="middle" font-size="9.5" fill="var(--text-light)">why?</text>
+<text x="170.0" y="244" text-anchor="middle" font-size="9.5" font-weight="600" fill="var(--magenta-dark)">section 1.3</text>
 <rect x="220" y="128" width="105" height="126" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1.2"/>
 <text x="272.5" y="146" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--text-dark)">PREDICTIVE</text>
 <text x="272.5" y="161" text-anchor="middle" font-size="9.5" fill="var(--text-light)">what will happen?</text>
+<text x="272.5" y="244" text-anchor="middle" font-size="9.5" font-weight="600" fill="var(--magenta-dark)">section 1.4</text>
 <rect x="325" y="70" width="110" height="184" fill="var(--magenta-pale)" stroke="var(--text-dark)" stroke-width="1.2"/>
 <text x="380.0" y="88" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--text-dark)">PRESCRIPTIVE</text>
 <text x="380.0" y="103" text-anchor="middle" font-size="9.5" fill="var(--text-light)">what should we do?</text>
+<text x="380" y="244" text-anchor="middle" font-size="9.5" font-weight="600" fill="var(--magenta-dark)">section 1.5</text>
+<text x="75" y="204" text-anchor="middle" font-size="9.5" font-weight="600" fill="var(--magenta-dark)">section 1.2</text>
 <text x="75" y="268" text-anchor="middle" font-size="9.5" fill="var(--magenta-dark)" font-weight="600">most organizations live here</text>
-<text x="380" y="222" text-anchor="middle" font-size="9" fill="var(--magenta-dark)" font-weight="600">a wrong answer here</text><text x="380" y="234" text-anchor="middle" font-size="9" fill="var(--magenta-dark)" font-weight="600">has already spent money</text>
+<text x="380" y="200" text-anchor="middle" font-size="9" fill="var(--magenta-dark)" font-weight="600">a wrong answer here</text><text x="380" y="212" text-anchor="middle" font-size="8.5" fill="var(--magenta-dark)" font-weight="600">has already spent money</text>
 <path d="M452 254 L452 74" stroke="var(--magenta)" stroke-width="1.4" fill="none"/><path d="M448 82 L452 72 L456 82" fill="var(--magenta)"/>
 <text x="462" y="164" text-anchor="middle" font-size="10" font-weight="600" fill="var(--magenta-dark)" transform="rotate(-90 462 164)">cost of being wrong</text>
-<text x="235" y="292" text-anchor="middle" font-size="11" fill="var(--text-light)">Each level is worth more, costs more, and hurts more when it is wrong.</text>
+<text x="235" y="292" text-anchor="middle" font-size="11" fill="var(--text-light)">Each type is worth more, costs more, and hurts more when it is wrong.</text>
 </svg>
 <figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">
-The shape is the argument. Each level asks a harder question than the one below it, and each answer is worth more. But the bar on the right climbs too: a bad description produces a bad slide, a bad prediction produces a bad forecast, and a bad prescription produces a forecast that has already acted. The organizations that climb are not the ones with the most data. They are the ones that turn each level into a different decision.
+The shape is the argument. Each type asks a harder question than the one before it, and each answer is worth more. But the bar on the right climbs too: a bad description produces a bad slide, a bad prediction produces a bad plan, and a bad prescription has already acted. Keep this picture in mind for the next four sections, because each one ends where its step sits on that bar.
 </figcaption>
 </figure>
 
-<div class="tryit" id="rung">
-  <div class="tryit-head">Quick quiz &middot; Which of the four levels is this?</div>
-  <p class="tryit-intro">Five questions a manager might ask. Place each one on the four levels of analytics before you check.</p>
-  <div id="rungrows"></div>
-  <p class="tryit-note">The levels are in order of what they ask: what happened, why, what will happen, what should we do. Each one costs more to answer and costs more when it is wrong.</p>
-</div>
+<p>Read the figure from left to right and two things grow together. Each type is worth more than the one before, because its answer sits closer to a decision. Each also costs more, in data, in skill, and in damage when the answer is wrong. Most organizations live on the first step, with more descriptive reports than anyone reads. (Most of you will spend your first job on the first two steps. That is not a demotion. It is where most of the work is.) The organizations that move to the right are the ones that turn data into different decisions rather than prettier summaries.</p>
 
+<h3>1.2 Descriptive analytics: what happened?</h3>
+
+<p class="defn"><strong>Descriptive analytics</strong> summarizes past data to answer one question: what happened? Totals, averages, counts, rankings, and trends over time are all descriptive.</p>
+
+<p>Almost every report a business produces is descriptive: weekly sales by store, last month's website visits, this quarter's customer complaints. You have already seen a polished version of it. Spotify Wrapped, from Chapter 1, is descriptive analytics turned into a product. It counts what you played and ranks it, and it never asks why you played it. A monthly sales report does the same job for a store manager.</p>
+
+<p>Descriptive work rests on three ideas you will use for the rest of the chapter. A <strong>metric</strong> is a number chosen to stand in for something you care about. A <strong>key performance indicator (KPI)</strong> is a metric the organization has decided to manage by, usually with a target attached. And almost every metric is a <strong>proxy</strong>: a stand-in for the real thing, not the real thing itself. A hospital cares about patients getting well, and it counts patients seen. A store cares about loyal customers, and it counts revenue.</p>
+
+<p>That makes the most important descriptive question a question about the measure itself. <strong>Measurement validity</strong> asks whether a metric actually tracks the thing it is supposed to stand for. Revenue can rise while loyal customers drift away, if one-time shoppers cover the gap. At Cascadia, revenue looked healthy at the Bellingham store while the member attach rate was collapsing, and you needed the second number to see it.</p>
+
+<p>Baseball in 2001 was a perfect specimen of a descriptive-analytics industry. It had more data per event than almost any business on earth, a box score for every game since the 1870s, and it used that mountain of data mostly to describe, not to question. The questioning, when it came, came from outside. A night-shift statistician named Bill James had spent two decades publishing analyses, under the name <strong>sabermetrics</strong>, showing that some of baseball's most cherished numbers barely predicted winning. The Oakland A's were simply the first team desperate enough to act on it.</p>
+
+<p>The most cherished of those numbers was <strong>batting average</strong>, the headline measure of a hitter for a century. It ignores walks entirely. A walk puts a runner on base without using up an out, and batting average records it as if it never happened. That is a validity problem hiding in plain sight, and section 4 shows what one team did when it noticed.</p>
+
+<p>When descriptive analytics goes wrong, the usual damage is a misleading slide or a report nobody questions. That sounds small, and it is the cheapest step in the figure. But every other type of analytics is built on top of a description, so a bad one travels.</p>
+
+<h3>1.3 Diagnostic analytics: why did it happen?</h3>
+
+<p class="defn"><strong>Diagnostic analytics</strong> looks for the cause of something descriptive analytics found. It compares, breaks the numbers into smaller pieces, and rules explanations out until one is left.</p>
+
+<p>Diagnostic work starts when a number surprises somebody. Say online sales at a sporting goods chain fell 8 percent last month. The analyst breaks that total apart: by region, then by product, then by device, then by day. BI tools call this a <strong>drill-down</strong>, which means starting from one total and opening up the pieces that make it. Maybe the whole drop sits in one region, on phones, starting on one date. That points toward a cause. Perhaps a website update that week broke the checkout button on one mobile browser.</p>
+
+<p>Three habits make diagnostic work reliable. <strong>Segmentation</strong> means splitting customers or transactions into groups that might behave differently, such as new and returning customers. <strong>Comparison against a baseline</strong> means asking "compared with what?" every time: last month, the same month last year, the other stores. And a <strong>root cause</strong> is the explanation that is left after the others have been ruled out, not the first one that fits.</p>
+
+<p>Your Lab 5 mini project was diagnostic analytics. Bellingham's member numbers were down, and you compared the store with seven others until the problem had a shape. Diagnostic analytics is also where the most common reasoning mistake in business lives: seeing two numbers move together and deciding that one caused the other. Section 2 takes that mistake apart.</p>
+
+<p>A wrong diagnosis costs more than a wrong description, because people act on it. If you decide the online sales drop was caused by prices and cut prices, you spend money and the broken checkout stays broken.</p>
+
+<h3>1.4 Predictive analytics: what will happen?</h3>
+
+<p class="defn"><strong>Predictive analytics</strong> uses patterns in past data to estimate what will happen next, or what is true about a case you have not seen yet.</p>
+
+<p>You meet it every day. A grocery chain forecasts how much milk each store will sell next week, so it can order enough without throwing the rest away. A lender looks at your credit history and estimates how likely you are to repay a loan, which is what a credit score is. An airline estimates how many passengers will not show up for a flight, which is why it sells a few more seats than the plane holds.</p>
+
+<p>Every prediction rests on one assumption: the future will look enough like the past that the past's patterns still hold. A <strong>forecast</strong> is a prediction about a quantity over time, like next quarter's sales. A <strong>model</strong> is the rule, simple or complicated, that turns past data into the prediction. Your Lab 5 forecast was a simple model. Chapter 12 covers the machine learning models behind most of the predictions you meet online, and its argument starts here: a model learns from the data it is given, so it can only be as good as that data.</p>
+
+<p>When a prediction is wrong, the plan built on it is wrong. The milk spoils, or the shelf is empty. Predictions also fail suddenly when the world changes in a way the past data never saw, which is why an honest forecast always comes with a sense of how far off it might be.</p>
+
+<h3>1.5 Prescriptive analytics: what should we do?</h3>
+
+<p class="defn"><strong>Prescriptive analytics</strong> recommends an action, and sometimes takes it. It combines a prediction with a goal and the rules of the business, and searches for the choice that best meets the goal.</p>
+
+<p>One well-known example is UPS. Its routing system, called ORION, works out the order in which each driver should make the day's stops. A route of about 120 stops can be run in an enormous number of orders, and the system compares more than 200,000 of them before choosing one. In 2015 UPS said the system was expected to cut about 100 million miles of driving a year once fully deployed. The company has also said that one mile less per driver per day is worth about $50 million a year. Prices that change by the hour on airline tickets, and the reorder quantities a store's system suggests, are prescriptive analytics too.</p>
+
+<p>The key idea at this step is <strong>authority</strong>: how far a recommendation can travel before a person checks it. Some prescriptive systems advise, and a person decides. A UPS driver still drives the truck, and still uses judgment on the street. Other systems act directly, with nobody in between.</p>
+
+<p>Zillow shows what happens when that distance gets long. Zillow is a property website, and for years its price estimate was a prediction shown to readers: a guess that a person weighed against everything else they knew. In 2018 Zillow started buying houses itself, using its own estimates to decide what to pay, renovating the houses and selling them on. The estimate was no longer advice for a reader. It was an instruction to spend money.</p>
+
+<p>The model was not wildly wrong. It was wrong by a few percentage points, in a business where a few percentage points is the entire margin, and it was wrong in the same direction across thousands of houses at once. In November 2021 Zillow shut the business down, announced writedowns of up to $569 million, and cut about a quarter of its staff. The decision that cost the money was not made by the model. It was made by the executives who decided how far the model's answers could travel without a human in between. That is the same decision Chapter 4 asked you to make about handing steps to an agent.</p>
+
+<p>This is the right-hand end of the figure, where the bar is tallest. A bad description produces a bad slide. A bad prediction produces a bad plan. A bad prescription has already spent the money by the time anyone notices.</p>
+
+<div class="tryit" id="rung">
+  <div class="tryit-head">Quick quiz &middot; Which of the four types is this?</div>
+  <p class="tryit-intro">Five questions a manager might ask. Place each one on the four types of analytics before you check.</p>
+  <div id="rungrows"></div>
+  <p class="tryit-note">The types are in order of what they ask: what happened, why, what will happen, what should we do. Each one costs more to answer and costs more when it is wrong.</p>
+</div>
 <script>
 (function(){
   var host=document.getElementById('rungrows');
@@ -543,67 +595,204 @@ The shape is the argument. Each level asks a harder question than the one below 
 })();
 </script>
 
-<p>Baseball in 2001 was a perfect specimen of a descriptive-analytics industry. It had more data per
-event than almost any business on earth, a box score for every game since the 1870s, and it used that
-mountain of data mostly to describe, not to question. The questioning, when it came, came from outside:
-a night-shift statistician named Bill James had spent two decades publishing analyses, under the name
-<strong>sabermetrics</strong>, showing that some of baseball's most cherished numbers barely predicted
-winning. The A's were simply the first team desperate enough to act on it.</p>
+<h2 id="traps"><span class="num">2</span>Reading and showing numbers honestly</h2>
 
-<h3>1.2 The wrong number on the scoreboard</h3>
+<p>Choosing the right measure is the first job of business analytics. Reading it without fooling yourself is the second, and showing it so that other people see what it says is the third. The first four subsections here are traps that catch people who are perfectly good at the arithmetic. The last three are about where the numbers live and how they reach the person making the decision.</p>
 
-<p>For a century, the headline measure of a hitter was <strong>batting average</strong>: hits divided
-by at-bats. It is intuitive, traditional, and printed on the back of every card. It also has a design
-flaw: it ignores walks entirely. A player who draws a walk has reached base, avoided an out, and
-advanced the inning, and batting average records that event as if it never happened.</p>
+<h3>2.1 Correlation: when two numbers move together</h3>
 
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Metrics, proxies, and measurement validity</span>
-<p>A <strong>metric</strong> is a number chosen to stand in for something you actually care about, and
-that makes almost every metric a <strong>proxy</strong>. The thing baseball cares about is winning;
-wins come from runs; runs come from not making outs. <strong>Measurement validity</strong> asks: does
-the proxy actually track the thing? Batting average tracks run-scoring loosely. <strong>On-base percentage (OBP)</strong>, which counts every way of reaching base including walks, tracks it far
-more tightly. OBP is really measuring the avoidance of outs, and outs are the game's true scarce
-resource: you only get twenty-seven. The A's insight, distilled: the industry's headline metric had
-weak validity, a better one was sitting in the same box score, and nobody's prices reflected it.</p></div>
+<p class="defn">Two numbers are <strong>correlated</strong> when they tend to move together. If one goes up when the other goes up, the correlation is positive. If one goes up when the other goes down, it is negative.</p>
 
-<p>Notice what kind of insight the on-base percentage discovery was. It required no new technology, no new data, and no advanced
-math; OBP had been recorded for decades. It required someone to ask whether the number everyone stared
-at actually measured what they assumed it measured. That question, not the software, is the core skill
-of business intelligence, and it transfers directly: a store's revenue is a batting average. It tells
-you something happened. It does not tell you whether the underlying engine of the business, at Cascadia
-the membership relationship, is healthy or quietly failing.</p>
+<p>Analysts measure correlation with a number called the correlation coefficient, written <em>r</em>, which runs from &minus;1 to 1. Close to 1 means the points fall near a rising line. Close to 0 means there is no straight-line pattern at all. The figure shows three made-up examples.</p>
 
-<div class="pull"><p>The scoreboard was fine. The industry was reading the wrong line of it.</p></div>
+<figure class="diagram" style="margin:1.8rem auto;max-width:600px">
+<svg viewBox="0 0 600 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="crT crD" style="width:100%;height:auto;font-family:var(--sans)">
+<title id="crT">Three scatterplots showing strong, weak and no correlation</title>
+<desc id="crD">Three small scatterplots of made-up data, side by side. On the left, ad spend against sales: the dots climb in a tight band from lower left to upper right, correlation about 0.8. In the middle, store size against return rate: the dots drift slightly upward but are widely scattered, correlation about 0.2. On the right, day of the month against sales: the dots form a shapeless cloud, correlation about zero.</desc>
+<rect x="20" y="30" width="170" height="150" fill="var(--off-white)" stroke="var(--border)"/>
+<circle cx="96.6" cy="130.9" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="124.9" cy="101.5" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="95.5" cy="126.4" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="77.6" cy="119.7" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="92.5" cy="122.8" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="41.9" cy="140.4" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="106.9" cy="82.1" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="149.2" cy="83.8" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="82.9" cy="105.8" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="124.0" cy="102.6" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="114.0" cy="107.3" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="101.9" cy="100.8" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="54.4" cy="139.2" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="102.0" cy="99.8" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="104.6" cy="104.9" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="31.6" cy="132.9" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="160.1" cy="70.3" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="141.5" cy="99.7" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="124.7" cy="110.3" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="67.1" cy="130.1" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="125.3" cy="65.8" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="159.8" cy="78.6" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="97.6" cy="124.2" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="165.7" cy="96.7" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="156.3" cy="73.9" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="53.9" cy="103.2" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="91.2" cy="117.7" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="41.0" cy="137.2" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<text x="105.0" y="20" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-dark)">Ad spend vs. sales</text>
+<text x="105.0" y="200" text-anchor="middle" font-size="12" fill="var(--magenta-dark)" font-weight="600">strong: r &#8776; 0.8</text>
+<rect x="215" y="30" width="170" height="150" fill="var(--off-white)" stroke="var(--border)"/>
+<circle cx="313.4" cy="45.2" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="256.6" cy="101.4" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="352.0" cy="169.3" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="327.4" cy="157.3" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="357.0" cy="40.7" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="254.6" cy="104.2" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="245.5" cy="169.3" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="239.6" cy="165.2" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="344.6" cy="131.1" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="283.8" cy="52.5" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="337.6" cy="123.6" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="269.8" cy="48.3" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="324.7" cy="40.7" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="321.1" cy="75.2" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="282.1" cy="137.9" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="249.6" cy="128.6" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="368.0" cy="53.3" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="289.1" cy="110.7" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="321.4" cy="160.6" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="318.0" cy="70.1" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="227.9" cy="90.8" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="314.1" cy="169.3" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="329.5" cy="112.5" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="310.3" cy="131.6" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="256.4" cy="78.7" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="355.2" cy="55.8" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="227.7" cy="166.9" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="233.1" cy="83.5" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<text x="300.0" y="20" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-dark)">Store size vs. returns</text>
+<text x="300.0" y="200" text-anchor="middle" font-size="12" fill="var(--magenta-dark)" font-weight="600">weak: r &#8776; 0.2</text>
+<rect x="410" y="30" width="170" height="150" fill="var(--off-white)" stroke="var(--border)"/>
+<circle cx="472.8" cy="42.2" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="424.2" cy="82.5" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="556.5" cy="60.3" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="483.3" cy="100.5" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="538.5" cy="150.9" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="477.7" cy="97.4" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="546.8" cy="43.0" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="476.3" cy="59.2" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="567.0" cy="135.5" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="476.8" cy="134.7" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="418.2" cy="42.2" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="449.0" cy="145.8" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="538.2" cy="91.0" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="472.6" cy="42.3" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="425.4" cy="125.3" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="530.3" cy="155.9" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="436.8" cy="81.7" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="514.9" cy="145.9" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="541.5" cy="126.3" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="538.2" cy="47.8" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="508.0" cy="111.7" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="424.8" cy="130.0" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="479.2" cy="98.9" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="504.1" cy="143.9" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="534.8" cy="101.3" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="426.5" cy="123.0" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="542.7" cy="53.2" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<circle cx="485.9" cy="111.3" r="3.6" fill="var(--magenta)" fill-opacity=".75"/>
+<text x="495.0" y="20" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-dark)">Day of month vs. sales</text>
+<text x="495.0" y="200" text-anchor="middle" font-size="12" fill="var(--magenta-dark)" font-weight="600">none: r &#8776; 0.0</text>
+<text x="300" y="224" text-anchor="middle" font-size="10.5" fill="var(--text-light)">Made-up data, 28 points per panel</text></svg>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">
+Correlation is a pattern in the dots and nothing more. The left panel is the kind of pattern that makes a manager excited, and the right panel is the kind most pairs of numbers actually produce. Before anyone acts on the left one, the next question is why the dots line up, which is section 2.2.
+</figcaption>
+</figure>
 
-<h2 id="traps"><span class="num">2</span>Reading numbers honestly</h2>
+<p>Correlation is useful. It is how you find leads: which customers buy more, which stores struggle, which products sell together. A grocery chain that notices barbecue sauce and charcoal sell together can put them near each other without knowing anything deeper. But correlation only tells you that two numbers move together. It does not tell you why, and it does not tell you that changing one will change the other.</p>
 
-<p>Choosing the right measure is the first job of business intelligence. Reading it without fooling yourself is the second, and
-there are three traps that catch people who are perfectly competent at the arithmetic. Two of them are
-about what the numbers can and cannot tell you. The third is about what happens to a number once people
-know they are being judged by it.</p>
+<h3>2.2 Causation: when one number drives the other</h3>
 
-<h3>2.1 Correlation, causation, and sample size</h3>
+<p class="defn"><strong>Causation</strong> means one thing actually produces the other. Change the first, and the second changes because of it.</p>
 
-<p>The first two traps are old, and both come from forgetting what a pattern in the numbers can and
-cannot prove.</p>
+<p>The gap between correlation and causation is where expensive mistakes happen. Suppose a coffee chain finds that customers who use its mobile app spend far more than customers who do not. The tempting conclusion is that the app makes people spend more, so the chain should push everyone onto the app. But there is another explanation. The chain's most loyal customers were always going to spend more, and they are also the people most likely to bother downloading the app. Loyalty drives both numbers, and the app may be doing very little.</p>
 
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Correlation, causation, and sample size</span>
-<p>Two numbers are <strong>correlated</strong> when they move together; <strong>causation</strong>
-means one actually drives the other. Team OBP correlates strongly with runs scored across a 162-game
-season, and there is a causal mechanism behind the correlation: not making outs extends innings. That
-combination, correlation plus a mechanism, tested across a large sample, is what earned the A's their
-confidence. But the same logic warns you where the model stops working. A five-game playoff series is a <strong>small
-sample</strong>, small enough for luck to swamp skill. That is why the 103-win A's could lose their playoff
-series, and why Beane himself said his approach could not be counted on in October. The lesson is symmetric: enough data makes patterns trustworthy, and small samples make even
-true patterns unreliable.</p></div>
+<figure class="diagram" style="margin:1.8rem auto;max-width:520px">
+<svg viewBox="0 0 520 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="caT caD" style="width:100%;height:auto;font-family:var(--sans)">
+<title id="caT">A hidden third factor can drive two numbers that move together</title>
+<desc id="caD">A box at the top labelled customer loyalty has solid arrows pointing down to two boxes: uses the app, and spends more. Between those two boxes runs a dashed line with a question mark, labelled correlated, but is the app the cause? A note says loyalty drives both, so the app may be doing very little.</desc>
+<defs><marker id="caA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--text-dark)"/></marker></defs>
+<rect x="180" y="20" width="160" height="50" fill="var(--magenta-pale)" stroke="var(--text-dark)" stroke-width="1.2"/>
+<text x="260" y="42" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-dark)">Customer loyalty</text>
+<text x="260" y="59" text-anchor="middle" font-size="10.5" fill="var(--text-light)">the confounding variable</text>
+<rect x="30" y="160" width="150" height="50" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1.2"/>
+<text x="105" y="190" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-dark)">Uses the app</text>
+<rect x="340" y="160" width="150" height="50" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1.2"/>
+<text x="415" y="190" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-dark)">Spends more</text>
+<path d="M215 70 L130 156" stroke="var(--text-dark)" stroke-width="1.5" fill="none" marker-end="url(#caA)"/>
+<path d="M305 70 L390 156" stroke="var(--text-dark)" stroke-width="1.5" fill="none" marker-end="url(#caA)"/>
+<path d="M180 185 L340 185" stroke="var(--magenta)" stroke-width="1.6" stroke-dasharray="6 5" fill="none"/>
+<text x="260" y="178" text-anchor="middle" font-size="16" font-weight="700" fill="var(--magenta-dark)">?</text>
+<text x="260" y="205" text-anchor="middle" font-size="10.5" fill="var(--magenta-dark)" font-weight="600">correlated, but is</text>
+<text x="260" y="218" text-anchor="middle" font-size="10.5" fill="var(--magenta-dark)" font-weight="600">the app the cause?</text>
+<text x="260" y="243" text-anchor="middle" font-size="11" fill="var(--text-light)">Loyalty drives both numbers, so the app may be doing very little.</text>
+</svg>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">
+The dashed line is what the report shows: app users spend more. The solid arrows are what may actually be happening. Nothing in the two numbers alone can tell you which picture is true. A randomized experiment can, because it puts loyal and casual customers in both groups.
+</figcaption>
+</figure>
 
-<p>Business runs on small samples more than it admits to. One viral month, one bad quarter, one focus
-group of nine people. The Cascadia connection is direct: your Lab 5 forecast extrapolated from months
-of data, and the honest analyst's question, there and everywhere, is whether the sample behind a
-pattern is large enough to bet on. A twenty-game winning streak is thrilling and it is also, as the
-A's themselves would tell you, partly a run of luck sitting on top of a good team.</p>
+<p>That hidden third factor has a name: a <strong>confounding variable</strong>, something that drives both of the numbers you are comparing. Two other explanations are worth checking every time. The cause might run the other way: heavy spenders might download the app because they already visit so often. Or the pattern might be coincidence, which becomes likely when somebody has compared enough pairs of numbers.</p>
 
-<h3>2.2 When the metric becomes the target</h3>
+<p>The way a business gets from correlation to causation is an <strong>experiment</strong>. Give a change to a randomly chosen half of customers and not to the other half, then compare the two groups. Online companies call this an <strong>A/B test</strong>, and they run them constantly, on page layouts, prices, and email subject lines. Random assignment does the work: loyal and casual customers end up in both groups, so the confounder cancels out. When an experiment is not possible, the next best thing is a correlation with a believable mechanism behind it, which is exactly what the main case in section 4 relies on.</p>
+
+<h3>2.3 Sample size: how much data is enough?</h3>
+
+<p class="defn">The <strong>sample size</strong> is how many cases a number is based on. The <strong>small-sample problem</strong> is that a pattern built on a few cases can be produced by luck alone.</p>
+
+<p>A/B tests run into this immediately. Suppose a store tests a new checkout page. After the first 50 visitors, the new page has converted twice as many shoppers as the old one. That looks like a win. After 500 visitors the difference has almost disappeared, because there never was one. The figure is a simulation of exactly that: two pages with the same true conversion rate, drawn as the running result after each visitor.</p>
+
+<figure class="diagram" style="margin:1.8rem auto;max-width:600px">
+<svg viewBox="0 0 600 270" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="ssT ssD" style="width:100%;height:auto;font-family:var(--sans)">
+<title id="ssT">Two identical checkout pages look different on a small sample</title>
+<desc id="ssD">A simulated A/B test. Two lines show the running conversion rate of an old and a new checkout page as visitors arrive, from 5 to 500 visitors. Both pages have the same true rate of 5 percent. In the first few dozen visitors the lines swing wildly between 0 and 20 percent, and after 50 visitors the new page shows 8% against the old page&#8217;s 4%, which looks like twice as good. By 500 visitors both lines have settled close to 5 percent and almost meet.</desc>
+<line x1="60" x2="560" y1="210.0" y2="210.0" stroke="var(--border)"/>
+<text x="52" y="214.0" text-anchor="end" font-size="10.5" fill="var(--text-light)">0%</text>
+<line x1="60" x2="560" y1="172.0" y2="172.0" stroke="var(--border)"/>
+<text x="52" y="176.0" text-anchor="end" font-size="10.5" fill="var(--text-light)">5%</text>
+<line x1="60" x2="560" y1="134.0" y2="134.0" stroke="var(--border)"/>
+<text x="52" y="138.0" text-anchor="end" font-size="10.5" fill="var(--text-light)">10%</text>
+<line x1="60" x2="560" y1="96.0" y2="96.0" stroke="var(--border)"/>
+<text x="52" y="100.0" text-anchor="end" font-size="10.5" fill="var(--text-light)">15%</text>
+<line x1="60" x2="560" y1="58.0" y2="58.0" stroke="var(--border)"/>
+<text x="52" y="62.0" text-anchor="end" font-size="10.5" fill="var(--text-light)">20%</text>
+<line x1="60" x2="560" y1="20.0" y2="20.0" stroke="var(--border)"/>
+<text x="52" y="24.0" text-anchor="end" font-size="10.5" fill="var(--text-light)">25%</text>
+<text x="60.0" y="226" text-anchor="middle" font-size="10.5" fill="var(--text-light)">0</text>
+<text x="160.0" y="226" text-anchor="middle" font-size="10.5" fill="var(--text-light)">100</text>
+<text x="260.0" y="226" text-anchor="middle" font-size="10.5" fill="var(--text-light)">200</text>
+<text x="360.0" y="226" text-anchor="middle" font-size="10.5" fill="var(--text-light)">300</text>
+<text x="460.0" y="226" text-anchor="middle" font-size="10.5" fill="var(--text-light)">400</text>
+<text x="560.0" y="226" text-anchor="middle" font-size="10.5" fill="var(--text-light)">500</text>
+<line x1="60" x2="560" y1="172.0" y2="172.0" stroke="var(--text-dark)" stroke-dasharray="3 3"/>
+<text x="560" y="187.0" text-anchor="end" font-size="10" fill="var(--text-dark)">true rate for both: 5%</text>
+<polyline points="65.0,58.0 66.0,83.3 67.0,101.4 68.0,115.0 69.0,125.6 70.0,134.0 71.0,140.9 72.0,146.7 73.0,151.5 74.0,155.7 75.0,159.3 76.0,162.5 77.0,165.3 78.0,167.8 79.0,170.0 80.0,172.0 81.0,173.8 82.0,175.5 83.0,177.0 84.0,178.3 85.0,179.6 86.0,180.8 87.0,181.9 88.0,182.9 89.0,183.8 90.0,184.7 91.0,185.5 92.0,186.2 93.0,187.0 94.0,165.3 95.0,166.6 96.0,167.8 97.0,168.9 98.0,170.0 99.0,171.0 100.0,172.0 101.0,172.9 102.0,173.8 103.0,174.7 104.0,175.5 105.0,176.2 106.0,177.0 107.0,177.7 108.0,178.3 109.0,179.0 110.0,179.6 111.0,180.2 112.0,180.8 113.0,181.3 114.0,181.9 115.0,182.4 116.0,182.9 117.0,183.3 118.0,183.8 119.0,184.2 120.0,184.7 121.0,185.1 122.0,185.5 123.0,185.9 124.0,186.2 125.0,186.6 126.0,187.0 127.0,187.3 128.0,187.6 129.0,188.0 130.0,188.3 131.0,188.6 132.0,188.9 133.0,189.2 134.0,179.2 135.0,179.6 136.0,180.0 137.0,180.4 138.0,171.0 139.0,171.5 140.0,172.0 141.0,172.5 142.0,163.7 143.0,164.2 144.0,164.8 145.0,165.3 146.0,165.8 147.0,166.3 148.0,166.8 149.0,167.3 150.0,167.8 151.0,168.2 152.0,168.7 153.0,169.1 154.0,169.6 155.0,170.0 156.0,170.4 157.0,170.8 158.0,171.2 159.0,171.6 160.0,172.0 161.0,172.4 162.0,172.7 163.0,173.1 164.0,173.5 165.0,166.6 166.0,167.0 167.0,160.3 168.0,160.7 169.0,161.2 170.0,161.6 171.0,162.1 172.0,162.5 173.0,162.9 174.0,163.3 175.0,163.7 176.0,164.1 177.0,164.5 178.0,164.9 179.0,165.3 180.0,165.7 181.0,166.0 182.0,166.4 183.0,166.7 184.0,167.1 185.0,167.4 186.0,167.8 187.0,168.1 188.0,168.4 189.0,168.8 190.0,169.1 191.0,169.4 192.0,169.7 193.0,170.0 194.0,170.3 195.0,170.6 196.0,170.9 197.0,171.2 198.0,171.4 199.0,171.7 200.0,166.6 201.0,166.9 202.0,167.2 203.0,167.5 204.0,167.8 205.0,168.1 206.0,168.4 207.0,168.6 208.0,168.9 209.0,169.2 210.0,169.5 211.0,169.7 212.0,170.0 213.0,170.3 214.0,170.5 215.0,170.8 216.0,171.0 217.0,171.3 218.0,171.5 219.0,167.0 220.0,167.2 221.0,167.5 222.0,167.8 223.0,168.0 224.0,168.3 225.0,168.5 226.0,168.8 227.0,169.0 228.0,169.3 229.0,169.5 230.0,169.8 231.0,170.0 232.0,170.2 233.0,170.5 234.0,170.7 235.0,170.9 236.0,166.8 237.0,167.1 238.0,167.3 239.0,167.5 240.0,167.8 241.0,168.0 242.0,168.2 243.0,168.5 244.0,168.7 245.0,168.9 246.0,169.1 247.0,169.4 248.0,169.6 249.0,169.8 250.0,166.0 251.0,166.2 252.0,166.5 253.0,166.7 254.0,166.9 255.0,167.1 256.0,167.3 257.0,167.6 258.0,167.8 259.0,168.0 260.0,168.2 261.0,168.4 262.0,168.6 263.0,168.8 264.0,169.0 265.0,169.2 266.0,169.4 267.0,169.6 268.0,169.8 269.0,170.0 270.0,170.2 271.0,170.4 272.0,167.0 273.0,167.2 274.0,167.4 275.0,167.6 276.0,167.8 277.0,168.0 278.0,168.2 279.0,168.4 280.0,168.5 281.0,168.7 282.0,168.9 283.0,169.1 284.0,169.3 285.0,169.5 286.0,169.6 287.0,169.8 288.0,170.0 289.0,170.2 290.0,170.3 291.0,170.5 292.0,170.7 293.0,170.9 294.0,171.0 295.0,171.2 296.0,171.4 297.0,168.3 298.0,168.5 299.0,168.7 300.0,168.8 301.0,169.0 302.0,169.2 303.0,169.3 304.0,169.5 305.0,169.7 306.0,169.8 307.0,170.0 308.0,170.2 309.0,170.3 310.0,170.5 311.0,170.6 312.0,170.8 313.0,170.9 314.0,171.1 315.0,171.3 316.0,171.4 317.0,171.6 318.0,171.7 319.0,171.9 320.0,172.0 321.0,172.1 322.0,172.3 323.0,172.4 324.0,169.7 325.0,169.8 326.0,170.0 327.0,170.1 328.0,170.3 329.0,170.4 330.0,170.6 331.0,170.7 332.0,170.9 333.0,171.0 334.0,168.4 335.0,168.5 336.0,168.7 337.0,168.8 338.0,169.0 339.0,169.1 340.0,169.3 341.0,169.4 342.0,169.6 343.0,169.7 344.0,169.9 345.0,170.0 346.0,170.1 347.0,170.3 348.0,170.4 349.0,170.6 350.0,170.7 351.0,170.8 352.0,171.0 353.0,168.5 354.0,168.6 355.0,168.8 356.0,168.9 357.0,169.1 358.0,169.2 359.0,169.3 360.0,169.5 361.0,169.6 362.0,169.7 363.0,167.4 364.0,167.5 365.0,165.1 366.0,165.3 367.0,165.4 368.0,165.6 369.0,165.7 370.0,165.9 371.0,166.0 372.0,166.2 373.0,166.3 374.0,166.4 375.0,166.6 376.0,166.7 377.0,166.8 378.0,167.0 379.0,167.1 380.0,167.2 381.0,167.4 382.0,167.5 383.0,167.6 384.0,167.8 385.0,167.9 386.0,168.0 387.0,168.2 388.0,168.3 389.0,168.4 390.0,168.5 391.0,168.7 392.0,168.8 393.0,166.6 394.0,166.8 395.0,166.9 396.0,167.0 397.0,167.2 398.0,167.3 399.0,167.4 400.0,167.5 401.0,167.7 402.0,167.8 403.0,167.9 404.0,168.0 405.0,165.9 406.0,166.1 407.0,166.2 408.0,166.3 409.0,166.4 410.0,166.6 411.0,166.7 412.0,166.8 413.0,166.9 414.0,167.1 415.0,167.2 416.0,167.3 417.0,165.3 418.0,165.4 419.0,165.5 420.0,165.7 421.0,165.8 422.0,165.9 423.0,166.0 424.0,166.2 425.0,166.3 426.0,166.4 427.0,166.5 428.0,166.6 429.0,166.7 430.0,166.9 431.0,167.0 432.0,167.1 433.0,167.2 434.0,167.3 435.0,167.4 436.0,167.6 437.0,167.7 438.0,167.8 439.0,167.9 440.0,168.0 441.0,168.1 442.0,168.2 443.0,168.3 444.0,168.4 445.0,168.5 446.0,168.7 447.0,168.8 448.0,168.9 449.0,169.0 450.0,169.1 451.0,169.2 452.0,169.3 453.0,169.4 454.0,169.5 455.0,169.6 456.0,169.7 457.0,169.8 458.0,169.9 459.0,170.0 460.0,170.1 461.0,170.2 462.0,170.3 463.0,170.4 464.0,170.5 465.0,170.6 466.0,170.7 467.0,170.8 468.0,170.9 469.0,171.0 470.0,171.1 471.0,171.2 472.0,171.3 473.0,171.4 474.0,171.4 475.0,171.5 476.0,171.6 477.0,171.7 478.0,171.8 479.0,171.9 480.0,172.0 481.0,172.1 482.0,170.4 483.0,170.5 484.0,170.6 485.0,168.9 486.0,169.0 487.0,169.1 488.0,169.2 489.0,169.3 490.0,169.3 491.0,169.4 492.0,169.5 493.0,169.6 494.0,169.7 495.0,169.8 496.0,169.9 497.0,170.0 498.0,170.1 499.0,170.2 500.0,170.3 501.0,170.4 502.0,170.5 503.0,170.5 504.0,170.6 505.0,170.7 506.0,170.8 507.0,170.9 508.0,171.0 509.0,171.1 510.0,171.2 511.0,171.2 512.0,171.3 513.0,171.4 514.0,171.5 515.0,171.6 516.0,171.7 517.0,171.8 518.0,171.8 519.0,171.9 520.0,172.0 521.0,172.1 522.0,172.2 523.0,172.2 524.0,172.3 525.0,172.4 526.0,172.5 527.0,172.6 528.0,172.6 529.0,172.7 530.0,172.8 531.0,171.3 532.0,171.4 533.0,171.4 534.0,171.5 535.0,171.6 536.0,171.7 537.0,171.8 538.0,171.8 539.0,171.9 540.0,172.0 541.0,172.1 542.0,172.2 543.0,170.7 544.0,170.7 545.0,170.8 546.0,170.9 547.0,171.0 548.0,171.1 549.0,171.1 550.0,171.2 551.0,171.3 552.0,171.4 553.0,171.5 554.0,171.5 555.0,170.1 556.0,170.2 557.0,170.2 558.0,170.3 559.0,170.4 560.0,170.5" fill="none" stroke="var(--text-light)" stroke-width="1.8"/>
+<polyline points="65.0,210.0 66.0,210.0 67.0,210.0 68.0,210.0 69.0,210.0 70.0,210.0 71.0,210.0 72.0,210.0 73.0,210.0 74.0,210.0 75.0,210.0 76.0,210.0 77.0,210.0 78.0,210.0 79.0,210.0 80.0,210.0 81.0,210.0 82.0,210.0 83.0,210.0 84.0,210.0 85.0,210.0 86.0,210.0 87.0,181.9 88.0,182.9 89.0,183.8 90.0,159.3 91.0,161.0 92.0,138.8 93.0,140.9 94.0,142.9 95.0,144.9 96.0,146.7 97.0,148.4 98.0,150.0 99.0,151.5 100.0,153.0 101.0,154.4 102.0,155.7 103.0,157.0 104.0,140.9 105.0,142.4 106.0,143.9 107.0,145.3 108.0,146.7 109.0,148.0 110.0,149.2 111.0,150.4 112.0,151.5 113.0,152.6 114.0,153.7 115.0,154.7 116.0,155.7 117.0,156.7 118.0,157.6 119.0,158.5 120.0,159.3 121.0,160.2 122.0,161.0 123.0,149.7 124.0,150.6 125.0,139.8 126.0,140.9 127.0,141.9 128.0,142.9 129.0,143.9 130.0,144.9 131.0,145.8 132.0,146.7 133.0,147.5 134.0,148.4 135.0,149.2 136.0,150.0 137.0,150.8 138.0,151.5 139.0,152.3 140.0,153.0 141.0,153.7 142.0,154.4 143.0,155.1 144.0,155.7 145.0,156.4 146.0,157.0 147.0,157.6 148.0,158.2 149.0,158.8 150.0,159.3 151.0,159.9 152.0,160.4 153.0,161.0 154.0,161.5 155.0,162.0 156.0,162.5 157.0,163.0 158.0,163.5 159.0,163.9 160.0,164.4 161.0,164.9 162.0,165.3 163.0,165.7 164.0,158.8 165.0,159.3 166.0,159.8 167.0,160.3 168.0,160.7 169.0,161.2 170.0,161.6 171.0,162.1 172.0,162.5 173.0,162.9 174.0,163.3 175.0,163.7 176.0,164.1 177.0,164.5 178.0,164.9 179.0,165.3 180.0,165.7 181.0,166.0 182.0,166.4 183.0,166.7 184.0,167.1 185.0,167.4 186.0,167.8 187.0,168.1 188.0,168.4 189.0,168.8 190.0,169.1 191.0,169.4 192.0,169.7 193.0,164.3 194.0,164.6 195.0,165.0 196.0,165.3 197.0,165.6 198.0,165.9 199.0,166.3 200.0,161.1 201.0,161.5 202.0,161.8 203.0,162.2 204.0,162.5 205.0,162.8 206.0,157.9 207.0,158.3 208.0,158.6 209.0,159.0 210.0,159.3 211.0,159.7 212.0,160.0 213.0,160.3 214.0,160.6 215.0,161.0 216.0,161.3 217.0,161.6 218.0,161.9 219.0,162.2 220.0,162.5 221.0,162.8 222.0,163.1 223.0,163.4 224.0,163.7 225.0,163.9 226.0,164.2 227.0,159.9 228.0,160.2 229.0,160.5 230.0,160.8 231.0,161.1 232.0,161.4 233.0,161.7 234.0,162.0 235.0,162.2 236.0,162.5 237.0,162.8 238.0,163.0 239.0,163.3 240.0,163.6 241.0,163.8 242.0,164.1 243.0,160.2 244.0,160.4 245.0,160.7 246.0,161.0 247.0,161.2 248.0,161.5 249.0,161.7 250.0,162.0 251.0,162.3 252.0,162.5 253.0,162.7 254.0,163.0 255.0,163.2 256.0,163.5 257.0,163.7 258.0,163.9 259.0,164.2 260.0,164.4 261.0,164.6 262.0,164.9 263.0,165.1 264.0,165.3 265.0,165.5 266.0,165.7 267.0,165.9 268.0,166.2 269.0,166.4 270.0,166.6 271.0,166.8 272.0,167.0 273.0,167.2 274.0,167.4 275.0,167.6 276.0,167.8 277.0,168.0 278.0,168.2 279.0,168.4 280.0,168.5 281.0,168.7 282.0,168.9 283.0,165.7 284.0,165.9 285.0,166.1 286.0,166.3 287.0,166.5 288.0,166.7 289.0,166.9 290.0,167.0 291.0,167.2 292.0,167.4 293.0,164.3 294.0,164.5 295.0,164.7 296.0,161.7 297.0,161.9 298.0,162.1 299.0,162.3 300.0,159.3 301.0,159.5 302.0,159.8 303.0,160.0 304.0,160.2 305.0,160.4 306.0,160.6 307.0,160.8 308.0,161.0 309.0,161.2 310.0,161.4 311.0,161.6 312.0,161.7 313.0,161.9 314.0,159.1 315.0,159.3 316.0,156.6 317.0,153.8 318.0,154.0 319.0,154.2 320.0,154.5 321.0,154.7 322.0,154.9 323.0,152.2 324.0,152.4 325.0,152.6 326.0,152.9 327.0,153.1 328.0,153.3 329.0,153.5 330.0,153.7 331.0,153.9 332.0,154.1 333.0,151.5 334.0,151.8 335.0,152.0 336.0,152.2 337.0,152.4 338.0,152.6 339.0,152.8 340.0,153.0 341.0,153.2 342.0,153.4 343.0,153.6 344.0,153.8 345.0,154.0 346.0,154.2 347.0,154.4 348.0,154.6 349.0,154.8 350.0,155.0 351.0,155.2 352.0,155.3 353.0,155.5 354.0,155.7 355.0,155.9 356.0,156.1 357.0,156.3 358.0,156.4 359.0,156.6 360.0,156.8 361.0,157.0 362.0,157.2 363.0,157.3 364.0,157.5 365.0,157.7 366.0,157.8 367.0,158.0 368.0,158.2 369.0,158.3 370.0,158.5 371.0,158.7 372.0,158.8 373.0,159.0 374.0,159.2 375.0,159.3 376.0,159.5 377.0,159.7 378.0,159.8 379.0,160.0 380.0,160.1 381.0,160.3 382.0,160.4 383.0,160.6 384.0,160.7 385.0,160.9 386.0,161.0 387.0,161.2 388.0,161.3 389.0,159.2 390.0,159.3 391.0,159.5 392.0,159.6 393.0,159.8 394.0,159.9 395.0,160.1 396.0,160.2 397.0,160.4 398.0,160.5 399.0,160.7 400.0,160.8 401.0,161.0 402.0,161.1 403.0,161.3 404.0,161.4 405.0,161.5 406.0,161.7 407.0,161.8 408.0,162.0 409.0,162.1 410.0,162.2 411.0,162.4 412.0,162.5 413.0,160.5 414.0,160.6 415.0,160.8 416.0,160.9 417.0,161.0 418.0,161.2 419.0,161.3 420.0,161.4 421.0,161.6 422.0,161.7 423.0,161.8 424.0,162.0 425.0,162.1 426.0,162.2 427.0,160.3 428.0,160.4 429.0,160.6 430.0,160.7 431.0,160.8 432.0,161.0 433.0,161.1 434.0,161.2 435.0,161.4 436.0,161.5 437.0,161.6 438.0,161.7 439.0,161.9 440.0,162.0 441.0,160.1 442.0,160.3 443.0,160.4 444.0,160.5 445.0,160.6 446.0,160.8 447.0,160.9 448.0,161.0 449.0,161.2 450.0,161.3 451.0,161.4 452.0,161.5 453.0,159.7 454.0,159.8 455.0,160.0 456.0,158.2 457.0,158.3 458.0,158.4 459.0,158.6 460.0,158.7 461.0,158.8 462.0,159.0 463.0,159.1 464.0,159.2 465.0,159.3 466.0,159.5 467.0,159.6 468.0,159.7 469.0,159.8 470.0,160.0 471.0,160.1 472.0,160.2 473.0,160.3 474.0,160.4 475.0,160.6 476.0,160.7 477.0,160.8 478.0,160.9 479.0,161.0 480.0,161.1 481.0,161.3 482.0,161.4 483.0,161.5 484.0,161.6 485.0,161.7 486.0,161.8 487.0,161.9 488.0,162.1 489.0,162.2 490.0,162.3 491.0,162.4 492.0,162.5 493.0,162.6 494.0,162.7 495.0,162.8 496.0,162.9 497.0,163.0 498.0,163.2 499.0,163.3 500.0,163.4 501.0,163.5 502.0,163.6 503.0,163.7 504.0,163.8 505.0,163.9 506.0,164.0 507.0,164.1 508.0,164.2 509.0,164.3 510.0,164.4 511.0,164.5 512.0,164.6 513.0,164.7 514.0,164.8 515.0,164.9 516.0,165.0 517.0,165.1 518.0,165.2 519.0,165.3 520.0,165.4 521.0,165.5 522.0,165.6 523.0,165.7 524.0,165.8 525.0,165.9 526.0,166.0 527.0,166.1 528.0,166.2 529.0,166.2 530.0,166.3 531.0,166.4 532.0,166.5 533.0,166.6 534.0,166.7 535.0,166.8 536.0,166.9 537.0,167.0 538.0,167.1 539.0,167.2 540.0,167.2 541.0,167.3 542.0,167.4 543.0,167.5 544.0,167.6 545.0,167.7 546.0,167.8 547.0,167.9 548.0,168.0 549.0,168.0 550.0,168.1 551.0,168.2 552.0,168.3 553.0,168.4 554.0,168.5 555.0,168.5 556.0,168.6 557.0,168.7 558.0,168.8 559.0,168.9 560.0,169.0" fill="none" stroke="var(--magenta)" stroke-width="1.8"/>
+<line x1="110.0" x2="110.0" y1="20" y2="210" stroke="var(--magenta-dark)" stroke-width="1" stroke-dasharray="2 3"/>
+<text x="115.0" y="32" font-size="10.5" font-weight="600" fill="var(--magenta-dark)">after 50 visitors: new 8%, old 4%</text>
+<text x="310.0" y="244" text-anchor="middle" font-size="11" fill="var(--text-light)">visitors so far</text>
+<rect x="360" y="60" width="12" height="3" fill="var(--magenta)"/><text x="378" y="65" font-size="10.5" fill="var(--text-dark)">new page</text>
+<rect x="360" y="78" width="12" height="3" fill="var(--text-light)"/><text x="378" y="83" font-size="10.5" fill="var(--text-dark)">old page</text>
+<text x="300" y="266" text-anchor="middle" font-size="10" fill="var(--text-light)">Simulated data: both pages convert at exactly the same rate</text></svg>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">
+Nothing differs between these two pages except luck. On the left, luck is most of what you are seeing. On the right, the lines have settled toward the truth. A manager who stopped the test at 50 visitors would have rebuilt the checkout for nothing, and would have had a chart to prove it worked.
+</figcaption>
+</figure>
+
+<p>Small samples fool rankings too. Rank a chain's stores by return rate, and the smallest stores will tend to show up at both the top and the bottom of the list. That is not because small stores are better or worse. With few sales, a handful of returns moves the rate a lot. A manager who rewards the top store and visits the bottom one may be responding to luck.</p>
+
+<p>Business runs on small samples more often than it admits: one viral month, one bad quarter, one focus group of nine people. Sports runs on them too. A baseball team plays 162 regular-season games, which is enough for skill to show. A playoff series is five or seven games, which is small enough for luck to decide it, and the main case will need you to remember that. The honest analyst's question, in Lab 5 and everywhere else, is whether the sample behind a pattern is large enough to bet on.</p>
+
+<h3>2.4 When the metric becomes the target</h3>
 
 <p>There is a trap waiting inside every successful metric, and it has a name: <strong>Goodhart's
 law</strong>, usually stated as <em>when a measure becomes a target, it ceases to be a good
@@ -612,279 +801,457 @@ proxy for, and the gap between the two becomes the business's blind spot.</p>
 
 <p>Call centers that grade agents on average handle time get shorter calls and angrier customers,
 because the fastest way to end a call is to not solve the problem. Schools graded on test scores drift
-toward teaching the test. A sales team paid on units shipped will stuff the channel in December and eat
-returns in January. In every case the metric was a reasonable proxy right up until it became the
-target, and then the measured number improved while the real thing decayed. Baseball is not exempt: a
-hitter paid for OBP alone can learn to take walks in situations where swinging would win the game.</p>
+toward teaching the test. A sales team paid on units shipped will push extra stock onto retailers in December and take it back
+as returns in January. In every case the metric was a reasonable proxy right up until it became the
+target, and then the measured number improved while the real thing decayed.</p>
 
 <p>Goodhart's law is why choosing metrics is a management decision, not a reporting chore. The professional habit
 is to pair every target with a counter-metric that catches the gaming: handle time with resolution
-rate, units shipped with returns. Keep this section in mind, because spotting one of these
-traps in a real organization is much harder than defining it here.</p>
+rate, units shipped with returns. Section 3 opens with a case where this happened inside a hospital system, with patients waiting on the other side of the number.</p>
 
-<h3>2.3 From the dugout to the dashboard</h3>
+<h3>2.5 Where the numbers live: the BI stack</h3>
 
-<p>What did the Oakland A's revolution look like as an information system? It was unremarkably modest: public
-statistics, DePodesta's laptop, and spreadsheet models. The lesson is not the technology; it is the
-architecture, which is the same one every BI-capable business runs today, at larger scale.</p>
+<p>Before a number can reach a manager, it has to live somewhere, and that is usually not where it was first recorded.</p>
 
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">The BI stack: operational systems, warehouse, dashboard</span>
-<p>Operational systems, the registers and databases you will meet in the next two chapters, are built to record
-transactions quickly, one at a time. Analysis asks the opposite kind of question: patterns across
-millions of rows and months of history. So organizations copy operational data into a <strong>data
-warehouse</strong>, a database organized for analysis rather than transactions, and put
-<strong>dashboards</strong> on top: visual displays of the metrics that matter, updated continuously.
-The separation exists so that a heavy analytical query never slows down the register, and so that
-analysis runs on a cleaned, consistent copy, which after Lab 7 you know is not the copy the
-registers write.</p></div>
+<p>Operational systems, the registers, websites, apps, and databases you will meet in the next two chapters, are built to record transactions quickly, one at a time. Analysis asks the opposite kind of question: patterns across millions of rows and years of history. Running those heavy questions against the registers' own database would slow the registers down. So organizations copy the data out.</p>
 
-<p>The last layer is <strong>self-service BI</strong>, tools like Tableau that let the analyst, rather
-than a programmer, explore the warehouse and build the dashboard. That is this week's lab, and it
-closes the loop on the course's longest-running thread. At Cascadia, revenue is the batting average:
-Bellingham's looked fine on every standard report. The member attach rate is the on-base percentage:
-the truer measure of the underlying engine, and the number that finally exposed the problem. You found
-it in a pivot table in Lab 5; this week you will make it impossible for a manager to miss, which is
-what a dashboard is for.</p>
+<p>The copying step is usually called <strong>ETL</strong>, for extract, transform, load. Pull the data from each operational system, clean it and make it consistent, and load it into a <strong>data warehouse</strong>, a database organized for analysis rather than for recording transactions. Dashboards and analysis tools sit on top of the warehouse. Together these layers are often called the <strong>BI stack</strong>.</p>
+
+<figure class="diagram" style="margin:1.8rem auto;max-width:620px">
+<svg viewBox="0 0 620 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="stT stD" style="width:100%;height:auto;font-family:var(--sans)">
+<title id="stT">The BI stack: from operational systems to a decision</title>
+<desc id="stD">Four boxes in a row with arrows between them. Operational systems, such as registers, the website, the app and loyalty cards, record each transaction. An arrow leads to ETL, which extracts, cleans and makes the data consistent. An arrow leads to the data warehouse, organized for analysis. An arrow leads to dashboards and analysis, what a manager actually sees. A final arrow points down to a decision. Under the ETL box a note reads: every rule here changes the number a manager sees.</desc>
+<defs><marker id="stA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--text-dark)"/></marker></defs>
+<rect x="10" y="30" width="130" height="92" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1.2"/>
+<text x="75" y="54" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-dark)">Operational</text>
+<text x="75" y="70" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-dark)">systems</text>
+<text x="75" y="92" text-anchor="middle" font-size="10.5" fill="var(--text-light)">registers, website,</text>
+<text x="75" y="106" text-anchor="middle" font-size="10.5" fill="var(--text-light)">app, loyalty cards</text>
+<path d="M142 76 L166 76" stroke="var(--text-dark)" stroke-width="1.5" marker-end="url(#stA)"/>
+<rect x="160" y="30" width="130" height="92" fill="var(--magenta-pale)" stroke="var(--text-dark)" stroke-width="1.2"/>
+<text x="225" y="54" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-dark)">ETL</text>
+<text x="225" y="92" text-anchor="middle" font-size="10.5" fill="var(--text-light)">extract, clean,</text>
+<text x="225" y="106" text-anchor="middle" font-size="10.5" fill="var(--text-light)">make consistent</text>
+<path d="M292 76 L316 76" stroke="var(--text-dark)" stroke-width="1.5" marker-end="url(#stA)"/>
+<rect x="310" y="30" width="130" height="92" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1.2"/>
+<text x="375" y="54" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-dark)">Data</text>
+<text x="375" y="70" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-dark)">warehouse</text>
+<text x="375" y="92" text-anchor="middle" font-size="10.5" fill="var(--text-light)">organized for</text>
+<text x="375" y="106" text-anchor="middle" font-size="10.5" fill="var(--text-light)">analysis</text>
+<path d="M442 76 L466 76" stroke="var(--text-dark)" stroke-width="1.5" marker-end="url(#stA)"/>
+<rect x="460" y="30" width="130" height="92" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1.2"/>
+<text x="525" y="54" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-dark)">Dashboards</text>
+<text x="525" y="70" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-dark)">and analysis</text>
+<text x="525" y="92" text-anchor="middle" font-size="10.5" fill="var(--text-light)">what a manager</text>
+<text x="525" y="106" text-anchor="middle" font-size="10.5" fill="var(--text-light)">actually sees</text>
+<path d="M525 124 L525 166" stroke="var(--text-dark)" stroke-width="1.5" marker-end="url(#stA)"/>
+<text x="525" y="184" text-anchor="middle" font-size="13" font-weight="700" fill="var(--magenta-dark)">a decision</text>
+<text x="225" y="146" text-anchor="middle" font-size="10.5" font-weight="600" fill="var(--magenta-dark)">every rule here changes</text>
+<text x="225" y="160" text-anchor="middle" font-size="10.5" font-weight="600" fill="var(--magenta-dark)">the number a manager sees</text>
+<text x="10" y="18" font-size="10.5" fill="var(--text-light)">records one transaction at a time</text>
+<text x="440" y="18" font-size="10.5" fill="var(--text-light)">answers questions across years</text></svg>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">
+Read the stack left to right and the data moves further from where it was recorded and closer to a decision. The pink box is the one nobody outside the data team sees, and it is where a sale, a return or a member gets defined. A dashboard can only be as honest as the rules in that box.
+</figcaption>
+</figure>
+
+<p>Each layer is a place where the number can change. The transform step decides what counts as a sale, how a return is matched to its purchase, and what happens to a record with a missing store code. After Lab 3 you know that raw data and a cleaned copy are not the same thing, and a manager reading a dashboard sees only the cleaned copy. In five-component terms, the warehouse is data and the ETL and dashboard tools are software, but the rules inside the transform step were written by people. That is why "where did this number come from?" is a fair question to ask about any figure on any screen.</p>
+
+<h3>2.6 Dashboards: putting the number where the decision is made</h3>
+
+<p class="defn">A <strong>dashboard</strong> is a visual display of a small set of metrics, updated regularly, built so that a particular person can see at a glance whether something needs their attention.</p>
+
+<p>The name comes from a car, and the comparison is useful. A car's dashboard shows a few things: speed, fuel, and warning lights. It does not show the engine's full sensor log, because the driver has one job and a few seconds to look. A business dashboard works the same way, and most bad dashboards fail by forgetting it.</p>
+
+<p>Good dashboards share four habits. First, they are built for one audience. A store manager checking every morning needs different numbers from an executive checking every month, which is why organizations often separate <strong>operational dashboards</strong>, used to run today's work, from <strong>strategic dashboards</strong>, used to track direction over months. Second, they show few numbers, mostly KPIs tied to decisions somebody can actually make. Third, they give every number a comparison, such as a target, last year, or the other stores, because a number alone cannot tell you whether to worry. Fourth, they pair each target with its counter-metric from section 2.4, so gaming shows up on the same screen.</p>
+
+<p>Building a dashboard used to require a programmer. <strong>Self-service BI</strong> tools, such as Tableau and Power BI, let an analyst or a manager connect to the warehouse and build the view directly. That is this week's lab, and it closes the course's longest-running thread. At Cascadia, revenue was the comfortable number: Bellingham's looked fine on every standard report. The member attach rate was the valid one, and it exposed the problem. You found it in a pivot table in Lab 5. Now you will make it impossible for a manager to miss, which is what a dashboard is for.</p>
+
+<p>One warning comes with the tool. A dashboard is a decision about what people will look at, and so it is also a decision about what they will not look at. Whoever chooses the six numbers on the screen has quietly decided which problems the organization can see.</p>
+
+<h3>2.7 Data storytelling: a chart is an argument somebody built</h3>
+
+<p class="defn"><strong>Data storytelling</strong> is presenting data as an argument: the data itself, a visual that makes the important pattern easy to see, and a short narrative that says what the pattern means and what to do about it.</p>
+
+<p>Numbers do not speak for themselves. Somebody decides which ones to show and which to leave out, what scale to draw them on, what to compare them against, and what sentence goes in the title. Every one of those choices pushes a reader toward a conclusion. That is not a flaw to remove. It is the job. A chart with no point leaves the decision-maker to find one, and they will usually find the wrong one or none at all. The goal is to make choices that show what the data actually says.</p>
+
+<p>A good data story answers four questions before anyone else sees it. Who is it for, and what decision are they making? What is the one point? Compared with what? And what should the reader do next? A dashboard tile that says "Member attach rate: 49.8%" is a number. A title that says "Bellingham signs up members at about half the rate of every other store" is a story, and a manager can act on it.</p>
+
+<p>The cost of getting this wrong has rarely been clearer than in 1986. The night before the Challenger launch, engineers at the contractor that built the shuttle's rocket boosters argued against flying. It was going to be unusually cold in Florida, and they believed the rubber seals between booster sections would seal less well at low temperature. They had data. Seals had been damaged on earlier flights, and the damage had been recorded.</p>
+
+<p>What they did not have was a picture that made the relationship visible. The charts taken into that teleconference presented the damaged flights. They did not plot damage against temperature across all the flights, including the ones with no damage at all. Read that way, the evidence looked like scattered incidents rather than a trend. The launch went ahead the next morning in near-freezing conditions, and the shuttle was destroyed, killing all seven people aboard.</p>
+
+<p>The statistician Edward Tufte later redrew the evidence with every flight on one temperature axis, and in that version the danger is obvious at a glance. His redrawing became a standard example in how to show quantitative information, because the engineers' argument was <em>in</em> their data and was not <em>in</em> their charts. Leaving out the flights where nothing happened removed the comparison that would have made the point. Nobody lacked the numbers, and nobody miscalculated. The display decided what a room full of decision-makers could see.</p>
+
+<p>The same power works in the other direction. If the choices in a chart decide what a room sees, then a person who wants the room to see something can make those choices on purpose. Section 3's second case is about exactly that.</p>
 
 <div class="callout"><strong>The one-sentence version</strong>
-<p>BI is not having data. Everyone has data. BI is choosing the measure that tracks what you actually
-care about, and putting it where decisions get made.</p></div>
+<p>Business analytics is not having data. Everyone has data. It is choosing the measure that tracks what you actually
+care about, reading it honestly, and showing it where decisions get made.</p></div>
 
-<h2 id="cases"><span class="num">3</span>Two failures, two levels</h2>
-<p>Before the main case, here are two short ones, from opposite ends of the four levels in section 1. The first is a descriptive failure, the second prescriptive. Read them in order and watch the cost of being wrong grow. A bad description produces a bad slide. A bad prescription produces a bad forecast that has already spent your money.</p>
+<h2 id="cases"><span class="num">3</span>Mini-cases: when people shape the numbers</h2>
 
-<h3>3.1 Mini-case 1 &middot; 1986: the chart that did not show the thing it contained</h3>
+<p>Before the main case, here are two short ones. In both, the data passed through people before it reached a decision, and those people changed what the decision-maker saw. The first is a metric that became a target, from section 2.4. The second is a chart built to tell one story, from section 2.7. Neither failure needed a calculation error.</p>
 
-<p>The night before the Challenger launch, engineers at the contractor that built the shuttle's rocket
-boosters argued against flying. It was going to be unusually cold in Florida, and they believed the
-rubber seals between booster sections would be less able to seal at low temperature. They had data.
-Seals had been damaged on previous flights, and the damage had been recorded.</p>
+<h3>3.1 Mini-case 1 &middot; 2014: the wait that shrank on paper</h3>
 
-<p>What the engineers did not have was a picture that made the relationship visible. The charts taken into that
-teleconference presented the damaged flights, and did not plot damage against temperature across all
-the flights, including the ones with no damage at all. Read that way, the case looked like scattered
-incidents rather than a trend. The launch went ahead the next morning in near-freezing conditions and
-the shuttle was destroyed, killing all seven people aboard.</p>
+<p>The Department of Veterans Affairs runs one of the largest health care systems in the United States. In the years before 2014, it judged its medical centers partly on one number: how long veterans waited for an appointment. The target for new appointments was 14 days, and wait times counted toward managers' performance reviews and awards.</p>
 
-<p>Later analysis of those materials became a standard teaching example in how to display quantitative
-information, because the argument the engineers were making was <em>in</em> their data and was not
-<em>in</em> their charts. This is descriptive analytics failing at its only job.</p>
+<p>The wait was calculated by the VA's electronic scheduling system, using a field called the "desired date," meaning the date the veteran wanted to be seen. That design had a weak point. If a scheduler typed a later date into the field, the recorded wait got shorter, and the veteran's actual wait did not change at all. Veterans could also be kept on paper or unofficial lists instead of the official electronic wait list. As far as the system knew, their wait had not started.</p>
 
-<p><strong>The level: descriptive. The component: software, meaning the tool that displayed
-it.</strong> Nobody lacked the numbers, and nobody miscalculated. The presentation decided what a room
-full of decision-makers could see, which is worth remembering in a week when you are choosing what to
-put on a dashboard.</p>
+<p>In 2014 Sam Foote, a doctor who had worked at the Phoenix VA, went public with allegations of long delays and hidden lists. The VA's inspector general investigated. For a sample of veterans in Phoenix, the official data showed an average wait of about 24 days for a first primary care appointment. The actual average for that same sample was 115 days. The inspector general also found about 1,700 veterans waiting for appointments who were not on the official wait list at all, and said they were at risk of being "forgotten or lost."</p>
 
-<div class="mcq"><b>Check yourself</b>The damaged flights were shown and the undamaged ones were left
-out. Explain why leaving out the cases where nothing happened destroys the ability to see a
-relationship, and name one chart you have made where you did the same thing without noticing.
-<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>Completeness. The chart showed only the flights with damage, so the reader could not see the relationship between temperature and damage, because half the evidence, every cold-weather flight that was damaged and every warm-weather flight that was fine, was either missing or not lined up with the rest. The data existed. The picture left it out. That is the descriptive level failing: not a wrong number, but a display that hid what the numbers contained. Tufte's redrawn version, all flights on one temperature axis, makes the danger obvious in a glance, which is the whole point of the descriptive level.</p></details></div>
+<p>Phoenix was not unusual. The Secretary of Veterans Affairs, Eric Shinseki, resigned at the end of May. A nationwide VA audit published in June covered 731 facilities. Thirteen percent of the scheduling staff it interviewed said they had been told to enter a date other than the one the veteran asked for, and schedulers at 90 clinics said they had done it to improve performance measures. The audit concluded that the 14-day target was not attainable with the doctors and appointment slots the VA had, and the VA removed the 14-day goal from employee performance contracts.</p>
 
-<h3>3.2 Mini-case 2 &middot; 2021: the algorithm that was allowed to spend</h3>
+<p>Reports that veterans had died while waiting for care made this a national story. The inspector general later said it could not conclude that the delays caused those deaths, while documenting serious delays and concerns about the quality of care. Both halves of that finding matter. The veterans were real, and so were the waits, whatever the records said.</p>
 
-<p>A model looks at a house and names a price, and a company wires the money, thousands of times, on the model's word. Zillow is a property website. In 2018 it started buying houses
-itself, using its own price estimates
-to decide what to pay, renovating them and selling them on. The estimate was no longer advice for a
-reader. It was an instruction to spend money.</p>
+<p><strong>The type: descriptive. The component: data, corrupted by people under pressure.</strong> Nothing was wrong with the scheduling software's arithmetic. Leaders set a target that could not be met, tied rewards to it, and measured it with a field that the people being measured could edit. Goodhart's law did the rest. The measure became a target, and it stopped measuring.</p>
 
-<p>The model was not wildly wrong. It was wrong by a few percentage points, in a business where a few
-percentage points is the entire margin, and it was wrong in the same direction across thousands of
-houses at once. In November 2021 Zillow shut the business down, announced writedowns of up to $569
-million, and cut about a quarter of its staff.</p>
+<div class="mcq"><b>Check yourself</b>The VA's wait-time metric was the gap between two dates. Say who
+controlled each date, and explain why that made the metric easy to game. Then name one counter-metric
+you would have put beside it.
+<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>One date was the appointment itself. The other, the desired date, was typed in by a scheduler working inside the facility whose performance the number judged. A metric that the people being measured can change by typing is not a measure of their work. It is a measure of how much pressure they are under. Good counter-metrics are ones nobody inside the clinic can edit. One is the date the veteran first called, stamped automatically by the phone or request system. Another is a survey asking veterans how long they actually waited. A third is a regular audit counting veterans who are waiting but not on the official list. The rule from section 2.4 holds: pair every target with a number the people being measured cannot move.</p></details></div>
 
-<p>Compare Zillow with the other two mini-cases. A bad chart misleads a meeting. A bad forecast misleads a plan.
-A bad prescription buys seven thousand houses. The difference is not accuracy. It is how much authority
-somebody granted the output before anyone checked it.</p>
+<h3>3.2 Mini-case 2 &middot; 1995 to 2007: the chart that made a drug look gentler</h3>
 
-<p><strong>The level: prescriptive. The component: people.</strong> The decision that cost the money was
-not made by the model. It was made by the executives who decided how far the model's answers could travel without a human
-in between. That is the same decision Chapter 4 asked you to make about handing steps to an agent.</p>
+<p>In December 1995 the U.S. Food and Drug Administration approved OxyContin, an opioid painkiller made by Purdue Pharma. Its selling point was a timed-release design meant to spread one dose over about twelve hours. The label the FDA approved said that this delayed absorption was "believed to reduce the abuse liability" of the drug. Purdue had no studies showing that it did.</p>
 
-<div class="mcq"><b>Check yourself</b>Zillow's estimate had been public for years before it was used to
-buy anything. Explain what changed about the same number when it stopped being displayed and started
-being acted on, and name the specific control you would have put between the model and the cheque.
-<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>Nothing changed about the estimate. What changed was the level it was operating at. As a number on a listing, the Zestimate was descriptive: a guess that a person read and weighed against everything else they knew. Once it was used to decide what Zillow itself would pay for a house, it became prescriptive: the number acted, with money, at scale, and nobody checked each decision. An estimate that is fine as information becomes dangerous as an instruction, because the errors that a person would have caught one at a time now pile up unchecked. That is why moving a model up the levels is a management decision, not a technical upgrade.</p></details></div>
+<p>The label also carried a graph of the drug's level in the blood over time, drawn on a <strong>logarithmic scale</strong>. On that kind of axis, each step up multiplies the value, usually by ten, instead of adding a fixed amount. A level that falls steeply after its peak can look like a gentle, steady slope. To a busy doctor glancing at the page, the picture said smooth and steady. Redrawn on an ordinary scale, the levels rise quickly and fall quickly.</p>
+
+<figure class="diagram" style="margin:1.8rem auto;max-width:620px">
+<svg viewBox="0 0 620 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="lgT lgD" style="width:100%;height:auto;font-family:var(--sans)">
+<title id="lgT">The same numbers drawn on a logarithmic scale and on an ordinary scale</title>
+<desc id="lgD">Two charts of the same made-up numbers: a level in the blood over twelve hours after one dose. On the left, the vertical axis is logarithmic, marked 1, 10 and 100. The line rises and then slopes down gently and evenly, and looks steady. On the right, the vertical axis is ordinary, marked 0 to 100. The same line shoots up, then loses about two thirds of its height within three hours and most of the rest by twelve.</desc>
+<rect x="50" y="40" width="230" height="170" fill="var(--off-white)" stroke="var(--border)"/>
+<line x1="50" x2="280" y1="210.0" y2="210.0" stroke="var(--border)"/><text x="44" y="214.0" text-anchor="end" font-size="10.5" fill="var(--text-light)">1</text>
+<line x1="50" x2="280" y1="125.0" y2="125.0" stroke="var(--border)"/><text x="44" y="129.0" text-anchor="end" font-size="10.5" fill="var(--text-light)">10</text>
+<line x1="50" x2="280" y1="40.0" y2="40.0" stroke="var(--border)"/><text x="44" y="44.0" text-anchor="end" font-size="10.5" fill="var(--text-light)">100</text>
+<polyline points="50.0,195.0 54.8,59.9 59.6,47.0 64.4,42.8 69.2,41.1 74.0,44.6 78.8,48.1 83.5,51.6 88.3,55.2 93.1,58.7 97.9,62.2 102.7,65.7 107.5,69.2 112.3,72.7 117.1,76.2 121.9,79.7 126.7,83.2 131.5,86.7 136.2,90.2 141.0,93.7 145.8,97.2 150.6,100.7 155.4,104.2 160.2,107.8 165.0,111.3 169.8,114.8 174.6,118.3 179.4,121.8 184.2,125.3 189.0,128.8 193.8,132.3 198.5,135.8 203.3,139.3 208.1,142.8 212.9,146.3 217.7,149.8 222.5,153.3 227.3,156.9 232.1,160.4 236.9,163.9 241.7,167.4 246.5,170.9 251.2,174.4 256.0,177.9 260.8,181.4 265.6,184.9 270.4,188.4 275.2,191.9 280.0,195.0" fill="none" stroke="var(--magenta)" stroke-width="2.2"/>
+<text x="165.0" y="28" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-dark)">Logarithmic scale</text>
+<text x="50.0" y="225" text-anchor="middle" font-size="10.5" fill="var(--text-light)">0h</text>
+<text x="165.0" y="225" text-anchor="middle" font-size="10.5" fill="var(--text-light)">6h</text>
+<text x="280.0" y="225" text-anchor="middle" font-size="10.5" fill="var(--text-light)">12h</text>
+<rect x="360" y="40" width="230" height="170" fill="var(--off-white)" stroke="var(--border)"/>
+<line x1="360" x2="590" y1="210.0" y2="210.0" stroke="var(--border)"/><text x="354" y="214.0" text-anchor="end" font-size="10.5" fill="var(--text-light)">0</text>
+<line x1="360" x2="590" y1="167.5" y2="167.5" stroke="var(--border)"/><text x="354" y="171.5" text-anchor="end" font-size="10.5" fill="var(--text-light)">25</text>
+<line x1="360" x2="590" y1="125.0" y2="125.0" stroke="var(--border)"/><text x="354" y="129.0" text-anchor="end" font-size="10.5" fill="var(--text-light)">50</text>
+<line x1="360" x2="590" y1="82.5" y2="82.5" stroke="var(--border)"/><text x="354" y="86.5" text-anchor="end" font-size="10.5" fill="var(--text-light)">75</text>
+<line x1="360" x2="590" y1="40.0" y2="40.0" stroke="var(--border)"/><text x="354" y="44.0" text-anchor="end" font-size="10.5" fill="var(--text-light)">100</text>
+<polyline points="360.0,210.0 364.8,110.9 369.6,69.5 374.4,52.3 379.2,45.1 384.0,60.0 388.8,73.6 393.5,86.0 398.3,97.2 403.1,107.5 407.9,116.7 412.7,125.2 417.5,132.9 422.3,139.9 427.1,146.2 431.9,152.0 436.7,157.3 441.5,162.0 446.2,166.4 451.0,170.3 455.8,173.9 460.6,177.2 465.4,180.2 470.2,182.9 475.0,185.3 479.8,187.6 484.6,189.6 489.4,191.5 494.2,193.1 499.0,194.7 503.8,196.1 508.5,197.3 513.3,198.5 518.1,199.5 522.9,200.5 527.7,201.3 532.5,202.1 537.3,202.8 542.1,203.5 546.9,204.1 551.7,204.6 556.5,205.1 561.2,205.5 566.0,205.9 570.8,206.3 575.6,206.6 580.4,206.9 585.2,207.2 590.0,207.5" fill="none" stroke="var(--magenta)" stroke-width="2.2"/>
+<text x="475.0" y="28" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-dark)">Ordinary scale</text>
+<text x="360.0" y="225" text-anchor="middle" font-size="10.5" fill="var(--text-light)">0h</text>
+<text x="475.0" y="225" text-anchor="middle" font-size="10.5" fill="var(--text-light)">6h</text>
+<text x="590.0" y="225" text-anchor="middle" font-size="10.5" fill="var(--text-light)">12h</text>
+<text x="310" y="252" text-anchor="middle" font-size="10.5" fill="var(--text-light)">Illustrative numbers, not data from any drug label</text></svg>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">
+Same numbers, two pictures. On the left the line looks like a gentle, steady slope. On the right it has lost most of its height within a few hours. Neither chart is false. The scale decides which story a reader in a hurry walks away with.
+</figcaption>
+</figure>
+
+<p>The sales force then pushed the visual argument further. In 2007 Purdue Frederick, the Purdue company that sold OxyContin, pleaded guilty to a federal felony charge of misbranding the drug, and three of its executives pleaded guilty to a misdemeanor charge. In the statement of facts filed with the court, the company admitted that its sales representatives had told some health care providers that OxyContin had less euphoric effect and less abuse potential than other opioids. It admitted that this message was delivered partly through graphs that exaggerated the differences in blood levels between OxyContin and other pain medications. The company and the executives paid more than $600 million.</p>
+
+<p>The opioid crisis that followed has killed hundreds of thousands of people in the United States, and it has many causes. This chapter does not try to say how much of it one drug or one chart produced. The narrower point is the one this chapter is about. The numbers in a graph can be accurate and the graph can still tell a false story, because a person chose the scale, the comparison, and the words beside it. Here, one version of that story passed a regulator's review, and the sales training carried a stronger version into doctors' offices.</p>
+
+<p><strong>The type: descriptive. The component: people.</strong> The measurements were real. The story around them was built, and it was built by people who knew what they wanted the reader to conclude. This is data storytelling with its purpose reversed.</p>
+
+<div class="mcq"><b>Check yourself</b>A logarithmic scale is a legitimate tool, and scientists use one every
+day. So what exactly was wrong here? Explain the difference between using a log scale honestly and using
+it to mislead, and say what the reader needed that the chart did not give them.
+<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>The scale itself was not the problem. A log scale is the right choice when values range from very small to very large, or when the reader cares about rates of change, and a pharmacologist reads one easily. The problem was the match between the chart and its reader. A busy prescriber looking at a sales graph sees a flat line and reads "steady." An honest chart picks a scale its audience will read correctly, labels it plainly, and says in words what the reader should take away. The misleading use depended on the reader not noticing the scale, and paired the picture with a claim, less abuse potential, that the data did not support. The questions from section 2.7 catch it: who is the reader, and what will they conclude in five seconds?</p></details></div>
 
 <h3>3.3 What the two have in common</h3>
 
-<p>Two failures, two levels, and neither was caused by bad arithmetic. The Challenger data was correct. Zillow's estimate was close. In both cases the numbers were fine and something around them was not: how they were displayed, and how much authority they were given.</p>
+<p>Two cases, and neither was caused by bad arithmetic. The VA's software subtracted dates correctly. Purdue's blood-level data came from real measurements. In both, the failure sat in the people component: in who set the target and who could edit the field, and in who chose the scale and what claim went beside it.</p>
 
-<p>That is the argument of this chapter, stated in advance of the main case. Business intelligence is not a calculation problem.
+<p>That is the argument of this chapter, stated before the main case. Business analytics is not a calculation problem.
 It is a series of judgments about what to measure, how to show it, what to compare it against, and how
 far to let it act on its own. The case that follows is what it looks like when an organization gets the
 first of those judgments right while an entire industry gets it wrong.</p>
-<h2 id="oakland"><span class="num">4</span>Main case &middot; Oakland: the team that measured differently</h2>
 
-<p>Let's begin with the problem Oakland faced. After the 2001 season, the Oakland Athletics lost their best hitter, Jason Giambi, to the New York
-Yankees on a seven-year, $120 million contract, and lost outfielder Johnny Damon and closer Jason
-Isringhausen the same winter. Oakland could not outbid anyone: its payroll of roughly $41 million was
-the third lowest in Major League Baseball, against the Yankees' roughly $125 million. By every
-conventional measure, the 2002 A's were supposed to collapse.</p>
+<h2 id="oakland"><span class="num">4</span>Main case &middot; The Oakland A's: the team that measured differently</h2>
 
-<p>General manager Billy Beane and his assistant Paul DePodesta could not buy the players everyone
-agreed were good, so they asked a more basic question: is everyone right about who is good? Baseball
-had a century of meticulous statistics and a settled consensus about which ones mattered. Beane and
-DePodesta treated that consensus as a hypothesis rather than a fact, tested it against the data, and
-found it wrong in an exploitable way. Then they built a roster out of the players the market had
-mispriced: a catcher with a damaged arm converted to first base, a sidearm reliever nobody wanted, and
-hitters who looked wrong and walked constantly.</p>
+<p>Everything so far in this chapter has been a concept with a short example. This case puts all of it in one place, in one organization, over one season and the twenty years after it. You will watch a baseball team with very little money use descriptive data that everyone owned, ask a diagnostic question nobody else asked, build a simple predictive model, and turn it into prescriptive decisions about whom to hire. You will see the five components of its information system, the fight inside the organization over whether to believe the numbers, and what happened once every competitor copied the idea.</p>
 
-<p>The result was 103 wins, a division title, and a twenty-game winning streak that set an American
-League record at the time, capped by a walk-off home run from Scott Hatteberg, the converted catcher. The season
-became Michael Lewis's book <em>Moneyball</em> and later the film. But strip away the baseball and what remains is the cleanest business intelligence case ever
-documented. An organization gained a competitive advantage not by having more data than its rivals,
-because everyone had the same data, but by measuring the right thing while everyone else measured
-the wrong one.</p>
+<p>Start with the trailer for <em>Moneyball</em>, the 2011 film made from Michael Lewis's book about this season. Brad Pitt plays general manager Billy Beane. The film is a dramatized version, and it changes names and compresses events, but it captures the problem and the argument quickly. Watch it, then read what the film leaves out.</p>
+
+<figure class="video" style="margin:1.6rem auto;max-width:640px">
+<div style="position:relative;width:100%;padding-top:56.25%;background:var(--black)">
+<iframe src="https://www.youtube-nocookie.com/embed/D1R-LwHbld4" title="Moneyball (2011), official film trailer" style="position:absolute;inset:0;width:100%;height:100%;border:0" loading="lazy" allow="encrypted-media; picture-in-picture" allowfullscreen></iframe>
+</div>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">Trailer for <em>Moneyball</em> (Columbia Pictures, 2011). If the video does not load, <a href="https://youtu.be/D1R-LwHbld4" target="_blank" rel="noopener">watch it on YouTube</a>.<sup class="cite"><a href="#src-9" aria-label="Source 9">9</a></sup></figcaption>
+</figure>
+
+<h3>4.1 The problem: three stars gone and a third of the money</h3>
+
+<p>After the 2001 season, the Oakland Athletics lost their best hitter, Jason Giambi, to the New York Yankees on a seven-year, $120 million contract.<sup class="cite"><a href="#src-10" aria-label="Source 10">10</a></sup> The same winter they lost outfielder Johnny Damon to Boston and closer Jason Isringhausen to St. Louis.<sup class="cite"><a href="#src-12" aria-label="Source 12">12</a></sup> Giambi had led the American League in on-base percentage in 2001, so Oakland lost exactly the kind of player this case is about.<sup class="cite"><a href="#src-11" aria-label="Source 11">11</a></sup></p>
+
+<p>Oakland could not outbid anyone to replace them. Its 2002 payroll of about $40 million was the third lowest in Major League Baseball.<sup class="cite"><a href="#src-13" aria-label="Source 13">13</a></sup> The Yankees, the team Oakland had to beat to reach a World Series, spent roughly $125 million.<sup class="cite"><a href="#src-14" aria-label="Source 14">14</a></sup> By every conventional measure, the 2002 A's were supposed to collapse. Here is what happened instead.<sup class="cite"><a href="#src-15" aria-label="Source 15">15</a></sup></p>
 
 <div class="statrow">
-  <div class="stat"><b>~$41M</b><span>A's payroll, third lowest in MLB</span></div>
+  <div class="stat"><b>~$40M</b><span>A's payroll, third lowest in MLB</span></div>
   <div class="stat"><b>~$125M</b><span>Yankees payroll, the team they had to beat</span></div>
   <div class="stat"><b>103&ndash;59</b><span>Oakland's record</span></div>
   <div class="stat"><b>20</b><span>straight wins, an AL record until 2017</span></div>
   <div class="stat"><b>1</b><span>question: what actually causes runs?</span></div>
 </div>
 
-<h3>4.1 The question nobody was asking</h3>
+<p>The result was 103 wins, a division title, and a twenty-game winning streak that set an American League record at the time. The streak ended its twentieth game on a walk-off home run by Scott Hatteberg, a catcher the A's had converted into a first baseman.<sup class="cite"><a href="#src-15" aria-label="Source 15">15</a></sup> The Yankees also won 103 games that year.<sup class="cite"><a href="#src-16" aria-label="Source 16">16</a></sup> Put those two facts next to the payrolls and you have the question this case answers.</p>
 
-<p>Before you can buy an undervalued player you have to know what value is, and that is where the
-Oakland argument actually starts. Baseball in 2001 evaluated hitters mainly by batting average, home
-runs, and runs batted in, plus the judgment of scouts who had watched thousands of players and could
-tell you who looked like a ballplayer.</p>
+<figure class="diagram" style="margin:1.8rem auto;max-width:600px">
+<svg viewBox="0 0 600 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="pwT pwD" style="width:100%;height:auto;font-family:var(--sans)">
+<title id="pwT">Same wins, a third of the money: Oakland and New York in 2002</title>
+<desc id="pwD">Two horizontal bars compare 2002 payrolls. The New York Yankees bar is about 125 million dollars and three times as long as the Oakland Athletics bar, about 40 million dollars. Beside each bar, the team&#8217;s regular-season wins: 103 for New York and 103 for Oakland. A note gives the payroll per win: about 1.2 million dollars for New York and about 0.4 million dollars for Oakland.</desc>
+<text x="140" y="72" text-anchor="end" font-size="13" font-weight="700" fill="var(--text-dark)">New York Yankees</text>
+<rect x="150" y="50" width="330" height="34" fill="var(--text-dark)"/>
+<text x="472" y="65" text-anchor="end" font-size="12.5" font-weight="700" fill="var(--white)">&#8776; $125M payroll</text>
+<text x="472" y="79" text-anchor="end" font-size="11.5" fill="var(--white)">103 wins (103&#8211;58), &#8776; $1.2M per win</text>
+<text x="140" y="152" text-anchor="end" font-size="13" font-weight="700" fill="var(--text-dark)">Oakland Athletics</text>
+<rect x="150" y="130" width="106" height="34" fill="var(--magenta)"/>
+<text x="264" y="145" text-anchor="start" font-size="12.5" font-weight="700" fill="var(--text-dark)">&#8776; $40M payroll</text>
+<text x="264" y="159" text-anchor="start" font-size="11.5" fill="var(--text-dark)">103 wins (103&#8211;59), &#8776; $0.4M per win</text>
+<text x="300" y="24" text-anchor="middle" font-size="12" fill="var(--text-light)">2002 opening-day payroll and regular-season wins</text>
+<text x="300" y="222" text-anchor="middle" font-size="10.5" fill="var(--text-light)">Payrolls rounded; sources differ slightly on what they count</text></svg>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">
+The bars are the argument. Both teams won 103 games, and one of them paid about three times as much for each win. If money bought wins in a straight line, the short bar should belong to a losing team. Something other than money was doing the work, and the rest of this case is about what.
+</figcaption>
+</figure>
 
-<p>Beane and DePodesta asked a narrower question: what actually causes a team to score runs? Work back
-from the rules. A team's turn continues until it makes three outs, so outs are the scarce resource and
-everything that does not make one has value. That reframing does something specific. It makes a walk
-close to as valuable as a single, because both put a runner on base without spending an out, and the
-conventional measures counted the single and ignored the walk almost entirely.</p>
+<p>General manager Billy Beane and his assistant Paul DePodesta could not buy the players everyone agreed were good, so they asked a more basic question: is everyone right about who is good? Baseball had a century of statistics and a settled consensus about which ones mattered. Beane and DePodesta treated that consensus as a hypothesis rather than a fact, tested it against the data, and found it wrong in a way they could use.<sup class="cite"><a href="#src-17" aria-label="Source 17">17</a></sup> In the language of section 1, they took the industry's descriptive numbers and asked a diagnostic question of them.</p>
 
-<p>On-base percentage, which counts every way a batter reaches base, tracked run-scoring better than
-batting average did. This was not Oakland's discovery. Analysts outside the game, Bill James most
-famously, had been publishing versions of it for twenty years, and the data was in the same record
-books everyone else owned. What Oakland did was believe it and spend money on it.</p>
+<h3>4.2 The question nobody was asking</h3>
 
-<p>That is the part to take into business. The A's did not have better data. They had the same data as
-thirty other clubs and a century of it in the public record. Their advantage was a better model of
-what the data meant, held while everyone else held a worse one. Chapter 2 said information has value
-only when it changes a decision. Here is the cleanest example in the book: the same numbers, on
-everybody's desk, changing exactly one organization's decisions.</p>
+<p>Before you can buy an undervalued player, you have to know what value is, and that is where the Oakland argument actually starts. Baseball in 2001 judged hitters mainly by batting average, home runs, and runs batted in. It also relied on scouts, who had watched thousands of players and could tell you who looked like a ballplayer.<sup class="cite"><a href="#src-17" aria-label="Source 17">17</a></sup></p>
 
-<h3>4.2 Buying what the market mispriced</h3>
+<p>Beane and DePodesta asked a narrower question: what actually causes a team to score runs? Work back from the rules. A team keeps batting until it makes three outs, so outs are the scarce resource, and anything that does not use one up has value. That reframing does something specific. It makes a walk nearly as valuable as a single, because both put a runner on base without spending an out. The conventional measures counted the single and ignored the walk.</p>
 
-<p>A mismeasured quality becomes a mispriced asset. Because the market paid for batting average, home
-runs, and how an athlete looked in uniform, players who merely got on base relentlessly came cheap.
-Hatteberg, coming off a career-threatening injury and hitting for modest averages, was exactly that.
-His on-base skills made him a bargain, and in 2002 he posted a .374 OBP and hit the home run that
-won game twenty of the streak. Reliever Chad Bradford threw underhand, looked unorthodox, got outs, and
-cost almost nothing. The roster was an arbitrage portfolio built on a market inefficiency: a price that
-had drifted away from the value it was supposed to track.</p>
+<p><strong>On-base percentage (OBP)</strong>, which counts every way a batter reaches base, walks included, tracked run-scoring better than batting average did. You can check this yourself with real numbers from that season.<sup class="cite"><a href="#src-16" aria-label="Source 16">16</a></sup></p>
 
-<p>Connect the A's story to Chapter 3. Porter would say the A's found a competitive advantage grounded in information. Everyone had the
-same raw data, but Oakland converted it into a truer model of value than its rivals used, which let
-a $41 million payroll buy roughly as much real production as teams spending three times more. And, exactly as Chapter 3 predicts, the advantage decayed as the
-information spread. Boston hired sabermetric thinkers and won the 2004 World Series; within a decade
-every front office employed analysts; and once everyone measured correctly, the edge returned to the
-teams with the most money. An information advantage is real, and it is rented, not owned.</p>
+<figure class="diagram" style="margin:1.8rem auto;max-width:620px">
+<svg viewBox="0 0 620 270" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="obT obD" style="width:100%;height:auto;font-family:var(--sans)">
+<title id="obT">Batting average and on-base percentage against runs per game, 2002 American League teams</title>
+<desc id="obD">Two scatterplots of the fourteen American League teams in 2002, using real season totals. Each dot is a team, plotted by runs scored per game on the vertical axis. On the left the horizontal axis is team batting average: the dots rise but spread out, correlation about 0.84. On the right the horizontal axis is team on-base percentage: the dots fall closer to a rising line, correlation about 0.94. Oakland is highlighted in both. In the left panel Oakland sits in the middle of the pack on batting average, and in the right panel it sits among the better teams on on-base percentage.</desc>
+<rect x="60" y="40" width="230" height="170" fill="var(--off-white)" stroke="var(--border)"/>
+<text x="106.0" y="225" text-anchor="middle" font-size="10" fill="var(--text-light)">.250</text>
+<text x="198.0" y="225" text-anchor="middle" font-size="10" fill="var(--text-light)">.270</text>
+<text x="290.0" y="225" text-anchor="middle" font-size="10" fill="var(--text-light)">.290</text>
+<line x1="60" x2="290" y1="167.5" y2="167.5" stroke="var(--border)"/><text x="54" y="171.5" text-anchor="end" font-size="10" fill="var(--text-light)">4.0</text>
+<line x1="60" x2="290" y1="96.7" y2="96.7" stroke="var(--border)"/><text x="54" y="100.7" text-anchor="end" font-size="10" fill="var(--text-light)">5.0</text>
+<circle cx="253.2" cy="79.0" r="4" fill="var(--text-light)" fill-opacity="0.7"/>
+<circle cx="87.6" cy="159.0" r="4" fill="var(--text-light)" fill-opacity="0.7"/>
+<circle cx="230.2" cy="75.4" r="4" fill="var(--text-light)" fill-opacity="0.7"/>
+<circle cx="188.8" cy="76.8" r="4" fill="var(--text-light)" fill-opacity="0.7"/>
+<circle cx="101.4" cy="127.8" r="4" fill="var(--text-light)" fill-opacity="0.7"/>
+<circle cx="96.8" cy="198.0" r="4" fill="var(--text-light)" fill-opacity="0.7"/>
+<circle cx="133.6" cy="128.5" r="4" fill="var(--text-light)" fill-opacity="0.7"/>
+<circle cx="207.2" cy="113.0" r="4" fill="var(--text-light)" fill-opacity="0.7"/>
+<circle cx="221.0" cy="56.3" r="4" fill="var(--text-light)" fill-opacity="0.7"/>
+<circle cx="156.6" cy="100.9" r="5.5" fill="var(--magenta)" fill-opacity="1"/>
+<text x="164.6" y="114.9" font-size="10.5" font-weight="700" fill="var(--magenta-dark)">Oakland</text>
+<circle cx="221.0" cy="95.3" r="4" fill="var(--text-light)" fill-opacity="0.7"/>
+<circle cx="119.8" cy="154.8" r="4" fill="var(--text-light)" fill-opacity="0.7"/>
+<circle cx="193.4" cy="82.5" r="4" fill="var(--text-light)" fill-opacity="0.7"/>
+<circle cx="156.6" cy="95.3" r="4" fill="var(--text-light)" fill-opacity="0.7"/>
+<text x="175.0" y="28" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--text-dark)">Batting average: r &#8776; 0.84</text>
+<rect x="370" y="40" width="230" height="170" fill="var(--off-white)" stroke="var(--border)"/>
+<text x="387.7" y="225" text-anchor="middle" font-size="10" fill="var(--text-light)">.300</text>
+<text x="458.5" y="225" text-anchor="middle" font-size="10" fill="var(--text-light)">.320</text>
+<text x="529.2" y="225" text-anchor="middle" font-size="10" fill="var(--text-light)">.340</text>
+<text x="600.0" y="225" text-anchor="middle" font-size="10" fill="var(--text-light)">.360</text>
+<line x1="370" x2="600" y1="167.5" y2="167.5" stroke="var(--border)"/><text x="364" y="171.5" text-anchor="end" font-size="10" fill="var(--text-light)">4.0</text>
+<line x1="370" x2="600" y1="96.7" y2="96.7" stroke="var(--border)"/><text x="364" y="100.7" text-anchor="end" font-size="10" fill="var(--text-light)">5.0</text>
+<circle cx="532.8" cy="79.0" r="4" fill="var(--text-light)" fill-opacity="0.7"/>
+<circle cx="419.5" cy="159.0" r="4" fill="var(--text-light)" fill-opacity="0.7"/>
+<circle cx="546.9" cy="75.4" r="4" fill="var(--text-light)" fill-opacity="0.7"/>
+<circle cx="522.2" cy="76.8" r="4" fill="var(--text-light)" fill-opacity="0.7"/>
+<circle cx="462.0" cy="127.8" r="4" fill="var(--text-light)" fill-opacity="0.7"/>
+<circle cx="387.7" cy="198.0" r="4" fill="var(--text-light)" fill-opacity="0.7"/>
+<circle cx="469.1" cy="128.5" r="4" fill="var(--text-light)" fill-opacity="0.7"/>
+<circle cx="500.9" cy="113.0" r="4" fill="var(--text-light)" fill-opacity="0.7"/>
+<circle cx="578.8" cy="56.3" r="4" fill="var(--text-light)" fill-opacity="0.7"/>
+<circle cx="525.7" cy="100.9" r="5.5" fill="var(--magenta)" fill-opacity="1"/>
+<text x="533.7" y="114.9" font-size="10.5" font-weight="700" fill="var(--magenta-dark)">Oakland</text>
+<circle cx="564.6" cy="95.3" r="4" fill="var(--text-light)" fill-opacity="0.7"/>
+<circle cx="437.2" cy="154.8" r="4" fill="var(--text-light)" fill-opacity="0.7"/>
+<circle cx="522.2" cy="82.5" r="4" fill="var(--text-light)" fill-opacity="0.7"/>
+<circle cx="483.2" cy="95.3" r="4" fill="var(--text-light)" fill-opacity="0.7"/>
+<text x="485.0" y="28" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--text-dark)">On-base percentage: r &#8776; 0.94</text>
+<text x="20" y="130" text-anchor="middle" font-size="10.5" fill="var(--text-light)" transform="rotate(-90 20 130)">runs per game</text>
+<text x="310" y="264" text-anchor="middle" font-size="10.5" fill="var(--text-light)">Real 2002 season totals, 14 American League teams (Baseball-Reference)</text></svg>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">
+Read this the way section 2 taught you. Both measures correlate with runs, but on-base percentage tracks them more tightly, 0.94 against 0.84, and it has a mechanism behind it: not making outs keeps an inning alive. Section 2.3 should make you careful, though. Fourteen dots is a small sample, which is why analysts made this case with decades of seasons, not one.
+</figcaption>
+</figure>
 
-<h3>4.3 The system underneath the story</h3>
+<p>This was not Oakland's discovery. As section 1.2 said, Bill James and other analysts outside the game had been publishing versions of it for two decades, and the data was in the same record books everyone else owned.<sup class="cite"><a href="#src-18" aria-label="Source 18">18</a></sup> What Oakland did was believe it and spend money on it.</p>
 
-<p>The film gives you a laptop and a spreadsheet, and the reality was not far off, which is worth
-saying plainly because students expect a business intelligence case to involve expensive technology.
-The A's ran on public statistics, a database, a small amount of custom analysis and one Harvard
-economics graduate who could do the arithmetic. Their hardware was ordinary. Their software was
-ordinary. Their data was free.</p>
+<p>That is the part to take into business. The A's did not have better data. They had the same data as thirty other clubs, and a century of it in the public record. Their advantage was a better model of what the data meant, held while everyone else held a worse one. Chapter 2 said information has value only when it changes a decision. Here is the cleanest example in the book: the same numbers, on everybody's desk, changing exactly one organization's decisions.</p>
 
-<p>Put the four levels from section 1.1 against what they built. Descriptive analytics is what
-baseball already had in abundance: batting averages, box scores, a century of description. Oakland's
-work was predictive, in the plain sense that they estimated how many runs a given set of skills would
-produce and therefore how many wins a player was worth. Then it became prescriptive, because the
-projection carried a price attached, which told them who to sign and who to let leave. The famous
-version of this is how they replaced Jason Giambi: not with one star they could not afford, but with
-a combination of cheaper players whose production added up to something close in the aggregate.</p>
+<h3>4.3 Buying what the market mispriced</h3>
 
-<p>Notice which component was doing the work. Not hardware, not software, not even the data, since
-everyone had it. The load was carried by people, the ones willing to act on a model that contradicted
-the professional consensus, and by the arrangement that let their answer reach the decision. This is
-the chapter's argument in the case: business intelligence is not a calculation problem. The
-calculation was the easy part.</p>
+<p>A quality that is measured badly becomes an asset that is priced badly. Because the market paid for batting average, home runs, and how an athlete looked in uniform, players whose main skill was getting on base were cheap. Hatteberg, coming off an injury that had damaged his throwing arm, was exactly that. His on-base skills made him a bargain, and in 2002 he posted a .374 OBP.<sup class="cite"><a href="#src-15" aria-label="Source 15">15</a></sup> Reliever Chad Bradford threw nearly underhand, looked unusual, got outs, and cost little.<sup class="cite"><a href="#src-17" aria-label="Source 17">17</a></sup> The roster was built on a <strong>market inefficiency</strong>: a price that had drifted away from the value it was supposed to track.</p>
 
-<h3>4.4 The fight inside the building</h3>
+<p>The A's also could not replace Giambi with one star. Instead, in Lewis's account, they replaced his production in the aggregate, with a combination of cheaper players whose on-base skills added up to something close to what they had lost.<sup class="cite"><a href="#src-17" aria-label="Source 17">17</a></sup> That is prescriptive analytics from section 1.5: a prediction about runs, plus a budget, plus a goal, turned into a decision about whom to sign.</p>
 
-<p>An information advantage has to survive the organization that holds it, and this one nearly did
-not.</p>
+<p>One honest correction belongs here, because section 2.7 says every chart and every story is built by somebody. The book and the film both center the hitters. But the 2002 A's team on-base percentage ranked only seventh in the majors, and its team batting average sixteenth. The club also had three of the best young starting pitchers in baseball, Barry Zito, Tim Hudson, and Mark Mulder, and Zito won the Cy Young Award that year.<sup class="cite"><a href="#src-13" aria-label="Source 13">13</a></sup> The on-base insight was real and it was cheap, which is why it matters for this chapter. It was not the only reason Oakland won.</p>
 
-<p>The scouts had spent their careers learning to evaluate players by watching them, and the new
-method told them their expertise was mispriced. In Michael Lewis's account the meetings were
-genuinely hostile, and it is worth being fair to the scouts here rather than treating them as the
-villains of a story about smart people. They were being told that a skill they had built over decades
-was worth less than a formula built by someone who had never played. Anyone would argue. You will be
-on both sides of that conversation in your career, and knowing how it feels from the other chair is
-most of what makes the conversation survivable.</p>
+<p>Connect this to Chapter 3. The A's found a competitive advantage grounded in information. Everyone had the same raw data, but Oakland turned it into a truer model of value than its rivals used. That let a payroll of about $40 million compete with teams spending three times as much.</p>
 
-<p>The sharper problem was that the analysis could be overruled downstream. The front office decided
-Scott Hatteberg, the catcher with the damaged arm, should play first base. The manager preferred a
-different player and kept writing a different name on the lineup card. Lewis describes Beane
-resolving it by trading the other player away in the middle of the season, which removed the option
-rather than winning the argument.</p>
+<h3>4.4 The five components of the 2002 A's</h3>
 
-<p>Read that as a management case, not a baseball anecdote. A measure that decision-makers can ignore
-is not a decision system, it is a report. Section 2.3 said the work is putting the number where the
-decision is made. Oakland's front office found out that the number also has to arrive with the
-authority to be acted on, and when it does not, somebody ends up removing choices instead of changing
-minds. That is expensive, it damages relationships, and it is what happens when analytics is installed
-beside an organization instead of inside it.</p>
+<p>Students expect a business analytics case to involve expensive technology, so it is worth saying plainly how ordinary Oakland's system was. Walk through it the way you have mapped every case in this course, and notice which components were common and which were scarce.</p>
 
-<h3>4.5 What's next: what happened after everybody caught up</h3>
+<p><strong>Data.</strong> The A's worked mostly from data every club could see: box scores, season statistics, and the record books. Their most distinctive use of data was in the 2002 draft, where Lewis describes the front office leaning on college players' statistics rather than on high school players whom scouts could only watch.<sup class="cite"><a href="#src-17" aria-label="Source 17">17</a></sup> A college player had several seasons of numbers, which made him a larger sample, in exactly the sense of section 2.3. The scouts' written reports were data too, just a different kind.</p>
 
-<p>Chapter 3 predicted the ending of this story before you read it. An advantage built on information
-lasts exactly as long as the information stays scarce, and this one did not stay scarce, because
-Michael Lewis published a book explaining it.</p>
+<p><strong>Hardware and software.</strong> Ordinary computers, spreadsheets, and statistical analysis. DePodesta, a Harvard economics graduate, did much of the analysis himself.<sup class="cite"><a href="#src-17" aria-label="Source 17">17</a></sup> Nothing in this layer was secret or expensive. Any club could have bought it.</p>
 
-<p>Boston hired the same kind of thinking and won the 2004 World Series, ending an eighty-six-year
-drought. Within about a decade every club in the league employed analysts, and the analytics
-departments that were novelties in 2002 became standard staffing. Once every team measured correctly,
-measuring correctly stopped being an edge, and the advantage flowed back to the clubs with the most
-money, which now spent it efficiently. Oakland, for its part, never won a World Series under Beane, and
-by the 2020s was among the lowest-payroll teams in the sport and left the city entirely. The team
-played its last game in Oakland in September 2024, moved to a minor-league park in West Sacramento,
-and is due to open a stadium in Las Vegas in 2028, having dropped the city name off the front of the
-jersey in the meantime.</p>
+<p><strong>Networks.</strong> The statistics were published, so every rival could read them. The A's also relied on a second, human network: the scouts who traveled to games and reported back. The front office's job was to decide how much to trust each network.</p>
 
-<p>The raw material changed too. Since 2015 every major-league park has carried tracking technology
-that records the speed and spin of every pitch and the movement of every player, so clubs no longer
-work from what a scorer wrote down. When the data itself becomes abundant, the scarce thing moves. It
-stops being measurement, which anybody can now buy, and becomes judgment about which of the thousands
-of available measures matters. That is where the previous section left you, and it is where analytics
-work in any industry ends up.</p>
+<p><strong>People.</strong> This is where the advantage lived. Beane chose to act on a model that contradicted a century of professional consensus, and DePodesta could build and defend that model. The manager, Art Howe, and the scouts were people in the system too, and as the next section shows, the model's answer had to pass through them before it reached the field.</p>
 
-<p>Then something happened in baseball that no chapter in this book has shown you yet: the analysis worked so well
-that the industry changed the rules to stop it.</p>
-
-<p>Teams had used the data to reposition fielders, moving three infielders to one side of the diamond
-against hitters whose spray charts said they almost always hit there. It worked. It also removed base
-hits that fans had paid to see, and the sport's offensive numbers fell. Before the 2023 season Major
-League Baseball banned the practice, requiring two infielders on each side of second base. Batting
-averages on balls in play rose that season.</p>
-
-<p>Stay with that rule change for a moment, because it applies well beyond baseball. An analytics program
-succeeded, its conclusions were adopted by everyone, the aggregate result was a worse product for the
-customer, and the governing body outlawed the conclusion. The same shape appears wherever a score or a
-recommendation is optimized hard enough. The question is what happens when optimization works, everyone does it, and the thing being
-optimized was not the thing anybody actually wanted.</p>
-
-<h3>4.6 The five components of the 2002 A's</h3>
-
-<p>Now that you have seen the whole system, here it is as five components, the way this course maps every case. Notice how little of it is technology. The advantage lived in the question, which is the people row.</p>
+<figure class="diagram" style="margin:1.8rem auto;max-width:640px">
+<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="isT isD" style="width:100%;height:auto;font-family:var(--sans)">
+<title id="isT">The 2002 A&#8217;s as an information system</title>
+<desc id="isD">A left-to-right flow. On the left, three data sources: box scores and season statistics, college statistics for draft prospects, and scouts&#8217; reports. Arrows lead to a box labelled the model, spreadsheets and statistical analysis on ordinary computers. An arrow leads to the front office, Beane and DePodesta, who decide whom to draft, sign and trade. A final arrow leads to the manager&#8217;s lineup card and the field. Across that last arrow is a dashed band labelled organizational culture, where the analysis can be ignored. Labels under each stage name the component: data, hardware and software, people, people.</desc>
+<defs><marker id="isA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--text-dark)"/></marker></defs>
+<rect x="10" y="40" width="140" height="46" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1.1"/>
+<text x="80" y="60" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--text-dark)">Box scores and</text><text x="80" y="75" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--text-dark)">season statistics</text>
+<path d="M152 63 L196 126" stroke="var(--text-dark)" stroke-width="1.3" marker-end="url(#isA)"/>
+<rect x="10" y="102" width="140" height="46" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1.1"/>
+<text x="80" y="122" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--text-dark)">College stats for</text><text x="80" y="137" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--text-dark)">draft prospects</text>
+<path d="M152 125 L196 126" stroke="var(--text-dark)" stroke-width="1.3" marker-end="url(#isA)"/>
+<rect x="10" y="164" width="140" height="46" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1.1"/>
+<text x="80" y="184" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--text-dark)">Scouts&#8217;</text><text x="80" y="199" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--text-dark)">reports</text>
+<path d="M152 187 L196 126" stroke="var(--text-dark)" stroke-width="1.3" marker-end="url(#isA)"/>
+<rect x="200" y="96" width="120" height="66" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1.2"/>
+<text x="260" y="118" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--text-dark)">The model</text><text x="260" y="135" text-anchor="middle" font-size="10.5" fill="var(--text-light)">spreadsheets and</text><text x="260" y="149" text-anchor="middle" font-size="10.5" fill="var(--text-light)">statistical analysis</text>
+<rect x="350" y="96" width="120" height="66" fill="var(--magenta-pale)" stroke="var(--text-dark)" stroke-width="1.2"/>
+<text x="410" y="118" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--text-dark)">Front office</text><text x="410" y="135" text-anchor="middle" font-size="10.5" fill="var(--text-light)">Beane, DePodesta:</text><text x="410" y="149" text-anchor="middle" font-size="10.5" fill="var(--text-light)">draft, sign, trade</text>
+<rect x="510" y="96" width="120" height="66" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1.2"/>
+<text x="570" y="118" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--text-dark)">Lineup card</text><text x="570" y="135" text-anchor="middle" font-size="10.5" fill="var(--text-light)">the manager</text><text x="570" y="149" text-anchor="middle" font-size="10.5" fill="var(--text-light)">decides who plays</text>
+<path d="M322 129 L346 129" stroke="var(--text-dark)" stroke-width="1.3" marker-end="url(#isA)"/>
+<path d="M472 129 L506 129" stroke="var(--text-dark)" stroke-width="1.3" marker-end="url(#isA)"/>
+<rect x="476" y="70" width="26" height="118" fill="var(--magenta-pale)" stroke="var(--magenta)" stroke-dasharray="4 3"/>
+<text x="489" y="62" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--magenta-dark)">culture</text>
+<text x="489" y="204" text-anchor="middle" font-size="10" fill="var(--magenta-dark)">the analysis</text><text x="489" y="216" text-anchor="middle" font-size="10" fill="var(--magenta-dark)">can stop here</text>
+<text x="80" y="262" text-anchor="middle" font-size="10.5" font-weight="700" letter-spacing=".08em" fill="var(--magenta-dark)">DATA</text>
+<text x="260" y="262" text-anchor="middle" font-size="10.5" font-weight="700" letter-spacing=".08em" fill="var(--magenta-dark)">HARDWARE + SOFTWARE</text>
+<text x="410" y="262" text-anchor="middle" font-size="10.5" font-weight="700" letter-spacing=".08em" fill="var(--magenta-dark)">PEOPLE</text>
+<text x="570" y="262" text-anchor="middle" font-size="10.5" font-weight="700" letter-spacing=".08em" fill="var(--magenta-dark)">PEOPLE</text>
+<text x="320" y="288" text-anchor="middle" font-size="10.5" fill="var(--text-light)">Networks: published statistics every club could read, and a scouting network of people</text></svg>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">
+Follow the arrows and notice where the expensive parts are not. The data was public, the computers were ordinary, and the model fit in a spreadsheet. The scarce parts were the two pink boxes: a front office willing to believe the model, and the point where its answer had to pass through a manager and a culture that did not yet believe it. Section 4.5 is about that dashed band.
+</figcaption>
+</figure>
 
 <table class="sumtable stack-sm">
 <tr><th>Component</th><th>In the case</th><th>The lesson</th></tr>
-<tr><td data-label="Component"><strong>Hardware</strong></td><td data-label="In the case">A laptop and commodity computers; nothing exotic</td><td data-label="The lesson">The BI revolution was not a hardware story</td></tr>
+<tr><td data-label="Component"><strong>Hardware</strong></td><td data-label="In the case">Ordinary computers; nothing exotic</td><td data-label="The lesson">The analytics revolution was not a hardware story</td></tr>
 <tr><td data-label="Component"><strong>Software</strong></td><td data-label="In the case">Spreadsheets and statistical models on public data</td><td data-label="The lesson">The model encodes the insight; the tool is replaceable</td></tr>
-<tr><td data-label="Component"><strong>Data</strong></td><td data-label="In the case">A century of box scores every team also had</td><td data-label="The lesson">Advantage came from the question asked, not the data held</td></tr>
-<tr><td data-label="Component"><strong>Networks</strong></td><td data-label="In the case">Published statistics, available to every rival</td><td data-label="The lesson">Shared data means information advantages are temporary</td></tr>
-<tr><td data-label="Component"><strong>People</strong></td><td data-label="In the case">Beane choosing the model over a century of consensus</td><td data-label="The lesson">The scarce component was the willingness to trust a better measure</td></tr>
+<tr><td data-label="Component"><strong>Data</strong></td><td data-label="In the case">Box scores every team had, plus college statistics for the draft</td><td data-label="The lesson">Advantage came from the question asked, not the data held</td></tr>
+<tr><td data-label="Component"><strong>Networks</strong></td><td data-label="In the case">Published statistics, and a human network of scouts</td><td data-label="The lesson">Shared data means information advantages are temporary</td></tr>
+<tr><td data-label="Component"><strong>People</strong></td><td data-label="In the case">A front office willing to trust a better measure, and a manager who had to be persuaded</td><td data-label="The lesson">The scarce component was the willingness to act on the model</td></tr>
 </table>
 
-<h3>4.7 What a business technology manager takes from this chapter</h3>
+<p>Put the four types of analytics from sections 1.2 to 1.5 against this system. Descriptive analytics is what baseball already had, as section 1.2 said. Oakland's diagnostic question was why runs happen. Its model was predictive: it estimated how many runs a set of skills would produce, and so how many wins a player was worth. Then it became prescriptive, because each projection came with a price, which told the front office whom to sign and whom to let go. The calculation was the easy part.</p>
+
+<h3>4.5 The fight inside the building: analytics meets culture</h3>
+
+<p>An information advantage has to survive the organization that holds it, and this one nearly did not. The reason is the part of business analytics that no software vendor sells.</p>
+
+<p class="defn"><strong>Organizational culture</strong> is the set of shared, mostly unwritten beliefs in an organization about what counts as good work, what counts as evidence, and who gets to decide.</p>
+
+<p>Analytics is a technology, but it always runs inside a culture, and the culture decides whether its answers change anything. Baseball's culture in 2001 trusted the experienced eye. It prized home run hitters and high batting averages, it valued players who looked the part, and it gave the final word to scouts and managers who had spent their lives in the game. A spreadsheet that said a walk was nearly as good as a hit was not just new information. It was a claim that the people with the most status had been measuring the wrong thing.</p>
+
+<p>The scouts had spent their careers learning to judge players by watching them, and the new method told them their expertise was mispriced. In Lewis's account the meetings were hostile.<sup class="cite"><a href="#src-17" aria-label="Source 17">17</a></sup> It is worth being fair to the scouts rather than treating them as the villains. Each kind of evidence sees something the other misses, which is why most clubs today use both.</p>
+
+<table class="sumtable stack-sm">
+<tr><th>Question</th><th>The scout's report</th><th>The statistical model</th></tr>
+<tr><td data-label="Question"><strong>What counts as evidence</strong></td><td data-label="The scout's report">What an expert sees in person</td><td data-label="The statistical model">What was recorded, game after game</td></tr>
+<tr><td data-label="Question"><strong>Sample size</strong></td><td data-label="The scout's report">A few games, sometimes one</td><td data-label="The statistical model">Hundreds of games, often several seasons</td></tr>
+<tr><td data-label="Question"><strong>What it sees well</strong></td><td data-label="The scout's report">Mechanics, injuries, effort, things never written down</td><td data-label="The statistical model">Patterns too slow or small for an eye to notice</td></tr>
+<tr><td data-label="Question"><strong>Its blind spot</strong></td><td data-label="The scout's report">Bias about how a player looks; small samples</td><td data-label="The statistical model">Anything nobody recorded; a proxy mistaken for the real thing</td></tr>
+</table>
+
+<p>The sharper problem was that the analysis could be overruled downstream. The front office wanted Hatteberg at first base. The manager preferred a different player and kept writing a different name on the lineup card. Lewis describes Beane resolving it by trading the other player away in the middle of the season, which removed the option rather than winning the argument.<sup class="cite"><a href="#src-17" aria-label="Source 17">17</a></sup></p>
+
+<p>Read that as a management case, not a baseball story. A measure that decision-makers can ignore is not a decision system. It is a report. Section 2.6 said the work is putting the number where the decision is made. Oakland's front office found out that the number also has to arrive with the authority to be acted on. When it does not, somebody ends up removing choices instead of changing minds, which is expensive and damages relationships. That is what happens when analytics is installed beside an organization instead of inside it.</p>
+
+<p>Businesses face the same fight. Google's engineers were famously skeptical that managers added any value at all. In the account Harvard Business Review published in 2013, Google did not win that argument with a memo. Its people-analytics team studied its own managers with the kind of data and rigor the engineers respected, found that better managers mattered, and turned the findings into specific behaviors and feedback surveys.<sup class="cite"><a href="#src-19" aria-label="Source 19">19</a></sup> The lesson runs both ways. Analytics changes a culture fastest when it speaks the culture's own language of evidence. And a culture that will not accept any evidence against its beliefs will beat the best model in the building.</p>
+
+<h3>4.6 What's next: baseball catches up</h3>
+
+<p>Chapter 3 predicted the ending of this story. An advantage built on information lasts only as long as the information stays scarce. This one did not stay scarce, partly because Michael Lewis published a book explaining it in 2003.</p>
+
+<p>The Boston Red Sox hired Bill James as an adviser in November 2002, and in 2004 they won their first World Series since 1918.<sup class="cite"><a href="#src-20" aria-label="Source 20">20</a></sup> Within about a decade every club in the league employed analysts. Once every team measured correctly, measuring correctly stopped being an edge. The advantage flowed back to the clubs with the most money, which now spent it efficiently. Oakland never won a World Series under Beane, and by the 2020s it was again among the lowest-payroll teams in the sport. The team played its last game in Oakland in September 2024 and moved to a minor-league park in West Sacramento. It is due to open a stadium in Las Vegas in 2028.<sup class="cite"><a href="#src-21" aria-label="Source 21">21</a></sup></p>
+
+<p>The raw material changed too. Since 2015 a tracking system called Statcast has measured the speed and spin of every pitch and the movement of every player in every major-league park.<sup class="cite"><a href="#src-22" aria-label="Source 22">22</a></sup> This is big data from section 1, in a sport. When data becomes abundant, the scarce thing moves, and you should expect the same shift in any industry you join. It stops being measurement, which anybody can now buy, and becomes judgment about which of thousands of measures matters.</p>
+
+<p>Then the analysis worked so well that the sport changed its rules to stop it. Teams had used data to reposition fielders, moving three infielders to one side of the field against hitters who almost always hit the ball there. It worked, and it also removed base hits that fans had paid to see. Before the 2023 season Major League Baseball banned the practice, requiring two infielders on each side of second base. Batting average on balls in play rose that season.<sup class="cite"><a href="#src-23" aria-label="Source 23">23</a></sup> A later study that compared affected and unaffected hitters, the kind of comparison section 2.2 recommends, found the ban raised left-handed hitters' results by a modest amount.<sup class="cite"><a href="#src-24" aria-label="Source 24">24</a></sup></p>
+
+<figure class="diagram" style="margin:1.8rem auto;max-width:620px">
+<svg viewBox="0 0 620 410" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="tlT tlD" style="width:100%;height:auto;font-family:var(--sans)">
+<title id="tlT">From one baseball team to every organization: a timeline</title>
+<desc id="tlD">A vertical timeline from 1977 to 2023. 1977, Bill James publishes his first Baseball Abstract. 2002, Oakland wins 103 games on a small payroll. 2003, the book Moneyball. 2004, the Red Sox, with James advising, win the World Series. 2013, Harvard Business Review reports how Google used data to study its own managers. 2015, Statcast tracks every player in every major-league park. 2017, NBA players win limits on how wearable data can be used. 2018, the Houston Rockets become the first NBA team to take more three-point shots than two-point shots. 2021, California limits warehouse productivity quotas. 2023, Major League Baseball bans the defensive shift. Events are marked as sport, business, or about the people being measured.</desc>
+<line x1="90" x2="90" y1="20" y2="385" stroke="var(--text-dark)" stroke-width="1.5"/>
+<circle cx="90" cy="30" r="6" fill="var(--text-dark)" stroke="var(--text-dark)" stroke-width="2"/>
+<text x="76" y="34" text-anchor="end" font-size="12" font-weight="700" fill="var(--text-dark)">1977</text>
+<text x="104" y="34" font-size="12" fill="var(--text-dark)">Bill James&#8217;s first Baseball Abstract</text>
+<circle cx="90" cy="66" r="6" fill="var(--text-dark)" stroke="var(--text-dark)" stroke-width="2"/>
+<text x="76" y="70" text-anchor="end" font-size="12" font-weight="700" fill="var(--text-dark)">2002</text>
+<text x="104" y="70" font-size="12" fill="var(--text-dark)">Oakland wins 103 on a small payroll</text>
+<circle cx="90" cy="102" r="6" fill="var(--text-dark)" stroke="var(--text-dark)" stroke-width="2"/>
+<text x="76" y="106" text-anchor="end" font-size="12" font-weight="700" fill="var(--text-dark)">2003</text>
+<text x="104" y="106" font-size="12" fill="var(--text-dark)">Moneyball, the book</text>
+<circle cx="90" cy="138" r="6" fill="var(--text-dark)" stroke="var(--text-dark)" stroke-width="2"/>
+<text x="76" y="142" text-anchor="end" font-size="12" font-weight="700" fill="var(--text-dark)">2004</text>
+<text x="104" y="142" font-size="12" fill="var(--text-dark)">Red Sox, with James advising, win the World Series</text>
+<circle cx="90" cy="174" r="6" fill="var(--magenta)" stroke="var(--magenta)" stroke-width="2"/>
+<text x="76" y="178" text-anchor="end" font-size="12" font-weight="700" fill="var(--text-dark)">2013</text>
+<text x="104" y="178" font-size="12" fill="var(--text-dark)">HBR reports how Google used data on its managers</text>
+<circle cx="90" cy="210" r="6" fill="var(--text-dark)" stroke="var(--text-dark)" stroke-width="2"/>
+<text x="76" y="214" text-anchor="end" font-size="12" font-weight="700" fill="var(--text-dark)">2015</text>
+<text x="104" y="214" font-size="12" fill="var(--text-dark)">Statcast tracks every player in every MLB park</text>
+<circle cx="90" cy="246" r="6" fill="var(--white)" stroke="var(--magenta-dark)" stroke-width="2"/>
+<text x="76" y="250" text-anchor="end" font-size="12" font-weight="700" fill="var(--text-dark)">2017</text>
+<text x="104" y="250" font-size="12" fill="var(--text-dark)">NBA players win limits on how wearable data is used</text>
+<circle cx="90" cy="282" r="6" fill="var(--text-dark)" stroke="var(--text-dark)" stroke-width="2"/>
+<text x="76" y="286" text-anchor="end" font-size="12" font-weight="700" fill="var(--text-dark)">2018</text>
+<text x="104" y="286" font-size="12" fill="var(--text-dark)">Rockets: first NBA team to take more 3s than 2s</text>
+<circle cx="90" cy="318" r="6" fill="var(--white)" stroke="var(--magenta-dark)" stroke-width="2"/>
+<text x="76" y="322" text-anchor="end" font-size="12" font-weight="700" fill="var(--text-dark)">2021</text>
+<text x="104" y="322" font-size="12" fill="var(--text-dark)">California limits warehouse quotas (AB 701)</text>
+<circle cx="90" cy="354" r="6" fill="var(--text-dark)" stroke="var(--text-dark)" stroke-width="2"/>
+<text x="76" y="358" text-anchor="end" font-size="12" font-weight="700" fill="var(--text-dark)">2023</text>
+<text x="104" y="358" font-size="12" fill="var(--text-dark)">MLB bans the defensive shift</text>
+<circle cx="120" cy="398" r="5" fill="var(--text-dark)"/><text x="130" y="402" font-size="10.5" fill="var(--text-light)">sport</text>
+<circle cx="190" cy="398" r="5" fill="var(--magenta)"/><text x="200" y="402" font-size="10.5" fill="var(--text-light)">business</text>
+<circle cx="275" cy="398" r="5" fill="var(--white)" stroke="var(--magenta-dark)" stroke-width="2"/><text x="285" y="402" font-size="10.5" fill="var(--text-light)">the people being measured push back</text></svg>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">
+Read the timeline in three layers. First the method spreads, from one writer to one team to every team. Then it spreads to other sports and to ordinary companies. Then, in the hollow dots, the people on the other end of the measurement start setting limits on it. That last layer is section 5.
+</figcaption>
+</figure>
+
+<h3>4.7 Beyond baseball: other sports follow</h3>
+
+<p>Basketball went through the same change on a bigger scale. A three-point shot is worth 50 percent more than a two-point shot, and analysts pointed out that a long two-point jump shot is usually the least efficient shot on the floor. Daryl Morey, general manager of the Houston Rockets, built his team around that arithmetic. In the 2017&ndash;18 season the Rockets became the first team in NBA history to attempt more three-pointers than two-pointers, and they won 65 games.<sup class="cite"><a href="#src-25" aria-label="Source 25">25</a></sup></p>
+
+<p>The rest of the league copied it. Teams averaged about 22 three-point attempts a game around 2015, and partway through the 2024&ndash;25 season the figure was about 37.5.<sup class="cite"><a href="#src-25" aria-label="Source 25">25</a></sup> Then the same pattern as baseball's shift appeared. Morey himself said in 2025 that the three-pointer had reached the point where it was starting to make the game worse.<sup class="cite"><a href="#src-25" aria-label="Source 25">25</a></sup> When every competitor optimizes the same number, the product the customer watches can change in ways nobody chose.</p>
+
+<p>Other sports now employ analysts too, and players in several major leagues wear sensors or are tracked by cameras. That raised a question Oakland never faced: who owns the data about a player's body? Section 5 comes back to the players' answer.</p>
+
+<h3>4.8 Beyond sports: what organizations took from Oakland</h3>
+
+<p>"Moneyball" became business shorthand for finding value that a market misprices because it measures the wrong thing. Strip away the sport, and four patterns from this case show up in ordinary organizations.</p>
+
+<p><strong>Find the measure everyone trusts and test it.</strong> Every industry you will work in has its batting average: a number everyone watches because it has always been watched. Revenue per store, hours billed, calls handled, test scores. The first move is to ask whether it tracks the outcome the organization actually wants, which is the measurement validity test from section 1.2.</p>
+
+<p><strong>Expect people to resist, and plan for it.</strong> Oakland's scouts and Google's engineers both resisted data that challenged their expertise. Adoption is a people-component problem, and it is solved with evidence the culture respects and with authority over the decision, not with a better dashboard alone.</p>
+
+<p><strong>Expect the edge to be copied.</strong> Analytics advantages get copied faster than almost any other kind, because methods are easy to describe and data is increasingly easy to buy. What lasts is the habit of asking the question, held by people, not any single answer.</p>
+
+<p><strong>Watch what happens when everyone optimizes the same number.</strong> The shift ban and the three-point debate are Goodhart's law at the level of a whole industry. In business the same thing happens when every company optimizes for clicks, or for the same hiring score, or for the same delivery speed. Chapter 12 looks at what that does when the optimizing is done by a machine learning model.</p>
+
+<h3>4.9 What a business technology manager takes from this case</h3>
 
 <p>Strip the Oakland case down to what you can reuse in any company. Four decisions came up in it, and each one is a decision you will be in the room for.</p>
 
@@ -892,32 +1259,30 @@ optimized was not the thing anybody actually wanted.</p>
 
 <p><strong>Show the data so that the danger is visible.</strong> The Challenger engineers had the right numbers and drew a chart that hid the relationship. A description that leaves half the evidence off the page is not a description. Before a chart goes to a decision-maker, ask what a reader would conclude from it in five seconds, and whether that is what the data says.</p>
 
-<p><strong>Decide how much authority a number gets, and decide it on purpose.</strong> Zillow's estimate was fine as information and ruinous as an instruction. Moving a model from describing to deciding is a management decision, because the errors a person would catch one at a time now act at scale with nobody watching. Ask, for every number in the company, who is allowed to act on it without a person in between.</p>
+<p><strong>Put the analysis inside the decision, not beside it.</strong> Oakland's model mattered only when its answer reached the lineup card. Decide who has the authority to act on a number, and decide it on purpose. Zillow is the warning on the other side: an estimate that was fine as information was ruinous as an instruction, because nobody checked it before it acted.</p>
 
-<p><strong>Expect the advantage to end when everybody catches up.</strong> By 2010 every team measured what Oakland measured, and the edge was gone; by 2023 the league changed the rules to undo what the measuring produced. A measurement advantage is real, and it is never permanent. The lasting advantage is the habit of asking whether the consensus is right, and that habit is a person, not a system.</p>
+<p><strong>Expect the advantage to end when everybody catches up.</strong> Within about a decade every team measured what Oakland measured, and the edge was gone. By 2023 the league had changed the rules to undo what the measuring produced. A measurement advantage is real, and it is never permanent. The lasting advantage is the habit of asking whether the consensus is right, and that habit is a person, not a system.</p>
 
-<h2 id="other"><span class="num">5</span>The downside: being measured</h2>
+<h2 id="other"><span class="num">5</span>The downside: when a person becomes a row of numbers</h2>
 
-<p>The Moneyball story has winners it celebrates and costs it mentions quietly. The A's model worked
-partly by overruling scouts, professionals with decades of pattern-recognition that resisted
-quantification, and the analytics wave that followed thinned their ranks across the sport. Players
-experienced the shift too: to a model you are a row of numbers, and the qualities the numbers do not
-capture, leadership, resilience, how you play hurt, stop being priced. Some of that was the point;
-prejudice about how an athlete looked was exactly the noise OBP filtered out. But a measurement regime
-always sees some things by going blind to others, and the people inside it feel the blindness.</p>
+<p>Every measurement system turns people into rows. A row is useful: it lets a club compare a thousand players, or a company compare ten thousand workers. But a row only holds what somebody chose to record, and the person it describes has no say in what that was. This section asks what that costs, in sports and at work.</p>
 
-<p>Two honest footnotes belong in the Oakland case. The 2002 A's, for all 103 wins, lost in the first playoff
-round, and Beane's Oakland teams never won a World Series: analytics bought an edge, not a
-championship, and edges decay. And once every team adopted the same methods, the advantage flowed back
-to the largest payrolls, now spending efficiently. Measuring right is necessary. It is not, on its
-own, sufficient, and it is never permanent. Once every competitor measures the same thing, the
-question becomes who has more data to measure, which is where the advantage went.</p>
+<p>Start with the people Moneyball celebrates. Analytics helped players the old system had overlooked. Hatteberg and Bradford were exactly the kind of players a scout's eye had discounted, and a measure that ignored how an athlete looked gave them a chance. Prejudice about appearance was part of the noise that on-base percentage filtered out. That is a real benefit, and it is worth saying first.</p>
+
+<p>The cost is the other side of the same coin. To a model, a player is the numbers it records, and qualities the numbers do not capture, such as leadership or playing through pain, stop being priced. Players and their unions have noticed. When NBA teams began asking players to wear sensors that track their bodies, the players' union negotiated limits in its 2017 agreement with the league. Wearing a device is voluntary, and data from it cannot be used in contract negotiations, trades, or other player transactions.<sup class="cite"><a href="#src-26" aria-label="Source 26">26</a></sup> In other words, the people being measured insisted on a rule about what the system could be used to decide. That is a direct answer to whether athletes feel reduced to a number: enough of them did to write it into their contract.</p>
+
+<p>The same tension runs through ordinary jobs, usually with less bargaining power. Warehouse workers at large retailers are measured continuously by systems that track how fast they work and how long they spend away from their task. At Amazon, that measure has been called "time off task."<sup class="cite"><a href="#src-27" aria-label="Source 27">27</a></sup> In 2021 California passed AB 701, the first state law of its kind. It requires large warehouse employers to tell workers what quotas they are measured against, lets workers request records of their own speed, and bars firing workers for missing a quota because they took rest or bathroom breaks.<sup class="cite"><a href="#src-27" aria-label="Source 27">27</a></sup> Retail groups opposed the law, arguing it would raise costs and slow deliveries.<sup class="cite"><a href="#src-27" aria-label="Source 27">27</a></sup></p>
+
+<p>Notice the shape of both responses. Neither banned measurement. Both set rules about what the measurement could decide, and who could see it. That is the systems question this chapter has been building toward. Ask five questions about any metric that describes a person, including the ones you will be judged by. What does it record, and what does it leave out? Who sees it? Can the person see their own number? And what decisions is it allowed to drive? Those are design choices about the data component, made by people, and they are as much a part of business analytics as choosing on-base percentage over batting average.</p>
+
+<p>Two honest footnotes belong in the Oakland case. The 2002 A's, for all 103 wins, lost in the first playoff round, in a five-game series small enough for luck to decide, as section 2.3 explained. Beane's Oakland teams never won a World Series. Analytics bought an edge, not a championship, and edges decay. Measuring right is necessary. It is not, on its own, sufficient, and it is never permanent.</p>
 
 <div class="takeaways"><span class="obj-tag">Key takeaways</span>
 <ul>
-<li>Business intelligence is not a calculation problem. It is a series of judgments about what to measure, how to show it, what to check it against, and how far to let it act alone.</li>
+<li>Business analytics is not a calculation problem. It is a series of judgments about what to measure, how to show it, what to check it against, and how far to let it act alone.</li>
 <li>Every metric is a proxy. The first question is never what the number says; it is whether the number tracks the thing you actually care about.</li>
 <li>When a measure becomes a target, it stops being a good measure. Pair every target with a counter-metric that catches the gaming.</li>
+<li>A chart is an argument somebody built. Before you accept what it seems to say, ask who chose the scale, the comparison, and the title.</li>
 <li>The A's did not have more data than the Yankees. They had a truer model of value, and the market inefficiency it revealed lasted only until everyone else adopted it.</li>
 <li>A dashboard is a decision about what people will look at. The people who choose the metric, and how far its answers may travel without a human, are making the management decision.</li>
 </ul>
@@ -926,8 +1291,10 @@ question becomes who has more data to measure, which is where the advantage went
 <h2 id="vocab"><span class="num">6</span>Vocabulary</h2>
 
 <dl class="vocab">
-<div><dt>Business intelligence (BI)</dt><dd>Systems and practices that turn organizational data into decision-ready information.</dd></div>
-<div><dt>Descriptive / diagnostic / predictive / prescriptive</dt><dd>The four kinds of analytics: what happened, why, what will, what to do.</dd></div>
+<div><dt>Big data</dt><dd>Data collected in huge volume, at high velocity, and in a wide variety of forms, made possible by cheap storage.</dd></div>
+<div><dt>Business intelligence (BI)</dt><dd>The systems and reports that turn organizational data into information about what is happening: warehouse, reports, dashboards.</dd></div>
+<div><dt>Business analytics</dt><dd>The wider practice of using data to answer questions: what happened, why, what will happen, and what to do.</dd></div>
+<div><dt>Descriptive / diagnostic / predictive / prescriptive</dt><dd>The four types of analytics: what happened, why, what will happen, what to do.</dd></div>
 <div><dt>Metric / KPI</dt><dd>A number chosen to stand for something the business cares about; a key performance indicator is a metric elevated to a target.</dd></div>
 <div><dt>Proxy</dt><dd>What every metric secretly is: a stand-in for the real thing, valid only as far as it tracks it.</dd></div>
 <div><dt>Measurement validity</dt><dd>Whether a metric actually measures what it claims to.</dd></div>
@@ -935,16 +1302,20 @@ question becomes who has more data to measure, which is where the advantage went
 <div><dt>On-base percentage</dt><dd>Share of plate appearances reaching base; the undervalued, more valid measure.</dd></div>
 <div><dt>Market inefficiency</dt><dd>A gap between price and value, here created by an industry-wide measurement error.</dd></div>
 <div><dt>Correlation vs. causation</dt><dd>Moving together vs. one driving the other; trust correlations with a mechanism and a large sample.</dd></div>
-<div><dt>Small-sample problem</dt><dd>Patterns in little data mislead; a five-game series is a coin flip.</dd></div>
+<div><dt>Confounding variable</dt><dd>A hidden factor that drives two numbers you are comparing, making them look causally linked.</dd></div>
+<div><dt>A/B test</dt><dd>An experiment that gives a change to a random half of customers and compares the two halves.</dd></div>
+<div><dt>Small-sample problem</dt><dd>Patterns built on few cases can be produced by luck alone.</dd></div>
 <div><dt>Goodhart's law</dt><dd>When a measure becomes a target, it ceases to be a good measure.</dd></div>
+<div><dt>ETL</dt><dd>Extract, transform, load: copying data out of operational systems, cleaning it, and loading it into a warehouse.</dd></div>
 <div><dt>Data warehouse</dt><dd>A database organized for analysis, fed by copies of operational data.</dd></div>
 <div><dt>Dashboard / self-service BI</dt><dd>Visual metric displays, and the tools (like Tableau) that let analysts build them directly.</dd></div>
+<div><dt>Data storytelling</dt><dd>Presenting data as an argument: the data, a visual that shows the pattern, and a narrative saying what it means.</dd></div>
 </dl>
 
 <div class="ailight g">
   <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
   <div class="lighttext"><strong>Green &middot; AI as coach and sparring partner</strong>
-  <p>Have an AI quiz you on the four kinds of analytics with fresh business examples until you can
+  <p>Have an AI quiz you on the four types of analytics with fresh business examples until you can
   classify them cold, or argue your discussion-question position against it, your position first, per
   the Lab 1 rules. One warm-up worth doing: ask it to name three proxy metrics in an industry you care
   about, then judge for yourself which would survive this chapter's validity test.</p></div>
@@ -964,9 +1335,10 @@ strongest opinion about, and be ready to say it first.</p>
   not read this chapter where the advantage actually came from, and then say why Chapter 3 would have
   predicted it could not last. <span class="tag">Systems</span></li>
 
-  <li>Put the three failures in section 3 in order of how much damage a wrong answer caused, then
-  explain what determines that order. It is not accuracy. Name what it is, and give an example from your
-  own experience of a number that moved up that scale. <span class="tag">Analyze</span></li>
+  <li>The VA schedulers and Purdue's sales force both changed what a decision-maker saw. One group was
+  hitting a target a manager had set; the other was selling a product. Is one more to blame than the
+  other, and who else in each story shares the responsibility? Then name a number you have been judged on
+  that shaped what you reported. <span class="tag">Analyze</span></li>
 
   <li>Cascadia's revenue looked fine on every standard report while the member attach rate was
   collapsing. Design the dashboard that would have caught it: name the three numbers on it, say who
@@ -985,7 +1357,7 @@ strongest opinion about, and be ready to say it first.</p>
 <p>This chapter argues that the work is choosing the measure and putting it where decisions get made.
 <a href="lab6-tableau.html"><strong>Lab 6: Tableau</strong></a> is the second half of that sentence.</p>
 <p>You already found Cascadia's real problem in Lab 5, in a pivot table, by digging. This week you build
-the view that would have made it impossible to miss in the first place. Keep mini-case 1 in mind while
+the view that would have made it impossible to miss in the first place. Keep section 2.7 in mind while
 you do it: the Challenger engineers had the right data and the wrong picture, and the picture is what
 the room saw.</p>
   <a class="lablink" href="lab6-tableau.html">Go to Lab 6 &#8594;</a>
@@ -994,20 +1366,55 @@ the room saw.</p>
 <details class="srcbox">
 <summary><h2 id="sources"><span class="num">9</span>Sources and further reading</h2></summary>
 <ul class="sources">
-<li>Michael Lewis, <em>Moneyball</em> (2003), for the internal account used in sections 4.3 and 4.4: the scouting meetings, the decision to replace Jason Giambi's production in the aggregate rather than with one player, and the mid-season trade that settled who would play first base. It is a journalist's account written with the front office's cooperation, so read it as their version of events; participants have disputed parts of it, and the film compresses further.</li>
-<li>The 2002 record, the payrolls and the twenty-game streak are in the standard baseball reference databases; Cleveland broke the American League streak record with twenty-two in 2017. The Athletics played their final Oakland game in September 2024 and are scheduled to open in Las Vegas in 2028, so section 4.5 needs a date check each year.</li>
-<li>Michael Lewis, <em>Moneyball: The Art of Winning an Unfair Game</em> (2003), for the 2002 season, the payroll gap, Hatteberg and Bradford, and the front office argument. Read it as a source with a point of view rather than a neutral record.</li>
-<li>Bill James's <em>Baseball Abstract</em> series, for the sabermetric work that preceded the A's by two decades and which they were the first to act on at scale.</li>
-<li>Baseball-Reference, 2002 Oakland Athletics season page, for the record (103&ndash;59), the 13 August to 4 September winning streak, and player statistics including Hatteberg's .374 OBP; the USA Today MLB salary database for the 2002 payrolls (Oakland roughly $41 million, third lowest; the Yankees roughly $125 million). Payroll figures vary slightly between sources depending on what is counted. Cleveland's 22-game streak in 2017 passed Oakland's American League mark.</li>
-<li>Edward Tufte's analysis of the Challenger pre-launch charts in <em>Visual Explanations</em> (1997), and the Rogers Commission report (1986), for mini-case 1. Tufte's reading has been debated; the uncontested part is that the presented charts did not plot damage against temperature across all flights.</li>
-
-<li>Zillow's November 2021 announcement and contemporary reporting, for the closure of Zillow Offers, the writedowns of up to $569 million, and the workforce reduction.</li>
-<li>Major League Baseball's 2023 rule changes and subsequent reporting on their effect, for the shift restriction described at the end of section 4.</li>
-<li><strong>Verification note.</strong> Checked in September 2026 against the authors' knowledge of the published record rather than by new searches, because none of this chapter's figures are recent: the 2002 season and payroll numbers, the Challenger details, the Zillow figures, and the 2023 shift rule. Two wording corrections were made on that pass: the twenty-game streak was an American League record only until 2017, and the rise in batting average on balls in play came in the 2023 season itself, not the year after. The claim that Oakland's payroll bought "roughly as much real production as teams spending three times more" is the book's argument rather than a measured figure; treat it as an interpretation.</li>
+<li id="src-1"><span class="srcnum">1</span> Edward Tufte's analysis of the Challenger pre-launch charts in <em>Visual Explanations</em> (1997), and the Rogers Commission report (1986), for the Challenger example in section 2.7. Tufte's reading has been debated; the uncontested part is that the presented charts did not plot damage against temperature across all flights.</li>
+<li id="src-2"><span class="srcnum">2</span> Zillow's November 2021 announcement and contemporary reporting, for the closure of Zillow Offers, the writedowns of up to $569 million, and the workforce reduction (section 1.5).</li>
+<li id="src-3"><span class="srcnum">3</span> UPS, <a href="https://app.3blmedia.com/news/ups-accelerates-use-routing-optimization-software-reduce-100-million-miles-driven" target="_blank" rel="noopener">&ldquo;UPS Accelerates Use of Routing Optimization Software to Reduce 100 Million Miles Driven&rdquo;</a> (company release, 3 March 2015), for ORION's expected 100 million miles a year at full deployment and the 200,000 route options per route; and <a href="https://www.ttnews.com/articles/ups-routing-program-orion-helps-drivers-trim-miles-reduce-costs" target="_blank" rel="noopener">Transport Topics</a> for Jack Levis's statement that one mile per driver per day is worth $50 million a year to UPS. Section 1.5.</li>
+<li id="src-4"><span class="srcnum">4</span> VA Office of Inspector General, interim report on the Phoenix VA Health Care System (28 May 2014), for the 115-day actual and roughly 24-day reported average waits in the reviewed sample and the 1,700 veterans not on the electronic wait list; summarized in the inspector general's <a href="https://www.vaoig.gov/sites/default/files/document/2023-08/VAOIG-statement-20140917-griffin.pdf" target="_blank" rel="noopener">September 2014 congressional statement</a>. The reported 24-day figure is taken from contemporary coverage of the interim report rather than read from the report itself. Mini-case 1.</li>
+<li id="src-5"><span class="srcnum">5</span> Veterans Health Administration, <a href="https://www.va.gov/health/docs/vaaccessauditfindingsreport.pdf" target="_blank" rel="noopener">Access Audit: System-Wide Review of Access</a> (June 2014), for the 731 facilities, the 13 percent of scheduling staff instructed to enter a different desired date, and the finding that the 14-day target was not attainable; NPR's coverage of the audit for the 90 clinics where schedulers cited performance measures. Mini-case 1.</li>
+<li id="src-6"><span class="srcnum">6</span> NPR, <a href="https://www.npr.org/2014/08/26/343326196/probe-no-proof-va-delays-caused-phoenix-veterans-to-die" target="_blank" rel="noopener">&ldquo;Probe: No Proof VA Delays Caused Phoenix Veterans To Die&rdquo;</a> (26 August 2014), for the inspector general's final finding on the deaths and Sam Foote's role as the source of the allegations. Mini-case 1.</li>
+<li id="src-7"><span class="srcnum">7</span> U.S. Attorney's Office, Western District of Virginia, <a href="https://media.defense.gov/2007/May/10/2001711223/-1/-1/1/purduefrederick1.pdf" target="_blank" rel="noopener">news release on the Purdue Frederick guilty pleas</a> (10 May 2007), quoting the agreed statement of facts, for the misbranding plea, the admission about graphs that exaggerated blood-level differences, and the label's &ldquo;reduce the abuse liability&rdquo; sentence; <a href="https://www.statnews.com/2020/01/09/prescriber-fears-oxycontin-misuse-purdue-pharma-sales-reps-misleadingly-played-up-safety/" target="_blank" rel="noopener">STAT</a> (2020) for the statement of facts' finding that Purdue had no studies showing OxyContin was less addictive. Mini-case 2.</li>
+<li id="src-8"><span class="srcnum">8</span> Jim Edwards, CBS MoneyWatch, <a href="https://www.cbsnews.com/news/who-signed-off-on-purdues-misleading-oxycontin-chart-judge-may-want-answers" target="_blank" rel="noopener">&ldquo;Who Signed Off on Purdue's Misleading OxyContin Chart?&rdquo;</a> (2010), for the logarithmic-scale blood-level graph in OxyContin's labeling and a linear redrawing of it. The figure in mini-case 2 is illustrative and uses made-up numbers, not the label's data. Mini-case 2.</li>
+<li id="src-9"><span class="srcnum">9</span> <em>Moneyball</em> (2011), directed by Bennett Miller, Columbia Pictures; <a href="https://youtu.be/D1R-LwHbld4" target="_blank" rel="noopener">official trailer on YouTube</a>. A dramatization: it changes names (Paul DePodesta appears as a fictional assistant) and compresses events, so section 4 relies on the sources below rather than the film. Check the trailer link each term.</li>
+<li id="src-10"><span class="srcnum">10</span> ESPN, <a href="https://www.espn.com/mlb/news/2001/1213/1295293.html" target="_blank" rel="noopener">&ldquo;Giambi tops Yankees&rsquo; arsenal of new additions&rdquo;</a> (13 December 2001), for Giambi&rsquo;s seven-year, $120 million contract with the Yankees. Section 4.1.</li>
+<li id="src-11"><span class="srcnum">11</span> <em>Sports Illustrated</em>, <a href="https://vault.si.com/vault/2001/12/24/rich-get-richer-by-acquiring-four-new-regulars-including-potent-yet-patient-superstar-jason-giambi-the-yankees-returned-to-the-roots-of-their-recent-successes" target="_blank" rel="noopener">&ldquo;Rich Get Richer&rdquo;</a> (24 December 2001), for Giambi&rsquo;s league-leading .477 on-base percentage in 2001. Section 4.1.</li>
+<li id="src-12"><span class="srcnum">12</span> UPI, <a href="https://www.upi.com/Sports_News/2001/12/13/Yankees-sign-Giambi/86051008272258" target="_blank" rel="noopener">&ldquo;Yankees sign Giambi&rdquo;</a> (13 December 2001), for Isringhausen&rsquo;s signing with St. Louis; Baseball-Reference&rsquo;s <a href="https://www.baseball-reference.com/leagues/MLB/2002-transactions.shtml" target="_blank" rel="noopener">2002 transactions page</a> and Lewis (below) for Damon&rsquo;s move to Boston. Section 4.1.</li>
+<li id="src-13"><span class="srcnum">13</span> MLB.com, <a href="https://www.mlb.com/news/ten-years-later-the-as-are-back/c-37848808" target="_blank" rel="noopener">&ldquo;Ten Years Later: The A&rsquo;s Are Back&rdquo;</a> (2012), for the 2002 payroll of about $40.0 million, 28th of 30; the team&rsquo;s rank of seventh in on-base percentage and sixteenth in batting average; and the Zito, Hudson and Mulder rotation. Sections 4.1 and 4.3.</li>
+<li id="src-14"><span class="srcnum">14</span> The USA Today MLB salary database, for the Yankees&rsquo; 2002 payroll of roughly $125 million. Payroll figures differ slightly between sources depending on what they count, so the chapter rounds them. Not linked: the database has moved since 2002. Section 4.1.</li>
+<li id="src-15"><span class="srcnum">15</span> Baseball-Reference, <a href="https://www.baseball-reference.com/teams/OAK/2002.shtml" target="_blank" rel="noopener">2002 Oakland Athletics season page</a>, for the 103&ndash;59 record, the twenty-game winning streak from 13 August to 4 September, Hatteberg&rsquo;s walk-off home run in the twentieth game, and his .374 on-base percentage. Cleveland&rsquo;s 22-game streak in 2017 passed Oakland&rsquo;s American League mark. Sections 4.1 and 4.3.</li>
+<li id="src-16"><span class="srcnum">16</span> Baseball-Reference, <a href="https://www.baseball-reference.com/leagues/AL/2002.shtml" target="_blank" rel="noopener">2002 American League team statistics</a>, for the Yankees&rsquo; 103&ndash;58 record, Zito&rsquo;s Cy Young Award, and the team batting average, on-base percentage and runs per game used in the section 4.2 figure. The correlations in that figure were calculated by the authors from those fourteen rows. Sections 4.1 and 4.2.</li>
+<li id="src-17"><span class="srcnum">17</span> Michael Lewis, <em>Moneyball: The Art of Winning an Unfair Game</em> (W. W. Norton, 2003), for the front office&rsquo;s reasoning, Hatteberg and Bradford, replacing Giambi in the aggregate, the 2002 draft, DePodesta&rsquo;s background, the scouting meetings, and the mid-season trade that settled who would play first base. It is a journalist&rsquo;s account written with the front office&rsquo;s cooperation, so read it as their version of events; participants have disputed parts of it. Sections 4.1 to 4.5.</li>
+<li id="src-18"><span class="srcnum">18</span> Bill James&rsquo;s <em>Baseball Abstract</em> series (1977 to 1988), for the sabermetric work that preceded the A&rsquo;s; summarized in SABR&rsquo;s <a href="https://sabr.org/journal/article/henry-chadwick-award-bill-james/" target="_blank" rel="noopener">Henry Chadwick Award profile of James</a>. Sections 1.2 and 4.2.</li>
+<li id="src-19"><span class="srcnum">19</span> David A. Garvin, <a href="https://hbr.org/2013/12/how-google-sold-its-engineers-on-management" target="_blank" rel="noopener">&ldquo;How Google Sold Its Engineers on Management&rdquo;</a>, <em>Harvard Business Review</em> (December 2013), for Project Oxygen and the engineers&rsquo; skepticism about managers. Section 4.5.</li>
+<li id="src-20"><span class="srcnum">20</span> ESPN, <a href="https://www.espn.com/mlb/s/2002/1105/1456563.html" target="_blank" rel="noopener">&ldquo;Red Sox hire James in advisory capacity&rdquo;</a> (November 2002), and the SABR profile above, for James joining Boston in November 2002 and the 2004 World Series. Section 4.6.</li>
+<li id="src-21"><span class="srcnum">21</span> The Athletics&rsquo; final Oakland game in September 2024, the move to West Sacramento, and the planned 2028 opening in Las Vegas are from contemporary reporting and need a date check each year. Section 4.6.</li>
+<li id="src-22"><span class="srcnum">22</span> MLB.com, <a href="https://mlb.com/glossary/statcast" target="_blank" rel="noopener">Statcast glossary</a>, for Statcast&rsquo;s installation in all 30 parks in 2015 and what it tracks. Section 4.6.</li>
+<li id="src-23"><span class="srcnum">23</span> MLB.com, <a href="https://www.mlb.com/news/effect-of-new-rules-early-2023" target="_blank" rel="noopener">&ldquo;MLB maintaining trend of quicker games, more steals and hits&rdquo;</a> (May 2023), for the 2023 shift restriction and the early-season rise in batting average on balls in play. Section 4.6.</li>
+<li id="src-24"><span class="srcnum">24</span> Lee Kennedy-Shaffer, <a href="https://arxiv.org/abs/2411.15075v1" target="_blank" rel="noopener">&ldquo;The Effects of Major League Baseball&rsquo;s Ban on Infield Shifts: A Quasi-Experimental Analysis&rdquo;</a> (2024 preprint, not yet peer reviewed when checked), for the difference-in-differences estimate of a modest gain for left-handed hitters. Section 4.6.</li>
+<li id="src-25"><span class="srcnum">25</span> Kevin Pelton, ESPN, <a href="https://www.espn.com.au/nba/story/_/id/44422379/too-many-3-pointers-why-nba-think-issue" target="_blank" rel="noopener">&ldquo;Too many 3-pointers? Why the NBA doesn&rsquo;t think it&rsquo;s an issue&rdquo;</a> (March 2025), for the Rockets&rsquo; 2017&ndash;18 season, league three-point attempts per game, and Morey&rsquo;s 2025 remark. Section 4.7.</li>
+<li id="src-26"><span class="srcnum">26</span> <em>Sports Business Daily</em>, <a href="https://www.sportsbusinessdaily.com/Daily/Issues/2017/06/09/Technology/the-delicate-balance-of-incorporating-player-tracking-data-into-the-nba.aspx" target="_blank" rel="noopener">&ldquo;The delicate balance of incorporating player tracking data into the NBA&rdquo;</a> (June 2017), for the wearables provisions in the 2017 NBA collective bargaining agreement. Section 5.</li>
+<li id="src-27"><span class="srcnum">27</span> NBC News, <a href="https://www.nbcnews.com/business/business-news/california-passes-bill-targeting-amazon-s-productivity-quotas-can-penalize-n1278807" target="_blank" rel="noopener">&ldquo;California passes bill targeting Amazon&rsquo;s productivity quotas&rdquo;</a> (2021), for &ldquo;time off task&rdquo; and the retail coalition&rsquo;s opposition; the Associated Press via <a href="https://www.cbsnews.com/sanfrancisco/news/ab701-newsom-signs-bill-targeting-warehouse-productivity-quotas-amazon-mega-retailers/" target="_blank" rel="noopener">CBS San Francisco</a> for the law&rsquo;s signing and its requirements. Section 5.</li>
+<li><strong>Verification note, October 2026 (section 4 and 5 rebuild).</strong> Sections 4 and 5 were rebuilt on 21 October 2026, and each claim now carries a numbered marker pointing to its entry above. Corrected on that pass: the 2002 payroll is given as about $40 million (MLB.com) rather than $41 million. Still not confirmed from a primary document: the Yankees&rsquo; payroll figure and the relocation details in entry 21. The trailer is embedded from YouTube and should be checked each term.</li>
+<li><strong>Verification note, October 2026 (sections 1 to 3).</strong> Sections 1 to 3 were rebuilt on 21 October 2026. The VA, Purdue and UPS material was checked that day against the sources linked above. Not yet confirmed from a primary document: the reported 24-day Phoenix figure (from news coverage of the interim report), the size of Purdue&rsquo;s total payments (stated conservatively as more than $600 million), and the opioid death toll, which is stated only as &ldquo;hundreds of thousands&rdquo; and should be checked against current CDC figures. The correlation, sample-size and log-scale figures in sections 2 and 3 use simulated or made-up data and say so. The Big Data song link in section 1 should be checked once a term to confirm it still plays.</li>
+<li><strong>Verification note, September 2026.</strong> The earlier pass corrected two wordings: the twenty-game streak was an American League record only until 2017, and the rise in batting average on balls in play came in the 2023 season itself. The claim that Oakland competed with teams spending three times as much is the book&rsquo;s argument rather than a measured figure.</li>
 </ul>
 </details>
 
 </main>
+<script>
+(function(){
+  function openFor(h){
+    if(!h||h.indexOf('#src-')!==0)return;
+    var box=document.querySelector('details.srcbox'); if(box) box.open=true;
+    var t=document.getElementById(h.slice(1)); if(t) t.scrollIntoView();
+  }
+  document.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('.cite a'); if(!a)return;
+    e.preventDefault(); var h=a.getAttribute('href'); history.replaceState(null,'',h); openFor(h);
+  });
+  openFor(location.hash);
+})();
+</script>
+
 <!--NAVJS-->
 <script>
 (function(){
