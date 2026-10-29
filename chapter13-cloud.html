@@ -351,6 +351,10 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 .srcbox>summary:focus-visible{outline:2px solid var(--magenta);outline-offset:3px}
 .srcbox .sources{margin-top:0;padding-top:0;border-top:0;padding-bottom:1.1rem}
 @media print{.srcbox{border:0;padding:0}.srcbox>summary::after{display:none}}
+/* ---------- citations ---------- */
+.cite{font-size:.68em;line-height:0;margin-left:.1em}
+.cite a{color:var(--magenta-dark);text-decoration:none;font-weight:600}
+.srcnum{display:inline-block;min-width:1.6rem;font-weight:700;color:var(--magenta-dark)}
 </style>
 <link rel="stylesheet" href="book.css">
 </head>
@@ -468,16 +472,23 @@ the hour. The <strong>data</strong> is still yours, and so is every obligation a
 <strong>people</strong> making the decisions have not moved at all, which is why a chapter about renting
 computers is mostly a chapter about management.</p>
 
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Cloud computing: IaaS, PaaS, SaaS, and capex to opex</span>
-<p>So what is the cloud, really? Strip the marketing from the word: <strong>the cloud is other people's data centers, rented over the network, usually by the hour</strong>. It comes in layers of pre-assembly.
-<strong>Infrastructure as a service (IaaS)</strong> rents raw computing: virtual machines, storage,
-networking, and you run everything above. <strong>Platform as a service (PaaS)</strong> rents a
-higher floor: databases, queues, and tools the provider operates for you. <strong>Software as a
-service (SaaS)</strong>, from Chapter 11, rents the finished application. Economically, the cloud
-converts <strong>capital expenditure</strong>, buying servers years ahead of need, into
-<strong>operating expenditure</strong>, paying for what you use as you use it. And technically it
-delivers <strong>elasticity</strong>: capacity that expands in minutes and, just as importantly,
-contracts, so nobody pays all year for the machines that only Thanksgiving weekend needs.</p></div>
+<p>So what is the cloud, really? Strip the marketing from the word: <strong>cloud computing</strong> is other
+people's data centers, rented over the network, usually by the hour. It comes in three layers:</p>
+
+<ul>
+<li><strong>Infrastructure as a service (IaaS)</strong> rents raw computing: virtual machines, storage, and
+networking. You run everything above. For example, renting a server from Amazon Web Services and installing
+your own software on it.</li>
+<li><strong>Platform as a service (PaaS)</strong> rents a higher floor: databases and tools the provider runs
+for you. For example, a managed database you use without ever touching the server under it.</li>
+<li><strong>Software as a service (SaaS)</strong>, from Chapter 11, rents the finished application. For
+example, Gmail or Canvas.</li>
+</ul>
+
+<p>Economically, the cloud turns <strong>capital expenditure (capex)</strong>, buying servers years ahead of
+need, into <strong>operating expenditure (opex)</strong>, paying for what you use as you use it. Technically it
+delivers <strong>elasticity</strong>: capacity that grows in minutes and, just as important, shrinks, so nobody
+pays all year for the machines that only Thanksgiving weekend needs.</p>
 <figure class="diagram" style="margin:1.8rem auto;max-width:470px">
 <svg viewBox="0 0 470 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="slT slD" style="width:100%;height:auto;font-family:var(--sans)">
 <title id="slT">Who manages what: on-premises, IaaS, PaaS, SaaS</title>
@@ -599,27 +610,43 @@ AWS's largest region, US-East-1 in Northern Virginia, rooted in a DNS fault invo
 database service, cascaded for the better part of a day. Thousands of services stumbled at once:
 social apps, games, banks, airlines, smart-home devices, companies whose customers had no idea AWS
 existed until the morning it mattered. Nothing was hacked. One landlord had a bad day, and a
-noticeable slice of the internet had it too.</p>
+noticeable slice of the internet had it too.<sup class="cite"><a href="#src-1" aria-label="Source 1">1</a></sup></p>
 
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Lock-in, egress, and the cost of leaving</span>
-<p>The strategic business twin of concentration risk is <strong>vendor lock-in</strong>. Cloud providers
-price movement asymmetrically: data flows in free and pays <strong>egress fees</strong> on the way
-out, and every provider-specific service your engineers adopt deepens the rebuild required to leave.
-This is Chapter 3's <strong>switching costs</strong>, implemented in infrastructure. The remedies, spreading across regions or across providers, are real and expensive. That makes
-resilience what it has been all course: not a technical setting but a business decision about how
-much insurance to buy, made before the morning it is needed.</p></div>
+<p>The business twin of concentration risk is <strong>vendor lock-in</strong>. Cloud providers
+price movement unevenly: data flows in free and pays <strong>egress fees</strong> on the way out, and every
+provider-specific service your engineers adopt makes leaving harder. This is Chapter 3's <strong>switching
+costs</strong>, built into infrastructure. It is also why the first choice of where to put your data lasts:
+services and other data pile up around it, a pull engineers call <strong>data gravity</strong>.</p>
+
+<p>The remedies cost real money. Clouds are sold by <strong>region</strong>, a cluster of data centers in one
+area, and each region is split into <strong>availability zones</strong>, separate buildings with their own
+power and cooling. Spreading your systems across zones, regions, or even providers protects you from one
+landlord's bad morning, and you pay for that protection every month. That makes resilience what it has been
+all course: not a technical setting but a business decision about how much insurance to buy, made before the
+morning it is needed.</p>
 
 <h3>2.2 The bill the planet gets</h3>
 
 <p>Chapter 12 ended with a question it did not answer: when the For You page or a chatbot answer feels free, who
 is paying, and in what currency? This section answers it, with the International Energy Agency's
 ledger. In 2024, the world's data centers consumed roughly <strong>415 terawatt-hours</strong> of electricity, about <strong>1.5
-percent of all electricity on Earth</strong>. The figure has grown around 12 percent a year since 2017, four
+percent of all electricity on Earth</strong>.<sup class="cite"><a href="#src-2" aria-label="Source 2">2</a></sup> The IEA's April 2026 update puts 2025 at about 485 terawatt-hours, a jump of
+about a sixth in a single year.<sup class="cite"><a href="#src-2" aria-label="Source 2">2</a></sup> The figure has grown around 12 percent a year since 2017, four
 times faster than electricity use overall. The IEA's base
 case projects consumption more than doubling to about <strong>945 TWh by 2030</strong>, roughly
 Japan's entire current annual usage, with AI-accelerated servers driving close to half of the
 increase. The United States hosts the largest share, around 45 percent, and data centers account for
-nearly half of all US electricity-demand growth between now and 2030.</p>
+nearly half of all US electricity-demand growth between now and 2030.<sup class="cite"><a href="#src-2" aria-label="Source 2">2</a></sup></p>
+
+<figure class="diagram" style="margin:1.9rem auto;max-width:640px">
+<img src="google-data-center-the-dalles.jpg" width="960" height="609" loading="lazy" style="width:100%;height:auto"
+ alt="A long, low, beige industrial building with rows of large gray cooling units along its front, behind a chain-link fence and an empty gravel lot. Brown, dry hills rise behind it under a cloudy sky.">
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">
+Google's data center in The Dalles, Oregon, on the Columbia River. Companies built here for cheap hydroelectric power and river water to cool the machines. This is what &ldquo;the cloud&rdquo; looks like from the road: a factory, with a factory's appetite for electricity and water, in a dry place a few hours from Bellingham.
+<br><br>Photograph: Tony Webster, 2015, via Wikimedia Commons, CC BY 2.0.
+</figcaption>
+</figure>
+
 
 <p>The global percentages stay small; the local ones do not, because the demand clusters in a few places. Data centers already consume on the order of a fifth of Ireland's electricity and, by commonly cited
 estimates, a quarter of Virginia's. That is why siting fights, grid-upgrade bills, and moratorium
@@ -645,7 +672,7 @@ about what that cost.</p>
 Salesforce's computers, customers would reach it through a web browser, and they would pay a
 subscription. No servers to buy, no installation, no upgrade projects. The company's marketing showed
 the word "software" with a line through it, and the industry it was entering thought this was
-ridiculous. Businesses would never put their customer records on somebody else's machines.</p>
+ridiculous.<sup class="cite"><a href="#src-3" aria-label="Source 3">3</a></sup> Businesses would never put their customer records on somebody else's machines.</p>
 
 <p>Customers did trust it, and the model has a name now, software as a service, that Chapter 11 already gave you. The
 point of putting it here is the date. The decision to rent rather than own was being made, and winning,
@@ -663,13 +690,34 @@ somebody else's computers, and something it gains. Then say which of the five co
 which stayed exactly where it was.
 <details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>Control over timing and change, mostly. When the software runs on the vendor's servers, the vendor decides when it updates, when it is down for maintenance, what the new version looks like, and whether a feature the company depends on survives. The company also gives up the ability to run it if the vendor fails, and the ability to keep its data anywhere the vendor has not agreed to. Whether that matters depends on the software: nobody minds Salesforce choosing when to update a contact list. Whether you would accept the same terms for the system that runs your factory floor is the question Chapter 11's build-or-rent rule is for.</p></details></div>
 
+<figure class="diagram" style="margin:1.9rem auto;max-width:440px">
+<img src="salesforce-tower-sf.jpg" width="960" height="615" loading="lazy" style="width:100%;height:auto"
+ alt="The San Francisco skyline on a sunny day, dominated by a tall, smooth, rounded glass skyscraper with a tapered top, the Salesforce Tower, rising well above the surrounding office buildings.">
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">
+Salesforce Tower, the tallest building in San Francisco. In 1999 the company was a few people selling
+software that nobody had to install. The skyscraper is what that idea, renting software instead of selling
+it, grew into.
+<br><br>Photograph: Sharon Hahn Darlin, 2022, via Wikimedia Commons, CC BY 2.0.
+</figcaption>
+</figure>
+
 <h3>3.2 Mini-case 2 &middot; 2021: the cloud that caught fire</h3>
 
 <p>In the early hours of 10 March 2021, a fire started in a data center in Strasbourg belonging to
 OVHcloud, one of Europe's largest hosting providers. One building was destroyed and a neighbouring one
 damaged. The company shut down the whole site. Millions of websites went offline, including government
 services, news outlets and a large number of small businesses that had never thought about where their
-website physically was.</p>
+website physically was.<sup class="cite"><a href="#src-4" aria-label="Source 4">4</a></sup></p>
+
+<figure class="diagram" style="margin:1.9rem auto;max-width:640px">
+<img src="ovh-fire-pompidou-site.jpg" width="960" height="540" loading="lazy" style="width:100%;height:auto"
+ alt="A screenshot of the Centre Pompidou museum website in March 2021. Instead of the normal home page, a dark page shows a short message in French and English saying the website is unavailable because of the fire at the OVH data center in Strasbourg, with links to the museum's social media accounts.">
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">
+The website of the Centre Pompidou, one of the world's best-known art museums, two days after the fire. The museum had not been anywhere near Strasbourg. Its computers had.
+<br><br>Screenshot: Fraguando, 2021, via Wikimedia Commons, CC BY-SA 4.0.
+</figcaption>
+</figure>
+
 
 <p>Most of those customers came back within days. Some did not come back at all. A number of customers had chosen the
 cheapest hosting option, which did not include backups, or had their backups in the same building on
@@ -688,7 +736,7 @@ world. It means you have outsourced your exposure to it, along with your ability
 <div class="mcq"><b>Check yourself</b>Cascadia's data will live somewhere physical whichever option the
 co-op chooses. Name three questions about that building you would want answered before signing, and say
 which of them the cheapest provider would rather you did not ask.
-<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>Whichever option Cascadia picks, its data sits on a disk in a building somewhere, and the honest answer for a small co-op is that renting is safer than owning, because Amazon, Microsoft, and Google keep copies in more than one building and Cascadia never would. The lesson of Strasbourg is not that the cloud is dangerous. It is that a customer has to ask where the copies are, because OVH's customers who had paid for backups in the same building lost everything. The two questions to put to any provider: how many physical locations hold a copy of our data, and how far apart are they? If the answer is one, you are back in the building.</p></details></div>
+<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>Whichever option Cascadia picks, its data sits on a disk in a building somewhere. For a small co-op, renting is usually safer than owning, because Amazon, Microsoft, and Google keep copies in more than one building and Cascadia never would. The lesson of Strasbourg is not that the cloud is dangerous. It is that a customer has to ask where the copies are, because OVH's customers who had paid for backups in the same building lost everything. Three questions to put to any provider: how many physical locations hold a copy of our data, how far apart are they, and are backups included in the price we are paying or sold separately? The cheapest provider would rather you skipped the third. If the answer to the first is one, you are back in the building.</p></details></div>
 
 <h3>3.3 What the two have in common</h3>
 
@@ -701,22 +749,18 @@ years. It got clearer, and every one of those clarifications was a bill.</p>
 <p>Read the main case with that in mind. Netflix understood both early, and made a decision that still surprises people: it rented nearly everything, including from a competitor, and built the one piece a fire could not be allowed to touch.</p>
 <h2 id="netflix"><span class="num">4</span>Main case &middot; Netflix: seven years to zero data centers</h2>
 
-<p>Let's begin with a failure. By its own account, Netflix's road to the cloud began with one: in August 2008 a major
-database corruption meant that for three days the company could not ship DVDs to its members. The
-diagnosis went deeper than the incident. Netflix concluded it had to move away from single points of failure, meaning big databases in its
-own data center, toward distributed systems it did not own. It chose Amazon Web Services as the
-landlord. Pause on the
-strangeness of that sentence: Amazon, whose Prime Video competes directly with Netflix, would
-henceforth run the computers underneath Netflix. The logic was Chapter 11's rule pushed to its
-limit: computing infrastructure had become a commodity Netflix could rent better than build, even
-from a rival, freeing the company to spend its effort on what differentiates it.</p>
+<p>Press Play on Netflix tonight and two different companies' computers do the work. Everything before the
+video starts, from signing in to search to the row of recommendations, runs on computers Netflix rents from
+Amazon, a company that competes with it for your evenings. The video itself comes from a box Netflix owns,
+probably sitting inside your internet provider's building. How a DVD-by-mail company ended up with that
+arrangement, and why it is a strategy rather than an accident, is the case.</p>
 
 <div class="statrow">
   <div class="stat"><b>3 days</b><span>DVDs stopped; the decision that started it</span></div>
   <div class="stat"><b>7 yrs</b><span>to shut the last Netflix data center, 2016</span></div>
   <div class="stat"><b>130+</b><span>countries switched on in a single day</span></div>
-  <div class="stat"><b>415 TWh</b><span>data centers' electricity in 2024, ~1.5% of the world's</span></div>
-  <div class="stat"><b>&times;2</b><span>projected by 2030, roughly Japan's annual usage</span></div>
+  <div class="stat"><b>0</b><span>data centers of its own today</span></div>
+  <div class="stat"><b>1</b><span>piece it built anyway: the delivery network</span></div>
 </div>
 
 <h3>4.1 The three days that started it</h3>
@@ -771,7 +815,7 @@ as distributed systems designed to expect failure. The payoff figures come from 
 2008, overall viewing up a thousandfold, and elasticity that let engineers add thousands of virtual
 servers and petabytes of storage in minutes. The proof-of-concept moment came the same month the migration ended: on January
 6, 2016, Netflix switched on service in more than 130 additional countries at once, a launch its own
-racks could never have absorbed.</p>
+racks could never have absorbed.<sup class="cite"><a href="#src-5" aria-label="Source 5">5</a></sup></p>
 
 <h3>4.4 Assume everything fails</h3>
 
@@ -785,10 +829,10 @@ somebody else.</p>
 <p>The useful thing is what Netflix did with that experience, and it is a management practice rather
 than a technology. The company decided to stop treating failure as an event to be prevented and start
 treating it as a condition to be survived. Its engineers built tools that deliberately break pieces of
-its own live production systems, the best known of which is called Chaos Monkey, which switches off
+its own live production systems, a practice now called <strong>chaos engineering</strong>. The best-known tool is called Chaos Monkey, which switches off
 running servers at random during working hours. If a service cannot survive losing a machine at two in
 the afternoon on a Tuesday, the team finds out on a Tuesday afternoon while everybody is at their
-desks, instead of on Christmas Eve.</p>
+desks, instead of on Christmas Eve.<sup class="cite"><a href="#src-6" aria-label="Source 6">6</a></sup></p>
 
 <p>Chapter 9 gave you the term for the written plan covering the bad day: business continuity. Most
 organizations write that plan, file it, and discover on the bad day which parts of it were wishes.
@@ -805,7 +849,7 @@ purpose-built appliances loaded with the catalog and installed inside internet s
 around the world. The actual stream travels a few network hops from a Netflix-owned box near you,
 not across the planet from a rented one. Open
 Connect carries the entirety of Netflix's video traffic, tens of terabits per second at peak, one of
-the highest-volume networks in existence.</p>
+the highest-volume networks in existence.<sup class="cite"><a href="#src-7" aria-label="Source 7">7</a></sup></p>
 
 <p>Run Chapter 11's build-or-rent rule over that split and it resolves perfectly. Elastic, spiky, commodity
 computing: rent it, even from a rival. The predictable, colossal, quality-defining flow of bits that
@@ -817,7 +861,7 @@ to a third of the internet's evening traffic.</p>
 
 <p>Netflix has never published what it pays Amazon. Around the time the migration finished, the company
 said it expected to spend more than $800 million on technology and development in 2016, up from $651
-million the year before, which tells you the order of magnitude without breaking out the rent.
+million the year before. That gives the order of magnitude without breaking out the rent.
 Netflix has also been consistent that cost reduction was not why it moved. It moved for availability
 and elasticity, and it says it got both.</p>
 
@@ -825,7 +869,8 @@ and elasticity, and it says it got both.</p>
 to save money and a large number of them have since done the arithmetic and disagreed. The clearest
 worked example is 37signals, which runs Basecamp. The company says it spent about $3.2 million on
 cloud services in 2022, bought roughly $700,000 of its own servers, moved its applications onto them
-without hiring anyone new, and cut its annual bills by around $2 million. Dropbox made a bigger version
+without hiring anyone new, and cut its annual bills by around $2 million.<sup class="cite"><a href="#src-8" aria-label="Source 8">8</a></sup> In 2025 it went further, buying its own
+storage so it could close its Amazon account entirely.<sup class="cite"><a href="#src-8" aria-label="Source 8">8</a></sup> Dropbox made a bigger version
 of the same move years earlier. Investors have a name for the pattern now, the cloud paradox: the
 rented infrastructure that makes a young company fast becomes a permanent charge against its margins
 once its demand is large and predictable.</p>
@@ -838,28 +883,7 @@ that is enormous and predictable. Nothing about that requires you to have an opi
 in general. It requires you to know which of those two descriptions fits the workload in front of
 you, and to be willing to redo the sum when it changes.</p>
 
-<h3>4.7 What has changed since, and what has not</h3>
-
-<p>Netflix now serves a business that did not exist when it started this: hundreds of millions of paid
-memberships, its own studio output, live events, games and advertising, all on rented computers and
-its own delivery network. The architecture held while the company became something else, which is the
-strongest argument anyone has made for the rebuild being worth seven years.</p>
-
-<p>What has not changed is the exposure. Section 2 opened with the October 2025 failure in AWS's
-largest region and the long list of services that fell over with it. Renting from one landlord still
-means inheriting that landlord's worst morning, and the insurance against it is still the expensive
-kind: designing to run in more than one region, or with more than one provider, and paying for
-capacity you hope never to use. Netflix bought that insurance early and kept paying for it. Most
-companies decide they cannot afford it, which is a legitimate decision and only a decision if somebody
-actually made it.</p>
-
-<p>The newest pressure on the arithmetic is the one section 2.2 costed out. The same providers are now
-buying accelerators for AI workloads on a scale that is reshaping electricity demand, and that shows
-up in prices, in waiting lists for capacity, and in the politics of where the next building goes. When
-you approve a system in five years, the question will not be whether to use the cloud. It will be
-which parts, in whose buildings, powered how, and at what price when the contract renews.</p>
-
-<h3>4.8 The five components at Netflix</h3>
+<h3>4.7 The five components at Netflix</h3>
 
 <p>Now that you have seen the whole system, here it is as five components, the way this course maps every case, and the last time the book draws this table. Look at how many rows Netflix rents from a competitor, and which one it refused to.</p>
 
@@ -872,7 +896,28 @@ which parts, in whose buildings, powered how, and at what price when the contrac
 <tr><td data-label="Component"><strong>People</strong></td><td data-label="In the case">Engineers who break things on purpose; FinOps; the neighbors</td><td data-label="The lesson">Every rented machine still has humans deciding, and absorbing</td></tr>
 </table>
 
-<h3>4.9 What a business technology manager takes from this chapter</h3>
+<h3>4.8 What's next: what has changed since, and what has not</h3>
+
+<p>Netflix now serves a business that did not exist when it started this: hundreds of millions of paid
+memberships, its own studio output, live events, games and advertising, all on rented computers and
+its own delivery network. The architecture held while the company became something else, which is the
+strongest argument anyone has made for the rebuild being worth seven years.</p>
+
+<p>What has not changed is the exposure. Section 2 opened with the October 2025 failure in AWS's
+largest region and the long list of services that fell over with it. Renting from one landlord still
+means inheriting that landlord's worst morning. The insurance against it is still the expensive
+kind: running in more than one region, or with more than one provider, and paying for
+capacity you hope never to use. Netflix bought that insurance early and kept paying for it. Most
+companies decide they cannot afford it, which is a legitimate decision and only a decision if somebody
+actually made it.</p>
+
+<p>The newest pressure on the arithmetic is the one section 2.2 costed out. The same providers are now
+buying accelerators for AI workloads on a scale that is reshaping electricity demand, and that shows
+up in prices, in waiting lists for capacity, and in the politics of where the next building goes. When
+you approve a system in five years, the question will not be whether to use the cloud. It will be
+which parts, in whose buildings, powered how, and at what price when the contract renews.</p>
+
+<h3>4.9 What a business technology manager takes from this case</h3>
 
 <p>Strip the Netflix case down to what you can reuse in any company. Four decisions came up in it, and each one is a decision you will be in the room for.</p>
 
@@ -896,7 +941,7 @@ whether and how the next campus gets built.</p>
 
 <p>You have seen this pattern twice before: security costs exported to patients in Chapter 9, AI's
 costs exported to applicants and labelers in Chapter 12. Economists call it an externality all three
-times, and the governance answer is the same all three times: someone has to represent the people
+times. Here they are <strong>data-center externalities</strong>, and the governance answer is the same all three times: someone has to represent the people
 who are not in the room when the decision is made. This course keeps returning to that sentence
 because, in an economy that runs on information systems, the person in the room is increasingly
 someone with your degree.</p>
@@ -991,42 +1036,50 @@ strongest opinion about, and be ready to say it first.</p>
 <h2 id="lab"><span class="num">8</span>From lecture to lab</h2>
 
 <div class="callout callout-bridge"><strong>Week 10 &middot; Lab 10</strong>
-<p>This is the last chapter, and the lab that goes with it is the one that ties the quarter together.
-You have built Cascadia's spreadsheets, queried its database, charted its problem, audited its
-security. This week you decide where all of it should live.</p>
-<p>Take the three questions from mini-case 2 into it. Wherever the co-op's data ends up, it is in a
-building somewhere, and somebody's typo away from being unavailable. The question the lab asks is not
-"cloud or not", which Chapter 11's rule already settled for a commodity like storage. It is which
-capabilities the co-op should rent, which it should own, and what it should be able to survive.</p>
-<p>The lab itself steps back one level further, to information architecture: before anything is
-rented or built, somebody decides what things are called and where they go. You will read Abby Covert
-on making sense of a mess, find an information architecture in the world and judge it, and sketch a
-model of your own. (Also: is a hotdog a sandwich? Lab has an answer.)</p>
+<p>This is the last chapter, and the lab is the last of the quarter. Every lab so far handed you a structure
+somebody else built: Cascadia's spreadsheets, its tables, its dashboards. This one hands you the blank
+page.</p>
+<p>Before anything is rented or built, in the cloud or anywhere else, somebody decides what things are called
+and where they go. That decision is <strong>information architecture</strong>, and it is what the lab is about.
+You will read Abby Covert on making sense of a mess, find an information architecture in the world and judge
+it, and sketch a model of your own. Chapter 7 already told you why it matters: the shape you store facts in
+decides which questions are cheap to answer. (Also: is a hotdog a sandwich? Lab has an answer.)</p>
 <p><a class="lablink" href="lab10-ia.html">Go to Lab 10: Information Architecture &#8594;</a></p>
 </div>
 
 <details class="srcbox">
 <summary><h2 id="sources"><span class="num">9</span>Sources and further reading</h2></summary>
 <ul class="sources">
-<li>Netflix's own engineering blog posts on the migration, including the January 2016 announcement of completing the move to AWS and the earlier account of the 2008 database corruption, for the timeline, the scale figures, and the rebuild-rather-than-forklift decision.</li>
-<li>Netflix's published material on Open Connect, for the content delivery network and its traffic share.</li>
-<li>International Energy Agency, <em>Energy and AI</em> (2025), for the 2024 data-center electricity figures, the 2030 projection, the national shares, and the growth rates. The IEA updates these annually; use the current edition.</li>
-<li>Amazon Web Services' October 2025 summary of the US-East-1 event, for section 2.</li>
-<li>Contemporary reporting on the OVHcloud Strasbourg fire of 10 March 2021, including the company's statements on backups, for mini-case 2.</li>
-<li>Accounts of Salesforce's founding and its early "no software" positioning, for mini-case 1. Marc Benioff's <em>Behind the Cloud</em> (2009) is the insider version and should be read as one.</li>
-<li>Reporting on data-center electricity and water use in Ireland and Virginia, and on local siting disputes, for section 5. These figures move quickly and vary by source; check before teaching them.</li>
-<li>Netflix Technology Blog / About Netflix, <a href="https://about.netflix.com/en/news/completing-the-netflix-cloud-migration">Completing the Netflix Cloud Migration</a> (February 2016): the 2008 database corruption, the seven-year timeline, the cloud-native rebuild, the growth figures, and the January 2016 global launch.</li>
-<li>Netflix Technology Blog, its post-mortem of the Christmas Eve 2012 Elastic Load Balancing outage, and its published work on chaos engineering, for section 4.4. The company also said around the migration's completion that it expected to spend over $800 million on technology and development in 2016, against $651 million in 2015; it has never published what it pays Amazon.</li>
-<li>37signals' own "cloud exit" posts by David Heinemeier Hansson, for section 4.6: roughly $3.2 million of cloud spending in 2022, about $700,000 of servers bought, and annual bills cut by around $2 million. These are the company's own figures and it is arguing a case; Dropbox's earlier move off AWS and Andreessen Horowitz's "cost of cloud" paper are the other two pieces usually cited in this debate. All three are worth reading against Netflix's statement that cost reduction was not why it moved.</li>
-<li>Netflix Open Connect documentation and industry coverage: the company-owned CDN carrying the entirety of Netflix's video traffic from appliances inside ISPs, at tens of terabits per second of peak.</li>
-<li>International Energy Agency, <a href="https://www.iea.org/reports/energy-and-ai">Energy and AI</a> (2025): the 415 TWh / ~1.5% figure for 2024, the ~945 TWh 2030 base case, the growth rates, the US share, and the role of AI-accelerated servers.</li>
-<li>Reporting on the October 2025 AWS US-East-1 outage (major outlets and AWS's own post-incident summary): the DNS fault involving DynamoDB and the day of cascading disruption across thousands of services.</li>
-<li>Netflix Technology Blog on the Christmas Eve 2012 ELB outage and the Simian Army: the origin of chaos engineering as institutional habit.</li>
-<li><strong>Verification note.</strong> Checked in September 2026 against the authors' knowledge of the published sources rather than by new searches, because none of the figures here had a reason to move: the IEA's <em>Energy and AI</em> figures (415 TWh and about 1.5 percent in 2024; about 945 TWh in the 2030 base case; roughly 12 percent annual growth since 2017; the United States at around 45 percent), the Netflix migration dates and growth figures from the company's own February 2016 post, the S3 and OVHcloud incidents, and Salesforce's 1999 founding. The Ireland and Virginia shares are 2023 estimates and will move; the IEA's next edition will supersede the 2024 figures, so check both before teaching in 2027. Also fixed on that pass: section cross-references that used an older numbering, and a continuity reference that pointed to Chapter 12 instead of Chapter 9.</li>
+<li id="src-1"><span class="srcnum">1</span> Amazon Web Services, <a href="https://aws.amazon.com/message/101925/" target="_blank" rel="noopener">&ldquo;Summary of the Amazon DynamoDB Service Disruption in Northern Virginia (US-EAST-1) Region&rdquo;</a>, post-event summary of the 19 and 20 October 2025 disruption in the US-East-1 (Northern Virginia) region, and contemporary reporting, for the DNS fault involving DynamoDB and the day of cascading outages. Section 2.1.</li>
+<li id="src-2"><span class="srcnum">2</span> International Energy Agency, <a href="https://www.iea.org/reports/energy-and-ai/executive-summary" target="_blank" rel="noopener"><em>Energy and AI</em>, executive summary (April 2025)</a>, for the 415 TWh and 1.5 percent figures for 2024, the roughly 945 TWh base case for 2030, the growth rate, and the U.S. share; and the IEA&rsquo;s <em>Key Questions on Energy and AI</em> (16 April 2026) for the 2025 estimate of about 485 TWh. The IEA updates these figures; use the current edition. Section 2.2.</li>
+<li id="src-3"><span class="srcnum">3</span> Accounts of Salesforce&rsquo;s founding in 1999 and its &ldquo;no software&rdquo; positioning. Marc Benioff&rsquo;s <em>Behind the Cloud</em> (2009) is the insider version and should be read as one. Mini-case 1.</li>
+<li id="src-4"><span class="srcnum">4</span> Netcraft, <a href="https://www.netcraft.com/blog/ovh-fire" target="_blank" rel="noopener">&ldquo;3.6 million websites taken offline after fire at OVH datacenters&rdquo;</a> (March 2021), and Reuters, via <a href="https://www.techpartner.news/news/millions-of-websites-offline-after-ovhcloud-data-centre-fire-in-france-562026" target="_blank" rel="noopener">iTnews, 11 March 2021</a>, for the scale of the outage and the company&rsquo;s statements, including the founder&rsquo;s advice to customers to activate their disaster recovery plans. Mini-case 2.</li>
+<li id="src-5"><span class="srcnum">5</span> Netflix, <a href="https://about.netflix.com/en/news/completing-the-netflix-cloud-migration" target="_blank" rel="noopener">&ldquo;Completing the Netflix Cloud Migration&rdquo;</a> (February 2016): the 2008 database corruption, the seven-year timeline, the cloud-native rebuild, the growth figures, and the January 2016 launch in 130 more countries. Around the same time the company said it expected to spend over $800 million on technology and development in 2016, against $651 million in 2015; it has never published what it pays Amazon (reported in <a href="https://groups.google.com/g/idnog/c/JCex89AftE8" target="_blank" rel="noopener">Ars Technica, 11 February 2016</a>). Sections 4.1 to 4.3 and 4.6.</li>
+<li id="src-6"><span class="srcnum">6</span> GeekWire, <a href="https://www.geekwire.com/2013/netflix-nightmare-amazon-explains-christmas-eve-outage-issues-apology/" target="_blank" rel="noopener">&ldquo;Netflix nightmare: Amazon explains Christmas Eve outage,&rdquo; January 2013</a>, covering both Amazon&rsquo;s explanation and Netflix&rsquo;s own post-mortem of the Christmas Eve 2012 Elastic Load Balancing outage; and the Netflix Technology Blog&rsquo;s published work on chaos engineering and the Simian Army. Section 4.4.</li>
+<li id="src-7"><span class="srcnum">7</span> Netflix, <a href="https://openconnect.netflix.com/Open-Connect-Overview.pdf" target="_blank" rel="noopener">&ldquo;Open Connect Overview&rdquo;</a>, for the company-owned delivery network that carries Netflix&rsquo;s video from appliances placed inside internet providers. Section 4.5.</li>
+<li id="src-8"><span class="srcnum">8</span> The Register, <a href="https://www.theregister.com/2024/10/21/37signals_aws_savings" target="_blank" rel="noopener">21 October 2024</a>, for 37signals&rsquo; $3.2 million 2022 cloud bill, about $700,000 of Dell servers, and savings of almost $2 million a year with the same team; and <a href="https://www.theregister.com/2025/05/09/37signals_cloud_repatriation_storage_savings" target="_blank" rel="noopener">9 May 2025</a>, for its move off Amazon&rsquo;s storage service. These are the company&rsquo;s own figures, and it is arguing a case. Section 4.6.</li>
+<li>Further reading. Andreessen Horowitz, &ldquo;The Cost of Cloud, a Trillion Dollar Paradox&rdquo; (2021), the source of the &ldquo;cloud paradox&rdquo; argument, and Dropbox&rsquo;s earlier move off AWS. Read both against Netflix&rsquo;s statement that cost was not why it moved. The Ireland and Virginia shares in section 2.2 are commonly cited estimates that move quickly; check them before teaching.</li>
+<li>Images. Google data center, The Dalles, Oregon, photograph by Tony Webster, 2015, <a href="https://commons.wikimedia.org/wiki/File:Google_Datacenter_-_The_Dalles,_Oregon_(17832143871).jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY 2.0. Salesforce Tower, photograph by Sharon Hahn Darlin, 2022, <a href="https://commons.wikimedia.org/wiki/File:San_Francisco,_California_April_2022_Salesforce_Tower.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY 2.0. Centre Pompidou website after the OVH fire, screenshot by Fraguando, 2021, <a href="https://commons.wikimedia.org/wiki/File:Falla_de_sitio_web_Pompidou_por_incendio_en_OVH.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0. The service-layer diagram is original to this book.</li>
+<li><strong>Verification note, 29 October 2026 (rebuild).</strong> Restructured to match Chapter 7. The IEA figures and the 37signals numbers were re-searched rather than taken from memory, and the IEA&rsquo;s 2026 estimate for 2025 was added. The earlier note mentioned an S3 incident the chapter does not contain; that reference is gone. Corrections: the case opening retold the 2008 outage and the &ldquo;renting from a rival&rdquo; point before sections 4.1 and 4.2 told them again; it is now a short hook. Two stats in the case row were global energy figures, not Netflix facts, and now live only in section 2.2. A check-yourself asked for three questions and answered with two. The lab bridge described a rent-or-own exercise the lab does not contain; it now describes Lab 10 as written. Five vocabulary terms that never appeared in the body (capex and opex, availability zone, chaos engineering, data gravity, data-center externalities) are now defined where they are used. Duplicate source entries were merged. The Netflix, AWS, Open Connect, and OVH entries were linked to their sources on the same day.</li>
 </ul>
 </details>
 
 </main>
+<script>
+(function(){
+  function openFor(h){
+    if(!h||h.indexOf('#src-')!==0)return;
+    var box=document.querySelector('details.srcbox'); if(box) box.open=true;
+    var t=document.getElementById(h.slice(1)); if(t) t.scrollIntoView();
+  }
+  document.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('.cite a'); if(!a)return;
+    e.preventDefault(); var h=a.getAttribute('href'); history.replaceState(null,'',h); openFor(h);
+  });
+  openFor(location.hash);
+})();
+</script>
+
 <!--NAVJS-->
 <script>
 (function(){
