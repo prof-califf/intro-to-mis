@@ -349,6 +349,10 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 .srcbox>summary:focus-visible{outline:2px solid var(--magenta);outline-offset:3px}
 .srcbox .sources{margin-top:0;padding-top:0;border-top:0;padding-bottom:1.1rem}
 @media print{.srcbox{border:0;padding:0}.srcbox>summary::after{display:none}}
+/* ---------- citations ---------- */
+.cite{font-size:.68em;line-height:0;margin-left:.1em}
+.cite a{color:var(--magenta-dark);text-decoration:none;font-weight:600}
+.srcnum{display:inline-block;min-width:1.6rem;font-weight:700;color:var(--magenta-dark)}
 </style>
 <link rel="stylesheet" href="book.css">
 </head>
@@ -434,9 +438,9 @@ a customer.</p>
 </div>
 <p class="printbox"><span>Wanna go analog?</span><button type="button" onclick="window.print()" aria-label="Print this page or save it as a PDF">&#9113;&nbsp; Print here</button><span>or save it as a PDF; the navigation drops out</span></p>
 
-<p class="lede">Domino's rebuilt itself as a technology company that happens to sell pizza, and by the
-mid-2010s a large share of its orders arrived through its website and app. That was the front door
-Guillermo Robles walked up to, and it was closed.</p>
+<p class="lede">Every business that sells online has a front door made of software. This chapter is about who
+can walk through it, how businesses choose the software that builds it, and what happened when one famous
+company's door stayed shut to a blind customer for six years.</p>
 
 <div class="objectives"><span class="obj-tag">Learning objectives</span>
 <p>By the end of this chapter you should be able to:</p>
@@ -451,119 +455,161 @@ Guillermo Robles walked up to, and it was closed.</p>
 
 <h2 id="design"><span class="num">1</span>Software, and the interface that decides who gets in</h2>
 
-<p>Every chapter so far has treated software as one of five components, the one that holds the rules.
-This chapter looks at it from the only angle a customer ever sees: the surface where a person meets the
-system. That surface is where the software component touches the people component, and it is where
-most of a system's value is either delivered or lost.</p>
+<p>Think of the last app that made you give up halfway through a task. Maybe a checkout page kept
+rejecting your address, or a form erased everything when you hit the back button. The system behind it
+probably worked fine. You just could not get through the front of it. This chapter is about that front,
+and about who gets through it.</p>
 
-<p>Two decisions follow from that, and both belong to managers rather than programmers. The first is how software
-is designed, meaning what the interface lets a person do and who it lets do it. The second is how
-software is chosen, because most organizations buy far more of it than they build. The case at the end of the chapter is a company that built its own front door, for a process it had
-already made the center of its business, and forgot to ask who could open it.</p>
+<p>Every chapter so far has treated software as one of five components, the one that holds the rules. This
+chapter looks at it from the only angle a customer ever sees: the surface where a person meets the system.
+That surface is where the software component touches the people component, and it is where most of a
+system's value is delivered or lost. Two decisions follow, and both belong to managers rather than
+programmers: how software is designed, and how it is chosen.</p>
 
 <h3>1.1 Kinds of software, and where it comes from</h3>
 
-<p>Let's start with the plain inventory: what kinds of software a business runs, and the three ways it can get them.</p>
+<p>Start with the plain inventory. Software comes in two broad kinds:</p>
 
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Kinds of software, and where software comes from</span>
-<p><strong>System software</strong>, the operating systems and utilities that run the machine, versus
-<strong>application software</strong>, the programs that do the business's actual work: a register, a
-payroll system, a pizza-ordering app. Applications arrive three ways. <strong>Custom</strong>
-software is built for you, fits exactly, and costs the most to create and maintain.
-<strong>Packaged</strong> (off-the-shelf) software is bought and installed, cheaper, and fits
-approximately, which is why Chapter 8 spent a whole case on the configure-versus-customize decision.
-<strong>Software as a service (SaaS)</strong> is rented: it runs on the vendor's computers, you reach
-it through a browser, and you pay by subscription. Most new business software today is SaaS, for
-reasons that come down to cost.</p></div>
+<ul>
+<li><strong>System software</strong> runs the machine itself. For example, the operating system on your
+laptop or phone.</li>
+<li><strong>Application software</strong> does the business's actual work. For example, a cash register, a
+payroll system, or a pizza-ordering app.</li>
+</ul>
 
-<p>Domino's ordering system sits at the expensive end: custom software, built and owned, because
-Chapter 4 established that the ordering pipeline <em>is</em> the business, exactly the situation
-where custom is worth it. Which makes the case sharper, not softer: this was not a neglected vendor
-product the company barely controlled. It was the software Domino's chose to build itself, and the
-gap in it was a gap in the company's own design decisions.</p>
+<p>A business can get application software in three ways:</p>
+
+<ul>
+<li><strong>Custom software</strong> is built for you. It fits exactly and costs the most to create and keep
+running. For example, a company's own ordering app.</li>
+<li><strong>Packaged software</strong>, also called off-the-shelf, is bought and installed. It is cheaper and
+fits approximately, which is why Chapter 8 spent a whole case on configuring versus customizing it. For
+example, an accounting program installed on the company's own computers.</li>
+<li><strong>Software as a service (SaaS)</strong> is rented. It runs on the vendor's computers, you reach it
+through a browser, and you pay a subscription. For example, Gmail or Canvas. Most new business software
+today is SaaS.</li>
+</ul>
+
+<p>Keep one fact in mind for the main case. Domino's ordering system sits at the expensive end: custom
+software, built and owned by Domino's, because Chapter 4 showed that the ordering pipeline is the
+business. Whatever gaps it had were gaps in the company's own design decisions.</p>
 
 <h3>1.2 The interface decides who gets in</h3>
 
-<p>For the first decades of computing, the interface was a command line: a blinking cursor awaiting
-typed instructions in a syntax you had to already know. The population of people who could use a
-computer was, in effect, the population willing to memorize it. The graphical interface, windows,
-menus, a mouse, things you could recognize instead of recall, did not make computers more powerful.
-It made them <em>usable by more people</em>, and the personal-computing industry is the direct
-result. Hold that historical fact as a principle: every interface decision is a decision about who is
-in your market.</p>
+<p>For the first decades of computing, the interface was a command line: a blinking cursor waiting for typed
+instructions in a syntax you had to already know. The people who could use a computer were, in effect, the
+people willing to memorize it. The graphical interface, with windows, menus, and a mouse, did not make
+computers more powerful. It made them usable by more people, and the personal computer industry grew out
+of that. Hold it as a principle: <strong>every interface decision is a decision about who is in your
+market.</strong></p>
 
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Usability</span>
-<p><strong>Usability</strong> is not a matter of taste; it is a set of measurable properties.
-<strong>Learnability</strong>: how quickly can a new user do the core task? <strong>Efficiency</strong>:
-how fast is the task once learned? <strong>Error tolerance</strong>: how easily do users make
-mistakes, and how gracefully can they recover? You can put numbers on each, by watching real users
-attempt real tasks, which is what Lab 9 will have you do. The business stakes compound quietly. A confusing checkout leaks customers one abandoned cart at a
-time. Inside the company, hard-to-use enterprise software taxes every employee every day, a cost that never appears on the
-invoice of the system that causes it. The tax is measurable. One of this book's authors studied
-nurses using electronic medical records and found that the same system produced two different kinds
-of stress: the good kind, where a demanding tool feels worth mastering because it is useful and
-somebody helped, and the bad kind, where it feels imposed and pointless, which predicts wanting to
-leave the job. Usability is not a nicety. It is the difference between those two.</p></div>
+<p><strong>Usability</strong> is how easily people can use an interface to do what they came to do. It is not a
+matter of taste. It has properties you can measure by watching real people try real tasks:</p>
+
+<ul>
+<li><strong>Learnability:</strong> how quickly a new user can do the core task. For example, can a first-time
+customer order a pizza without help?</li>
+<li><strong>Efficiency:</strong> how fast the task is once learned. For example, how many taps a repeat
+order takes.</li>
+<li><strong>Error tolerance:</strong> how easily people make mistakes, and how gracefully they recover. For
+example, whether a wrong tap can be undone or empties the whole cart.</li>
+</ul>
+
+<p>The business stakes add up quietly. A confusing checkout loses customers one abandoned cart at a time.
+Inside a company, hard-to-use software taxes every employee every day, a cost that never appears on the
+invoice for the system that causes it. One of this book's authors studied nurses using electronic medical
+records and found that the same system produced two kinds of stress. The good kind came when a demanding
+tool felt useful and somebody helped people learn it. The bad kind came when it felt imposed and
+pointless, and it predicted wanting to leave the job.<sup class="cite"><a href="#src-1" aria-label="Source 1">1</a></sup> Usability is the difference between the
+two.</p>
 
 <h3>1.3 Accessibility is not a feature request</h3>
 
-<p>Usability asks whether a typical user can do the task. Accessibility asks the harder version: whether
-every user can, including the ones the builders never pictured.</p>
+<p>Usability asks whether a typical user can do the task. <strong>Accessibility</strong> asks the harder
+version: whether every user can, including people with disabilities the builders never pictured. That
+includes blind users who rely on a <strong>screen reader</strong>, software that reads the screen aloud;
+deaf users who need captions; and people who use a keyboard or voice because they cannot use a
+mouse.</p>
 
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Accessibility and WCAG</span>
-<p><strong>Accessibility</strong> is usability's widest circle: designing software that works for
-people with disabilities, including blind and low-vision users on screen readers, deaf users needing
-captions, and people navigating by keyboard or voice because they cannot use a mouse. The World Wide
-Web Consortium's <strong>Web Content Accessibility Guidelines (WCAG)</strong> are the de facto
-standard, organized around four properties: content must be <em>perceivable</em>, <em>operable</em>,
-<em>understandable</em>, and <em>robust</em>. In practice much of it is unglamorous discipline:
-labeling images and buttons so a screen reader has something to say, making every function reachable
-by keyboard, maintaining contrast a low-vision user can read.</p></div>
+<p>The working standard is the <strong>Web Content Accessibility Guidelines (WCAG)</strong>, published free by
+the World Wide Web Consortium, the group that sets web standards.<sup class="cite"><a href="#src-2" aria-label="Source 2">2</a></sup> They are organized around four
+properties:</p>
 
-<p>Two facts turn accessibility from charity into strategy. First, scale: the World Health
-Organization estimates about one in six people worldwide live with a significant disability, a
-market no retailer would knowingly lock out. Second, the <strong>curb-cut effect</strong>: features
-built for disability keep turning out to serve everyone, the way sidewalk curb cuts built for
-wheelchairs now serve strollers, suitcases, and delivery carts. Captions serve the noisy gym;
-voice interfaces serve drivers; high contrast serves your phone in sunlight. Accessible design is,
-reliably, just better design under constraints, and building it in from the start costs a fraction of
-retrofitting it under a court deadline, which brings us back to the pizza.</p>
+<ul>
+<li><strong>Perceivable:</strong> people can take in the content. For example, images have text descriptions
+a screen reader can speak.</li>
+<li><strong>Operable:</strong> people can use the controls. For example, every button works from the keyboard,
+not just with a mouse.</li>
+<li><strong>Understandable:</strong> people can follow it. For example, error messages say what went wrong in
+plain words.</li>
+<li><strong>Robust:</strong> it works with the tools people bring. For example, a screen reader can tell what
+each control is.</li>
+</ul>
+
+<p>Two facts turn accessibility from charity into strategy. The first is scale: the World Health
+Organization estimates that about 1.3 billion people, roughly one in six, live with a significant
+disability, a market no business would knowingly lock out.<sup class="cite"><a href="#src-3" aria-label="Source 3">3</a></sup> The second is the <strong>curb-cut
+effect</strong>: features built for disability keep turning out to serve everyone.</p>
+
+<figure class="diagram" style="margin:1.9rem auto;max-width:560px">
+<img src="curb-cut-colchester.jpg" width="960" height="723" loading="lazy" style="width:100%;height:auto"
+ alt="A concrete sidewalk beside a quiet street on a sunny autumn day. Instead of ending at a raised curb, the sidewalk slopes gently down to the level of the road. Just before the road, a rectangle of reddish textured paving marks the edge of the crossing. Grass and fallen leaves line both sides, and cars are parked in the background.">
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">
+A curb cut in Colchester, Vermont. Ramps like this were built so wheelchair users could cross the street.
+Now they carry strollers, suitcases, bikes, and delivery carts, and almost nobody notices them. The
+textured patch warns blind pedestrians where the road begins. Software works the same way: captions help
+in a noisy gym, and high contrast helps on a phone in bright sun.
+<br><br>Photograph: Ezekielf, via Wikimedia Commons, CC0 (public domain dedication).
+</figcaption>
+</figure>
+
+<p>Accessible design is, reliably, just better design. And building it in from the start costs a fraction of
+fixing it later under a court order, which brings us to the pizza.</p>
 
 <h2 id="select"><span class="num">2</span>How businesses choose software</h2>
 
-<p>Design is one software decision a business makes. Selection is the other, and by far the more common one, because most
-companies buy far more software than they build. Done badly it produces the systems everyone hates, and
-Chapter 8 showed you the nine-figure version. The professional process is unglamorous and learnable, and
-it ends with a question that decides how much of your company's technology you should own at all.</p>
+<p>Design is one software decision a business makes. Selection is the other, and by far the more common,
+because most companies buy far more software than they build. Done badly, it produces the systems everyone
+hates, and Chapter 8 showed you the hundred-million-dollar version. The professional process is
+unglamorous and learnable.</p>
 
 <h3>2.1 The selection process</h3>
 
-<p>Learnable is the word to notice. Nobody is born knowing how to buy software, and most managers never
-get taught. Here is the process:</p>
+<p>Nobody is born knowing how to buy software, and most managers never get taught. Here is the process:</p>
 
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Software selection and total cost of ownership</span>
-<p>Start with <strong>requirements</strong>, written before any vendor demo, split into must-have
-and nice-to-have, because a good demo will otherwise write your requirements for you. Shortlist, then
-run <strong>scripted demos</strong>: every vendor performs <em>your</em> tasks on <em>your</em>
-sample data, not their rehearsed happy path. Compute <strong>total cost of ownership (TCO)</strong>:
-the license or subscription is often the minority of the real cost once implementation, integration,
-training, support, and the eventual cost of leaving are added. Check references from companies your
-size, then <strong>pilot</strong> with real users before committing. And after this chapter, one line
-belongs in every requirements document: conformance with WCAG, verified in the demo with a screen
-reader running, because section 4 establishes what that line is worth.</p></div>
+<ul>
+<li><strong>Write the requirements first.</strong> List what the software must do before you see any vendor
+demo, and split the list into must-haves and nice-to-haves. Otherwise a good demo will write your
+requirements for you. Many organizations send the list to vendors as a formal <strong>request for proposal
+(RFP)</strong>.</li>
+<li><strong>Run scripted demos.</strong> Every vendor on the shortlist performs <em>your</em> tasks on
+<em>your</em> sample data, not their rehearsed best case. For example, a grocery co-op makes each vendor
+process a member discount on a real receipt.</li>
+<li><strong>Work out the total cost of ownership (TCO).</strong> The license or subscription is often the
+smaller part. Add setup, connecting it to other systems, training, support, and the cost of leaving
+later.</li>
+<li><strong>Check references and run a pilot.</strong> Talk to companies your size that use it, then let real
+users try it on real work before you sign.</li>
+</ul>
+
+<p>After this chapter, one line belongs in every requirements list: the software must meet WCAG, checked in
+the demo with a screen reader running. Section 4 shows what that line is worth.</p>
 
 <h3>2.2 Build, buy, or subscribe</h3>
 
-<p>The strategic part of selection is the oldest question in corporate IT: build it, buy it, or
-rent it? The working rule falls straight out of Chapter 3. If the capability is a
-<strong>commodity</strong>, something every business does the same way, payroll, email, accounting,
-buy or subscribe, because custom-building it buys you no advantage and all the maintenance. If the capability is your <strong>differentiator</strong>, the thing customers choose you for, owning it can be worth
-the enormous cost. That is why Domino's built its ordering pipeline, and why Chapter 4's whole story
-exists. The judgment call is knowing which is which, and the honest test is Porter's:
-would doing this better than rivals actually change what customers do?</p>
+<p>The strategic part of selection is the oldest question in corporate IT: build it, buy it, or rent it? The
+working rule comes straight from Chapter 3:</p>
 
-<p>The rule scales from a co-op's point-of-sale choice to a $100 billion streaming service without
-changing shape, and it comes up again in the last chapter of this book.</p>
+<ul>
+<li>If the capability is a <strong>commodity</strong>, something every business does the same way, such as
+payroll, email, or accounting, buy or subscribe. Building it yourself buys no advantage and all the
+upkeep.</li>
+<li>If the capability is your <strong>differentiator</strong>, the thing customers choose you for, owning it
+can be worth the cost. That is why Domino's built its own ordering system.</li>
+</ul>
+
+<p>The judgment call is knowing which is which. The test is simple to say: would doing this better than rivals
+actually change what customers do?</p>
 
 <div class="tryit" id="bbs">
   <div class="tryit-head">Quick quiz &middot; Build, buy, or subscribe?</div>
@@ -601,98 +647,117 @@ changing shape, and it comes up again in the last chapter of this book.</p>
 </script>
 
 <h2 id="cases"><span class="num">3</span>Two interfaces that decided the outcome</h2>
-<p>Before the main case, here are two short ones. In each one, the system underneath worked exactly as built, and the
-interface decided the outcome anyway. That is the claim section 1 makes in the abstract; these are
-what it looks like when it costs something.</p>
+
+<p>Before the main case, here are two short ones. In each, the system underneath worked exactly as built, and
+the interface decided the outcome anyway.</p>
 
 <h3>3.1 Mini-case 1 &middot; 2000: the ballot that was hard to read</h3>
 
-<p>In the 2000 United States presidential election, Palm Beach County in Florida used a ballot that
-listed candidates on two facing pages with a single column of punch holes running down the middle. To
-vote for the second candidate on the left page, you punched the third hole, because the second hole
-belonged to the first candidate on the right page. It was designed that way to fit ten candidates in
-large type, by an election official trying to help older voters see the names.</p>
+<p>In the 2000 U.S. presidential election, Palm Beach County, Florida, used a punch-card ballot that listed
+candidates on two facing pages, with one column of punch holes running down the middle. The county's
+election supervisor designed it that way so she could print the ten candidates' names in larger type for
+older voters.<sup class="cite"><a href="#src-4" aria-label="Source 4">4</a></sup></p>
 
-<p>The result was thousands of votes for a minor candidate whose name sat opposite the second hole, far
-more than he received in comparable counties. Many thousands more ballots were punched twice and
-discarded. The presidential election was decided in Florida by a margin of 537 votes.</p>
+<figure class="diagram" style="margin:1.9rem auto;max-width:640px">
+<img src="butterfly-ballot-2000.jpg" width="960" height="612" loading="lazy" style="width:100%;height:auto"
+ alt="The 2000 Palm Beach County presidential ballot laid open. Candidate names are printed in two columns on facing pages, with a single yellow strip of punch holes running down the middle between them. Arrows point from each name to a numbered hole. On the left page, George W. Bush points to hole 3 and Al Gore points to hole 5. On the right page, Pat Buchanan points to hole 4, which sits between them.">
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">
+The actual 2000 ballot. The second name on the left page points to the third hole, because the second hole
+belongs to the first name on the right page. The machines counted every punch correctly. The layout
+decided what people were able to say.
+<br><br>Public domain, via Wikimedia Commons.
+</figcaption>
+</figure>
 
-<p>In Palm Beach County, the voting machines counted correctly. The tabulation was accurate. The interface, a piece of card and a row of holes, determined what people were able to express. No
-test of the counting system would ever have caught that.</p>
+<p>The result was 3,407 votes for a minor candidate, Pat Buchanan, whose hole sat between the two
+front-runners'. That was several times what he received in comparable counties. More than 19,000 other
+ballots were punched twice and thrown out.<sup class="cite"><a href="#src-4" aria-label="Source 4">4</a></sup> The election was decided in Florida by 537 votes. The
+voting machines counted correctly. The interface, a piece of card and a row of holes, determined what
+people were able to express, and no test of the counting system would ever have caught it.</p>
 
-<p><strong>What decided the outcome: the layout. The component: hardware.</strong> This is the
-purest version of section 1's claim that every interface decision is a decision about who is in your
-market, and here the market was an electorate.</p>
+<p><strong>What decided the outcome: the layout. The component: hardware.</strong> This is the purest version of
+section 1's claim that every interface decision is a decision about who is in your market. Here the market
+was an electorate.</p>
 
 <div class="mcq"><b>Check yourself</b>The official who designed the ballot did it to make the names
 larger for older voters. Say what she should have done before printing it, using the vocabulary in
 section 1, and say why that step is so routinely skipped.
-<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>Usability, and specifically the property called error prevention. Larger type made each name easier to read, which is one usability goal, and the layout that larger type forced, names on two facing pages with one column of punch holes between them, made it easy to punch the wrong hole, which defeats the other. The ballot passed the test the designer ran (can you read it?) and failed the test she did not run (can you vote for who you meant to?). That is the general lesson: a design decision made to help one property can quietly break another, and the only way to know is to watch real people use the thing before it counts.</p></details></div>
+<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>Usability, and specifically the property section 1.2 calls error tolerance. Larger type made each name easier to read, which is one usability goal. But the layout that larger type forced, names on two facing pages with one column of punch holes between them, made it easy to punch the wrong hole, which defeats the other. The ballot passed the test the designer ran (can you read it?) and failed the test she did not run (can you vote for who you meant to?). That is the general lesson: a design decision made to help one property can quietly break another, and the only way to know is to watch real people use the thing before it counts.</p></details></div>
 
 <h3>3.2 Mini-case 2 &middot; 2024: the app that made the speakers stop working</h3>
 
-<p>One morning in May 2024, people who owned expensive speakers found that their alarms had not gone
-off, their sleep timers were gone, and in some cases the speakers would not respond at all. Nothing
-in the hardware had changed. Sonos makes wireless speakers that are controlled entirely through its
-app, and that month it released
-a rebuilt version of that app, timed to accompany the launch of its first headphones. The new app was
-missing features customers used every day: sleep timers, editing a queue, searching a local music
-library. Alarms did not fire. Some systems could not be controlled at all. And support for screen
-readers, which the previous app had, went backwards.</p>
+<p>One morning in May 2024, people who owned expensive speakers found that their alarms had not gone off,
+their sleep timers were gone, and in some cases the speakers would not respond at all. Nothing in the
+hardware had changed. Sonos makes wireless speakers that are controlled almost entirely through its app,
+and it had just released a rebuilt version, timed to the launch of its first headphones. The new app was
+missing features customers used every day.<sup class="cite"><a href="#src-5" aria-label="Source 5">5</a></sup></p>
 
-<p>The Sonos hardware was unchanged and working. The speakers on people's shelves were exactly as good as the
-week before. What changed was the only door customers had into them, and the company's first response
-was to defend the redesign as a better experience.</p>
+<figure class="diagram" style="margin:1.9rem auto;max-width:440px">
+<img src="sonos-one-speaker.jpg" width="960" height="720" loading="lazy" style="width:100%;height:auto"
+ alt="A black cylindrical Sonos One smart speaker with a fine mesh grille and the Sonos name printed on top, sitting on a white desk next to a knitted cup full of pens and scissors.">
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">
+A Sonos speaker. There are no buttons worth mentioning on it. The app is the door, so when the app broke,
+a perfectly good speaker became a very expensive ornament.
+<br><br>Photograph: Ajay Suresh, via Wikimedia Commons, CC BY 2.0.
+</figcaption>
+</figure>
 
-<p>Eight months later the chief executive resigned. By then the company had said fixing the app would cost between $20 million and $30 million. It had
-cut about six percent of its staff, reported a quarter in which revenue fell by around sixteen
-percent, and appointed an ombudsperson to publish reports on quality.
-It also said it could not go back to the old app, because the new one had changed the architecture
-underneath.</p>
+<p>For blind customers it was worse. Before launch, a Sonos staff member had assured users on the company's
+own forum that the new app had been tested with VoiceOver, the iPhone's screen reader. On launch day the
+National Federation of the Blind publicly called the app a significant accessibility regression.<sup class="cite"><a href="#src-6" aria-label="Source 6">6</a></sup></p>
 
-<p><strong>What decided the outcome: a launch date. The component: people.</strong> The app shipped
-when the headphones were ready rather than when the app was, and that was a decision made by named
-executives. Notice, too, that accessibility was the first thing to fall off, which is exactly the
-pattern section 1 describes and the case that follows turned into a lawsuit.</p>
+<p>The costs mounted. In August the company said fixing the app would cost $20 million to $30 million, and it
+cut about 6 percent of its staff. In October it said it would appoint a &ldquo;quality ombudsperson&rdquo; to give employees a
+direct line to raise problems. Its chief executive later blamed too little testing and releasing too many
+changes at once, which he called a &ldquo;big bang&rdquo; rollout, the same term you met in Chapter 8.<sup class="cite"><a href="#src-7" aria-label="Source 7">7</a></sup> Sales
+fell 16 percent in one quarter, and in January 2025 the chief executive stepped down.<sup class="cite"><a href="#src-7" aria-label="Source 7">7</a></sup></p>
+
+<p><strong>What decided the outcome: a launch date. The component: people.</strong> The app shipped when the
+headphones were ready rather than when the app was, and that was a decision made by named executives.
+Notice that accessibility was among the first things to break, which is the pattern section 1 describes,
+and the one the main case turned into a lawsuit.</p>
 
 <div class="mcq"><b>Check yourself</b>Sonos had a testing process and shipped anyway. Using section
 2's selection vocabulary, say what a scripted demo with real customers doing real tasks would have
 shown, and say why a company that knew that would still choose the launch date.
-<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>Testing tells you whether the software does what the specification says. It cannot tell you whether the specification left something out, and Sonos's left out the users who could not see the screen. The app passed its tests because screen-reader support was not in them; it had been treated as a feature rather than a requirement, so removing it broke no test. The gap is in section 2's selection and design step, before testing begins: the requirement was never written down as one, so nobody was responsible for it, and the process that was supposed to catch failures had nothing to catch. A test suite is only as complete as the list of people the product is for.</p></details></div>
+<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>Sonos said it had tested the app with VoiceOver, and it shipped anyway, so the gap was not whether testing happened but what the tests asked. A scripted demo built on section 2's rule, real customers doing their real tasks, would have looked different. A blind user would set an alarm, change the volume in one room, and start a playlist, start to finish, with the screen reader on. That would have failed on day one. A company that knew this might still keep the launch date because the headphones were ready and the date was public, and nobody had the authority, or the requirement in writing, to say that accessibility was a reason to wait. A test suite is only as complete as the list of people, and tasks, the product is for.</p></details></div>
 
 <h3>3.3 What the two have in common</h3>
 
-<p>A ballot and a mobile app. In both, the system underneath was correct: the votes were counted accurately, the speakers played. And in both, the interface decided what people could actually do, which is the only thing they experience.</p>
+<p>A ballot and a mobile app. In both, the system underneath was correct: the votes were counted accurately,
+and the speakers played. In both, the interface decided what people could actually do, which is the only
+thing they experience.</p>
 
-<p>Hold the second one especially close for the main case, because it is the same failure at a different scale. Sonos removed screen-reader support and lost a chief executive. Domino's never added it and
-ended up at the door of the Supreme Court. The interface is where a business meets a person, and it is
-the part of the system a court can see.</p>
+<p>Hold the second one close for the main case, because it is the same failure at a different scale. Sonos
+broke screen-reader support and lost a chief executive. Domino's never built it in, and ended up at the
+door of the Supreme Court.</p>
+
 <h2 id="robles"><span class="num">4</span>Main case &middot; Robles v. Domino's: the ADA meets the web</h2>
 
-<p>Let's begin with a pizza. Guillermo Robles tried to order one. He is blind, he uses software that reads a screen aloud,
-and Domino's website and app would not let him finish. Domino's, the company from Chapter 4, had
-rebuilt itself as "a tech company that happens to sell pizza," and by the mid-2010s a large share of
-its orders arrived through its website and app. That is
-the front door Guillermo Robles walked up to. His screen reader converts on-screen text and controls
-into speech, and it works only when software is built with the underlying labels and structure the
-reader needs. Domino's site and app were not. On at least two occasions he could not complete an
-order or claim an online-only discount, which meant the company's digital front door, its proudest
-system, was closed to him. In September 2016 he sued under the Americans with Disabilities Act.</p>
+<p>Picture trying to order a pizza with your eyes closed, using only a voice that reads the screen to you.
+The voice says &ldquo;button.&rdquo; Then &ldquo;button.&rdquo; Then &ldquo;button&rdquo; again. You have no idea which one adds
+pepperoni and which one empties your cart. That is roughly what Guillermo Robles met when he tried to order
+from Domino's, more than once, starting in July 2015.<sup class="cite"><a href="#src-8" aria-label="Source 8">8</a></sup></p>
 
-<p>Domino's defense is worth stating fairly, because your discussion questions will ask you to weigh
-it. The company made three arguments. The ADA, a 1990 law about physical places of public accommodation,
-does not reach websites and apps at all. No federal regulations existed telling businesses what an
-accessible website even is. And Mr. Robles was not shut out of Domino's, because he could always
-order by phone. Keep those three arguments in mind; a federal appeals court is going to answer each
-one, and the answers now shape how every business with a website gets advised.</p>
+<p>Domino's, the company from Chapter 4, had rebuilt itself as a technology company that happens to sell
+pizza, and by the mid-2010s a large share of its orders came through its website and app. That was the
+front door, and for Mr. Robles it was closed. In September 2016 he sued under the Americans with
+Disabilities Act (ADA), the 1990 federal law that bars businesses open to the public from shutting out
+people with disabilities.<sup class="cite"><a href="#src-8" aria-label="Source 8">8</a></sup></p>
 
 <div class="statrow">
   <div class="stat"><b>2</b><span>channels that failed him: website and app</span></div>
-  <div class="stat"><b>2016</b><span>the lawsuit, filed over an unorderable pizza</span></div>
+  <div class="stat"><b>2016</b><span>the lawsuit is filed</span></div>
   <div class="stat"><b>2019</b><span>Ninth Circuit: the ADA applies online</span></div>
-  <div class="stat"><b>1990</b><span>the ADA, written before the web existed</span></div>
-  <div class="stat"><b>1,000s</b><span>of web-accessibility suits now filed each year</span></div>
+  <div class="stat"><b>$4,000</b><span>the only public dollar figure</span></div>
+  <div class="stat"><b>3,000+</b><span>web-accessibility suits in 2025</span></div>
 </div>
+
+<p>Domino's defense is worth stating fairly, because your discussion questions will ask you to weigh it. The
+company made three arguments. The ADA, a law about physical places, does not reach websites and apps. No
+federal regulation said what an accessible website even is. And Mr. Robles was not shut out, because he
+could always phone. A federal appeals court answered each one, and the answers now shape how every business
+with a website gets advised.</p>
 
 <h3>4.1 What the software actually did to him</h3>
 
@@ -758,8 +823,8 @@ was offering something to its digital customers that it was not offering to him.
 
 <p>Keep hold of what the fix would have been. Nobody was asking Domino's to build a separate site for
 blind customers, or to invent anything. The remedy is to label the controls and describe the images in
-the software the company already had. That is the same work Chapter 12 will call an accessibility
-requirement, and it is cheapest when it is part of how the team builds, rather than a project somebody
+the software the company already had. That is the accessibility line section 2.1 puts in every
+requirements list, and it is cheapest when it is part of how the team builds, rather than a project somebody
 funds later under a court order.</p>
 
 <h3>4.2 Three defenses, and what happened to each</h3>
@@ -803,24 +868,23 @@ plainly had that connection, which the court calls a nexus. The court put it dir
 the goods and services of a place of public accommodation. Second: the absence of formal regulations
 is not a due-process escape hatch; the statute's obligation to communicate effectively with disabled
 customers was itself fair notice. In October 2019 the Supreme Court declined to hear Domino's appeal,
-leaving the ruling standing, and the case later ended in settlement.</p>
+leaving the ruling standing.<sup class="cite"><a href="#src-9" aria-label="Source 9">9</a></sup></p>
 
-<p>Notice the shape of the legal lesson, because you have seen it before. Regulators have taken the same position on AI hiring tools, which Chapter 12 returns to: existing discrimination law applies
+<p>Notice the shape of the legal lesson, because you have seen it before. Federal regulators took the same position on AI hiring tools in 2023, which Chapter 12 returns to: existing discrimination law applies
 no matter how novel the technology. Here, a 1990 statute written before the web reached the web
-anyway, because courts read laws by their purpose, not by the technology of their era. "There are no rules for this yet" is one of the most expensive sentences in business, and the
-aftermath proved it. With the precedent standing, web-accessibility suits, already climbing, now
-number in the thousands per year. The practical standard companies are held to is the WCAG guidance
-that was freely available the whole time. The cheapest moment to meet it was before the lawsuit.</p>
+anyway, because courts read laws by their purpose, not by the technology of their era. "There are no rules for this yet" is one of the most expensive sentences in business. The practical
+standard companies are now held to is the WCAG guidance that was freely available the whole time, and the
+cheapest moment to meet it was before the lawsuit.</p>
 
 <div class="pull"><p>The interface is a legal surface. Domino's learned it from a pizza order; every business with a website inherited the lesson.</p></div>
 
 <h3>4.4 Six years, and what the record actually shows</h3>
 
-<p>Follow the calendar. Mr. Robles filed in September 2016. The district court dismissed in 2017. The
+<p>Follow the calendar. Mr. Robles filed in September 2016. In March 2017 the district court set the case aside to wait for federal regulators. The
 Ninth Circuit reversed in January 2019. The Supreme Court declined to take the appeal in October 2019.
 In June 2021, back at the district court, the judge granted summary judgment for Mr. Robles on the
 website, ordered Domino's to bring it into line with WCAG, and awarded him $4,000 in statutory damages
-under California's civil rights act. The parties settled in June 2022, on undisclosed terms. Six years
+under California's civil rights act. It did not rule on the app. The parties settled in June 2022, on undisclosed terms.<sup class="cite"><a href="#src-8" aria-label="Source 8">8</a></sup> Six years
 of litigation, over an order for a pizza.</p>
 
 <p>Now a caution about a number you will meet the moment you search for this case. Many articles state
@@ -836,29 +900,7 @@ an invented number, and using one hands the other side an easy way to dismiss th
 the record does establish is strong enough: a company spent six years and an undisclosed amount of
 legal effort defending its right not to label its buttons, and was ordered to label them anyway.</p>
 
-<h3>4.5 Since the ruling</h3>
-
-<p>The Ninth Circuit's decision stood, and the practical standard businesses are held to is the WCAG
-guidance that was freely available the whole time. Web-accessibility suits in the United States have
-run to several thousand a year since, many of them against small businesses that never imagined their
-website was a legal surface.</p>
-
-<p>The law has moved too, though unevenly. In 2024 the United States Department of Justice issued a rule
-requiring state and local government websites and apps to meet a specific version of WCAG by April
-2026. In April 2026, days before that deadline, it pushed the dates back a year, to 2027 and 2028, and
-said it might revise the rule itself. The National Federation of the Blind sued over the delay. The
-standard did not change and the private lawsuits did not pause: more than three thousand federal suits
-were filed against businesses in 2025 alone. In 2025 the European Union's accessibility act came into
-force, extending requirements to private-sector products and services including websites, apps and
-self-service terminals. And the Sonos case in section 3 shows the market's version of the same lesson. A company that went
-backwards on accessibility in 2024 lost customers, revenue and a chief executive without any lawsuit
-at all.</p>
-
-<p>The direction is not in doubt, even where the deadlines slip. What was arguable in 2016 is settled in
-2026: the interface is a legal surface, and the cheapest moment to meet the standard is before anybody
-has to ask.</p>
-
-<h3>4.6 The five components at Domino's, again</h3>
+<h3>4.5 The five components at Domino's, again</h3>
 
 <p>Now that you have seen the whole system, here it is as five components, the way this course maps every case. Compare it with the Chapter 4 table for the same company. The rows are the same; the question asked of them is different.</p>
 
@@ -871,15 +913,39 @@ has to ask.</p>
 <tr><td data-label="Component"><strong>People</strong></td><td data-label="In the case">Builders who never tested with a screen reader; a customer who sued</td><td data-label="The lesson">The users you do not picture will find you eventually</td></tr>
 </table>
 
-<h3>4.7 What a business technology manager takes from this chapter</h3>
+<h3>4.6 What's next: since the ruling</h3>
+
+<p>The Ninth Circuit's decision stood, and web-accessibility lawsuits in the United States have run to
+thousands a year since. More than 3,000 were filed in federal court against businesses in 2025 alone, many
+of them against small businesses that never imagined their website was a legal surface.<sup class="cite"><a href="#src-10" aria-label="Source 10">10</a></sup></p>
+
+<p>The law has moved too, though unevenly:</p>
+
+<ul>
+<li><strong>Government websites.</strong> In 2024 the Department of Justice issued a rule requiring state and
+local government websites and apps, including public universities like this one, to meet WCAG 2.1. Four
+days before the first deadline in April 2026, it pushed the dates back a year, to April 2027 for large
+entities and April 2028 for smaller ones. The standard itself did not change.<sup class="cite"><a href="#src-11" aria-label="Source 11">11</a></sup></li>
+<li><strong>The challenge to the delay.</strong> In May 2026 the National Federation of the Blind sued to undo
+the extension. As of October 2026 the court had not ruled.<sup class="cite"><a href="#src-11" aria-label="Source 11">11</a></sup></li>
+<li><strong>Europe.</strong> In June 2025 the European Accessibility Act began applying to many private-sector
+products and services, including websites, apps, and self-service machines.</li>
+</ul>
+
+<p>And Sonos shows the market's version of the same lesson. A company that went backwards on accessibility in
+2024 lost customers, revenue, and a chief executive without any lawsuit at all. The direction is not in
+doubt, even where deadlines slip. What was arguable in 2016 is settled in 2026: the cheapest moment to meet
+the standard is before anybody has to ask.</p>
+
+<h3>4.7 What a business technology manager takes from this case</h3>
 
 <p>Strip the Robles case down to what you can reuse in any company. Four decisions came up in it, and each one is a decision you will be in the room for.</p>
 
-<p><strong>The interface is the system, as far as the customer and the court are concerned.</strong> Domino's counted votes correctly in the ballot case, played music correctly in the Sonos case, and took orders correctly on its website, and in every one the interface decided who could actually use it. When you review a system, review it from the outside, as the person who has to use it, because that is the only part they will ever see.</p>
+<p><strong>The interface is the system, as far as the customer and the court are concerned.</strong> The Palm Beach machines counted votes correctly, the Sonos speakers played music correctly, and Domino's systems took orders correctly, and in every one the interface decided who could actually use it. When you review a system, review it from the outside, as the person who has to use it, because that is the only part they will ever see.</p>
 
-<p><strong>Write accessibility down as a requirement, not a feature.</strong> Sonos had a testing process and shipped an app that blind users could not operate, because screen-reader support was never a requirement, so no test covered it. A feature can be dropped in a sprint. A requirement has an owner and a test. Which one accessibility is at your company is a decision, and after Robles it is a legal one.</p>
+<p><strong>Write accessibility down as a requirement, not a feature.</strong> Sonos said its app had been tested with a screen reader and still shipped one blind users could barely operate, because full screen-reader support was never treated as a release requirement. A feature can be dropped in a sprint. A requirement has an owner and a test. Which one accessibility is at your company is a decision, and after Robles it is a legal one.</p>
 
-<p><strong>Decide build, buy, or subscribe by who is accountable for the result.</strong> Most companies buy far more software than they build, and the selection process is learnable. But whichever you choose, the company that puts the software in front of customers answers for what it does. Domino's did not write its screen-reader failure; it bought and configured its way into it, and the court did not care.</p>
+<p><strong>Whether you build, buy, or subscribe, you answer for what customers see.</strong> Domino's built its own ordering system, so the gap was its own. But buying would not have shifted the duty: the company that puts software in front of customers answers for what it does, whoever wrote the code. That is why the accessibility line belongs in every requirements list and every vendor demo.</p>
 
 <p><strong>Ask who the system forgets.</strong> Every one of the cases in this chapter is about a user the designers never pictured: a voter who could not follow the layout, a blind customer, an employee stuck with the tools the company chose. That question costs nothing to ask before launch and a great deal to answer after, and it is the manager's question, because the developers are building what they were told.</p>
 
@@ -972,7 +1038,7 @@ strongest opinion about, and be ready to say it first.</p>
 circle. This week's lab hands you the instrument professionals use to measure them: the ten usability
 heuristics. You will learn all ten, go deep on three, find each one working or failing in a real
 interface, and write the short evaluation report a UX designer produces on the first day of a project.</p>
-<p>Keep mini-case 3 beside you while you do it. Sonos had a testing process. The question is not
+<p>Keep mini-case 2 beside you while you do it. Sonos had a testing process. The question is not
 whether you tested but who you tested with, doing what, and whether anybody had the authority to say
 the launch date moves.</p>
 <p><a class="lablink" href="lab9-ux.html">Go to Lab 9: UX Design &#8594;</a></p>
@@ -981,27 +1047,40 @@ the launch date moves.</p>
 <details class="srcbox">
 <summary><h2 id="sources"><span class="num">9</span>Sources and further reading</h2></summary>
 <ul class="sources">
-<li>Robles v. Domino's Pizza LLC, 913 F.3d 898 (9th Cir. 2019), the Supreme Court's denial of certiorari in October 2019, and the district court's summary judgment of 23 June 2021, for the nexus holding, the fair-notice reasoning, the order to conform to WCAG, and the $4,000 in statutory damages under California's Unruh Act. The parties settled in June 2022 on undisclosed terms, and the claims about the mobile app were never decided on the merits.</li>
-<li><strong>A number to avoid.</strong> Many secondary accounts say remediation would have cost Domino's about $38,000. That figure is not in the filings reviewed for this chapter and appears to originate in a 2019 social media post. Domino's litigation spending, its remediation cost and the settlement terms are all undisclosed. Section 4.4 says so deliberately; if a student brings the figure to class, this is the source discussion to have.</li>
-<li>Christopher B. Califf, Saonee Sarker and Suprateek Sarker, "The Bright and Dark Sides of Technostress: A Mixed-Methods Study Involving Healthcare IT," <em>MIS Quarterly</em> 44(2), 2020, pp. 809&ndash;856, for the two kinds of technology stress described in section 1.</li>
-<li><em>Robles v. Domino's Pizza LLC</em>, Ninth Circuit Court of Appeals, January 2019, and the Supreme Court's denial of certiorari, October 2019, for the two holdings in section 4.</li>
-<li>Web Content Accessibility Guidelines (WCAG), World Wide Web Consortium, for the four principles in section 1. The guidelines themselves are readable and worth an hour.</li>
-<li>Contemporary reporting and subsequent analysis of the Palm Beach County ballot in the 2000 election, for mini-case 1. The precise number of misdirected votes is contested; the design and the margin are not.</li>
-<li></li>
-<li>Sonos investor communications and reporting from May 2024 to January 2025, for the app release, the missing features, the remediation cost, the layoffs, the revenue decline and the chief executive's departure, for mini-case 3.</li>
-<li>US Department of Justice, final rule on web and mobile accessibility under Title II of the ADA (April 2024), and the European Accessibility Act (in force June 2025), for the "since the ruling" material. Both are recent; check current deadlines before teaching them.</li>
-<li>World Health Organization estimates on the global prevalence of significant disability, for the scale figure in section 1.</li>
-<li><em>Robles v. Domino's Pizza LLC</em>, 913 F.3d 898 (9th Cir. 2019): the holdings that Title III of the ADA applies to a website and app with a nexus to physical locations, and that the absence of regulations raises no due-process bar.</li>
-<li>Reporting on the Supreme Court's denial of certiorari, October 7, 2019 (ABA Journal and others): the ruling left standing, and the anticipated rise in web-accessibility litigation that followed.</li>
-<li>W3C, Web Content Accessibility Guidelines (WCAG): the perceivable, operable, understandable, robust framework that functions as the practical compliance standard.</li>
-<li>World Health Organization, World Report on Disability estimates: roughly one in six people worldwide live with significant disability, the market-scale figure in section 1.</li>
-<li>Coverage of the case's 2022 settlement (accessibility-industry reporting): the quiet ending, after the expensive route.</li>
-<li>US Department of Justice, interim final rule of 20 April 2026 extending the Title II web-accessibility compliance dates to 26 April 2027 (large public entities) and 26 April 2028 (smaller ones); the National Federation of the Blind's suit over the delay; and law-firm tallies of 2025 web-accessibility litigation (more than 3,100 federal Title III suits), for the "Since the ruling" passage.</li>
-<li><strong>Verification note.</strong> Checked in September 2026: the DOJ deadline extension (the chapter had described the 2024 rule as due on a deadline; it now records the April 2026 delay), the European Accessibility Act's June 2025 application date, and the 2025 lawsuit counts. The Robles procedural history, the Palm Beach ballot and the Sonos figures were checked against the authors' knowledge of the published record rather than re-searched. Also fixed on that pass: section cross-references that used an older numbering, and a "Since the ruling" passage that had been stranded after the discussion questions and is now back inside section 4.</li>
+<li id="src-1"><span class="srcnum">1</span> Christopher B. Califf, Saonee Sarker and Suprateek Sarker, &ldquo;The Bright and Dark Sides of Technostress: A Mixed-Methods Study Involving Healthcare IT,&rdquo; <em>MIS Quarterly</em> 44(2), 2020, pp. 809&ndash;856, for the two kinds of technology stress. Section 1.2.</li>
+<li id="src-2"><span class="srcnum">2</span> World Wide Web Consortium, Web Accessibility Initiative, <a href="https://www.w3.org/WAI/gettingstarted/Overview.html" target="_blank" rel="noopener">accessibility overview</a> and the <a href="https://www.w3.org/TR/WCAG20/" target="_blank" rel="noopener">Web Content Accessibility Guidelines</a>, for the four principles. The guidelines are readable and worth an hour. Section 1.3.</li>
+<li id="src-3"><span class="srcnum">3</span> World Health Organization, <em>Disability</em> fact sheet and <em>Global Report on Health Equity for Persons with Disabilities</em> (2022), for about 1.3 billion people, roughly one in six, living with significant disability. Section 1.3.</li>
+<li id="src-4"><span class="srcnum">4</span> Jonathan N. Wand and others, <a href="https://www.jsekhon.com/papers/butterfly.pdf" target="_blank" rel="noopener">&ldquo;The Butterfly Did It: The Aberrant Vote for Buchanan in Palm Beach County, Florida&rdquo;</a>, <em>American Political Science Review</em>, December 2001, for the design, its purpose (larger type), and Buchanan&rsquo;s 3,407 votes; and <a href="https://www.cnn.com/TRANSCRIPTS/0011/09/tl.00.html" target="_blank" rel="noopener">CNN, 9 November 2000</a>, for the more than 19,000 discarded ballots. Exactly how many votes were misdirected is contested; the design and the margin are not. Mini-case 1.</li>
+<li id="src-5"><span class="srcnum">5</span> The Register, <a href="https://www.theregister.com/2024/05/20/sonos_app_update_borks_users" target="_blank" rel="noopener">20 May 2024</a>, for the missing features and blind users&rsquo; complaints. Mini-case 2.</li>
+<li id="src-6"><span class="srcnum">6</span> National Federation of the Blind, <a href="https://nfb.org/node/15765" target="_blank" rel="noopener">&ldquo;National Federation of the Blind Urges Sonos to Restore Accessibility,&rdquo; 7 May 2024</a>; and the Sonos community forum, <a href="https://en.community.sonos.com/controllers-music-services-228995/redesigned-sonos-app-and-compatibility-with-voice-over-screen-reader-in-ios-6891799?postid=16716207" target="_blank" rel="noopener">April and May 2024</a>, for the pre-launch statement that the app had been tested with VoiceOver. Mini-case 2.</li>
+<li id="src-7"><span class="srcnum">7</span> Reuters, via <a href="https://arc-dev.theglobeandmail.com/business/technology/article-speaker-maker-sonos-unveils-broad-series-of-reforms-after-app-release" target="_blank" rel="noopener">The Globe and Mail, October 2024</a>, for the CEO&rsquo;s &ldquo;big bang&rdquo; explanation, the $20 to $30 million cost, the August job cuts, and the ombudsperson; and Sonos, <a href="https://www.sec.gov/Archives/edgar/data/1314727/000131472725000026/sono-20241228.htm" target="_blank" rel="noopener">Form 10-Q for the quarter ended 28 December 2024</a>, for the CEO&rsquo;s departure on 13 January 2025. The 16 percent quarterly sales decline is from contemporary reporting on Sonos&rsquo;s fourth fiscal quarter of 2024. Mini-case 2.</li>
+<li id="src-8"><span class="srcnum">8</span> U.S. District Court for the Central District of California, <a href="https://www.bclplaw.com/a/web/251042/Dominos-MSJ-Order.pdf" target="_blank" rel="noopener">order granting summary judgment, 23 June 2021</a>, for the filing date, the 2017 stay, the attempts beginning July 2015, the order to meet WCAG, and the $4,000 under California&rsquo;s Unruh Act; and the <a href="https://www.microassist.com/digital-accessibility/dominos-pizza-guillermo-robles/" target="_blank" rel="noopener">case timeline</a> for the June 2022 notice of settlement on undisclosed terms. Sections 4 and 4.4.</li>
+<li id="src-9"><span class="srcnum">9</span> <em>Robles v. Domino&rsquo;s Pizza, LLC</em>, 913 F.3d 898 (9th Cir. 2019), <a href="https://www.leagle.com/decision/infco20190115201" target="_blank" rel="noopener">opinion of 15 January 2019</a>, for the nexus holding and the fair-notice reasoning; and the Supreme Court&rsquo;s <a href="https://www.supremecourt.gov/docket/docketfiles/html/public/18-1539.html" target="_blank" rel="noopener">docket in No. 18-1539</a>, for the denial of review on 7 October 2019. Section 4.3.</li>
+<li id="src-10"><span class="srcnum">10</span> Seyfarth Shaw, <a href="https://www.adatitleiii.com/2026/03/federal-court-website-accessibility-lawsuit-filings-bounce-back-in-2025/" target="_blank" rel="noopener">&ldquo;Federal Court Website Accessibility Lawsuit Filings Bounce Back in 2025,&rdquo; March 2026</a>, for 3,117 federal website-accessibility suits in 2025, up 27 percent. Section 4.6.</li>
+<li id="src-11"><span class="srcnum">11</span> <a href="https://www.consumerfinancialserviceslawmonitor.com/2026/04/doj-extends-title-ii-ada-web-accessibility-rule-compliance-deadlines-for-state-and-local-governments/" target="_blank" rel="noopener">Consumer Financial Services Law Monitor, April 2026</a>, on the Justice Department&rsquo;s interim final rule moving the Title II dates to 26 April 2027 and 26 April 2028; and <a href="https://titleii.org/title-ii-updates" target="_blank" rel="noopener">TitleII.org, October 2026</a>, on the National Federation of the Blind&rsquo;s May 2026 suit, unresolved as of 12 October 2026. Recheck before teaching. Section 4.6.</li>
+<li>A number to avoid. Many secondary accounts say fixing the site would have cost Domino&rsquo;s about $38,000. That figure is not in the court filings and appears to come from a 2019 social media post. Domino&rsquo;s legal spending, its repair costs, and the settlement terms are all undisclosed. Section 4.4 says so deliberately; if a student brings the figure to class, this is the source discussion to have.</li>
+<li>European Accessibility Act, applying from 28 June 2025, for the European requirements in section 4.6.</li>
+<li>Images. Curb cut in Colchester, Vermont, photograph by Ezekielf, <a href="https://commons.wikimedia.org/wiki/File:Long_gradual_sidewalk_ramp_to_tactile_paving_and_curb_cut_in_Colchester_VT.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC0. 2000 Palm Beach County ballot, <a href="https://commons.wikimedia.org/wiki/File:Butterfly_Ballot,_Florida_2000_(large).jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, public domain. Sonos One speaker, photograph by Ajay Suresh, <a href="https://commons.wikimedia.org/wiki/File:Sonos_One_Speaker_(49671374307).jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY 2.0. The screen-reader diagram is original to this book.</li>
+<li><strong>Verification note, 29 October 2026 (rebuild).</strong> Restructured to match Chapter 7 and checked against the entries above; the Robles history, the ballot, and the Sonos figures have now been re-searched rather than taken from memory. Corrections: section 4.7 said Domino&rsquo;s &ldquo;bought and configured its way into&rdquo; the failure, which contradicted section 1.1; Domino&rsquo;s built its own system, and the takeaway now says so. The district court stayed the case in March 2017 rather than dismissing it outright. Section 4.1 pointed to Chapter 12 for accessibility requirements; it now points to section 2.1. The lab bridge mentioned a nonexistent &ldquo;mini-case 3.&rdquo; The Sonos check-yourself answer said screen-reader support was missing from the tests; Sonos in fact said it had tested with VoiceOver, so the answer now asks what the tests asked. The sentence on AI hiring tools is now dated to 2023; check its current status against Chapter 12 before teaching. Repeated lines in sections 4.3 and 4.5 were removed, and duplicate source entries were merged. New: the photographs, the bulleted usability, WCAG, and selection steps, &ldquo;RFP&rdquo; in the body, Sonos&rsquo;s own &ldquo;big bang&rdquo; explanation, the National Federation of the Blind&rsquo;s launch-day statement, the 2025 suit count from Seyfarth Shaw, and the status of the NFB challenge to the Title II delay.</li>
 </ul>
 </details>
 
 </main>
+<script>
+(function(){
+  function openFor(h){
+    if(!h||h.indexOf('#src-')!==0)return;
+    var box=document.querySelector('details.srcbox'); if(box) box.open=true;
+    var t=document.getElementById(h.slice(1)); if(t) t.scrollIntoView();
+  }
+  document.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('.cite a'); if(!a)return;
+    e.preventDefault(); var h=a.getAttribute('href'); history.replaceState(null,'',h); openFor(h);
+  });
+  openFor(location.hash);
+})();
+</script>
+
 <!--NAVJS-->
 <script>
 (function(){
