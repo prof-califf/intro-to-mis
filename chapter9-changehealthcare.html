@@ -351,6 +351,10 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 .srcbox>summary:focus-visible{outline:2px solid var(--magenta);outline-offset:3px}
 .srcbox .sources{margin-top:0;padding-top:0;border-top:0;padding-bottom:1.1rem}
 @media print{.srcbox{border:0;padding:0}.srcbox>summary::after{display:none}}
+/* ---------- citations ---------- */
+.cite{font-size:.68em;line-height:0;margin-left:.1em}
+.cite a{color:var(--magenta-dark);text-decoration:none;font-weight:600}
+.srcnum{display:inline-block;min-width:1.6rem;font-weight:700;color:var(--magenta-dark)}
 </style>
 <link rel="stylesheet" href="book.css">
 </head>
@@ -434,9 +438,9 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 </div>
 <p class="printbox"><span>Wanna go analog?</span><button type="button" onclick="window.print()" aria-label="Print this page or save it as a PDF">&#9113;&nbsp; Print here</button><span>or save it as a PDF; the navigation drops out</span></p>
 
-<p class="lede">Most Americans had never heard of Change Healthcare before February 2024. It is not a
-hospital or an insurer. It is the plumbing between them, and when it went offline, a third of the
-country's medical claims stopped moving.</p>
+<p class="lede">Most Americans had never heard of Change Healthcare before February 2024. Then, for
+weeks, pharmacies struggled to confirm coverage and doctors' offices could not get paid, all because of one
+company most of them had never chosen to depend on.</p>
 
 <div class="objectives"><span class="obj-tag">Learning objectives</span>
 <p>By the end of this chapter you should be able to:</p>
@@ -451,36 +455,46 @@ country's medical claims stopped moving.</p>
 
 <h2 id="protect"><span class="num">1</span>What security actually protects</h2>
 
-<p>Every chapter so far has assumed the system works. This one is about what happens when somebody
-deliberately stops it, and the first thing to fix is the idea that security is something that happens to
-computers.</p>
+<p>Think about the last time an app you depend on stopped working. Maybe your bank's site was down on
+payday, or the campus registration system froze the morning classes opened. Nothing was stolen. You just
+could not do the thing you needed to do. Hold on to that feeling, because it is the center of this
+chapter.</p>
 
-<p>Security is a property of all five components at once, and the weakest one decides the outcome.
-Hardware can be seized or encrypted. Software carries the flaw that lets someone in. Data is what gets
-copied out. Networks are how an intruder moves from the one machine they reached to the ones they
-wanted. And people are, in almost every incident you will read about, both the way in and the only
-reason anyone notices. The chapter's case turns on a missing lock, nine days of unnoticed movement, and
-a decision nobody had made about how much of a country's medical billing should run through one
-building. Not one of those is a coding problem.</p>
+<p>Every chapter so far has assumed the system works. This one is about what happens when somebody
+deliberately stops it. The first idea to fix is that security is not something that happens only to
+computers. It is a property of all five components at once, and the weakest one decides the outcome:</p>
+
+<ul>
+<li><strong>Hardware</strong> can be locked up or taken offline.</li>
+<li><strong>Software</strong> carries the flaw or the missing setting that lets someone in.</li>
+<li><strong>Data</strong> is what gets copied out.</li>
+<li><strong>Networks</strong> are how an intruder moves from the one machine they reached to the ones they
+wanted.</li>
+<li><strong>People</strong> are, in almost every incident you will read about, both the way in and the only
+reason anyone notices.</li>
+</ul>
 
 <h3>1.1 The three things security protects</h3>
 
-<p>So what does an attack actually take? Ask that about any attack and the answer is always one of three properties of information. Security people have a name for the set.</p>
+<p>Ask what an attack actually takes, and the answer is always one of three properties of information.
+Security people call the set the <strong>CIA triad</strong>. It has nothing to do with the spy agency; the
+letters stand for the three properties:</p>
 
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">The CIA triad</span>
-<p>Security protects three properties of information. <strong>Confidentiality</strong>: only
-authorized people can read it. <strong>Integrity</strong>: it cannot be altered without detection.
-<strong>Availability</strong>: the people who need it can reach it when they need it. Older breaches
-were mostly confidentiality failures, data read by the wrong people. Ransomware is primarily an
-<strong>availability</strong> attack: it does not read your data so much as lock it away from you,
-then charge for the key. Change Healthcare was both at once, availability first (systems down,
-claims frozen) and confidentiality second (193 million people's records taken). When you analyze any incident,
-name which of the three broke, because the defense and the damage differ completely for each.</p></div>
+<ul>
+<li><strong>Confidentiality:</strong> only the right people can read it. For example, a stolen laptop full of
+customer Social Security numbers is a confidentiality failure.</li>
+<li><strong>Integrity:</strong> nobody can change it without being noticed. For example, an attacker who quietly
+changes a supplier's bank account number, so the next payment goes to them, has broken integrity.</li>
+<li><strong>Availability:</strong> the people who need it can reach it when they need it. For example, a
+hospital whose scheduling system is locked has lost availability, even if not one record leaves the
+building.</li>
+</ul>
 
-<p>The CIA triad makes a deeper point: security is a property of information and operations, not of computers. A hospital whose billing system is encrypted by an attacker has lost availability just as
-completely as if the building had flooded. This is why security stopped being purely an IT topic and
-became a boardroom one, and why the people who manage it increasingly come from business, not only
-from engineering.</p>
+<p>Older breaches were mostly confidentiality failures: data read by the wrong people. Today's most common
+attack, ransomware, is mainly an availability attack. A hospital whose billing system is locked by an
+attacker has lost availability just as completely as if the building had flooded. That is why security
+stopped being only an IT topic and became a boardroom one. When you analyze any incident, name which of
+the three broke first, because the damage and the defense differ for each.</p>
 
 <div class="tryit" id="cia">
   <div class="tryit-head">Quick quiz &middot; Which property was lost?</div>
@@ -519,90 +533,106 @@ from engineering.</p>
 
 <h3>1.2 Ransomware as a business</h3>
 
-<p>The attack in this chapter's case was ransomware, which is now the most common way a large
-organization loses availability, and the first thing to understand about it is that the people behind
-it are running a business.</p>
+<p><strong>Ransomware</strong> is malicious software that locks an organization's data, usually by encrypting
+it, and demands payment for the key. Modern ransomware adds a second threat called <strong>double
+extortion</strong>. The attackers copy the data out first, so even a victim with perfect backups faces a
+second demand: pay, or we publish what we took.</p>
 
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Ransomware</span>
-<p><strong>Ransomware</strong> is malicious software that encrypts an organization's data and demands
-payment for the key. Modern ransomware adds a second threat, called double extortion. The attackers copy the data out
-first, so even a victim with perfect backups faces the choice of paying to keep the data off the
-internet. The crucial thing for a business student to understand is that
-ransomware is an <em>industry</em>, not a prank. Groups operate as ransomware-as-a-service:
-core operators build the malware and rent it to affiliates who carry out attacks and split the
-proceeds. It has revenue models, customer support, and, as Change Healthcare learned, dishonest
-partners.</p></div>
+<p>The most important thing to understand about ransomware is that it is an industry, not a prank. Many
+groups run what is called <strong>ransomware-as-a-service</strong>. A core team builds the malware and rents
+it to partners, called affiliates, who carry out the attacks and split the money. It has revenue models,
+help desks for victims, and, like any business, partners who cheat each other.</p>
 
-<p>The aftermath of the main case reads like a case study in why paying does not buy safety. Change Healthcare, through
-a UnitedHealth subsidiary, paid the ALPHV/BlackCat group about $22 million for a promise to delete
-the stolen data. The core operators then took the entire payment and vanished, an exit scam, without
-paying the affiliate who had actually done the hacking. That affiliate still had a copy of the data,
-took it to a second ransomware group, RansomHub, and demanded a fresh ransom. The company had paid
-$22 million and protected nothing. This is the practical argument, not the moral one, against assuming a ransom payment solves the
-problem. You are trusting criminals to keep a promise, and nothing in their incentives protects you.</p>
+<p>That last point matters when a victim decides whether to pay. A payment buys a promise, such as
+&ldquo;we will delete your data,&rdquo; from people whose business is breaking promises. Nothing makes that promise
+enforceable. Section 4 shows exactly what one company's payment bought.</p>
 
 <h2 id="defense"><span class="num">2</span>How attacks work, and how defense works</h2>
 
-<p>Attacks are not single events. They are sequences, and that is the good news, because a sequence can
-be broken at any point. This section gives you the model analysts use to describe attackers and the handful of ordinary
-controls that interrupt it. It starts at the door the case's attackers walked through.</p>
+<p>Attacks are not single events. They are sequences, and that is good news, because a sequence can be broken
+at any point. This section starts at the front door and works inward, then steps back to ask what counts
+as your system in the first place.</p>
 
-<h3>2.1 The missing control</h3>
+<h3>2.1 Passwords, and the second step</h3>
 
-<p>Here is how the largest healthcare breach in US history, the main case of this chapter, began. Attackers logged into a Change
-Healthcare remote-access portal, a Citrix system, using a stolen username and password. That portal
-was not protected by multi-factor authentication. There was no second step, no code from a phone, no
-confirmation prompt. A password was the whole lock.</p>
+<p>Most attacks do not begin with clever code. They begin with a real username and password that somebody
+stole. Stolen passwords are cheap and everywhere. They come from phishing emails, from old breaches at other
+sites, and from people who reuse the same password, and they are sold in bulk on criminal markets.</p>
 
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Multi-factor authentication (MFA)</span>
-<p>MFA requires more than one kind of proof to log in: something you know (a password), plus
-something you have (a phone or hardware key) or something you are (a fingerprint). Its entire purpose
-is to make a stolen password insufficient by itself, and stolen passwords are cheap and everywhere,
-harvested by the millions and sold on criminal markets. MFA is not exotic, expensive, or new. It is
-the single highest-value control most organizations can deploy, and its absence on one internet-facing
-portal is the root cause the company's own CEO named in sworn testimony to Congress.</p></div>
+<p><strong>Multi-factor authentication</strong>, or <strong>MFA</strong>, makes a stolen password useless on its own.
+It asks for more than one kind of proof before letting someone in:</p>
 
-<p>The attackers were then inside for about nine days before anyone noticed. They moved through the
-network and copied out roughly six terabytes of data, then deployed the ransomware that finally made
-their presence impossible to miss. Two failures, in sequence: a missing lock at the door, and
-nine days of movement inside that nobody detected. Hold that shape, because it has a name.</p>
+<ul>
+<li><strong>Something you know,</strong> such as a password.</li>
+<li><strong>Something you have,</strong> such as a code sent to your phone, or a small physical key like the one
+in the photo.</li>
+<li><strong>Something you are,</strong> such as a fingerprint or face scan.</li>
+</ul>
+
+<figure class="diagram" style="margin:1.9rem auto;max-width:360px">
+<img src="security-key.jpg" width="720" height="720" loading="lazy" style="width:100%;height:auto"
+ alt="A small black hardware security key lying on a plain white surface. It is about the size of a house key, with a gold circular touch pad near one end marked with the letter y, a round hole for a key ring at the top, and gold USB contacts at the bottom end that plug into a computer.">
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">
+A hardware security key, one form of &ldquo;something you have.&rdquo; Someone who steals your password from
+across the world still cannot log in without this physical object. That is the whole idea of MFA, and it is
+why one missing second step can matter more than any amount of clever software.
+<br><br>Photograph: Tony Webster, via Wikimedia Commons, CC BY 2.0.
+</figcaption>
+</figure>
+
+<p>MFA is not exotic, expensive, or new. It is one of the highest-value controls most organizations can turn
+on, and you probably already use it for your university or bank account. The main case of this chapter turns
+on one login page that did not ask for it.</p>
 
 <h3>2.2 The kill chain, and where to break it</h3>
 
-<p>Two failures in sequence, a way in and then time to move around, is the general shape of a modern intrusion, and security analysts have a model for it.</p>
+<p>Security analysts describe an intrusion as a <strong>kill chain</strong>: a series of stages the attacker
+has to complete, in order. You do not need to memorize the stages. You need to see that there are stages,
+because each one is a place to stop the attack. In plain terms, an attacker has to:</p>
 
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">The kill chain, and breaking it</span>
-<p>Analysts describe intrusions as a <strong>kill chain</strong>: an ordered sequence of stages an attacker must
-complete. It runs from initial entry, to moving deeper (called lateral movement), to stealing or encrypting
-the data. (You do not need to memorize the stages. You need to see that there are stages, because
-each one is a place to stop the attack.) The model's value is that the attacker must succeed at every stage while the
-defender only has to break one, so security stacks controls in layers, <strong>defense in
-depth</strong>, assuming each can fail. Two design rules do most of the work. <strong>Least
-privilege</strong>: every account gets the minimum access its job needs, so a stolen credential is
-worth as little as possible. <strong>Network segmentation</strong>: systems are fenced into zones, so
-entry into one is not entry into all. Change Healthcare's attackers had nine days of lateral movement,
-which is a segmentation failure sitting behind the MFA failure. Break either link and the record
-breach does not happen.</p></div>
+<ul>
+<li><strong>Get in.</strong> For example, log in with a stolen password.</li>
+<li><strong>Move around.</strong> Spread from the first machine to the ones holding valuable data. This is
+called <strong>lateral movement</strong>, and it often takes days or weeks.</li>
+<li><strong>Take or lock the data.</strong> Copy it out, encrypt it, or both.</li>
+</ul>
+
+<p>The attacker has to win at every stage. The defender only has to win at one. So defenders stack ordinary
+controls in layers, each one assuming the one before it might fail:</p>
+
+<ul>
+<li><strong>MFA</strong> stops most stolen-password logins at the door.</li>
+<li><strong>Least privilege</strong> means every account gets only the access its job needs. For example, a
+receptionist's login cannot reach the payroll system, so a stolen receptionist password is worth very
+little.</li>
+<li><strong>Network segmentation</strong> divides systems into fenced-off zones. For example, the guest Wi-Fi
+cannot reach the billing servers, so getting into one zone is not getting into all of them.</li>
+<li><strong>Monitoring</strong> means somebody watches for unusual activity, such as one account suddenly
+copying huge amounts of data at 3 a.m.</li>
+<li><strong>Backups</strong>, kept separate from the main systems, mean locked data can be restored without
+paying.</li>
+</ul>
+
 <figure class="diagram" style="margin:1.8rem auto;max-width:470px">
 <svg viewBox="0 0 470 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="kcT kcD" style="width:100%;height:auto;font-family:var(--sans)">
 <title id="kcT">The kill chain, and where to break it</title>
-<desc id="kcD">Five boxes in a row joined by arrows, labelled entry, foothold, move deeper, take the data, and encrypt. Under each arrow a control that would have broken the chain at that point: multi-factor authentication, least privilege, segmentation, monitoring, and backups. The first two links are highlighted, with a note that at Change Healthcare both were missing.</desc>
+<desc id="kcD">Five boxes in a row joined by arrows, labelled entry, foothold, move deeper, take the data, and encrypt. Under each arrow a control that would have broken the chain at that point: multi-factor authentication, least privilege, segmentation, monitoring, and backups. A note says most breaches skip a control the organization already knew how to use.</desc>
 <defs><marker id="kca" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--text-light)"/></marker></defs>
-<rect x="12" y="70" width="78" height="46" fill="var(--warn-pale)" stroke="var(--text-dark)" stroke-width="1.2"/>
+<rect x="12" y="70" width="78" height="46" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1.2"/>
 <text x="51" y="89" text-anchor="middle" font-size="9.5" font-weight="700" fill="var(--text-dark)">ENTRY</text>
 <text x="51" y="104" text-anchor="middle" font-size="9" fill="var(--text-light)">stolen password</text>
 <path d="M92 93 L102 93" stroke="var(--text-light)" stroke-width="1.6" fill="none" marker-end="url(#kca)"/>
-<rect x="104" y="70" width="78" height="46" fill="var(--warn-pale)" stroke="var(--text-dark)" stroke-width="1.2"/>
+<rect x="104" y="70" width="78" height="46" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1.2"/>
 <text x="143" y="89" text-anchor="middle" font-size="9.5" font-weight="700" fill="var(--text-dark)">FOOTHOLD</text>
 <text x="143" y="104" text-anchor="middle" font-size="9" fill="var(--text-light)">first machine</text>
 <path d="M184 93 L194 93" stroke="var(--text-light)" stroke-width="1.6" fill="none" marker-end="url(#kca)"/>
-<rect x="196" y="70" width="78" height="46" fill="var(--warn-pale)" stroke="var(--text-dark)" stroke-width="1.2"/>
+<rect x="196" y="70" width="78" height="46" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1.2"/>
 <text x="235" y="89" text-anchor="middle" font-size="9.5" font-weight="700" fill="var(--text-dark)">MOVE DEEPER</text>
-<text x="235" y="104" text-anchor="middle" font-size="9" fill="var(--text-light)">nine days</text>
+<text x="235" y="104" text-anchor="middle" font-size="9" fill="var(--text-light)">days or weeks</text>
 <path d="M276 93 L286 93" stroke="var(--text-light)" stroke-width="1.6" fill="none" marker-end="url(#kca)"/>
 <rect x="288" y="70" width="78" height="46" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1.2"/>
 <text x="327" y="89" text-anchor="middle" font-size="9.5" font-weight="700" fill="var(--text-dark)">TAKE THE DATA</text>
-<text x="327" y="104" text-anchor="middle" font-size="9" fill="var(--text-light)">six terabytes</text>
+<text x="327" y="104" text-anchor="middle" font-size="9" fill="var(--text-light)">copy it out</text>
 <path d="M368 93 L378 93" stroke="var(--text-light)" stroke-width="1.6" fill="none" marker-end="url(#kca)"/>
 <rect x="380" y="70" width="78" height="46" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1.2"/>
 <text x="419" y="89" text-anchor="middle" font-size="9.5" font-weight="700" fill="var(--text-dark)">ENCRYPT</text>
@@ -617,48 +647,72 @@ breach does not happen.</p></div>
 <text x="373" y="164" text-anchor="middle" font-size="9.5" font-weight="600" fill="var(--good)">monitoring</text>
 <path d="M419 122 L419 150" stroke="var(--good)" stroke-width="1.4" fill="none"/><path d="M412 132 L426 118 M412 118 L426 132" stroke="var(--good)" stroke-width="2"/><text x="419" y="178" text-anchor="middle" font-size="9.5" font-weight="600" fill="var(--good)">backups</text>
 <text x="235" y="40" text-anchor="middle" font-size="10.5" fill="var(--text-light)">The attacker must win every link. The defender has to break one.</text>
-<text x="235" y="196" text-anchor="middle" font-size="10" fill="var(--warn)" font-weight="600">At Change Healthcare the first three links held:</text><text x="235" y="210" text-anchor="middle" font-size="10" fill="var(--warn)" font-weight="600">no MFA on the portal, then nine days of movement.</text>
+<text x="235" y="196" text-anchor="middle" font-size="10" fill="var(--warn)" font-weight="600">Most breaches you will read about skipped a control</text><text x="235" y="210" text-anchor="middle" font-size="10" fill="var(--warn)" font-weight="600">the organization already knew how to use.</text>
 <text x="235" y="240" text-anchor="middle" font-size="10" fill="var(--text-light)">Each green mark is an ordinary control. None is new. All were available.</text>
 </svg>
 <figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">
-Read the chain from left to right as the attacker did, then read the marks underneath as the controls that would have ended it. Multi-factor authentication stops the first link. Least privilege and segmentation stop the second and third; nine days of movement is a segmentation failure sitting behind an MFA failure. The attacker needed every link. The defender needed one.
+Read the chain from left to right as the attacker does, then read the green marks as the controls that end it. Multi-factor authentication stops the first link. Least privilege and segmentation stop the second and third. Monitoring catches the fourth, and backups take the power out of the fifth. The attacker needs every link. The defender needs one.
 </figcaption>
 </figure>
 
-<p>Now run the whole Change Healthcare chain against a single question: at how many points could this have been stopped
-cheaply? MFA on one portal. Segmentation to contain the movement. Detection to catch nine days of an
-intruder. Each is ordinary, none is exotic, and any one of them breaks the chain. Nearly every breach
-you will read about is a failure to apply known controls, not the work of unstoppable genius. That is
-oddly good news: it means most security is a management problem, and management is learnable.</p>
+<p>Nearly every breach you will read about is a failure to apply a known control, not the work of an
+unstoppable genius. That is oddly good news. It means most security is a management problem, and
+management is learnable.</p>
+
+<h3>2.3 Your suppliers are part of your system</h3>
+
+<p>The last idea steps back from the front door. Every organization depends on outside companies: a
+payroll processor, a cloud email provider, a payments company. Their security is part of yours. The risk
+that comes from the companies you rely on is called <strong>third-party risk</strong>, or vendor risk, and it
+includes the companies <em>they</em> rely on.</p>
+
+<p>A related danger is <strong>concentration risk</strong>: too much of something critical depending on a single
+point, such as one vendor, one data center, or one system. Concentration usually is not chosen. It builds
+up quietly, as many separate decisions all happen to lead to the same supplier.</p>
+
+<p>The answer to both is <strong>business continuity planning</strong>: preparing, before the crisis, to keep
+operating when a critical dependency fails. That means backups, a second vendor, and manual workarounds,
+tested and ready. The planning question is simple to ask and hard to answer: what do we do on the day this
+thing is gone? It is a business question, not a technical one.</p>
 
 <h2 id="cases"><span class="num">3</span>Two attacks that came in sideways</h2>
-<p>Before the main case, here are two short ones, thirty-five years apart. Each one entered through something the victim did not think of as part of its own system: the network itself, and a file-transfer tool bought by somebody else. Read them with one question in mind,
-because it is the question section 5 will make national: what did the organization actually depend on
-that it had never listed anywhere?</p>
+
+<p>Before the main case, here are two short ones, thirty-five years apart. Each one entered through
+something the victim did not think of as part of its own system. Read them with one question in mind:
+what did the organization actually depend on that it had never written down?</p>
 
 <h3>3.1 Mini-case 1 &middot; 1988: the program that was only supposed to count</h3>
 
-<p>In November 1988 a graduate student at Cornell released a program onto the internet, which then
-connected a few tens of thousands of machines belonging mostly to universities, research labs and the
-military. His stated intention was to measure how big the network was. To spread, the program used
-known weaknesses in common software, and it included a mechanism meant to stop it copying itself onto a
-machine that already had it.</p>
+<p>In November 1988 a Cornell graduate student named Robert Morris released a program onto the early
+internet, which then connected about 60,000 computers, mostly at universities, research labs, and military
+sites. To spread, the program used known weaknesses in common software, and it was meant to avoid copying
+itself onto a machine that already had it.<sup class="cite"><a href="#src-1" aria-label="Source 1">1</a></sup></p>
 
-<p>That counting mechanism was wrong. The program reinfected machines repeatedly, and each copy consumed
-resources until the machine became unusable. Estimates at the time put the number of affected computers
-around six thousand, roughly a tenth of the internet as it then existed. Nothing was stolen and nothing
-was read. Machines simply stopped being able to do their work, and administrators disconnected from the
-network to save themselves, which broke the network further.</p>
+<p>That check did not work. The program copied itself onto the same machines again and again, and each copy
+used up resources until the machine could do nothing else. Within about a day, roughly 6,000 computers,
+about a tenth of the internet at the time, were crippled. Nothing was stolen and nothing was read.
+Machines simply stopped being able to do their work.<sup class="cite"><a href="#src-1" aria-label="Source 1">1</a></sup></p>
 
-<p>Two things came out of the Morris worm. Its author became the first person convicted under the United States
-Computer Fraud and Abuse Act. And the incident led directly to the creation of the first coordinated computer emergency response
-team. It had become obvious that nobody was on the other end of the phone when something like this
-happened.</p>
+<figure class="diagram" style="margin:1.9rem auto;max-width:360px">
+<img src="morris-worm-disk.jpg" width="450" height="600" loading="lazy" style="width:100%;height:auto"
+ alt="A museum display. A clear plastic case on a grey stand holds a single 3.5-inch floppy disk. On the wall above it, a printed label reads: The Morris Internet Worm source code. This disk contains the complete source code of the Morris Internet worm program. This tiny, 99-line program brought large pieces of the Internet to a standstill on November 2nd, 1988. The worm was the first of many intrusive programs that use the Internet to spread. The Computer History Museum.">
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">
+The disk holding the Morris worm's source code, on display at the Museum of Science in Boston. The label
+is from the Computer History Museum, which owns the disk. Notice the size of the thing: by that label, a
+99-line program on one floppy disk. The damage did
+not come from how big the program was. It came from how many machines trusted the network it arrived on.
+<br><br>Photograph: Go Card USA, via Wikimedia Commons, CC BY-SA 2.0.
+</figcaption>
+</figure>
 
-<p><strong>Where it came in: the network connection itself. The component: networks.</strong> Note what
-kind of failure this was, because it is the one students expect least. No confidentiality was lost. The
-harm was <em>availability</em>, and it arrived through the thing everybody had assumed was simply a
-convenience.</p>
+<p>Two things came out of it. Morris became the first person convicted under the U.S. Computer Fraud and
+Abuse Act. And the Defense Department's research agency paid Carnegie Mellon University to set up the first
+computer emergency response team, because it had become obvious that nobody was on the other end of the
+phone when something like this happened.<sup class="cite"><a href="#src-1" aria-label="Source 1">1</a></sup></p>
+
+<p><strong>Where it came in: the network connection itself. The component: networks.</strong> Notice what kind of
+failure this was, because it is the one students expect least. No confidentiality was lost. The harm was
+availability, and it arrived through something everyone had assumed was simply a convenience.</p>
 
 <div class="mcq"><b>Check yourself</b>Nothing was stolen in 1988 and the damage was still severe. Using
 the three properties in section 1, explain what an organization loses when a system is merely
@@ -668,26 +722,24 @@ would.
 
 <h3>3.2 Mini-case 2 &middot; 2023: one flaw in a tool most victims had never bought</h3>
 
-<p>In the summer of 2023, employees at British Airways and the BBC learned their personal data had been
-stolen from a piece of software neither company had ever bought. MOVEit Transfer is a product for
-moving files securely between organizations. It is unglamorous
-software, used by around 1,700 organizations to shift payroll files, claims data and records between
-one company and another.</p>
+<p>In June 2023, employees at British Airways, the BBC, and the drugstore chain Boots learned that their
+personal data had been stolen from a piece of software none of those companies had bought. MOVEit Transfer
+is a product for moving files securely between organizations: payroll files, claims data, and records,
+passed from one company to another.</p>
 
-<p>In mid-2023 a criminal group exploited flaws in MOVEit. The pattern of the damage is the part worth
-studying. A UK payroll provider used MOVEit, and its clients included British Airways, the BBC and
-others. Those companies had not bought MOVEit and in many cases had never heard of it. Their employees'
-data was exposed anyway, because it had passed through a supplier's supplier. Across the whole event,
-thousands of organizations and tens of millions of individuals were affected.</p>
+<p>A criminal group called Cl0p found a flaw in MOVEit and used it to steal data from the organizations
+running it. One of them was Zellis, a UK payroll company. British Airways, the BBC, and Boots were Zellis
+customers. They had not bought MOVEit and in many cases had never heard of it. Their employees' payroll data
+was exposed anyway, because it had passed through a supplier's supplier.<sup class="cite"><a href="#src-2" aria-label="Source 2">2</a></sup> By August 2024, a running
+count put the total at about 2,700 organizations and roughly 96 million people.<sup class="cite"><a href="#src-2" aria-label="Source 2">2</a></sup></p>
 
-<p>For most of the victims there was no negligence to point at in their own house. They had a vendor
-they had assessed, and that vendor had a vendor. The exposure lived two steps away from anything they
-controlled or could see.</p>
+<p>For most victims there was no carelessness to point at in their own house. They had a vendor, and that
+vendor had a vendor. The exposure lived two steps away from anything they controlled or could see.</p>
 
-<p><strong>Where it came in: a vendor's vendor. The component: people.</strong> The failure was not
-technical: it was that almost nobody maintained a list of which outside organizations touched their
-data, or of the organizations those organizations relied on. Section 5 names the job that exists to fix
-this, and it is a job a business graduate does.</p>
+<p><strong>Where it came in: a vendor's vendor. The component: people.</strong> The failure was not mainly
+technical. Almost nobody kept a list of which outside organizations touched their data, or of the
+organizations those organizations relied on. That is section 2.3's third-party risk, and section 5 names the
+job that exists to manage it.</p>
 
 <div class="mcq"><b>Check yourself</b>Name three outside companies that hold data about you through an
 organization you belong to rather than through you directly. Now say how you would find out who
@@ -696,320 +748,346 @@ organization you belong to rather than through you directly. Now say how you wou
 
 <h3>3.3 What the two have in common</h3>
 
-<p>A network connection, and a file-transfer tool nobody remembers buying. In neither case did the attack arrive through the front door the organization was defending, and in neither case would a stronger password on the main system have helped.</p>
+<p>A network connection, and a file-transfer tool nobody remembered buying. In neither case did the attack
+come through the front door the organization was guarding, and in neither case would a stronger password on
+the main system have helped.</p>
 
-<p>What the two share is a boundary problem. Both organizations had a mental picture of what their system was, and in both cases the real system was larger than the picture. The internet was part of Cornell's system. A supplier's supplier was part of the BBC's.</p>
+<p>What the two share is a boundary problem. Both organizations had a mental picture of what their system
+was, and in both cases the real system was bigger than the picture. The internet was part of Cornell's
+system. A supplier's supplier was part of the BBC's.</p>
 
-<p>Hold that idea as you read the main case, because Change Healthcare is the same problem seen from the other end. It was not the victim that had failed to map its dependencies. It <em>was</em> the dependency, for
-a third of American healthcare, and almost nobody using it had written that down either.</p>
+<p>Hold that idea as you read the main case, because Change Healthcare is the same problem seen from the other
+end. It was not a victim that had failed to map its dependencies. It <em>was</em> the dependency, for a large
+share of American healthcare.</p>
+
 <h2 id="change"><span class="num">4</span>Main case &middot; Change Healthcare: the day the claims stopped</h2>
 
-<p>Let's begin at a pharmacy counter on the morning of 21 February 2024. The prescription is filled and
-sitting in the bag. The pharmacist scans it, waits for the insurer to confirm coverage, and the
-screen does nothing. Across the country the same screen is doing nothing in tens of thousands of
-clinics, hospitals, and pharmacies, and almost none of the people staring at it have heard of the
-company that just went dark. Change Healthcare is not a hospital or an insurer. It is the plumbing
-between them: a UnitedHealth Group subsidiary that processes roughly 15 billion healthcare
-transactions a year and touches about one in every three US patient records.
-When a doctor's office submits a claim or a pharmacy checks your coverage, that request very often
-passes through Change Healthcare.</p>
+<p>Picture a pharmacy counter on the afternoon of 21 February 2024. The prescription is filled and sitting in
+the bag. The pharmacist sends it to the insurer to confirm coverage, and the screen does nothing. Across
+the country the same screen is doing nothing in pharmacies, clinics, and hospitals, and almost none of the
+people staring at it have heard of the company that just went dark. To see how one company's bad morning
+became a national event, start with what that company was.</p>
 
-<p>On February 21, 2024, the company discovered ransomware on its systems and did the only thing it
-could: it took itself offline. The effect was immediate and national. Pharmacies could not verify
-coverage or process claims for a large share of the country. Hospitals and physician practices could
-not submit claims, which meant they could not get paid. An American Medical Association survey that spring found that 80 percent of physician practices lost
-revenue from unpaid claims. Many small practices, which run on thin cash reserves, faced a real cash
-crisis: payroll for real staff, with the money that normally arrived from insurers simply not
-arriving.</p>
-
-<p>The data theft, when its scale became clear, set a record: about 193 million people's protected
-health information by the final count in July 2025, the largest healthcare breach in US history. But notice which harm came first and
-hit hardest. Before a single record was known to be misused, the attack had already frozen the cash
-flow of a large slice of American medicine. <strong>The business disruption was the disaster. The
-data breach was the aftermath.</strong> That ordering is the theme of this chapter.</p>
-
-<div class="callout"><strong>Why this case, and not an older one</strong>
-<p>The famous breaches of the last decade, Target and Equifax, were about stolen data. Change Healthcare is about a stopped business, which is where cybercrime has actually gone. Ransomware does not quietly
-copy your data and leave; it takes your operations hostage. Understanding that shift is the difference between thinking of security as an IT problem and
-thinking of it as a survival problem for the whole organization. That is exactly the shift a
-business degree is supposed to give you.</p></div>
+<figure class="diagram" style="margin:1.9rem auto;max-width:560px">
+<img src="pharmacy-pill-counter.jpg" width="960" height="639" loading="lazy" style="width:100%;height:auto"
+ alt="A close-up in a pharmacy. A gloved hand pours small pink tablets from a white bottle into the clear tray of an automated pill-counting machine. The tablets are scattered across the top of the tray, which funnels down into a clear chamber below. The pharmacist's camouflage-patterned sleeve is visible at the edge of the frame.">
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">
+Filling a prescription is the easy part. Before the patient can take it home at the normal price, the
+pharmacy has to confirm coverage with the insurer, and in February 2024 a large share of those checks ran
+through one company. When it went offline, pharmacies like this one could still count pills but often could
+not get paid for them.
+<br><br>Photograph: Senior Airman Jessica Sanchez-Chen, U.S. Air Force, public domain, via Wikimedia Commons.
+</figcaption>
+</figure>
 
 <div class="statrow">
   <div class="stat"><b>1 in 3</b><span>US patient records touched</span></div>
-  <div class="stat"><b>~193M</b><span>people's data exposed</span></div>
-  <div class="stat"><b>9 days</b><span>attackers inside, undetected</span></div>
+  <div class="stat"><b>9 days</b><span>attackers inside, unnoticed</span></div>
   <div class="stat"><b>$22M</b><span>ransom paid, data leaked anyway</span></div>
   <div class="stat"><b>~$3.1B</b><span>cost to UnitedHealth, 2024</span></div>
+  <div class="stat"><b>192.7M</b><span>people affected</span></div>
 </div>
 
-<h3>4.1 The business damage, not the data</h3>
+<div class="callout">
+  <strong>Why this case, and not an older one</strong>
+  <p>The famous breaches of the last decade, such as Target and Equifax, were about stolen data. Change
+  Healthcare is about a stopped business, which is where cybercrime has actually gone. Ransomware does not
+  quietly copy your data and leave. It takes your operations hostage. Understanding that shift is the
+  difference between treating security as an IT problem and treating it as a survival problem for the whole
+  organization.</p>
+</div>
 
-<p>UnitedHealth's own reporting put its direct costs for 2024 at about $3.1 billion. That number, large as it
-is, is the smallest part of the harm, because it is only the part that falls on the company big
-enough to absorb it. Trace the damage outward and it is almost entirely a business-operations story:</p>
+<h3>4.1 The plumbing, and who owned it</h3>
 
-<p><strong>Provider cash flow.</strong> Thousands of practices and hospitals could not bill, so
-revenue stopped while payroll and rent did not. UnitedHealth advanced billions in emergency funding
-to providers precisely because the cash-flow damage threatened to close practices before any data
-was ever misused. A clinic does not need its patient records leaked to fail; it just needs to miss
-payroll twice.</p>
+<p>Change Healthcare is not a hospital or an insurer. It is the plumbing between them. When a doctor's office
+submits a claim, or a pharmacy checks your coverage, that request very often passes through a company like
+Change, which is called a clearinghouse. By its own figures, Change handled about 15 billion healthcare
+transactions a year and touched about 1 in every 3 U.S. patient records.<sup class="cite"><a href="#src-3" aria-label="Source 3">3</a></sup></p>
 
-<p><strong>Care itself.</strong> Prior authorizations, prescription approvals, and eligibility checks
-run through this plumbing. When it stopped, patients faced delays getting medications and treatments
-approved. The availability failure reached from a server all the way to a pharmacy counter.</p>
+<figure class="diagram" style="margin:1.9rem auto;max-width:640px">
+<svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="hubT hubD" style="width:100%;height:auto;font-family:var(--sans)">
+<title id="hubT">Change Healthcare as a hub between providers and payers</title>
+<desc id="hubD">On the left, four kinds of provider: doctors' offices, hospitals, pharmacies, and labs and clinics. On the right, three kinds of payer: insurers, Medicare and Medicaid, and pharmacy benefit managers. Pink lines from every box on both sides converge on one box in the middle labelled Change Healthcare, which carries claims, eligibility checks, prescriptions, and payments. A note says the company handled about 15 billion transactions a year and touched about 1 in 3 U.S. patient records, by its own figures, and that two thirds of hospitals surveyed said switching clearinghouses was difficult or very difficult.</desc>
+<g font-size="11.5" fill="var(--text-dark)"><rect x="10" y="52" width="150" height="34" rx="4" fill="var(--off-white)" stroke="var(--border)"/><text x="85" y="74" text-anchor="middle">Doctors&#8217; offices</text><path d="M160 70 C 205 70, 215 160, 250 160" fill="none" stroke="var(--magenta)" stroke-width="2"/><rect x="10" y="112" width="150" height="34" rx="4" fill="var(--off-white)" stroke="var(--border)"/><text x="85" y="134" text-anchor="middle">Hospitals</text><path d="M160 130 C 205 130, 215 160, 250 160" fill="none" stroke="var(--magenta)" stroke-width="2"/><rect x="10" y="172" width="150" height="34" rx="4" fill="var(--off-white)" stroke="var(--border)"/><text x="85" y="194" text-anchor="middle">Pharmacies</text><path d="M160 190 C 205 190, 215 160, 250 160" fill="none" stroke="var(--magenta)" stroke-width="2"/><rect x="10" y="232" width="150" height="34" rx="4" fill="var(--off-white)" stroke="var(--border)"/><text x="85" y="254" text-anchor="middle">Labs and clinics</text><path d="M160 250 C 205 250, 215 160, 250 160" fill="none" stroke="var(--magenta)" stroke-width="2"/><rect x="470" y="72" width="160" height="34" rx="4" fill="var(--off-white)" stroke="var(--border)"/><text x="550" y="94" text-anchor="middle">Insurers</text><path d="M390 160 C 425 160, 430 90, 470 90" fill="none" stroke="var(--magenta)" stroke-width="2"/><rect x="470" y="142" width="160" height="34" rx="4" fill="var(--off-white)" stroke="var(--border)"/><text x="550" y="164" text-anchor="middle">Medicare and Medicaid</text><path d="M390 160 C 425 160, 430 160, 470 160" fill="none" stroke="var(--magenta)" stroke-width="2"/><rect x="470" y="212" width="160" height="34" rx="4" fill="var(--off-white)" stroke="var(--border)"/><text x="550" y="234" text-anchor="middle">Pharmacy benefit managers</text><path d="M390 160 C 425 160, 430 230, 470 230" fill="none" stroke="var(--magenta)" stroke-width="2"/></g>
+<rect x="250" y="112" width="140" height="96" rx="8" fill="var(--magenta-pale)" stroke="var(--magenta)" stroke-width="1.6"/>
+<text x="320" y="146" text-anchor="middle" font-size="13" font-weight="700" fill="var(--magenta-dark)">Change</text>
+<text x="320" y="163" text-anchor="middle" font-size="13" font-weight="700" fill="var(--magenta-dark)">Healthcare</text>
+<text x="320" y="184" text-anchor="middle" font-size="10" fill="var(--text-dark)">claims, eligibility,</text>
+<text x="320" y="198" text-anchor="middle" font-size="10" fill="var(--text-dark)">prescriptions, payments</text>
+<text x="85" y="24" text-anchor="middle" font-size="11" font-weight="700" fill="var(--text-muted)">PROVIDERS</text>
+<text x="550" y="24" text-anchor="middle" font-size="11" font-weight="700" fill="var(--text-muted)">PAYERS</text>
+<text x="320" y="296" text-anchor="middle" font-size="10.5" fill="var(--text-dark)">About 15 billion transactions a year; about 1 in 3 U.S. patient records (Change&#8217;s own figures)</text>
+<text x="320" y="314" text-anchor="middle" font-size="10.5" fill="var(--warn)" font-weight="600">67% of hospitals surveyed said switching clearinghouses was difficult or very difficult</text>
+</svg>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">
+Every line on the left needs to reach some box on the right, and a large share of them went through the
+middle. That is efficient on an ordinary day, which is why it happened. On the day the middle box went dark,
+every line through it stopped at once, and the people at both ends had few other routes ready.
+</figcaption>
+</figure>
 
-<p><strong>Concentration risk, revealed.</strong> The reason one company's outage could do national
-damage is that the industry had quietly routed a third of its transactions through a single point.
-Nobody chose that risk deliberately; it accumulated through decades of consolidation. The attack turned an invisible structural fact into a visible one. "We depend on one vendor for
-something we cannot operate without" is now a risk that boards across every industry are
-re-examining.</p>
-
-<div class="kc"><span class="kc-tag">Key concept</span><span class="kc-term">Concentration risk and business continuity</span>
-<p><strong>Concentration risk</strong> is the danger created when too much of something critical
-depends on a single point: one vendor, one data center, one system. <strong>Business continuity
-planning</strong> is the discipline of preparing to keep operating when that point fails: backups,
-alternate vendors, manual fallback procedures, tested and ready before the crisis. The Change
-Healthcare outage was so damaging partly because so few providers had a plan B for a service they had
-assumed would always be there. Asking "what do we do the day this critical thing is gone?" is
-business continuity, and it is a business planning question, not a technical one.</p></div>
+<p>In January 2021, UnitedHealth Group, the largest health insurer in the country, agreed to buy Change for
+about $13 billion and fold it into its Optum business. Hospital groups objected, and in February 2022 the U.S.
+Justice Department sued to block the deal. One of its arguments was that it would put too much healthcare
+claims data in the hands of one company. A federal judge disagreed, and the purchase closed in October
+2022.<sup class="cite"><a href="#src-4" aria-label="Source 4">4</a></sup> That argument was about competition, not security. But it was a warning about concentration
+risk, made sixteen months before anyone tested it.</p>
 
 <h3>4.2 One door without a second step</h3>
 
-<p>Here is how it started, and the smallness of it is the point. On 12 February 2024, criminals logged
-into a Change Healthcare Citrix portal, which is the kind of service that lets staff reach their work
-desktops from somewhere else. They used stolen credentials, meaning a real username and a real
-password belonging to a real employee. The portal asked for nothing more. It did not require
-multi-factor authentication, the second step from section 2.1 that turns a stolen password into a
-useless one.</p>
+<p>On 12 February 2024, criminals logged in to a Change Healthcare Citrix portal, a service that lets staff
+reach their work desktops from somewhere else. They used stolen credentials: a real username and a real
+password. The portal asked for nothing more. In the words of UnitedHealth's chief executive in sworn
+testimony to Congress, the portal did not have multi-factor authentication.<sup class="cite"><a href="#src-5" aria-label="Source 5">5</a></sup></p>
 
-<p>That is not a sophisticated attack. There is no clever exploit in this story, no flaw nobody had
-heard of. Somebody had a working password and a door that only asked for a password. Everything else
-in this chapter, the national outage, the 193 million records, the billions of dollars, follows from
-that one missing setting.</p>
+<p>That is not a sophisticated attack. There is no clever exploit in this story. Somebody had a working
+password, and a door that only asked for a password. Everything else in this chapter, the national outage,
+the 192.7 million people, the billions of dollars, follows from that one missing setting. When senators
+asked why, the chief executive said the company was still working out why that server did not have MFA
+turned on.<sup class="cite"><a href="#src-5" aria-label="Source 5">5</a></sup></p>
 
-<p>The obvious question is how a company of this size got there, and the answer is a management
-answer rather than a technical one. UnitedHealth had acquired Change Healthcare, and when the chief
-executive testified about the breach he said the attackers came in through Change's older systems,
-the ones not yet brought up to the parent company's standard. Buying a company means buying its
-servers, its defaults and its unfinished work. Somebody owns the job of raising an acquired
-company's controls to the standard of the buyer's, and until that job is finished the buyer holds the
-risk whether or not anyone has written it down anywhere.</p>
-
-<p>Carry that with you into any job where your employer is growing by acquisition, which is most large
-American companies. The integration plan will have a section on branding and a section on payroll
-systems. Ask what its section on security controls says, and ask what happens to the risk in the
-months before that section is finished.</p>
+<p>Notice the timing. UnitedHealth had owned Change for about sixteen months. Buying a company means buying
+its servers, its settings, and its unfinished work. Somebody has to own the job of raising an acquired
+company's controls to the buyer's standard, and until that job is done, the buyer holds the risk. Carry
+that into any job where your employer grows by buying other companies. The integration plan will have a
+section on branding and a section on payroll. Ask what its section on security controls says.</p>
 
 <h3>4.3 Nine days</h3>
 
-<p>The attackers were inside from 12 February and did not set off the ransomware until 21 February.
-Nine days. Section 2.2 called this the part of the kill chain where defense still has every advantage,
-because an intruder who has just arrived cannot do much yet and has to move around to become
-dangerous. That is exactly what happened here. They moved through the network, found what was worth
-taking, and copied out roughly four terabytes of corporate and patient data before doing anything
-visible at all.</p>
+<p>Once inside, the attackers moved through the network and copied out data. Nine days later, on the morning
+of 21 February, they set off the ransomware and locked Change's systems so the company could not use
+them.<sup class="cite"><a href="#src-5" aria-label="Source 5">5</a></sup> The attackers later claimed to have taken several terabytes of data.<sup class="cite"><a href="#src-6" aria-label="Source 6">6</a></sup></p>
 
-<p>Then on the morning of 21 February they encrypted the systems, and the company lost access to its
-own environment. Change Healthcare shut down its data centers to stop the ransomware spreading into
-the rest of UnitedHealth, which worked, and which is also why the outage was so total. Containment and
-availability were in direct conflict, and the company chose containment. It was the right call, and it
-is the reason the pharmacy screen in this section's opening paragraph did nothing.</p>
+<p>Those nine days are section 2.2's &ldquo;move around&rdquo; stage, the part of the chain where defenders still
+have every advantage. An intruder who has just arrived cannot do much yet and has to move around to become
+dangerous, which is noisy and unusual. For more than a week, that activity did not set off an alarm anyone
+acted on. Detection is not a product you own. It is a question somebody has to be responsible for asking
+every day.</p>
 
-<p>Two lessons sit in those nine days. The first is that the attackers built the damage you eventually
-see during a stretch when nothing appeared to be wrong. The second is that the attackers were doing
-something noisy and unusual for more than a week, and it did not raise an alarm anyone acted on.
-Detection is not a product you own. It is a question somebody has to be responsible for asking every
-day, which Chapter 10 takes up in detail.</p>
+<h3>4.4 The day the claims stopped</h3>
 
-<h3>4.4 The ransom, and what money buys from a criminal</h3>
+<p>When the ransomware went off, UnitedHealth cut Change's data centers off from everything else, to stop the
+attack spreading into the rest of the company. It worked, and it is also why the outage was so total.<sup class="cite"><a href="#src-5" aria-label="Source 5">5</a></sup>
+Containment and availability were in direct conflict, and the company chose containment. It was the right
+call, and it is the reason the pharmacy screen at the start of this case did nothing.</p>
 
-<p>UnitedHealth paid. Around 1 March, roughly $22 million in bitcoin went to a wallet linked to the
-ALPHV group, also called BlackCat, in exchange for a promise that the stolen data would be deleted.
-The chief executive later told Congress that the decision to pay was his and that it was one of the
-hardest he had ever made.</p>
+<p>The effect was immediate and national. Pharmacies struggled to confirm coverage. Doctors' offices and
+hospitals could not submit claims, which meant they could not get paid. In a March survey of nearly 1,000
+hospitals, 94 percent reported a financial impact, and 67 percent said switching to a different clearinghouse
+was difficult or very difficult.<sup class="cite"><a href="#src-3" aria-label="Source 3">3</a></sup> In an American Medical Association survey that spring, 80 percent of
+physician practices said they had lost revenue from unpaid claims.<sup class="cite"><a href="#src-7" aria-label="Source 7">7</a></sup> Many small practices run on thin
+cash reserves. For them, this meant payroll for real staff, with the money that normally arrived from insurers
+simply not arriving.</p>
 
-<p>Follow what the money actually bought. ALPHV took the payment and vanished, shutting down its own
-operation without paying the affiliate who had carried out the attack. That affiliate still had a copy
-of the data. He took it to a rival group, RansomHub, which then demanded a second ransom from
-UnitedHealth in April. UnitedHealth did not pay again, and patient data appeared on leak sites anyway.
-The company paid $22 million for the deletion of data that was never deleted.</p>
+<p>Now notice which harm came first and hit hardest. The data theft, when its size became clear, set a record.
+But before anyone knew how many records were taken, the attack had already frozen the cash flow of a large
+slice of American medicine. <strong>The business disruption was the disaster. The data breach was the
+aftermath.</strong> That ordering is the theme of this chapter, and it is section 2.3's concentration risk,
+made visible: the industry had quietly routed a huge share of its transactions through one point, and the
+point failed.</p>
 
-<p>Students usually want a rule here, and the rule is not "never pay." Organizations facing the end of
-their ability to operate sometimes pay, and the FBI's advice against it is easier to follow from
-outside the room. The rule is narrower and more useful. A ransom payment buys a promise from a
-person whose entire business model is breaking promises, and it buys nothing that is enforceable
-afterward. So the payment decision is never the moment to start thinking about this. It is the moment
-you find out what you decided months earlier, when somebody chose whether to fund backups, network
-segmentation, detection, and a rehearsed plan for the day the screens go dark.</p>
+<h3>4.5 The ransom, and what money buys from a criminal</h3>
 
-<h3>4.5 Bringing it back</h3>
+<p>UnitedHealth paid. About $22 million in bitcoin went to the ALPHV group, also called BlackCat, in exchange
+for a promise that the stolen data would be deleted. The chief executive later told Congress that the
+decision to pay was his, and one of the hardest he had ever made.<sup class="cite"><a href="#src-5" aria-label="Source 5">5</a></sup></p>
 
-<p>Recovery was not a weekend. Electronic prescribing came back over the first weeks of March, the
-payment platform after that, and claims processing later still, with the tail of the disruption
-running for months at practices trying to submit a backlog through systems that had changed under
-them.</p>
+<p>Follow what the money bought. ALPHV's core team took the payment and shut down its own operation, without
+paying the affiliate who had actually carried out the attack. That affiliate still had a copy of the data,
+took it to a rival group called RansomHub, and in April a second demand arrived. RansomHub threatened to
+sell the data and posted some of it online.<sup class="cite"><a href="#src-6" aria-label="Source 6">6</a></sup> The company paid $22 million for the deletion of data
+that was never deleted.</p>
 
-<p>In the meantime UnitedHealth put roughly $9 billion of interest-free advances into the hands of
-providers who could not bill, which is the clearest possible statement of what the damage actually
-was. The company was not compensating people for leaked records. It was keeping clinics solvent while
-the plumbing was rebuilt, because otherwise practices would have closed before the systems came back.
-Providers have been repaying those advances since, which is its own long story in medical practices
-you may end up working for.</p>
+<p>Students usually want a rule here, and the rule is not &ldquo;never pay.&rdquo; Organizations facing the end of
+their ability to operate sometimes pay. The rule is narrower and more useful. A ransom buys a promise from
+someone whose business is breaking promises, and nothing makes it enforceable afterward. So the payment
+decision is never the moment to start thinking about this. It is the moment you find out what you decided
+months earlier, when somebody chose whether to fund backups, segmentation, monitoring, and a rehearsed
+plan for the day the screens go dark.</p>
 
-<p>Notice what the recovery required that no security product supplies: decisions about who gets paid
-first, communication to hundreds of thousands of providers, staff working manual processes for weeks,
-and an executive team able to say what was happening while the investigation was still running.
-Chapter 10 will give this the name it deserves. Business continuity is not a document. It is whether
-the organization can still function on the day the technology cannot.</p>
+<h3>4.6 Bringing it back</h3>
 
-<h3>4.6 Who answered for it, and how the number grew</h3>
+<p>Recovery was not a weekend. A rebuilding team replaced thousands of laptops, changed every password, and
+rebuilt Change's data center network. UnitedHealth even pushed some of Change's work to competing
+clearinghouses so claims could start moving again. Pharmacies came back first: by 7 March, 99 percent of them
+could process claims again. Medical claims and payments took longer.<sup class="cite"><a href="#src-5" aria-label="Source 5">5</a></sup></p>
 
-<p>On 1 May 2024 the chief executive of UnitedHealth testified to Congress, confirmed the missing
-multi-factor authentication, confirmed the ransom, and took the questions. Federal health regulators
-had already opened an investigation in March, before the company had formally reported the breach at
-all, which tells you how visible the damage was from outside.</p>
+<p>Meanwhile UnitedHealth lent providers who could not bill more than $9 billion, interest free, by the end
+of 2024.<sup class="cite"><a href="#src-8" aria-label="Source 8">8</a></sup> That is the clearest possible statement of what the damage really was. The company was not
+paying people for leaked records. It was keeping clinics solvent while the plumbing was rebuilt, because
+otherwise practices would have closed before the systems came back.</p>
 
-<p>Then watch the count of affected people move, because it teaches something about how these numbers
-work. The first filing used a placeholder of 500 individuals. By October 2024 the company had notified
-100 million. In January 2025 the figure was about 190 million. On 31 July 2025 it settled at 192.7
-million, which the chapter rounds to 193 million and which is close to two thirds of the population of
-the United States. It is the largest healthcare data breach in American history.</p>
+<p>Notice what the recovery needed that no security product supplies. Somebody had to decide who got paid
+first. Somebody had to keep hundreds of thousands of providers informed. Staff ran manual processes for
+weeks, and executives had to explain what was happening while the investigation was still running. Business continuity is not a
+document. It is whether the organization can still function on the day the technology cannot.</p>
 
-<p>That escalation is normal and worth expecting. Early breach numbers are not lies, they are the
-honest output of an investigation that has barely started, and they almost always go up. A manager who
-treats the first number as the real one will make promises in week two that look dishonest in month
-twelve. Say what you know, say when you will know more, and say plainly that the figure will change.</p>
+<h3>4.7 Who answered for it, and how the number grew</h3>
 
-<h3>4.7 What has changed since, and what has not</h3>
+<p>On 1 May 2024, UnitedHealth's chief executive testified to both the Senate and the House, confirmed the
+missing MFA and the ransom, and apologized.<sup class="cite"><a href="#src-5" aria-label="Source 5">5</a></sup> Federal health regulators had already opened an
+investigation in March.<sup class="cite"><a href="#src-9" aria-label="Source 9">9</a></sup> UnitedHealth later put its 2024 costs at about $3.1 billion: $2.2 billion in
+direct response costs and about $867 million in lost business.<sup class="cite"><a href="#src-8" aria-label="Source 8">8</a></sup></p>
 
-<p>The specific fix is not in dispute. Everyone who looked at this agreed that multi-factor
-authentication on remote access would have stopped it. In January 2025 federal regulators proposed
-the first substantial update to the HIPAA Security Rule in more than a decade, and it would require
-controls like this rather than leaving them to each organization's judgment. Then the argument
-started. More than a hundred hospital systems and provider groups asked for the proposal to be
-withdrawn, on the grounds of cost and burden, and the rule has been delayed.</p>
+<p>Then watch the count of affected people move, because it teaches something about how these numbers work.
+The first filing to regulators used a placeholder of 500 people. By October 2024 the company had notified 100
+million. In January 2025 the estimate was about 190 million. On 31 July 2025 it settled at 192.7 million,
+about two thirds of the U.S. population, and the largest healthcare data breach in American history.<sup class="cite"><a href="#src-9" aria-label="Source 9">9</a></sup></p>
 
-<p>Hold that next to what the same organizations lived through in 2024. It is not hypocrisy, and you
-should not read it as one. The providers making that argument are frequently the small and
-mid-sized operations that this attack nearly bankrupted, and a compliance program they cannot afford
-is a real threat to them too. This is the genuine version of the security trade-off, with real
-budgets and real patients on both sides of it, and you will meet it in whatever industry you end up
-in.</p>
-
-<p>What has not changed at all is the shape that made one company's bad morning into a national
-event. A third of US patient records still pass through the same plumbing. Nobody has unwound the
-consolidation, because there is no mechanism that would, and each individual merger that produced it
-looked sensible on its own terms. Concentration risk is not a decision anyone makes. It is what a
-market arrives at when every participant optimizes separately, and noticing it before it fails is
-work that falls to people who understand both the business and the system.</p>
+<p>That kind of growth is normal and worth expecting. Early breach numbers are not lies. They are the honest
+output of an investigation that has barely started, and they almost always go up. A manager who treats the
+first number as final will make promises in week two that look dishonest in month twelve. Say what you know,
+say when you will know more, and say plainly that the figure will change.</p>
 
 <h3>4.8 The five components at Change Healthcare</h3>
 
-<p>Now that you have seen the whole system, here it is as five components, the way this course maps every case. Look at which row the attack came in through and which row the damage landed in. They were not the same row.</p>
+<p>Here is the whole case as five components, the way this course maps every case. Look at which row the
+attack came in through and which row the damage landed in. They were not the same row.</p>
 
 <table class="sumtable stack-sm">
 <tr><th>Component</th><th>In the breach</th><th>The lesson</th></tr>
-<tr><td data-label="Component"><strong>Hardware</strong></td><td data-label="In the breach">The servers taken offline, freezing a third of US claims</td><td data-label="The lesson">Availability is physical; when it is gone, the business stops</td></tr>
-<tr><td data-label="Component"><strong>Software</strong></td><td data-label="In the breach">Ransomware that encrypted operations; the Citrix portal without MFA</td><td data-label="The lesson">One unenforced setting was the whole failure</td></tr>
-<tr><td data-label="Component"><strong>Data</strong></td><td data-label="In the breach">6 TB exfiltrated; 193M people's health records</td><td data-label="The lesson">Concentrated data is a concentrated prize</td></tr>
-<tr><td data-label="Component"><strong>Networks</strong></td><td data-label="In the breach">Nine days of lateral movement no fence contained</td><td data-label="The lesson">Segmentation is what limits a foothold to a foothold</td></tr>
-<tr><td data-label="Component"><strong>People</strong></td><td data-label="In the breach">The stolen credential; the security procedures never updated after acquisition; the CEO before Congress</td><td data-label="The lesson">The decisive failures were management decisions, not code</td></tr>
+<tr><td data-label="Component"><strong>Hardware</strong></td><td data-label="In the breach">Data centers cut off to contain the attack, freezing a large share of US claims</td><td data-label="The lesson">Availability is physical; when it is gone, the business stops</td></tr>
+<tr><td data-label="Component"><strong>Software</strong></td><td data-label="In the breach">A remote-access portal without MFA; ransomware that locked operations</td><td data-label="The lesson">One unenforced setting was the whole opening</td></tr>
+<tr><td data-label="Component"><strong>Data</strong></td><td data-label="In the breach">Several terabytes copied out; 192.7 million people's information</td><td data-label="The lesson">Concentrated data is a concentrated prize</td></tr>
+<tr><td data-label="Component"><strong>Networks</strong></td><td data-label="In the breach">Nine days of movement that nothing stopped or flagged</td><td data-label="The lesson">Segmentation and monitoring decide whether a foothold stays a foothold</td></tr>
+<tr><td data-label="Component"><strong>People</strong></td><td data-label="In the breach">A stolen credential; a portal nobody had required MFA on; a ransom decision</td><td data-label="The lesson">The decisive failures were management decisions, not code</td></tr>
 </table>
 
-<h3>4.9 What a business technology manager takes from this chapter</h3>
+<h3>4.9 What's next: what has changed since, and what has not</h3>
 
-<p>Strip the Change Healthcare case down to what you can reuse in any company. Four decisions came up in it, and each one is a decision you will be in the room for.</p>
+<p>The specific fix is not in dispute. Everyone who looked at this agreed that MFA on remote access would have
+stopped it, and UnitedHealth told senators it had since turned MFA on for all of its internet-facing
+systems.<sup class="cite"><a href="#src-5" aria-label="Source 5">5</a></sup> The bigger questions are still open:</p>
 
-<p><strong>Ask what stopped before you ask what was stolen.</strong> Change Healthcare's data was taken, and the damage that mattered was the pharmacies and clinics that could not get paid for weeks. Security is an availability problem before it is a confidentiality one. When you plan for a breach, plan for the day the system is simply gone, because that is the day that costs the most.</p>
+<ul>
+<li><strong>The rule.</strong> In January 2025, federal regulators proposed the first major update to the HIPAA
+Security Rule in more than a decade. It would require controls like MFA instead of leaving them to each
+organization's judgment. More than a hundred hospital and provider groups asked for it to be withdrawn or
+scaled back, mostly over cost. As of late 2026 it was still only a proposal, with final action pushed back to
+July 2027 at the earliest.<sup class="cite"><a href="#src-10" aria-label="Source 10">10</a></sup></li>
+<li><strong>The lawsuits.</strong> Suits from patients and providers were combined into one federal case in
+Minnesota. As of autumn 2026 it was still in pretrial stages, with no settlement announced.<sup class="cite"><a href="#src-10" aria-label="Source 10">10</a></sup></li>
+<li><strong>The enforcement.</strong> Regulators kept enforcing the existing rules. In April 2026, for example,
+they announced settlements with four smaller organizations over separate ransomware breaches.<sup class="cite"><a href="#src-11" aria-label="Source 11">11</a></sup></li>
+</ul>
 
-<p><strong>Write down what you depend on, including the things you did not buy.</strong> The Morris worm came in through the network. MOVEit came in through a supplier's supplier. Change Healthcare was the dependency, for a third of American healthcare, and almost nobody using it had written that down. A list of the systems your business cannot run without is the cheapest security document there is, and most companies do not have one.</p>
+<p>Hold the rule fight next to what the same providers lived through in 2024. It is not hypocrisy, and you
+should not read it as one. Many of the providers objecting are small and mid-sized ones that this attack
+nearly bankrupted, and a compliance program they cannot afford is a real threat to them too. This is the
+honest version of the security trade-off, with real budgets and real patients on both sides, and you will
+meet it in whatever industry you end up in.</p>
 
-<p><strong>Put the boring control in place before the clever one.</strong> The breach began with one stolen password on a server that did not have multi-factor authentication turned on. Nothing sophisticated was required. Most of what stops a breach is a short list of unglamorous controls that somebody has to insist on, and insisting is a manager's job.</p>
+<p>What has not changed at all is the shape that made one company's bad morning into a national event.
+Nobody has unwound the concentration, because there is no mechanism that would, and each decision that
+produced it looked sensible on its own. Concentration risk is not a choice anyone makes. It is what a
+market arrives at when every participant decides separately, and noticing it before it fails is work for
+people who understand both the business and the system.</p>
 
-<p><strong>Decide, in advance, who can turn a system off.</strong> Change Healthcare shut everything down to stop the spread, which was the right call and cost billions. The person who makes that call has to exist before the morning it is needed, with the authority to make it and the plan for what happens next. If nobody has that job, the decision gets made by the attacker.</p>
+<h3>4.10 What a business technology manager takes from this case</h3>
+
+<p>Strip the case down to what you can reuse in any company. Four decisions came up in it, and you may be in
+the room for any of them.</p>
+
+<p><strong>Ask what stopped before you ask what was stolen.</strong> Change Healthcare's data was taken, but the
+damage that mattered first was pharmacies and clinics that could not get paid for weeks. When you plan for a
+breach, plan for the day the system is simply gone, because that is the day that costs the most.</p>
+
+<p><strong>Write down what you depend on, including the things you did not buy.</strong> The Morris worm came in
+through the network. MOVEit came in through a supplier's supplier. Change Healthcare was the dependency for a
+large share of American healthcare. A list of the systems your business cannot run without is the cheapest
+security document there is, and most companies do not have one.</p>
+
+<p><strong>Put the boring control in place before the clever one.</strong> This breach began with one stolen
+password and one portal without MFA. Most of what stops a breach is a short list of unglamorous controls that
+somebody has to insist on, and insisting is a manager's job.</p>
+
+<p><strong>Decide in advance who can turn a system off.</strong> Change was cut off to stop the spread, which was
+the right call and cost billions. The person who makes that call has to exist before the morning it is needed,
+with the authority to make it and a plan for what happens next.</p>
 
 <h2 id="other"><span class="num">5</span>The downside: who absorbs a breach, and who does this work</h2>
 
-<p>The $3.1 billion UnitedHealth booked is the part of the cost that a large company could absorb. Follow the rest of it
-outward and it falls on people with far less capacity to carry it.</p>
+<p>The roughly $3.1 billion UnitedHealth booked is the part of the cost a very large company could absorb.
+Follow the rest of it outward and it falls on people with far less room to carry it:</p>
 
-<p>Small medical practices, some of which took emergency loans or closed, because a company they had
-never chosen to depend on went dark. Patients who waited for medications while an eligibility check
-sat in a frozen queue. And 193 million people whose Social Security numbers, diagnoses, and treatment
-records are now somewhere they cannot retrieve, carrying a lifetime risk of identity theft and
-medical fraud that no credit-monitoring offer erases. Health data does not expire the way a credit
-card does; you cannot reissue a diagnosis.</p>
+<ul>
+<li><strong>Small medical practices,</strong> some of which used personal funds or took emergency loans to keep
+going, because a company they had never chosen to depend on went dark.<sup class="cite"><a href="#src-7" aria-label="Source 7">7</a></sup></li>
+<li><strong>Patients,</strong> who waited for approvals and medications while checks sat in a frozen queue.</li>
+<li><strong>192.7 million people</strong> whose personal and health information is now somewhere they cannot
+get it back from. Health data does not expire the way a credit card number does. You cannot reissue a
+diagnosis.</li>
+</ul>
 
-<p>Keep this list for Wednesday's governance discussion. When a company decides how much to spend
-on security, much of the downside of underspending is exported, to patients, to small providers, to
-the public. Economists call that an externality, and it is the core reason security cannot be left
-entirely to each firm's private cost-benefit math. The company weighs its $3.1 billion; it does not
-weigh the closed clinic or the stolen medical history, because those never appear on its books. Part
-of the job of governance, and of regulation, is to represent the people who are not in the room when
-the security budget is set.</p>
+<p>Keep this list for Wednesday's governance discussion. When a company decides how much to spend on security,
+much of the cost of spending too little is pushed onto others: patients, small providers, the public.
+Economists call that an <strong>externality</strong>, and it is the main reason security cannot be left entirely
+to each company's private cost-benefit math. The company weighs its own $3.1 billion. It does not weigh the
+closed clinic or the stolen medical history, because those never appear on its books. Part of the job of
+governance, and of regulation, is to speak for the people who are not in the room when the security budget
+is set.</p>
 
 <h3>5.1 What business people actually do in security</h3>
 
-<p>Students often assume cybersecurity is a coding job they are unqualified for. Some of it is. But the field is short hundreds of thousands of workers in the US alone, and a large fraction of the
-open roles are business roles. Most of what determines whether an organization gets breached is
-decisions, not code. A few of the jobs a business graduate actually does:</p>
+<p>Students often assume cybersecurity is a coding job they are not qualified for. Some of it is. But U.S.
+employers posted about 514,000 cybersecurity job openings in a single year, and many of those roles are
+business roles.<sup class="cite"><a href="#src-12" aria-label="Source 12">12</a></sup> Most of what decides whether an organization gets breached is decisions, not code.
+A few of the jobs a business graduate actually does:</p>
 
-<p><strong>Governance, risk, and compliance (GRC).</strong> Deciding which risks the organization
-will accept, reduce, or insure against, and proving to regulators and auditors that required controls
-exist. This is spreadsheets, policy, and judgment, not exploits, and it is one of the largest and
-best-paid corners of the field.</p>
+<ul>
+<li><strong>Governance, risk, and compliance (GRC).</strong> Deciding which risks the organization will accept,
+reduce, or insure against, and proving to regulators and auditors that required controls exist. This is
+spreadsheets, policy, and judgment, not hacking.</li>
+<li><strong>Third-party and vendor risk management.</strong> Change Healthcare was a vendor to much of the
+healthcare system, and MOVEit reached victims through a vendor's vendor. Someone has to check whether the
+companies you depend on are secure, and that someone reads contracts and audit reports.</li>
+<li><strong>Security awareness and training.</strong> Because stolen passwords and phishing start so many
+breaches, the people who design how a workforce is trained and tested are doing frontline security work with
+no code at all.</li>
+<li><strong>Incident response and business continuity.</strong> When an incident hits, someone has to run the
+response as a business operation: who is told, who decides, when regulators and customers are notified, and
+how the company keeps working.</li>
+<li><strong>The CISO.</strong> The chief information security officer sits on or near the executive team and
+answers to the board. The job is mostly about explaining risk in business terms, setting priorities against
+a budget, and building a culture.</li>
+</ul>
 
-<p><strong>Third-party and vendor risk management.</strong> Change Healthcare was a vendor to the
-entire healthcare system; the Target breach a decade earlier came through an HVAC contractor. Someone
-has to assess whether the companies you depend on are secure, and that someone reads contracts and
-audit reports, not memory dumps.</p>
-
-<p><strong>Security awareness and training.</strong> Because phishing starts most breaches, the
-people who design how a workforce is trained and tested are doing frontline security work with no code
-at all.</p>
-
-<p><strong>Incident response coordination and business continuity.</strong> When an incident hits,
-someone has to run the response as a business operation: who is told, who decides, when regulators and
-customers are notified, how the company keeps functioning. That coordinator is often a manager, not an
-engineer.</p>
-
-<p><strong>The CISO.</strong> The Chief Information Security Officer sits on or near the executive
-team and answers to the board. The job is overwhelmingly about communicating risk in business terms,
-setting priorities against a budget, and building a culture, which is why a growing number of CISOs
-come from management backgrounds. Andrew Witty, the executive who testified to Congress about this
-breach, is not an engineer; he was the chief executive, and the breach was his problem.</p>
-
-<p>The takeaway for this course is this: the most important security decisions at Change Healthcare, enforce
-MFA everywhere, segment the network, keep an acquired company's defenses current, were management
-decisions that went unmade. You do not need to write malware to prevent the next one. You need to
-understand the business well enough to insist on the boring controls before the crisis, which is
-precisely the vantage point an MIS degree provides.</p>
+<p>The takeaway for this course: the most important security decisions in this case, require MFA everywhere,
+fence the network into zones, and bring an acquired company up to standard, were management decisions that
+went unmade. You do not need to write code to prevent the next one. You need to understand the business well
+enough to insist on the boring controls before the crisis, which is exactly what an MIS degree prepares you
+for.</p>
 
 <div class="takeaways"><span class="obj-tag">Key takeaways</span>
 <ul>
 <li>A breach is an availability problem before it is a confidentiality problem. The first question is not what was stolen but what stopped.</li>
-<li>Attacks are sequences, and a sequence can be broken at any point. Nearly every breach is a failure to apply a known, boring control.</li>
-<li>One portal without multi-factor authentication was enough. Nine days inside, six terabytes out, and a third of American medicine's cash flow frozen.</li>
-<li>"We depend on one vendor for something we cannot operate without" is a risk every board is now re-examining, and most of them could not have named the vendor before.</li>
-<li>The company weighs its own cost. The patients, the small practices, and the 193 million people are not in the room, which is why security cannot be left to private cost-benefit math alone.</li>
+<li>Attacks are sequences, and a sequence can be broken at any point. Nearly every breach is a failure to apply a known, ordinary control.</li>
+<li>One portal without multi-factor authentication was enough. Nine days inside, then a large share of American medicine's cash flow frozen.</li>
+<li>Your system includes your suppliers and their suppliers. If you cannot name what you depend on, you cannot plan for the day it is gone.</li>
+<li>The company weighs its own cost. The patients, the small practices, and the 192.7 million people are not in the room, which is why security cannot be left to private cost-benefit math alone.</li>
 </ul>
 </div>
 
 <h2 id="vocab"><span class="num">6</span>Vocabulary</h2>
 
 <dl class="vocab">
-<div><dt>Confidentiality / integrity / availability</dt><dd>The three properties security protects; ransomware attacks availability first.</dd></div>
-<div><dt>Ransomware</dt><dd>Malware that encrypts data and demands payment; modern versions also steal it (double extortion).</dd></div>
-<div><dt>Multi-factor authentication</dt><dd>Requiring more than a password, so a stolen one is not enough.</dd></div>
-<div><dt>Kill chain</dt><dd>The ordered stages of an intrusion; defenders need to break only one.</dd></div>
-<div><dt>Lateral movement</dt><dd>An attacker spreading from a foothold deeper into a network.</dd></div>
-<div><dt>Least privilege</dt><dd>Every account gets the minimum access its job requires.</dd></div>
-<div><dt>Network segmentation</dt><dd>Fencing systems into zones to contain a compromise.</dd></div>
-<div><dt>Concentration risk</dt><dd>Danger from too much depending on a single vendor, system, or point.</dd></div>
-<div><dt>Business continuity planning</dt><dd>Preparing to keep operating when a critical dependency fails.</dd></div>
-<div><dt>Third-party (vendor) risk</dt><dd>The security exposure created by the outside companies you rely on.</dd></div>
-<div><dt>GRC</dt><dd>Governance, risk, and compliance: the business side of managing security.</dd></div>
-<div><dt>CISO</dt><dd>The executive who owns security and answers to the board, increasingly in business terms.</dd></div>
+  <div><dt>CIA triad</dt><dd>The three properties security protects: confidentiality, integrity, availability.</dd></div>
+  <div><dt>Confidentiality / integrity / availability</dt><dd>Only the right people can read it; nobody can change it unnoticed; the people who need it can reach it.</dd></div>
+  <div><dt>Ransomware</dt><dd>Malicious software that locks an organization's data and demands payment for the key.</dd></div>
+  <div><dt>Double extortion</dt><dd>Copying the data out before locking it, so the victim also pays to keep it from being published.</dd></div>
+  <div><dt>Ransomware-as-a-service</dt><dd>A core group rents its ransomware to affiliates who carry out attacks and split the money.</dd></div>
+  <div><dt>Multi-factor authentication</dt><dd>Requiring more than a password, so a stolen one is not enough.</dd></div>
+  <div><dt>Kill chain</dt><dd>The stages an attack must complete in order; defenders need to break only one.</dd></div>
+  <div><dt>Lateral movement</dt><dd>An attacker spreading from the first machine they reached to the ones they want.</dd></div>
+  <div><dt>Least privilege</dt><dd>Every account gets only the access its job needs.</dd></div>
+  <div><dt>Network segmentation</dt><dd>Dividing systems into fenced-off zones, so getting into one is not getting into all.</dd></div>
+  <div><dt>Third-party (vendor) risk</dt><dd>The security risk that comes from the outside companies you rely on, and the ones they rely on.</dd></div>
+  <div><dt>Concentration risk</dt><dd>Danger from too much depending on a single vendor, system, or point.</dd></div>
+  <div><dt>Business continuity planning</dt><dd>Preparing, before a crisis, to keep operating when a critical dependency fails.</dd></div>
+  <div><dt>Clearinghouse</dt><dd>A company that passes claims, eligibility checks, and payments between healthcare providers and payers.</dd></div>
+  <div><dt>Externality</dt><dd>A cost of a decision that is paid by people outside the company that made it.</dd></div>
+  <div><dt>GRC</dt><dd>Governance, risk, and compliance: the business side of managing security.</dd></div>
+  <div><dt>CISO</dt><dd>The chief information security officer, who owns security and answers to the board.</dd></div>
 </dl>
 
 <div class="ailight g">
@@ -1056,34 +1134,46 @@ strongest opinion about, and be ready to say it first.</p>
 <p>This chapter argues that most breaches are failures to apply ordinary controls, and that deciding
 which controls exist is a management job. <a href="lab8-security.html"><strong>Lab 8: Security and Data
 Governance: The Audit</strong></a> puts you in that job at Cascadia.</p>
-<p>Seven messages arrive at the co-op in one morning, and some of them are attacks. You will sort what each one is after using the CIA triad from section 1, catch the attacks the way this chapter says breaches are actually caught, by checking a claim against a record the sender does not control, and then choose the one control you would put in place first, from the same short list that would have stopped the breach in section 4. Every judgment in the lab is one from this chapter, at co-op scale.</p>
+<p>Seven messages arrive at the co-op in one morning, and some of them are attacks. First you will sort what each one is after, using the CIA triad from section 1. Then you will catch the attacks by checking each claim against a record the sender does not control. Last, you will choose the one control you would put in place first, from the same short list of ordinary controls in section 2.2. Every judgment in the lab is one from this chapter, at co-op scale.</p>
   <a class="lablink" href="lab8-security.html">Go to Lab 8 &#8594;</a>
 </div>
 
 <details class="srcbox">
 <summary><h2 id="sources"><span class="num">9</span>Sources and further reading</h2></summary>
 <ul class="sources">
-<li>Andrew Witty's testimony to Congress, May 2024, for the absence of multi-factor authentication on the compromised portal, the nine days of undetected access, and the ransom payment.</li>
-<li>UnitedHealth Group's quarterly reporting through 2024 and 2025, for the direct costs and the emergency funding advanced to providers. The figures were revised upward several times; check the current total.</li>
-<li>US Department of Health and Human Services breach reporting, for the number of individuals whose protected health information was affected, which was revised repeatedly through 2024 and 2025.</li>
-<li>American Medical Association survey work, spring 2024, for the share of physician practices reporting lost revenue.</li>
-<li>Contemporary reporting on the ALPHV/BlackCat exit scam and the subsequent RansomHub demand, for the aftermath described in section 1.</li>
-<li>Change Healthcare's 31 July 2025 notice to state attorneys general and to HHS, for the final count of 192.7 million individuals (the company says full deduplication was not possible, so the figure may overstate slightly); UnitedHealth's 2024 results, for the roughly $3.1 billion in cyberattack-related costs for the year and the more than $9 billion advanced to providers.</li>
-<li>UnitedHealth's congressional testimony of 1 May 2024 and contemporary reporting, for the attack anatomy in sections 4.2 to 4.4: entry through a Citrix remote-access portal on 12 February 2024 using stolen credentials with no multi-factor authentication, the attackers' statement that the compromised systems were Change's older ones not yet raised to the parent company's standard, roughly four terabytes of data copied out during the nine days before encryption, the payment of about $22 million in bitcoin around 1 March, the ALPHV exit scam that left the affiliate holding the data, and RansomHub's subsequent demand, which was not paid.</li>
-<li>HHS Office for Civil Rights, its Change Healthcare incident FAQ and its January 2025 Notice of Proposed Rulemaking on the HIPAA Security Rule, for section 4.7: the escalating notification counts (500, then 100 million, then about 190 million, then 192.7 million on 31 July 2025) and the proposal to require controls such as multi-factor authentication. The provider-side objections and the resulting delay are the live part of this story; check the rule's status before teaching it.</li>
-<li><strong>Verification note.</strong> Checked against sources in September 2026: the final affected count (raised from 190 to 193 million), the 2024 cost figure (raised from "above $2.8 billion" to about $3.1 billion), and the litigation status (a federal multidistrict case and the Nebraska attorney general's suit had both survived motions to dismiss by late 2025; no settlement or federal penalty had been announced by mid-2026). Andrew Witty stepped down as UnitedHealth's chief executive in May 2025, so the text now uses the past tense. Also confirmed in September 2026: the 12 February entry date and Citrix vector, the ransom sequence and exit scam, the roughly $9 billion of interest-free provider advances, and the HIPAA Security Rule proposal of 6 January 2025 together with the provider coalition that asked for its withdrawal in December 2025 and the delay that followed. The Morris worm and MOVEit details were checked against the authors' knowledge of the published accounts (Emsisoft's running totals for MOVEit) rather than re-searched.</li>
-<li>Accounts of the 1988 internet worm, including the subsequent prosecution and the creation of the first coordinated response team, for mini-case 1.</li>
-<li></li>
-<li>Reporting on the 2023 MOVEit Transfer exploitation, for the vendor-of-a-vendor pattern in mini-case 3. Totals for organizations and individuals affected rose for more than a year afterward.</li>
-<li>Testimony of Andrew Witty, UnitedHealth Group CEO, before US Senate and House committees (May 2024): the confirmation, under oath, that the Citrix portal lacked MFA and that security procedures had not been updated after the acquisition.</li>
-<li>BankInfoSecurity, <a href="https://www.bankinfosecurity.com/change-healthcares-mega-attack-1-year-later-a-27578">Change Healthcare's Mega Attack: One Year Later</a> (2025): timeline, the exit scam, and the RansomHub second-extortion attempt.</li>
-<li>HIPAA Journal, <a href="https://www.hipaajournal.com/change-healthcare-responding-to-cyberattack/">Change Healthcare Responding to Cyberattack</a>: the revised breach totals (100M to 190M) and settlement and litigation status.</li>
-<li>American Medical Association survey coverage, spring 2024: the finding that 80 percent of physician practices lost revenue from unpaid claims during the outage.</li>
-<li>Note on figures: costs and affected-person counts rose over 2024 and 2025 as forensic analysis continued; treat the numbers here as the best available scale, not a final ledger.</li>
+<li id="src-1"><span class="srcnum">1</span> Lawrence Livermore National Laboratory, <a href="https://st.llnl.gov/news/look-back/1988-morris-worm-internets-first-cyberattack" target="_blank" rel="noopener">&ldquo;1988: Morris worm, the internet&rsquo;s first cyberattack&rdquo;</a>, and Cornell University, <a href="https://alumni.cornell.edu/cornellians/morris-worm/" target="_blank" rel="noopener">&ldquo;The Morris Worm&rdquo;</a>, for the 6,000 of roughly 60,000 computers, the conviction, and the founding of CERT at Carnegie Mellon. Mini-case 1.</li>
+<li id="src-2"><span class="srcnum">2</span> <a href="https://www.govinfosecurity.com/microsoft-attributes-moveit-transfer-hack-to-clop-affiliate-a-22234" target="_blank" rel="noopener">GovInfoSecurity, 5 June 2023</a>, for Zellis and its affected clients British Airways, the BBC, and Boots; and Emsisoft, <a href="https://www.emsisoft.com/en/blog/44123/unpacking-the-moveit-breach-statistics-and-analysis/" target="_blank" rel="noopener">running MOVEit totals</a>, for about 2,700 organizations and roughly 96 million people by August 2024. Mini-case 2.</li>
+<li id="src-3"><span class="srcnum">3</span> American Hospital Association, <a href="https://www.aha.org/lettercomment/2024-02-26-aha-letter-hhs-implications-change-healthcare-cyberattack" target="_blank" rel="noopener">letter to HHS, 26 February 2024</a>, quoting Change Healthcare&rsquo;s own figures of 15 billion transactions a year and 1 in 3 patient records; and <a href="https://www.aha.org/2024-03-15-aha-survey-change-healthcare-cyberattack-significantly-disrupts-patient-care-hospitals-finances" target="_blank" rel="noopener">AHA hospital survey, March 2024</a>, nearly 1,000 hospitals, for the 94 percent and 67 percent figures. Sections 4.1 and 4.4.</li>
+<li id="src-4"><span class="srcnum">4</span> <a href="https://www.beckershospitalreview.com/legal-regulatory-issues/unitedhealth-ceo-its-important-for-the-country-that-we-own-change-healthcare/" target="_blank" rel="noopener">Becker&rsquo;s Hospital Review, April 2024</a>, for the January 2021 agreement, the Justice Department&rsquo;s February 2022 suit and its data-concentration argument, and the ruling; and <a href="https://www.stblaw.com/about-us/news/view/2022/10/03/change-healthcare-unitedhealth-combination-closes-after-antitrust-win-against-doj" target="_blank" rel="noopener">Simpson Thacher, 3 October 2022</a>, for the closing date and deal size. Section 4.1.</li>
+<li id="src-5"><span class="srcnum">5</span> Andrew Witty, then UnitedHealth Group CEO, <a href="https://www.finance.senate.gov/imo/media/doc/0501_witty_testimony.pdf" target="_blank" rel="noopener">written testimony to the Senate Finance Committee</a> and <a href="https://docs.house.gov/meetings/IF/IF02/20240501/117242/HHRG-118-IF02-Wstate-WittyS-20240501-U5.pdf" target="_blank" rel="noopener">the House Energy and Commerce Committee</a>, 1 May 2024, for the 12 February entry through a Citrix portal without MFA, lateral movement and data theft, ransomware nine days later, cutting off the data centers, the ransom decision, the rebuild, and pharmacy recovery by 7 March; and <a href="https://techcrunch.com/2024/05/01/unitedhealth-ceo-tells-senate-all-systems-now-have-multi-factor-authentication-after-hack" target="_blank" rel="noopener">TechCrunch, 1 May 2024</a>, for his answers on why MFA was missing and its later rollout. Sections 4.2 to 4.7 and 4.9.</li>
+<li id="src-6"><span class="srcnum">6</span> <a href="https://www.theregister.com/2024/04/30/unitedhealth_ceo_ransom/" target="_blank" rel="noopener">The Register, 30 April 2024</a> (updated 1 May), for the confirmed $22 million payment; <a href="https://www.bankinfosecurity.com/change-healthcare-attack-cost-estimate-reaches-nearly-29b-a-26541" target="_blank" rel="noopener">BankInfoSecurity, October 2024</a>, for the ALPHV exit scam and the RansomHub demand; and <a href="https://www.govinfosecurity.com/change-healthcare-attack-devastating-to-doc-practices-a-24842" target="_blank" rel="noopener">GovInfoSecurity, April 2024</a>, for RansomHub&rsquo;s threat to sell 4 terabytes. The attackers&rsquo; claims about data volume varied (ALPHV claimed about 6 terabytes), so the chapter says &ldquo;several terabytes.&rdquo; Sections 4.3 and 4.5.</li>
+<li id="src-7"><span class="srcnum">7</span> American Medical Association survey, March and April 2024, about 1,400 respondents, as reported by <a href="https://www.bankinfosecurity.com/change-healthcare-attack-devastating-to-doc-practices-a-24842" target="_blank" rel="noopener">BankInfoSecurity</a>, for the 80 percent figure and practices using personal funds. Sections 4.4 and 5.</li>
+<li id="src-8"><span class="srcnum">8</span> UnitedHealth Group, <a href="https://www.sec.gov/Archives/edgar/data/731766/000073176625000063/unh-20241231.htm" target="_blank" rel="noopener">Form 10-K for 2024</a>, for $2.2 billion in direct response costs, $867 million in business disruption, and more than $9 billion in interest-free loans to providers. Sections 4.6 and 4.7.</li>
+<li id="src-9"><span class="srcnum">9</span> U.S. Department of Health and Human Services, Office for Civil Rights, <a href="https://www.hhs.gov/hipaa/for-professionals/special-topics/change-healthcare-cybersecurity-incident-frequently-asked-questions/index.html" target="_blank" rel="noopener">Change Healthcare Cybersecurity Incident FAQ</a>, for the investigation and the notification counts through 192.7 million on 31 July 2025. Section 4.7.</li>
+<li id="src-10"><span class="srcnum">10</span> HIPAA Journal, <a href="https://www.hipaajournal.com/h1-2026-healthcare-data-breach-report/" target="_blank" rel="noopener">H1 2026 Healthcare Data Breach Report</a> and <a href="https://www.hipaajournal.com/change-healthcare-responding-to-cyberattack/" target="_blank" rel="noopener">Change Healthcare coverage</a>, for the Security Rule proposal, the opposition, the delay to July 2027, and the litigation. Litigation status as of autumn 2026 is from secondary trackers of the federal docket (MDL No. 3108, District of Minnesota); recheck before teaching. Section 4.9.</li>
+<li id="src-11"><span class="srcnum">11</span> HHS, <a href="https://www.hhs.gov/press-room/ocr-settles-four-ransomware-investigations.html" target="_blank" rel="noopener">&ldquo;OCR Settles Four HIPAA Security Rule Ransomware Investigations,&rdquo; 23 April 2026</a>. Section 4.9.</li>
+<li id="src-12"><span class="srcnum">12</span> CompTIA, <a href="https://www.comptia.org/en/about-us/news/press-releases/cyberseek-expands-cybersecurity-workforce-data-coverage-and-enhances-user-experience/" target="_blank" rel="noopener">CyberSeek data release, 2 June 2025</a>, for about 514,000 U.S. cybersecurity job postings in the year to April 2025. Section 5.1.</li>
+<li>Images. Security key, photograph by Tony Webster, 2019, <a href="https://commons.wikimedia.org/wiki/File:Yubikey_USB_2FA_U2F_Security_Token_(46900270791).jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY 2.0, cropped. Morris worm disk at the Museum of Science, Boston, photograph by Go Card USA, 2006, <a href="https://commons.wikimedia.org/wiki/File:Morris_Worm.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 2.0. Pharmacy pill counter, U.S. Air Force photograph by Senior Airman Jessica Sanchez-Chen, 2022, <a href="https://commons.wikimedia.org/wiki/File:52nd_MDG_Pharmacy_(7580222).jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, public domain. Both diagrams are original to this book.</li>
+<li><strong>Verification note, 29 October 2026 (rebuild).</strong> The chapter was restructured to match Chapter 7, the case was reordered to run in chronological order, and every claim was checked against the entries above. Corrections: the data volume is now given as the attackers&rsquo; claim of &ldquo;several terabytes,&rdquo; because the previous version said six terabytes in some places and four in another, and neither figure comes from the company. The claim that the CEO blamed &ldquo;Change&rsquo;s older systems not yet raised to the parent company&rsquo;s standard&rdquo; is not in his testimony and was removed; he said the company was still working out why MFA was missing. The MOVEit figure of &ldquo;around 1,700 organizations&rdquo; had no source and was replaced with Emsisoft&rsquo;s totals. A reference to a nonexistent &ldquo;mini-case 3&rdquo; was removed, as was the unsourced Target HVAC aside and the unsourced claim that more CISOs now come from management backgrounds. The kill-chain diagram&rsquo;s labels were made general, so the case is not told in section 2 before section 4. New: section 4.1 on the 2022 acquisition and the Justice Department&rsquo;s data-concentration argument; the hub diagram; section 2.3 on third-party and concentration risk; and the 2026 status of the Security Rule, the litigation, and enforcement.</li>
 </ul>
 </details>
 
 </main>
+<script>
+(function(){
+  function openFor(h){
+    if(!h||h.indexOf('#src-')!==0)return;
+    var box=document.querySelector('details.srcbox'); if(box) box.open=true;
+    var t=document.getElementById(h.slice(1)); if(t) t.scrollIntoView();
+  }
+  document.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('.cite a'); if(!a)return;
+    e.preventDefault(); var h=a.getAttribute('href'); history.replaceState(null,'',h); openFor(h);
+  });
+  openFor(location.hash);
+})();
+</script>
+
 <!--NAVJS-->
 <script>
 (function(){
