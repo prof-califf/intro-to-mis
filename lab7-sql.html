@@ -327,7 +327,7 @@ input::placeholder{color:#6b6b68;opacity:1}.cp.done{border-left:4px solid var(--
 #sqlbox.docked{left:0;right:0;bottom:0;height:var(--sbxh);border-radius:0}
 #sqlbox.docked.collapsed{height:auto}
 #sqlbox.docked #sbxcollapse{display:inline-block}
-#sqlbox.docked.collapsed #sqlstatus,#sqlbox.docked.collapsed #sqlin,#sqlbox.docked.collapsed .sbxrun,#sqlbox.docked.collapsed #sqlout{display:none}
+#sqlbox.docked.collapsed #sqlstatus,#sqlbox.docked.collapsed .sqlwrap,#sqlbox.docked.collapsed .sbxrun,#sqlbox.docked.collapsed #sqlout{display:none}
 body.sbxdocked{padding-bottom:calc(var(--sbxh) + 3vh)}
 body.sbxdocked.sbxcollapsed{padding-bottom:4rem}
 /* wide screens: right-hand panel */
@@ -350,6 +350,18 @@ body.sbxdocked:not(.sbxcollapsed) .sbxgrip{display:block}
   .sbxgrip:hover,.sbxgrip:focus-visible{background-size:6px 96px}
   body.sbxdocked .sbxgrip{display:block}
 }
+
+/* SQL keyword colouring */
+.sqlwrap{position:relative;background:#0e0e0d;border:1px solid #3a3a38;border-radius:2px}
+#sqlhl,#sqlin{font-family:ui-monospace,Menlo,monospace;font-size:.92rem;line-height:1.5;padding:.6rem;margin:0;border:0;
+  white-space:pre-wrap;overflow-wrap:break-word;word-break:normal;tab-size:4;letter-spacing:normal;box-sizing:border-box;width:100%}
+#sqlhl{position:absolute;inset:0;overflow:hidden;color:#f6f4f1;pointer-events:none;background:none}
+#sqlin{position:relative;display:block;background:transparent;color:transparent;caret-color:#f6f4f1;resize:vertical;overflow:hidden;min-height:7.5rem}
+#sqlin::placeholder{color:#6b6b68}
+#sqlin:focus{outline:2px solid var(--magenta-onblack);outline-offset:1px}
+#sqlhl .kw{color:var(--magenta-onblack);font-weight:700}
+#sqlhl .str{color:#9fd3a8}
+code .kw{color:var(--magenta);font-weight:700}
 </style>
 <link rel="stylesheet" href="book.css">
 <link rel="stylesheet" href="lab.css"></head><body>
@@ -497,7 +509,7 @@ and it follows you down the page, so you never have to scroll back up to it.</p>
   <div class="sbxbar"><p style="font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--magenta-onblack);margin:0 0 .5rem">Sandbox &middot; tool, not a checkpoint</p>
   <span class="sbxbtns"><button type="button" class="sbxbtn" id="sbxcollapse" aria-expanded="true" onclick="sbxCollapse()">Hide</button><button type="button" class="sbxbtn" id="sbxdock" aria-pressed="false" onclick="sbxDock()">Dock</button></span></div>
   <p id="sqlstatus" style="font-family:var(--sans);font-size:.85rem;color:#c9c6c0;margin:0 0 .6rem">Loading database&hellip;</p>
-  <textarea id="sqlin" rows="5" spellcheck="false" style="width:100%;font-family:ui-monospace,Menlo,monospace;font-size:.92rem;padding:.6rem;border:1px solid #3a3a38;border-radius:2px;background:#0e0e0d;color:#f6f4f1" aria-label="SQL query" placeholder="SELECT store_name, region FROM stores WHERE region = 'Inland';"></textarea>
+  <div class="sqlwrap"><pre id="sqlhl" aria-hidden="true"></pre><textarea id="sqlin" rows="5" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="SQL query" placeholder="SELECT store_name, region FROM stores WHERE region = 'Inland';"></textarea></div>
   <p id="sbxpastemsg" aria-live="polite" style="font-family:var(--sans);font-size:.8rem;color:var(--magenta-onblack);margin:.35rem 0 0;min-height:0"></p>
   <button class="sbxrun" onclick="runSQL()" style="font-family:var(--display);font-size:14px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--magenta);color:#fff;border:none;padding:.5rem 1.1rem;cursor:pointer;margin-top:.5rem">Run query</button>
   <div id="sqlout" style="overflow-x:auto;margin-top:.8rem;font-family:var(--sans);font-size:.85rem;background:#f6f4f1;color:#0e0e0d;padding:.6rem .8rem;border-radius:2px;min-height:1.5rem"></div>
@@ -928,6 +940,28 @@ function sbxCollapse(){
     clearTimeout(timer);timer=setTimeout(function(){m.textContent='';},4000);}
   t.addEventListener('paste',no);t.addEventListener('drop',no);
   t.addEventListener('beforeinput',function(e){if(e.inputType==='insertFromPaste'||e.inputType==='insertFromDrop'||e.inputType==='insertFromPasteAsQuotation')no(e);});
+})();
+</script>
+<script>
+(function(){
+  var KW=/\b(SELECT|FROM|WHERE|AND|OR|NOT|ORDER|GROUP|BY|HAVING|LIMIT|JOIN|INNER|LEFT|RIGHT|OUTER|ON|AS|DESC|ASC|DISTINCT|IN|LIKE|IS|NULL|BETWEEN|COUNT|SUM|AVG|MAX|MIN|ROUND)\b/gi;
+  function esc(x){return x.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  function hl(text,strings){
+    var out='',re=/('[^']*'?)/g,last=0,m;
+    while((m=re.exec(text))){out+=esc(text.slice(last,m.index)).replace(KW,'<span class="kw">$1</span>');
+      out+=strings?'<span class="str">'+esc(m[0])+'</span>':esc(m[0]);last=re.lastIndex;}
+    return out+esc(text.slice(last)).replace(KW,'<span class="kw">$1</span>');
+  }
+  window.sqlHighlight=hl;
+  var t=document.getElementById('sqlin'),pre=document.getElementById('sqlhl');
+  function grow(){t.style.height='auto';t.style.height=t.scrollHeight+'px';}
+  function upd(){pre.innerHTML=hl(t.value,true)+'\n';grow();}
+  t.addEventListener('input',upd);upd();
+  // colour the example queries on the page (only code made of plain text)
+  function colourCode(root){(root||document).querySelectorAll('code').forEach(function(c){
+    if(c.dataset.hl||c.children.length)return;c.dataset.hl='1';c.innerHTML=hl(c.textContent,false);});}
+  colourCode();
+  new MutationObserver(function(){colourCode();}).observe(document.body,{childList:true,subtree:true});
 })();
 </script>
 </body></html>
