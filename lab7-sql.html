@@ -312,6 +312,31 @@ li{margin-bottom:.45rem}
 .locked button{background:var(--off-white)!important;color:var(--text-light)!important;border:1px solid var(--rule)!important;cursor:default}
 .locked input{background:var(--off-white)}
 input::placeholder{color:#6b6b68;opacity:1}.cp.done{border-left:4px solid var(--good);background:var(--good-pale)}.cp .q{font-family:var(--sans);font-size:.92rem;color:var(--navy);margin:0 0.6rem;font-weight:500}.cp input[type=text]{font-family:var(--sans);font-size:.9rem;padding:.45rem.6rem;border:1px solid var(--rule);border-radius:2px;width:14rem;max-width:100%}.cp button{font-family:var(--sans);font-size:.8rem;font-weight:600;letter-spacing:.04em;background:var(--accent-deep);color:#fff;border:none;border-radius:2px;padding:.5rem.9rem;cursor:pointer;margin-left:.4rem}.cp button.hintb{background:none;color:var(--accent-deep);border:1px solid var(--rule)}.cp .msg{font-family:var(--sans);font-size:.8rem;margin:.5rem 0 0}.cp .hint{font-family:var(--sans);font-size:.8rem;color:var(--muted);margin:.5rem 0 0;display:none;border-top:1px dashed var(--rule);padding-top:.5rem}.progress{position:sticky;top:0;z-index:5;background:var(--black);color:#fff;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:.6rem 1rem;margin:1.5rem 0}.certbox{border:2px solid var(--black);background:var(--paper);padding:1.2rem 1.3rem;margin:1.5rem 0;display:none}.certbox.show{display:block}.certbox h3{margin-top:0}.codebox code{font-family:ui-monospace,Menlo,monospace;background:var(--cream-deep);padding:.15em.45em;border-radius:2px}
+
+/* ---------- docked sandbox ---------- */
+.sbxbar{display:flex;align-items:center;justify-content:space-between;gap:.6rem;margin:0 0 .5rem}
+.sbxbar p{margin:0!important}
+.sbxbtns{display:flex;gap:.4rem}
+.sbxbtn{font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:none;color:#f6f4f1;border:1px solid #6b6b68;padding:.3rem .7rem;cursor:pointer}
+.sbxbtn:hover,.sbxbtn:focus-visible{border-color:var(--magenta-onblack);color:var(--magenta-onblack);outline:none}
+#sbxcollapse{display:none}
+#sqlbox.docked{position:fixed;z-index:50;margin:0!important;box-shadow:0 -4px 24px rgba(0,0,0,.35);overflow-y:auto}
+#sqlbox.docked #sqlout{max-height:30vh;overflow:auto}
+/* laptops and phones: bottom drawer */
+#sqlbox.docked{left:0;right:0;bottom:0;max-height:55vh;border-radius:0}
+#sqlbox.docked #sbxcollapse{display:inline-block}
+#sqlbox.docked.collapsed #sqlstatus,#sqlbox.docked.collapsed #sqlin,#sqlbox.docked.collapsed .sbxrun,#sqlbox.docked.collapsed #sqlout{display:none}
+body.sbxdocked{padding-bottom:58vh}
+body.sbxdocked.sbxcollapsed{padding-bottom:4rem}
+/* wide screens: right-hand panel */
+@media (min-width:1500px){
+  #sqlbox.docked{left:auto;top:0;right:0;bottom:0;width:30rem;max-height:none;border-left:6px solid var(--magenta)}
+  #sqlbox.docked #sbxcollapse{display:none}
+  #sqlbox.docked #sqlout{max-height:none}
+  body.sbxdocked{padding-bottom:0;padding-right:31rem}
+}
+.sbxspot{display:none;font-family:var(--sans);font-size:.85rem;color:var(--text-light);border:1px dashed var(--border);padding:.6rem .9rem;margin:1.2rem 0}
+body.sbxdocked .sbxspot{display:block}
 </style>
 <link rel="stylesheet" href="book.css">
 <link rel="stylesheet" href="lab.css"></head><body>
@@ -453,15 +478,18 @@ going to the truth directly.</p></div>
 
 <h2><span class="num">Tool</span>The sandbox: where every query in this lab gets typed</h2>
 <p>The dark box below is not a checkpoint and nothing you type in it is graded. It is your workbench.
-Every step in Part 2 says "type this into the sandbox"; this is the sandbox. It stays here on the page,
-so scroll back up to it, or keep it open in a second window beside the steps.</p>
+Every step in Part 2 says "type this into the sandbox"; this is the sandbox. Press <strong>Dock</strong>
+and it follows you down the page, so you never have to scroll back up to it.</p>
 <div id="sqlbox" style="background:var(--off-black);color:#f6f4f1;border-radius:3px;padding:1rem 1.15rem 1.15rem;margin:1.2rem 0;border-left:6px solid var(--magenta)">
-  <p style="font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--magenta-onblack);margin:0 0 .5rem">Sandbox &middot; tool, not a checkpoint</p>
+  <div class="sbxbar"><p style="font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--magenta-onblack);margin:0 0 .5rem">Sandbox &middot; tool, not a checkpoint</p>
+  <span class="sbxbtns"><button type="button" class="sbxbtn" id="sbxcollapse" aria-expanded="true" onclick="sbxCollapse()">Hide</button><button type="button" class="sbxbtn" id="sbxdock" aria-pressed="false" onclick="sbxDock()">Dock</button></span></div>
   <p id="sqlstatus" style="font-family:var(--sans);font-size:.85rem;color:#c9c6c0;margin:0 0 .6rem">Loading database&hellip;</p>
   <textarea id="sqlin" rows="5" spellcheck="false" style="width:100%;font-family:ui-monospace,Menlo,monospace;font-size:.92rem;padding:.6rem;border:1px solid #3a3a38;border-radius:2px;background:#0e0e0d;color:#f6f4f1" aria-label="SQL query" placeholder="SELECT store_name, region FROM stores WHERE region = 'Inland';"></textarea>
-  <br><button onclick="runSQL()" style="font-family:var(--display);font-size:14px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--magenta);color:#fff;border:none;padding:.5rem 1.1rem;cursor:pointer;margin-top:.5rem">Run query</button>
+  <br><button class="sbxrun" onclick="runSQL()" style="font-family:var(--display);font-size:14px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--magenta);color:#fff;border:none;padding:.5rem 1.1rem;cursor:pointer;margin-top:.5rem">Run query</button>
   <div id="sqlout" style="overflow-x:auto;margin-top:.8rem;font-family:var(--sans);font-size:.85rem;background:#f6f4f1;color:#0e0e0d;padding:.6rem .8rem;border-radius:2px;min-height:1.5rem"></div>
 </div>
+
+<p class="sbxspot">The sandbox is docked. Press <strong>Undock</strong> on it to put it back here.</p>
 
 <div class="callout"><strong>Email 1 &middot; Monday, 8:30 AM</strong>
 <p style="font-family:var(--sans);font-size:.9rem"><strong>From:</strong> Controller &middot;
@@ -508,7 +536,7 @@ with no spreadsheet equivalent.</p>
 </div></details>
 
 <h2><span class="num">Part 2</span>Follow along: the GM's questions, one query at a time</h2>
-<p><strong>Every query is printed for you.</strong> Type it into the sandbox above (typing, not pasting,
+<p><strong>Every query is printed for you.</strong> Type it into the sandbox (typing, not pasting,
 is how the words get into your hands), press Run, and enter what comes back. Each step adds one word to
 what you already know. Seven steps, and one of them is clicking rather than typing.</p>
 
@@ -838,5 +866,23 @@ function cert(){
     m.addEventListener('click',function(e){e.stopPropagation();});
   });
 })();
+</script>
+<script>
+function sbxDock(){
+  var b=document.getElementById('sqlbox'),btn=document.getElementById('sbxdock');
+  var on=!b.classList.contains('docked');
+  b.classList.toggle('docked',on); document.body.classList.toggle('sbxdocked',on);
+  if(!on){b.classList.remove('collapsed');document.body.classList.remove('sbxcollapsed');
+    var c=document.getElementById('sbxcollapse');c.textContent='Hide';c.setAttribute('aria-expanded','true');}
+  btn.textContent=on?'Undock':'Dock'; btn.setAttribute('aria-pressed',on?'true':'false');
+  if(on)document.getElementById('sqlin').focus();
+}
+function sbxCollapse(){
+  var b=document.getElementById('sqlbox'),c=document.getElementById('sbxcollapse');
+  var hid=!b.classList.contains('collapsed');
+  b.classList.toggle('collapsed',hid); document.body.classList.toggle('sbxcollapsed',hid);
+  c.textContent=hid?'Show':'Hide'; c.setAttribute('aria-expanded',hid?'false':'true');
+  if(!hid)document.getElementById('sqlin').focus();
+}
 </script>
 </body></html>
