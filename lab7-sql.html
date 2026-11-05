@@ -498,7 +498,8 @@ and it follows you down the page, so you never have to scroll back up to it.</p>
   <span class="sbxbtns"><button type="button" class="sbxbtn" id="sbxcollapse" aria-expanded="true" onclick="sbxCollapse()">Hide</button><button type="button" class="sbxbtn" id="sbxdock" aria-pressed="false" onclick="sbxDock()">Dock</button></span></div>
   <p id="sqlstatus" style="font-family:var(--sans);font-size:.85rem;color:#c9c6c0;margin:0 0 .6rem">Loading database&hellip;</p>
   <textarea id="sqlin" rows="5" spellcheck="false" style="width:100%;font-family:ui-monospace,Menlo,monospace;font-size:.92rem;padding:.6rem;border:1px solid #3a3a38;border-radius:2px;background:#0e0e0d;color:#f6f4f1" aria-label="SQL query" placeholder="SELECT store_name, region FROM stores WHERE region = 'Inland';"></textarea>
-  <br><button class="sbxrun" onclick="runSQL()" style="font-family:var(--display);font-size:14px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--magenta);color:#fff;border:none;padding:.5rem 1.1rem;cursor:pointer;margin-top:.5rem">Run query</button>
+  <p id="sbxpastemsg" aria-live="polite" style="font-family:var(--sans);font-size:.8rem;color:var(--magenta-onblack);margin:.35rem 0 0;min-height:0"></p>
+  <button class="sbxrun" onclick="runSQL()" style="font-family:var(--display);font-size:14px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--magenta);color:#fff;border:none;padding:.5rem 1.1rem;cursor:pointer;margin-top:.5rem">Run query</button>
   <div id="sqlout" style="overflow-x:auto;margin-top:.8rem;font-family:var(--sans);font-size:.85rem;background:#f6f4f1;color:#0e0e0d;padding:.6rem .8rem;border-radius:2px;min-height:1.5rem"></div>
 </div>
 
@@ -918,6 +919,15 @@ function sbxCollapse(){
     if(e.key===grow){setSize(cur()+40);e.preventDefault();}
     else if(e.key===shrink){setSize(cur()-40);e.preventDefault();}
   });
+})();
+</script>
+<script>
+(function(){
+  var t=document.getElementById('sqlin'),m=document.getElementById('sbxpastemsg'),timer;
+  function no(e){e.preventDefault();m.textContent='Pasting is turned off here. Type the query: typing is how the words stick.';
+    clearTimeout(timer);timer=setTimeout(function(){m.textContent='';},4000);}
+  t.addEventListener('paste',no);t.addEventListener('drop',no);
+  t.addEventListener('beforeinput',function(e){if(e.inputType==='insertFromPaste'||e.inputType==='insertFromDrop'||e.inputType==='insertFromPasteAsQuotation')no(e);});
 })();
 </script>
 </body></html>
