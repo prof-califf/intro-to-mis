@@ -321,22 +321,35 @@ input::placeholder{color:#6b6b68;opacity:1}.cp.done{border-left:4px solid var(--
 .sbxbtn:hover,.sbxbtn:focus-visible{border-color:var(--magenta-onblack);color:var(--magenta-onblack);outline:none}
 #sbxcollapse{display:none}
 #sqlbox.docked{position:fixed;z-index:50;margin:0!important;box-shadow:0 -4px 24px rgba(0,0,0,.35);overflow-y:auto}
-#sqlbox.docked #sqlout{max-height:30vh;overflow:auto}
+#sqlbox.docked #sqlout{max-height:none;overflow:auto}
 /* laptops and phones: bottom drawer */
-#sqlbox.docked{left:0;right:0;bottom:0;max-height:55vh;border-radius:0}
+:root{--sbxw:30rem;--sbxh:55vh}
+#sqlbox.docked{left:0;right:0;bottom:0;height:var(--sbxh);border-radius:0}
+#sqlbox.docked.collapsed{height:auto}
 #sqlbox.docked #sbxcollapse{display:inline-block}
 #sqlbox.docked.collapsed #sqlstatus,#sqlbox.docked.collapsed #sqlin,#sqlbox.docked.collapsed .sbxrun,#sqlbox.docked.collapsed #sqlout{display:none}
-body.sbxdocked{padding-bottom:58vh}
+body.sbxdocked{padding-bottom:calc(var(--sbxh) + 3vh)}
 body.sbxdocked.sbxcollapsed{padding-bottom:4rem}
 /* wide screens: right-hand panel */
 @media (min-width:1500px){
-  #sqlbox.docked{left:auto;top:0;right:0;bottom:0;width:30rem;max-height:none;border-left:6px solid var(--magenta)}
+  #sqlbox.docked{left:auto;top:0;right:0;bottom:0;width:var(--sbxw);height:auto;border-left:6px solid var(--magenta)}
   #sqlbox.docked #sbxcollapse{display:none}
   #sqlbox.docked #sqlout{max-height:none}
-  body.sbxdocked{padding-bottom:0;padding-right:31rem}
+  body.sbxdocked{padding-bottom:0;padding-right:calc(var(--sbxw) + 1rem)}
 }
 .sbxspot{display:none;font-family:var(--sans);font-size:.85rem;color:var(--text-light);border:1px dashed var(--border);padding:.6rem .9rem;margin:1.2rem 0}
 body.sbxdocked .sbxspot{display:block}
+
+/* drag handle for the docked sandbox */
+.sbxgrip{display:none;position:fixed;z-index:51;left:0;right:0;bottom:calc(var(--sbxh) - 7px);height:14px;cursor:ns-resize;touch-action:none;
+  background:linear-gradient(var(--magenta),var(--magenta)) center/48px 4px no-repeat}
+.sbxgrip:hover,.sbxgrip:focus-visible{background-size:96px 6px;outline:none}
+body.sbxdocked:not(.sbxcollapsed) .sbxgrip{display:block}
+@media (min-width:1500px){
+  .sbxgrip{left:auto;right:calc(var(--sbxw) - 7px);top:0;bottom:0;width:14px;height:auto;cursor:ew-resize;background-size:4px 48px}
+  .sbxgrip:hover,.sbxgrip:focus-visible{background-size:6px 96px}
+  body.sbxdocked .sbxgrip{display:block}
+}
 </style>
 <link rel="stylesheet" href="book.css">
 <link rel="stylesheet" href="lab.css"></head><body>
@@ -489,6 +502,7 @@ and it follows you down the page, so you never have to scroll back up to it.</p>
   <div id="sqlout" style="overflow-x:auto;margin-top:.8rem;font-family:var(--sans);font-size:.85rem;background:#f6f4f1;color:#0e0e0d;padding:.6rem .8rem;border-radius:2px;min-height:1.5rem"></div>
 </div>
 
+<div class="sbxgrip" id="sbxgrip" role="separator" tabindex="0" aria-label="Resize the sandbox. Drag, or use the arrow keys."></div>
 <p class="sbxspot">The sandbox is docked. Press <strong>Undock</strong> on it to put it back here.</p>
 
 <div class="callout"><strong>Email 1 &middot; Monday, 8:30 AM</strong>
@@ -884,5 +898,26 @@ function sbxCollapse(){
   c.textContent=hid?'Show':'Hide'; c.setAttribute('aria-expanded',hid?'false':'true');
   if(!hid)document.getElementById('sqlin').focus();
 }
+</script>
+<script>
+(function(){
+  var g=document.getElementById('sbxgrip'),root=document.documentElement,wide=window.matchMedia('(min-width:1500px)');
+  function setSize(px){
+    if(wide.matches){px=Math.max(320,Math.min(px,window.innerWidth*0.7));root.style.setProperty('--sbxw',px+'px');}
+    else{px=Math.max(140,Math.min(px,window.innerHeight*0.85));root.style.setProperty('--sbxh',px+'px');}
+  }
+  function cur(){var b=document.getElementById('sqlbox').getBoundingClientRect();return wide.matches?b.width:b.height;}
+  g.addEventListener('pointerdown',function(e){
+    e.preventDefault();g.setPointerCapture(e.pointerId);document.body.style.userSelect='none';
+    function mv(ev){setSize(wide.matches?window.innerWidth-ev.clientX:window.innerHeight-ev.clientY);}
+    function up(){g.removeEventListener('pointermove',mv);g.removeEventListener('pointerup',up);g.removeEventListener('pointercancel',up);document.body.style.userSelect='';}
+    g.addEventListener('pointermove',mv);g.addEventListener('pointerup',up);g.addEventListener('pointercancel',up);
+  });
+  g.addEventListener('keydown',function(e){
+    var grow=wide.matches?'ArrowLeft':'ArrowUp',shrink=wide.matches?'ArrowRight':'ArrowDown';
+    if(e.key===grow){setSize(cur()+40);e.preventDefault();}
+    else if(e.key===shrink){setSize(cur()-40);e.preventDefault();}
+  });
+})();
 </script>
 </body></html>
