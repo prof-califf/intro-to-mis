@@ -429,7 +429,7 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 <a href="#defense"><span class="tnum">2.</span> How attacks work, and how defense works</a>
 <a href="#cases"><span class="tnum">3.</span> Two attacks that came in sideways</a>
 <a href="#change"><span class="tnum">4.</span> Main case. Change Healthcare: the day the claims stopped</a>
-<a href="#other"><span class="tnum">5.</span> The downside: who absorbs a breach, and who does this work</a>
+<a href="#other"><span class="tnum">5.</span> The downside: who absorbs a breach</a>
 <a href="#vocab"><span class="tnum">6.</span> Vocabulary</a>
 <a href="#discussion"><span class="tnum">7.</span> Discussion questions</a>
 <a href="#lab"><span class="tnum">8.</span> From lecture to lab</a>
@@ -765,8 +765,19 @@ share of American healthcare.</p>
 <p>Picture a pharmacy counter on the afternoon of 21 February 2024. The prescription is filled and sitting in
 the bag. The pharmacist sends it to the insurer to confirm coverage, and the screen does nothing. Across
 the country the same screen is doing nothing in pharmacies, clinics, and hospitals, and almost none of the
-people staring at it have heard of the company that just went dark. To see how one company's bad morning
-became a national event, start with what that company was.</p>
+people staring at it have heard of the company that just went dark.</p>
+
+<p>The famous breaches of the last decade, such as Target and Equifax, were about stolen data. This one is
+about a stopped business, which is where cybercrime has actually gone. Ransomware does not quietly copy your
+data and leave. It takes your operations hostage. Five numbers set the scale:</p>
+
+<div class="statrow">
+  <div class="stat"><b>1 in 3</b><span>US patient records touched</span></div>
+  <div class="stat"><b>9 days</b><span>attackers inside, unnoticed</span></div>
+  <div class="stat"><b>$22M</b><span>ransom paid, data leaked anyway</span></div>
+  <div class="stat"><b>~$3.1B</b><span>cost to UnitedHealth, 2024</span></div>
+  <div class="stat"><b>192.7M</b><span>people affected</span></div>
+</div>
 
 <figure class="diagram" style="margin:1.9rem auto;max-width:560px">
 <img src="pharmacy-pill-counter.jpg" width="960" height="639" loading="lazy" style="width:100%;height:auto"
@@ -780,22 +791,7 @@ not get paid for them.
 </figcaption>
 </figure>
 
-<div class="statrow">
-  <div class="stat"><b>1 in 3</b><span>US patient records touched</span></div>
-  <div class="stat"><b>9 days</b><span>attackers inside, unnoticed</span></div>
-  <div class="stat"><b>$22M</b><span>ransom paid, data leaked anyway</span></div>
-  <div class="stat"><b>~$3.1B</b><span>cost to UnitedHealth, 2024</span></div>
-  <div class="stat"><b>192.7M</b><span>people affected</span></div>
-</div>
 
-<div class="callout">
-  <strong>Why this case, and not an older one</strong>
-  <p>The famous breaches of the last decade, such as Target and Equifax, were about stolen data. Change
-  Healthcare is about a stopped business, which is where cybercrime has actually gone. Ransomware does not
-  quietly copy your data and leave. It takes your operations hostage. Understanding that shift is the
-  difference between treating security as an IT problem and treating it as a survival problem for the whole
-  organization.</p>
-</div>
 
 <h3>4.1 The plumbing, and who owned it</h3>
 
@@ -983,51 +979,7 @@ produced it looked sensible on its own. Concentration risk is not a choice anyon
 market arrives at when every participant decides separately, and noticing it before it fails is work for
 people who understand both the business and the system.</p>
 
-<h3>4.10 What a business technology manager takes from this case</h3>
-
-<p>Strip the case down to what you can reuse in any company. Four decisions came up in it, and you may be in
-the room for any of them.</p>
-
-<p><strong>Ask what stopped before you ask what was stolen.</strong> Change Healthcare's data was taken, but the
-damage that mattered first was pharmacies and clinics that could not get paid for weeks. When you plan for a
-breach, plan for the day the system is simply gone, because that is the day that costs the most.</p>
-
-<p><strong>Write down what you depend on, including the things you did not buy.</strong> The Morris worm came in
-through the network. MOVEit came in through a supplier's supplier. Change Healthcare was the dependency for a
-large share of American healthcare. A list of the systems your business cannot run without is the cheapest
-security document there is, and most companies do not have one.</p>
-
-<p><strong>Put the boring control in place before the clever one.</strong> This breach began with one stolen
-password and one portal without MFA. Most of what stops a breach is a short list of unglamorous controls that
-somebody has to insist on, and insisting is a manager's job.</p>
-
-<p><strong>Decide in advance who can turn a system off.</strong> Change was cut off to stop the spread, which was
-the right call and cost billions. The person who makes that call has to exist before the morning it is needed,
-with the authority to make it and a plan for what happens next.</p>
-
-<h2 id="other"><span class="num">5</span>The downside: who absorbs a breach, and who does this work</h2>
-
-<p>The roughly $3.1 billion UnitedHealth booked is the part of the cost a very large company could absorb.
-Follow the rest of it outward and it falls on people with far less room to carry it:</p>
-
-<ul>
-<li><strong>Small medical practices,</strong> some of which used personal funds or took emergency loans to keep
-going, because a company they had never chosen to depend on went dark.<sup class="cite"><a href="#src-7" aria-label="Source 7">7</a></sup></li>
-<li><strong>Patients,</strong> who waited for approvals and medications while checks sat in a frozen queue.</li>
-<li><strong>192.7 million people</strong> whose personal and health information is now somewhere they cannot
-get it back from. Health data does not expire the way a credit card number does. You cannot reissue a
-diagnosis.</li>
-</ul>
-
-<p>Keep this list for Wednesday's governance discussion. When a company decides how much to spend on security,
-much of the cost of spending too little is pushed onto others: patients, small providers, the public.
-Economists call that an <strong>externality</strong>, and it is the main reason security cannot be left entirely
-to each company's private cost-benefit math. The company weighs its own $3.1 billion. It does not weigh the
-closed clinic or the stolen medical history, because those never appear on its books. Part of the job of
-governance, and of regulation, is to speak for the people who are not in the room when the security budget
-is set.</p>
-
-<h3>5.1 What business people actually do in security</h3>
+<h3>4.10 What business people actually do in security</h3>
 
 <p>Students often assume cybersecurity is a coding job they are not qualified for. Some of it is. But U.S.
 employers posted about 514,000 cybersecurity job openings in a single year, and many of those roles are
@@ -1052,11 +1004,54 @@ answers to the board. The job is mostly about explaining risk in business terms,
 a budget, and building a culture.</li>
 </ul>
 
-<p>The takeaway for this course: the most important security decisions in this case, require MFA everywhere,
-fence the network into zones, and bring an acquired company up to standard, were management decisions that
-went unmade. You do not need to write code to prevent the next one. You need to understand the business well
-enough to insist on the boring controls before the crisis, which is exactly what an MIS degree prepares you
-for.</p>
+<p>The point for this course: the most important security decisions in this case were management decisions
+that went unmade. Requiring MFA everywhere, fencing the network into zones, and bringing an acquired company up
+to standard needed no code. They needed someone who understood the business well enough to insist, which is
+exactly what an MIS degree prepares you for.</p>
+
+<h3>4.11 What a business technology manager takes from this case</h3>
+
+<p>Strip the case down to what you can reuse in any company. Four decisions came up in it, and you may be in
+the room for any of them.</p>
+
+<p><strong>Ask what stopped before you ask what was stolen.</strong> Change Healthcare's data was taken, but the
+damage that mattered first was pharmacies and clinics that could not get paid for weeks. When you plan for a
+breach, plan for the day the system is simply gone, because that is the day that costs the most.</p>
+
+<p><strong>Write down what you depend on, including the things you did not buy.</strong> The Morris worm came in
+through the network. MOVEit came in through a supplier's supplier. Change Healthcare was the dependency for a
+large share of American healthcare. A list of the systems your business cannot run without is the cheapest
+security document there is, and most companies do not have one.</p>
+
+<p><strong>Put the boring control in place before the clever one.</strong> This breach began with one stolen
+password and one portal without MFA. Most of what stops a breach is a short list of unglamorous controls that
+somebody has to insist on, and insisting is a manager's job.</p>
+
+<p><strong>Decide in advance who can turn a system off.</strong> Change was cut off to stop the spread, which was
+the right call and cost billions. The person who makes that call has to exist before the morning it is needed,
+with the authority to make it and a plan for what happens next.</p>
+
+<h2 id="other"><span class="num">5</span>The downside: who absorbs a breach</h2>
+
+<p>The roughly $3.1 billion UnitedHealth booked is the part of the cost a very large company could absorb.
+Follow the rest of it outward and it falls on people with far less room to carry it:</p>
+
+<ul>
+<li><strong>Small medical practices,</strong> some of which used personal funds or took emergency loans to keep
+going, because a company they had never chosen to depend on went dark.<sup class="cite"><a href="#src-7" aria-label="Source 7">7</a></sup></li>
+<li><strong>Patients,</strong> who waited for approvals and medications while checks sat in a frozen queue.</li>
+<li><strong>192.7 million people</strong> whose personal and health information is now somewhere they cannot
+get it back from. Health data does not expire the way a credit card number does. You cannot reissue a
+diagnosis.</li>
+</ul>
+
+<p>Keep this list for Chapter 10. When a company decides how much to spend on security,
+much of the cost of spending too little is pushed onto others: patients, small providers, the public.
+Economists call that an <strong>externality</strong>, and it is the main reason security cannot be left entirely
+to each company's private cost-benefit math. The company weighs its own $3.1 billion. It does not weigh the
+closed clinic or the stolen medical history, because those never appear on its books. Part of the job of
+governance, and of regulation, is to speak for the people who are not in the room when the security budget
+is set.</p>
 
 <div class="takeaways"><span class="obj-tag">Key takeaways</span>
 <ul>
@@ -1099,7 +1094,7 @@ for.</p>
 </div>
 
 <h2 id="discussion"><span class="num">7</span>Discussion questions</h2>
-<p>None of these get handed in. On Wednesday you run the discussion and I steer it, which means the
+<p>None of these get handed in. In class you run the discussion and I steer it, which means the
 class is only as good as what you walk in with. Read the chapter, pick the question you have the
 strongest opinion about, and be ready to say it first.</p>
 
@@ -1152,7 +1147,7 @@ Governance: The Audit</strong></a> puts you in that job at Cascadia.</p>
 <li id="src-9"><span class="srcnum">9</span> U.S. Department of Health and Human Services, Office for Civil Rights, <a href="https://www.hhs.gov/hipaa/for-professionals/special-topics/change-healthcare-cybersecurity-incident-frequently-asked-questions/index.html" target="_blank" rel="noopener">Change Healthcare Cybersecurity Incident FAQ</a>, for the investigation and the notification counts through 192.7 million on 31 July 2025. Section 4.7.</li>
 <li id="src-10"><span class="srcnum">10</span> HIPAA Journal, <a href="https://www.hipaajournal.com/h1-2026-healthcare-data-breach-report/" target="_blank" rel="noopener">H1 2026 Healthcare Data Breach Report</a> and <a href="https://www.hipaajournal.com/change-healthcare-responding-to-cyberattack/" target="_blank" rel="noopener">Change Healthcare coverage</a>, for the Security Rule proposal, the opposition, the delay to July 2027, and the litigation. Litigation status as of autumn 2026 is from secondary trackers of the federal docket (MDL No. 3108, District of Minnesota); recheck before teaching. Section 4.9.</li>
 <li id="src-11"><span class="srcnum">11</span> HHS, <a href="https://www.hhs.gov/press-room/ocr-settles-four-ransomware-investigations.html" target="_blank" rel="noopener">&ldquo;OCR Settles Four HIPAA Security Rule Ransomware Investigations,&rdquo; 23 April 2026</a>. Section 4.9.</li>
-<li id="src-12"><span class="srcnum">12</span> CompTIA, <a href="https://www.comptia.org/en/about-us/news/press-releases/cyberseek-expands-cybersecurity-workforce-data-coverage-and-enhances-user-experience/" target="_blank" rel="noopener">CyberSeek data release, 2 June 2025</a>, for about 514,000 U.S. cybersecurity job postings in the year to April 2025. Section 5.1.</li>
+<li id="src-12"><span class="srcnum">12</span> CompTIA, <a href="https://www.comptia.org/en/about-us/news/press-releases/cyberseek-expands-cybersecurity-workforce-data-coverage-and-enhances-user-experience/" target="_blank" rel="noopener">CyberSeek data release, 2 June 2025</a>, for about 514,000 U.S. cybersecurity job postings in the year to April 2025. Section 4.10.</li>
 <li>Images. Security key, photograph by Tony Webster, 2019, <a href="https://commons.wikimedia.org/wiki/File:Yubikey_USB_2FA_U2F_Security_Token_(46900270791).jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY 2.0, cropped. Morris worm disk at the Museum of Science, Boston, photograph by Go Card USA, 2006, <a href="https://commons.wikimedia.org/wiki/File:Morris_Worm.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 2.0. Pharmacy pill counter, U.S. Air Force photograph by Senior Airman Jessica Sanchez-Chen, 2022, <a href="https://commons.wikimedia.org/wiki/File:52nd_MDG_Pharmacy_(7580222).jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, public domain. Both diagrams are original to this book.</li>
 <li><strong>Verification note, 29 October 2026 (rebuild).</strong> The chapter was restructured to match Chapter 7, the case was reordered to run in chronological order, and every claim was checked against the entries above. Corrections: the data volume is now given as the attackers&rsquo; claim of &ldquo;several terabytes,&rdquo; because the previous version said six terabytes in some places and four in another, and neither figure comes from the company. The claim that the CEO blamed &ldquo;Change&rsquo;s older systems not yet raised to the parent company&rsquo;s standard&rdquo; is not in his testimony and was removed; he said the company was still working out why MFA was missing. The MOVEit figure of &ldquo;around 1,700 organizations&rdquo; had no source and was replaced with Emsisoft&rsquo;s totals. A reference to a nonexistent &ldquo;mini-case 3&rdquo; was removed, as was the unsourced Target HVAC aside and the unsourced claim that more CISOs now come from management backgrounds. The kill-chain diagram&rsquo;s labels were made general, so the case is not told in section 2 before section 4. New: section 4.1 on the 2022 acquisition and the Justice Department&rsquo;s data-concentration argument; the hub diagram; section 2.3 on third-party and concentration risk; and the 2026 status of the Security Rule, the litigation, and enforcement.</li>
 </ul>
