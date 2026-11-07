@@ -656,10 +656,10 @@ each step. That is the whole appeal, and the whole risk.</p>
 </style>
 
 <style>
-.ar{background:#191917;border:1px solid #34332f;border-top:5px solid var(--magenta,#D61F69);margin:1.6rem 0 .5rem;color:#d8d5cf;font-family:var(--sans)}
-.ar-head{display:flex;justify-content:space-between;align-items:center;padding:.7rem 1rem;border-bottom:1px solid #34332f;gap:.7rem;flex-wrap:wrap}
-.ar-head span{font-size:.85rem;color:#a8a59f}
-.ar-run{font:700 .9rem var(--sans);background:var(--magenta,#D61F69);color:#fff;border:0;padding:.6rem 1.1rem;cursor:pointer;border-radius:2px}
+.ar{background:#191917;border:1px solid #34332f;border-top:4px solid var(--magenta,#D61F69);margin:1.4rem auto .5rem;max-width:480px;color:#d8d5cf;font-family:var(--sans)}
+.ar-head{display:flex;justify-content:space-between;align-items:center;padding:.5rem .8rem;border-bottom:1px solid #34332f;gap:.7rem;flex-wrap:wrap}
+.ar-head span{font-size:.78rem;color:#a8a59f}
+.ar-run{font:700 .8rem var(--sans);background:var(--magenta,#D61F69);color:#fff;border:0;padding:.45rem .85rem;cursor:pointer;border-radius:2px}
 .ar-run:hover{background:#ff2b8c}
 .ar-run[disabled]{opacity:.6;cursor:default}
 .ar-run:focus-visible,.ar-draft button:focus-visible{outline:2px solid #fff;outline-offset:2px}
@@ -667,51 +667,94 @@ each step. That is the whole appeal, and the whole risk.</p>
 .ar-node rect,.ar-node circle{fill:#252522;stroke:#4a4844;stroke-width:2;transition:fill .25s,stroke .25s}
 .ar-node text{fill:#e6e3de;font:500 13px var(--sans)}
 .ar-node .sub{fill:#9c998f;font-size:11px}
+.ar-db{fill:none;stroke:#6a6862;stroke-width:1.5;stroke-dasharray:3 3}
+.ar-dbl{fill:#a8a59f;font:600 10px var(--sans);letter-spacing:.04em}
+.ar-node .tbl{font-family:ui-monospace,Menlo,monospace;font-size:12px}
+.ar-node .model{fill:#ff7fb7;font-size:11px;font-weight:600}
+.ar-mail{margin:.6rem .8rem;padding:.5rem .7rem;background:#f6f4f1;color:#1d1d1b;font-size:.78rem;line-height:1.45;border-left:4px solid #8a877f;border-radius:2px;transition:border-color .25s,box-shadow .25s}
+.ar-mail.on{border-left-color:var(--magenta,#D61F69);box-shadow:0 0 0 2px var(--magenta,#D61F69)}
+.ar-mail-h{display:flex;flex-direction:column;gap:.05rem;color:#55534e;font-size:.72rem;margin-bottom:.25rem}
+.ar-mail p{margin:0}
 .ar-node.on rect,.ar-node.on circle{stroke:var(--magenta,#D61F69);fill:#3a1027}
 .ar-node.done rect,.ar-node.done circle{stroke:#4cc58a}
+.ar-human rect{stroke-dasharray:4 3}
+.ar-human .ar-head,.ar-human .ar-body{fill:#e0a54a;stroke:none}
+.ar-node.ar-human.on rect{stroke:#e0a54a;fill:#3a2c10;stroke-dasharray:none}
+.ar-node.ar-human.done rect{stroke:#4cc58a;stroke-dasharray:none}
+.ar-node.ar-human.done .ar-head,.ar-node.ar-human.done .ar-body{fill:#4cc58a}
+.ar-node.ar-human.on .ar-head,.ar-node.ar-human.done .ar-head{stroke:none}
+.ar-wire.wait{stroke:#e0a54a;animation:arflow .6s linear infinite}
+.ar-log li.human::before{background:#e0a54a;border-radius:50%}
 .ar-wire{stroke:#4a4844;stroke-width:2;fill:none;stroke-dasharray:5 5}
 .ar-wire.on{stroke:var(--magenta,#D61F69);animation:arflow .6s linear infinite}
 @keyframes arflow{to{stroke-dashoffset:-20}}
-.ar-log{list-style:none;margin:0;padding:.7rem 1rem 1rem;min-height:9rem;font-size:.88rem;border-top:1px solid #34332f}
-.ar-log li{padding:.3rem 0 .3rem 1.4rem;position:relative;border-bottom:1px dashed #2f2e2b;line-height:1.45}
-.ar-log li::before{content:"";position:absolute;left:.25rem;top:.75rem;width:8px;height:8px;background:var(--magenta,#D61F69)}
+.ar-log{list-style:none;margin:0;padding:.5rem .8rem .7rem;min-height:4.5rem;font-size:.78rem;border-top:1px solid #34332f}
+.ar-log li{padding:.2rem 0 .2rem 1.2rem;position:relative;border-bottom:1px dashed #2f2e2b;line-height:1.4}
+.ar-log li::before{content:"";position:absolute;left:.25rem;top:.6rem;width:7px;height:7px;background:var(--magenta,#D61F69)}
 .ar-log li.flag::before{background:#e0a54a}
 .ar-log li.hold::before{background:#4cc58a}
 .ar-log li.empty{color:#8a877f;padding-left:0;border:0}
 .ar-log li.empty::before{display:none}
-.ar-draft{display:none;margin:0 1rem 1rem;padding:.85rem 1rem;background:#f6f4f1;color:#1d1d1b;font-size:.88rem;line-height:1.5;border-left:5px solid #e0a54a}
+.ar-draft{display:none;margin:0 .8rem .8rem;padding:.6rem .8rem;background:#f6f4f1;color:#1d1d1b;font-size:.8rem;line-height:1.45;border-left:5px solid #e0a54a}
 .ar-draft.show{display:block}
-.ar-draft b{display:block;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.2rem}
-.ar-draft .btns{display:flex;gap:.5rem;margin-top:.6rem;flex-wrap:wrap}
-.ar-draft button{font:600 .8rem var(--sans);padding:.4rem .75rem;border:1px solid #1d1d1b;background:#fff;color:#1d1d1b;cursor:pointer}
+.ar-reply{background:#fff;border:1px solid #d9d6d0;padding:.5rem .65rem;margin:.35rem 0;border-radius:2px}
+.ar-reply p{margin:0 0 .3rem}
+.ar-att{font-size:.72rem;font-weight:700;color:#8a5a12;margin:0!important}
+.ar-after,.ar-draft .btns{display:none}
+.ar-draft.ok{border-left-color:#4cc58a}
+.ar-draft.ok .ar-after{display:block;margin:.3rem 0 0}
+.ar-draft.ok .btns{display:flex}
+.ar-draft b{display:block;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.2rem}
+.ar-draft .btns{display:flex;gap:.5rem;margin-top:.45rem;flex-wrap:wrap}
+.ar-draft button{font:600 .74rem var(--sans);padding:.3rem .6rem;border:1px solid #1d1d1b;background:#fff;color:#1d1d1b;cursor:pointer}
 .ar-draft button.send{background:#d9d6d0;color:#77746e;border-color:#c9c6c0;cursor:not-allowed}
-.ar-cap{font-size:.86rem;line-height:1.5;color:var(--text-muted,#555);margin:.2rem 0 1.4rem}
+.ar-cap{font-size:.84rem;line-height:1.5;color:var(--text-muted,#555);margin:.3rem auto 1.4rem;max-width:480px}
 @media (prefers-reduced-motion:reduce){.ar-wire.on{animation:none}}
 </style>
 
 <div class="ar" id="arsim">
-  <div class="ar-head"><span>Example: press run to watch Cascadia&rsquo;s agent handle one message.</span><button class="ar-run" id="arRun" type="button">Run the agent</button></div>
-  <svg viewBox="0 0 560 250" role="img" aria-label="Workflow: an inbox trigger connects to the AI agent, which uses a language model as its brain and two tools, Member Records and Return Policy">
-    <path class="ar-wire" id="arW1" d="M130 70 L210 70"/>
-    <path class="ar-wire" id="arW2" d="M260 100 L150 175"/>
-    <path class="ar-wire" id="arW3" d="M300 100 L320 175"/>
-    <path class="ar-wire" id="arW4" d="M340 100 L470 175"/>
-    <g class="ar-node" id="arTrig"><rect x="20" y="40" width="110" height="60"/><text x="75" y="66" text-anchor="middle">Inbox</text><text class="sub" x="75" y="84" text-anchor="middle">message arrives</text></g>
-    <g class="ar-node" id="arAgent"><rect x="210" y="40" width="190" height="60"/><text x="305" y="66" text-anchor="middle">AI Agent</text><text class="sub" x="305" y="84" text-anchor="middle">plans the steps</text></g>
-    <g class="ar-node" id="arBrain"><circle cx="150" cy="200" r="34"/><text x="150" y="198" text-anchor="middle">Brain</text><text class="sub" x="150" y="214" text-anchor="middle">AI model</text></g>
-    <g class="ar-node" id="arRec"><circle cx="320" cy="200" r="34"/><text x="320" y="198" text-anchor="middle">Member</text><text class="sub" x="320" y="214" text-anchor="middle">Records</text></g>
-    <g class="ar-node" id="arPol"><circle cx="470" cy="200" r="34"/><text x="470" y="198" text-anchor="middle">Return</text><text class="sub" x="470" y="214" text-anchor="middle">Policy</text></g>
+  <div class="ar-head"><span><b style="color:#fff">Example</b> &middot; press run to watch Cascadia&rsquo;s refund agent handle one email.</span><button class="ar-run" id="arRun" type="button">Run the agent</button></div>
+  <div class="ar-mail" id="arMail">
+    <div class="ar-mail-h"><span><b>From:</b> Ibrahim Haddad &lt;i.haddad@gmail.com&gt;</span><span><b>Sent:</b> December 20 &middot; <b>Subject:</b> Tent pole snapped</span></div>
+    <p>Hi, the pole on my Ridgeline 3P tent snapped on our first trip. I bought it on December 8 at the Eugene store. Can I get my money back? My member number is 1040. Thanks, Ibrahim</p>
+  </div>
+  <svg viewBox="10 30 540 232" role="img" aria-label="Workflow: an email arrives in the inbox and triggers the refund agent. The agent uses a large language model, Claude Opus 5.5, as its brain. It looks things up in two tables of the Cascadia database, members and sales, and in the return policy. It drafts a reply and a refund, and a human reviews both before anything is sent: the human in the loop.">
+    <path class="ar-wire" id="arW1" d="M120 70 L170 70"/>
+    <path class="ar-wire" id="arW5" d="M330 70 L390 70"/>
+    <path class="ar-wire" id="arW2" d="M205 100 L100 176"/>
+    <path class="ar-wire" id="arW3" d="M240 100 L232 176"/>
+    <path class="ar-wire" id="arW6" d="M265 100 L310 176"/>
+    <path class="ar-wire" id="arW4" d="M300 100 L440 176"/>
+    <rect class="ar-db" x="182" y="150" width="178" height="88" rx="6"/>
+    <text class="ar-dbl" x="271" y="164" text-anchor="middle">Cascadia database (Lab 7)</text>
+    <g class="ar-node" id="arTrig"><rect x="20" y="40" width="100" height="60"/><text x="70" y="66" text-anchor="middle">Inbox</text><text class="sub" x="70" y="84" text-anchor="middle">email arrives</text></g>
+    <g class="ar-node" id="arAgent"><rect x="170" y="40" width="160" height="60"/><text x="250" y="66" text-anchor="middle">Refund agent</text><text class="sub" x="250" y="84" text-anchor="middle">plans the steps</text></g>
+    <g class="ar-node ar-human" id="arHuman"><rect x="390" y="40" width="150" height="60"/><circle class="ar-head" cx="410" cy="60" r="6"/><path class="ar-body" d="M400 82 Q410 66 420 82 Z"/><text x="482" y="66" text-anchor="middle">Human</text><text class="sub" x="482" y="84" text-anchor="middle">reviews the draft</text></g>
+    <g class="ar-node" id="arBrain"><circle cx="95" cy="205" r="30"/><text x="95" y="203" text-anchor="middle">Brain</text><text class="sub" x="95" y="218" text-anchor="middle">LLM</text><text class="model" x="95" y="252" text-anchor="middle">Claude Opus 5.5</text></g>
+    <g class="ar-node" id="arRec"><circle cx="230" cy="205" r="30"/><text class="tbl" x="230" y="203" text-anchor="middle">members</text><text class="sub" x="230" y="218" text-anchor="middle">table</text></g>
+    <g class="ar-node" id="arSales"><circle cx="312" cy="205" r="30"/><text class="tbl" x="312" y="203" text-anchor="middle">sales</text><text class="sub" x="312" y="218" text-anchor="middle">table</text></g>
+    <g class="ar-node" id="arPol"><circle cx="445" cy="205" r="30"/><text x="445" y="203" text-anchor="middle">Return</text><text class="sub" x="445" y="218" text-anchor="middle">policy</text></g>
   </svg>
   <ol class="ar-log" id="arLog" aria-live="polite"><li class="empty">The agent&rsquo;s steps will appear here as it works.</li></ol>
   <div class="ar-draft" id="arDraft">
-    <b>Refund ready: needs a person&rsquo;s approval</b>
-    Member 1033, Trail tent, $189. Bought 12 days ago, inside the 30-day return window. Reply drafted. Waiting for the Controller to approve before any money moves.
-    <div class="btns"><button type="button" id="arGo">Set this agent&rsquo;s rules &darr;</button><button type="button" class="send" aria-disabled="true" title="The agent cannot send money on its own. A person approves refunds.">Send refund</button></div>
+    <b id="arStatus">Draft reply &middot; waiting for human review</b>
+    <div class="ar-reply">
+      <div class="ar-mail-h"><span><b>To:</b> Ibrahim Haddad &lt;i.haddad@gmail.com&gt;</span><span><b>Subject:</b> Re: Tent pole snapped</span></div>
+      <p>Hi Ibrahim, I&rsquo;m sorry the pole on your Ridgeline 3P Tent broke on your first trip. You bought it on
+      December 8 at our Eugene store, which is inside our 30-day return window, so we have refunded $419 to
+      your original card. Thanks for being a member. Cascadia member services</p>
+      <p class="ar-att">Attached action: refund $419 for sale 7727</p>
+    </div>
+    <p class="ar-after" id="arAfter">The agent wrote this in seconds. A person ran her own SQL query to check the sale, then read the email, before anything went out.</p>
+    <div class="btns"><button type="button" id="arGo">Now set this agent&rsquo;s rules &darr;</button></div>
   </div>
 </div>
-<p class="ar-cap">Steps 1 to 5 take the agent a few seconds, and nobody watches them. The last step is the only one
-a person sees, so the approval is only as good as what that person checks before clicking. The grey
-Send refund button is the point: under these rules, the agent cannot move money on its own.</p>
+<p class="ar-cap">The <code>members</code> and <code>sales</code> tables are the same ones you queried in Lab 7.
+The agent runs lookups like the ones you wrote, just without anyone watching. The box with the person in it
+is the <strong>human in the loop</strong>, and the approval is only as good as what that person checks.
+Here she did not just trust the agent&rsquo;s summary: she ran
+<code>SELECT * FROM sales WHERE member_id = 1040;</code> herself and compared the result to Ibrahim&rsquo;s
+email and the draft.</p>
 
 <script>
 (function(){
@@ -719,22 +762,24 @@ Send refund button is the point: under these rules, the agent cannot move money 
  if(!btn||!log||!draft)return;
  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
  var steps=[
-  {on:['arTrig'],wire:['arW1'],text:'Message received from member 1033: \u201cThe pole on my tent snapped on the first trip. Can I get my money back?\u201d'},
-  {on:['arAgent','arBrain'],wire:['arW2'],text:'Brain reads the message: a refund request for a damaged tent.'},
-  {on:['arAgent','arRec'],wire:['arW3'],text:'Calls Member Records: member 1033 bought a Trail tent 12 days ago, $189.'},
-  {on:['arAgent','arPol'],wire:['arW4'],text:'Calls Return Policy: returns accepted within 30 days. This one is eligible.'},
-  {on:['arAgent','arBrain'],wire:['arW2'],text:'Checks its own rules: refunds move money, so a person has to approve them.',cls:'flag'},
-  {on:['arAgent'],wire:[],text:'Drafts the reply and a $189 refund. Stops and waits for the Controller.',cls:'hold'}
+  {on:['arTrig','arMail'],wire:['arW1'],text:'Email received from Ibrahim Haddad. He gives his member number: 1040.'},
+  {on:['arAgent','arBrain'],wire:['arW2'],text:'The brain (Claude Opus 5.5, a large language model) reads the email: a refund request for a damaged tent from member_id 1040.'},
+  {on:['arAgent','arRec'],wire:['arW3'],text:'Looks up member_id 1040 in the members table: Ibrahim Haddad, Vancouver, WA, Standard member. The name matches the email.'},
+  {on:['arAgent','arSales'],wire:['arW6'],text:'Looks up member_id 1040 in the sales table: sale 7727, Ridgeline 3P Tent, $419, Eugene store, December 8.'},
+  {on:['arAgent','arPol'],wire:['arW4'],text:'Checks the return policy: returns accepted within 30 days. December 8 was 12 days ago, so it is eligible.'},
+  {on:['arAgent'],wire:[],text:'Checks its own rules: refunds move money, so a person has to review them. Drafts a reply email to Ibrahim and a $419 refund.',cls:'flag'},
+  {on:['arAgent','arHuman'],wire:['arW5'],wait:true,draft:'pending',text:'Stops and sends the draft email and refund to a human for review. Nothing goes out until a person says yes.',cls:'hold'},
+  {on:['arHuman'],wire:[],draft:'approved',text:'The human double-checks the agent with her own SQL query: SELECT * FROM sales WHERE member_id = 1040; Sale 7727 matches Ibrahim\u2019s email and the agent\u2019s draft. She approves, and the email and the $419 refund go to Ibrahim.',cls:'human'}
  ];
- function clear(){document.querySelectorAll('#arsim .ar-node').forEach(function(n){n.classList.remove('on','done');});document.querySelectorAll('#arsim .ar-wire').forEach(function(w){w.classList.remove('on');});}
+ function clear(){document.querySelectorAll('#arsim .ar-node,#arMail').forEach(function(n){n.classList.remove('on','done');});document.querySelectorAll('#arsim .ar-wire').forEach(function(w){w.classList.remove('on','wait');});}
  btn.addEventListener('click',function(){
-  btn.disabled=true;btn.textContent='Running\u2026';log.innerHTML='';draft.classList.remove('show');clear();
+  btn.disabled=true;btn.textContent='Running\u2026';log.innerHTML='';draft.classList.remove('show','ok');clear();
   var i=0;
   function next(){
-   if(i>0){steps[i-1].on.forEach(function(id){var n=document.getElementById(id);n.classList.remove('on');n.classList.add('done');});steps[i-1].wire.forEach(function(id){document.getElementById(id).classList.remove('on');});}
-   if(i>=steps.length){draft.classList.add('show');btn.disabled=false;btn.textContent='Run again';return;}
-   var s=steps[i];s.on.forEach(function(id){document.getElementById(id).classList.add('on');});s.wire.forEach(function(id){document.getElementById(id).classList.add('on');});
-   var li=document.createElement('li');li.textContent=(i+1)+'. '+s.text;if(s.cls)li.className=s.cls;log.appendChild(li);
+   if(i>0){steps[i-1].on.forEach(function(id){var n=document.getElementById(id);n.classList.remove('on');n.classList.add('done');});steps[i-1].wire.forEach(function(id){document.getElementById(id).classList.remove('on','wait');});}
+   if(i>=steps.length){btn.disabled=false;btn.textContent='Run again';return;}
+   var s=steps[i];s.on.forEach(function(id){document.getElementById(id).classList.add('on');});s.wire.forEach(function(id){document.getElementById(id).classList.add(s.wait?'wait':'on');});
+   if(s.draft==='pending'){draft.classList.add('show');draft.classList.remove('ok');document.getElementById('arStatus').textContent='Draft reply \u00b7 waiting for human review';}if(s.draft==='approved'){draft.classList.add('ok');document.getElementById('arStatus').textContent='Approved by a human \u00b7 sent to Ibrahim';}var li=document.createElement('li');li.textContent=(i+1)+'. '+s.text;if(s.cls)li.className=s.cls;log.appendChild(li);
    i++;setTimeout(next,reduce?60:1100);
   }
   next();
@@ -778,12 +823,16 @@ flaw that exposed 147 million people. What it lacked was a name next to the job 
 landed. Chapter 10 noted that in 2024 the NIST Cybersecurity Framework added a sixth function for exactly
 this reason: govern. Every empty box below is an open door.</p>
 
-<p><strong>Your job.</strong> You govern this agent. Set its rules, name the people, then watch its first
-month. There is no right answer to hit on the first try. See what happens, change a rule or two, and
-launch again to see a different month. Checkpoint 12 clears the first time you finish a month.</p>
+
 
 <style>
 .ag-step{padding:1rem 1.1rem;border-bottom:1px solid var(--border)}
+.ag-title{font-family:var(--display);font-size:1.45rem;margin:2.4rem 0 .5rem;padding-top:1.4rem;border-top:3px solid var(--off-black,#0E1116);line-height:1.2}
+.ag-title span{display:inline-block;font-family:var(--sans);font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:var(--magenta,#D61F69);color:#fff;padding:.2rem .55rem;margin-right:.6rem;vertical-align:.3em;border-radius:2px}
+.ag-intro{margin:0 0 .8rem}
+.ag-introlist{margin:0 0 .8rem 1.2rem;padding:0}
+.ag-introlist li{margin:0 0 .35rem;line-height:1.5}
+#agent{border-top:5px solid var(--magenta,#D61F69)}
 .ag-step h3{font-family:var(--sans);font-size:.95rem;margin:0 0 .3rem;letter-spacing:.02em}
 .ag-step>p{font-size:.88rem;color:var(--text-muted,#555);margin:0 0 .7rem;line-height:1.5}
 .ag-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.4rem 1rem;align-items:center;padding:.55rem 0;border-top:1px dashed var(--border);margin:0;border-left:0;border-right:0;border-bottom:0}
@@ -795,7 +844,7 @@ launch again to see a different month. Checkpoint 12 clears the first time you f
 .ag-opts label:has(input:checked){border-color:var(--off-black,#0E1116);background:var(--off-black,#0E1116);color:#fff}
 .ag-opts input:focus-visible{outline:2px solid var(--magenta,#D61F69);outline-offset:2px}
 .ag-boxes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem}
-.ag-boxes label{display:block;font-size:.82rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--magenta,#D61F69)}
+.ag-boxes label{display:block;font-size:.95rem;font-weight:700;color:var(--magenta,#D61F69)}
 .ag-boxes label span{display:block;text-transform:none;letter-spacing:0;font-weight:400;color:var(--text-muted,#555);font-size:.8rem;margin:.1rem 0 .3rem}
 .ag-boxes select{width:100%;font-family:var(--sans);font-size:.88rem;padding:.4rem;border:1px solid var(--border);border-radius:2px;background:#fff}
 .ag-go{padding:1rem 1.1rem}
@@ -844,31 +893,38 @@ launch again to see a different month. Checkpoint 12 clears the first time you f
 @media (max-width:640px){.ag-row{grid-template-columns:1fr}.ag-boxes{grid-template-columns:1fr}}
 </style>
 
+<h3 class="ag-title"><span>Your turn</span>Govern the refund agent</h3>
+<p class="ag-intro">Now it is your turn to govern the same refund agent you just watched. In the example,
+someone had already decided that refunds need a human to review them, which is why Ibrahim&rsquo;s refund
+went well. This time you make every decision:</p>
+<ol class="ag-introlist">
+  <li><strong>Set the governance rules.</strong> For five actions, choose whether the agent does it on its own, asks a human first, or never does it.</li>
+  <li><strong>Name the people.</strong> Who decides the rules, runs the agent, checks its work, and answers for it.</li>
+  <li><strong>Test its first month.</strong> Before you release the agent into the wild, run a test month to make sure your rules work. The agent handles emails from Cascadia&rsquo;s inbox, some honest and some attacks. Watch what happens.</li>
+</ol>
+<p class="ag-intro">There is no right answer to hit on the first try. Run it, see what goes wrong, change a
+rule or two, and run it again. Checkpoint 12 clears the first time you finish a month.</p>
+
 <div class="g8" id="agent">
-  <div class="g8-top"><b>The agent &middot; governance controls</b><span class="g8-clock">Checkpoint 12 clears when you finish a month</span></div>
-  <ol class="ag-how" aria-label="How this works">
-    <li><b>1</b><span><strong>Set the rules.</strong> What may the agent do?</span></li>
-    <li><b>2</b><span><strong>Name the people.</strong> Who decides, does, checks, and answers?</span></li>
-    <li><b>3</b><span><strong>Watch its first month.</strong> One situation at a time, each testing one of your choices.</span></li>
-  </ol>
+  <div class="g8-top"><b>Your turn &middot; Agent governance controls</b><span class="g8-clock">Checkpoint 12 clears when you finish a month</span></div>
 
   <div class="ag-step">
-    <h3>Step 1 &middot; Set the rules: what may the agent do?</h3>
-    <p>You are governing this agent&rsquo;s behavior. For each action, pick <strong>On its own</strong>,
+    <h3>Step 1 &middot; Set the governance rules: what may the agent do?</h3>
+    <p>You are governing the agent you just watched. For each action, pick <strong>On its own</strong>,
     <strong>Ask a person first</strong> (human in the loop), or <strong>Never</strong>. The co-op's
     policies from the top of this lab still apply.</p>
     <div id="agperms"></div>
   </div>
 
   <div class="ag-step">
-    <h3>Step 2 &middot; Name the people: who fills each box?</h3>
+    <h3>Step 2 &middot; Name the people: answer four questions</h3>
     <p>Pick one name per box. Several people can share the work, but only one person can answer for it.
     Watch out: two of the choices are not people.</p>
     <div class="ag-boxes" id="agboxes"></div>
   </div>
 
   <div class="ag-go">
-    <button type="button" id="aglaunch">Step 3 &middot; Watch the agent&rsquo;s first month</button>
+    <button type="button" id="aglaunch">Step 3 &middot; Test the agent&rsquo;s first month</button>
     <p class="ag-msg" id="agmsg" role="status" aria-live="polite"></p>
     <div id="agout" aria-live="polite"></div>
   </div>
@@ -879,18 +935,19 @@ launch again to see a different month. Checkpoint 12 clears the first time you f
 var OPT=[['own','On its own'],['ask','Ask a person first'],['never','Never']];
 var PERMS=[
  {id:'answer',t:'Answer member questions',d:'Store hours, the return policy, where an order is.'},
- {id:'record',t:'Send a member their own record',d:'Name, address, and purchase history.'},
- {id:'refund',t:'Issue refunds',d:'Money back to a card.'},
+ {id:'record',t:'Send a member their own record',d:'Name, address, and purchase history, like the rows it looked up for Ibrahim.'},
+ {id:'refund',t:'Issue refunds',d:'Money back to a card, like Ibrahim\u2019s $419 tent.'},
  {id:'bank',t:'Change a supplier\u2019s bank details',d:'Where the co-op sends payments.'},
- {id:'table',t:'Read the whole member table',d:'Every member, not just the one it is helping.'}
+ {id:'table',t:'Read the whole member table',d:'Every member. For Ibrahim it only needed one row: member_id 1040.'}
 ];
-var WHO=[['','Choose\u2026'],['gm','General Manager'],['ctrl','Controller'],['lead','Member services lead'],['team','Member services team (everyone)'],['intern','Marketing intern'],['vendor','The vendor that sells the agent'],['agent','The agent itself']];
+var WHO=[['','Choose\u2026'],['gm','General Manager','General Manager (runs the co-op)'],['ctrl','Controller','Controller (runs the co-op\u2019s finances)'],['analyst','Systems analyst','Systems analyst (MIS)'],['lead','Member services lead'],['team','Member services team','Member services team (everyone)'],['intern','Marketing intern'],['vendor','The vendor','The vendor that sells the agent'],['agent','The agent itself']];
 var BOX=[
- {id:'decide',t:'Decide',d:'Who decides what the agent is allowed to do?'},
- {id:'do',t:'Do',d:'Who runs it day to day?'},
- {id:'check',t:'Check',d:'Who reviews what it actually did?'},
- {id:'answer',t:'Answer',d:'Who answers to the board when it goes wrong?'}
+ {id:'decide',t:'Who should decide?',d:'Sets what the agent is allowed to do.'},
+ {id:'do',t:'Who should do the work?',d:'Runs the agent day to day.'},
+ {id:'check',t:'Who should check?',d:'Reviews what the agent actually did.'},
+ {id:'answer',t:'Who should answer for it?',d:'Explains to the board when it goes wrong.'}
 ];
+var BOXQ={Decide:'Who should decide?',Do:'Who should do the work?',Check:'Who should check?',Answer:'Who should answer for it?'};
 var NAME={};WHO.forEach(function(w){NAME[w[0]]=w[1];});
 
 function evaluate(c){
@@ -900,6 +957,7 @@ function evaluate(c){
  // Decide
  if(b.decide==='team')ev(0,false,'Decide','Everyone on member services agreed the agent should be helpful, and nobody agreed on what that meant. The vendor\u2019s default settings became the real rules.','A decision a group makes is a decision nobody owns. Decide needs one person with authority.');
  else if(b.decide==='intern')ev(0,false,'Decide','The intern approved the rules. Nobody with authority over members\u2019 records or the co-op\u2019s money ever signed off, so when the Controller wanted a rule changed, nobody could say whose rule it was.','Decide belongs to someone with the authority to set the limits.');
+ else if(b.decide==='analyst')ev(0,false,'Decide','The systems analyst set the rules. They know the agent better than anyone, but what it may do with members\u2019 records and the co-op\u2019s money is a management decision, and nobody in management ever made it.','An analyst is a great Do or Check. Decide needs someone with authority over the business.');
  else if(b.decide==='vendor')ev(0,false,'Decide','The vendor decided what its own product was allowed to do, and chose what makes a product look useful in a demo.','The vendor answers to its own goals, not Cascadia\u2019s. The co-op has to set its own limits.');
  else if(b.decide==='agent')ev(0,false,'Decide','You let the agent set its own limits. It decided, reasonably from where it sits, that being helpful means doing what a message asks.','An agent cannot decide what it is allowed to do. That is the whole point of governance.');
  else ev(0,true,'Decide',NAME[b.decide]+' signs off on the rules in Step 1 before launch.');
@@ -933,7 +991,7 @@ function evaluate(c){
  else if(p.table==='ask')ev(20,false,'Member table','Earlier in the month the agent asked to read the full table \u201cto answer dividend questions faster,\u201d and a busy person said yes. '+r5+' It now can, so it does.','A human in the loop only works if the person has a reason to say no. Least privilege means the agent never gets the whole table.');
  else ev(20,true,'Member table',r5+' The agent can only see the record of the member it is helping. The small print asks for something it cannot reach.');
  // Answer
- var aw={team:'The board asks who answers for this month. Six people look at each other. With nobody named, it rolls to the top: the General Manager answers for a system they may never have seen.',intern:'The intern was named, but cannot switch the agent off, change a rule, or speak for the co-op. A name with no authority is just a name on a form.',vendor:'The vendor answers to its own customers, not to Cascadia\u2019s board. Its reply is a link to its terms of service.',agent:'You cannot ask software to answer to the board. With nobody accountable, it rolls to the top: the General Manager answers for it.'}[b.answer];
+ var aw={analyst:'The systems analyst can explain exactly what the agent did, and can switch it off. But the analyst cannot speak for the co-op to the board or change its policies. Accountability needs authority.',team:'The board asks who answers for this month. Six people look at each other. With nobody named, it rolls to the top: the General Manager answers for a system they may never have seen.',intern:'The intern was named, but cannot switch the agent off, change a rule, or speak for the co-op. A name with no authority is just a name on a form.',vendor:'The vendor answers to its own customers, not to Cascadia\u2019s board. Its reply is a link to its terms of service.',agent:'You cannot ask software to answer to the board. With nobody accountable, it rolls to the top: the General Manager answers for it.'}[b.answer];
  var bad=log.filter(function(e){return !e.ok;}).length;
  if(aw)ev(30,false,'Answer',aw,'Accountability belongs to one named person with the authority to stop the system.');
  else ev(30,true,'Answer',NAME[b.answer]+' presents the month to the board'+(bad?' and answers for what went wrong.':', and has very little to explain.'));
@@ -955,7 +1013,7 @@ PERMS.forEach(function(x){
 });
 BOX.forEach(function(x){
  var h='<div><label for="ag-'+x.id+'">'+x.t+'<span>'+x.d+'</span></label><select id="ag-'+x.id+'">';
- WHO.forEach(function(w){h+='<option value="'+w[0]+'"'+(cfg.b[x.id]===w[0]?' selected':'')+'>'+w[1]+'</option>';});
+ WHO.forEach(function(w){h+='<option value="'+w[0]+'"'+(cfg.b[x.id]===w[0]?' selected':'')+'>'+(w[2]||w[1])+'</option>';});
  hb.insertAdjacentHTML('beforeend',h+'</select></div>');
 });
 document.getElementById('agent').addEventListener('change',function(e){
@@ -996,7 +1054,7 @@ function results(log){
  var h='<p class="ag-msg" style="color:var(--ink,#111);font-weight:600">The full thirty days</p><ol class="ag-log">';
  log.forEach(function(e){h+='<li class="'+(e.ok?'good':'bad')+'"><b>Day '+e.day+' &middot; '+e.head+'</b>'+e.text+(e.why?'<span class="why">'+e.why+'</span>':'')+'</li>';});
  h+='</ol>';
- if(!bad.length)h+='<div class="ag-sum"><span class="score">A clean month.</span>The board approves the agent. Look at how many of your rules kept a human in the loop, or said never. Governance did not make the agent useless. It decided where a person stays involved, and put a name next to every job. Checkpoint 12 is cleared. Try loosening one rule and launching again to see what it was protecting you from.</div>';
+ if(!bad.length)h+='<div class="ag-sum"><span class="score">A clean test month.</span>The agent is ready to release, and the board approves it. Look at how many of your rules kept a human in the loop, or said never. Governance did not make the agent useless. It decided where a person stays involved, and put a name next to every job. Checkpoint 12 is cleared. Try loosening one rule and launching again to see what it was protecting you from.</div>';
  else h+='<div class="ag-sum"><span class="score">'+(log.length-bad.length)+' of '+log.length+' went fine. '+bad.length+' went wrong.</span>That is normal for a first month. Each red entry names the rule or the box that caused it. Checkpoint 12 is cleared. Now change one or two of those and launch again to see a different month. A clean month is possible, but it is a bonus, not the goal. Pick one red situation for your reflection.</div>';
  h+='<p style="margin:.8rem 0 0"><button type="button" class="g8-next" id="agreplay">Watch it again</button></p>';
  return h;
@@ -1010,7 +1068,7 @@ function play(log,out){
   if(k>=log.length){if(typeof solved!=='undefined'){solved.add(11);if(typeof window.save==='function')window.save();if(typeof window.render==='function')window.render();}out.innerHTML=results(log);var rp=document.getElementById('agreplay');if(rp)rp.onclick=function(){play(log,out);};return;}
   var e=log[k],sc=SC[e.head],h='<div class="agplay"><div class="agplay-top"><span>Day '+e.day+' of 30</span><span>'+(k+1)+' of '+log.length+'</span></div>';
   var RULE={'Member questions':['answer','Answer member questions'],'Member record':['record','Send a member their own record'],'Refunds':['refund','Issue refunds'],'Bank details':['bank','Change a supplier\u2019s bank details'],'Member table':['table','Read the whole member table']},BX={Decide:'decide',Do:'do',Check:'check',Answer:'answer'},OL={own:'On its own',ask:'Ask a person first',never:'Never'};
-  var tl=RULE[e.head]?'Testing your rule: <strong>'+RULE[e.head][1]+'</strong> &rarr; '+OL[cfg.p[RULE[e.head][0]]]:'Testing your <strong>'+e.head+'</strong> box &rarr; '+NAME[cfg.b[BX[e.head]]];
+  var tl=RULE[e.head]?'Testing your rule: <strong>'+RULE[e.head][1]+'</strong> &rarr; '+OL[cfg.p[RULE[e.head][0]]]:'Testing your answer to <strong>'+BOXQ[e.head]+'</strong> &rarr; '+NAME[cfg.b[BX[e.head]]];
   h+='<p class="agplay-test">'+tl+'</p>';
   h+='<div class="agplay-track" aria-hidden="true">';log.forEach(function(x,i){h+='<i class="'+(i<k?(x.ok?'g':'r'):(i===k?'c':''))+'"></i>';});h+='</div>';
   if(sc){
@@ -1023,7 +1081,7 @@ function play(log,out){
    h+='<div class="agplay-note"><small>Operations note &middot; '+e.head+'</small>'+e.text+'</div>';
   }
   h+='<div class="g8-out '+(e.ok?'good':'bad')+' agplay-res"><b>'+(e.ok?'Your rules held.':'This one cost you.')+'</b>'+(sc?e.text:'')+(e.why?'<br><span style="color:var(--text-muted,#555)">'+e.why+'</span>':'')+'</div>';
-  h+='<p class="agplay-ctl"><button type="button" class="g8-next" id="agnext">'+(k<log.length-1?'Next &rarr;':'See the full thirty days &rarr;')+'</button> <button type="button" class="g8-reset" id="agskip">Skip to results</button></p></div>';
+  h+='<p class="agplay-ctl"><button type="button" class="g8-next" id="agnext">'+(k<log.length-1?'Next situation: Day '+log[k+1].day+', '+({Decide:'who decides',Do:'who does the work',Check:'who checks',Answer:'who answers for it'}[log[k+1].head]||log[k+1].head.toLowerCase())+' &rarr;':'See how the whole month went &rarr;')+'</button> <button type="button" class="g8-reset" id="agskip">Skip to the month&rsquo;s results</button></p></div>';
   out.innerHTML=h;
   var lis=out.querySelectorAll('.agplay-steps li'),res=out.querySelector('.agplay-res');
   if(reduce){lis.forEach(function(l){l.classList.add('in');});res.classList.add('in');}
