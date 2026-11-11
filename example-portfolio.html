@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jane Doe · Portfolio</title>
+<meta name="description" content="Example student portfolio for MIS 320 at Western Washington University.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234338CA'/%3E%3Ctext x='32' y='42' font-family='Arial' font-size='28' font-weight='700' fill='white' text-anchor='middle'%3EJD%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --accent:#4338CA; --accent-dark:#3730A3; --tint:#EEF0FF; --tint2:#F6F7FF;
+  --ink:#111827; --body:#374151; --muted:#6B7280; --line:#E5E7EB; --bg:#FFFFFF;
+  --head:'Plus Jakarta Sans', Arial, sans-serif; --sans:'Inter', Arial, sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--sans);color:var(--body);background:var(--bg);line-height:1.6;font-size:16px}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+/* top bar */
+.top{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.brand{font-family:var(--head);font-weight:800;color:var(--ink);text-decoration:none;font-size:17px}
+.top nav a{color:var(--body);text-decoration:none;margin-left:24px;font-weight:500;font-size:15px}
+.top nav a:hover{color:var(--accent)}
+/* hero */
+.hero{background:linear-gradient(180deg,var(--tint) 0%,#fff 100%);padding:80px 0 56px}
+.pill{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid #D9DCFB;color:var(--accent-dark);font-weight:600;font-size:13px;padding:6px 12px;border-radius:999px}
+.pill::before{content:"";width:8px;height:8px;border-radius:50%;background:#10B981}
+h1{font-family:var(--head);color:var(--ink);font-size:clamp(40px,7vw,68px);line-height:1.05;letter-spacing:-.02em;margin:18px 0 12px;font-weight:800}
+.lead{font-size:clamp(18px,2.2vw,21px);color:var(--body);max-width:640px;margin:0 0 6px}
+.grad{color:var(--muted);font-size:15px;margin:0 0 28px}
+.btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:28px}
+.btn{display:inline-block;padding:12px 20px;border-radius:10px;font-weight:600;text-decoration:none;transition:transform .15s,box-shadow .15s,background .15s}
+.btn.primary{background:var(--accent);color:#fff;box-shadow:0 6px 18px rgba(67,56,202,.25)}
+.btn.primary:hover{background:var(--accent-dark);transform:translateY(-2px)}
+.btn.ghost{background:#fff;color:var(--accent);border:1.5px solid #C7CBF7}
+.btn.ghost:hover{border-color:var(--accent);transform:translateY(-2px)}
+.tags{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:0}
+.tag{background:var(--tint);color:var(--accent-dark);font-size:13px;font-weight:600;padding:5px 12px;border-radius:999px}
+/* highlights */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:40px 0 0}
+.stat{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 22px;box-shadow:0 1px 2px rgba(17,24,39,.04)}
+.stat b{display:block;font-family:var(--head);font-size:34px;color:var(--ink);line-height:1.1}
+.stat span{color:var(--muted);font-size:14px}
+/* sections */
+section{padding:72px 0}
+section.alt{background:var(--tint2)}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0 0 8px}
+h2{font-family:var(--head);color:var(--ink);font-size:clamp(28px,4vw,38px);letter-spacing:-.01em;margin:0 0 8px}
+.sub{color:var(--muted);margin:0 0 32px;max-width:640px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:22px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 4px 14px rgba(17,24,39,.05);transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column}
+.card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(67,56,202,.14)}
+.card h3{font-family:var(--head);color:var(--ink);font-size:20px;margin:0 0 10px;line-height:1.25}
+.card .tags{margin-bottom:14px}
+.result{font-weight:600;color:var(--ink);margin:0 0 12px}
+.card dl{margin:0 0 16px;font-size:14.5px}
+.card dt{font-weight:600;color:var(--ink);display:inline}
+.card dd{display:inline;margin:0}
+.card dd::after{content:"";display:block;margin-bottom:6px}
+.more{margin-top:auto;font-weight:600;text-decoration:none}
+.more:hover{text-decoration:underline}
+.note{font-size:13px;color:var(--muted);margin-top:18px}
+.about p{max-width:680px;font-size:17px}
+.contact a{font-weight:600}
+footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-size:14px}
+/* motion */
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none;transition:none}.card,.btn{transition:none}}
+@media (max-width:640px){.top nav a{margin-left:14px;font-size:14px}.stats{grid-template-columns:1fr}.hero{padding:56px 0 40px}}
+@media print{.top{position:static}.hero{background:none}.reveal{opacity:1;transform:none}.card{box-shadow:none;break-inside:avoid}section.alt{background:none}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top">Jane Doe</a>
+    <nav aria-label="Main"><a href="#projects">Projects</a><a href="#about">About</a><a href="#contact">Contact</a></nav>
+  </div>
+</header>
+
+<main id="top">
+<div class="hero">
+  <div class="wrap">
+    <span class="pill">Open to internships</span>
+    <h1>Jane Doe</h1>
+    <p class="lead">Business Administration student, MIS concentration. I turn messy data into decisions people can act on.</p>
+    <p class="grad">Western Washington University · Graduating June 2028</p>
+    <div class="btns">
+      <a class="btn primary" href="#">View my resume</a>
+      <a class="btn ghost" href="#contact">Contact me</a>
+    </div>
+    <ul class="tags" aria-label="Skills">
+      <li class="tag">Data analysis</li><li class="tag">Excel</li><li class="tag">Tableau</li><li class="tag">SQL</li><li class="tag">UX evaluation</li><li class="tag">AI with judgment</li>
+    </ul>
+    <div class="stats reveal">
+      <div class="stat"><b>2,900</b><span>transactions analyzed</span></div>
+      <div class="stat"><b>8</b><span>database tables queried</span></div>
+      <div class="stat"><b>10</b><span>usability heuristics applied</span></div>
+    </div>
+  </div>
+</div>
+
+<section id="projects" class="alt">
+  <div class="wrap">
+    <p class="eyebrow">Fall 2026 · Western Washington University</p>
+    <h2>MIS 320 · Principles of Information Systems</h2>
+    <p class="sub">How information systems create value for a business, and how to judge them. Projects used data from Cascadia Outfitters, a simulated retail co-op.</p>
+    <div class="grid">
+      <article class="card reveal">
+        <h3>Why member revenue went flat</h3>
+        <ul class="tags"><li class="tag">Excel</li><li class="tag">Pivot tables</li><li class="tag">Analysis</li></ul>
+        <p class="result">[Your finding, in one bold line.]</p>
+        <dl><dt>Question: </dt><dd>Why was member revenue flat when the headline numbers looked healthy?</dd>
+        <dt>Data: </dt><dd>12 months of sales, about 2,900 transactions.</dd>
+        <dt>What I did: </dt><dd>Built the six numbers the board asked for and wrote a one-page memo.</dd>
+        <dt>Next: </dt><dd>[What you would check next.]</dd></dl>
+        <a class="more" href="#">Read the memo →</a>
+      </article>
+      <article class="card reveal">
+        <h3>A dashboard managers can question</h3>
+        <ul class="tags"><li class="tag">Tableau</li><li class="tag">Dashboard design</li></ul>
+        <p class="result">Any manager can click a store and see every chart update.</p>
+        <dl><dt>Question: </dt><dd>What does each store manager need to see first?</dd>
+        <dt>Data: </dt><dd>A year of sales by store, product, and member.</dd>
+        <dt>What I did: </dt><dd>Chose the questions it answers, and the ones it leaves out.</dd>
+        <dt>Next: </dt><dd>[What you would add for the next user.]</dd></dl>
+        <a class="more" href="#">Open the dashboard →</a>
+      </article>
+      <article class="card reveal">
+        <h3>Answering new questions with SQL</h3>
+        <ul class="tags"><li class="tag">SQL</li><li class="tag">Databases</li></ul>
+        <p class="result">Answered questions the exported spreadsheets could not.</p>
+        <dl><dt>Question: </dt><dd>[The business question you liked best.]</dd>
+        <dt>Data: </dt><dd>A database of eight related tables.</dd>
+        <dt>What I did: </dt><dd>Wrote queries that join sales to the members who made them.</dd>
+        <dt>Next: </dt><dd>[A question you would ask next.]</dd></dl>
+        <a class="more" href="#">See the queries →</a>
+      </article>
+      <article class="card reveal">
+        <h3>Usability review of a real app</h3>
+        <ul class="tags"><li class="tag">UX</li><li class="tag">Heuristic evaluation</li></ul>
+        <p class="result">[How many problems you found, and the most important fix.]</p>
+        <dl><dt>Question: </dt><dd>Where does this app help its users, and where does it trap them?</dd>
+        <dt>Data: </dt><dd>The app itself, tested against ten usability heuristics.</dd>
+        <dt>What I did: </dt><dd>Wrote a short evaluation report with screenshots.</dd>
+        <dt>Next: </dt><dd>[Who you would test it with.]</dd></dl>
+        <a class="more" href="#">Read the report →</a>
+      </article>
+    </div>
+    <p class="note">Bracketed lines are placeholders. Your own findings go there.</p>
+  </div>
+</section>
+
+<section id="about" class="about">
+  <div class="wrap reveal">
+    <p class="eyebrow">About</p>
+    <h2>A little about me</h2>
+    <p>[Three or four sentences in your own words: what you study, what kind of problems you like, and what you are looking for next. This example uses a made-up student.]</p>
+  </div>
+</section>
+
+<section id="contact" class="alt contact">
+  <div class="wrap reveal">
+    <p class="eyebrow">Contact</p>
+    <h2>Let's talk</h2>
+    <p>Email <a href="#">jane.doe@example.com</a> · <a href="#">LinkedIn</a></p>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap">© 2026 Jane Doe · Example portfolio for MIS 320</div></footer>
+
+<script>
+(function(){
+  var els=document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in');});return;}
+  var io=new IntersectionObserver(function(entries){entries.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});},{threshold:.12});
+  els.forEach(function(e){io.observe(e);});
+})();
+</script>
+</body>
+</html>
