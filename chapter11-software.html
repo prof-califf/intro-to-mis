@@ -413,7 +413,7 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 <main class="chapwrap">
 
 <header class="chaphead">
-  <p class="eyebrow">Chapter 11 &middot; Software Design and Selection</p>
+  <p class="eyebrow">Chapter 11 &middot; Software, UX, and Selection</p>
   <h1>Software: The Pizza You <b>Could Not Order</b></h1>
   <p class="anchor">Guillermo Robles is blind and uses software that reads a screen aloud. At least twice
   he tried to order a pizza from Domino's, on the website and in the app, and could not, because neither
@@ -421,12 +421,12 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
   Court. This chapter is about the two software decisions every business makes: how it is designed and how it
 is chosen. It is also about why the interface is the part of the system that decides who gets to be
 a customer.</p>
-  <div class="concepts"><span class="clabel">Key concepts</span><span>Kinds of software</span><span>Usability</span><span>Accessibility and WCAG</span><span>Software selection</span><span>Total cost of ownership</span><span>Build, buy, or subscribe</span><span>The curb-cut effect</span></div>
+  <div class="concepts"><span class="clabel">Key concepts</span><span>Where software comes from</span><span>Open source</span><span>AI-assisted building</span><span>APIs</span><span>UX and usability</span><span>Accessibility and WCAG</span><span>Total cost of ownership</span><span>Build, buy, or subscribe</span></div>
 </header>
 
 <div class="toc"><strong>Contents</strong>
-<a href="#design"><span class="tnum">1.</span> Software, and the interface that decides who gets in</a>
-<a href="#select"><span class="tnum">2.</span> How businesses choose software</a>
+<a href="#design"><span class="tnum">1.</span> Where software comes from, and how it changes</a>
+<a href="#select"><span class="tnum">2.</span> Judging software, and choosing it</a>
 <a href="#cases"><span class="tnum">3.</span> Two interfaces that decided the outcome</a>
 <a href="#robles"><span class="tnum">4.</span> Main case. Robles v. Domino's: the ADA meets the web</a>
 <a href="#other"><span class="tnum">5.</span> The downside: who software forgets</a>
@@ -438,117 +438,304 @@ a customer.</p>
 </div>
 <p class="printbox"><span>Wanna go analog?</span><button type="button" onclick="window.print()" aria-label="Print this page or save it as a PDF">&#9113;&nbsp; Print here</button><span>or save it as a PDF; the navigation drops out</span></p>
 
-<p class="lede">Every business that sells online has a front door made of software. This chapter is about who
-can walk through it, how businesses choose the software that builds it, and what happened when one famous
-company's door stayed shut to a blind customer for six years.</p>
+<p class="lede">Every business runs on software it did not write, bought from people it will never meet,
+and judged by customers who only ever see the front of it. This chapter is about where that software
+comes from, how to tell whether it works for the people using it, and how to choose it well.</p>
 
 <div class="objectives"><span class="obj-tag">Learning objectives</span>
 <p>By the end of this chapter you should be able to:</p>
 <ol>
-<li>Distinguish system software from application software, and explain where business software comes from.</li>
-<li>Explain usability and accessibility, and why the interface decides who gets to be a customer.</li>
-<li>Apply the build, buy, or subscribe decision using the differentiator test and total cost of ownership.</li>
-<li>Describe a professional software selection process, from requirements to pilot.</li>
+<li>Distinguish system from application software, and explain where business software comes from, including open source and its licenses.</li>
+<li>Explain what AI coding tools change about building software, and what they do not.</li>
+<li>Explain how software connects to other systems through APIs, and why every update is a decision.</li>
+<li>Explain user experience, usability, and accessibility, and use them to judge a real interface.</li>
+<li>Apply a software selection process, total cost of ownership, and the build, buy, or subscribe decision.</li>
 <li>Explain why the ADA reached the web in Robles v. Domino's, and what the ruling now binds.</li>
 </ol>
 </div>
 
-<h2 id="design"><span class="num">1</span>Software, and the interface that decides who gets in</h2>
+<h2 id="design"><span class="num">1</span>Where software comes from, and how it changes</h2>
 
-<p>Think of the last app that made you give up halfway through a task. Maybe a checkout page kept
-rejecting your address, or a form erased everything when you hit the back button. The system behind it
-probably worked fine. You just could not get through the front of it. This chapter is about that front,
-and about who gets through it.</p>
+<p>Count the software you used before breakfast. An alarm on your phone, the weather, a banking app, a
+message to a friend, maybe a podcast. You chose almost none of it in any real sense. You paid for very
+little of it directly, and nobody you know wrote any of it. A business is in the same position, with
+higher stakes. Most of the software it runs on was written by other people, and the business still
+answers for what that software does.</p>
 
-<p>Every chapter so far has treated software as one of five components, the one that holds the rules. This
-chapter looks at it from the only angle a customer ever sees: the surface where a person meets the system.
-That surface is where the software component touches the people component, and it is where most of a
-system's value is delivered or lost. Two decisions follow, and both belong to managers rather than
-programmers: how software is designed, and how it is chosen.</p>
+<p>Every chapter so far has treated software as one of the five components, the one that holds the rules.
+This chapter asks where those rules come from, who can change them, and who they work for. Section 1 is
+about where software comes from and how it changes. Section 2 is about how to judge it and how to choose
+it. The main case is what happened when one company's software did not work for one customer, and a
+court decided that was the company's problem.</p>
 
-<h3>1.1 Kinds of software, and where it comes from</h3>
+<h3>1.1 System software and application software</h3>
 
-<p>Start with the plain inventory. Software comes in two broad kinds:</p>
+<p><strong>System software</strong> runs the machine itself. The operating system on your laptop or phone
+is the obvious example, along with the programs that manage storage, networks, and security in the
+background. <strong>Application software</strong> does the business's actual work: a cash register, a
+payroll system, a pizza-ordering app.</p>
 
-<ul>
-<li><strong>System software</strong> runs the machine itself. For example, the operating system on your
-laptop or phone.</li>
-<li><strong>Application software</strong> does the business's actual work. For example, a cash register, a
-payroll system, or a pizza-ordering app.</li>
-</ul>
+<p>The split matters to a manager for one reason. Application software sits on top of system software, so
+a change underneath can break everything above it without anyone touching the application. Chapter 5
+showed the extreme version. In July 2024 a faulty update to CrowdStrike's security software, which runs
+deep inside Windows, crashed millions of computers at once. Airlines, hospitals, and banks stopped
+working, and none of their own applications had changed.</p>
 
-<p>A business can get application software in three ways:</p>
+<h3>1.2 Custom, packaged, or rented</h3>
 
-<ul>
-<li><strong>Custom software</strong> is built for you. It fits exactly and costs the most to create and keep
-running. For example, a company's own ordering app.</li>
-<li><strong>Packaged software</strong>, also called off-the-shelf, is bought and installed. It is cheaper and
-fits approximately, which is why Chapter 8 spent a whole case on configuring versus customizing it. For
-example, an accounting program installed on the company's own computers.</li>
-<li><strong>Software as a service (SaaS)</strong> is rented. It runs on the vendor's computers, you reach it
-through a browser, and you pay a subscription. For example, Gmail or Canvas. Most new business software
-today is SaaS.</li>
-</ul>
+<p>A business can get application software in three ways. Each one moves work, and control, between the
+business and somebody else.</p>
 
-<p>Keep one fact in mind for the main case. Domino's ordering system sits at the expensive end: custom
-software, built and owned by Domino's, because Chapter 4 showed that the ordering pipeline is the
-business. Whatever gaps it had were gaps in the company's own design decisions.</p>
+<p><strong>Custom software</strong> is built for you, by your own developers or by a firm you hire. It fits
+exactly, and you pay for every hour of building it and every year of keeping it running. Domino's
+ordering system, which Chapter 4 called the business itself, is custom.</p>
 
-<h3>1.2 The interface decides who gets in</h3>
+<p><strong>Packaged software</strong>, also called off-the-shelf software, is bought and installed on your own
+computers. It is cheaper and fits approximately, which is why Chapter 8 spent a whole case on configuring
+it versus customizing it. An accounting program a firm installs on its own servers is packaged
+software.</p>
 
-<p>For the first decades of computing, the interface was a command line: a blinking cursor waiting for typed
-instructions in a syntax you had to already know. The people who could use a computer were, in effect, the
-people willing to memorize it. The graphical interface, with windows, menus, and a mouse, did not make
-computers more powerful. It made them usable by more people, and the personal computer industry grew out
-of that. Hold it as a principle: <strong>every interface decision is a decision about who is in your
-market.</strong></p>
+<p><strong>Software as a service (SaaS)</strong> is rented. It runs on the vendor's computers, you reach it
+through a browser or an app, and you pay a subscription. Gmail and Canvas are SaaS, and most new business
+software is now sold this way.</p>
 
-<p><strong>Usability</strong> is how easily people can use an interface to do what they came to do. It is not a
-matter of taste. It has properties you can measure by watching real people try real tasks:</p>
+<figure class="diagram" style="margin:1.8rem auto;max-width:480px">
+<svg viewBox="0 0 460 262" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="f1T f1D"
+     style="width:100%;height:auto;font-family:var(--sans)">
+<title id="f1T">Three ways to get software, and what each one costs you</title>
+<desc id="f1D">A grid with three columns, custom, packaged, and SaaS, and four rows: how closely the
+software fits your business, the work you carry to run it, your say over what changes, and the cost to
+start. Each cell is scored with one to three filled dots. Custom scores three on every row, packaged
+scores two on every row, and SaaS scores one on every row. Every row falls together from left to
+right.</desc>
+<text x="252" y="24" font-size="12" font-weight="700" fill="var(--ink)" text-anchor="middle">CUSTOM</text>
+<text x="334" y="24" font-size="12" font-weight="700" fill="var(--ink)" text-anchor="middle">PACKAGED</text>
+<text x="414" y="16" font-size="12" font-weight="700" fill="var(--ink)" text-anchor="middle">SAAS</text>
+<text x="414" y="30" font-size="11" fill="var(--muted)" text-anchor="middle">(rented)</text>
+<line x1="0" y1="40" x2="460" y2="40" stroke="var(--rule)" stroke-width="1"/>
+<text x="0" y="74" font-size="12.5" fill="var(--ink)">How closely it fits you</text>
+<circle cx="237" cy="70" r="5.6" fill="var(--magenta)"/><circle cx="252" cy="70" r="5.6" fill="var(--magenta)"/><circle cx="267" cy="70" r="5.6" fill="var(--magenta)"/><circle cx="319" cy="70" r="5.6" fill="var(--magenta)"/><circle cx="334" cy="70" r="5.6" fill="var(--magenta)"/><circle cx="349" cy="70" r="5" fill="none" stroke="var(--ink)" stroke-width="1.1"/><circle cx="399" cy="70" r="5.6" fill="var(--magenta)"/><circle cx="414" cy="70" r="5" fill="none" stroke="var(--ink)" stroke-width="1.1"/><circle cx="429" cy="70" r="5" fill="none" stroke="var(--ink)" stroke-width="1.1"/>
+<text x="0" y="116" font-size="12.5" fill="var(--ink)">Work you carry to run it</text>
+<circle cx="237" cy="112" r="5.6" fill="var(--magenta)"/><circle cx="252" cy="112" r="5.6" fill="var(--magenta)"/><circle cx="267" cy="112" r="5.6" fill="var(--magenta)"/><circle cx="319" cy="112" r="5.6" fill="var(--magenta)"/><circle cx="334" cy="112" r="5.6" fill="var(--magenta)"/><circle cx="349" cy="112" r="5" fill="none" stroke="var(--ink)" stroke-width="1.1"/><circle cx="399" cy="112" r="5.6" fill="var(--magenta)"/><circle cx="414" cy="112" r="5" fill="none" stroke="var(--ink)" stroke-width="1.1"/><circle cx="429" cy="112" r="5" fill="none" stroke="var(--ink)" stroke-width="1.1"/>
+<text x="0" y="158" font-size="12.5" fill="var(--ink)">Your say over what changes</text>
+<circle cx="237" cy="154" r="5.6" fill="var(--magenta)"/><circle cx="252" cy="154" r="5.6" fill="var(--magenta)"/><circle cx="267" cy="154" r="5.6" fill="var(--magenta)"/><circle cx="319" cy="154" r="5.6" fill="var(--magenta)"/><circle cx="334" cy="154" r="5.6" fill="var(--magenta)"/><circle cx="349" cy="154" r="5" fill="none" stroke="var(--ink)" stroke-width="1.1"/><circle cx="399" cy="154" r="5.6" fill="var(--magenta)"/><circle cx="414" cy="154" r="5" fill="none" stroke="var(--ink)" stroke-width="1.1"/><circle cx="429" cy="154" r="5" fill="none" stroke="var(--ink)" stroke-width="1.1"/>
+<text x="0" y="200" font-size="12.5" fill="var(--ink)">Cost to start</text>
+<circle cx="237" cy="196" r="5.6" fill="var(--magenta)"/><circle cx="252" cy="196" r="5.6" fill="var(--magenta)"/><circle cx="267" cy="196" r="5.6" fill="var(--magenta)"/><circle cx="319" cy="196" r="5.6" fill="var(--magenta)"/><circle cx="334" cy="196" r="5.6" fill="var(--magenta)"/><circle cx="349" cy="196" r="5" fill="none" stroke="var(--ink)" stroke-width="1.1"/><circle cx="399" cy="196" r="5.6" fill="var(--magenta)"/><circle cx="414" cy="196" r="5" fill="none" stroke="var(--ink)" stroke-width="1.1"/><circle cx="429" cy="196" r="5" fill="none" stroke="var(--ink)" stroke-width="1.1"/>
+<line x1="0" y1="218" x2="460" y2="218" stroke="var(--rule)" stroke-width="1"/>
+<text x="0" y="238" font-size="11.5" fill="var(--muted)">Every row falls together. You cannot keep the fit and</text>
+<text x="0" y="254" font-size="11.5" fill="var(--muted)">the control without carrying the work.</text>
+</svg>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--muted);margin-top:.55rem;line-height:1.55"><strong style="color:var(--ink)">Moving right, you carry less and control less.</strong>
+Custom software is all yours, including every fix. SaaS hands most of the running to the vendor, and with
+it most of the say over what changes and when. Neither end is better. The decision is which work you
+want to carry for which system, and section 2.6 is about how to make it.</figcaption>
+</figure>
 
-<ul>
-<li><strong>Learnability:</strong> how quickly a new user can do the core task. For example, can a first-time
-customer order a pizza without help?</li>
-<li><strong>Efficiency:</strong> how fast the task is once learned. For example, how many taps a repeat
-order takes.</li>
-<li><strong>Error tolerance:</strong> how easily people make mistakes, and how gracefully they recover. For
-example, whether a wrong tap can be undone or empties the whole cart.</li>
-</ul>
+<p>Hold one fact for the main case. Domino's built its own ordering system, so whatever that software did
+to customers, the company had designed it.</p>
+
+<h3>1.3 Open source, and the license that comes with it</h3>
+
+<p><strong>Open source software</strong> is software whose source code, the instructions programmers
+write, is published for anyone to read, use, and change. <strong>Proprietary software</strong> keeps its
+code private, and you get only the right to run it. Linux, which runs a large share of the internet's
+servers, is open source, and so is much of Android.</p>
+
+<p>Open source is everywhere, including inside the software you pay for. When the firm Black Duck audited
+947 commercial codebases for its 2026 report, 98 percent contained open source components. The average
+application contained about 1,180 of them.<sup class="cite"><a href="#src-1" aria-label="Source 1">1</a></sup> If you buy software today, you are almost
+certainly buying open source inside it.</p>
+
+<p>Open source is free to download. It is not free to own. Every open source project comes with a
+<strong>license</strong>, the legal terms that say what you may do with the code. Some licenses let you do
+nearly anything. Others require you to publish your own changes if you distribute the result. The same
+audit found license conflicts in 68 percent of the codebases it examined.<sup class="cite"><a href="#src-1" aria-label="Source 1">1</a></sup></p>
+
+<p>The larger cost is keeping the parts current. Somebody inside the company has to know which open source
+components it runs and update them when a flaw is found. Chapter 10's Equifax breach began with exactly
+that failure: a publicly announced flaw in Apache Struts, an open source framework, left unpatched on a
+system that faced the internet. The code was free. Not tracking it cost a great deal.</p>
+
+<h3>1.4 How software gets built, and what AI changes</h3>
+
+<p>Chapter 5 walked through how software gets built: requirements, design, building, testing, and launch,
+whether in one long sequence or in short cycles. That process has not changed. Two things have changed
+who does the building.</p>
+
+<p>The first is <strong>low-code</strong> tools, which let people who are not programmers build simple
+applications by arranging ready-made pieces on a screen. A sales manager can build a form that feeds a
+spreadsheet without filing a request with IT.</p>
+
+<p>The second is much bigger. <strong>AI coding assistants</strong> write code from a plain-language
+description of what you want. By 2026 many professional programmers would not work without one. So does
+AI make software cheaper to build? The evidence says yes, sometimes, and by less than it feels.</p>
+
+<p>In a 2023 experiment by researchers at Microsoft, GitHub, and MIT, programmers using GitHub's AI
+assistant finished a set task, writing a small web server, 55.8 percent faster than programmers without
+it.<sup class="cite"><a href="#src-2" aria-label="Source 2">2</a></sup> GitHub sells that assistant, which is worth knowing when you read the number. In 2025 the
+research group METR ran a harder test. Experienced developers worked on real tasks in large projects
+they already knew well. With AI allowed, they took 19 percent longer. Afterward, they estimated that AI
+had made them about 20 percent faster.<sup class="cite"><a href="#src-2" aria-label="Source 2">2</a></sup></p>
+
+<p>By early 2026 METR said developers were probably faster than in its first study, but it could not
+measure by how much. Too many of them refused to do half their work without AI, even when they were paid
+to take part.<sup class="cite"><a href="#src-2" aria-label="Source 2">2</a></sup> The tools had become part of how the work was done before anyone could measure
+what they were worth. Chapter 6 would call that a measurement problem, and it is one.</p>
+
+<p>Here is the plain answer, and its conditions. AI makes writing code cheaper, sometimes much cheaper,
+especially for small, new, well-defined tasks. It does not make owning code cheaper. Code is written once
+and then maintained for years. It gets fixed, updated, connected to new systems, and checked for
+security flaws. The work you skip now and owe later has a name, <strong>technical debt</strong>, and AI
+makes it easier to borrow. When somebody tells you a system can be built in a weekend, ask who will
+maintain it in its third year.</p>
+
+<h3>1.5 How software connects: APIs</h3>
+
+<p>Business software almost never works alone. A sale at a register has to lower the inventory count,
+charge a card, add points to a loyalty account, and land in the accounting system. Those are often four
+systems from four vendors, and they talk to each other through APIs.</p>
+
+<p>An <strong>application programming interface (API)</strong> is a published set of requests one program
+can make of another, along with the answers it will give back. A weather app owns no weather stations. It
+sends a request to a weather service's API and shows you the answer. Domino's AnyWare, from Chapter 4,
+was the same idea in the other direction: one ordering system that accepted orders from many
+channels.</p>
+
+<figure class="diagram" style="margin:1.8rem auto;max-width:600px">
+<svg viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="f2T f2D"
+     style="width:100%;height:auto;font-family:var(--sans)">
+<title id="f2T">One sale at a register, and the four systems it touches</title>
+<desc id="f2D">A box in the center labeled the register, one sale, is connected by four lines to four
+boxes in the corners: the card processor, the inventory system, the loyalty program, and accounting. Each
+line is labeled API. Three lines are solid. The line to the loyalty program is dashed and labeled as an
+old API the vendor is retiring.</desc>
+<rect x="215" y="122" width="170" height="56" fill="var(--magenta)" stroke="var(--ink)" stroke-width="1"/>
+<text x="300" y="146" font-size="12" font-weight="700" fill="var(--white)" text-anchor="middle">THE REGISTER</text>
+<text x="300" y="164" font-size="11" fill="var(--white)" text-anchor="middle">one sale</text>
+<rect x="0" y="20" width="160" height="46" fill="var(--off-white)" stroke="var(--ink)" stroke-width="1"/>
+<text x="80" y="40" font-size="11" font-weight="700" fill="var(--ink)" text-anchor="middle">Card processor</text>
+<text x="80" y="56" font-size="10" fill="var(--muted)" text-anchor="middle">a bank's company</text>
+<rect x="440" y="20" width="160" height="46" fill="var(--off-white)" stroke="var(--ink)" stroke-width="1"/>
+<text x="520" y="40" font-size="11" font-weight="700" fill="var(--ink)" text-anchor="middle">Inventory system</text>
+<text x="520" y="56" font-size="10" fill="var(--muted)" text-anchor="middle">a SaaS vendor</text>
+<rect x="0" y="234" width="160" height="46" fill="var(--off-white)" stroke="var(--ink)" stroke-width="1"/>
+<text x="80" y="254" font-size="11" font-weight="700" fill="var(--ink)" text-anchor="middle">Loyalty program</text>
+<text x="80" y="270" font-size="10" fill="var(--muted)" text-anchor="middle">a marketing vendor</text>
+<rect x="440" y="234" width="160" height="46" fill="var(--off-white)" stroke="var(--ink)" stroke-width="1"/>
+<text x="520" y="254" font-size="11" font-weight="700" fill="var(--ink)" text-anchor="middle">Accounting</text>
+<text x="520" y="270" font-size="10" fill="var(--muted)" text-anchor="middle">a packaged program</text>
+<line x1="160" y1="56" x2="215" y2="128" stroke="var(--ink)" stroke-width="1.4"/>
+<line x1="440" y1="56" x2="385" y2="128" stroke="var(--ink)" stroke-width="1.4"/>
+<line x1="440" y1="244" x2="385" y2="172" stroke="var(--ink)" stroke-width="1.4"/>
+<line x1="160" y1="244" x2="215" y2="172" stroke="var(--ink)" stroke-width="1.4" stroke-dasharray="5 4"/>
+<text x="194" y="80" font-size="11" font-weight="700" fill="var(--ink)">API</text>
+<text x="406" y="80" font-size="11" font-weight="700" fill="var(--ink)" text-anchor="end">API</text>
+<text x="406" y="218" font-size="11" font-weight="700" fill="var(--ink)" text-anchor="end">API</text>
+<text x="172" y="204" font-size="11" font-weight="700" fill="var(--magenta)" text-anchor="end">old API,</text>
+<text x="172" y="218" font-size="11" fill="var(--magenta)" text-anchor="end">being retired</text>
+</svg>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--muted);margin-top:.55rem;line-height:1.55"><strong style="color:var(--ink)">The register is one box. The sale touches four.</strong>
+Every line is an API, and every API belongs to somebody else. The dashed one is the line nobody notices
+until the vendor announces that the old version stops working at the end of the quarter.</figcaption>
+</figure>
+
+<p>Two consequences follow for a manager. First, a system's real cost includes connecting it to
+everything else, which is why integration appears in the cost section below. Second, an API is a promise
+that another company can change. When a vendor retires an old API or starts charging for it, every
+system built on it has to change too, on the vendor's schedule rather than yours.</p>
+
+<h3>1.6 Every update is a decision</h3>
+
+<p>Software is never finished. Vendors release <strong>updates</strong> constantly. Some fix security
+flaws, some add features, and some quietly remove them. With SaaS, the vendor decides when an update
+arrives. With custom software, your own team decides, and owns the result.</p>
+
+<p>Treat every update as a decision with a cost on both sides. Skip a security update and you are Equifax.
+Ship a large update all at once, without testing it on the tasks real people do, and you are Sonos,
+which section 3 is about. The manager's question is not whether to update. It is who checks each update
+against the work people actually do, and who is allowed to say it is not ready.</p>
+
+<h2 id="select"><span class="num">2</span>Judging software, and choosing it</h2>
+
+<p>Section 1 was about where software comes from. This section is about the two judgments a business
+makes about it: whether it works for the people who use it, and whether it is the right thing to buy.
+The first is the job of user experience design. The second is the job of software selection, which most
+managers do many times in a career and are rarely taught.</p>
+
+<h3>2.1 User experience: watching people use the thing</h3>
+
+<p><strong>User experience (UX)</strong> is everything a person experiences while using a product: finding
+it, learning it, getting a task done, recovering from a mistake, and leaving. The <strong>user interface
+(UI)</strong> is narrower. It is the screens, buttons, and messages a person actually touches. UX is the
+whole visit, and the UI is the room it happens in.</p>
+
+<p>For the first decades of computing, the interface was a command line: a blinking cursor waiting for
+typed instructions in a syntax you had to know already. The graphical interface, with windows, menus,
+and a mouse, did not make computers more powerful. It made them usable by far more people, and the
+personal computer industry grew out of that. Hold it as a principle: every interface decision is a
+decision about who is in your market.</p>
+
+<p>UX work rests on one habit. Watch real people try real tasks, and believe what you see over what you
+expected. You do not need a large study. The usability researcher Jakob Nielsen showed that about five
+test users find most of an interface's problems, and that three small rounds of testing teach more than
+one large one.<sup class="cite"><a href="#src-3" aria-label="Source 3">3</a></sup> The condition matters, though. Five users work only if they are like your real
+users, and if you have several kinds of users, each kind needs its own test. Five sighted employees will
+never find the problem a blind customer hits on the first screen.</p>
+
+<p>The other main UX method is a <strong>heuristic evaluation</strong>, in which an expert checks an
+interface against a short list of known principles. The best-known list is Nielsen's ten usability
+heuristics, published in 1994 and still in use.<sup class="cite"><a href="#src-3" aria-label="Source 3">3</a></sup> This week's lab teaches all ten. Two of them run
+through this chapter's cases. <em>Visibility of system status</em> says the system should always tell
+people what it is doing. <em>Error prevention</em> says the best error message is a design that stops
+the error from happening at all.</p>
+
+<p>UX skill can also be turned against the user. A <strong>dark pattern</strong> is an interface designed
+to push people into choices they would not otherwise make. In 2023 the Federal Trade Commission sued
+Amazon. It alleged that the Prime sign-up flow enrolled people without clear consent, and that cancelling
+took a long, confusing process Amazon had nicknamed internally after the <em>Iliad</em>, Homer's long war
+poem. One decline button read, &ldquo;No, I don't want Free Shipping.&rdquo; In September 2025 Amazon
+agreed to pay $2.5 billion, $1 billion as a civil penalty and $1.5 billion in refunds, without admitting
+wrongdoing.<sup class="cite"><a href="#src-4" aria-label="Source 4">4</a></sup></p>
+
+<p>Notice what that case says about UX as a business function. The people who designed those screens
+were skilled. The question was what they had been asked to make happen, and who had decided it.</p>
+
+<h3>2.2 Usability: the part you can measure</h3>
+
+<p><strong>Usability</strong> is how easily people can use an interface to do what they came to do. It is
+the part of UX you can measure, by timing and counting while people work, and three properties do most
+of the work. <em>Learnability</em> is how quickly a new user can do the core task: can a first-time
+customer order a pizza without help? <em>Efficiency</em> is how fast the task goes once it is learned, for
+example how many taps a repeat order takes. <em>Error tolerance</em> is how hard it is to make a mistake,
+and how easily people recover from one: whether a wrong tap can be undone, or empties the whole cart.</p>
 
 <p>The business stakes add up quietly. A confusing checkout loses customers one abandoned cart at a time.
 Inside a company, hard-to-use software taxes every employee every day, a cost that never appears on the
 invoice for the system that causes it. One of this book's authors studied nurses using electronic medical
 records and found that the same system produced two kinds of stress. The good kind came when a demanding
 tool felt useful and somebody helped people learn it. The bad kind came when it felt imposed and
-pointless, and it predicted wanting to leave the job.<sup class="cite"><a href="#src-1" aria-label="Source 1">1</a></sup> Usability is the difference between the
-two.</p>
+pointless, and it predicted wanting to leave the job.<sup class="cite"><a href="#src-5" aria-label="Source 5">5</a></sup> Usability is a large part of the
+difference between the two.</p>
 
-<h3>1.3 Accessibility is not a feature request</h3>
+<h3>2.3 Accessibility is not a feature request</h3>
 
 <p>Usability asks whether a typical user can do the task. <strong>Accessibility</strong> asks the harder
 version: whether every user can, including people with disabilities the builders never pictured. That
 includes blind users who rely on a <strong>screen reader</strong>, software that reads the screen aloud;
-deaf users who need captions; and people who use a keyboard or voice because they cannot use a
+deaf users who need captions; and people who use a keyboard or their voice because they cannot use a
 mouse.</p>
 
-<p>The working standard is the <strong>Web Content Accessibility Guidelines (WCAG)</strong>, published free by
-the World Wide Web Consortium, the group that sets web standards.<sup class="cite"><a href="#src-2" aria-label="Source 2">2</a></sup> They are organized around four
-properties:</p>
-
-<ul>
-<li><strong>Perceivable:</strong> people can take in the content. For example, images have text descriptions
-a screen reader can speak.</li>
-<li><strong>Operable:</strong> people can use the controls. For example, every button works from the keyboard,
-not just with a mouse.</li>
-<li><strong>Understandable:</strong> people can follow it. For example, error messages say what went wrong in
-plain words.</li>
-<li><strong>Robust:</strong> it works with the tools people bring. For example, a screen reader can tell what
-each control is.</li>
-</ul>
+<p>The working standard is the <strong>Web Content Accessibility Guidelines (WCAG)</strong>, published free
+by the World Wide Web Consortium, the group that sets web standards.<sup class="cite"><a href="#src-6" aria-label="Source 6">6</a></sup> They are organized around four
+properties. Content must be <em>perceivable</em>, so an image has a text description a screen reader can
+speak. Controls must be <em>operable</em>, so every button works from the keyboard and not just with a
+mouse. The page must be <em>understandable</em>, so an error message says what went wrong in plain words.
+And it must be <em>robust</em>, so the tools people bring, such as a screen reader, can tell what each
+control is.</p>
 
 <p>Two facts turn accessibility from charity into strategy. The first is scale: the World Health
 Organization estimates that about 1.3 billion people, roughly one in six, live with a significant
-disability, a market no business would knowingly lock out.<sup class="cite"><a href="#src-3" aria-label="Source 3">3</a></sup> The second is the <strong>curb-cut
+disability, a market no business would knowingly lock out.<sup class="cite"><a href="#src-7" aria-label="Source 7">7</a></sup> The second is the <strong>curb-cut
 effect</strong>: features built for disability keep turning out to serve everyone.</p>
 
 <figure class="diagram" style="margin:1.9rem auto;max-width:560px">
@@ -563,53 +750,152 @@ in a noisy gym, and high contrast helps on a phone in bright sun.
 </figcaption>
 </figure>
 
-<p>Accessible design is, reliably, just better design. And building it in from the start costs a fraction of
-fixing it later under a court order, which brings us to the pizza.</p>
+<p>There is also a deadline close to home. Under a 2024 Justice Department rule, state and local
+governments, public universities included, must make their websites, apps, and online course materials
+meet WCAG 2.1. For large institutions like Western, the deadline is now 26 April 2027.<sup class="cite"><a href="#src-8" aria-label="Source 8">8</a></sup> Every course
+page, every PDF a professor posts, and every form you fill in to register for classes is covered.</p>
 
-<h2 id="select"><span class="num">2</span>How businesses choose software</h2>
+<p>Accessible design is, reliably, just better design. Building it in from the start costs a fraction of
+fixing it later under a court order, and section 4 shows what the court order looks like.</p>
+
+<h3>2.4 The selection process</h3>
 
 <p>Design is one software decision a business makes. Selection is the other, and by far the more common,
-because most companies buy far more software than they build. Done badly, it produces the systems everyone
-hates, and Chapter 8 showed you the hundred-million-dollar version. The professional process is
-unglamorous and learnable.</p>
+because most companies buy far more software than they build. Done badly, it produces the systems
+everyone hates, and Chapter 8 showed you the hundred-million-dollar version. The professional process is
+unglamorous and learnable, and it has four steps.</p>
 
-<h3>2.1 The selection process</h3>
+<p>First, write the requirements before you see any vendor demo, and split them into must-haves and
+nice-to-haves. Otherwise a good demo will write your requirements for you. Many organizations send the
+list to vendors as a formal <strong>request for proposal (RFP)</strong>.</p>
 
-<p>Nobody is born knowing how to buy software, and most managers never get taught. Here is the process:</p>
+<p>Second, run <strong>scripted demos</strong>. Every vendor on the shortlist performs your tasks on your
+sample data, not its rehearsed best case. A grocery co-op, for example, makes each vendor process a
+member discount on a real receipt.</p>
 
-<ul>
-<li><strong>Write the requirements first.</strong> List what the software must do before you see any vendor
-demo, and split the list into must-haves and nice-to-haves. Otherwise a good demo will write your
-requirements for you. Many organizations send the list to vendors as a formal <strong>request for proposal
-(RFP)</strong>.</li>
-<li><strong>Run scripted demos.</strong> Every vendor on the shortlist performs <em>your</em> tasks on
-<em>your</em> sample data, not their rehearsed best case. For example, a grocery co-op makes each vendor
-process a member discount on a real receipt.</li>
-<li><strong>Work out the total cost of ownership (TCO).</strong> The license or subscription is often the
-smaller part. Add setup, connecting it to other systems, training, support, and the cost of leaving
-later.</li>
-<li><strong>Check references and run a pilot.</strong> Talk to companies your size that use it, then let real
-users try it on real work before you sign.</li>
-</ul>
+<p>Third, work out the total cost of ownership, which section 2.5 explains.</p>
 
-<p>After this chapter, one line belongs in every requirements list: the software must meet WCAG, checked in
-the demo with a screen reader running. Section 4 shows what that line is worth.</p>
+<p>Fourth, check references and run a <strong>pilot</strong>. Talk to companies your size that use the
+product, then let real users try it on real work before you sign. A pilot is UX research by another
+name, and it is the step most often cut when a deadline gets close.</p>
 
-<h3>2.2 Build, buy, or subscribe</h3>
+<p>After this chapter, one line belongs in every requirements list: the software must meet WCAG, checked
+in the demo with a screen reader running. Section 4 shows what that line is worth.</p>
 
-<p>The strategic part of selection is the oldest question in corporate IT: build it, buy it, or rent it? The
-working rule comes straight from Chapter 3:</p>
+<h3>2.5 Total cost of ownership</h3>
 
-<ul>
-<li>If the capability is a <strong>commodity</strong>, something every business does the same way, such as
-payroll, email, or accounting, buy or subscribe. Building it yourself buys no advantage and all the
-upkeep.</li>
-<li>If the capability is your <strong>differentiator</strong>, the thing customers choose you for, owning it
-can be worth the cost. That is why Domino's built its own ordering system.</li>
-</ul>
+<p><strong>Total cost of ownership (TCO)</strong> is everything a system costs over its life, not just the
+price on the quote. The license or subscription is often the smaller part. Add setup, connecting the
+system to everything else, moving your data in, training people, support, upgrades, and the cost of
+leaving later.</p>
 
-<p>The judgment call is knowing which is which. The test is simple to say: would doing this better than rivals
-actually change what customers do?</p>
+<figure class="diagram" style="margin:1.8rem auto;max-width:600px">
+<svg viewBox="0 0 600 246" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="f3T f3D"
+     style="width:100%;height:auto;font-family:var(--sans)">
+<title id="f3T">What a rented system costs over five years, illustrated</title>
+<desc id="f3D">A single horizontal bar divided into seven parts, with illustrative shares of five-year
+cost. The subscription, shown dark and labeled as the quote, is 35 percent. The other 65 percent is
+everything else: implementation 15 percent, integration 15 percent, support and administration 15
+percent, training 10 percent, moving data in 5 percent, and leaving later 5 percent. A legend below lists
+each part.</desc>
+<text x="0" y="16" font-size="10.5" font-weight="700" fill="var(--ink)">THE QUOTE</text>
+<text x="210" y="16" font-size="10.5" font-weight="700" fill="var(--magenta)">EVERYTHING ELSE: 65%</text>
+<line x1="212" y1="24" x2="600" y2="24" stroke="var(--magenta)" stroke-width="1.4"/>
+<line x1="212" y1="24" x2="212" y2="32" stroke="var(--magenta)" stroke-width="1.4"/>
+<line x1="599" y1="24" x2="599" y2="32" stroke="var(--magenta)" stroke-width="1.4"/>
+<rect x="0" y="36" width="210" height="48" fill="var(--ink)"/>
+<text x="105" y="65" font-size="12" font-weight="700" fill="var(--white)" text-anchor="middle">Subscription 35%</text>
+<rect x="210" y="36" width="90" height="48" fill="var(--magenta)" stroke="var(--white)" stroke-width="1"/>
+<rect x="300" y="36" width="90" height="48" fill="var(--magenta-pale)" stroke="var(--ink)" stroke-width="1"/>
+<rect x="390" y="36" width="90" height="48" fill="var(--magenta)" stroke="var(--white)" stroke-width="1"/>
+<rect x="480" y="36" width="60" height="48" fill="var(--magenta-pale)" stroke="var(--ink)" stroke-width="1"/>
+<rect x="540" y="36" width="30" height="48" fill="var(--magenta)" stroke="var(--white)" stroke-width="1"/>
+<rect x="570" y="36" width="30" height="48" fill="var(--magenta-pale)" stroke="var(--ink)" stroke-width="1"/>
+<text x="255" y="65" font-size="10.5" font-weight="700" fill="var(--white)" text-anchor="middle">15%</text>
+<text x="345" y="65" font-size="10.5" font-weight="700" fill="var(--ink)" text-anchor="middle">15%</text>
+<text x="435" y="65" font-size="10.5" font-weight="700" fill="var(--white)" text-anchor="middle">15%</text>
+<text x="510" y="65" font-size="10.5" font-weight="700" fill="var(--ink)" text-anchor="middle">10%</text>
+<text x="0" y="118" font-size="11" fill="var(--ink)">Implementation and setup</text><text x="250" y="118" font-size="11" fill="var(--muted)">15%</text>
+<text x="0" y="138" font-size="11" fill="var(--ink)">Integration with other systems</text><text x="250" y="138" font-size="11" fill="var(--muted)">15%</text>
+<text x="0" y="158" font-size="11" fill="var(--ink)">Support and administration</text><text x="250" y="158" font-size="11" fill="var(--muted)">15%</text>
+<text x="320" y="118" font-size="11" fill="var(--ink)">Training</text><text x="560" y="118" font-size="11" fill="var(--muted)">10%</text>
+<text x="320" y="138" font-size="11" fill="var(--ink)">Moving your data in</text><text x="560" y="138" font-size="11" fill="var(--muted)">5%</text>
+<text x="320" y="158" font-size="11" fill="var(--ink)">Leaving later</text><text x="560" y="158" font-size="11" fill="var(--muted)">5%</text>
+<line x1="0" y1="180" x2="600" y2="180" stroke="var(--rule)" stroke-width="1"/>
+<text x="0" y="202" font-size="10.5" fill="var(--muted)">Shares are illustrative, in the order of the bar from left to right.</text>
+<text x="0" y="220" font-size="10.5" fill="var(--muted)">They show the shape of the problem, not any one company's numbers.</text>
+</svg>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--muted);margin-top:.55rem;line-height:1.55"><strong style="color:var(--ink)">The quote is the dark bar. Everything else is the system.</strong>
+The proportions are invented to show the shape. Real TCO work fills in your own numbers, and the reason
+to do it is that the price on the quote is rarely the biggest one. The two smallest boxes on the right are
+the ones nobody budgets for at all.</figcaption>
+</figure>
+
+<p>Two costs get missed most often. One is integration, from section 1.5, because no vendor quotes for
+connecting to systems it does not sell. The other is leaving, because nobody plans to leave. Ask on the
+first day how you would get your data out, in what format, and at what cost. Chapter 13 asks the same
+question about the cloud.</p>
+
+<h3>2.6 Build, buy, or subscribe, now that AI can write code</h3>
+
+<p>The strategic part of selection is the oldest question in corporate IT: build it, buy it, or rent it?
+The working rule comes from Chapter 3. If a capability is a <strong>commodity</strong>, something every
+business does the same way, such as payroll, email, or accounting, buy it or subscribe. Building it
+yourself buys no advantage and all the upkeep. If the capability is your <strong>differentiator</strong>,
+the thing customers choose you for, owning it can be worth the cost. That is why Domino's built its own
+ordering system.</p>
+
+<figure class="diagram" style="margin:1.8rem auto;max-width:560px">
+<svg viewBox="0 0 560 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="f4T f4D"
+     style="width:100%;height:auto;font-family:var(--sans)">
+<title id="f4T">Build, buy, or subscribe, as two questions</title>
+<desc id="f4D">A two by two grid. The rows ask whether customers choose you for this capability, yes on
+top and no below. The columns ask whether a good rented version exists, yes on the left and no on the
+right. Top left: own the part customers see and rent the rest. Top right: build it. Bottom left:
+subscribe. Bottom right: buy a package or build something small. The top row is shaded as the only place
+building pays. A dashed outline around the bottom row carries a note that AI makes these look buildable
+but the upkeep has not moved.</desc>
+<text x="300" y="16" font-size="10.5" font-weight="700" fill="var(--ink)" text-anchor="middle">A GOOD RENTED VERSION EXISTS?</text>
+<text x="200" y="36" font-size="10.5" fill="var(--muted)" text-anchor="middle">Yes</text>
+<text x="420" y="36" font-size="10.5" fill="var(--muted)" text-anchor="middle">No</text>
+<text x="16" y="146" font-size="10.5" font-weight="700" fill="var(--ink)" transform="rotate(-90 16 146)" text-anchor="middle">CUSTOMERS CHOOSE YOU FOR IT?</text>
+<text x="70" y="100" font-size="10.5" fill="var(--muted)" text-anchor="end">Yes</text>
+<text x="70" y="206" font-size="10.5" fill="var(--muted)" text-anchor="end">No</text>
+<rect x="90" y="46" width="220" height="104" fill="var(--magenta-pale)" stroke="var(--ink)" stroke-width="1"/>
+<rect x="310" y="46" width="220" height="104" fill="var(--magenta-pale)" stroke="var(--ink)" stroke-width="1"/>
+<rect x="90" y="150" width="220" height="104" fill="var(--off-white)" stroke="var(--ink)" stroke-width="1"/>
+<rect x="310" y="150" width="220" height="104" fill="var(--off-white)" stroke="var(--ink)" stroke-width="1"/>
+<text x="200" y="88" font-size="13" font-weight="700" fill="var(--ink)" text-anchor="middle">Own what they see,</text>
+<text x="200" y="106" font-size="13" font-weight="700" fill="var(--ink)" text-anchor="middle">rent the rest</text>
+<text x="200" y="128" font-size="10.5" fill="var(--muted)" text-anchor="middle">an ordering app on rented computers</text>
+<text x="420" y="96" font-size="13" font-weight="700" fill="var(--magenta)" text-anchor="middle">Build it</text>
+<text x="420" y="118" font-size="10.5" fill="var(--muted)" text-anchor="middle">where owning pays</text>
+<text x="200" y="200" font-size="13" font-weight="700" fill="var(--ink)" text-anchor="middle">Subscribe</text>
+<text x="200" y="222" font-size="10.5" fill="var(--muted)" text-anchor="middle">payroll, email, accounting</text>
+<text x="420" y="192" font-size="13" font-weight="700" fill="var(--ink)" text-anchor="middle">Buy a package,</text>
+<text x="420" y="210" font-size="13" font-weight="700" fill="var(--ink)" text-anchor="middle">or build small</text>
+<text x="420" y="232" font-size="10.5" fill="var(--muted)" text-anchor="middle">a niche internal tool</text>
+<rect x="84" y="144" width="452" height="116" fill="none" stroke="var(--magenta)" stroke-width="1.6" stroke-dasharray="6 4"/>
+<text x="90" y="284" font-size="10.5" font-weight="700" fill="var(--magenta)">What AI changed: the bottom row now looks buildable, because a first version is cheap.</text>
+<text x="90" y="302" font-size="10.5" fill="var(--magenta)">What it did not change: the years of upkeep, which a vendor spreads over thousands</text>
+<text x="90" y="318" font-size="10.5" fill="var(--magenta)">of customers and you would carry alone.</text>
+</svg>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--muted);margin-top:.55rem;line-height:1.55"><strong style="color:var(--ink)">Ask two questions and the answer is usually clear.</strong>
+Building pays only in the top row, where customers would notice the difference. The dashed outline is
+the temptation AI has created, not a change in the rule.</figcaption>
+</figure>
+
+<p>AI changes one side of this calculation. When code was expensive to write, the cost of building kept
+most companies disciplined: nobody built their own payroll system, because it would take a team a year.
+If an AI assistant can produce a working version in a week, the temptation is to build commodities after
+all. The rule still holds, because the point of section 1.4 still holds. The week of building is the
+cheap part. The years of updates, security fixes, and tax-law changes are the expensive part, and a
+vendor spreads that cost across thousands of customers while you would carry it alone.</p>
+
+<p>Where AI does change the answer is at the edges. Small internal tools that nobody sells, a form here or
+a report there, are now cheap enough that a team can build one before it buys anything. The test is
+simple to say and hard to apply: would doing this better than rivals change what customers do? If not,
+rent it, and spend your building time on the thing they would notice.</p>
 
 <div class="tryit" id="bbs">
   <div class="tryit-head">Quick quiz &middot; Build, buy, or subscribe?</div>
@@ -648,41 +934,96 @@ actually change what customers do?</p>
 
 <h2 id="cases"><span class="num">3</span>Two interfaces that decided the outcome</h2>
 
-<p>Before the main case, here are two short ones. In each, the system underneath worked exactly as built, and
-the interface decided the outcome anyway.</p>
+<p>Before the main case, here are two short ones. In each, the software underneath did exactly what it was
+built to do, and the interface decided the outcome anyway. The first is a bank and a checkbox. The second
+is a speaker company and an app.</p>
 
-<h3>3.1 Mini-case 1 &middot; 2000: the ballot that was hard to read</h3>
+<h3>3.1 Mini-case 1 &middot; 2020: the $900 million checkbox</h3>
 
-<p>In the 2000 U.S. presidential election, Palm Beach County, Florida, used a punch-card ballot that listed
-candidates on two facing pages, with one column of punch holes running down the middle. The county's
-election supervisor designed it that way so she could print the ten candidates' names in larger type for
-older voters.<sup class="cite"><a href="#src-4" aria-label="Source 4">4</a></sup></p>
+<p>On 11 August 2020, Citibank was managing a large loan to the cosmetics company Revlon. Its job that
+afternoon was routine: pass about $7.8 million of interest from Revlon on to the loan's lenders.<sup class="cite"><a href="#src-9" aria-label="Source 9">9</a></sup>
+Because the loan was also being restructured, staff had to process the payment in an unusual way. They
+entered it in the payment system as if the whole loan were being paid off. Then they directed the
+principal, about $894 million, to an internal holding account, called a wash account, so that it would
+never leave the bank.</p>
 
-<figure class="diagram" style="margin:1.9rem auto;max-width:640px">
-<img src="butterfly-ballot-2000.jpg" width="960" height="612" loading="lazy" style="width:100%;height:auto"
- alt="The 2000 Palm Beach County presidential ballot laid open. Candidate names are printed in two columns on facing pages, with a single yellow strip of punch holes running down the middle between them. Arrows point from each name to a numbered hole. On the left page, George W. Bush points to hole 3 and Al Gore points to hole 5. On the right page, Pat Buchanan points to hole 4, which sits between them.">
-<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">
-The actual 2000 ballot. The second name on the left page points to the third hole, because the second hole
-belongs to the first name on the right page. The machines counted every punch correctly. The layout
-decided what people were able to say.
-<br><br>Public domain, via Wikimedia Commons.
-</figcaption>
+<p>The system was Flexcube, a loan-processing program Citibank used to send wire payments. Most payments
+in it go to outside parties, so its default was to send money out of the bank unless the person entering
+a payment overrode that default. The bank's own manual said that keeping the principal inside took three
+fields, all set to the wash account: FRONT, FUND, and PRINCIPAL.<sup class="cite"><a href="#src-9" aria-label="Source 9">9</a></sup></p>
+
+<p>The payment went through Citibank's six-eye check, which takes three people. A maker enters the
+payment, a checker reviews it, and an approver signs off. All three believed, wrongly, that setting the
+PRINCIPAL field alone was enough. The maker set one field of the three. The checker agreed. The approver
+replied that it looked good and that the principal was going to the wash account.<sup class="cite"><a href="#src-9" aria-label="Source 9">9</a></sup></p>
+
+<figure class="diagram" style="margin:1.8rem auto;max-width:540px">
+<svg viewBox="0 0 540 316" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="f5T f5D"
+     style="width:100%;height:auto;font-family:var(--sans)">
+<title id="f5T">The payment screen, simplified</title>
+<desc id="f5D">A simplified drawing of a payment entry screen. Three rows each have a checkbox, a field
+name, and an account box: FRONT, unchecked and empty; FUND, unchecked and empty; PRINCIPAL, checked and
+set to the wash account. A note says the manual required all three. Below is a warning box that reads:
+Account used is Wire Account and Funds will be sent out of the bank. Do you want to continue? It has Yes
+and No buttons. A note beside it says the amount was not shown.</desc>
+<text x="0" y="14" font-size="10.5" font-weight="700" fill="var(--ink)">PAYMENT ENTRY (SIMPLIFIED)</text>
+<rect x="0" y="22" width="330" height="128" fill="none" stroke="var(--rule)" stroke-width="1"/>
+<rect x="16" y="40" width="16" height="16" fill="var(--white)" stroke="var(--ink)" stroke-width="1.2"/>
+<text x="44" y="53" font-size="11" font-weight="700" fill="var(--ink)">FRONT</text>
+<rect x="150" y="38" width="164" height="20" fill="var(--off-white)" stroke="var(--ink)" stroke-width="1"/>
+<rect x="16" y="78" width="16" height="16" fill="var(--white)" stroke="var(--ink)" stroke-width="1.2"/>
+<text x="44" y="91" font-size="11" font-weight="700" fill="var(--ink)">FUND</text>
+<rect x="150" y="76" width="164" height="20" fill="var(--off-white)" stroke="var(--ink)" stroke-width="1"/>
+<rect x="16" y="116" width="16" height="16" fill="var(--magenta)" stroke="var(--ink)" stroke-width="1.2"/>
+<path d="M19 124 L23 129 L30 119" fill="none" stroke="var(--white)" stroke-width="2"/>
+<text x="44" y="129" font-size="11" font-weight="700" fill="var(--ink)">PRINCIPAL</text>
+<rect x="150" y="114" width="164" height="20" fill="var(--off-white)" stroke="var(--ink)" stroke-width="1"/>
+<text x="158" y="128" font-size="10.5" fill="var(--ink)">wash account</text>
+<text x="346" y="50" font-size="10.5" font-weight="700" fill="var(--magenta)">The manual: all three</text>
+<text x="346" y="64" font-size="10.5" fill="var(--magenta)">must name the wash account.</text>
+<text x="346" y="96" font-size="10.5" font-weight="700" fill="var(--magenta)">What all three reviewers</text>
+<text x="346" y="110" font-size="10.5" fill="var(--magenta)">believed: this one box</text>
+<text x="346" y="124" font-size="10.5" fill="var(--magenta)">was enough.</text>
+<rect x="0" y="174" width="330" height="104" fill="var(--off-white)" stroke="var(--ink)" stroke-width="1.2"/>
+<path d="M18 208 L28 190 L38 208 Z" fill="none" stroke="var(--ink)" stroke-width="1.4"/>
+<text x="28" y="205" font-size="11" font-weight="700" fill="var(--ink)" text-anchor="middle">!</text>
+<text x="50" y="196" font-size="10.5" fill="var(--ink)">Account used is Wire Account and</text>
+<text x="50" y="211" font-size="10.5" fill="var(--ink)">Funds will be sent out of the bank.</text>
+<text x="50" y="226" font-size="10.5" fill="var(--ink)">Do you want to continue?</text>
+<rect x="160" y="242" width="70" height="24" fill="var(--magenta)" stroke="var(--ink)" stroke-width="1"/>
+<text x="195" y="258" font-size="11" font-weight="700" fill="var(--white)" text-anchor="middle">Yes</text>
+<rect x="244" y="242" width="70" height="24" fill="var(--white)" stroke="var(--ink)" stroke-width="1"/>
+<text x="279" y="258" font-size="11" font-weight="700" fill="var(--ink)" text-anchor="middle">No</text>
+<text x="346" y="206" font-size="10.5" font-weight="700" fill="var(--magenta)">How much? Not shown.</text>
+<text x="346" y="220" font-size="10.5" fill="var(--magenta)">True for $7.8 million,</text>
+<text x="346" y="234" font-size="10.5" fill="var(--magenta)">true for $901.7 million.</text>
+<text x="0" y="304" font-size="10" fill="var(--muted)">Drawn from the court's description of the screen and the warning. Not a screenshot.</text>
+</svg>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--muted);margin-top:.55rem;line-height:1.55"><strong style="color:var(--ink)">A warning that is true either way tells you nothing.</strong>
+The screen asked for three matching entries to do the safe thing and only one to do the dangerous one.
+Then it warned about money leaving the bank, which was also true of the payment everyone meant to make.
+Neither part of the screen gave anyone a reason to stop.</figcaption>
 </figure>
 
-<p>The result was 3,407 votes for a minor candidate, Pat Buchanan, whose hole sat between the two
-front-runners'. That was several times what he received in comparable counties. More than 19,000 other
-ballots were punched twice and thrown out.<sup class="cite"><a href="#src-4" aria-label="Source 4">4</a></sup> The election was decided in Florida by 537 votes. The
-voting machines counted correctly. The interface, a piece of card and a row of holes, determined what
-people were able to express, and no test of the counting system would ever have caught it.</p>
+<p>When the checker went to release the payment, the screen showed the warning in the drawing above.
+It did not say how much money would leave. The checker expected to release an interest payment, so the
+answer was yes.<sup class="cite"><a href="#src-9" aria-label="Source 9">9</a></sup> The next morning, reconciling the previous day's payments, the same team found
+that the bank had wired about $894 million of its own money to 315 lenders, on top of the interest.</p>
 
-<p><strong>What decided the outcome: the layout. The component: hardware.</strong> This is the purest version of
-section 1's claim that every interface decision is a decision about who is in your market. Here the market
-was an electorate.</p>
+<p>Most lenders sent the money back. A group that had received about $500 million refused. In February
+2021 a federal judge ruled that they could keep it, and called the payment one of the biggest blunders
+in banking history. In September 2022 the appeals court reversed that ruling, and the money had to be
+returned.<sup class="cite"><a href="#src-9" aria-label="Source 9">9</a></sup></p>
 
-<div class="mcq"><b>Check yourself</b>The official who designed the ballot did it to make the names
-larger for older voters. Say what she should have done before printing it, using the vocabulary in
-section 1, and say why that step is so routinely skipped.
-<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>Usability, and specifically the property section 1.2 calls error tolerance. Larger type made each name easier to read, which is one usability goal. But the layout that larger type forced, names on two facing pages with one column of punch holes between them, made it easy to punch the wrong hole, which defeats the other. The ballot passed the test the designer ran (can you read it?) and failed the test she did not run (can you vote for who you meant to?). That is the general lesson: a design decision made to help one property can quietly break another, and the only way to know is to watch real people use the thing before it counts.</p></details></div>
+<p><strong>What decided the outcome: three fields and a warning with no number in it. The component:
+software.</strong> Three trained people, following a correct process, held the same wrong picture of
+what one checkbox did, and the interface gave none of them a reason to doubt it. A second and third
+reviewer cannot catch a mistake when all three are reading the same misleading screen.</p>
+
+<div class="mcq"><b>Check yourself</b>Name two of Nielsen's heuristics from section 2.1 that this screen
+broke, and say what a better design would have shown at each point. Then say why adding a fourth
+reviewer would not have helped.
+<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>Error prevention and visibility of system status. On error prevention: a screen where keeping money in the bank takes three matching entries, and getting one wrong sends it out, invites exactly this mistake. A better design treats the wash account as one choice that sets all three fields, or refuses to save a payment whose fields disagree. On visibility of system status: the warning said money would leave the bank, which was true of the $7.8 million as well, so it told the reviewer nothing new. A better warning states the outcome in numbers, for example that $901.7 million is about to go to 315 outside accounts. A fourth reviewer would have read the same screen with the same wrong picture of it. Review only adds safety when each reviewer can see something the last one could not.</p></details></div>
 
 <h3>3.2 Mini-case 2 &middot; 2024: the app that made the speakers stop working</h3>
 
@@ -690,7 +1031,7 @@ section 1, and say why that step is so routinely skipped.
 their sleep timers were gone, and in some cases the speakers would not respond at all. Nothing in the
 hardware had changed. Sonos makes wireless speakers that are controlled almost entirely through its app,
 and it had just released a rebuilt version, timed to the launch of its first headphones. The new app was
-missing features customers used every day.<sup class="cite"><a href="#src-5" aria-label="Source 5">5</a></sup></p>
+missing features customers used every day.<sup class="cite"><a href="#src-10" aria-label="Source 10">10</a></sup></p>
 
 <figure class="diagram" style="margin:1.9rem auto;max-width:440px">
 <img src="sonos-one-speaker.jpg" width="960" height="720" loading="lazy" style="width:100%;height:auto"
@@ -704,17 +1045,17 @@ a perfectly good speaker became a very expensive ornament.
 
 <p>For blind customers it was worse. Before launch, a Sonos staff member had assured users on the company's
 own forum that the new app had been tested with VoiceOver, the iPhone's screen reader. On launch day the
-National Federation of the Blind publicly called the app a significant accessibility regression.<sup class="cite"><a href="#src-6" aria-label="Source 6">6</a></sup></p>
+National Federation of the Blind publicly called the app a significant accessibility regression.<sup class="cite"><a href="#src-11" aria-label="Source 11">11</a></sup></p>
 
 <p>The costs mounted. In August the company said fixing the app would cost $20 million to $30 million, and it
 cut about 6 percent of its staff. In October it said it would appoint a &ldquo;quality ombudsperson&rdquo; to give employees a
 direct line to raise problems. Its chief executive later blamed too little testing and releasing too many
-changes at once, which he called a &ldquo;big bang&rdquo; rollout, the same term you met in Chapter 8.<sup class="cite"><a href="#src-7" aria-label="Source 7">7</a></sup> Sales
-fell 16 percent in one quarter, and in January 2025 the chief executive stepped down.<sup class="cite"><a href="#src-7" aria-label="Source 7">7</a></sup></p>
+changes at once, which he called a &ldquo;big bang&rdquo; rollout, the same term you met in Chapter 8.<sup class="cite"><a href="#src-12" aria-label="Source 12">12</a></sup> Sales
+fell 16 percent in one quarter, and in January 2025 the chief executive stepped down.<sup class="cite"><a href="#src-12" aria-label="Source 12">12</a></sup></p>
 
 <p><strong>What decided the outcome: a launch date. The component: people.</strong> The app shipped when the
 headphones were ready rather than when the app was, and that was a decision made by named executives.
-Notice that accessibility was among the first things to break, which is the pattern section 1 describes,
+Notice that accessibility was among the first things to break, which is the pattern section 2.3 describes,
 and the one the main case turned into a lawsuit.</p>
 
 <div class="mcq"><b>Check yourself</b>Sonos had a testing process and shipped anyway. Using section
@@ -722,28 +1063,32 @@ and the one the main case turned into a lawsuit.</p>
 shown, and say why a company that knew that would still choose the launch date.
 <details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>Sonos said it had tested the app with VoiceOver, and it shipped anyway, so the gap was not whether testing happened but what the tests asked. A scripted demo built on section 2's rule, real customers doing their real tasks, would have looked different. A blind user would set an alarm, change the volume in one room, and start a playlist, start to finish, with the screen reader on. That would have failed on day one. A company that knew this might still keep the launch date because the headphones were ready and the date was public, and nobody had the authority, or the requirement in writing, to say that accessibility was a reason to wait. A test suite is only as complete as the list of people, and tasks, the product is for.</p></details></div>
 
+
 <h3>3.3 What the two have in common</h3>
 
-<p>A ballot and a mobile app. In both, the system underneath was correct: the votes were counted accurately,
-and the speakers played. In both, the interface decided what people could actually do, which is the only
-thing they experience.</p>
+<p>A bank's payment screen and a speaker company's app. In both, the software underneath did what it was
+built to do. Flexcube sent the payment it was told to send, and the speakers played music. In both, the
+interface decided what people could actually do, and the people who paid for the mistake were not the
+people who designed the screen.</p>
 
-<p>Hold the second one close for the main case, because it is the same failure at a different scale. Sonos
-broke screen-reader support and lost a chief executive. Domino's never built it in, and ended up at the
-door of the Supreme Court.</p>
+<p>The two also fail in different ways. Citibank's screen misled trained professionals doing their normal
+jobs, which is a usability failure. Sonos shipped an app that some customers could not use at all, which
+is an accessibility failure. Hold the second one close for the main case, because it is the same failure
+at a different scale. Sonos broke screen-reader support and lost a chief executive. Domino's never built
+it in, and ended up at the door of the Supreme Court.</p>
 
 <h2 id="robles"><span class="num">4</span>Main case &middot; Robles v. Domino's: the ADA meets the web</h2>
 
 <p>Picture trying to order a pizza with your eyes closed, using only a voice that reads the screen to you.
 The voice says &ldquo;button.&rdquo; Then &ldquo;button.&rdquo; Then &ldquo;button&rdquo; again. You have no idea which one adds
 pepperoni and which one empties your cart. That is roughly what Guillermo Robles met when he tried to order
-from Domino's, more than once, starting in July 2015.<sup class="cite"><a href="#src-8" aria-label="Source 8">8</a></sup></p>
+from Domino's, more than once, starting in July 2015.<sup class="cite"><a href="#src-13" aria-label="Source 13">13</a></sup></p>
 
 <p>Domino's, the company from Chapter 4, had rebuilt itself as a technology company that happens to sell
 pizza, and by the mid-2010s a large share of its orders came through its website and app. That was the
 front door, and for Mr. Robles it was closed. In September 2016 he sued under the Americans with
 Disabilities Act (ADA), the 1990 federal law that bars businesses open to the public from shutting out
-people with disabilities.<sup class="cite"><a href="#src-8" aria-label="Source 8">8</a></sup></p>
+people with disabilities.<sup class="cite"><a href="#src-13" aria-label="Source 13">13</a></sup></p>
 
 <div class="statrow">
   <div class="stat"><b>2</b><span>channels that failed him: website and app</span></div>
@@ -823,7 +1168,7 @@ was offering something to its digital customers that it was not offering to him.
 
 <p>Keep hold of what the fix would have been. Nobody was asking Domino's to build a separate site for
 blind customers, or to invent anything. The remedy is to label the controls and describe the images in
-the software the company already had. That is the accessibility line section 2.1 puts in every
+the software the company already had. That is the accessibility line section 2.4 puts in every
 requirements list, and it is cheapest when it is part of how the team builds, rather than a project somebody
 funds later under a court order.</p>
 
@@ -868,7 +1213,7 @@ plainly had that connection, which the court calls a nexus. The court put it dir
 the goods and services of a place of public accommodation. Second: the absence of formal regulations
 is not a due-process escape hatch; the statute's obligation to communicate effectively with disabled
 customers was itself fair notice. In October 2019 the Supreme Court declined to hear Domino's appeal,
-leaving the ruling standing.<sup class="cite"><a href="#src-9" aria-label="Source 9">9</a></sup></p>
+leaving the ruling standing.<sup class="cite"><a href="#src-14" aria-label="Source 14">14</a></sup></p>
 
 <p>Notice the shape of the legal lesson, because you have seen it before. Federal regulators took the same position on AI hiring tools in 2023, which Chapter 12 returns to: existing discrimination law applies
 no matter how novel the technology. Here, a 1990 statute written before the web reached the web
@@ -884,8 +1229,50 @@ cheapest moment to meet it was before the lawsuit.</p>
 Ninth Circuit reversed in January 2019. The Supreme Court declined to take the appeal in October 2019.
 In June 2021, back at the district court, the judge granted summary judgment for Mr. Robles on the
 website, ordered Domino's to bring it into line with WCAG, and awarded him $4,000 in statutory damages
-under California's civil rights act. It did not rule on the app. The parties settled in June 2022, on undisclosed terms.<sup class="cite"><a href="#src-8" aria-label="Source 8">8</a></sup> Six years
+under California's civil rights act. It did not rule on the app. The parties settled in June 2022, on undisclosed terms.<sup class="cite"><a href="#src-13" aria-label="Source 13">13</a></sup> Six years
 of litigation, over an order for a pizza.</p>
+
+<figure class="diagram" style="margin:1.8rem auto;max-width:620px">
+<svg viewBox="0 0 620 176" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="f6T f6D"
+     style="width:100%;height:auto;font-family:var(--sans)">
+<title id="f6T">Robles v. Domino's, from the first order to the settlement</title>
+<desc id="f6D">A timeline from 2015 to 2022 with seven events. July 2015, the first failed order.
+September 2016, the lawsuit is filed. March 2017, the district court sets the case aside to wait for
+regulators. January 2019, the Ninth Circuit rules that the ADA applies. October 2019, the Supreme Court
+declines to hear the appeal. June 2021, Domino's is ordered to meet WCAG and pay 4,000 dollars. June
+2022, the case settles on undisclosed terms.</desc>
+<line x1="30" y1="88" x2="600" y2="88" stroke="var(--ink)" stroke-width="1.6"/>
+<line x1="30" y1="84" x2="30" y2="92" stroke="var(--ink)" stroke-width="1"/><text x="30" y="168" font-size="10" fill="var(--muted)" text-anchor="middle">2015</text>
+<line x1="105" y1="84" x2="105" y2="92" stroke="var(--ink)" stroke-width="1"/><text x="105" y="168" font-size="10" fill="var(--muted)" text-anchor="middle">2016</text>
+<line x1="180" y1="84" x2="180" y2="92" stroke="var(--ink)" stroke-width="1"/><text x="180" y="168" font-size="10" fill="var(--muted)" text-anchor="middle">2017</text>
+<line x1="255" y1="84" x2="255" y2="92" stroke="var(--ink)" stroke-width="1"/><text x="255" y="168" font-size="10" fill="var(--muted)" text-anchor="middle">2018</text>
+<line x1="330" y1="84" x2="330" y2="92" stroke="var(--ink)" stroke-width="1"/><text x="330" y="168" font-size="10" fill="var(--muted)" text-anchor="middle">2019</text>
+<line x1="405" y1="84" x2="405" y2="92" stroke="var(--ink)" stroke-width="1"/><text x="405" y="168" font-size="10" fill="var(--muted)" text-anchor="middle">2020</text>
+<line x1="480" y1="84" x2="480" y2="92" stroke="var(--ink)" stroke-width="1"/><text x="480" y="168" font-size="10" fill="var(--muted)" text-anchor="middle">2021</text>
+<line x1="555" y1="84" x2="555" y2="92" stroke="var(--ink)" stroke-width="1"/><text x="555" y="168" font-size="10" fill="var(--muted)" text-anchor="middle">2022</text>
+
+<circle cx="68" cy="88" r="5.5" fill="var(--ink)" stroke="var(--white)" stroke-width="1.2"/>
+<line x1="68" y1="82" x2="68" y2="60" stroke="var(--rule)" stroke-width="1"/><text x="68" y="36" font-size="10" font-weight="700" fill="var(--ink)" text-anchor="start">Jul 2015</text><text x="68" y="50" font-size="10" fill="var(--ink)" text-anchor="start">first failed order</text>
+<circle cx="155" cy="88" r="5.5" fill="var(--ink)" stroke="var(--white)" stroke-width="1.2"/>
+<line x1="155" y1="94" x2="155" y2="112" stroke="var(--rule)" stroke-width="1"/><text x="155" y="126" font-size="10" font-weight="700" fill="var(--ink)" text-anchor="middle">Sep 2016</text><text x="155" y="140" font-size="10" fill="var(--ink)" text-anchor="middle">lawsuit filed</text>
+<circle cx="193" cy="88" r="5.5" fill="var(--ink)" stroke="var(--white)" stroke-width="1.2"/>
+<line x1="193" y1="82" x2="193" y2="60" stroke="var(--rule)" stroke-width="1"/><text x="193" y="36" font-size="10" font-weight="700" fill="var(--ink)" text-anchor="start">Mar 2017</text><text x="193" y="50" font-size="10" fill="var(--ink)" text-anchor="start">set aside for regulators</text>
+<circle cx="330" cy="88" r="5.5" fill="var(--magenta)" stroke="var(--white)" stroke-width="1.2"/>
+<line x1="330" y1="94" x2="330" y2="112" stroke="var(--rule)" stroke-width="1"/><text x="330" y="126" font-size="10" font-weight="700" fill="var(--magenta)" text-anchor="middle">Jan 2019</text><text x="330" y="140" font-size="10" fill="var(--ink)" text-anchor="middle">Ninth Circuit: ADA applies</text>
+<circle cx="386" cy="88" r="5.5" fill="var(--ink)" stroke="var(--white)" stroke-width="1.2"/>
+<line x1="386" y1="82" x2="386" y2="60" stroke="var(--rule)" stroke-width="1"/><text x="386" y="36" font-size="10" font-weight="700" fill="var(--ink)" text-anchor="middle">Oct 2019</text><text x="386" y="50" font-size="10" fill="var(--ink)" text-anchor="middle">Supreme Court declines</text>
+<circle cx="514" cy="88" r="5.5" fill="var(--ink)" stroke="var(--white)" stroke-width="1.2"/>
+<line x1="514" y1="94" x2="514" y2="112" stroke="var(--rule)" stroke-width="1"/><text x="514" y="126" font-size="10" font-weight="700" fill="var(--ink)" text-anchor="middle">Jun 2021</text><text x="514" y="140" font-size="10" fill="var(--ink)" text-anchor="middle">ordered to meet WCAG; $4,000</text>
+<circle cx="589" cy="88" r="5.5" fill="var(--ink)" stroke="var(--white)" stroke-width="1.2"/>
+<line x1="589" y1="82" x2="589" y2="60" stroke="var(--rule)" stroke-width="1"/><text x="589" y="36" font-size="10" font-weight="700" fill="var(--ink)" text-anchor="end">Jun 2022</text><text x="589" y="50" font-size="10" fill="var(--ink)" text-anchor="end">settled, terms undisclosed</text>
+
+</svg>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--muted);margin-top:.55rem;line-height:1.55"><strong style="color:var(--ink)">Nearly seven years, from the first failed order to the settlement.</strong>
+Most of that time is the case waiting, first for regulators and then for appeals, which is the
+defense that there were no rules yet. The fix the court ordered at the end, labels and descriptions
+written to a free public standard, was available at the beginning.</figcaption>
+</figure>
+
 
 <p>Now a caution about a number you will meet the moment you search for this case. Many articles state
 that fixing the website would have cost Domino's about $38,000, usually next to an estimate of
@@ -917,20 +1304,16 @@ legal effort defending its right not to label its buttons, and was ordered to la
 
 <p>The Ninth Circuit's decision stood, and web-accessibility lawsuits in the United States have run to
 thousands a year since. More than 3,000 were filed in federal court against businesses in 2025 alone, many
-of them against small businesses that never imagined their website was a legal surface.<sup class="cite"><a href="#src-10" aria-label="Source 10">10</a></sup></p>
+of them against small businesses that never imagined their website was a legal surface.<sup class="cite"><a href="#src-15" aria-label="Source 15">15</a></sup></p>
 
-<p>The law has moved too, though unevenly:</p>
+<p>The law has moved too, though unevenly. In 2024 the Department of Justice issued a rule requiring
+state and local government websites and apps, including public universities like this one, to meet WCAG
+2.1. Four days before the first deadline in April 2026, it pushed the dates back a year, to April 2027
+for large entities and April 2028 for smaller ones. The standard itself did not change.<sup class="cite"><a href="#src-8" aria-label="Source 8">8</a></sup> In May 2026
+the National Federation of the Blind sued to undo the extension, and as of October 2026 the court had not
+ruled.<sup class="cite"><a href="#src-8" aria-label="Source 8">8</a></sup> In Europe, the European Accessibility Act began applying in June 2025 to many private-sector
+products and services, including websites, apps, and self-service machines.</p>
 
-<ul>
-<li><strong>Government websites.</strong> In 2024 the Department of Justice issued a rule requiring state and
-local government websites and apps, including public universities like this one, to meet WCAG 2.1. Four
-days before the first deadline in April 2026, it pushed the dates back a year, to April 2027 for large
-entities and April 2028 for smaller ones. The standard itself did not change.<sup class="cite"><a href="#src-11" aria-label="Source 11">11</a></sup></li>
-<li><strong>The challenge to the delay.</strong> In May 2026 the National Federation of the Blind sued to undo
-the extension. As of October 2026 the court had not ruled.<sup class="cite"><a href="#src-11" aria-label="Source 11">11</a></sup></li>
-<li><strong>Europe.</strong> In June 2025 the European Accessibility Act began applying to many private-sector
-products and services, including websites, apps, and self-service machines.</li>
-</ul>
 
 <p>And Sonos shows the market's version of the same lesson. A company that went backwards on accessibility in
 2024 lost customers, revenue, and a chief executive without any lawsuit at all. The direction is not in
@@ -941,13 +1324,13 @@ the standard is before anybody has to ask.</p>
 
 <p>Strip the Robles case down to what you can reuse in any company. Four decisions came up in it, and each one is a decision you will be in the room for.</p>
 
-<p><strong>The interface is the system, as far as the customer and the court are concerned.</strong> The Palm Beach machines counted votes correctly, the Sonos speakers played music correctly, and Domino's systems took orders correctly, and in every one the interface decided who could actually use it. When you review a system, review it from the outside, as the person who has to use it, because that is the only part they will ever see.</p>
+<p><strong>The interface is the system, as far as the customer and the court are concerned.</strong> Citibank&rsquo;s payment system moved money exactly as instructed, the Sonos speakers played music correctly, and Domino's systems took orders correctly, and in every one the interface decided who could actually use it. When you review a system, review it from the outside, as the person who has to use it, because that is the only part they will ever see.</p>
 
 <p><strong>Write accessibility down as a requirement, not a feature.</strong> Sonos said its app had been tested with a screen reader and still shipped one blind users could barely operate, because full screen-reader support was never treated as a release requirement. A feature can be dropped in a sprint. A requirement has an owner and a test. Which one accessibility is at your company is a decision, and after Robles it is a legal one.</p>
 
 <p><strong>Whether you build, buy, or subscribe, you answer for what customers see.</strong> Domino's built its own ordering system, so the gap was its own. But buying would not have shifted the duty: the company that puts software in front of customers answers for what it does, whoever wrote the code. That is why the accessibility line belongs in every requirements list and every vendor demo.</p>
 
-<p><strong>Ask who the system forgets.</strong> Every one of the cases in this chapter is about a user the designers never pictured: a voter who could not follow the layout, a blind customer, an employee stuck with the tools the company chose. That question costs nothing to ask before launch and a great deal to answer after, and it is the manager's question, because the developers are building what they were told.</p>
+<p><strong>Ask who the system forgets.</strong> Every one of the cases in this chapter is about a user the designers never pictured: a bank reviewer reading a warning that never said how much, a blind customer, an employee stuck with the tools the company chose. That question costs nothing to ask before launch and a great deal to answer after, and it is the manager's question, because the developers are building what they were told.</p>
 
 <h2 id="other"><span class="num">5</span>The downside: who software forgets</h2>
 
@@ -969,9 +1352,10 @@ chosen, and who has to live with it?</em></p>
 <div class="takeaways"><span class="obj-tag">Key takeaways</span>
 <ul>
 <li>The interface is the part of the system that decides who gets to be a customer. Everything behind it can work and the front door can still be closed.</li>
-<li>Accessibility is usability's widest circle, and the WCAG guidance was freely available the whole time Domino's argued there were no rules.</li>
-<li>Build your differentiator; buy or subscribe to your commodities. Custom-building a commodity buys you no advantage and all the maintenance.</li>
-<li>Write the requirements before the demo, or the demo will write them for you. Then pilot with real users doing real tasks.</li>
+<li>Almost all software is built from other people's parts. Open source is free to download and not free to own.</li>
+<li>AI makes writing code cheaper. It does not make owning code cheaper, and the years of upkeep are where the cost lives.</li>
+<li>Test with real people doing real tasks, and make sure some of them are unlike the people who built it.</li>
+<li>Write the requirements before the demo, cost the whole life of the system, and own only what customers choose you for.</li>
 <li>"There are no rules for this yet" is one of the most expensive sentences in business. The law caught up, unevenly, and the private suits never paused.</li>
 </ul>
 </div>
@@ -981,16 +1365,25 @@ chosen, and who has to live with it?</em></p>
 <dl class="vocab">
 <div><dt>System vs. application software</dt><dd>What runs the machine vs. what does the business's work.</dd></div>
 <div><dt>Custom / packaged / SaaS</dt><dd>Built for you, bought off the shelf, or rented by subscription on the vendor's computers.</dd></div>
+<div><dt>Open source vs. proprietary</dt><dd>Code published for anyone to use and change vs. code kept private, with only the right to run it.</dd></div>
+<div><dt>License</dt><dd>The legal terms that say what you may do with a piece of software, open source included.</dd></div>
+<div><dt>Low-code</dt><dd>Tools that let non-programmers build simple applications from ready-made pieces.</dd></div>
+<div><dt>AI coding assistant</dt><dd>A tool that writes code from a plain-language description; cheaper writing, not cheaper owning.</dd></div>
+<div><dt>Technical debt</dt><dd>Work skipped now that has to be paid back later, usually with interest.</dd></div>
+<div><dt>API</dt><dd>Application programming interface: the published requests one program can make of another.</dd></div>
+<div><dt>User experience (UX) / user interface (UI)</dt><dd>Everything a person experiences using a product / the screens and controls they touch.</dd></div>
+<div><dt>Heuristic evaluation</dt><dd>An expert check of an interface against a short list of principles, such as Nielsen's ten.</dd></div>
+<div><dt>Dark pattern</dt><dd>An interface designed to push people into choices they would not otherwise make.</dd></div>
 <div><dt>Usability</dt><dd>Measurable properties of an interface: learnability, efficiency, error tolerance.</dd></div>
 <div><dt>Accessibility</dt><dd>Design that works for people with disabilities; usability's widest circle.</dd></div>
 <div><dt>Screen reader</dt><dd>Assistive software that speaks an interface aloud, if the interface was built with the structure it needs.</dd></div>
 <div><dt>WCAG</dt><dd>The Web Content Accessibility Guidelines: perceivable, operable, understandable, robust; the working legal standard.</dd></div>
 <div><dt>Curb-cut effect</dt><dd>Features built for disability that end up serving everyone.</dd></div>
-<div><dt>Public accommodation nexus</dt><dd>The Ninth Circuit's rule: the ADA reaches a site or app that connects customers to a physical business's goods and services.</dd></div>
 <div><dt>Requirements / RFP</dt><dd>What the software must do, written down before any vendor demo can write it for you.</dd></div>
-<div><dt>Scripted demo</dt><dd>Vendors performing your tasks on your data, not their rehearsed path.</dd></div>
-<div><dt>Total cost of ownership</dt><dd>License plus implementation, integration, training, support, and the cost of leaving.</dd></div>
-<div><dt>Build vs. buy vs. subscribe</dt><dd>Own your differentiator; rent your commodities.</dd></div>
+<div><dt>Scripted demo / pilot</dt><dd>Vendors performing your tasks on your data / real users trying the system on real work before you sign.</dd></div>
+<div><dt>Total cost of ownership</dt><dd>Everything a system costs over its life: license plus setup, integration, data, training, support, and leaving.</dd></div>
+<div><dt>Commodity vs. differentiator</dt><dd>What every business does the same way vs. what customers choose you for. Rent the first; own the second.</dd></div>
+<div><dt>Nexus (public accommodation)</dt><dd>The Ninth Circuit's rule: the ADA reaches a site or app that connects customers to a physical business's goods and services.</dd></div>
 </dl>
 
 <div class="ailight g">
@@ -1012,18 +1405,18 @@ strongest opinion about, and be ready to say it first.</p>
   follow, and Mr. Robles could have phoned. Take the strongest of the three and make its best case, then
   explain what the court said and whether you find it convincing. <span class="tag">Analyze</span></li>
 
-  <li>Pick an app you use daily and score it on the three usability properties from section 1, with a
+  <li>Pick an app you use daily and score it on the three usability properties from section 2.2, with a
   number and a reason for each. Then say what it would take to score it with a screen reader, and
   whether you think anyone at the company has. <span class="tag">Apply</span></li>
 
-  <li>Sonos removed screen-reader support and shipped; Domino's never added it. One lost a chief
-  executive to the market, the other lost in court. Explain why a company with a testing process still
-  ships an interface that fails some of its users, and name the decision that would have to change.
-  <span class="tag">Systems</span></li>
+  <li>Citibank had a three-person review and Sonos had a testing process, and both shipped the mistake
+  anyway. Explain why review and testing failed in each case, and name the one change to the screen or
+  the process that would have caught it. <span class="tag">Systems</span></li>
 
-  <li>Write the accessibility line for Cascadia's next software requirements document, and describe
-  exactly how you would verify it in a vendor demo. Then say what you would do if the best system on
-  every other criterion failed that line. <span class="tag">Apply</span></li>
+  <li>A manager at Cascadia says that with AI, the co-op can build its own staff scheduling system in a
+  week instead of paying a monthly subscription. Using total cost of ownership and the differentiator
+  test, write her a short answer. Then name the one situation in which you would tell her to go ahead.
+  <span class="tag">Apply</span></li>
 
   <li>"There are no rules for this yet" was Domino's defense in 2016 and it lost. Is it reasonable to
   hold a business to a standard that no regulator had written down? Argue one side, state the strongest
@@ -1034,34 +1427,41 @@ strongest opinion about, and be ready to say it first.</p>
 <h2 id="lab"><span class="num">8</span>From lecture to lab</h2>
 
 <div class="callout callout-bridge"><strong>Week 9</strong>
-<p>This chapter says usability is a set of measurable properties and accessibility is its widest
-circle. This week's lab hands you the instrument professionals use to measure them: the ten usability
+<p>This chapter says UX starts with watching people, and that usability is a set of properties you can
+measure. This week's lab hands you the instrument professionals use first: Nielsen's ten usability
 heuristics. You will learn all ten, go deep on three, find each one working or failing in a real
-interface, and write the short evaluation report a UX designer produces on the first day of a project.</p>
-<p>Keep mini-case 2 beside you while you do it. Sonos had a testing process. The question is not
-whether you tested but who you tested with, doing what, and whether anybody had the authority to say
-the launch date moves.</p>
+interface, and write the short evaluation report a UX designer produces on the first day of a
+project.</p>
+<p>Keep the two mini-cases beside you while you do it. The Citibank screen broke at least two of the ten
+heuristics, and it is good practice to name them before you start on your own interface. Sonos had a
+testing process. The question is not whether you tested but who you tested with, doing what, and whether
+anybody had the authority to say the launch date moves.</p>
 <p><a class="lablink" href="lab9-ux.html">Go to Lab 9: UX Design &#8594;</a></p>
 </div>
 
 <details class="srcbox">
 <summary><h2 id="sources"><span class="num">9</span>Sources and further reading</h2></summary>
 <ul class="sources">
-<li id="src-1"><span class="srcnum">1</span> Christopher B. Califf, Saonee Sarker and Suprateek Sarker, &ldquo;The Bright and Dark Sides of Technostress: A Mixed-Methods Study Involving Healthcare IT,&rdquo; <em>MIS Quarterly</em> 44(2), 2020, pp. 809&ndash;856, for the two kinds of technology stress. Section 1.2.</li>
-<li id="src-2"><span class="srcnum">2</span> World Wide Web Consortium, Web Accessibility Initiative, <a href="https://www.w3.org/WAI/gettingstarted/Overview.html" target="_blank" rel="noopener">accessibility overview</a> and the <a href="https://www.w3.org/TR/WCAG20/" target="_blank" rel="noopener">Web Content Accessibility Guidelines</a>, for the four principles. The guidelines are readable and worth an hour. Section 1.3.</li>
-<li id="src-3"><span class="srcnum">3</span> World Health Organization, <em>Disability</em> fact sheet and <em>Global Report on Health Equity for Persons with Disabilities</em> (2022), for about 1.3 billion people, roughly one in six, living with significant disability. Section 1.3.</li>
-<li id="src-4"><span class="srcnum">4</span> Jonathan N. Wand and others, <a href="https://www.jsekhon.com/papers/butterfly.pdf" target="_blank" rel="noopener">&ldquo;The Butterfly Did It: The Aberrant Vote for Buchanan in Palm Beach County, Florida&rdquo;</a>, <em>American Political Science Review</em>, December 2001, for the design, its purpose (larger type), and Buchanan&rsquo;s 3,407 votes; and <a href="https://www.cnn.com/TRANSCRIPTS/0011/09/tl.00.html" target="_blank" rel="noopener">CNN, 9 November 2000</a>, for the more than 19,000 discarded ballots. Exactly how many votes were misdirected is contested; the design and the margin are not. Mini-case 1.</li>
-<li id="src-5"><span class="srcnum">5</span> The Register, <a href="https://www.theregister.com/2024/05/20/sonos_app_update_borks_users" target="_blank" rel="noopener">20 May 2024</a>, for the missing features and blind users&rsquo; complaints. Mini-case 2.</li>
-<li id="src-6"><span class="srcnum">6</span> National Federation of the Blind, <a href="https://nfb.org/node/15765" target="_blank" rel="noopener">&ldquo;National Federation of the Blind Urges Sonos to Restore Accessibility,&rdquo; 7 May 2024</a>; and the Sonos community forum, <a href="https://en.community.sonos.com/controllers-music-services-228995/redesigned-sonos-app-and-compatibility-with-voice-over-screen-reader-in-ios-6891799?postid=16716207" target="_blank" rel="noopener">April and May 2024</a>, for the pre-launch statement that the app had been tested with VoiceOver. Mini-case 2.</li>
-<li id="src-7"><span class="srcnum">7</span> Reuters, via <a href="https://arc-dev.theglobeandmail.com/business/technology/article-speaker-maker-sonos-unveils-broad-series-of-reforms-after-app-release" target="_blank" rel="noopener">The Globe and Mail, October 2024</a>, for the CEO&rsquo;s &ldquo;big bang&rdquo; explanation, the $20 to $30 million cost, the August job cuts, and the ombudsperson; and Sonos, <a href="https://www.sec.gov/Archives/edgar/data/1314727/000131472725000026/sono-20241228.htm" target="_blank" rel="noopener">Form 10-Q for the quarter ended 28 December 2024</a>, for the CEO&rsquo;s departure on 13 January 2025. The 16 percent quarterly sales decline is from contemporary reporting on Sonos&rsquo;s fourth fiscal quarter of 2024. Mini-case 2.</li>
-<li id="src-8"><span class="srcnum">8</span> U.S. District Court for the Central District of California, <a href="https://www.bclplaw.com/a/web/251042/Dominos-MSJ-Order.pdf" target="_blank" rel="noopener">order granting summary judgment, 23 June 2021</a>, for the filing date, the 2017 stay, the attempts beginning July 2015, the order to meet WCAG, and the $4,000 under California&rsquo;s Unruh Act; and the <a href="https://www.microassist.com/digital-accessibility/dominos-pizza-guillermo-robles/" target="_blank" rel="noopener">case timeline</a> for the June 2022 notice of settlement on undisclosed terms. Sections 4 and 4.4.</li>
-<li id="src-9"><span class="srcnum">9</span> <em>Robles v. Domino&rsquo;s Pizza, LLC</em>, 913 F.3d 898 (9th Cir. 2019), <a href="https://www.leagle.com/decision/infco20190115201" target="_blank" rel="noopener">opinion of 15 January 2019</a>, for the nexus holding and the fair-notice reasoning; and the Supreme Court&rsquo;s <a href="https://www.supremecourt.gov/docket/docketfiles/html/public/18-1539.html" target="_blank" rel="noopener">docket in No. 18-1539</a>, for the denial of review on 7 October 2019. Section 4.3.</li>
-<li id="src-10"><span class="srcnum">10</span> Seyfarth Shaw, <a href="https://www.adatitleiii.com/2026/03/federal-court-website-accessibility-lawsuit-filings-bounce-back-in-2025/" target="_blank" rel="noopener">&ldquo;Federal Court Website Accessibility Lawsuit Filings Bounce Back in 2025,&rdquo; March 2026</a>, for 3,117 federal website-accessibility suits in 2025, up 27 percent. Section 4.6.</li>
-<li id="src-11"><span class="srcnum">11</span> <a href="https://www.consumerfinancialserviceslawmonitor.com/2026/04/doj-extends-title-ii-ada-web-accessibility-rule-compliance-deadlines-for-state-and-local-governments/" target="_blank" rel="noopener">Consumer Financial Services Law Monitor, April 2026</a>, on the Justice Department&rsquo;s interim final rule moving the Title II dates to 26 April 2027 and 26 April 2028; and <a href="https://titleii.org/title-ii-updates" target="_blank" rel="noopener">TitleII.org, October 2026</a>, on the National Federation of the Blind&rsquo;s May 2026 suit, unresolved as of 12 October 2026. Recheck before teaching. Section 4.6.</li>
+<li id="src-1"><span class="srcnum">1</span> Black Duck, <a href="https://www.blackduck.com/ossra" target="_blank" rel="noopener">2026 Open Source Security and Risk Analysis report</a>, March 2026, for open source in 98 percent of 947 audited commercial codebases, about 1,180 open source components per application on average, and license conflicts in 68 percent. Black Duck sells the auditing tools the report is based on. Section 1.3.</li>
+<li id="src-2"><span class="srcnum">2</span> Sida Peng, Eirini Kalliamvakou, Peter Cihon and Mert Demirer, <a href="https://arxiv.org/abs/2302.06590v1" target="_blank" rel="noopener">&ldquo;The Impact of AI on Developer Productivity: Evidence from GitHub Copilot,&rdquo;</a> February 2023, for the 55.8 percent result on a set task; two authors were GitHub researchers. METR, <a href="https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/" target="_blank" rel="noopener">&ldquo;Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity,&rdquo;</a> July 2025, for the 19 percent slowdown and the developers&rsquo; estimate of a 20 percent speedup; and METR, <a href="https://metr.org/blog/2026-02-24-uplift-update/" target="_blank" rel="noopener">&ldquo;We are Changing our Developer Productivity Experiment Design,&rdquo;</a> 24 February 2026, for its view that developers were probably faster by early 2026 and that refusals to work without AI made the new data unreliable. A fast-moving question; recheck each term. Section 1.4.</li>
+<li id="src-3"><span class="srcnum">3</span> Jakob Nielsen, <a href="https://nngroup.com/articles/why-you-only-need-to-test-with-5-users/" target="_blank" rel="noopener">&ldquo;Why You Only Need to Test with 5 Users,&rdquo;</a> Nielsen Norman Group, 2000, for testing with about five users per group of similar users and running several small rounds; and <a href="https://www.nngroup.com/articles/ten-usability-heuristics/" target="_blank" rel="noopener">&ldquo;10 Usability Heuristics for User Interface Design,&rdquo;</a> Nielsen Norman Group, list dating from 1994. Section 2.1 and Lab 9.</li>
+<li id="src-4"><span class="srcnum">4</span> Federal Trade Commission, <a href="https://www.ftc.gov/news-events/news/press-releases/2025/09/ftc-secures-historic-25-billion-settlement-against-amazon" target="_blank" rel="noopener">&ldquo;FTC Secures Historic $2.5 Billion Settlement Against Amazon,&rdquo;</a> 25 September 2025, for the allegations, the &ldquo;Iliad&rdquo; cancellation process, the &ldquo;No, I don&rsquo;t want Free Shipping&rdquo; button, the $1 billion penalty and $1.5 billion in refunds. Amazon did not admit wrongdoing, as reported by Engadget and others the same day. Section 2.1.</li>
+<li id="src-5"><span class="srcnum">5</span> Christopher B. Califf, Saonee Sarker and Suprateek Sarker, &ldquo;The Bright and Dark Sides of Technostress: A Mixed-Methods Study Involving Healthcare IT,&rdquo; <em>MIS Quarterly</em> 44(2), 2020, pp. 809&ndash;856, for the two kinds of technology stress. Section 2.2.</li>
+<li id="src-6"><span class="srcnum">6</span> World Wide Web Consortium, Web Accessibility Initiative, <a href="https://www.w3.org/WAI/gettingstarted/Overview.html" target="_blank" rel="noopener">accessibility overview</a> and the <a href="https://www.w3.org/TR/WCAG20/" target="_blank" rel="noopener">Web Content Accessibility Guidelines</a>, for the four principles. The guidelines are readable and worth an hour. Section 2.3.</li>
+<li id="src-7"><span class="srcnum">7</span> World Health Organization, <em>Disability</em> fact sheet and <em>Global Report on Health Equity for Persons with Disabilities</em> (2022), for about 1.3 billion people, roughly one in six, living with significant disability. Section 2.3.</li>
+<li id="src-8"><span class="srcnum">8</span> <a href="https://www.consumerfinancialserviceslawmonitor.com/2026/04/doj-extends-title-ii-ada-web-accessibility-rule-compliance-deadlines-for-state-and-local-governments/" target="_blank" rel="noopener">Consumer Financial Services Law Monitor, April 2026</a>, on the Justice Department&rsquo;s interim final rule moving the Title II dates to 26 April 2027 and 26 April 2028; and <a href="https://titleii.org/title-ii-updates" target="_blank" rel="noopener">TitleII.org, October 2026</a>, on the National Federation of the Blind&rsquo;s May 2026 suit, unresolved as of 12 October 2026. Chapter 4&rsquo;s sources link the Federal Register entries themselves. Recheck before teaching. Sections 2.3 and 4.6.</li>
+<li id="src-9"><span class="srcnum">9</span> U.S. District Court for the Southern District of New York, <em>In re Citibank August 11, 2020 Wire Transfers</em>, <a href="https://nysd.uscourts.gov/sites/default/files/2021-02/20cv6539 Citibank Opinion.pdf" target="_blank" rel="noopener">findings of fact and conclusions of law, 16 February 2021</a>, for the $7.8 million interest payment, the wash account, Flexcube&rsquo;s default, the three fields in the manual, the six-eye review, the warning text, the $893,944,008.52 sent to 315 lenders, and the ruling for the lenders; and the Second Circuit&rsquo;s opinion in No. 21-487, <a href="https://www.kslaw.com/attachments/000/009/947/original/Citibank_v._Brigade.pdf" target="_blank" rel="noopener">decided 8 September 2022</a> (copy hosted by King &amp; Spalding), for the reversal. The drawing in section 3.1 is a simplification of the court&rsquo;s description, not the real screen. Mini-case 1.</li>
+<li id="src-10"><span class="srcnum">10</span> The Register, <a href="https://www.theregister.com/2024/05/20/sonos_app_update_borks_users" target="_blank" rel="noopener">20 May 2024</a>, for the missing features and blind users&rsquo; complaints. Mini-case 2.</li>
+<li id="src-11"><span class="srcnum">11</span> National Federation of the Blind, <a href="https://nfb.org/node/15765" target="_blank" rel="noopener">&ldquo;National Federation of the Blind Urges Sonos to Restore Accessibility,&rdquo; 7 May 2024</a>; and the Sonos community forum, <a href="https://en.community.sonos.com/controllers-music-services-228995/redesigned-sonos-app-and-compatibility-with-voice-over-screen-reader-in-ios-6891799?postid=16716207" target="_blank" rel="noopener">April and May 2024</a>, for the pre-launch statement that the app had been tested with VoiceOver. Mini-case 2.</li>
+<li id="src-12"><span class="srcnum">12</span> Reuters, via <a href="https://arc-dev.theglobeandmail.com/business/technology/article-speaker-maker-sonos-unveils-broad-series-of-reforms-after-app-release" target="_blank" rel="noopener">The Globe and Mail, October 2024</a>, for the CEO&rsquo;s &ldquo;big bang&rdquo; explanation, the $20 to $30 million cost, the August job cuts, and the ombudsperson; and Sonos, <a href="https://www.sec.gov/Archives/edgar/data/1314727/000131472725000026/sono-20241228.htm" target="_blank" rel="noopener">Form 10-Q for the quarter ended 28 December 2024</a>, for the CEO&rsquo;s departure on 13 January 2025. The 16 percent quarterly sales decline is from contemporary reporting on Sonos&rsquo;s fourth fiscal quarter of 2024. Mini-case 2.</li>
+<li id="src-13"><span class="srcnum">13</span> U.S. District Court for the Central District of California, <a href="https://www.bclplaw.com/a/web/251042/Dominos-MSJ-Order.pdf" target="_blank" rel="noopener">order granting summary judgment, 23 June 2021</a>, for the filing date, the 2017 stay, the attempts beginning July 2015, the order to meet WCAG, and the $4,000 under California&rsquo;s Unruh Act; and the <a href="https://www.microassist.com/digital-accessibility/dominos-pizza-guillermo-robles/" target="_blank" rel="noopener">case timeline</a> for the June 2022 notice of settlement on undisclosed terms. Section 4 and the timeline in 4.4.</li>
+<li id="src-14"><span class="srcnum">14</span> <em>Robles v. Domino&rsquo;s Pizza, LLC</em>, 913 F.3d 898 (9th Cir. 2019), <a href="https://www.leagle.com/decision/infco20190115201" target="_blank" rel="noopener">opinion of 15 January 2019</a>, for the nexus holding and the fair-notice reasoning; and the Supreme Court&rsquo;s <a href="https://www.supremecourt.gov/docket/docketfiles/html/public/18-1539.html" target="_blank" rel="noopener">docket in No. 18-1539</a>, for the denial of review on 7 October 2019. Section 4.3.</li>
+<li id="src-15"><span class="srcnum">15</span> Seyfarth Shaw, <a href="https://www.adatitleiii.com/2026/03/federal-court-website-accessibility-lawsuit-filings-bounce-back-in-2025/" target="_blank" rel="noopener">&ldquo;Federal Court Website Accessibility Lawsuit Filings Bounce Back in 2025,&rdquo; March 2026</a>, for 3,117 federal website-accessibility suits in 2025, up 27 percent. Section 4.6.</li>
 <li>A number to avoid. Many secondary accounts say fixing the site would have cost Domino&rsquo;s about $38,000. That figure is not in the court filings and appears to come from a 2019 social media post. Domino&rsquo;s legal spending, its repair costs, and the settlement terms are all undisclosed. Section 4.4 says so deliberately; if a student brings the figure to class, this is the source discussion to have.</li>
 <li>European Accessibility Act, applying from 28 June 2025, for the European requirements in section 4.6.</li>
-<li>Images. Curb cut in Colchester, Vermont, photograph by Ezekielf, <a href="https://commons.wikimedia.org/wiki/File:Long_gradual_sidewalk_ramp_to_tactile_paving_and_curb_cut_in_Colchester_VT.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC0. 2000 Palm Beach County ballot, <a href="https://commons.wikimedia.org/wiki/File:Butterfly_Ballot,_Florida_2000_(large).jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, public domain. Sonos One speaker, photograph by Ajay Suresh, <a href="https://commons.wikimedia.org/wiki/File:Sonos_One_Speaker_(49671374307).jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY 2.0. The screen-reader diagram is original to this book.</li>
-<li><strong>Verification note, 29 October 2026 (rebuild).</strong> Restructured to match Chapter 7 and checked against the entries above; the Robles history, the ballot, and the Sonos figures have now been re-searched rather than taken from memory. Corrections: section 4.7 said Domino&rsquo;s &ldquo;bought and configured its way into&rdquo; the failure, which contradicted section 1.1; Domino&rsquo;s built its own system, and the takeaway now says so. The district court stayed the case in March 2017 rather than dismissing it outright. Section 4.1 pointed to Chapter 12 for accessibility requirements; it now points to section 2.1. The lab bridge mentioned a nonexistent &ldquo;mini-case 3.&rdquo; The Sonos check-yourself answer said screen-reader support was missing from the tests; Sonos in fact said it had tested with VoiceOver, so the answer now asks what the tests asked. The sentence on AI hiring tools is now dated to 2023; check its current status against Chapter 12 before teaching. Repeated lines in sections 4.3 and 4.5 were removed, and duplicate source entries were merged. New: the photographs, the bulleted usability, WCAG, and selection steps, &ldquo;RFP&rdquo; in the body, Sonos&rsquo;s own &ldquo;big bang&rdquo; explanation, the National Federation of the Blind&rsquo;s launch-day statement, the 2025 suit count from Seyfarth Shaw, and the status of the NFB challenge to the Title II delay.</li>
+<li>Callbacks without new sources. The CrowdStrike outage (section 1.1) is sourced in Chapter 5, the Equifax breach and Apache Struts (sections 1.3 and 1.6) in Chapter 10, and Domino&rsquo;s AnyWare (section 1.5) in Chapter 4.</li>
+<li>Images. Curb cut in Colchester, Vermont, photograph by Ezekielf, <a href="https://commons.wikimedia.org/wiki/File:Long_gradual_sidewalk_ramp_to_tactile_paving_and_curb_cut_in_Colchester_VT.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC0. Sonos One speaker, photograph by Ajay Suresh, <a href="https://commons.wikimedia.org/wiki/File:Sonos_One_Speaker_(49671374307).jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY 2.0. All diagrams are original to this book; the TCO shares in section 2.5 are illustrative, and the payment screen in section 3.1 is drawn from the court&rsquo;s description.</li>
+<li><strong>Verification note, 10 November 2026 (rebuild to the Chapter 6 model).</strong> Sections 1 and 2 were rebuilt around more concepts taught in prose, with six new diagrams across the chapter. New material, each checked against the entry cited: open source and licensing (Black Duck 2026), AI-assisted building (Peng et al. 2023; METR 2025 and its February 2026 update, which declined to publish a new estimate), APIs and updates, UX and heuristic evaluation (Nielsen Norman Group), dark patterns (FTC v. Amazon settlement, 2025), total cost of ownership, and build, buy, or subscribe after AI. WWU&rsquo;s 26 April 2027 WCAG deadline is now stated in section 2.3. The Palm Beach ballot mini-case was cut and replaced with Citibank&rsquo;s 2020 wire error, sourced to the district court&rsquo;s findings and the Second Circuit&rsquo;s reversal. The Robles history, the Sonos figures, and the Title II status are unchanged from the 29 October rebuild. Not confirmed: whether the Title II litigation has moved since 12 October 2026.</li>
 </ul>
 </details>
 
