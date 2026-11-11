@@ -415,23 +415,22 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 <main class="chapwrap">
 
 <header class="chaphead">
-  <p class="eyebrow">Chapter 13 &middot; Cloud Computing and What Computing Costs</p>
-  <h1>The Cloud: Renting Computers, and the Bill <b>the Planet</b> Gets</h1>
+  <p class="eyebrow">Chapter 13 &middot; The Cloud</p>
+  <h1>The Cloud: Why Netflix Runs on <b>Its Rival's Computers</b></h1>
   <p class="anchor">In August 2008 a database corruption stopped Netflix shipping DVDs for three days,
   and the company drew a radical conclusion: stop owning computers. Seven years later it shut its last
   data center and ran one of the world's largest services on machines rented from its fiercest
-  competitor. This chapter is about what the cloud actually is, why renting won, and what Netflix built anyway. It
-also answers the question Chapter 12 left you holding: when computing feels free, who is paying, and
-in what currency?</p>
-  <div class="concepts"><span class="clabel">Key concepts</span><span>IaaS, PaaS, SaaS</span><span>Capex to opex</span><span>Elasticity</span><span>Content delivery networks</span><span>Concentration risk and lock-in</span><span>FinOps</span><span>The physical bill</span></div>
+  competitor. This chapter is about the foundation almost every business now runs on, and about what it
+  means to build a company on something you do not own.</p>
+  <div class="concepts"><span class="clabel">Key concepts</span><span>Cloud as a utility</span><span>IaaS, PaaS, SaaS</span><span>Capex to opex</span><span>Elasticity</span><span>Data ownership</span><span>Concentration risk</span><span>Vendor lock-in</span><span>Service-level agreements</span></div>
 </header>
 
 <div class="toc"><strong>Contents</strong>
-<a href="#what"><span class="tnum">1.</span> What the cloud actually is</a>
-<a href="#risk"><span class="tnum">2.</span> When the cloud blinks, and the bill the planet gets</a>
-<a href="#cases"><span class="tnum">3.</span> Two answers to where the computers are</a>
+<a href="#what"><span class="tnum">1.</span> The foundation everything else runs on</a>
+<a href="#risk"><span class="tnum">2.</span> Depending on a foundation you don't own</a>
+<a href="#cases"><span class="tnum">3.</span> Three answers to where the computers are</a>
 <a href="#netflix"><span class="tnum">4.</span> Main case. Netflix: seven years to zero data centers</a>
-<a href="#other"><span class="tnum">5.</span> The downside: the cloud's neighbors, and who does this work</a>
+<a href="#other"><span class="tnum">5.</span> The downside: the cloud's neighbors</a>
 <a href="#vocab"><span class="tnum">6.</span> Vocabulary</a>
 <a href="#discussion"><span class="tnum">7.</span> Discussion questions</a>
 <a href="#lab"><span class="tnum">8.</span> From lecture to lab</a>
@@ -440,131 +439,219 @@ in what currency?</p>
 </div>
 <p class="printbox"><span>Wanna go analog?</span><button type="button" onclick="window.print()" aria-label="Print this page or save it as a PDF">&#9113;&nbsp; Print here</button><span>or save it as a PDF; the navigation drops out</span></p>
 
-<p class="lede">Ask where, physically, the last thing you streamed was. Almost nobody knows. By the end
-of this chapter you will, down to the box inside your internet provider, and you will know what it
-cost to put it there.</p>
+<p class="lede">Almost every system in this book runs on rented computers in somebody else's building.
+This chapter treats that as what it has become, a foundation like electricity, and asks the manager's
+question about it: not whether to depend on the cloud, but how to depend on it wisely.</p>
 
 <div class="objectives"><span class="obj-tag">Learning objectives</span>
 <p>By the end of this chapter you should be able to:</p>
 <ol>
-<li>Explain what the cloud is and distinguish infrastructure, platform, and software as a service by who manages what.</li>
-<li>Explain capex to opex, elasticity, and what renting transfers and what it does not.</li>
-<li>Describe concentration risk and lock-in in the cloud, and what a provider's bad morning costs a tenant.</li>
-<li>State what computing costs the planet, using the IEA figures, and who pays for it.</li>
+<li>Explain what the cloud is, and why it now works like a utility for business.</li>
+<li>Distinguish IaaS, PaaS, and SaaS by what you still manage, and explain capex to opex and elasticity.</li>
+<li>Explain what renting does not move: ownership of the data, responsibility for it, and accountability.</li>
+<li>Describe concentration risk, vendor lock-in, and what a service-level agreement actually promises.</li>
 <li>Explain why Netflix rented nearly everything from a competitor and built the one piece it did not.</li>
+<li>Describe what data centers cost the communities around them, and who decides how that is paid.</li>
 </ol>
 </div>
 
-<h2 id="what"><span class="num">1</span>What the cloud actually is</h2>
+<h2 id="what"><span class="num">1</span>The foundation everything else runs on</h2>
 
-<p>This is the last chapter, and it returns to the first component. Chapter 1 listed hardware first and then spent twelve chapters on the other four, because hardware
-was the part you could point at. (You will not be asked to configure a server in your career. You
-will be asked to approve one, and this chapter is about that decision.) This
-chapter is about what happened when it stopped being something you owned.</p>
+<p>This is the last chapter, and it returns to the first component. Chapter 1 listed hardware first and
+then spent twelve chapters on the other four, because hardware was the part you could point at. You will
+not be asked to set up a server in your career. You will be asked to approve the decision to rent
+one, and to answer for what happens next. This chapter is about that decision.</p>
 
-<h3>1.1 One component moves, four stay</h3>
+<h3>1.1 What the cloud is</h3>
 
-<p>Read it with the five components in view, because the cloud moves exactly one of them and leaves
-the other four exactly where they were. The <strong>hardware</strong> becomes somebody else's, rented by
-the hour. The <strong>data</strong> is still yours, and so is every obligation attached to it. The
-<strong>software</strong> above the rented layer is still yours to choose and run. The
-<strong>networks</strong> matter more, not less, because everything now travels over them. And the
+<p>Strip the marketing from the word. <strong>Cloud computing</strong> is other people's data centers,
+rented over the internet and paid for as you use them. A <strong>data center</strong> is a building full
+of computers, with the power, cooling, and security to keep them running day and night. "The cloud" is
+thousands of those buildings, run by a few very large companies, and rented out to everyone else.</p>
+
+<p>Read it with the five components in view, because the cloud moves exactly one of them. The
+<strong>hardware</strong> becomes somebody else's. The <strong>data</strong> is still yours, and so is every
+obligation attached to it. The <strong>software</strong> you choose and the <strong>networks</strong> that
+reach it matter more, not less, because everything now travels over the internet. And the
 <strong>people</strong> making the decisions have not moved at all, which is why a chapter about renting
 computers is mostly a chapter about management.</p>
 
-<p>So what is the cloud, really? Strip the marketing from the word: <strong>cloud computing</strong> is other
-people's data centers, rented over the network, usually by the hour. It comes in three layers:</p>
+<h3>1.2 How we got here: forty years of layers</h3>
 
-<ul>
-<li><strong>Infrastructure as a service (IaaS)</strong> rents raw computing: virtual machines, storage, and
-networking. You run everything above. For example, renting a server from Amazon Web Services and installing
-your own software on it.</li>
-<li><strong>Platform as a service (PaaS)</strong> rents a higher floor: databases and tools the provider runs
-for you. For example, a managed database you use without ever touching the server under it.</li>
-<li><strong>Software as a service (SaaS)</strong>, from Chapter 11, rents the finished application. For
-example, Gmail or Canvas.</li>
-</ul>
+<p>The cloud did not arrive alone. It is one layer in a stack that took about forty years to build, and
+each layer made the next one possible.</p>
 
-<p>Economically, the cloud turns <strong>capital expenditure (capex)</strong>, buying servers years ahead of
-need, into <strong>operating expenditure (opex)</strong>, paying for what you use as you use it. Technically it
-delivers <strong>elasticity</strong>: capacity that grows in minutes and, just as important, shrinks, so nobody
-pays all year for the machines that only Thanksgiving weekend needs.</p>
-<figure class="diagram" style="margin:1.8rem auto;max-width:470px">
-<svg viewBox="0 0 470 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="slT slD" style="width:100%;height:auto;font-family:var(--sans)">
-<title id="slT">Who manages what: on-premises, IaaS, PaaS, SaaS</title>
-<desc id="slD">Four columns, each a stack of the same six layers from bottom to top: hardware, networking, operating system, runtime, application, data. In the first column, on your own servers, every layer is yours. In the IaaS column the provider takes the bottom two. In PaaS the provider takes the bottom four. In SaaS the provider takes everything except the data. A stepped line marks where your responsibility stops in each column.</desc>
-<defs><marker id="sla" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--text-light)"/></marker></defs>
-<text x="74.0" y="40" text-anchor="middle" font-size="9.5" font-weight="700" fill="var(--text-dark)">ON YOUR OWN SERVERS</text>
-<rect x="22" y="52" width="104" height="28" fill="var(--magenta-pale)" stroke="var(--text-dark)" stroke-width="1"/>
-<text x="74.0" y="70" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--magenta-dark)">DATA</text>
-<rect x="22" y="82" width="104" height="28" fill="var(--magenta-pale)" stroke="var(--text-dark)" stroke-width="1"/>
-<text x="74.0" y="100" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--magenta-dark)">APPLICATION</text>
-<rect x="22" y="112" width="104" height="28" fill="var(--magenta-pale)" stroke="var(--text-dark)" stroke-width="1"/>
-<text x="74.0" y="130" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--magenta-dark)">RUNTIME</text>
-<rect x="22" y="142" width="104" height="28" fill="var(--magenta-pale)" stroke="var(--text-dark)" stroke-width="1"/>
-<text x="74.0" y="160" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--magenta-dark)">OPERATING SYSTEM</text>
-<rect x="22" y="172" width="104" height="28" fill="var(--magenta-pale)" stroke="var(--text-dark)" stroke-width="1"/>
-<text x="74.0" y="190" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--magenta-dark)">NETWORKING</text>
-<rect x="22" y="202" width="104" height="28" fill="var(--magenta-pale)" stroke="var(--text-dark)" stroke-width="1"/>
-<text x="74.0" y="220" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--magenta-dark)">HARDWARE</text>
-<text x="186.0" y="40" text-anchor="middle" font-size="9.5" font-weight="700" fill="var(--text-dark)">IaaS</text>
-<rect x="134" y="52" width="104" height="28" fill="var(--magenta-pale)" stroke="var(--text-dark)" stroke-width="1"/>
-<text x="186.0" y="70" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--magenta-dark)">DATA</text>
-<rect x="134" y="82" width="104" height="28" fill="var(--magenta-pale)" stroke="var(--text-dark)" stroke-width="1"/>
-<text x="186.0" y="100" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--magenta-dark)">APPLICATION</text>
-<rect x="134" y="112" width="104" height="28" fill="var(--magenta-pale)" stroke="var(--text-dark)" stroke-width="1"/>
-<text x="186.0" y="130" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--magenta-dark)">RUNTIME</text>
-<rect x="134" y="142" width="104" height="28" fill="var(--magenta-pale)" stroke="var(--text-dark)" stroke-width="1"/>
-<text x="186.0" y="160" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--magenta-dark)">OPERATING SYSTEM</text>
-<rect x="134" y="172" width="104" height="28" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1"/>
-<text x="186.0" y="190" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--text-light)">NETWORKING</text>
-<rect x="134" y="202" width="104" height="28" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1"/>
-<text x="186.0" y="220" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--text-light)">HARDWARE</text>
-<text x="298.0" y="40" text-anchor="middle" font-size="9.5" font-weight="700" fill="var(--text-dark)">PaaS</text>
-<rect x="246" y="52" width="104" height="28" fill="var(--magenta-pale)" stroke="var(--text-dark)" stroke-width="1"/>
-<text x="298.0" y="70" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--magenta-dark)">DATA</text>
-<rect x="246" y="82" width="104" height="28" fill="var(--magenta-pale)" stroke="var(--text-dark)" stroke-width="1"/>
-<text x="298.0" y="100" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--magenta-dark)">APPLICATION</text>
-<rect x="246" y="112" width="104" height="28" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1"/>
-<text x="298.0" y="130" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--text-light)">RUNTIME</text>
-<rect x="246" y="142" width="104" height="28" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1"/>
-<text x="298.0" y="160" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--text-light)">OPERATING SYSTEM</text>
-<rect x="246" y="172" width="104" height="28" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1"/>
-<text x="298.0" y="190" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--text-light)">NETWORKING</text>
-<rect x="246" y="202" width="104" height="28" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1"/>
-<text x="298.0" y="220" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--text-light)">HARDWARE</text>
-<text x="410.0" y="40" text-anchor="middle" font-size="9.5" font-weight="700" fill="var(--text-dark)">SaaS</text>
-<rect x="358" y="52" width="104" height="28" fill="var(--magenta-pale)" stroke="var(--text-dark)" stroke-width="1"/>
-<text x="410.0" y="70" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--magenta-dark)">DATA</text>
-<rect x="358" y="82" width="104" height="28" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1"/>
-<text x="410.0" y="100" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--text-light)">APPLICATION</text>
-<rect x="358" y="112" width="104" height="28" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1"/>
-<text x="410.0" y="130" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--text-light)">RUNTIME</text>
-<rect x="358" y="142" width="104" height="28" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1"/>
-<text x="410.0" y="160" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--text-light)">OPERATING SYSTEM</text>
-<rect x="358" y="172" width="104" height="28" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1"/>
-<text x="410.0" y="190" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--text-light)">NETWORKING</text>
-<rect x="358" y="202" width="104" height="28" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1"/>
-<text x="410.0" y="220" text-anchor="middle" font-size="8.5" font-weight="600" fill="var(--text-light)">HARDWARE</text>
-<rect x="22" y="244" width="14" height="10" fill="var(--magenta-pale)" stroke="var(--text-dark)" stroke-width="1"/><text x="42" y="253" font-size="9.5" fill="var(--text-dark)">you manage it</text>
-<rect x="142" y="244" width="14" height="10" fill="var(--off-white)" stroke="var(--text-dark)" stroke-width="1"/><text x="162" y="253" font-size="9.5" fill="var(--text-dark)">the landlord manages it</text>
-<text x="235" y="282" text-anchor="middle" font-size="11" fill="var(--text-light)">The data is yours in every column. So is the decision.</text>
+<figure class="diagram" style="margin:1.8rem auto;max-width:600px">
+<svg viewBox="0 0 600 396" xmlns="http://www.w3.org/2000/svg" role="img" style="width:100%;height:auto;font-family:var(--sans)" aria-labelledby="hsT hsD">
+<title id="hsT">Forty years of layers, from office PCs to AI agents</title>
+<desc id="hsD">Seven floors stacked like a building, oldest at the bottom. 1980s: computers at work, PCs and
+spreadsheets on office desks, so records go digital. 1990s: computers at home and the web, half of U.S.
+homes with a computer by 2000, so customers come online. 2000s: fast internet, then smartphones, so
+customers are always online. 2006 on: the cloud, computing rented by the hour, with the CIA signing on in 2013, so any firm can rent a data
+center; this floor is highlighted. 2010s: cheap data and tools to read it, so decisions run on data. Late
+2010s: AI in the background, feeds, fraud alerts and recommendations, so software starts predicting. 2022
+on, the top floor: generative AI then agents, so software writes and acts.</desc>
+<text x="100" y="22" font-size="11" font-weight="700" fill="var(--ink)">WHAT ARRIVED</text>
+<text x="590" y="22" font-size="11" font-weight="700" fill="var(--ink)" text-anchor="end">WHAT A BUSINESS COULD NOW DO</text>
+<rect x="0" y="316" width="600" height="42" fill="var(--off-white)" stroke="var(--ink)" stroke-width=".8"/><text x="10" y="342" font-size="11.5" font-weight="700" fill="var(--ink)">1980s</text><text x="100" y="334" font-size="11.5" font-weight="700" fill="var(--ink)">Computers at work</text><text x="100" y="349" font-size="10.5" fill="var(--muted)">PCs and spreadsheets reach office desks</text><text x="590" y="342" font-size="10.5" font-style="italic" fill="var(--ink)" text-anchor="end">records go digital</text>
+<rect x="0" y="270" width="600" height="42" fill="var(--off-white)" stroke="var(--ink)" stroke-width=".8"/><text x="10" y="296" font-size="11.5" font-weight="700" fill="var(--ink)">1990s</text><text x="100" y="288" font-size="11.5" font-weight="700" fill="var(--ink)">Computers at home, and the web</text><text x="100" y="303" font-size="10.5" fill="var(--muted)">half of U.S. homes have a computer by 2000</text><text x="590" y="296" font-size="10.5" font-style="italic" fill="var(--ink)" text-anchor="end">customers come online</text>
+<rect x="0" y="224" width="600" height="42" fill="var(--off-white)" stroke="var(--ink)" stroke-width=".8"/><text x="10" y="250" font-size="11.5" font-weight="700" fill="var(--ink)">2000s</text><text x="100" y="242" font-size="11.5" font-weight="700" fill="var(--ink)">Fast internet, then smartphones</text><text x="100" y="257" font-size="10.5" fill="var(--muted)">home broadband; the iPhone in 2007</text><text x="590" y="250" font-size="10.5" font-style="italic" fill="var(--ink)" text-anchor="end">customers are always online</text>
+<rect x="0" y="178" width="600" height="42" fill="var(--magenta-pale)" stroke="var(--ink)" stroke-width=".8"/><text x="10" y="204" font-size="11.5" font-weight="700" fill="var(--ink)">2006 on</text><text x="100" y="196" font-size="11.5" font-weight="700" fill="var(--ink)">The cloud</text><text x="100" y="211" font-size="10.5" fill="var(--muted)">rented by the hour; the CIA signs on in 2013</text><text x="590" y="204" font-size="10.5" font-style="italic" fill="var(--ink)" text-anchor="end">any firm can rent a data center</text>
+<rect x="0" y="132" width="600" height="42" fill="var(--off-white)" stroke="var(--ink)" stroke-width=".8"/><text x="10" y="158" font-size="11.5" font-weight="700" fill="var(--ink)">2010s</text><text x="100" y="150" font-size="11.5" font-weight="700" fill="var(--ink)">Cheap data, and tools to read it</text><text x="100" y="165" font-size="10.5" fill="var(--muted)">keep everything; analytics and dashboards</text><text x="590" y="158" font-size="10.5" font-style="italic" fill="var(--ink)" text-anchor="end">decisions run on data</text>
+<rect x="0" y="86" width="600" height="42" fill="var(--off-white)" stroke="var(--ink)" stroke-width=".8"/><text x="10" y="112" font-size="11.5" font-weight="700" fill="var(--ink)">Late 2010s</text><text x="100" y="104" font-size="11.5" font-weight="700" fill="var(--ink)">AI in the background</text><text x="100" y="119" font-size="10.5" fill="var(--muted)">feeds, fraud alerts, recommendations</text><text x="590" y="112" font-size="10.5" font-style="italic" fill="var(--ink)" text-anchor="end">software starts predicting</text>
+<rect x="0" y="40" width="600" height="42" fill="var(--magenta)" stroke="var(--ink)" stroke-width=".8"/><text x="10" y="66" font-size="11.5" font-weight="700" fill="var(--white)">2022 on</text><text x="100" y="58" font-size="11.5" font-weight="700" fill="var(--white)">Generative AI, then agents</text><text x="100" y="73" font-size="10.5" fill="var(--white)">ChatGPT in 2022; agents from 2024</text><text x="590" y="66" font-size="10.5" font-style="italic" fill="var(--white)" text-anchor="end">software writes and acts</text>
+<text x="0" y="386" font-size="11" fill="var(--muted)">Read from the bottom up. Every floor stands on the ones below it.</text>
 </svg>
-<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">
-The columns differ by where the line of responsibility sits, and the line only ever moves one way: the higher the layer you rent, the less you manage and the less you can change. What the picture also shows is what never moves. The top row is magenta in all four columns. Renting the computers outsources none of the responsibility for the data on them, or for the decisions about it.
-</figcaption>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--muted);margin-top:.55rem;line-height:1.55"><strong style="color:var(--ink)">The top floor gets the headlines. It cannot stand without the rest.</strong> Generative AI runs on rented cloud computers, the cloud depends on fast networks, and all of it runs on data that businesses have been collecting since the first office spreadsheet. The pale floor in the middle is this chapter.</figcaption>
 </figure>
 
-<p>In terms of the five components, the cloud is the hardware component becoming a utility, like power from
-a grid instead of a generator in the basement. That framing also tells you what does not change. Renting the computers outsources none of the
-responsibility for the data on them, the software above them, or the decisions about both. Chapter
-9's third-party-risk lesson already made that point in harder currency.</p>
+<p>In the 1980s, personal computers and spreadsheets reached office desks, and businesses began keeping
+their records digitally. In the 1990s computers reached homes, and the World Wide Web gave them somewhere
+to go. About 8 percent of U.S. households had a computer in 1984, and 51 percent did by 2000.<sup class="cite"><a href="#src-1" aria-label="Source 1">1</a></sup> In
+the 2000s the connection got fast, and then it got portable. Home broadband went from about 1 percent of
+U.S. adults in 2000 to roughly 60 percent by 2010,<sup class="cite"><a href="#src-2" aria-label="Source 2">2</a></sup> and the iPhone in 2007 put the internet in a
+pocket.</p>
+
+<p>Then the layers this course has been about arrived quickly. Amazon began renting computing by the hour
+in 2006, but for years large companies treated it as a tool for startups, not for anything sensitive. A
+turning point came in 2013, when the most security-conscious customer imaginable, the CIA, decided to
+rent its computing too. Mini-case 2 tells that story.
+Through the rest of the 2010s, the cloud became the default. Storing data became so cheap that companies
+stopped deciding what to keep and kept everything, which created the need for the analytics and database
+tools in Chapters 6 and 7. By the late 2010s, machine learning was at work in the background, choosing
+your feed, flagging card fraud, and ranking search results, mostly without anyone calling it AI. In
+November 2022 ChatGPT made AI something people talk to, and agents that take actions on their own
+followed from 2024.</p>
+
+<p>Each layer rests on the ones below it, and that is the sense in which the foundation for modern
+business has been laid. A manager in 2026 does not need to build any of these layers. But a manager who
+does not understand them cannot make the decisions that sit on top of them: what to rent, what data to
+keep, what to automate, and what to trust. Understanding the technology and the data is no longer a
+specialist's job. It has become part of the job of managing a business, which is the argument of this
+whole course, and this chapter is where the layers meet.</p>
+
+<h3>1.3 Computing as a utility</h3>
+
+<p>A century ago, many factories made their own electricity. Each one had a generator in the basement
+and people on staff to run it. When the electric grid arrived, buying power from a utility became cheaper
+and more reliable than making it, and within a few decades almost nobody made their own. In 2008 the
+writer Nicholas Carr, whose argument about IT you met in Chapter 3, predicted that computing would go the
+same way.<sup class="cite"><a href="#src-3" aria-label="Source 3">3</a></sup> It has.</p>
+
+<p>A <strong>utility</strong> is a service so basic that a business assumes it, like electricity, water,
+or a phone line. You plug in, you pay for what you use, and you need no expertise to benefit. That is
+what the cloud has become. A company opening today does not ask whether to use it any more than it asks
+whether to connect to the power grid. It asks how much, for what, and from whom.</p>
+
+<p>The comparison carries a warning as well as a promise. Everybody on the same grid loses power in the
+same blackout. When computing became a utility, its outages became shared too, and section 2 is about
+what that means for a business that depends on it. A utility is something you stop thinking about. That
+is the benefit, and it is also the risk.</p>
+
+<figure class="diagram" style="margin:1.8rem auto;max-width:600px">
+<svg viewBox="0 0 600 402" xmlns="http://www.w3.org/2000/svg" role="img" style="width:100%;height:auto;font-family:var(--sans)" aria-labelledby="elT elD">
+<title id="elT">Electricity and the cloud, side by side</title>
+<desc id="elD">A table comparing electricity and cloud computing row by row. Before: a generator in every
+factory basement, and a server room in every company. The switch: buying power from the grid, and renting
+computing from a cloud provider. How you pay: by the kilowatt-hour on a meter, and by the hour and the gigabyte
+on a meter. What you need to know: nothing about power plants, and nothing about data centers. Who
+supplies it: a few large utilities, and a few large cloud providers. When it fails: a blackout or an outage hits
+everyone at once. Your backup: a generator, or copies in a second region or cloud provider. The last row,
+highlighted, is where the comparison breaks: power is power and you can switch suppliers, but your data
+lives inside the cloud provider and leaving is hard.</desc>
+<text x="257" y="30" font-size="12" font-weight="700" fill="var(--ink)" text-anchor="middle">ELECTRICITY</text>
+<text x="488" y="30" font-size="12" font-weight="700" fill="var(--magenta)" text-anchor="middle">THE CLOUD</text>
+<text x="0" y="70" font-size="11" font-weight="700" fill="var(--ink)">Before</text><rect x="150" y="52" width="215" height="34" fill="var(--off-white)" stroke="var(--ink)" stroke-width=".8"/><text x="160" y="66" font-size="10.5" fill="var(--ink)">a generator in every</text><text x="160" y="80" font-size="10.5" fill="var(--ink)">factory basement</text><rect x="377" y="52" width="223" height="34" fill="var(--magenta-pale)" stroke="var(--ink)" stroke-width=".8"/><text x="387" y="66" font-size="10.5" fill="var(--ink)" font-weight="400">a server room in every</text><text x="387" y="80" font-size="10.5" fill="var(--ink)" font-weight="400">company building</text>
+<text x="0" y="110" font-size="11" font-weight="700" fill="var(--ink)">The switch</text><rect x="150" y="92" width="215" height="34" fill="var(--off-white)" stroke="var(--ink)" stroke-width=".8"/><text x="160" y="106" font-size="10.5" fill="var(--ink)">buy power from</text><text x="160" y="120" font-size="10.5" fill="var(--ink)">the grid</text><rect x="377" y="92" width="223" height="34" fill="var(--magenta-pale)" stroke="var(--ink)" stroke-width=".8"/><text x="387" y="106" font-size="10.5" fill="var(--ink)" font-weight="400">rent computing from a</text><text x="387" y="120" font-size="10.5" fill="var(--ink)" font-weight="400">cloud provider</text>
+<text x="0" y="150" font-size="11" font-weight="700" fill="var(--ink)">How you pay</text><rect x="150" y="132" width="215" height="34" fill="var(--off-white)" stroke="var(--ink)" stroke-width=".8"/><text x="160" y="146" font-size="10.5" fill="var(--ink)">by the kilowatt-hour,</text><text x="160" y="160" font-size="10.5" fill="var(--ink)">read off a meter</text><rect x="377" y="132" width="223" height="34" fill="var(--magenta-pale)" stroke="var(--ink)" stroke-width=".8"/><text x="387" y="146" font-size="10.5" fill="var(--ink)" font-weight="400">by the hour and the gigabyte,</text><text x="387" y="160" font-size="10.5" fill="var(--ink)" font-weight="400">read off a meter</text>
+<text x="0" y="190" font-size="11" font-weight="700" fill="var(--ink)">What you need to know</text><rect x="150" y="172" width="215" height="34" fill="var(--off-white)" stroke="var(--ink)" stroke-width=".8"/><text x="160" y="186" font-size="10.5" fill="var(--ink)">nothing about</text><text x="160" y="200" font-size="10.5" fill="var(--ink)">power plants</text><rect x="377" y="172" width="223" height="34" fill="var(--magenta-pale)" stroke="var(--ink)" stroke-width=".8"/><text x="387" y="186" font-size="10.5" fill="var(--ink)" font-weight="400">nothing about</text><text x="387" y="200" font-size="10.5" fill="var(--ink)" font-weight="400">data centers</text>
+<text x="0" y="230" font-size="11" font-weight="700" fill="var(--ink)">Who supplies it</text><rect x="150" y="212" width="215" height="34" fill="var(--off-white)" stroke="var(--ink)" stroke-width=".8"/><text x="160" y="226" font-size="10.5" fill="var(--ink)">a few large</text><text x="160" y="240" font-size="10.5" fill="var(--ink)">utilities</text><rect x="377" y="212" width="223" height="34" fill="var(--magenta-pale)" stroke="var(--ink)" stroke-width=".8"/><text x="387" y="226" font-size="10.5" fill="var(--ink)" font-weight="400">a few large</text><text x="387" y="240" font-size="10.5" fill="var(--ink)" font-weight="400">cloud providers</text>
+<text x="0" y="270" font-size="11" font-weight="700" fill="var(--ink)">When it fails</text><rect x="150" y="252" width="215" height="34" fill="var(--off-white)" stroke="var(--ink)" stroke-width=".8"/><text x="160" y="266" font-size="10.5" fill="var(--ink)">a blackout hits</text><text x="160" y="280" font-size="10.5" fill="var(--ink)">everyone at once</text><rect x="377" y="252" width="223" height="34" fill="var(--magenta-pale)" stroke="var(--ink)" stroke-width=".8"/><text x="387" y="266" font-size="10.5" fill="var(--ink)" font-weight="400">an outage hits</text><text x="387" y="280" font-size="10.5" fill="var(--ink)" font-weight="400">everyone at once</text>
+<text x="0" y="310" font-size="11" font-weight="700" fill="var(--ink)">Your backup</text><rect x="150" y="292" width="215" height="34" fill="var(--off-white)" stroke="var(--ink)" stroke-width=".8"/><text x="160" y="306" font-size="10.5" fill="var(--ink)">a generator for what</text><text x="160" y="320" font-size="10.5" fill="var(--ink)">cannot go dark</text><rect x="377" y="292" width="223" height="34" fill="var(--magenta-pale)" stroke="var(--ink)" stroke-width=".8"/><text x="387" y="306" font-size="10.5" fill="var(--ink)" font-weight="400">copies in a second region</text><text x="387" y="320" font-size="10.5" fill="var(--ink)" font-weight="400">or cloud provider</text>
+<text x="0" y="350" font-size="11" font-weight="700" fill="var(--magenta)">Where it breaks</text><rect x="150" y="332" width="215" height="34" fill="var(--off-white)" stroke="var(--ink)" stroke-width=".8"/><text x="160" y="346" font-size="10.5" fill="var(--ink)">power is power; you can</text><text x="160" y="360" font-size="10.5" fill="var(--ink)">switch suppliers</text><rect x="377" y="332" width="223" height="34" fill="var(--magenta)" stroke="var(--ink)" stroke-width=".8"/><text x="387" y="346" font-size="10.5" fill="var(--white)" font-weight="700">your data lives inside the cloud</text><text x="387" y="360" font-size="10.5" fill="var(--white)" font-weight="700">provider; leaving is hard</text>
+<text x="0" y="394" font-size="11" fill="var(--muted)">Seven rows match. The eighth is why section 2 exists.</text>
+</svg>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--muted);margin-top:.55rem;line-height:1.55"><strong style="color:var(--ink)">Almost every line of the comparison holds.</strong> The cloud is metered like power, supplied by a few big companies like power, and fails for everyone at once like power. The last row is the exception, and it is the most important line in the chapter for a manager.</figcaption>
+</figure>
+
+<p>Notice where the comparison breaks, because that is where the management starts. Electricity is the
+same no matter who makes it, so a business can change power suppliers and nothing in the building
+notices. Computing is not like that. Your data lives inside the provider's systems, your software is
+built around its tools, and moving both takes months. A power company sells you something that passes
+through. A cloud provider holds something that stays: your records, your history, your customers. That
+is why the rest of this chapter keeps asking about ownership, exit costs, and backups, questions nobody
+asks about the electric company.</p>
+
+<h3>1.4 You have been studying cloud systems all quarter</h3>
+
+<p>Look back through the book and the foundation is everywhere. Every SaaS product in Chapter 11, from
+Canvas to Gmail, runs in somebody else's data center. Chapter 12 explained that most companies rent their
+AI models, which run on rented computers too, and that TikTok's American version is being retrained
+inside Oracle's cloud. The software that renders this page reached you from a computer you will never see.
+Netflix, the main case, runs everything before you press Play on Amazon's computers.</p>
+
+<p>None of those chapters needed to say so, because the cloud had become the floor the other systems
+stood on. That is what a foundation is. You notice it when it cracks.</p>
+
+<h3>1.5 What the foundation made possible</h3>
+
+<p>Before the cloud, starting a company that needed serious computing meant buying servers before you
+had customers. Now a student with a laptop can rent the same computers a bank uses, by the hour, and
+stop paying the day the idea fails. A small shop can run its register, its website, and its inventory on
+subscriptions, with no server in the back room. A company can launch in a new country without building
+anything there, as Netflix did in more than 130 countries in a single day in 2016. And any business can
+rent AI by the request, which is why Chapter 12's tools reached small firms as fast as large ones.</p>
+
+<p>The scale of the shift shows in the spending. Businesses spent about $168 billion on cloud
+infrastructure in the third quarter of 2026 alone, 55 percent more than a year earlier, with AI the main
+reason for the growth.<sup class="cite"><a href="#src-4" aria-label="Source 4">4</a></sup> That is the electricity bill of the modern economy.</p>
+
+<h3>1.6 The three service layers: IaaS, PaaS, and SaaS</h3>
+
+<p>The cloud is sold in three <strong>service layers</strong>, and the difference between them is how much
+you still manage yourself. An apartment makes a good comparison.</p>
+
+<ul>
+<li><strong>Infrastructure as a service (IaaS)</strong> is like renting an empty apartment. The provider
+supplies the building, the computers, and the connections, and your team installs and looks after all the
+software. <em>In business:</em> Netflix rents raw computing from Amazon Web Services this way and runs its
+own software on top of it.</li>
+<li><strong>Platform as a service (PaaS)</strong> is like a furnished apartment. The provider also runs the
+standard tools, such as databases, so your team only builds and runs its own application. <em>In
+business:</em> a startup builds its ordering app on Google Cloud or Microsoft Azure and lets the provider
+run the database underneath it.</li>
+<li><strong>Software as a service (SaaS)</strong>, from Chapter 11, is like a hotel room. Everything is
+provided and maintained, and you just use it. <em>In business:</em> a sales team keeps its customer records
+in Salesforce, and a shop sells online through Shopify, without anyone at either company touching a
+server.</li>
+</ul>
+
+<figure class="diagram" style="margin:1.8rem auto;max-width:600px">
+<svg viewBox="0 0 600 270" xmlns="http://www.w3.org/2000/svg" role="img" style="width:100%;height:auto;font-family:var(--sans)" aria-labelledby="apT apD">
+<title id="apT">Who looks after what: owning, IaaS, PaaS, SaaS</title>
+<desc id="apD">A grid with four columns, on your own servers, IaaS like an empty apartment, PaaS like a
+furnished apartment, and SaaS like a hotel room, and four rows from top to bottom: your data, your
+application, standard tools, and the building. On your own servers, you look after all four. With IaaS
+the provider takes the building. With PaaS the provider takes the building and the standard tools. With
+SaaS the provider takes everything except your data. The data row says you in every column.</desc>
+<text x="244.0" y="18" font-size="11" font-weight="700" fill="var(--ink)" text-anchor="middle">ON YOUR</text><text x="244.0" y="33" font-size="10" fill="var(--muted)" text-anchor="middle">OWN SERVERS</text><text x="344.0" y="18" font-size="11" font-weight="700" fill="var(--ink)" text-anchor="middle">IAAS</text><text x="344.0" y="33" font-size="10" fill="var(--muted)" text-anchor="middle">empty apartment</text><text x="444.0" y="18" font-size="11" font-weight="700" fill="var(--ink)" text-anchor="middle">PAAS</text><text x="444.0" y="33" font-size="10" fill="var(--muted)" text-anchor="middle">furnished apt.</text><text x="544.0" y="18" font-size="11" font-weight="700" fill="var(--ink)" text-anchor="middle">SAAS</text><text x="544.0" y="33" font-size="10" fill="var(--muted)" text-anchor="middle">hotel room</text><text x="0" y="66" font-size="12" font-weight="700" fill="var(--ink)">Your data</text><text x="0" y="81" font-size="10" fill="var(--muted)">always yours</text><rect x="200" y="46" width="88" height="40" fill="var(--magenta)" stroke="var(--ink)" stroke-width="1"/><text x="244.0" y="71" font-size="11" font-weight="700" fill="var(--white)" text-anchor="middle">you</text><rect x="300" y="46" width="88" height="40" fill="var(--magenta)" stroke="var(--ink)" stroke-width="1"/><text x="344.0" y="71" font-size="11" font-weight="700" fill="var(--white)" text-anchor="middle">you</text><rect x="400" y="46" width="88" height="40" fill="var(--magenta)" stroke="var(--ink)" stroke-width="1"/><text x="444.0" y="71" font-size="11" font-weight="700" fill="var(--white)" text-anchor="middle">you</text><rect x="500" y="46" width="88" height="40" fill="var(--magenta)" stroke="var(--ink)" stroke-width="1"/><text x="544.0" y="71" font-size="11" font-weight="700" fill="var(--white)" text-anchor="middle">you</text><text x="0" y="114" font-size="12" font-weight="700" fill="var(--ink)">Your application</text><text x="0" y="129" font-size="10" fill="var(--muted)">what your business does</text><rect x="200" y="94" width="88" height="40" fill="var(--magenta)" stroke="var(--ink)" stroke-width="1"/><text x="244.0" y="119" font-size="11" font-weight="700" fill="var(--white)" text-anchor="middle">you</text><rect x="300" y="94" width="88" height="40" fill="var(--magenta)" stroke="var(--ink)" stroke-width="1"/><text x="344.0" y="119" font-size="11" font-weight="700" fill="var(--white)" text-anchor="middle">you</text><rect x="400" y="94" width="88" height="40" fill="var(--magenta)" stroke="var(--ink)" stroke-width="1"/><text x="444.0" y="119" font-size="11" font-weight="700" fill="var(--white)" text-anchor="middle">you</text><rect x="500" y="94" width="88" height="40" fill="var(--off-white)" stroke="var(--ink)" stroke-width="1"/><text x="544.0" y="119" font-size="11" font-weight="700" fill="var(--muted)" text-anchor="middle">provider</text><text x="0" y="162" font-size="12" font-weight="700" fill="var(--ink)">Standard tools</text><text x="0" y="177" font-size="10" fill="var(--muted)">databases, security updates</text><rect x="200" y="142" width="88" height="40" fill="var(--magenta)" stroke="var(--ink)" stroke-width="1"/><text x="244.0" y="167" font-size="11" font-weight="700" fill="var(--white)" text-anchor="middle">you</text><rect x="300" y="142" width="88" height="40" fill="var(--magenta)" stroke="var(--ink)" stroke-width="1"/><text x="344.0" y="167" font-size="11" font-weight="700" fill="var(--white)" text-anchor="middle">you</text><rect x="400" y="142" width="88" height="40" fill="var(--off-white)" stroke="var(--ink)" stroke-width="1"/><text x="444.0" y="167" font-size="11" font-weight="700" fill="var(--muted)" text-anchor="middle">provider</text><rect x="500" y="142" width="88" height="40" fill="var(--off-white)" stroke="var(--ink)" stroke-width="1"/><text x="544.0" y="167" font-size="11" font-weight="700" fill="var(--muted)" text-anchor="middle">provider</text><text x="0" y="210" font-size="12" font-weight="700" fill="var(--ink)">The building</text><text x="0" y="225" font-size="10" fill="var(--muted)">computers, power, network</text><rect x="200" y="190" width="88" height="40" fill="var(--magenta)" stroke="var(--ink)" stroke-width="1"/><text x="244.0" y="215" font-size="11" font-weight="700" fill="var(--white)" text-anchor="middle">you</text><rect x="300" y="190" width="88" height="40" fill="var(--off-white)" stroke="var(--ink)" stroke-width="1"/><text x="344.0" y="215" font-size="11" font-weight="700" fill="var(--muted)" text-anchor="middle">provider</text><rect x="400" y="190" width="88" height="40" fill="var(--off-white)" stroke="var(--ink)" stroke-width="1"/><text x="444.0" y="215" font-size="11" font-weight="700" fill="var(--muted)" text-anchor="middle">provider</text><rect x="500" y="190" width="88" height="40" fill="var(--off-white)" stroke="var(--ink)" stroke-width="1"/><text x="544.0" y="215" font-size="11" font-weight="700" fill="var(--muted)" text-anchor="middle">provider</text>
+<line x1="0" y1="244" x2="600" y2="244" stroke="var(--rule)" stroke-width="1"/>
+<text x="0" y="264" font-size="11.5" font-weight="700" fill="var(--magenta)">Read the top row: in every column, the data is still yours.</text>
+</svg>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--muted);margin-top:.55rem;line-height:1.55"><strong style="color:var(--ink)">The higher the layer you rent, the less you manage and the less you can change.</strong> A hotel room is wonderfully easy until you want to move the furniture. Moving right hands work to the provider, and with it control over when things change. What never moves is the top row, and section 2 is about why that matters.</figcaption>
+</figure>
+
+<p>The money changes shape too. Owning computers is <strong>capital expenditure (capex)</strong>: a large
+purchase made years ahead of need, which sits on the balance sheet and loses value. Renting them is
+<strong>operating expenditure (opex)</strong>: a monthly bill for what you used. For a finance department
+that is a real change. It frees cash that would have been locked up in equipment, and it turns a
+once-a-decade decision into a bill somebody has to watch every month.</p>
 
 <div class="tryit" id="layer">
   <div class="tryit-head">Quick quiz &middot; IaaS, PaaS, or SaaS?</div>
-  <p class="tryit-intro">Five things a company might rent. Say which service layer each one is before you check.</p>
+  <p class="tryit-intro">Five things a company might rent. Say which layer each one is, empty apartment, furnished apartment, or hotel room, before you check.</p>
   <div id="layerrows"></div>
-  <p class="tryit-note">Ask what you still manage. If you install and patch the operating system, it is infrastructure. If you only deploy your code, it is a platform. If you just log in and use it, it is software as a service.</p>
+  <p class="tryit-note">Ask what you still manage. If your team installs and updates the software on the machine, it is infrastructure. If your team only builds its own application, it is a platform. If you just log in and use it, it is software as a service.</p>
 </div>
 
 <script>
@@ -572,7 +659,7 @@ responsibility for the data on them, the software above them, or the decisions a
   var host=document.getElementById('layerrows');
   if(!host)return;
   var F=["IaaS", "PaaS", "SaaS"];
-  var R=[{"t": "A virtual server you rent by the hour, on which your team installs its own database and patches the operating system.", "a": "IaaS", "why": "You rented the machine and nothing else. Everything above the hardware is your job, including the thing that goes wrong at 2 a.m."}, {"t": "A hosted environment where your developers upload code and the provider handles the servers, scaling, and operating system.", "a": "PaaS", "why": "You manage the application; the provider manages everything it runs on. You gave up control of the machine to stop worrying about it."}, {"t": "A customer-relationship system your sales team uses in a browser, updated by the vendor without you noticing.", "a": "SaaS", "why": "You log in and use it. The vendor owns the code, the servers, and the upgrade schedule, which is the convenience and the lock-in at once."}, {"t": "Rented storage that your own applications write files to, billed by the gigabyte.", "a": "IaaS", "why": "A raw resource. The provider keeps the disks alive; what goes on them and what reads them is entirely yours, as the 2017 S3 morning proved."}, {"t": "Email and calendars for the whole company, paid per user per month.", "a": "SaaS", "why": "Nobody at your company touches a server or a line of code. It is the purest case of renting the whole stack."}];
+  var R=[{"t": "A computer you rent by the hour, on which your team installs and updates all of its own software.", "a": "IaaS", "why": "You rented the machine and nothing else. Everything above the hardware is your job, including the thing that goes wrong at 2 a.m."}, {"t": "A service where your developers upload their own application and the provider runs everything underneath it.", "a": "PaaS", "why": "You manage the application; the provider manages everything it runs on. You gave up control of the machine to stop worrying about it."}, {"t": "A customer-relationship system your sales team uses in a browser, updated by the vendor without you noticing.", "a": "SaaS", "why": "You log in and use it. The vendor owns the code, the servers, and the upgrade schedule, which is the convenience and the lock-in at once."}, {"t": "Rented storage that your own applications write files to, billed by the gigabyte.", "a": "IaaS", "why": "A raw resource. The provider keeps the disks running; what goes on them, and who can read it, is entirely yours, which is the shared responsibility model in section 2.1."}, {"t": "Email and calendars for the whole company, paid per user per month.", "a": "SaaS", "why": "Nobody at your company touches a server or a line of code. It is the purest case of renting the whole stack."}];
   R.forEach(function(r){
     var row=document.createElement('div'); row.className='wrow';
     row.innerHTML='<div class="wq">'+r.t+'</div><div class="wbtns">'
@@ -595,72 +682,142 @@ responsibility for the data on them, the software above them, or the decisions a
 })();
 </script>
 
-<h2 id="risk"><span class="num">2</span>When the cloud blinks, and the bill the planet gets</h2>
+<h3>1.7 Paying only for the peak</h3>
 
-<p>Renting computers has two bills that never appear on the invoice. One arrives on the morning the landlord has
-a bad day, and the whole course's argument about concentration risk applies to it. The other arrives
-in electricity, water and land, and is paid by people who never signed the contract. This section is
-about both.</p>
+<p>Demand for computing is never flat. A retailer's website is quiet on a Tuesday in February and
+overwhelmed on the day after Thanksgiving. A tax service does most of its year's business in a few weeks
+of spring. A company that owns its computers has to buy enough for its busiest day, and then pays for
+that capacity all year while most of it sits idle.</p>
 
-<h3>2.1 When the cloud blinks: concentration risk and lock-in</h3>
+<p><strong>Elasticity</strong> is the cloud's answer: capacity that grows within minutes when demand
+rises and, just as important, shrinks when it falls, so you pay for the peak only while the peak lasts.
+For a business with spiky or unpredictable demand, that one property is often the whole case for
+renting. It is the electricity comparison again: you do not own a power plant sized for the hottest day
+of the year. You pay the meter for what you used, and the utility worries about the peak.</p>
 
-<p>Concentration risk, Chapter 9's word for a third of US medical claims flowing through one
-company, has a computing version, and it demonstrated itself recently. In October 2025 a failure in
-AWS's largest region, US-East-1 in Northern Virginia, rooted in a DNS fault involving its DynamoDB
-database service, cascaded for the better part of a day. Thousands of services stumbled at once:
-social apps, games, banks, airlines, smart-home devices, companies whose customers had no idea AWS
-existed until the morning it mattered. Nothing was hacked. One landlord had a bad day, and a
-noticeable slice of the internet had it too.<sup class="cite"><a href="#src-1" aria-label="Source 1">1</a></sup></p>
+<figure class="diagram" style="margin:1.8rem auto;max-width:600px">
+<svg viewBox="0 0 600 290" xmlns="http://www.w3.org/2000/svg" role="img" style="width:100%;height:auto;font-family:var(--sans)" aria-labelledby="pkT pkD">
+<title id="pkT">Owning for the peak vs. renting what you use</title>
+<desc id="pkD">A line chart of a retailer's computing demand across one year. Demand stays low most of the
+year, then spikes sharply near the end of November and again before the December holidays. A flat dashed
+line at the height of the spike shows the capacity a company must own to survive its busiest day; the
+large gap between that line and the demand line is labeled as capacity paid for and idle most of the
+year. A note explains that rented, elastic capacity follows the demand line instead.</desc>
+<rect x="40" y="39" width="529" height="181" fill="var(--magenta-pale)" opacity=".55"/>
+<line x1="40" y1="39" x2="569" y2="39" stroke="var(--magenta)" stroke-width="1.8" stroke-dasharray="7 4"/>
+<path d="M40.0 180.0 L44.4 179.0 L48.7 177.9 L53.0 177.0 L57.4 176.0 L61.8 175.1 L66.1 174.2 L70.5 173.4 L74.8 172.6 L79.2 172.0 L83.5 171.4 L87.8 170.9 L92.2 170.5 L96.5 170.3 L100.9 170.1 L105.2 170.0 L109.6 170.0 L114.0 170.2 L118.3 170.4 L122.6 170.8 L127.0 171.2 L131.3 171.7 L135.7 172.4 L140.1 173.1 L144.4 173.8 L148.8 174.7 L153.1 175.6 L157.4 176.5 L161.8 177.5 L166.1 178.5 L170.5 179.6 L174.8 180.6 L179.2 181.6 L183.5 182.6 L187.9 183.6 L192.2 184.6 L196.6 185.5 L200.9 186.3 L205.3 187.1 L209.7 187.7 L214.0 188.4 L218.3 188.9 L222.7 189.3 L227.0 189.6 L231.4 189.9 L235.8 190.0 L240.1 190.0 L244.4 189.9 L248.8 189.7 L253.2 189.4 L257.5 189.0 L261.9 188.5 L266.2 187.9 L270.5 187.2 L274.9 186.5 L279.2 185.7 L283.6 184.8 L287.9 183.9 L292.3 182.9 L296.6 181.9 L301.0 180.9 L305.3 179.8 L309.7 178.8 L314.1 177.8 L318.4 176.8 L322.8 175.8 L327.1 174.9 L331.4 174.1 L335.8 173.3 L340.1 172.5 L344.5 171.9 L348.8 171.3 L353.2 170.9 L357.6 170.5 L361.9 170.2 L366.2 170.1 L370.6 170.0 L374.9 170.0 L379.3 170.2 L383.6 170.5 L388.0 170.8 L392.3 171.3 L396.7 171.8 L401.1 172.5 L405.4 173.2 L409.8 174.0 L414.1 174.8 L418.4 175.7 L422.8 176.7 L427.1 177.7 L431.5 178.7 L435.8 179.7 L440.2 180.8 L444.6 181.8 L448.9 182.8 L453.2 183.8 L457.6 184.7 L461.9 185.6 L466.3 186.4 L470.6 187.2 L475.0 187.9 L479.3 188.5 L483.7 189.0 L488.1 189.4 L492.4 189.7 L496.8 189.6 L501.1 187.2 L505.4 174.2 L509.8 134.7 L514.1 72.8 L518.5 39.3 L522.8 72.1 L527.2 133.2 L531.5 171.6 L535.9 182.6 L540.2 179.7 L544.6 168.6 L549.0 150.4 L553.3 131.6 L557.6 122.7 L562.0 129.6 L566.4 146.5 L569.2 220 L40 220 Z" fill="var(--white)"/>
+<path d="M40.0 180.0 L44.4 179.0 L48.7 177.9 L53.0 177.0 L57.4 176.0 L61.8 175.1 L66.1 174.2 L70.5 173.4 L74.8 172.6 L79.2 172.0 L83.5 171.4 L87.8 170.9 L92.2 170.5 L96.5 170.3 L100.9 170.1 L105.2 170.0 L109.6 170.0 L114.0 170.2 L118.3 170.4 L122.6 170.8 L127.0 171.2 L131.3 171.7 L135.7 172.4 L140.1 173.1 L144.4 173.8 L148.8 174.7 L153.1 175.6 L157.4 176.5 L161.8 177.5 L166.1 178.5 L170.5 179.6 L174.8 180.6 L179.2 181.6 L183.5 182.6 L187.9 183.6 L192.2 184.6 L196.6 185.5 L200.9 186.3 L205.3 187.1 L209.7 187.7 L214.0 188.4 L218.3 188.9 L222.7 189.3 L227.0 189.6 L231.4 189.9 L235.8 190.0 L240.1 190.0 L244.4 189.9 L248.8 189.7 L253.2 189.4 L257.5 189.0 L261.9 188.5 L266.2 187.9 L270.5 187.2 L274.9 186.5 L279.2 185.7 L283.6 184.8 L287.9 183.9 L292.3 182.9 L296.6 181.9 L301.0 180.9 L305.3 179.8 L309.7 178.8 L314.1 177.8 L318.4 176.8 L322.8 175.8 L327.1 174.9 L331.4 174.1 L335.8 173.3 L340.1 172.5 L344.5 171.9 L348.8 171.3 L353.2 170.9 L357.6 170.5 L361.9 170.2 L366.2 170.1 L370.6 170.0 L374.9 170.0 L379.3 170.2 L383.6 170.5 L388.0 170.8 L392.3 171.3 L396.7 171.8 L401.1 172.5 L405.4 173.2 L409.8 174.0 L414.1 174.8 L418.4 175.7 L422.8 176.7 L427.1 177.7 L431.5 178.7 L435.8 179.7 L440.2 180.8 L444.6 181.8 L448.9 182.8 L453.2 183.8 L457.6 184.7 L461.9 185.6 L466.3 186.4 L470.6 187.2 L475.0 187.9 L479.3 188.5 L483.7 189.0 L488.1 189.4 L492.4 189.7 L496.8 189.6 L501.1 187.2 L505.4 174.2 L509.8 134.7 L514.1 72.8 L518.5 39.3 L522.8 72.1 L527.2 133.2 L531.5 171.6 L535.9 182.6 L540.2 179.7 L544.6 168.6 L549.0 150.4 L553.3 131.6 L557.6 122.7 L562.0 129.6 L566.4 146.5" fill="none" stroke="var(--ink)" stroke-width="2"/>
+<line x1="40" y1="220" x2="569" y2="220" stroke="var(--ink)" stroke-width="1"/>
+<text x="40.0" y="238" font-size="10.5" fill="var(--muted)">Jan</text>
+<text x="302.45" y="238" font-size="10.5" fill="var(--muted)" text-anchor="middle">Jul</text>
+<text x="569" y="238" font-size="10.5" fill="var(--muted)" text-anchor="end">Black Friday</text>
 
-<p>The business twin of concentration risk is <strong>vendor lock-in</strong>. Cloud providers
-price movement unevenly: data flows in free and pays <strong>egress fees</strong> on the way out, and every
-provider-specific service your engineers adopt makes leaving harder. This is Chapter 3's <strong>switching
-costs</strong>, built into infrastructure. It is also why the first choice of where to put your data lasts:
-services and other data pile up around it, a pull engineers call <strong>data gravity</strong>.</p>
-
-<p>The remedies cost real money. Clouds are sold by <strong>region</strong>, a cluster of data centers in one
-area, and each region is split into <strong>availability zones</strong>, separate buildings with their own
-power and cooling. Spreading your systems across zones, regions, or even providers protects you from one
-landlord's bad morning, and you pay for that protection every month. That makes resilience what it has been
-all course: not a technical setting but a business decision about how much insurance to buy, made before the
-morning it is needed.</p>
-
-<h3>2.2 The bill the planet gets</h3>
-
-<p>Chapter 12 ended with a question it did not answer: when the For You page or a chatbot answer feels free, who
-is paying, and in what currency? This section answers it, with the International Energy Agency's
-ledger. In 2024, the world's data centers consumed roughly <strong>415 terawatt-hours</strong> of electricity, about <strong>1.5
-percent of all electricity on Earth</strong>.<sup class="cite"><a href="#src-2" aria-label="Source 2">2</a></sup> The IEA's April 2026 update puts 2025 at about 485 terawatt-hours, a jump of
-about a sixth in a single year.<sup class="cite"><a href="#src-2" aria-label="Source 2">2</a></sup> The figure has grown around 12 percent a year since 2017, four
-times faster than electricity use overall. The IEA's base
-case projects consumption more than doubling to about <strong>945 TWh by 2030</strong>, roughly
-Japan's entire current annual usage, with AI-accelerated servers driving close to half of the
-increase. The United States hosts the largest share, around 45 percent, and data centers account for
-nearly half of all US electricity-demand growth between now and 2030.<sup class="cite"><a href="#src-2" aria-label="Source 2">2</a></sup></p>
-
-<figure class="diagram" style="margin:1.9rem auto;max-width:640px">
-<img src="google-data-center-the-dalles.jpg" width="960" height="609" loading="lazy" style="width:100%;height:auto"
- alt="A long, low, beige industrial building with rows of large gray cooling units along its front, behind a chain-link fence and an empty gravel lot. Brown, dry hills rise behind it under a cloudy sky.">
-<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">
-Google's data center in The Dalles, Oregon, on the Columbia River. Companies built here for cheap hydroelectric power and river water to cool the machines. This is what &ldquo;the cloud&rdquo; looks like from the road: a factory, with a factory's appetite for electricity and water, in a dry place a few hours from Bellingham.
-<br><br>Photograph: Tony Webster, 2015, via Wikimedia Commons, CC BY 2.0.
-</figcaption>
+<text x="48" y="31" font-size="11" font-weight="700" fill="var(--magenta)">What you must own to survive the busiest day</text>
+<text x="160" y="120" font-size="11" font-weight="700" fill="var(--magenta)">paid for all year, idle most of it</text>
+<text x="160" y="212" font-size="11" font-weight="700" fill="var(--ink)">actual demand</text>
+<text x="0" y="266" font-size="11" fill="var(--ink)">Renting with elasticity means paying along the black line instead of the dashed one.</text>
+<text x="0" y="284" font-size="10" fill="var(--muted)">Illustrative shape.</text>
+</svg>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--muted);margin-top:.55rem;line-height:1.55"><strong style="color:var(--ink)">The pink area is the case for the cloud.</strong> A company that owns its computers pays for its busiest day every day of the year. Elastic, rented capacity follows the black line. Section 4.7 shows the other side: when demand is huge and steady, the gap disappears and owning can win again.</figcaption>
 </figure>
 
+<h2 id="risk"><span class="num">2</span>Depending on a foundation you don't own</h2>
 
-<p>The global percentages stay small; the local ones do not, because the demand clusters in a few places. Data centers already consume on the order of a fifth of Ireland's electricity and, by commonly cited
-estimates, a quarter of Virginia's. That is why siting fights, grid-upgrade bills, and moratorium
-debates now follow the industry around. Electricity is also only the headline line item. Cooling the machines
-consumes water, a sharpening issue where the cheap land and power happen to be dry. The accelerator
-arms race turns over hardware fast enough to make e-waste a growing stream. And the electricity mix
-matters as much as the amount: today it leans on coal and gas alongside renewables and nuclear,
-putting data-center emissions in the hundreds of millions of tonnes of CO2 per year. None of this is
-an argument that streaming a show is shameful; a single stream or prompt costs very little. It is an argument that <em>at scale, computing is industry</em>, with industry's bills. The people who plan,
-site, buy, and account for it, which is to say people with business degrees, decide how those bills
-get paid.</p>
+<p>Section 1 was the promise. This section is the fine print. A business that rents its foundation
+still owns its data, still answers for it, and now depends on a supplier it cannot easily replace. None
+of that is a reason to avoid the cloud. All of it is a reason to manage the relationship the way you
+would manage any supplier your business cannot run without.</p>
 
-<h2 id="cases"><span class="num">3</span>Two answers to where the computers are</h2>
-<p>Before the main case, here are two short ones. Each is a different answer to the same question, which is the question underneath this whole chapter: where are the computers, and whose problem is that? The first answer was that the customer no longer needs to know. The second was that they are in a building, and buildings burn.</p>
+<h3>2.1 Your data, their building</h3>
+
+<p>Renting the computers does not transfer ownership of the data on them. Your customer records, your
+sales history, and your employees' files are still yours, legally and ethically, wherever they sit.
+<strong>Data ownership</strong> in the cloud means you keep the rights and the responsibilities, while
+somebody else runs the machines.</p>
+
+<p>The providers say this themselves. Amazon calls it the <strong>shared responsibility model</strong>:
+Amazon is responsible for security <em>of</em> the cloud, meaning its buildings, machines, and
+networks. The customer is responsible for security <em>in</em> the cloud, meaning its own data, who can
+see it, and how its systems are set up.<sup class="cite"><a href="#src-5" aria-label="Source 5">5</a></sup> If an employee leaves a customer file open to the whole
+internet, that is not Amazon's breach. It is yours.</p>
+
+<p>So before signing, a manager asks four questions about the data. Can we get all of it back, in a form
+we can use somewhere else? Where, physically, will it be stored? That matters because the law that
+protects it depends on the place; personal data about people in Europe, for example, carries European
+rules wherever it is processed. Who at the provider can see it, and when? And what happens to it if the
+provider suspends our account, raises the price beyond what we can pay, or goes out of business?</p>
+
+<h3>2.2 One landlord's bad morning</h3>
+
+<p>A few companies run most of the world's rented computing. In the third quarter of 2026, Amazon held
+about 26 percent of the market, Microsoft about 19 percent, and Google about 16 percent, so roughly three
+of every five dollars went to just three providers.<sup class="cite"><a href="#src-4" aria-label="Source 4">4</a></sup> Chapter 9 called this
+<strong>concentration risk</strong>, when too much depends on one supplier, and the cloud has the same
+shape.</p>
+
+<p>It showed what that means in October 2025. A fault inside one of Amazon's own database services in its
+largest region, in Northern Virginia, spread through its systems for most of a day. Thousands of services
+failed at once: social apps, games, banks, airlines, and smart-home devices, run by companies whose
+customers had never heard of Amazon Web Services until the morning it mattered.<sup class="cite"><a href="#src-6" aria-label="Source 6">6</a></sup> Nothing was
+hacked. One landlord had a bad morning, and a noticeable slice of the internet had it too. That is the
+utility's blackout from section 1.3, arriving on schedule.</p>
+
+<h3>2.3 Easy to move in, expensive to leave</h3>
+
+<p><strong>Vendor lock-in</strong> is what happens when leaving a supplier costs so much that you stay
+even when you would rather not. It is Chapter 3's switching costs, built into a contract. Cloud lock-in
+has three layers. The first is exit fees: providers have long charged for data leaving their systems,
+called <strong>egress fees</strong>, while data arriving is free. The second is the provider's own tools.
+Every service only one provider sells becomes something you have to rebuild before you can go. The third
+is simply accumulation. Data piles up where it started, and other systems get built around it, so the
+first choice of provider tends to be the last.</p>
+
+<p>The first layer is now shrinking, partly by law. In 2024 Google, then Amazon and Microsoft, began waiving
+data fees for customers who move all their data out to leave; Amazon said the change followed the
+direction set by the European Union's Data Act.<sup class="cite"><a href="#src-7" aria-label="Source 7">7</a></sup> That law, in force since September 2025, caps
+what a provider may charge a customer for switching, and from 12 January 2027 bans switching charges,
+including those fees, for customers in the EU.<sup class="cite"><a href="#src-8" aria-label="Source 8">8</a></sup> The other two layers remain. Making the door
+free does not make the move easy, so the manager's job is to plan the exit on the day of the entry.</p>
+
+<h3>2.4 What the contract actually promises</h3>
+
+<p>Every cloud contract includes a <strong>service-level agreement (SLA)</strong>, the provider's written
+promise about how reliably the service will run. It is usually stated as a percentage of time the service
+will be up, and the decimal places matter more than they look. Translate them into hours and they become
+a business question.</p>
+
+<table class="sumtable stack-sm">
+<tr><th>Promised uptime</th><th>Downtime allowed in a year</th><th>In plain terms</th></tr>
+<tr><td data-label="Promised uptime"><strong>99%</strong></td><td data-label="Downtime allowed in a year">About 3.7 days</td><td data-label="In plain terms">A long weekend, at a time you do not choose</td></tr>
+<tr><td data-label="Promised uptime"><strong>99.9%</strong></td><td data-label="Downtime allowed in a year">About 8.8 hours</td><td data-label="In plain terms">One full working day</td></tr>
+<tr><td data-label="Promised uptime"><strong>99.99%</strong></td><td data-label="Downtime allowed in a year">About 53 minutes</td><td data-label="In plain terms">A long lunch break</td></tr>
+</table>
+
+<p>Read two more lines in any SLA. First, what you get when the promise is broken. It is usually a credit
+toward your next bill, often a share of that month's charges, and not compensation for the sales you lost
+while you were down. Second, what the promise covers. A provider can meet its SLA perfectly while your
+own system is down, if the fault is in a part of the system that is yours. The SLA is the provider's
+promise, not your business plan.</p>
+
+<h3>2.5 Insurance you buy in advance</h3>
+
+<p>The protection against one landlord's bad morning is to not keep everything in one place. Large
+providers sell computing by <strong>region</strong>, a cluster of data centers in one area, and divide
+each region into separate buildings with their own power and cooling. A business can keep copies of its
+systems and data in more than one building, more than one region, or even with more than one provider.
+Each step protects against a bigger failure, and each step costs more every month, for capacity you hope
+never to use. A hospital keeps a backup generator for the same reason: not because the grid usually
+fails, but because the hour it does is the hour that matters most.</p>
+
+<p>That makes resilience what it has been all course: a business decision about how much insurance to
+buy, made before the morning it is needed. Chapter 9's business continuity plan is where the decision
+gets written down. Some systems can wait a day. Some cannot be down for an hour. Deciding which is
+which, and paying for the difference, is a manager's job, and the third mini-case below shows what
+happened to customers who never made the decision at all.</p>
+
+
+<h2 id="cases"><span class="num">3</span>Three answers to where the computers are</h2>
+<p>Before the main case, here are three short ones, in the order they happened. Each is a different answer to the same question, which is the question underneath this whole chapter: where are the computers, and whose problem is that? The first answer was that the customer no longer needs to know. The second was that they can be trusted with even the most sensitive data, if the buyer stays in charge. The third was that they are in a building, and buildings burn.</p>
 
 <h3>3.1 Mini-case 1 &middot; 1999: the software you did not have to install</h3>
 
@@ -672,7 +829,7 @@ about what that cost.</p>
 Salesforce's computers, customers would reach it through a web browser, and they would pay a
 subscription. No servers to buy, no installation, no upgrade projects. The company's marketing showed
 the word "software" with a line through it, and the industry it was entering thought this was
-ridiculous.<sup class="cite"><a href="#src-3" aria-label="Source 3">3</a></sup> Businesses would never put their customer records on somebody else's machines.</p>
+ridiculous.<sup class="cite"><a href="#src-9" aria-label="Source 9">9</a></sup> Businesses would never put their customer records on somebody else's machines.</p>
 
 <p>Customers did trust it, and the model has a name now, software as a service, that Chapter 11 already gave you. The
 point of putting it here is the date. The decision to rent rather than own was being made, and winning,
@@ -682,7 +839,7 @@ answer was: not the customer.</p>
 
 <p><strong>The answer it gave: the customer stops needing to know where the computers are. The
 component: software.</strong> Notice what did not move. The customer still owned the data and still
-owned every decision about it, which is the point section 1 makes about what renting does and does
+owned every decision about it, which is the point section 2.1 makes about what renting does and does
 not transfer.</p>
 
 <div class="mcq"><b>Check yourself</b>Name something a company gives up when its software runs on
@@ -701,13 +858,56 @@ it, grew into.
 </figcaption>
 </figure>
 
-<h3>3.2 Mini-case 2 &middot; 2021: the cloud that caught fire</h3>
+<h3>3.2 Mini-case 2 &middot; 2013: the customer that made the cloud safe to buy</h3>
+
+<p>By 2013 Amazon had been renting computing for seven years, and many large organizations still kept it at
+arm's length. Startups used it. Banks, hospitals, and governments mostly did not, because putting
+sensitive data on somebody else's machines felt like a risk nobody wanted to be blamed for.</p>
+
+<p>Then the Central Intelligence Agency went shopping. It wanted cloud computing for itself and other
+intelligence agencies, and in early 2013 it awarded Amazon Web Services a contract worth up to $600
+million over four years. IBM, which had bid a lower price, protested. A government review sided with IBM
+on how prices had been compared, and the CIA reopened the competition. Amazon went to court, and in
+October 2013 a federal judge restored its contract.<sup class="cite"><a href="#src-10" aria-label="Source 10">10</a></sup> In his written opinion the judge concluded that
+Amazon's offer was superior and that the competition was not close.<sup class="cite"><a href="#src-10" aria-label="Source 10">10</a></sup></p>
+
+<p>Every other cautious buyer noticed. The organization with the most to lose
+from a leak had decided that renting was safe enough, and had paid more for the better service rather
+than less for the cheaper one. If rented computing was secure enough for the intelligence community, it
+became hard for a bank or a hospital to call it too risky.</p>
+
+<p>Nobody can prove the CIA's decision caused what came next, but what came next is well documented. Large,
+regulated companies began moving their core systems to the cloud. Capital One, the credit card company and
+bank, announced in 2015 that it would move its critical applications to Amazon and leave its own data
+centers. In 2020 it became the first U.S. bank to report that it had closed all of them.<sup class="cite"><a href="#src-11" aria-label="Source 11">11</a></sup> Along
+the way it also showed the other half of the bargain. In 2019 an attacker took data on about 106 million
+of its customers by exploiting a firewall Capital One itself had set up wrong on its rented
+servers.<sup class="cite"><a href="#src-12" aria-label="Source 12">12</a></sup> Amazon's buildings were never breached. That is the shared responsibility model from
+section 2.1: the provider secures the cloud, and the customer secures what it puts in it.</p>
+
+<p>The story has a second chapter. In 2020 the CIA replaced its single-provider contract with a new one
+shared among five: Amazon, Microsoft, Google, Oracle, and IBM, over fifteen years, in a deal reported to
+be worth tens of billions of dollars.<sup class="cite"><a href="#src-13" aria-label="Source 13">13</a></sup> Having trusted one landlord, the agency chose not to depend on
+just one. That is section 2.2's concentration risk and section 2.3's lock-in, managed by a customer large
+enough to make the providers compete.</p>
+
+<p><strong>The answer it gave: the computers can be trusted with sensitive data, if the buyer stays in
+charge. The component: data.</strong> The CIA rented the machines. It did not hand over responsibility
+for what was on them, which is the shared responsibility model from section 2.1 in its most serious
+form.</p>
+
+<div class="mcq"><b>Check yourself</b>The CIA chose Amazon even though IBM bid a lower price. Using
+Chapter 11's total cost of ownership, explain why the more expensive offer could be the better buy. Then
+say why the same agency spread its next contract across five providers.
+<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>The price on the bid is only part of the cost. Total cost of ownership adds what it takes to make a system work and keep it working. That includes how capable and proven the service is, how much the agency's own staff would have to build around it, and what a failure or a breach would cost. For an intelligence agency, the cost of the second-best security dwarfs the difference between two bids, so paying more for the stronger offer can be the cheaper decision over the life of the system. The 2020 decision is the other half of the lesson. After years of depending on one provider, the agency had the scale to avoid concentration risk and lock-in by making five providers compete for its work. Most businesses are too small to do that, which is why section 2 asks them to plan their exit and their backups instead.</p></details></div>
+
+<h3>3.3 Mini-case 3 &middot; 2021: the cloud that caught fire</h3>
 
 <p>In the early hours of 10 March 2021, a fire started in a data center in Strasbourg belonging to
-OVHcloud, one of Europe's largest hosting providers. One building was destroyed and a neighbouring one
+OVHcloud, one of Europe's largest hosting providers. One building was destroyed and a neighboring one
 damaged. The company shut down the whole site. Millions of websites went offline, including government
 services, news outlets and a large number of small businesses that had never thought about where their
-website physically was.<sup class="cite"><a href="#src-4" aria-label="Source 4">4</a></sup></p>
+website physically was.<sup class="cite"><a href="#src-14" aria-label="Source 14">14</a></sup></p>
 
 <figure class="diagram" style="margin:1.9rem auto;max-width:640px">
 <img src="ovh-fire-pompidou-site.jpg" width="960" height="540" loading="lazy" style="width:100%;height:auto"
@@ -719,11 +919,11 @@ The website of the Centre Pompidou, one of the world's best-known art museums, t
 </figure>
 
 
-<p>Most of those customers came back within days. Some did not come back at all. A number of customers had chosen the
-cheapest hosting option, which did not include backups, or had their backups in the same building on
-the assumption that a building is a safe place. Their data was gone. The company's chief executive said
-publicly that the fire was a lesson about backups, and customers who had assumed the cloud <em>was</em>
-the backup learned the difference the expensive way.</p>
+<p>Most of those customers came back within days. Some did not come back at all. A number of customers
+had chosen the cheapest hosting option, which did not include backups, or kept their backups in the same
+building on the assumption that a building is a safe place. Their data was gone. The company's founder
+publicly urged customers to switch on their disaster recovery plans, and customers who had assumed the
+cloud itself was the backup learned the difference the expensive way.<sup class="cite"><a href="#src-14" aria-label="Source 14">14</a></sup></p>
 
 <p>This chapter has been calling the cloud other people's data centers. This is what that sentence
 means when the metaphor is stripped off. It is a warehouse full of machines, with power, cooling, and
@@ -738,12 +938,13 @@ co-op chooses. Name three questions about that building you would want answered 
 which of them the cheapest provider would rather you did not ask.
 <details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>Whichever option Cascadia picks, its data sits on a disk in a building somewhere. For a small co-op, renting is usually safer than owning, because Amazon, Microsoft, and Google keep copies in more than one building and Cascadia never would. The lesson of Strasbourg is not that the cloud is dangerous. It is that a customer has to ask where the copies are, because OVH's customers who had paid for backups in the same building lost everything. Three questions to put to any provider: how many physical locations hold a copy of our data, how far apart are they, and are backups included in the price we are paying or sold separately? The cheapest provider would rather you skipped the third. If the answer to the first is one, you are back in the building.</p></details></div>
 
-<h3>3.3 What the two have in common</h3>
+<h3>3.4 What the three have in common</h3>
 
-<p>A subscription and a fire. In neither case did the technology fail in a way that was hard to understand once it had happened. What each one changed was what people understood they were
+<p>A subscription, a contract, and a fire. In none of the three did the technology fail in a way that was hard to understand once it had happened. What each one changed was what people understood they were
 buying.</p>
 
-<p>In 1999 they were buying freedom from running software. By 2021 they found out that the building the metaphor concealed could burn down with their business inside it. The cloud did not get worse across those
+<p>In 1999 they were buying freedom from running software. In 2013 they learned they could trust it with
+almost anything. By 2021 they found out that the building the metaphor concealed could burn down with their business inside it. The cloud did not get worse across those
 years. It got clearer, and every one of those clarifications was a bill.</p>
 
 <p>Read the main case with that in mind. Netflix understood both early, and made a decision that still surprises people: it rented nearly everything, including from a competitor, and built the one piece a fire could not be allowed to touch.</p>
@@ -777,9 +978,18 @@ broke." Members with DVDs at home could still watch them during those three days
 happened to streaming, viewing would simply stop for everyone at once. The failure was small and the
 implication was not, and the implication is what moved the decision.</p>
 
-<p>The diagnosis named a shape rather than a product. Netflix decided it had to move away from
-vertically scaled single points of failure, which means big relational databases in a building the
-company owned, toward distributed systems spread across machines it did not. Notice that this is a
+<figure class="diagram" style="margin:1.9rem auto;max-width:440px">
+<img src="netflix-envelope.jpg" width="490" height="300" loading="lazy" style="width:100%;height:auto"
+ alt="A white Netflix business reply envelope with the red Netflix logo, lying on a bed sheet, with its red paper sleeve pulled halfway out to show a DVD of the movie Coach Carter.">
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">
+The business Netflix was protecting in 2008. A DVD in the mail could survive three days of broken computers, because the movie was already on the coffee table. A stream could not survive three minutes.
+<br><br>Photograph: BlueMint, 2006, via Wikimedia Commons, CC BY 2.5.
+</figcaption>
+</figure>
+
+<p>The diagnosis named a shape rather than a product. Netflix decided it had to stop depending on a few
+large machines in a building it owned, any one of which could stop the whole business, and spread the
+work across many machines that it did not own. Notice that this is a
 design decision first and a purchasing decision second. The cloud was how Netflix executed it, not why
 it was needed.</p>
 
@@ -790,7 +1000,16 @@ Amazon sells video. Prime Video competes for the same evenings and the same subs
 decided to run its entire business on computers owned and operated by a rival, and has done so for
 more than fifteen years.</p>
 
-<p>That decision only makes sense if you apply Chapter 11's build-or-rent rule honestly. Rent what is
+<figure class="diagram" style="margin:1.9rem auto;max-width:600px">
+<img src="aws-ashburn-servers.jpg" width="960" height="720" loading="lazy" style="width:100%;height:auto"
+ alt="Large, windowless gray buildings with rows of equipment on their roofs, set back behind a fence and a line of young trees, beside a grassy roadside in Ashburn, Virginia, under a pale blue sky.">
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">
+Buildings in Ashburn, Virginia, that the photographer identified as Amazon Web Services data centers. Renting from a rival looks like this from the road: a plain warehouse with no sign, running part of the business of the company behind Prime Video, and part of Netflix&rsquo;s too.
+<br><br>Photograph: Vahurzpu, 2020, via Wikimedia Commons, CC BY-SA 4.0.
+</figcaption>
+</figure>
+
+<p>That decision only makes sense if you apply Chapter 11's build-or-rent rule carefully. Rent what is
 a commodity, build what differentiates you. Computing capacity was becoming a commodity, sold by the
 hour, available to Netflix and to everyone else on the same terms. Owning racks of it was never going
 to be the reason somebody subscribed. So Netflix rented the commodity from whoever ran it best, put
@@ -800,28 +1019,76 @@ invoice.</p>
 <p>Accepting it is not the same as ignoring it. The risk in that arrangement is real: a supplier who
 is also a competitor sets your prices, sees your capacity patterns, and can change terms. Netflix
 manages that risk the way every company should manage a dependency it cannot remove, by keeping the
-part that matters most out of the arrangement entirely. Section 4.5 is that part. Before you get
+part that matters most out of the arrangement entirely. Section 4.6 is that part. Before you get
 there, notice that the company made the uncomfortable choice deliberately, in public, and could
 explain it. A dependency you have chosen and can justify is a strategy. The same dependency arrived at
 by drift is an exposure.</p>
+
+<p>It is also a data-ownership decision. Netflix's member records and viewing history, the raw material
+its recommendations learn from, sit on Amazon's machines. Under the shared responsibility model from
+section 2.1, Netflix owns that data and answers for it, and Amazon runs the computers underneath. That
+arrangement can be safe between rivals, but only if the owner has decided who can see the data and what
+it would take to leave.</p>
 
 <h3>4.3 Seven years to zero data centers</h3>
 
 <p>The migration took seven years, finishing in early January 2016 when Netflix shut down the last
 data-center pieces serving its streaming product. The company is candid about why it took so long:
-the easy path was to forklift existing systems into AWS unchanged, and Netflix refused it, because
-that moves your problems along with your servers. Instead it rebuilt nearly everything cloud-native,
-as distributed systems designed to expect failure. The payoff figures come from Netflix's own announcement: eight times the streaming members it had in
-2008, overall viewing up a thousandfold, and elasticity that let engineers add thousands of virtual
-servers and petabytes of storage in minutes. The proof-of-concept moment came the same month the migration ended: on January
+the easy path was to move its existing systems into AWS unchanged, and Netflix refused it, because
+that moves your problems along with your servers. Instead it rebuilt nearly everything to run across
+many rented machines and to keep working when some of them failed. The payoff figures come from Netflix's own announcement: eight times the streaming members it had in
+2008, overall viewing up a thousandfold, and elasticity that let engineers add thousands of rented
+servers and enormous amounts of storage in minutes. The proof-of-concept moment came the same month the migration ended: on January
 6, 2016, Netflix switched on service in more than 130 additional countries at once, a launch its own
-racks could never have absorbed.<sup class="cite"><a href="#src-5" aria-label="Source 5">5</a></sup></p>
+racks could never have absorbed.<sup class="cite"><a href="#src-15" aria-label="Source 15">15</a></sup></p>
 
-<h3>4.4 Assume everything fails</h3>
+<figure class="diagram" style="margin:1.8rem auto;max-width:620px">
+<svg viewBox="0 0 620 190" xmlns="http://www.w3.org/2000/svg" role="img" style="width:100%;height:auto;font-family:var(--sans)" aria-labelledby="nfT nfD">
+<title id="nfT">Netflix's move to the cloud, 2007 to 2016</title>
+<desc id="nfD">A timeline from 2007 to 2016. Streaming launches in 2007. A three-day DVD outage in August
+2008 starts the move to Amazon's cloud. On Christmas Eve 2012 an Amazon outage stops Netflix streaming.
+In 2013 House of Cards premieres, Netflix's first major original show. In January 2016 Netflix closes
+the last of its own data centers for streaming and launches in more than 130 countries in one day. The
+two outages are highlighted.</desc>
+<line x1="30" y1="96" x2="600" y2="96" stroke="var(--ink)" stroke-width="1.6"/><line x1="40" y1="92" x2="40" y2="100" stroke="var(--ink)" stroke-width="1"/><text x="40" y="178" font-size="10" fill="var(--muted)" text-anchor="middle">2007</text><line x1="98" y1="92" x2="98" y2="100" stroke="var(--ink)" stroke-width="1"/><text x="98" y="178" font-size="10" fill="var(--muted)" text-anchor="middle">2008</text><line x1="156" y1="92" x2="156" y2="100" stroke="var(--ink)" stroke-width="1"/><text x="156" y="178" font-size="10" fill="var(--muted)" text-anchor="middle">2009</text><line x1="214" y1="92" x2="214" y2="100" stroke="var(--ink)" stroke-width="1"/><text x="214" y="178" font-size="10" fill="var(--muted)" text-anchor="middle">2010</text><line x1="272" y1="92" x2="272" y2="100" stroke="var(--ink)" stroke-width="1"/><text x="272" y="178" font-size="10" fill="var(--muted)" text-anchor="middle">2011</text><line x1="330" y1="92" x2="330" y2="100" stroke="var(--ink)" stroke-width="1"/><text x="330" y="178" font-size="10" fill="var(--muted)" text-anchor="middle">2012</text><line x1="388" y1="92" x2="388" y2="100" stroke="var(--ink)" stroke-width="1"/><text x="388" y="178" font-size="10" fill="var(--muted)" text-anchor="middle">2013</text><line x1="446" y1="92" x2="446" y2="100" stroke="var(--ink)" stroke-width="1"/><text x="446" y="178" font-size="10" fill="var(--muted)" text-anchor="middle">2014</text><line x1="504" y1="92" x2="504" y2="100" stroke="var(--ink)" stroke-width="1"/><text x="504" y="178" font-size="10" fill="var(--muted)" text-anchor="middle">2015</text><line x1="562" y1="92" x2="562" y2="100" stroke="var(--ink)" stroke-width="1"/><text x="562" y="178" font-size="10" fill="var(--muted)" text-anchor="middle">2016</text><circle cx="40" cy="96" r="5.5" fill="var(--ink)" stroke="var(--white)" stroke-width="1.2"/><line x1="40" y1="90" x2="40" y2="66" stroke="var(--rule)"/><text x="40" y="40" font-size="10.5" font-weight="700" fill="var(--ink)" text-anchor="start">Streaming</text><text x="40" y="54" font-size="10.5" fill="var(--ink)" text-anchor="start">launches</text><circle cx="133" cy="96" r="5.5" fill="var(--magenta)" stroke="var(--white)" stroke-width="1.2"/><line x1="133" y1="102" x2="133" y2="126" stroke="var(--rule)"/><text x="133" y="140" font-size="10.5" font-weight="700" fill="var(--magenta)" text-anchor="middle">Three-day</text><text x="133" y="154" font-size="10.5" fill="var(--ink)" text-anchor="middle">DVD outage</text><circle cx="387" cy="96" r="5.5" fill="var(--magenta)" stroke="var(--white)" stroke-width="1.2"/><line x1="387" y1="90" x2="387" y2="66" stroke="var(--rule)"/><text x="387" y="40" font-size="10.5" font-weight="700" fill="var(--magenta)" text-anchor="middle">Christmas Eve</text><text x="387" y="54" font-size="10.5" fill="var(--ink)" text-anchor="middle">outage</text><circle cx="394" cy="96" r="5.5" fill="var(--ink)" stroke="var(--white)" stroke-width="1.2"/><line x1="394" y1="102" x2="394" y2="126" stroke="var(--rule)"/><text x="394" y="140" font-size="10.5" font-weight="700" fill="var(--ink)" text-anchor="middle">House of Cards</text><text x="394" y="154" font-size="10.5" fill="var(--ink)" text-anchor="middle">premieres</text><circle cx="562" cy="96" r="5.5" fill="var(--ink)" stroke="var(--white)" stroke-width="1.2"/><line x1="562" y1="90" x2="562" y2="66" stroke="var(--rule)"/><text x="562" y="40" font-size="10.5" font-weight="700" fill="var(--ink)" text-anchor="end">Last data center</text><text x="562" y="54" font-size="10.5" fill="var(--ink)" text-anchor="end">closed</text><circle cx="563" cy="96" r="5.5" fill="var(--ink)" stroke="var(--white)" stroke-width="1.2"/><line x1="563" y1="102" x2="563" y2="126" stroke="var(--rule)"/><text x="563" y="140" font-size="10.5" font-weight="700" fill="var(--ink)" text-anchor="end">130+ countries</text><text x="563" y="154" font-size="10.5" fill="var(--ink)" text-anchor="end">in one day</text>
+</svg>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--muted);margin-top:.55rem;line-height:1.55"><strong style="color:var(--ink)">Seven years, bracketed by two bad days.</strong> The 2008 outage started the move; the 2012 outage, on somebody else&rsquo;s computers, taught Netflix how to live with it. In between, the company started turning what it knew about viewers into shows of its own.</figcaption>
+</figure>
 
-<p>On Christmas Eve 2012, a maintenance process at AWS was run against production by mistake and
-deleted data an elastic load balancing service depended on. Traffic stopped on a few load balancers
-just after noon Pacific time. Netflix streaming started failing within minutes, first on a few device
+<h3>4.4 What streaming recorded: data becomes the product</h3>
+
+<p>Moving to streaming changed more than where the computers were. It changed what Netflix knew. A DVD in
+an envelope told the company very little: which disc went out, and when it came back. A stream tells it
+almost everything. It records what you started, where you paused, where you gave up, what you watched
+next, on which device, and at what time of night. Rented computers that could store and analyze all of
+that, for every member, turned Netflix into a company that knows its audience minute by minute.</p>
+
+<p>The first use was recommendations, the collaborative filtering from Chapter 12. In 2015 two Netflix
+executives wrote in <em>ACM Transactions on Management Information Systems</em>, a journal in this
+book&rsquo;s own field, that recommendations influence about 80 percent of the hours streamed on Netflix;
+the rest come from search.<sup class="cite"><a href="#src-16" aria-label="Source 16">16</a></sup> They also estimated that personalization saves the company more than
+a billion dollars a year by keeping members who would otherwise cancel. Chapter 12&rsquo;s warning applies
+too. What Netflix recommends shapes what people watch, and what they watch becomes the next round of
+data.</p>
+
+<p>The second use was bigger. In 2013 Netflix began making its own shows instead of only licensing other
+studios&rsquo;. For its first major original it committed about $100 million to two full seasons of
+<em>House of Cards</em>, a political drama, without asking to see a pilot episode first, which is what
+television networks usually require.<sup class="cite"><a href="#src-17" aria-label="Source 17">17</a></sup> The company&rsquo;s confidence came from its viewing records.
+They showed a large audience for the original British version of the show, for films directed by David
+Fincher, and for films starring the show&rsquo;s lead actor. The new series was built where those
+audiences overlapped, and Netflix even cut different trailers for different kinds of viewers.<sup class="cite"><a href="#src-18" aria-label="Source 18">18</a></sup></p>
+
+<p>Notice what the data did and did not do. It told Netflix who the audience was before it spent the
+money. It did not write a single scene. And it raised the stakes of the decision in section 4.2: the
+most valuable thing Netflix owned was no longer its catalog or its computers, but what it knew about its
+members, and that knowledge lived on a rival&rsquo;s machines.</p>
+
+<h3>4.5 Assume everything fails</h3>
+
+<p>On Christmas Eve 2012, an Amazon maintenance process was run against live systems by mistake and
+deleted data that one of Amazon's traffic-routing services needed. Parts of that service stopped just
+after noon Pacific time. Netflix streaming started failing within minutes, first on a few device
 types, then on games consoles and mobile devices by mid-afternoon. It happened on one of the heaviest
 viewing nights of the year, and Netflix could not fix it, because the broken part belonged to
 somebody else.</p>
@@ -832,7 +1099,7 @@ treating it as a condition to be survived. Its engineers built tools that delibe
 its own live production systems, a practice now called <strong>chaos engineering</strong>. The best-known tool is called Chaos Monkey, which switches off
 running servers at random during working hours. If a service cannot survive losing a machine at two in
 the afternoon on a Tuesday, the team finds out on a Tuesday afternoon while everybody is at their
-desks, instead of on Christmas Eve.<sup class="cite"><a href="#src-6" aria-label="Source 6">6</a></sup></p>
+desks, instead of on Christmas Eve.<sup class="cite"><a href="#src-19" aria-label="Source 19">19</a></sup></p>
 
 <p>Chapter 9 gave you the term for the written plan covering the bad day: business continuity. Most
 organizations write that plan, file it, and discover on the bad day which parts of it were wishes.
@@ -840,24 +1107,56 @@ Netflix automated the rehearsal so the plan could not quietly rot. That is the t
 and it costs a decision rather than a budget. Somebody has to be willing to let a system break on
 purpose, on a normal day, in front of everyone, because the alternative is finding out later.</p>
 
-<h3>4.5 The part Netflix built anyway</h3>
+<h3>4.6 The part Netflix built anyway</h3>
 
 <p>Here is the detail that turns the Netflix case from a cloud advertisement into a strategy lesson.
 Everything that happens before you press Play, sign-in, search, recommendations, billing, runs on
-AWS. The video itself does not. Netflix built and owns <strong>Open Connect</strong>, its private <strong>content delivery network (CDN)</strong>. It consists of
-purpose-built appliances loaded with the catalog and installed inside internet service providers
-around the world. The actual stream travels a few network hops from a Netflix-owned box near you,
-not across the planet from a rented one. Open
-Connect carries the entirety of Netflix's video traffic, tens of terabits per second at peak, one of
-the highest-volume networks in existence.<sup class="cite"><a href="#src-7" aria-label="Source 7">7</a></sup></p>
+AWS. The video itself does not. Netflix built and owns <strong>Open Connect</strong>, its own <strong>content delivery network
+(CDN)</strong>: a set of computers placed close to viewers so the video travels a short distance. Netflix
+loads boxes with its catalog and installs them inside internet providers around the world, so the stream
+you watch comes from a Netflix-owned box near you, not across the planet from a rented one. Open Connect
+carries all of Netflix's video.<sup class="cite"><a href="#src-20" aria-label="Source 20">20</a></sup></p>
+
+<figure class="diagram" style="margin:1.8rem auto;max-width:600px">
+<svg viewBox="0 0 600 250" xmlns="http://www.w3.org/2000/svg" role="img" style="width:100%;height:auto;font-family:var(--sans)" aria-labelledby="spT spD">
+<defs><marker id="spa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--ink)"/></marker></defs>
+<title id="spT">What happens when you press Play on Netflix</title>
+<desc id="spD">A viewer's screen in the middle. On the left, everything before Play, sign-in, search,
+recommendations, and billing, comes from Amazon's cloud, rented from a rival. On the right, the video
+itself comes from a Netflix-owned Open Connect box inside the viewer's internet provider. The left box is
+labeled rent the commodity and the right box build what customers notice.</desc>
+<rect x="0" y="40" width="200" height="130" fill="var(--off-white)" stroke="var(--ink)" stroke-width="1"/>
+<text x="100" y="62" font-size="11.5" font-weight="700" fill="var(--ink)" text-anchor="middle">AMAZON&rsquo;S CLOUD</text>
+<text x="100" y="78" font-size="10" fill="var(--muted)" text-anchor="middle">rented, from a rival</text>
+<text x="100" y="102" font-size="10.5" fill="var(--ink)" text-anchor="middle">sign-in</text>
+<text x="100" y="118" font-size="10.5" fill="var(--ink)" text-anchor="middle">search</text>
+<text x="100" y="134" font-size="10.5" fill="var(--ink)" text-anchor="middle">recommendations</text>
+<text x="100" y="150" font-size="10.5" fill="var(--ink)" text-anchor="middle">billing</text>
+<rect x="230" y="70" width="140" height="80" rx="6" fill="var(--ink)"/>
+<text x="300" y="104" font-size="12" font-weight="700" fill="var(--white)" text-anchor="middle">YOUR SCREEN</text>
+<path d="M292 118 L292 136 L308 127 Z" fill="var(--magenta)"/>
+<rect x="400" y="40" width="200" height="130" fill="var(--magenta)" stroke="var(--ink)" stroke-width="1"/>
+<text x="500" y="62" font-size="11.5" font-weight="700" fill="var(--white)" text-anchor="middle">OPEN CONNECT</text>
+<text x="500" y="78" font-size="10" fill="var(--white)" text-anchor="middle">owned by Netflix</text>
+<text x="500" y="106" font-size="10.5" fill="var(--white)" text-anchor="middle">the video itself, from a</text>
+<text x="500" y="122" font-size="10.5" fill="var(--white)" text-anchor="middle">Netflix box inside your</text>
+<text x="500" y="138" font-size="10.5" fill="var(--white)" text-anchor="middle">internet provider</text>
+<line x1="200" y1="105" x2="228" y2="105" stroke="var(--ink)" stroke-width="1.4" marker-end="url(#spa)"/>
+<line x1="400" y1="118" x2="372" y2="118" stroke="var(--ink)" stroke-width="1.4" marker-end="url(#spa)"/>
+<text x="100" y="196" font-size="11" font-weight="700" fill="var(--ink)" text-anchor="middle">Rent the commodity</text>
+<text x="500" y="196" font-size="11" font-weight="700" fill="var(--magenta)" text-anchor="middle">Build what customers notice</text>
+<text x="300" y="236" font-size="10.5" fill="var(--muted)" text-anchor="middle">Everything before Play is rented. The moment of watching is owned.</text>
+</svg>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--muted);margin-top:.55rem;line-height:1.55"><strong style="color:var(--ink)">One press of a button, two companies&rsquo; computers.</strong> Netflix rents the parts any company could rent and owns the one part a viewer actually feels: whether the picture starts fast and never stutters.</figcaption>
+</figure>
 
 <p>Run Chapter 11's build-or-rent rule over that split and it resolves perfectly. Elastic, spiky, commodity
 computing: rent it, even from a rival. The predictable, colossal, quality-defining flow of bits that
 <em>is</em> the customer experience: own it, tune it, and let it become a moat. The lesson is not "use the cloud" or "avoid the cloud." It is that build-versus-rent is decided
 capability by capability, by the same differentiator test, at every scale from Cascadia's registers
-to a third of the internet's evening traffic.</p>
+to one of the largest video services in the world.</p>
 
-<h3>4.6 What it costs, and who does the arithmetic</h3>
+<h3>4.7 What it costs, and who does the arithmetic</h3>
 
 <p>Netflix has never published what it pays Amazon. Around the time the migration finished, the company
 said it expected to spend more than $800 million on technology and development in 2016, up from $651
@@ -869,8 +1168,8 @@ and elasticity, and it says it got both.</p>
 to save money and a large number of them have since done the arithmetic and disagreed. The clearest
 worked example is 37signals, which runs Basecamp. The company says it spent about $3.2 million on
 cloud services in 2022, bought roughly $700,000 of its own servers, moved its applications onto them
-without hiring anyone new, and cut its annual bills by around $2 million.<sup class="cite"><a href="#src-8" aria-label="Source 8">8</a></sup> In 2025 it went further, buying its own
-storage so it could close its Amazon account entirely.<sup class="cite"><a href="#src-8" aria-label="Source 8">8</a></sup> Dropbox made a bigger version
+without hiring anyone new, and cut its annual bills by around $2 million.<sup class="cite"><a href="#src-21" aria-label="Source 21">21</a></sup> In 2025 it went further, buying its own
+storage so it could close its Amazon account entirely.<sup class="cite"><a href="#src-21" aria-label="Source 21">21</a></sup> Dropbox made a bigger version
 of the same move years earlier. Investors have a name for the pattern now, the cloud paradox: the
 rented infrastructure that makes a young company fast becomes a permanent charge against its margins
 once its demand is large and predictable.</p>
@@ -883,27 +1182,27 @@ that is enormous and predictable. Nothing about that requires you to have an opi
 in general. It requires you to know which of those two descriptions fits the workload in front of
 you, and to be willing to redo the sum when it changes.</p>
 
-<h3>4.7 The five components at Netflix</h3>
+<h3>4.8 The five components at Netflix</h3>
 
 <p>Now that you have seen the whole system, here it is as five components, the way this course maps every case, and the last time the book draws this table. Look at how many rows Netflix rents from a competitor, and which one it refused to.</p>
 
 <table class="sumtable stack-sm">
 <tr><th>Component</th><th>In the case</th><th>The lesson</th></tr>
 <tr><td data-label="Component"><strong>Hardware</strong></td><td data-label="In the case">Rented by the hour from a rival; owned where the stream lives</td><td data-label="The lesson">Hardware became a utility, and the bill became strategy</td></tr>
-<tr><td data-label="Component"><strong>Software</strong></td><td data-label="In the case">Rebuilt cloud-native; systems that assume their own failure</td><td data-label="The lesson">Moving unchanged moves your problems with you</td></tr>
-<tr><td data-label="Component"><strong>Data</strong></td><td data-label="In the case">Everything before Play on AWS; the catalog staged inside ISPs</td><td data-label="The lesson">Data has gravity: where it sits decides cost, speed, and risk</td></tr>
-<tr><td data-label="Component"><strong>Networks</strong></td><td data-label="In the case">Open Connect, tens of terabits per second of owned delivery</td><td data-label="The lesson">The network is not plumbing when it is the product</td></tr>
-<tr><td data-label="Component"><strong>People</strong></td><td data-label="In the case">Engineers who break things on purpose; FinOps; the neighbors</td><td data-label="The lesson">Every rented machine still has humans deciding, and absorbing</td></tr>
+<tr><td data-label="Component"><strong>Software</strong></td><td data-label="In the case">Rebuilt to keep working when rented machines fail</td><td data-label="The lesson">Moving unchanged moves your problems with you</td></tr>
+<tr><td data-label="Component"><strong>Data</strong></td><td data-label="In the case">Viewing data that picks shows, on a rival&rsquo;s machines; the catalog inside internet providers</td><td data-label="The lesson">You own the data wherever it sits, and you answer for it</td></tr>
+<tr><td data-label="Component"><strong>Networks</strong></td><td data-label="In the case">Open Connect, its own delivery boxes inside internet providers</td><td data-label="The lesson">The network is not plumbing when it is the product</td></tr>
+<tr><td data-label="Component"><strong>People</strong></td><td data-label="In the case">Engineers who break things on purpose; managers who watch the bill</td><td data-label="The lesson">Every rented machine still has humans deciding, and absorbing</td></tr>
 </table>
 
-<h3>4.8 What's next: what has changed since, and what has not</h3>
+<h3>4.9 What's next: what has changed since, and what has not</h3>
 
 <p>Netflix now serves a business that did not exist when it started this: hundreds of millions of paid
 memberships, its own studio output, live events, games and advertising, all on rented computers and
 its own delivery network. The architecture held while the company became something else, which is the
 strongest argument anyone has made for the rebuild being worth seven years.</p>
 
-<p>What has not changed is the exposure. Section 2 opened with the October 2025 failure in AWS's
+<p>What has not changed is the exposure. Section 2.2 described the October 2025 failure in AWS's
 largest region and the long list of services that fell over with it. Renting from one landlord still
 means inheriting that landlord's worst morning. The insurance against it is still the expensive
 kind: running in more than one region, or with more than one provider, and paying for
@@ -911,15 +1210,24 @@ capacity you hope never to use. Netflix bought that insurance early and kept pay
 companies decide they cannot afford it, which is a legitimate decision and only a decision if somebody
 actually made it.</p>
 
-<p>The newest pressure on the arithmetic is the one section 2.2 costed out. The same providers are now
-buying accelerators for AI workloads on a scale that is reshaping electricity demand, and that shows
+<figure class="diagram" style="margin:1.9rem auto;max-width:640px">
+<img src="ashburn-data-centers-aerial.jpg" width="960" height="612" loading="lazy" style="width:100%;height:auto"
+ alt="An aerial view from an airplane window of Loudoun County, Virginia: dozens of large, flat-roofed, windowless white and gray buildings spread among roads, parking lots, and housing developments, under a partly cloudy sky.">
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">
+Data centers among the office parks and subdivisions near Ashburn, in Loudoun County, Virginia, seen from a plane. Amazon&rsquo;s largest region, where the October 2025 outage began, is in this part of Northern Virginia. When one landlord&rsquo;s buildings cluster this tightly, so does the risk.
+<br><br>Photograph: Theodore Christopher, 2025, via Wikimedia Commons, CC0.
+</figcaption>
+</figure>
+
+<p>The newest pressure on the arithmetic is the one Chapter 12 costed out. The same providers are now
+buying computers built for AI on a scale that is reshaping electricity demand, and that shows
 up in prices, in waiting lists for capacity, and in the politics of where the next building goes. When
 you approve a system in five years, the question will not be whether to use the cloud. It will be
 which parts, in whose buildings, powered how, and at what price when the contract renews.</p>
 
-<h3>4.9 What a business technology manager takes from this case</h3>
+<h3>4.10 What a business technology manager takes from this case</h3>
 
-<p>Strip the Netflix case down to what you can reuse in any company. Four decisions came up in it, and each one is a decision you will be in the room for.</p>
+<p>Strip the Netflix case down to what you can reuse in any company. Five decisions came up in it, and each one is a decision you will be in the room for.</p>
 
 <p><strong>Rent the commodity, even from a rival.</strong> Netflix runs on Amazon's computers while Amazon's Prime Video competes with it, because computing had become something Netflix could rent better than build. Chapter 11's rule, pushed to its limit: if a competitor could buy the same thing tomorrow, it is not your advantage, so pay somebody else to run it.</p>
 
@@ -929,68 +1237,96 @@ which parts, in whose buildings, powered how, and at what price when the contrac
 
 <p><strong>Plan for the day your provider is down.</strong> Renting from one company means that company's bad morning is yours, and an outage that takes out a region takes out everyone in it at once. A manager who has written down what the business does when the cloud is unreachable, even if the answer is "wait," has made a decision. One who has not has made a bet.</p>
 
-<h2 id="other"><span class="num">5</span>The downside: the cloud's neighbors, and who does this work</h2>
+<p><strong>Own the data, wherever it lives.</strong> Netflix&rsquo;s most valuable records sit on a rival&rsquo;s machines, and that is safe only because Netflix decided what it owns, who can see it, and how it would leave. Ask section 2.1&rsquo;s four questions before the first record moves, not after the contract renews.</p>
 
-<p>The cloud's benefits disperse globally; its burdens concentrate locally, and the people carrying
-them rarely chose to. A data-center cluster arrives with jobs and tax revenue, and also with demand
-that can strain the local grid and, in some markets, shows up in residential electricity debates. In
-dry regions, its cooling competes for water with farms and towns. Its diesel backup generators and
-constant mechanical hum are a neighbor's daily reality, not an abstraction. Communities from
-Northern Virginia to Ireland to the Southwest are now negotiating, and sometimes fighting, over
-whether and how the next campus gets built.</p>
 
-<p>You have seen this pattern twice before: security costs exported to patients in Chapter 9, AI's
-costs exported to applicants and labelers in Chapter 12. Economists call it an externality all three
-times. Here they are <strong>data-center externalities</strong>, and the governance answer is the same all three times: someone has to represent the people
-who are not in the room when the decision is made. This course keeps returning to that sentence
-because, in an economy that runs on information systems, the person in the room is increasingly
-someone with your degree.</p>
+<h2 id="other"><span class="num">5</span>The downside: the cloud's neighbors</h2>
 
-<h3>5.1 What business people do with the cloud</h3>
+<p>Start with what the cloud gave, because it is real. Section 1.5 described companies that could not
+have existed without it, and Netflix reached more than 130 countries in a day. But the cloud's benefits
+spread around the world, and its burdens land in a few places, on people who rarely chose them.</p>
 
-<p><strong>Cloud cost management, now a discipline called FinOps.</strong> Elasticity cuts both
-ways: capacity that scales up in minutes generates bills that do too, and someone must own the
-question of what the company is paying for and why. Rightsizing, reservations, and the monthly
-argument about whose workload that is: analytical work, sitting exactly on Lab 5's skills.</p>
+<p>A data-center campus arrives with construction jobs and tax revenue. It also arrives with demand that
+can strain the local power grid and show up in local electricity debates. In dry regions its cooling
+competes for water with farms and towns. Its backup diesel generators and constant mechanical hum are a
+neighbor's daily reality. Because the buildings cluster where land and power are cheap, the local
+numbers get large: data centers use on the order of a fifth of Ireland's electricity and, by commonly
+cited estimates, a quarter of Virginia's. Communities from Northern Virginia to Ireland to the American
+Southwest are now negotiating, and sometimes fighting, over where the next campus goes.</p>
 
-<p><strong>Vendor strategy and negotiation.</strong> Section 2 made lock-in a business problem, so
-contracts, egress terms, exit plans, and multi-cloud trade-offs are procurement strategy with
-Chapter 3's switching-cost math at the center.</p>
+<p>In November 2026 that fight reached the ballot box. Voters decided 41 local and state ballot measures
+about data centers in ten states, and sided against the data centers in all but one.<sup class="cite"><a href="#src-22" aria-label="Source 22">22</a></sup> Candidates
+in both parties promised pauses or new limits on construction, most often by tying data centers to rising
+electric bills.<sup class="cite"><a href="#src-23" aria-label="Source 23">23</a></sup> Many who made the issue central to their campaigns won, and in one national poll
+of voters, people opposed building a data center in their own community by roughly three to one.<sup class="cite"><a href="#src-24" aria-label="Source 24">24</a></sup>
+Elections turn on many issues at once, and the cost of living was the larger one, so the results do not
+show that data centers alone decided any race. They do show that where a company puts its computers has
+become a public question, answered partly by voters who will never be its customers.</p>
 
-<p><strong>Continuity planning.</strong> Deciding, before the next us-east-1 morning, which of the
-company's systems must survive a provider region failing, and what that insurance is worth: Chapter
-9's discipline, applied to the landlord.</p>
+<figure class="diagram" style="margin:1.9rem auto;max-width:640px">
+<img src="google-data-center-the-dalles.jpg" width="960" height="609" loading="lazy" style="width:100%;height:auto"
+ alt="A long, low, beige industrial building with rows of large gray cooling units along its front, behind a chain-link fence and an empty gravel lot. Brown, dry hills rise behind it under a cloudy sky.">
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">
+Google's data center in The Dalles, Oregon, on the Columbia River. Companies built here for cheap hydroelectric power and river water to cool the machines. This is what &ldquo;the cloud&rdquo; looks like from the road: a factory, with a factory's appetite for electricity and water, in a dry place a few hours from Bellingham.
+<br><br>Photograph: Tony Webster, 2015, via Wikimedia Commons, CC BY 2.0.
+</figcaption>
+</figure>
 
-<p><strong>Sustainability accounting.</strong> Emissions from rented computing increasingly land in
-corporate climate reporting, and regulators and customers are learning to read it. Someone has to
-measure the footprint of systems the company does not own, negotiate greener regions and contracts,
-and answer for the trend line: Chapter 6's measurement-validity problem, with a planet attached.</p>
+<p>The global picture is in Chapter 12, section 5.5: the International Energy Agency's estimate that the
+world's data centers used about 1.5 percent of all electricity in 2024, with demand on track to roughly
+double by 2030 as AI grows.<sup class="cite"><a href="#src-25" aria-label="Source 25">25</a></sup> This chapter adds the local half of that story. A single stream or
+prompt costs very little. At scale, computing is an industry, and industries have neighbors.</p>
+
+<p>You have seen this pattern twice before: security costs passed to patients in Chapter 9, and AI's
+costs passed to applicants and labelers in Chapter 12. Economists call it an externality all three
+times. Here they are <strong>data-center externalities</strong>, and the answer is the same all three
+times: someone has to speak for the people who are not in the room when the decision is made.</p>
+
+<h3>5.1 The last word: you are the one in the room</h3>
+
+<p>This is the end of the book, so it is worth saying plainly what the thirteen chapters add up to.
+Every system you studied was hardware, software, data, networks, and people, and in every case the
+technology was the easy part. Netflix did not win because it found better computers than anyone else;
+it rented the same computers everyone could rent. It won because people made clear decisions about what
+to rent, what to build, what to protect, and what to rehearse. The same is true of Domino's, of Every
+Cure, and of every case in between.</p>
+
+<p>The decisions in this chapter are the same kind. Which systems to rent and from whom. Where the data
+lives and how you get it back. How much insurance to buy against a bad morning. Whose electricity and
+water a new building uses. None of these is an engineering question, and all of them will be decided by
+somebody with a business degree who understands how the systems work. After this course, that can be
+you. The foundation is rented. The judgment is not, and it is the part of the system that companies
+cannot buy by the hour.</p>
 
 <div class="takeaways"><span class="obj-tag">Key takeaways</span>
 <ul>
-<li>Renting computers outsources none of the responsibility for the data on them, the software above them, or the decisions about both.</li>
-<li>The three service models differ by where the line of responsibility sits. The higher the layer you rent, the less you manage and the less you can change.</li>
-<li>The landlord's bad morning is your bad morning. Resilience is a business decision about how much insurance to buy, made before the day it is needed.</li>
-<li>At scale, computing is industry, with industry's bills. The people who plan, site, buy, and account for it decide how those bills get paid.</li>
-<li>Build-versus-rent is decided capability by capability. Netflix rented the commodity from its fiercest rival and built the one piece a fire could not be allowed to touch.</li>
+<li>The cloud is now a utility: the foundation almost every business runs on. The question is not whether to use it, but how to depend on it wisely.</li>
+<li>Renting the computers moves none of the ownership of, or responsibility for, the data on them. Ask how you would get it back before you put it in.</li>
+<li>A few providers run most of the world's rented computing, so one landlord's bad morning becomes everyone's. Resilience is insurance, bought in advance.</li>
+<li>Lock-in is built from exit fees, provider-only tools, and accumulated data. Law is removing the first; planning the exit on day one handles the rest.</li>
+<li>Build or rent is decided capability by capability. Netflix rented the commodity from its fiercest rival and built the one piece customers would notice.</li>
+<li>At scale, computing is an industry with neighbors. The people who decide where it goes, and who pays, are increasingly people with your degree.</li>
 </ul>
 </div>
 
 <h2 id="vocab"><span class="num">6</span>Vocabulary</h2>
 
 <dl class="vocab">
-<div><dt>Cloud computing</dt><dd>Other people's data centers, rented over the network, usually by the hour.</dd></div>
-<div><dt>IaaS / PaaS / SaaS</dt><dd>Renting raw machines, a managed platform, or the finished application.</dd></div>
-<div><dt>Capex vs. opex</dt><dd>Buying capacity years ahead versus paying for use as it happens.</dd></div>
-<div><dt>Elasticity</dt><dd>Capacity that grows and shrinks in minutes, so peak demand stops dictating year-round cost.</dd></div>
-<div><dt>Region / availability zone</dt><dd>The geographic units clouds are sold in; where your workload lives, fails, and is billed.</dd></div>
-<div><dt>Content delivery network (CDN)</dt><dd>Servers placed near users so heavy content travels a short distance; Netflix's is Open Connect.</dd></div>
-<div><dt>Chaos engineering</dt><dd>Breaking your own systems on purpose so failure is designed for before it is suffered.</dd></div>
-<div><dt>Vendor lock-in / egress fees</dt><dd>Switching costs implemented in infrastructure: free to arrive, priced to leave.</dd></div>
-<div><dt>Concentration risk</dt><dd>Chapter 9's word, computing edition: too much of the internet on one landlord's floor.</dd></div>
-<div><dt>FinOps</dt><dd>The discipline of managing cloud spend; elasticity's bill, owned by someone.</dd></div>
-<div><dt>Data gravity</dt><dd>Compute and services accumulate around where the data already sits, which is why the first region choice lasts.</dd></div>
-<div><dt>Data-center externalities</dt><dd>Energy, water, noise, and grid strain landing on neighbors of the buildout.</dd></div>
+<div><dt>Cloud computing / data center</dt><dd>Other people's computers, rented over the internet / the buildings those computers live in.</dd></div>
+<div><dt>Utility</dt><dd>A service so basic a business assumes it, paid for by use; what computing has become.</dd></div>
+<div><dt>IaaS / PaaS / SaaS</dt><dd>Renting the empty apartment, the furnished apartment, or the hotel room: less to manage, less you can change.</dd></div>
+<div><dt>Capex vs. opex</dt><dd>Buying capacity years ahead vs. paying monthly for what you use.</dd></div>
+<div><dt>Elasticity</dt><dd>Capacity that grows and shrinks with demand, so you pay for the peak only while it lasts.</dd></div>
+<div><dt>Data ownership</dt><dd>Keeping the rights to, and responsibility for, your data wherever it is stored.</dd></div>
+<div><dt>Shared responsibility model</dt><dd>The provider secures the cloud; the customer secures what it puts in it.</dd></div>
+<div><dt>Concentration risk</dt><dd>Too much depending on one supplier, so its failure becomes everyone's.</dd></div>
+<div><dt>Vendor lock-in / egress fees</dt><dd>When leaving costs more than staying / charges for moving data out.</dd></div>
+<div><dt>Service-level agreement (SLA)</dt><dd>A provider's written promise about reliability, and what you get when it is broken.</dd></div>
+<div><dt>Region</dt><dd>A cluster of a provider's data centers in one area; where your systems live and can fail together.</dd></div>
+<div><dt>Content delivery network (CDN)</dt><dd>Computers placed close to viewers so heavy content travels a short distance; Netflix's is Open Connect.</dd></div>
+<div><dt>Chaos engineering</dt><dd>Breaking your own systems on purpose so failure is planned for before it happens.</dd></div>
+<div><dt>Cloud paradox</dt><dd>Renting makes a young company fast and becomes a heavy cost once its demand is large and steady.</dd></div>
+<div><dt>Data-center externalities</dt><dd>Energy, water, noise, and grid strain landing on the neighbors of the buildout.</dd></div>
 </dl>
 
 <div class="ailight g">
@@ -998,8 +1334,8 @@ and answer for the trend line: Chapter 6's measurement-validity problem, with a 
   <div class="lighttext"><strong>Green &middot; AI as coach and sparring partner</strong>
   <p>Quiz yourself on the three service layers until you can place any product you use (your email,
   your bank's app, a game server) on the right one. Then one last audit in the Lab 1 spirit: ask an
-  AI to estimate the energy cost of an hour of streaming, and check its confident number against the
-  reasoning in section 2. If the quarter worked, you will catch what needs catching.</p></div>
+  AI to estimate the energy cost of an hour of streaming, and check its confident number against
+  Chapter 12, section 5.5, and section 5 of this one. If the quarter worked, you will catch what needs catching.</p></div>
 </div>
 
 <h2 id="discussion"><span class="num">7</span>Discussion questions</h2>
@@ -1009,28 +1345,28 @@ strongest opinion about, and be ready to say it first.</p>
 
 <ol class="dq">
   <li>Netflix rents nearly everything from a company that competes with it and owns the one piece that
-  carries the video. Apply Chapter 11's build, buy or subscribe rule to that split and say whether you
+  carries the video. Apply Chapter 11's build, buy, or subscribe rule to that split and say whether you
   would have drawn the line in the same place. Name one capability you would move to the other side.
   <span class="tag">Apply</span></li>
 
-  <li>On the October 2025 morning, thousands of companies discovered they had a landlord. Explain the
-  difference between concentration risk as Chapter 9 described it and as this chapter does, and say
-  what a company can realistically do about the second kind without doubling its costs.
-  <span class="tag">Analyze</span></li>
+  <li>On the October 2025 morning, thousands of companies discovered they had a landlord. Explain how
+  the cloud being a utility makes this kind of outage more likely to be shared, and say what a company
+  can realistically do about it without doubling its costs. <span class="tag">Analyze</span></li>
 
-  <li>Renting the hardware transfers none of the responsibility for the data, the software, or the
-  decisions. List, for Cascadia, what the co-op would still own after moving to the cloud, and say which
-  of those five components it is least prepared to own. <span class="tag">Systems</span></li>
+  <li>Cascadia is about to move its member records and sales history to a SaaS provider. Write the four
+  data-ownership questions from section 2.1 for this deal, say which answer would make you refuse to
+  sign, and say which of the five components the co-op is least prepared to own after the move.
+  <span class="tag">Systems</span></li>
 
-  <li>A single stream or prompt costs almost nothing, and data centers used about 1.5 percent of the
-  world's electricity in 2024 with a doubling projected. Reconcile those two facts, then say who inside
-  a company should be accountable for its computing footprint and what number they should be reporting.
+  <li>A provider promises 99.9 percent uptime, and its remedy for a broken promise is a credit worth 10
+  percent of that month's bill. For a business that makes most of its sales online, explain in plain
+  terms what that promise is and is not worth, and what you would do about the gap.
   <span class="tag">Apply</span></li>
 
   <li>Data centers cluster where land and power are cheap, and the people who live there did not choose
-  to host a fifth of a country's electricity demand. Is it acceptable for the convenience of everyone
-  else to be paid for locally by a few? Argue one side, state the strongest objection to your position,
-  and say what would change your mind. <span class="tag tag-hard">Ethics</span></li>
+  to host a large share of a country's electricity demand. Is it acceptable for the convenience of
+  everyone else to be paid for locally by a few? Argue one side, state the strongest objection to your
+  position, and say what would change your mind. <span class="tag tag-hard">Ethics</span></li>
 </ol>
 
 <h2 id="lab"><span class="num">8</span>From lecture to lab</h2>
@@ -1050,17 +1386,35 @@ decides which questions are cheap to answer. (Also: is a hotdog a sandwich? Lab 
 <details class="srcbox">
 <summary><h2 id="sources"><span class="num">9</span>Sources and further reading</h2></summary>
 <ul class="sources">
-<li id="src-1"><span class="srcnum">1</span> Amazon Web Services, <a href="https://aws.amazon.com/message/101925/" target="_blank" rel="noopener">&ldquo;Summary of the Amazon DynamoDB Service Disruption in Northern Virginia (US-EAST-1) Region&rdquo;</a>, post-event summary of the 19 and 20 October 2025 disruption in the US-East-1 (Northern Virginia) region, and contemporary reporting, for the DNS fault involving DynamoDB and the day of cascading outages. Section 2.1.</li>
-<li id="src-2"><span class="srcnum">2</span> International Energy Agency, <a href="https://www.iea.org/reports/energy-and-ai/executive-summary" target="_blank" rel="noopener"><em>Energy and AI</em>, executive summary (April 2025)</a>, for the 415 TWh and 1.5 percent figures for 2024, the roughly 945 TWh base case for 2030, the growth rate, and the U.S. share; and the IEA&rsquo;s <em>Key Questions on Energy and AI</em> (16 April 2026) for the 2025 estimate of about 485 TWh. The IEA updates these figures; use the current edition. Section 2.2.</li>
-<li id="src-3"><span class="srcnum">3</span> Accounts of Salesforce&rsquo;s founding in 1999 and its &ldquo;no software&rdquo; positioning. Marc Benioff&rsquo;s <em>Behind the Cloud</em> (2009) is the insider version and should be read as one. Mini-case 1.</li>
-<li id="src-4"><span class="srcnum">4</span> Netcraft, <a href="https://www.netcraft.com/blog/ovh-fire" target="_blank" rel="noopener">&ldquo;3.6 million websites taken offline after fire at OVH datacenters&rdquo;</a> (March 2021), and Reuters, via <a href="https://www.techpartner.news/news/millions-of-websites-offline-after-ovhcloud-data-centre-fire-in-france-562026" target="_blank" rel="noopener">iTnews, 11 March 2021</a>, for the scale of the outage and the company&rsquo;s statements, including the founder&rsquo;s advice to customers to activate their disaster recovery plans. Mini-case 2.</li>
-<li id="src-5"><span class="srcnum">5</span> Netflix, <a href="https://about.netflix.com/en/news/completing-the-netflix-cloud-migration" target="_blank" rel="noopener">&ldquo;Completing the Netflix Cloud Migration&rdquo;</a> (February 2016): the 2008 database corruption, the seven-year timeline, the cloud-native rebuild, the growth figures, and the January 2016 launch in 130 more countries. Around the same time the company said it expected to spend over $800 million on technology and development in 2016, against $651 million in 2015; it has never published what it pays Amazon (reported in <a href="https://groups.google.com/g/idnog/c/JCex89AftE8" target="_blank" rel="noopener">Ars Technica, 11 February 2016</a>). Sections 4.1 to 4.3 and 4.6.</li>
-<li id="src-6"><span class="srcnum">6</span> GeekWire, <a href="https://www.geekwire.com/2013/netflix-nightmare-amazon-explains-christmas-eve-outage-issues-apology/" target="_blank" rel="noopener">&ldquo;Netflix nightmare: Amazon explains Christmas Eve outage,&rdquo; January 2013</a>, covering both Amazon&rsquo;s explanation and Netflix&rsquo;s own post-mortem of the Christmas Eve 2012 Elastic Load Balancing outage; and the Netflix Technology Blog&rsquo;s published work on chaos engineering and the Simian Army. Section 4.4.</li>
-<li id="src-7"><span class="srcnum">7</span> Netflix, <a href="https://openconnect.netflix.com/Open-Connect-Overview.pdf" target="_blank" rel="noopener">&ldquo;Open Connect Overview&rdquo;</a>, for the company-owned delivery network that carries Netflix&rsquo;s video from appliances placed inside internet providers. Section 4.5.</li>
-<li id="src-8"><span class="srcnum">8</span> The Register, <a href="https://www.theregister.com/2024/10/21/37signals_aws_savings" target="_blank" rel="noopener">21 October 2024</a>, for 37signals&rsquo; $3.2 million 2022 cloud bill, about $700,000 of Dell servers, and savings of almost $2 million a year with the same team; and <a href="https://www.theregister.com/2025/05/09/37signals_cloud_repatriation_storage_savings" target="_blank" rel="noopener">9 May 2025</a>, for its move off Amazon&rsquo;s storage service. These are the company&rsquo;s own figures, and it is arguing a case. Section 4.6.</li>
-<li>Further reading. Andreessen Horowitz, &ldquo;The Cost of Cloud, a Trillion Dollar Paradox&rdquo; (2021), the source of the &ldquo;cloud paradox&rdquo; argument, and Dropbox&rsquo;s earlier move off AWS. Read both against Netflix&rsquo;s statement that cost was not why it moved. The Ireland and Virginia shares in section 2.2 are commonly cited estimates that move quickly; check them before teaching.</li>
-<li>Images. Google data center, The Dalles, Oregon, photograph by Tony Webster, 2015, <a href="https://commons.wikimedia.org/wiki/File:Google_Datacenter_-_The_Dalles,_Oregon_(17832143871).jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY 2.0. Salesforce Tower, photograph by Sharon Hahn Darlin, 2022, <a href="https://commons.wikimedia.org/wiki/File:San_Francisco,_California_April_2022_Salesforce_Tower.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY 2.0. Centre Pompidou website after the OVH fire, screenshot by Fraguando, 2021, <a href="https://commons.wikimedia.org/wiki/File:Falla_de_sitio_web_Pompidou_por_incendio_en_OVH.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0. The service-layer diagram is original to this book.</li>
-<li><strong>Verification note, 29 October 2026 (rebuild).</strong> Restructured to match Chapter 7. The IEA figures and the 37signals numbers were re-searched rather than taken from memory, and the IEA&rsquo;s 2026 estimate for 2025 was added. The earlier note mentioned an S3 incident the chapter does not contain; that reference is gone. Corrections: the case opening retold the 2008 outage and the &ldquo;renting from a rival&rdquo; point before sections 4.1 and 4.2 told them again; it is now a short hook. Two stats in the case row were global energy figures, not Netflix facts, and now live only in section 2.2. A check-yourself asked for three questions and answered with two. The lab bridge described a rent-or-own exercise the lab does not contain; it now describes Lab 10 as written. Five vocabulary terms that never appeared in the body (capex and opex, availability zone, chaos engineering, data gravity, data-center externalities) are now defined where they are used. Duplicate source entries were merged. The Netflix, AWS, Open Connect, and OVH entries were linked to their sources on the same day.</li>
+<li id="src-1"><span class="srcnum">1</span> U.S. Census Bureau, <a href="https://www.census.gov/content/dam/Census/library/publications/2001/demo/p23-207.pdf" target="_blank" rel="noopener"><em>Home Computers and Internet Use in the United States: August 2000</em></a> (P23-207, 2001), for households with a computer rising from 8.2 percent in 1984 to 51 percent in 2000. Section 1.2.</li>
+<li id="src-2"><span class="srcnum">2</span> Pew Research Center, <a href="https://www.pewresearch.org/internet/fact-sheet/internet-broadband/" target="_blank" rel="noopener">&ldquo;Internet, Broadband Fact Sheet&rdquo;</a>, for home broadband among U.S. adults at about 1 percent in 2000 and around 60 percent by 2010. Section 1.2.</li>
+<li id="src-3"><span class="srcnum">3</span> Nicholas Carr, <em>The Big Switch: Rewiring the World, from Edison to Google</em> (W. W. Norton, 2008), for the comparison between factories&rsquo; own generators and computing as a utility; and his earlier &ldquo;IT Doesn&rsquo;t Matter,&rdquo; <em>Harvard Business Review</em>, May 2003, cited in Chapter 3. Section 1.3.</li>
+<li id="src-4"><span class="srcnum">4</span> Synergy Research Group, as reported by <a href="https://www.datacenterdynamics.com/en/news/synergy-enterprise-cloud-infrastructure-spending-jumped-55-yoy-in-q3/" target="_blank" rel="noopener">DatacenterDynamics, Q3 2026</a>, for about $168 billion of enterprise cloud infrastructure spending in the quarter, 55 percent year-on-year growth driven by AI, and shares of about 26, 19, and 16 percent for Amazon, Microsoft, and Google. Shares move every quarter; recheck. Sections 1.5 and 2.2.</li>
+<li id="src-5"><span class="srcnum">5</span> Amazon Web Services, <a href="https://aws.amazon.com/en/compliance/shared-responsibility-model/" target="_blank" rel="noopener">&ldquo;Shared Responsibility Model&rdquo;</a>, for security &ldquo;of&rdquo; the cloud versus security &ldquo;in&rdquo; the cloud, and for the customer&rsquo;s responsibility for its own data and access. Section 2.1.</li>
+<li id="src-6"><span class="srcnum">6</span> Amazon Web Services, <a href="https://aws.amazon.com/message/101925/" target="_blank" rel="noopener">&ldquo;Summary of the Amazon DynamoDB Service Disruption in Northern Virginia (US-EAST-1) Region&rdquo;</a>, post-event summary of the 19 and 20 October 2025 disruption in the US-East-1 (Northern Virginia) region, and contemporary reporting, for the fault in Amazon&rsquo;s database service and the day of cascading outages. Section 2.2.</li>
+<li id="src-7"><span class="srcnum">7</span> Amazon Web Services, <a href="https://aws.amazon.com/blogs/aws/free-data-transfer-out-to-internet-when-moving-out-of-aws" target="_blank" rel="noopener">&ldquo;Free data transfer out to internet when moving out of AWS,&rdquo;</a> 5 March 2024, for the waiver and its stated link to the EU Data Act; and <a href="https://www.datacenterknowledge.com/cloud/amazon-cancels-fees-for-customers-moving-to-rival-cloud-services" target="_blank" rel="noopener">Data Center Knowledge, 6 March 2024</a>, for Google&rsquo;s January 2024 move first. Microsoft followed in March 2024. Section 2.3.</li>
+<li id="src-8"><span class="srcnum">8</span> Pinsent Masons, <a href="https://www.pinsentmasons.com/en-gb/out-law/guides/switching-porting-rules-eu-data-act" target="_blank" rel="noopener">&ldquo;Switching and porting rules under the EU Data Act&rdquo;</a>, for the cap on switching charges until 12 January 2027 and the general ban, including egress fees, from that date; the Act has applied since 12 September 2025. The ban covers switching, not ordinary ongoing data charges. Section 2.3.</li>
+<li id="src-9"><span class="srcnum">9</span> Accounts of Salesforce&rsquo;s founding in 1999 and its &ldquo;no software&rdquo; positioning. Marc Benioff&rsquo;s <em>Behind the Cloud</em> (2009) is the insider version and should be read as one. Mini-case 1.</li>
+<li id="src-10"><span class="srcnum">10</span> Washington Technology, <a href="https://www.washingtontechnology.com/2013/10/amazon-win-restarts-cia-cloud-contract/338279/" target="_blank" rel="noopener">&ldquo;Amazon win restarts CIA cloud contract,&rdquo; October 2013</a>, for the CIA&rsquo;s commercial cloud contract with AWS, worth up to $600 million over four years, IBM&rsquo;s protest, and the Court of Federal Claims ruling restoring the award; and <a href="https://www.theregister.com/2013/11/08/ibms_cia_cloud_claims_smashed_by_court_opinion/" target="_blank" rel="noopener">The Register, 8 November 2013</a>, for the judge&rsquo;s written opinion that AWS&rsquo;s offer was superior. The reading of the deal as a turning point for enterprise trust in the cloud is the book&rsquo;s, and a common one. Section 1.2 and mini-case 2.</li>
+<li id="src-11"><span class="srcnum">11</span> Amazon Web Services, <a href="https://aws.amazon.com/blogs/industries/aws-top-10-moments-of-reinvent" target="_blank" rel="noopener">&ldquo;Ten Memorable Customer Moments from 10 Years of AWS re:Invent&rdquo;</a>, for Capital One&rsquo;s 2015 announcement and its November 2020 report that it had become the first U.S. bank to exit its legacy data centers. This is Amazon describing its own customer. Mini-case 2.</li>
+<li id="src-12"><span class="srcnum">12</span> SiliconANGLE, <a href="https://siliconangle.com/2020/12/01/capital-one-closes-all-data-centers-to-rely-on-aws-on-demand-infrastructure-reinvent/" target="_blank" rel="noopener">1 December 2020</a>, for the closing of Capital One&rsquo;s data centers after an eight-year process and the 2019 breach affecting about 106 million customers; and <a href="https://cloudzero.com/blog/capital-one-aws" target="_blank" rel="noopener">CloudZero</a> for the breach occurring through a misconfigured web application firewall hosted on AWS. The breach is also covered in the public record of the criminal case and the regulators&rsquo; actions; check those before teaching it in depth. Mini-case 2.</li>
+<li id="src-13"><span class="srcnum">13</span> Nextgov, <a href="https://www.nextgov.com/modernization/2020/11/exclusive-cia-awards-secret-multibillion-dollar-cloud-contract/170227/" target="_blank" rel="noopener">&ldquo;CIA Awards Secret Multibillion-Dollar Cloud Contract,&rdquo; November 2020</a>, and <a href="https://washingtontechnology.com/2020/11/cia-makes-awards-for-intelligence-communitys-next-massive-cloud-contract/355018/" target="_blank" rel="noopener">Washington Technology, November 2020</a>, for the Commercial Cloud Enterprise contract awarded to Amazon, Microsoft, Google, Oracle, and IBM, its fifteen-year term, and its reported value of tens of billions of dollars (the CIA did not disclose a ceiling). Mini-case 2.</li>
+<li id="src-14"><span class="srcnum">14</span> Netcraft, <a href="https://www.netcraft.com/blog/ovh-fire" target="_blank" rel="noopener">&ldquo;3.6 million websites taken offline after fire at OVH datacenters&rdquo;</a> (March 2021), and Reuters, via <a href="https://www.techpartner.news/news/millions-of-websites-offline-after-ovhcloud-data-centre-fire-in-france-562026" target="_blank" rel="noopener">iTnews, 11 March 2021</a>, for the scale of the outage and the company&rsquo;s statements, including the founder&rsquo;s advice to customers to activate their disaster recovery plans. Mini-case 3.</li>
+<li id="src-15"><span class="srcnum">15</span> Netflix, <a href="https://about.netflix.com/en/news/completing-the-netflix-cloud-migration" target="_blank" rel="noopener">&ldquo;Completing the Netflix Cloud Migration&rdquo;</a> (February 2016): the 2008 database corruption, the seven-year timeline, the cloud-native rebuild, the growth figures, and the January 2016 launch in 130 more countries. Around the same time the company said it expected to spend over $800 million on technology and development in 2016, against $651 million in 2015; it has never published what it pays Amazon (reported in <a href="https://groups.google.com/g/idnog/c/JCex89AftE8" target="_blank" rel="noopener">Ars Technica, 11 February 2016</a>). Sections 4.1 to 4.3 and 4.6.</li>
+<li id="src-16"><span class="srcnum">16</span> Carlos A. Gomez-Uribe and Neil Hunt, <a href="http://dx.doi.org/10.1145/2843948" target="_blank" rel="noopener">&ldquo;The Netflix Recommender System: Algorithms, Business Value, and Innovation,&rdquo;</a> <em>ACM Transactions on Management Information Systems</em> 6(4), December 2015, for recommendations influencing about 80 percent of hours streamed and the estimated value of personalization. The authors were Netflix executives describing their own system. Section 4.4.</li>
+<li id="src-17"><span class="srcnum">17</span> NPR, <a href="https://www.npr.org/2013/02/01/170674754/netflix-moves-back-into-content-production-with-cards" target="_blank" rel="noopener">&ldquo;Netflix Moves Back Into Content Production With &lsquo;Cards,&rsquo;&rdquo; 1 February 2013</a>, for the $100 million commitment to two seasons; and NBC News, <a href="https://www.nbcnews.com/business/netflix-secrets-behind-coolest-kids-tv-block-8C11132450" target="_blank" rel="noopener">2013</a>, for Ted Sarandos offering two seasons without a pilot on the strength of viewing data. Section 4.4.</li>
+<li id="src-18"><span class="srcnum">18</span> David Carr&rsquo;s reporting in <em>The New York Times</em>, February 2013, as summarized by <a href="https://thenextweb.com/news/data-inspires-creativity" target="_blank" rel="noopener">The Next Web</a> and others, for the three viewing patterns (the British original, Fincher&rsquo;s films, and the lead actor&rsquo;s films) and for different trailers shown to different viewers. Section 4.4.</li>
+<li id="src-19"><span class="srcnum">19</span> GeekWire, <a href="https://www.geekwire.com/2013/netflix-nightmare-amazon-explains-christmas-eve-outage-issues-apology/" target="_blank" rel="noopener">&ldquo;Netflix nightmare: Amazon explains Christmas Eve outage,&rdquo; January 2013</a>, covering both Amazon&rsquo;s explanation and Netflix&rsquo;s own post-mortem of the Christmas Eve 2012 Elastic Load Balancing outage; and the Netflix Technology Blog&rsquo;s published work on chaos engineering and the Simian Army. Section 4.5.</li>
+<li id="src-20"><span class="srcnum">20</span> Netflix, <a href="https://openconnect.netflix.com/Open-Connect-Overview.pdf" target="_blank" rel="noopener">&ldquo;Open Connect Overview&rdquo;</a>, for the company-owned delivery network that carries Netflix&rsquo;s video from appliances placed inside internet providers. Section 4.6.</li>
+<li id="src-21"><span class="srcnum">21</span> The Register, <a href="https://www.theregister.com/2024/10/21/37signals_aws_savings" target="_blank" rel="noopener">21 October 2024</a>, for 37signals&rsquo; $3.2 million 2022 cloud bill, about $700,000 of Dell servers, and savings of almost $2 million a year with the same team; and <a href="https://www.theregister.com/2025/05/09/37signals_cloud_repatriation_storage_savings" target="_blank" rel="noopener">9 May 2025</a>, for its move off Amazon&rsquo;s storage service. These are the company&rsquo;s own figures, and it is arguing a case. Section 4.7.</li>
+<li id="src-22"><span class="srcnum">22</span> CNBC, <a href="https://www.cnbc.com/2026/11/04/data-center-ballot-measures-2026-midterm.html" target="_blank" rel="noopener">&ldquo;Voters rebuff data centers in every ballot measure except one during the 2026 midterms,&rdquo; 4 November 2026</a>, drawing on Ballotpedia, for 41 data-center ballot measures in 10 states and the single exception in Harwood, North Dakota. Section 5.</li>
+<li id="src-23"><span class="srcnum">23</span> Fortune, <a href="https://fortune.com/2026/11/04/data-centers-abdul-el-sayed-michigan-incumbents-data/" target="_blank" rel="noopener">4 November 2026</a>, for candidates in both parties linking data centers to electric bills and proposing moratoriums or restrictions, including both major-party nominees for governor of Ohio. Section 5.</li>
+<li id="src-24"><span class="srcnum">24</span> CNN, <a href="https://cnn.com/2026/11/11/tech/ai-data-center-opponents-midterm-fight" target="_blank" rel="noopener">&ldquo;AI data center opponents are cheering midterm results, but they say the fight isn&rsquo;t over,&rdquo; 11 November 2026</a>, for candidates who made data centers central to their campaigns winning, and for CNN&rsquo;s voter poll finding opposition to local data centers by about three to one. Coverage written days after the election; results and interpretations may be revised. Recheck before teaching. Section 5.</li>
+<li id="src-25"><span class="srcnum">25</span> International Energy Agency, <a href="https://www.iea.org/reports/energy-and-ai/executive-summary" target="_blank" rel="noopener"><em>Energy and AI</em>, executive summary (April 2025)</a>, for the 415 TWh and 1.5 percent figures for 2024, the roughly 945 TWh base case for 2030, the growth rate, and the U.S. share; and the IEA&rsquo;s <em>Key Questions on Energy and AI</em> (16 April 2026) for the 2025 estimate of about 485 TWh. The IEA updates these figures; use the current edition. Section 5; the full figures are in Chapter 12, section 5.5.</li>
+<li>Further reading. Andreessen Horowitz, &ldquo;The Cost of Cloud, a Trillion Dollar Paradox&rdquo; (2021), the source of the &ldquo;cloud paradox&rdquo; argument, and Dropbox&rsquo;s earlier move off AWS. Read both against Netflix&rsquo;s statement that cost was not why it moved. The Ireland and Virginia shares in section 5 are commonly cited estimates that move quickly; check them before teaching.</li>
+<li>Unsourced by design. The service-level arithmetic in section 2.4 is computed directly from the percentages. The description of SLA remedies as bill credits is a general account of common cloud contract terms, not a quotation from one provider. The demand curve in section 1.7 is illustrative.</li>
+<li>Images. Google data center, The Dalles, Oregon, photograph by Tony Webster, 2015, <a href="https://commons.wikimedia.org/wiki/File:Google_Datacenter_-_The_Dalles,_Oregon_(17832143871).jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY 2.0. Salesforce Tower, photograph by Sharon Hahn Darlin, 2022, <a href="https://commons.wikimedia.org/wiki/File:San_Francisco,_California_April_2022_Salesforce_Tower.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY 2.0. Centre Pompidou website after the OVH fire, screenshot by Fraguando, 2021, <a href="https://commons.wikimedia.org/wiki/File:Falla_de_sitio_web_Pompidou_por_incendio_en_OVH.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0. Netflix envelope, photograph by BlueMint, 2006, <a href="https://commons.wikimedia.org/wiki/File:Netflixenvelope.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY 2.5. AWS buildings in Ashburn, Virginia, photograph by Vahurzpu, 2020, <a href="https://commons.wikimedia.org/wiki/File:AWS_servers_in_Ashburn,_group_1,_2020-10-09_1.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0 (identified as AWS by the photographer). Data centers near Ashburn from the air, photograph by Theodore Christopher, 2025, <a href="https://commons.wikimedia.org/wiki/File:Data_centers_in_Ashburn.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC0. All diagrams are original to this book.</li>
+<li><strong>Verification note, 11 November 2026 (rebuild to the Chapter 6 model).</strong> Reframed for business students, with a short history of the technology layers added in section 1.2 (Census and Pew figures checked, and the 2013 CIA contract with AWS, now mini-case 2 alongside its 2020 multi-provider successor and Capital One as the corporate example that followed): the cloud as a foundational utility, and depending on it as a supplier relationship. New and checked against the entries above: the utility comparison (Carr), the Q3 2026 market size and shares (Synergy), the shared responsibility model (AWS), the 2024 egress waivers (AWS and others), and the EU Data Act switching rules. Technical terms that a manager does not need were removed or explained in plain words (DNS, DynamoDB, load balancers, availability zones, data gravity, cloud-native, petabytes, terabits). The detailed energy figures now live in Chapter 12, section 5.5, with a pointer here. The quiz explanation that referred to a 2017 storage incident the chapter does not contain was corrected. The OVH passage now attributes the founder&rsquo;s statement as the source reports it. Added the same week: a Netflix data section (4.4: recommendations and House of Cards), three photographs, a timeline, and a diagram of what happens at Play; and the November 2026 midterm results on data centers in section 5, from coverage published within a week of the election. The Netflix, 37signals, Salesforce, and OVH material is otherwise unchanged from the 29 October check.</li>
 </ul>
 </details>
 
