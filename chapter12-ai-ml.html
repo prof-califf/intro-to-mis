@@ -12,8 +12,8 @@
 
   gtag('config', 'G-QKT9X7ZMMV');
 </script>
-<title>Chapter 12: AI &amp; Machine Learning: TikTok to the Hiring Desk | MIS 320</title>
-<meta name="description" content="From the For You page that knows you in an evening to the hiring model Amazon had to kill: what machine learning is, why one idea produces both, and who decides which you get.">
+<title>Chapter 12: What AI Is: From Your Feed to Every Cure | MIS 320</title>
+<meta name="description" content="What AI is, why your feed has been AI for a decade, why an AI system is an information system and not just a model, and how one technique produces a biased hiring tool and a search for cures already on the shelf.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -379,7 +379,7 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
       <a href="chapter9-changehealthcare.html"><span class="lbl">Chapter 9 &middot; Week 8</span>Cybersecurity &mdash; Change Healthcare</a>
       <a href="chapter10-equifax.html"><span class="lbl">Chapter 10 &middot; Week 8</span>IT Governance &mdash; Equifax</a>
       <a href="chapter11-software.html"><span class="lbl">Chapter 11 &middot; Week 9</span>Software Design &amp; Selection &mdash; Robles v. Domino's</a>
-      <a class="current" href="chapter12-ai-ml.html"><span class="lbl">Chapter 12 &middot; Week 10</span>AI, Machine Learning &amp; Bias &mdash; TikTok &amp; Amazon</a>
+      <a class="current" href="chapter12-ai-ml.html"><span class="lbl">Chapter 12 &middot; Week 10</span>What AI Is &mdash; Every Cure</a>
       <a href="chapter13-cloud.html"><span class="lbl">Chapter 13 &middot; Week 10</span>The Cloud &amp; What Computing Costs &mdash; Netflix</a>
       </div>
     </div>
@@ -414,94 +414,184 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 <main class="chapwrap">
 
 <header class="chaphead">
-  <p class="eyebrow">Chapter 12 &middot; AI, Machine Learning, and Generative AI</p>
-  <h1>AI and Machine Learning: Scoring <b>Every Drug Against Every Disease</b></h1>
-  <p class="anchor">A medical student nearly died of a rare disease, and saved himself with a drug that
-  had been sitting in pharmacies for decades. His nonprofit now uses machine learning to score every
-  approved drug against every known disease, looking for more cures that are already in pharmacies. The same
-  technique, pointed at ten years of resumes, taught Amazon's hiring model to prefer men. This chapter is
-  about why one technique produces both outcomes, and who is responsible for the difference.</p>
-  <div class="concepts"><span class="clabel">Key concepts</span><span>AI, ML, generative AI</span><span>AI as a system</span><span>Supervised learning</span><span>Measuring a model</span><span>Bias, proxies, feedback loops</span><span>Large language models</span><span>Hallucination and grounding</span><span>AI agents</span><span>AI across the business</span></div>
+  <p class="eyebrow">Chapter 12 &middot; Artificial Intelligence</p>
+  <h1>What AI Is: How Every Cure <b>Scores Every Drug Against Every Disease</b></h1>
+  <p class="anchor">The feed on your phone has been AI for more than a decade, even though everyone
+  called it "the algorithm." The same technique, pointed at ten years of resumes, taught Amazon's hiring model to
+  prefer men. Pointed at every approved drug and every known disease, it is helping a nonprofit look for cures that
+  are already sitting in pharmacies. This chapter is about why one technique produces all three, and who is
+  responsible for the difference.</p>
+  <div class="concepts"><span class="clabel">Key concepts</span><span>AI vs. written rules</span><span>AI as an information system</span><span>Predictive, generative, agentic</span><span>Tool AI and agents</span><span>Supervised learning</span><span>Measuring a model</span><span>Bias and feedback loops</span><span>LLMs and grounding</span><span>AI governance</span></div>
 </header>
 
 <div class="toc"><strong>Contents</strong>
-<a href="#what"><span class="tnum">1.</span> How a model learns, and how it learns the wrong thing</a>
-<a href="#genai"><span class="tnum">2.</span> Generative AI, and what AI is good for</a>
-<a href="#cases"><span class="tnum">3.</span> Two systems nobody meant to build</a>
-<a href="#everycure"><span class="tnum">4.</span> Main case. Every Cure: the drugs already on the shelf</a>
-<a href="#cost"><span class="tnum">5.</span> The downside: what AI costs, and who pays</a>
-<a href="#vocab"><span class="tnum">6.</span> Vocabulary</a>
-<a href="#discussion"><span class="tnum">7.</span> Discussion questions</a>
-<a href="#lab"><span class="tnum">8.</span> From lecture to lab</a>
-<a href="#sources"><span class="tnum">9.</span> Sources and further reading</a>
-
+<a href="#what"><span class="tnum">1.</span> What AI is, and why your feed counts</a>
+<a href="#system"><span class="tnum">2.</span> AI is an information system, not just a model</a>
+<a href="#kinds"><span class="tnum">3.</span> Three kinds of AI, and how much freedom each gets</a>
+<a href="#learn"><span class="tnum">4.</span> How a model learns, and how it learns the wrong thing</a>
+<a href="#genai"><span class="tnum">5.</span> Generative AI and agents</a>
+<a href="#upside"><span class="tnum">6.</span> The upside: what AI is good for</a>
+<a href="#cases"><span class="tnum">7.</span> Two systems nobody meant to build</a>
+<a href="#everycure"><span class="tnum">8.</span> Main case. Every Cure: the drugs already on the shelf</a>
+<a href="#governance"><span class="tnum">9.</span> Governance and the human in the loop</a>
+<a href="#cost"><span class="tnum">10.</span> The downside: what AI costs, and who pays</a>
+<a href="#vocab"><span class="tnum">11.</span> Vocabulary</a>
+<a href="#discussion"><span class="tnum">12.</span> Discussion questions</a>
+<a href="#lab"><span class="tnum">13.</span> From lecture to lab</a>
+<a href="#sources"><span class="tnum">14.</span> Sources and further reading</a>
 </div>
 <p class="printbox"><span>Wanna go analog?</span><button type="button" onclick="window.print()" aria-label="Print this page or save it as a PDF">&#9113;&nbsp; Print here</button><span>or save it as a PDF; the navigation drops out</span></p>
 
-<p class="lede">You have used a large language model all quarter. This chapter explains what it is doing
-when it answers you, what machine learning in general can and cannot do, and how it is already changing
-the work of every major in this college.</p>
+<p class="lede">You have used AI every day for years, long before anyone called it that. This chapter
+explains what AI is, why it is an information system and not just a clever piece of software, what
+it is good for, what it costs, and who decides which of those you get.</p>
 
 <div class="objectives"><span class="obj-tag">Learning objectives</span>
 <p>By the end of this chapter you should be able to:</p>
 <ol>
-<li>Explain what machine learning is, why an AI system is more than its model, and why a model's behavior comes from its training data.</li>
-<li>Read a model's accuracy correctly, using false positives, false negatives, and base rates.</li>
-<li>Identify training-data bias, proxy discrimination, and feedback loops in a deployed system.</li>
+<li>Explain what makes software AI rather than a set of written rules, and why your social media feed counts.</li>
+<li>Describe an AI system as an information system, using all five components, and locate a failure in the right component.</li>
+<li>Tell predictive, generative, and agentic AI apart, and say whether a system is a tool, autonomous but controlled, or uncontrolled.</li>
+<li>Explain how machine learning works, read a model's accuracy correctly, and identify training-data bias, proxy discrimination, and feedback loops.</li>
 <li>Explain what a large language model does, why it hallucinates, and what grounding and agents change.</li>
-<li>Describe how AI is changing work in accounting, finance, marketing, management, operations, and MIS.</li>
-<li>Weigh AI's benefits against its costs, including the environment, and explain what AI governance consists of.</li>
+<li>Weigh AI's benefits against its costs, and describe what AI governance and a human in the loop look like in practice.</li>
 </ol>
 </div>
 
-<h2 id="what"><span class="num">1</span>How a model learns, and how it learns the wrong thing</h2>
+<h2 id="what"><span class="num">1</span>What AI is, and why your feed counts</h2>
 
 <p>Chapter 6 was about choosing the right measure and putting it where decisions get made. This chapter
-is about what happens when you hand the measuring to a machine that works out its own rules. This section
-says what that machine is, in plain terms, how to tell whether it works, and the three ways it goes
-wrong without anybody writing a bad instruction.</p>
+is about what happens when you hand the measuring to a machine that works out its own rules. Start
+with the plain version, because the marketing makes it sound harder than it is. <strong>Artificial
+intelligence (AI)</strong> is software that learns patterns from a large amount of data, then uses
+what it learned to make a judgment or to make something new.</p>
 
-<p>Before the vocabulary arrives, locate machine learning in the five components, because where it sits
-is the whole argument. Machine learning is a <strong>software</strong> component that is almost entirely
-determined by the <strong>data</strong> component. Hardware sets what you can afford and networks set who
-you can serve, and neither decides what the system will conclude. What decides that is the examples you
-show it, and those were chosen by <strong>people</strong>.</p>
+<h3>1.1 Rules versus learning</h3>
 
-<p>That means the weakest-component rule applies here in an uncomfortable way. In earlier chapters a weak
-component made the system slow, or unreliable, or blind. In this one a weak data component makes the
-system <em>confidently wrong in a way that looks like an answer</em>, and no amount of quality in the
-other four corrects it.</p>
+<p>For most of computing's history, people wrote the rules by hand. Tax software applies rules a person
+typed in from the tax code. A spreadsheet's lookup formula does exactly what the formula says. Every
+behavior is a line somebody wrote, and when the result is wrong, you can find the line and fix it.</p>
 
-<h3>1.1 Three terms that get used as one</h3>
+<p><strong>Machine learning (ML)</strong>, the approach behind nearly everything now called AI, flips
+that. Instead of writing rules, you show the system many examples, and it finds the patterns itself.
+A spam filter is the classic case. Nobody writes down every trick a spammer will try. The filter
+learns from millions of emails people marked as spam, and it keeps learning every time you click
+"mark as spam."</p>
 
-<p>The press uses three words interchangeably. They are three generations of one family, and the
-differences matter for what a manager can expect from each.</p>
+<p>The difference matters for business because it moves responsibility. A rule-based system does what
+someone wrote. A learned system does what its data taught it, and that lesson lives in millions of
+numbers that no manager can read. Nobody at TikTok wrote a rule that says "show this person otter
+videos." The preference was learned from behavior, and nobody at TikTok can point to the place in the
+model where it is stored either. The opacity is harmless when the stakes are otters. Much of this chapter is about
+what happens as the stakes rise.</p>
 
-<p><strong>Artificial intelligence (AI)</strong> is the broad project of making computers do things that
-seem to require intelligence. For decades the main approach was writing explicit rules, the way a tax
-program applies rules a person typed in. <strong>Machine learning (ML)</strong>, the approach behind
-nearly everything now called AI, flips that. Instead of writing rules, you show the system many examples
-and it finds the patterns itself, the way a spam filter learns from millions of emails people marked as
-spam. <strong>Generative AI</strong> is the newest member. It includes the <strong>large language models
-(LLMs)</strong> you have used all quarter under the Lab 1 rules: machine learning trained on so much text
-that it can produce new text, not just sort or score existing things.</p>
+<h3>1.2 Five moments that got us here</h3>
 
-<p>The difference between rules and learning matters for business because it moves responsibility. A
-rule-based system does what someone wrote, and a bad outcome traces to a bad rule someone can find and
-fix. Nobody at TikTok wrote a rule that says "show this person otter videos." The preference was learned
-from behavior, and it lives in millions of numbers inside the model that no manager can read. Nobody at
-TikTok can read them either. That is not a dodge; it is how the technology works. The opacity is harmless
-when the stakes are otters, and the rest of this chapter is about what happens as the stakes rise.</p>
+<p>AI did not arrive in November 2022. It arrived in pieces, over more than a decade, and most of it
+arrived without the name. Five moments are worth knowing, because each one added something the next
+one built on.</p>
 
-<h3>1.2 An AI system is more than a model</h3>
+<ul class="tl">
+<li><span class="when">2012 &middot; ImageNet</span>A research team trained a neural network on a million
+photos, each labeled by hand with what was in it. It cut the error rate in an image-recognition contest
+from about 26 percent to about 15. Computers had learned to see, and they had learned it from people's
+labels, mistakes included.</li>
+<li><span class="when">2012 to 2018 &middot; The feed</span>YouTube began ranking recommendations by how long
+people kept watching instead of what they clicked. Instagram and Twitter replaced the timeline in posting
+order with a ranked one in 2016. TikTok reached the United States in 2018 with a feed that was nothing but
+a model. Almost nobody called any of it AI.<sup class="cite"><a href="#src-1" aria-label="Source 1">1</a></sup></li>
+<li><span class="when">2016 &middot; AlphaGo</span>Google DeepMind's AlphaGo beat Lee Sedol, one of the best
+Go players alive, four games to one. It got that good by playing millions of games against itself. Its own
+games became its training data.</li>
+<li><span class="when">2022 &middot; ChatGPT</span>OpenAI released a chatbot built on a large language model.
+Within about two months an estimated hundred million people had used it. AI became something you could
+talk to.<sup class="cite"><a href="#src-2" aria-label="Source 2">2</a></sup></li>
+<li><span class="when">2025 to now &middot; Agents</span>Companies began giving language models tools and
+letting them take actions: editing code, issuing refunds, booking travel. AI moved from answering to
+doing.</li>
+</ul>
+
+<p>Every moment on that list is the same recipe with more data and more computing behind it. Data goes
+in. A model finds the pattern. Out comes a judgment or a creation, and what happens next becomes more
+data.</p>
+
+<h3>1.3 "The algorithm" is AI</h3>
+
+<p>The second moment is the one most people skip, and it is the one you know best. Early social media
+showed you posts in the order they were posted. Then the platforms replaced that order with a
+prediction. The model behind the feed learned from what you lingered on, liked, shared, and came back
+to. It also learned from what millions of people like you did. Then it ranked every possible post by
+how likely you were to keep watching.</p>
+
+<p>Everyone called this "the algorithm." That word makes it sound like a fixed formula somebody wrote,
+like the tax software. It is not. The YouTube sidebar, the Instagram Explore page, and TikTok's For You
+page are machine learning models, retrained constantly on the behavior of their users. They pass the
+only test that matters: <em>does it learn from data, or does it follow rules somebody wrote?</em> By
+that test, the first AI most people ever lived inside was a social media feed, and it was deciding what
+they saw for a decade before ChatGPT made "AI" a household word.</p>
+
+<p>The same is true of a lot of ordinary software: the fraud text from your bank, the arrival time in
+Google Maps, the rows on your Netflix home screen. The name on the box does not matter. The recipe
+does.</p>
+
+<div class="tryit" id="isai">
+  <div class="tryit-head">Quick quiz &middot; Is it AI?</div>
+  <p class="tryit-intro">Ten systems you have used. For each one, decide whether it learns from data or follows rules somebody wrote.</p>
+  <div id="isairows"></div>
+  <p class="tryit-note">The test is never how smart a system looks. Tax software looks smart and follows rules. A feed looks simple and learns from billions of swipes.</p>
+</div>
+<script>
+(function(){
+  var host=document.getElementById('isairows');
+  if(!host)return;
+  var F=["Learns from data","Follows written rules"];
+  var R=[
+   {"t":"TikTok's For You page picks the next video you see.","a":"Learns from data","why":"It is a model retrained on billions of swipes. Calling it \"the algorithm\" does not change what it is."},
+   {"t":"Tax software works out how much refund you are owed.","a":"Follows written rules","why":"Every step is a rule a person typed in from the tax code. It looks smart because the rules are complicated, not because it learned anything."},
+   {"t":"A Snapchat lens puts dog ears on your head and they follow you when you move.","a":"Learns from data","why":"A model trained on huge numbers of labeled face photos finds your eyes, nose, and the edges of your head in every frame. Nobody wrote a rule for where a face is."},
+   {"t":"Canvas marks your assignment late because you submitted at 12:01 a.m.","a":"Follows written rules","why":"Your professor set a deadline and Canvas compares two timestamps. No learning involved, which is why arguing with it never works."},
+   {"t":"Your bank texts you to confirm a strange charge.","a":"Learns from data","why":"A fraud model trained on millions of past transactions scored the purchase as unusual for you."},
+   {"t":"A spreadsheet formula looks up a product's price in a table.","a":"Follows written rules","why":"It does exactly what the formula says, every time. If it is wrong, you can find the line and fix it."},
+   {"t":"Spotify's Discover Weekly hands you thirty songs you have never heard.","a":"Learns from data","why":"It learns from what you play and skip, and from millions of playlists made by people whose taste overlaps with yours. That is collaborative filtering, from section 4.1."},
+   {"t":"Google Maps tells you that you will arrive at 5:42.","a":"Learns from data","why":"The estimate comes from a model trained on past traffic, including where phones like yours were moving a minute ago."},
+   {"t":"A basic thermostat turns the heat on at 6 a.m. every day.","a":"Follows written rules","why":"Somebody set a schedule. A smart thermostat that works out your schedule from when you come and go would be learning from data."},
+   {"t":"YouTube fills the sidebar with videos it thinks you will watch next.","a":"Learns from data","why":"Since 2012 YouTube has ranked recommendations by predicted watch time, learned from what people actually watched."}
+  ];
+  R.forEach(function(r){
+    var row=document.createElement('div'); row.className='wrow';
+    row.innerHTML='<div class="wq">'+r.t+'</div><div class="wbtns">'
+      +F.map(function(f){return '<button type="button" data-f="'+f+'">'+f+'</button>';}).join('')
+      +'</div><div class="wout" role="status" aria-live="polite" hidden></div>';
+    host.appendChild(row);
+    var bs=row.querySelectorAll('button'), out=row.querySelector('.wout');
+    bs.forEach(function(b){
+      b.addEventListener('click',function(){
+        if(!out.hidden)return;
+        var ok=b.getAttribute('data-f')===r.a;
+        bs.forEach(function(x){x.disabled=true;});
+        b.className='you '+(ok?'right':'wrong');
+        if(!ok) bs.forEach(function(x){ if(x.getAttribute('data-f')===r.a) x.className='you right'; });
+        out.hidden=false; out.className='wout '+(ok?'yes':'no');
+        out.innerHTML='<b>'+r.a+'.</b> '+r.why;
+      });
+    });
+  });
+})();
+</script>
+
+<h2 id="system"><span class="num">2</span>AI is an information system, not just a model</h2>
 
 <p>When people say "the AI," they usually mean the <strong>model</strong>: the trained piece of software
-that turns an input into an answer. A model on its own does nothing. An <strong>AI system</strong> is the
-whole arrangement that turns a model into decisions. It includes the data the model learned from and
-the data it is fed every day. It includes the infrastructure, the computers and networks that train it
-and run it. It includes the model itself and the output it produces, whether a score, a ranking, or a
-sentence. And it includes the people and processes that decide what happens with that output, which in
-turn produces the next round of data.</p>
+that turns an input into an answer. That is one box in a much bigger picture, and the picture is the
+one this course has drawn since Chapter 1. An <strong>AI system</strong> is an information system. It
+needs all five components, and like any information system it is only as strong as its weakest
+one.</p>
+
+<h3>2.1 The model is one box</h3>
+
+<p>A model on its own does nothing. It has to be trained on data, run on computers, connected to the
+people and apps that use it, and attached to a decision somebody acts on. The figure shows the whole
+arrangement.</p>
 
 <figure class="diagram" style="margin:1.8rem auto;max-width:600px">
 <svg viewBox="0 -24 600 294" xmlns="http://www.w3.org/2000/svg" role="img" style="width:100%;height:auto;font-family:var(--sans)" aria-labelledby="syT syD">
@@ -537,22 +627,162 @@ five.</desc>
 <line x1="0" y1="232" x2="600" y2="232" stroke="var(--rule)" stroke-width="1"/>
 <text x="0" y="256" font-size="11.5" fill="var(--ink)">The grey labels are the five components. The model is one box. The system is all of it.</text>
 </svg>
-<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--muted);margin-top:.55rem;line-height:1.55"><strong style="color:var(--ink)">When someone says &ldquo;the AI,&rdquo; they usually mean the pink box.</strong> The cases in this chapter went wrong, and right, everywhere else: in the data a model learned from, in what happened to its output, and in who was allowed to act on it. The dashed arrow is why the system never stands still. What people do with today&rsquo;s output becomes tomorrow&rsquo;s data.</figcaption>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--muted);margin-top:.55rem;line-height:1.55"><strong style="color:var(--ink)">When someone says &ldquo;the AI,&rdquo; they usually mean the pink box.</strong> The cases in this chapter went wrong, and right, everywhere else. The dashed arrow is why the system never stands still. What people do with today&rsquo;s output becomes tomorrow&rsquo;s data.</figcaption>
 </figure>
 
-<p>That is the five components again. The data is data. The infrastructure is hardware and networks,
-usually rented, which is Chapter 13's subject. The model and the programs around it are software. And the
-output matters only when it reaches a decision, which belongs to people. A model is one part of one
-component.</p>
+<h3>2.2 The five components of an AI system</h3>
 
-<p>This matters because almost every failure in this chapter happens outside the model. Amazon's hiring
-model learned exactly as designed; the problem was the data. Air Canada's chatbot had no grounding and
-no owner; the problem was the process and the people. Spotify's stories went wrong because of a bug in a
-data pipeline, not in the language model. So when somebody tells you about "our AI," ask about the whole
-system. Where does the data come from? What runs it? What does it output, who acts on that output, and
-who checks whether it is right?</p>
+<p>Here is each component in an AI system, with TikTok's For You page as the example, because you
+have used it.</p>
 
-<h3>1.3 How a model learns from examples</h3>
+<ul>
+<li><strong>Hardware.</strong> AI runs on specialized chips called graphics processing units, packed into
+data centers. Most companies rent this hardware from a cloud provider, which is Chapter 13's subject. For
+TikTok, it is the data centers that train the model and answer every swipe.</li>
+<li><strong>Software.</strong> The model itself, plus the programs around it that collect the data, feed the
+model, and show the result. For TikTok, the ranking model and the app that displays its top pick.</li>
+<li><strong>Data.</strong> What the model learned from, and what it is fed every day. This is the component
+that decides what the system will conclude. For TikTok, every view, pause, replay, and swipe from more
+than a billion people.</li>
+<li><strong>Networks.</strong> The connections that carry data in and answers out. For TikTok, the link that sends your swipe to a data center
+and the next video back to your phone.</li>
+<li><strong>People.</strong> The people who choose and label the data, build and tune the model, decide what
+it should optimize, act on its output, and answer for it when it fails. At TikTok, somebody decided that
+watch time was the thing to maximize. You are in the people component too. Your behavior is the data.</li>
+</ul>
+
+<p>One thing in that list deserves a second look. Hardware sets what you can afford, and networks set
+who you can serve, but neither decides what the system concludes. That is decided by the data, and the
+data was chosen by people. So the weakest-component rule applies here in an uncomfortable way. In
+earlier chapters a weak component made a system slow, unreliable, or blind. In this one a weak data
+component makes the system <em>confidently wrong in a way that looks like an answer</em>, and no amount
+of quality in the other four corrects it.</p>
+
+<h3>2.3 Why this changes where you look</h3>
+
+<p>Almost every failure in this chapter happens outside the model. Amazon's hiring model learned exactly
+as designed; the problem was the data. Air Canada's chatbot had no one responsible for what it said;
+the problem was the process and the people. So when somebody tells you about "our AI," ask about the
+whole system. Where does the data come from? What runs it? What does it output, who acts on that output,
+and who checks whether it is right? None of them needs a line of code to answer.</p>
+
+<h2 id="kinds"><span class="num">3</span>Three kinds of AI, and how much freedom each gets</h2>
+
+<p>"AI" is not one thing, and the first professional habit is to ask which kind you are dealing with,
+because each kind fails differently. The second habit is to ask how far it is allowed to go on its own
+before a person sees anything.</p>
+
+<h3>3.1 Predictive, generative, and agentic</h3>
+
+<p><strong>Predictive AI</strong> takes in data and outputs a judgment: this purchase looks like fraud,
+this resume fits, you will keep watching this video. It is the oldest kind and by far the most common,
+and it is the kind most likely to be judging you without your knowing. <strong>Generative AI</strong>
+produces something new, such as text, images, audio, or code, by predicting what plausibly comes next.
+It is what most people now mean when they say "AI." <strong>Agentic AI</strong> takes actions. It is
+given a goal, uses tools to reach it, and decides its own next step, such as sending the email or
+issuing the refund. A chatbot that tells you how to change a flight is generative. One that changes
+the flight for you is agentic.</p>
+
+<h3>3.2 Tool AI is most of the AI you use</h3>
+
+<p>Now ask the second question. <strong>Tool AI</strong> does the task people give it, inside limits
+people set, and then stops. A person decides what happens next. Your spam filter is tool AI, and you can
+drag any message back out of the folder. So is the fraud alert that waits for you to confirm, the model
+that predicts how a protein folds, and a chatbot that answers your question and then waits for the next
+one. Most of the AI in your life, and most of the good news in this chapter, is tool AI. It can be very
+powerful and still be a tool.</p>
+
+<h3>3.3 Autonomous but controlled: how agents are deployed</h3>
+
+<p>An agent is different. It is given a goal instead of a task, and it picks its own steps. That makes it
+<strong>autonomous</strong>: it goes some distance on its own before a person sees anything. But
+autonomy is only one dial. The other is <strong>control</strong>: whether anyone can notice what the
+system is doing, stop it, and undo it. The two dials move separately.</p>
+
+<p>Here is what a controlled agent looks like. A customer service agent reads a complaint, checks the
+order, and issues a refund. It can refund up to $50 on its own. Anything over that, or anything unusual,
+goes to a person. It can touch one system, the order database, and nothing else. Every action is logged,
+someone reviews the log, and there is an off switch. That agent is highly autonomous and tightly
+controlled, and it is the kind of agent most companies are actually putting to work. A driverless taxi is the same idea on the road: nobody in the driver's seat, but every mile
+logged and crashes reported to regulators. The leash is a
+management decision, not a property of the AI.</p>
+
+<figure class="diagram" style="margin:1.8rem auto;max-width:600px">
+<svg viewBox="0 0 600 390" xmlns="http://www.w3.org/2000/svg" role="img" style="width:100%;height:auto;font-family:var(--sans)" aria-labelledby="dlT dlD">
+<title id="dlT">Two dials: autonomy and control</title>
+<desc id="dlD">A square split into four quadrants. The horizontal axis runs from a system that waits for a person on
+the left to a system that picks its own steps on the right. The vertical axis runs from someone watching at the
+bottom to nobody watching at the top. Bottom left, tool AI: a spam filter, a fraud alert, a chatbot answering a
+question. Bottom right, autonomous and controlled: a refund agent with a fifty dollar cap, and a driverless taxi.
+Top left, an unwatched tool: a resume screener that rejects applicants with no person reading. Top right,
+highlighted, autonomous and uncontrolled: OpenAI's July 2026 test agents. A note says uncontrollable AI, which
+nobody could stop even if they tried, has not been built.</desc>
+<rect x="90" y="20" width="250" height="150" fill="var(--off-white)" stroke="var(--rule)"/>
+<rect x="340" y="20" width="250" height="150" fill="var(--magenta-pale)" stroke="var(--rule)"/>
+<rect x="90" y="170" width="250" height="150" fill="var(--off-white)" stroke="var(--rule)"/>
+<rect x="340" y="170" width="250" height="150" fill="var(--off-white)" stroke="var(--rule)"/>
+<line x1="340" y1="20" x2="340" y2="320" stroke="var(--ink)" stroke-width="1.5"/>
+<line x1="90" y1="170" x2="590" y2="170" stroke="var(--ink)" stroke-width="1.5"/>
+<text x="102" y="40" font-size="11" font-weight="700" fill="var(--muted)">UNWATCHED TOOL</text>
+<text x="102" y="64" font-size="11" fill="var(--ink)">a resume screener that rejects</text>
+<text x="102" y="79" font-size="11" fill="var(--ink)">applicants nobody reads</text>
+<text x="352" y="40" font-size="11" font-weight="700" fill="var(--magenta)">AUTONOMOUS, UNCONTROLLED</text>
+<text x="352" y="64" font-size="11" fill="var(--ink)">OpenAI's July 2026 test agents:</text>
+<text x="352" y="79" font-size="11" fill="var(--ink)">guardrails off, one door open,</text>
+<text x="352" y="94" font-size="11" fill="var(--ink)">nobody reading what they did</text>
+<text x="102" y="190" font-size="11" font-weight="700" fill="var(--ink)">TOOL AI</text>
+<text x="102" y="214" font-size="11" fill="var(--ink)">a spam filter</text>
+<text x="102" y="229" font-size="11" fill="var(--ink)">a fraud alert you confirm</text>
+<text x="102" y="244" font-size="11" fill="var(--ink)">a chatbot answering a question</text>
+<text x="102" y="268" font-size="10.5" fill="var(--muted)">most of the AI you use</text>
+<text x="352" y="190" font-size="11" font-weight="700" fill="var(--ink)">AUTONOMOUS, CONTROLLED</text>
+<text x="352" y="214" font-size="11" fill="var(--ink)">a refund agent with a $50 cap,</text>
+<text x="352" y="229" font-size="11" fill="var(--ink)">a log, and an off switch</text>
+<text x="352" y="244" font-size="11" fill="var(--ink)">a driverless taxi</text>
+<text x="352" y="268" font-size="10.5" fill="var(--muted)">how agents are meant to be deployed</text>
+<text x="90" y="340" font-size="11" fill="var(--ink)">waits for a person</text>
+<text x="590" y="340" font-size="11" fill="var(--ink)" text-anchor="end">picks its own steps</text>
+<text x="340" y="340" font-size="11" font-weight="700" fill="var(--ink)" text-anchor="middle">AUTONOMY</text>
+<text x="82" y="34" font-size="11" fill="var(--ink)" text-anchor="end">nobody</text>
+<text x="82" y="48" font-size="11" fill="var(--ink)" text-anchor="end">watching</text>
+<text x="82" y="304" font-size="11" fill="var(--ink)" text-anchor="end">someone</text>
+<text x="82" y="318" font-size="11" fill="var(--ink)" text-anchor="end">watching</text>
+<text x="20" y="174" font-size="11" font-weight="700" fill="var(--ink)">CONTROL</text>
+<text x="0" y="372" font-size="10.5" fill="var(--muted)">Uncontrollable AI, which nobody could stop even if they tried, is not on this square. Nobody has built it.</text>
+</svg>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--muted);margin-top:.55rem;line-height:1.55"><strong style="color:var(--ink)">Autonomy is not the same as danger.</strong> The refund agent and the July 2026 test agents sit on the same side of the square: both pick their own steps. What separates them is the vertical dial, and every setting on it was chosen by a person. The worrying systems are not the clever ones. They are the ones in the top row.</figcaption>
+</figure>
+
+<h3>3.4 Autonomous and uncontrolled: the July 2026 test</h3>
+
+<p>The clearest example of the dangerous corner comes from a test. Before an AI company releases a
+powerful model, it checks what the model could do in the worst case. In the spring and summer of 2026,
+OpenAI was running agents built on two of its models through a test of their hacking skills. Because the
+test measured attack skill, OpenAI switched off the safeguards that normally make its models refuse that
+kind of work. The agents were autonomous on purpose, because autonomy was what was being measured.</p>
+
+<p>What was missing was control. The test environment, called a sandbox, had one link to an internal
+company system. The agents found it, used it to pass messages to each other, and eventually used it to
+reach the internet. In July, hundreds of them broke into Hugging Face, a widely used site where
+developers share AI models, looking for the answers to their own test. Nobody told them to. Hacking
+the scorer was simply one way to raise the score. Hugging Face's own monitoring caught the intrusion and
+disclosed it on July 16. OpenAI did not learn that the attacker was its own agents until days later,
+and the two companies announced it together on July 21. By OpenAI's own later account, staff had seen
+signs of the agents' message board weeks earlier and let the run continue.<sup class="cite"><a href="#src-3" aria-label="Source 3">3</a></sup></p>
+
+<p>Notice what failed. Not the model being "too smart." The people around it switched off the
+guardrails, left one door open, and were not watching. That is <em>uncontrolled</em>, not
+<em>uncontrollable</em>: people could have stopped the agents and eventually did. A truly uncontrollable
+system, one that nobody could stop even if they tried, has not been built. The same agent can sit in either corner of the figure, and people decide which. Section 9 comes
+back to that decision.</p>
+
+<h2 id="learn"><span class="num">4</span>How a model learns, and how it learns the wrong thing</h2>
+
+<p>Every kind of AI in section 3 is built on machine learning. This section says what that machine is
+doing, in plain terms, how to tell whether it works, and the three ways it goes wrong without anybody
+writing a bad instruction.</p>
+
+<h3>4.1 Learning from labeled examples</h3>
 
 <p><strong>Supervised learning</strong> is the way most business machine learning works: show the system
 a large set of past cases where the answer is already known, and let it work out what predicts the
@@ -604,24 +834,21 @@ label goes into the trained model, which produces a prediction.</desc>
 content and by who watched them. The label is whether a person kept watching. Every time you swipe, the
 model predicts which of many candidate videos you will keep watching and shows you the winner, and your
 swipe becomes the next labeled example. Amazon's "customers who bought this also bought" works the same
-way, learning from millions of past purchases through a method called <strong>collaborative
-filtering</strong> that its engineers published in 2003.<sup class="cite"><a href="#src-1" aria-label="Source 1">1</a></sup> Its sibling, <strong>unsupervised
-learning</strong>, finds structure with no labels at all. It could, for example, sort Cascadia's members
-into groups nobody had defined in advance.</p>
+way. It learns from millions of past purchases through a method called <strong>collaborative
+filtering</strong>, which its engineers published in 2003.<sup class="cite"><a href="#src-4" aria-label="Source 4">4</a></sup>
+Its sibling, <strong>unsupervised learning</strong>, finds structure with no labels at all. It could,
+for example, sort Cascadia's members into groups nobody had defined in advance.</p>
 
 <p>Compress the mechanism into one sentence and keep it: <em>a supervised model is a machine for making
 the future resemble the labeled past.</em> When the past is what you want more of, that is a
 superpower. The rest of this section is about when it is not.</p>
 
-<h3>1.4 Deep learning: when nobody writes the rules</h3>
+<h3>4.2 Deep learning: billions of dials</h3>
 
-<p>Nearly everything currently sold as AI, from the feed on your phone to the language model you used
-last night, is built on <strong>deep learning</strong>. A <strong>neural network</strong> is a structure
-loosely modeled on how brains process information. It is built from layers of simple units, and each unit
-takes numbers from the layer before it, does one small calculation, and passes the result forward. The
-first layer takes in the raw input, such as the pixels of a photo or the words of a resume. The last
-layer gives the answer. Deep learning just means a network with many layers in between, sometimes
-hundreds.</p>
+<p>Nearly everything currently sold as AI is built on <strong>deep learning</strong>. A <strong>neural
+network</strong> is a structure built from layers of simple units. Each unit takes numbers from the
+layer before it, does one small calculation, and passes the result forward. Deep learning just means a
+network with many layers, sometimes hundreds.</p>
 
 <figure class="diagram" style="margin:1.8rem auto;max-width:620px">
 <svg viewBox="0 0 620 330" xmlns="http://www.w3.org/2000/svg" role="img" style="width:100%;height:auto;font-family:var(--sans)" aria-labelledby="nnT nnD">
@@ -648,30 +875,22 @@ dials and that nobody sets them by hand.</desc>
 <text x="20" y="298" font-size="10.5" fill="var(--ink)">This drawing has 55 dials. A large modern model has billions, and nobody sets any of them by hand.</text>
 <text x="20" y="318" font-size="10" fill="var(--muted)">&#8220;Deep&#8221; learning means many hidden layers, sometimes hundreds.</text>
 </svg>
-<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--muted);margin-top:.55rem;line-height:1.55"><strong style="color:var(--ink)">The network never sees &ldquo;ears&rdquo; or &ldquo;whiskers.&rdquo;</strong> It sees numbers in the input layer and adjusts the dials on every line until the output matches the labels. Whatever the hidden layers end up detecting, nobody chose it and nobody can read it off the dials. That is why the only place to look, when a model surprises you, is the data it learned from.</figcaption>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--muted);margin-top:.55rem;line-height:1.55"><strong style="color:var(--ink)">The network never sees &ldquo;ears&rdquo; or &ldquo;whiskers.&rdquo;</strong> It sees numbers in the input layer and adjusts the dials on every line until the output matches the labels. Whatever the hidden layers end up detecting, nobody chose it and nobody can read it off the dials.</figcaption>
 </figure>
 
-<p>Take the simplest version of the job: teaching a computer to tell a cat from anything else. You show
-it a picture and tell it "cat." You show it another and tell it "not a cat." You do that a few thousand
-times. Nobody writes down what a cat looks like. The network works out which features went with the
-label, such as pointy ears and whiskers, because those reliably came with "cat" in the pictures it saw.
-Two things in that are worth slowing down for. The network does not know what a cat is; it knows what
-cats tended to look like in one pile of pictures. And you chose the pile.</p>
+<p>Take the simplest job: telling a cat from anything else. You show the network a picture and tell it
+"cat." You show it another and tell it "not a cat." You do that a few thousand times. Nobody writes down
+what a cat looks like. The network works out which features went with the label, because those reliably
+came with "cat" in the pictures it saw. The network does not know what a cat is; it knows what cats
+tended to look like in one pile of pictures. And you chose the pile.</p>
 
-<p>Now change two words. Instead of cat and not a cat, label the examples hired and not hired, and feed
-the network ten years of a company's resumes. The machinery does not change at all. It works out which
-features went with the label, and it has no way to know which of those features you would be
-embarrassed to write down as a rule. Mini-case 1 in section 3 is that exact system.</p>
+<p>Now change two words. Label the examples <em>hired</em> and <em>not hired</em>, and feed the network
+ten years of a company's resumes. The machinery does not change at all. It works out which features went
+with the label, and it has no way to know which of those features you would be embarrassed to write down
+as a rule. Mini-case 1 in section 7 is that exact system. When you want to know why a network decided
+something, the only place to look is the data it learned from.</p>
 
-<p>Here is the part that matters to a manager. Think of every connection inside the network as a dial,
-and a large modern network as having billions of them. Training shows the network an example, checks
-whether it was right, and nudges every relevant dial slightly toward a better answer, millions of times.
-Nobody tells it what to look for, and nobody at the company can point at a dial and say what it is for. A
-rule you can read is a rule you can argue with and correct. Billions of dials are neither. So when you
-want to know why a system decided something, the only place left to look is the data it learned
-from.</p>
-
-<h3>1.5 Measuring a model: accuracy is not enough</h3>
+<h3>4.3 Measuring a model: accuracy is not enough</h3>
 
 <p>Every model comes with an accuracy number. The first professional habit is to ask what the number is
 hiding. A model makes two different kinds of mistake. A <strong>false positive</strong> says yes when the
@@ -713,7 +932,7 @@ percent, but only 16 of the 216 alerts were fraud, about 7 percent.</desc>
 <text x="0" y="268" font-size="12" font-weight="700" fill="var(--magenta)">Alerts that were really fraud: 16 out of 216, about 7 percent.</text>
 <text x="0" y="292" font-size="10.5" fill="var(--muted)">Illustrative numbers.</text>
 </svg>
-<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--muted);margin-top:.55rem;line-height:1.55"><strong style="color:var(--ink)">The same model is 98 percent accurate and wrong nine times in ten.</strong> Both numbers are true. Accuracy counts the thousands of easy honest purchases. The magenta boxes are the two kinds of mistake, and they have different victims: a customer whose card is declined, and a bank that pays for the fraud it missed. Which box you shrink is a business decision.</figcaption>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--muted);margin-top:.55rem;line-height:1.55"><strong style="color:var(--ink)">The same model is 98 percent accurate and wrong nine times in ten.</strong> Both numbers are true. Accuracy counts the thousands of easy honest purchases. The magenta boxes are the two kinds of mistake, and they have different victims. Which box you shrink is a business decision.</figcaption>
 </figure>
 
 <p>That model is about 98 percent accurate, and the number sounds excellent. But of the 216 transactions
@@ -722,11 +941,11 @@ behind every false alarm is a customer whose card was declined at a register. Wh
 worth it is a business decision, not a statistical one.</p>
 
 <p>The same arithmetic applies to people. When a hiring model makes a false negative, a qualified person
-never hears back, and nobody records that anything went wrong. Chapter 6 asked whether a measure tracks
-what you care about. For a model, ask three questions every time. What is the base rate? Which mistake
-does this model make more often? And who pays for each kind?</p>
+never hears back, and nobody records that anything went wrong. For a model, ask three questions every
+time. What is the base rate? Which mistake does this model make more often? And who pays for each
+kind?</p>
 
-<h3>1.6 Training-data bias and proxy discrimination</h3>
+<h3>4.4 Training-data bias and proxy discrimination</h3>
 
 <p>The most common way a model goes wrong is the simplest. If the examples it learned from carry a
 skew, it learns the skew as if it were a rule, and it keeps applying it after the humans who produced
@@ -738,26 +957,24 @@ discrimination</strong> is the sequel. Remove a forbidden attribute, such as gen
 stand-ins that go along with it: a word, a college, a zip code. A company can delete the one stand-in it
 noticed, but it can never prove there is no subtler one among tens of thousands of terms.</p>
 
-<p>One management lesson follows, and mini-case 1 shows it in full. "The algorithm decided" is never an
-explanation. A model's decisions are its training data's decisions, run through arithmetic.
-Accountability for them belongs to the people who chose the data and shipped the system. The engineers
-were responsible for building it, but the managers who approved it are the ones who answer for it.</p>
+<p>One management lesson follows. "The algorithm decided" is never an explanation. A model's decisions
+are its training data's decisions, run through arithmetic. The engineers were responsible for building
+it, but the managers who chose the data and approved the system are the ones who answer for it.</p>
 
-<h3>1.7 The feedback loop</h3>
+<h3>4.5 The feedback loop</h3>
 
 <p>Now take the feed one step further. The For You page does not just learn from your behavior; it shapes
 the behavior it will learn from next. It serves what held your attention, your attention becomes the
 data, and the data narrows what gets served. In 2021 the Wall Street Journal ran automated accounts
 through TikTok and showed that watch time alone steered fresh feeds into narrow tunnels within hours.
-Accounts that lingered on sad content were fed darker and darker variants of whatever had held their
-attention.<sup class="cite"><a href="#src-2" aria-label="Source 2">2</a></sup> Engagement is a proxy for satisfaction, the proxy became the target, and Chapter 6 told
-you the rest.</p>
+Accounts that lingered on sad content were fed darker and darker versions of whatever had held their
+attention.<sup class="cite"><a href="#src-5" aria-label="Source 5">5</a></sup> Engagement is a stand-in
+for satisfaction, the stand-in became the target, and Chapter 6 told you the rest.</p>
 
 <p>Raise the stakes and the same loop stops being recoverable. <strong>Predictive policing</strong>
 systems forecast where crime is likeliest and send patrols there. More patrols in a neighborhood observe
-more offenses there, which enters the data as more recorded crime, which raises the forecast, which
-sends more patrols. The prediction manufactures its own confirmation, and past over-policing hardens
-into policy, applied to people who cannot log off.</p>
+more offenses there, which enters the data as more recorded crime, which raises the forecast, which sends
+more patrols. The prediction makes its own evidence, and the people it is applied to cannot log off.</p>
 
 <p>A <strong>feedback loop</strong> exists when a system's outputs change the data it will learn from
 next. The test to carry into any AI project is one question: <em>does acting on this prediction change
@@ -791,7 +1008,7 @@ confirming itself.</p>
 <text x="395" y="278" text-anchor="middle" font-size="9.5" fill="var(--text-light)">patrols: where police went</text><text x="395" y="290" text-anchor="middle" font-size="9.5" fill="var(--text-light)">becomes where crime is recorded</text>
 </svg>
 <figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">
-The same ring, drawn in Chapter 3, was a flywheel that made Zara stronger every turn. Here it is the shape of a model confirming itself. The magenta arrow is the dangerous one: the world the model changed is the world it will be trained on next, so its prediction manufactures its own evidence. For a video feed that is a lost evening. For a patrol pattern it is policy, applied to people who cannot log off. The shape is identical; only the stakes differ.
+The same ring, drawn in Chapter 3, was a flywheel that made Zara stronger every turn. Here it is the shape of a model confirming itself. The magenta arrow is the dangerous one: the world the model changed is the world it will be trained on next. For a video feed that is a lost evening. For a patrol pattern it is policy. The shape is identical; only the stakes differ.
 </figcaption>
 </figure>
 
@@ -830,24 +1047,23 @@ The same ring, drawn in Chapter 3, was a flywheel that made Zara stronger every 
 })();
 </script>
 
-<h2 id="genai"><span class="num">2</span>Generative AI, and what AI is good for</h2>
+<h2 id="genai"><span class="num">5</span>Generative AI and agents</h2>
 
-<p>Section 1 was about models that sort and score: this video or that one, fraud or not, hire or not.
-Generative AI produces something new instead, usually text, and it is the kind of AI you have used all
-quarter. This section explains what it is actually doing, why it makes things up, what a business can
-control, and then what AI in all its forms is good for, discipline by discipline.</p>
+<p>Section 4 was about models that sort and score. Generative AI produces something new instead, usually
+text, and it is the kind of AI you have used all quarter under the Lab 1 rules. This section explains
+what it is actually doing, why it makes things up, and what changes when it starts taking actions.</p>
 
-<h3>2.1 What a large language model actually does</h3>
+<h3>5.1 What a large language model actually does</h3>
 
 <p>A <strong>large language model (LLM)</strong> is a deep learning model trained to do one thing:
 predict the next piece of text. During training it reads an enormous amount of writing, and for every
 passage it guesses the next word, checks the real one, and nudges its billions of dials. The label in
-section 1.3's sense is simply whatever word came next. After that, people rate its answers, and the
-model is trained further to give the kinds of answers people rated as helpful.</p>
+section 4.1's sense is simply whatever word came next. After that, people rate its answers, and the model
+is trained further to give the kinds of answers people rated as helpful.</p>
 
 <p>When you ask it something, it writes the reply one piece at a time, each time choosing a likely next
 word given everything so far. That is the whole mechanism, and it explains both what LLMs are good at and
-how they fail. The figure shows the same process on two questions.</p>
+how they fail.</p>
 
 <figure class="diagram" style="margin:1.8rem auto;max-width:470px">
 <svg viewBox="0 0 470 320" xmlns="http://www.w3.org/2000/svg" role="img" style="width:100%;height:auto;font-family:var(--sans)" aria-labelledby="nxT nxD">
@@ -878,22 +1094,22 @@ voice.</desc>
 </figure>
 
 <p>Notice what is missing from that process. There is no step where the model looks anything up. It
-produces text that resembles the text it was trained on, and on well-covered questions resembling the
+produces text that resembles the text it was trained on, and on well-covered questions, resembling the
 training text and being true are nearly the same thing. On a question about one airline's refund rules,
 or a person who is not famous, they can come apart, and the model has no way to notice.</p>
 
-<h3>2.2 Hallucination, and grounding</h3>
+<h3>5.2 Hallucination, and grounding</h3>
 
 <p>A <strong>hallucination</strong> is fluent, confident output that is simply wrong: an invented
 citation, a policy that does not exist, a statistic nobody measured. It is not a bug in the usual sense.
-It is section 2.1's mechanism working as designed on a question where the likely answer and the true
+It is section 5.1's mechanism working as designed on a question where the likely answer and the true
 answer differ. You met it in Lab 1, in the calculator test, as a confident wrong total.</p>
 
-<p>The main defense is <strong>grounding</strong>: giving the model the real documents or records it should
-answer from, inside the request, and instructing it to answer only from those. Instead of asking the model
-what an airline's refund policy is, the system fetches the policy page and asks the model to answer from
-it. Grounding does not make a model honest. It changes the question from "what sounds right?" to "what
-does this document say?", which a language model is much better at.</p>
+<p>The main defense is <strong>grounding</strong>: giving the model the real documents or records it
+should answer from, inside the request, and instructing it to answer only from those. Instead of asking
+the model what an airline's refund policy is, the system fetches the policy page and asks the model to
+answer from it. Grounding does not make a model honest. It changes the question from "what sounds right?"
+to "what does this document say?", which a language model is much better at.</p>
 
 <figure class="diagram" style="margin:1.8rem auto;max-width:600px">
 <svg viewBox="0 0 600 236" xmlns="http://www.w3.org/2000/svg" role="img" style="width:100%;height:auto;font-family:var(--sans)" aria-labelledby="gdT gdD">
@@ -932,118 +1148,104 @@ and the model answers from the page, saying the fare cannot be claimed after tra
 <line x1="350" y1="176" x2="398" y2="176" stroke="var(--ink)" stroke-width="1.4" marker-end="url(#gda)"/>
 <text x="0" y="234" font-size="10" fill="var(--muted)">Illustrative wording.</text>
 </svg>
-<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--muted);margin-top:.55rem;line-height:1.55"><strong style="color:var(--ink)">Same model, same question. The difference is what the system put in front of it.</strong> Grounding is not a smarter model. It is a step in the system around the model, which is the point of section 1.2: the fix for a model&rsquo;s weakness often lives somewhere else in the system.</figcaption>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--muted);margin-top:.55rem;line-height:1.55"><strong style="color:var(--ink)">Same model, same question. The difference is what the system put in front of it.</strong> Grounding is not a smarter model. It is a step in the system around the model, which is the point of section 2: the fix for a model&rsquo;s weakness often lives somewhere else in the system.</figcaption>
 </figure>
 
-<p>Spotify gave the clearest public example in 2025. For its Wrapped Archive, rules picked out up to five
-"remarkable days" in each of roughly 350 million users' listening years. A language model then wrote a
-short story about each one, about 1.4 billion stories, all written before launch day. Every story was
-grounded in the user's actual listening records, because an ungrounded model will cheerfully invent a
-touching day you never had. Even so, a timezone bug in the data pipeline made some stories celebrate the
-wrong "discovery day," and the model wrote a compelling story about it anyway.<sup class="cite"><a href="#src-3" aria-label="Source 3">3</a></sup> That is
-grounding failing one layer down. The model was faithful to the data, and the data was wrong.</p>
+<p>You met a grounded system in Chapter 1. Spotify had a language model write about 1.4 billion short
+Wrapped stories, each grounded in one user's listening records. Even so, a timezone bug in the data
+pipeline made some stories celebrate the wrong day, and the model wrote a convincing story anyway.<sup class="cite"><a href="#src-6" aria-label="Source 6">6</a></sup>
+The model was faithful to the data, and the data was wrong. Spotify's engineers said that at that scale, the call to the language model was the easy part.
+The data pipeline, the grounding, and the checking were the hard part, and all three are MIS work.</p>
 
-<h3>2.3 What a business can actually control</h3>
-
-<p>Most businesses never train a language model. They rent one, and control it in four ways. The
-<strong>prompt</strong> is the instructions and context sent with every request, including the grounding
-documents. <strong>Fine-tuning</strong> adapts a general model to one job by training it further on
-examples of that job. <strong>Distillation</strong> trains a smaller, cheaper model to imitate a big one
-on a narrow task. Spotify used both, because 1.4 billion calls to a large model would have cost too
-much.<sup class="cite"><a href="#src-3" aria-label="Source 3">3</a></sup> And <strong>evaluation</strong> decides how you will know it works.</p>
-
-<p>Evaluation is where most of the management lives. No person can read 1.4 billion stories, so Spotify
-had larger language models judge a sample of about 165,000, backed by targeted human review. That is
-how it caught the timezone bug. Spotify's engineers summed up the project in one line worth
-remembering: at that scale, the call to the language model was the easy part.<sup class="cite"><a href="#src-3" aria-label="Source 3">3</a></sup> The data
-pipeline, the grounding, the evaluation, and the capacity planning were the achievement, and every one
-of those is MIS work, not model-building work.</p>
-
-<h3>2.4 Agents: when the model takes actions</h3>
+<h3>5.3 Agents: when the model takes actions</h3>
 
 <p>An <strong>AI agent</strong> is a system in which a language model does not just answer but acts. It
 breaks a goal into steps and uses tools to carry them out: searching, sending an email, updating a
-record, placing an order. A chatbot that tells you how to change a flight is an assistant. One that
-changes the flight for you is an agent.</p>
+record, placing an order. Section 3 showed that the danger is
+how much the agent can reach and how rarely a person looks.</p>
 
-<p>Agents raise the question Chapter 6 asked about Zillow: how far can a model's output travel before a
-person checks it? An assistant's mistake is a wrong sentence somebody can ignore. An agent's mistake is
-an action, already taken, and a mistake in step two is carried forward into every step after it. Chapter
-4 asked you to decide which steps of a process to hand to an agent. Here is the rule underneath that
-decision. Give an agent the authority you would give a new employee in their first week: real work, a
-short list of things it may never do alone, and a person who reviews anything that cannot be undone.</p>
+<p>An assistant's mistake is a wrong sentence somebody can ignore. An agent's mistake is an action,
+already taken, and a mistake in step two is carried forward into every step after it. Chapter 4 asked you
+to decide which steps of a process to hand to an agent. Here is the rule underneath that decision. Give an
+agent the authority you would give a new employee in their first week: real work, a short list of things
+it may never do alone, and a person who reviews anything that cannot be undone.</p>
 
-<h3>2.5 Rent the model, or build it</h3>
+<h3>5.4 Rent the model, or build it</h3>
 
 <p>Chapter 11's build, buy, or subscribe question applies to models too, and the answer is usually the
 same. A handful of companies train the largest models, at a cost few others could carry, and most
-businesses rent them through an API, from Chapter 11, and run them in a cloud, from Chapter 13. What a
-business actually owns is its data, its prompts, its grounding documents, and its evaluation. Those are
-the differentiators. The model underneath is increasingly a commodity, and it can change when the
-provider releases a new version.</p>
+businesses rent them through an API and run them in a cloud. A business then shapes the rented model
+with its <strong>prompt</strong>, the instructions and grounding documents sent with every request. It
+can go further with <strong>fine-tuning</strong>, which trains a general model further on examples of
+one job, or <strong>distillation</strong>, which trains a smaller, cheaper model to imitate a big one.
+What a business actually owns is its data, its prompts, and its way of checking the results. The model
+underneath is increasingly a commodity.</p>
 
-<p>TikTok is the exception, and it shows why. TikTok's short videos were easy to copy, and much larger companies did
-copy them. The recommendation model, trained on its users' behavior, was not, and it was the
-business. When the United States forced a sale of TikTok's American operations, the hardest question was
-who would control the algorithm. In the deal that closed in January 2026, ByteDance kept a 19.9 percent
-stake and licensed the algorithm to the new American company, which is retraining it on American users'
-data inside Oracle's cloud.<sup class="cite"><a href="#src-4" aria-label="Source 4">4</a></sup> When the model is what customers choose you for, you own it.
-When it is not, you rent it and own what you feed it.</p>
+<p>TikTok is the exception, and it shows why. Rivals copied TikTok's short videos easily. They could not copy the recommendation
+model trained on its users' behavior, and that model was the business. When the United States forced a sale of TikTok's American operations, the hardest question
+was who would control the algorithm. In the deal that closed in January 2026, ByteDance kept a 19.9
+percent stake and licensed the algorithm to the new American company. That company is retraining it on
+American users' data inside Oracle's cloud.<sup class="cite"><a href="#src-7" aria-label="Source 7">7</a></sup>
+When the model is what customers choose you for, you own it. When it is not, you rent it and own what you
+feed it.</p>
 
-<h3>2.6 What AI is good for, in every part of the business</h3>
+<h2 id="upside"><span class="num">6</span>The upside: what AI is good for</h2>
 
-<p>Start with the plain fact, because the rest of this chapter spends a long time on costs. Machine
-learning works, at scale, every day. It flags card fraud in the moment between swipe and approval, which
-is why your bank texts you about a strange charge before you leave the store. Models trained on labeled
-medical scans screen for eye disease in clinics that have no specialist. DeepMind's AlphaFold predicted
-the shapes of essentially every known protein, work that shared the 2024 Nobel Prize in Chemistry.
-Translation and speech recognition have become accessibility tools for hundreds of millions of people.
-None of this is hype, and the main case in section 4 is one of the best examples there is.</p>
+<p>Start with the plain fact, because the end of this chapter spends a long time on costs. Machine
+learning works, at scale, every day, and most of it is tool AI doing a narrow job well.</p>
 
-<p>For a business student the more useful question is what AI does in your own future job. The pattern
-is consistent enough to state first. AI takes the first draft and the routine case. A person keeps the
+<h3>6.1 In science and everyday life</h3>
+
+<p>AI flags card fraud in the moment between swipe and approval, which is why your bank texts you about a
+strange charge before you leave the store. Models trained on labeled medical scans screen for eye disease
+in clinics that have no specialist. DeepMind's AlphaFold predicted the shapes of essentially every known
+protein, work that shared the 2024 Nobel Prize in Chemistry. Translation and speech recognition have
+become accessibility tools for hundreds of millions of people. None of this is hype, and the main case in
+section 8 is one of the best examples there is.</p>
+
+<h3>6.2 In every part of the business</h3>
+
+<p>For a business student the more useful question is what AI does in your own future job. The pattern is
+consistent enough to state first. AI takes the first draft and the routine case. A person keeps the
 exception, the judgment, and the accountability. The details differ by discipline.</p>
 
 <p><strong>Accounting.</strong> Models read invoices and receipts, match them to purchase orders, and flag
-journal entries that look unusual so an auditor can check them, instead of the auditor sampling at
-random. What stays with a person is deciding whether an unusual entry is fraud, an error, or a
-legitimate one-off, and signing the opinion that says the books are fair.</p>
+journal entries that look unusual so an auditor can check them, instead of the auditor sampling at random.
+What stays with a person is deciding whether an unusual entry is fraud, an error, or a legitimate one-off,
+and signing the opinion that says the books are fair.</p>
 
 <p><strong>Finance.</strong> In 2023 Morgan Stanley gave its financial advisors an assistant built on an
 OpenAI model and grounded in roughly 100,000 of the firm's own research reports and documents. An advisor
-could ask a question in plain English instead of searching by keyword.<sup class="cite"><a href="#src-5" aria-label="Source 5">5</a></sup> The firm
-presented it as a way to free advisors' time for clients, not to replace the advisor, who still owns the
-advice.</p>
+could ask a question in plain English instead of searching by keyword.<sup class="cite"><a href="#src-8" aria-label="Source 8">8</a></sup>
+The firm presented it as a way to free advisors' time for clients, not to replace the advisor, who still
+owns the advice.</p>
 
 <p><strong>Marketing.</strong> Generative AI makes content cheap: product descriptions, ad variations,
-images. In November 2024 Coca-Cola remade its famous 1995 "Holidays Are Coming" commercial with
-generative AI. An advertising research firm scored the ad well in early testing. Then public
-reaction turned against it, much of it from viewers and artists who objected to a brand known for its
-holiday animation replacing its animators.<sup class="cite"><a href="#src-6" aria-label="Source 6">6</a></sup> Cheaper content is real. So
-is the judgment about what a brand's audience will accept, and that judgment stayed with people.</p>
+images. In November 2024 Coca-Cola remade its famous 1995 "Holidays Are Coming" commercial with generative
+AI. It tested well, then public reaction turned against it, much of it from artists who
+objected to a brand known for its holiday animation replacing its animators.<sup class="cite"><a href="#src-9" aria-label="Source 9">9</a></sup> Cheaper content is real.
+So is the judgment about what a brand's audience will accept, and that judgment stayed with people.</p>
 
 <p><strong>Management and human resources.</strong> The strongest evidence on AI and everyday work comes
 from a study of more than 5,000 customer support agents at a software company. An AI assistant that
-suggested replies raised the number of issues resolved per hour by about 14 to 15 percent on average.
-The newest and least experienced agents gained roughly 30 percent or more, and the most experienced
-gained almost nothing.<sup class="cite"><a href="#src-7" aria-label="Source 7">7</a></sup> The authors' evidence suggests the assistant was spreading the
-habits of the best agents to everyone else.
-For a manager, that changes how you train people and whom you can hire. Mini-case 1 is the warning on
-the other side: AI used to choose whom to hire.</p>
+suggested replies raised the number of issues resolved per hour by about 14 to 15 percent on average. The
+newest and least experienced agents gained roughly 30 percent or more, and the most experienced gained
+almost nothing.<sup class="cite"><a href="#src-10" aria-label="Source 10">10</a></sup> The assistant seems to have spread the habits of
+the best agents to everyone else, which changes how a manager trains people and whom they can hire.</p>
 
 <p><strong>Operations and supply chain.</strong> Forecasting demand and planning routes are prediction
 problems, and Chapter 6's UPS routing system is prescriptive analytics at work. Customer service is the
 operations story everyone watched. In early 2024 Klarna said its AI assistant was handling two-thirds of
 its customer service chats, the work of about 700 agents. In 2025 its chief executive said the push to cut
 costs had lowered quality, and the company began hiring human agents again, while the assistant kept
-handling most chats.<sup class="cite"><a href="#src-8" aria-label="Source 8">8</a></sup> The lesson was not that AI failed. It was that where the line sits between
-the model and the person is a decision, and it can be drawn in the wrong place.</p>
+handling most chats.<sup class="cite"><a href="#src-11" aria-label="Source 11">11</a></sup> The lesson was not
+that AI failed. It was that the line between the model and the person is a decision, and it can be drawn
+in the wrong place.</p>
 
 <p><strong>MIS and analytics.</strong> Chapter 11 showed what AI does to building software. The bigger
-change is in the work around models. Somebody has to decide what "working" means for a model and
-measure it, ground it in the right data, decide which decisions it may make alone, and keep a record of
-every model the company runs. Section 5 calls that AI governance, and it is business work, not
-engineering.</p>
+change is in the work around models. Somebody has to decide what "working" means for a model and measure
+it, ground it in the right data, decide which decisions it may make alone, and keep a record of every model
+the company runs. Section 9 calls that AI governance, and it is business work, not engineering.</p>
 
 <table class="sumtable stack-sm">
 <tr><th>Discipline</th><th>What AI takes</th><th>What stays with a person</th></tr>
@@ -1055,28 +1257,27 @@ engineering.</p>
 <tr><td data-label="Discipline"><strong>MIS and analytics</strong></td><td data-label="What AI takes">Code drafts, data preparation</td><td data-label="What stays with a person">Evaluation, grounding, governance</td></tr>
 </table>
 
+<h2 id="cases"><span class="num">7</span>Two systems nobody meant to build</h2>
 
-<h2 id="cases"><span class="num">3</span>Two systems nobody meant to build</h2>
+<p>Before the main case, here are two short ones. In both, a system produced an outcome nobody designed and
+nobody could find written down anywhere. The first is the oldest kind of machine-learning failure, and the
+second is the newest. What differs between them is <em>which component</em> the human decision was hiding
+in.</p>
 
-<p>Before the main case, here are two short ones. In both, a system produced an outcome nobody designed
-and nobody could find written down anywhere. The first is the oldest kind of machine-learning failure,
-and the second is the newest. What differs between them is <em>where</em> the human decision was
-hiding.</p>
-
-<h3>3.1 Mini-case 1 &middot; 2014 to 2018: the hiring model that learned who got hired</h3>
+<h3>7.1 Mini-case 1 &middot; 2014 to 2018: the hiring model that learned who got hired</h3>
 
 <p>Amazon had spent two decades proving that prediction from history works: what you will buy, where to
 stock it, what to recommend. Beginning in 2014, a team at the company built experimental models to do
 the same for recruiting. The models would read each incoming resume and score the applicant from one to
 five stars, the way shoppers score products. One insider described the dream to Reuters: give the engine
-one hundred resumes, it picks the top five, and you hire those.<sup class="cite"><a href="#src-9" aria-label="Source 9">9</a></sup> This was not a rogue project.
+one hundred resumes, it picks the top five, and you hire those.<sup class="cite"><a href="#src-12" aria-label="Source 12">12</a></sup> This was not a rogue project.
 It was the company's most proven idea, aimed at its own front door.</p>
 
 <figure class="diagram" style="margin:1.9rem auto;max-width:420px">
 <img src="amazon-spheres-seattle.jpg" width="960" height="1280" loading="lazy" style="width:100%;height:auto"
  alt="Three large connected glass domes made of a geometric steel lattice, standing between tall office towers and a building under construction in downtown Seattle on a sunny day. People walk along the sidewalk in front of the domes.">
 <figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">
-The Spheres at Amazon's headquarters in Seattle. Amazon had spent two decades proving that prediction from history works: what you will buy, where to stock it, what to recommend. Pointing that same idea at its own hiring was not a strange decision. It was the company's most trusted idea, aimed one step too far.
+The Spheres at Amazon's headquarters in Seattle. By 2014 the company trusted prediction from history in almost every part of its business. Hiring looked like one more.
 <br><br>Photograph: Andy Li, via Wikimedia Commons, CC0 (public domain dedication).
 </figcaption>
 </figure>
@@ -1087,17 +1288,17 @@ resumes and how those candidacies had turned out. The whole story fits in one se
 men's resumes were what success looked like.</strong> By 2015 the team found the system penalizing
 resumes that contained the word "women's," as in "women's chess club captain," and downgrading
 graduates of two all-women's colleges. It favored verbs that happened to be more common on male
-engineers' resumes, such as "executed" and "captured."<sup class="cite"><a href="#src-9" aria-label="Source 9">9</a></sup></p>
+engineers' resumes, such as "executed" and "captured."<sup class="cite"><a href="#src-12" aria-label="Source 12">12</a></sup></p>
 
 <p>Amazon edited the model to neutralize those terms. Then the company faced the harder truth. With tens
 of thousands of terms in play, there was no way to be confident the model had not found other, subtler
 stand-ins for gender. It lost confidence in the project and shut it down. Amazon told Reuters the tool
 was never used by recruiters to evaluate candidates, though people familiar with it said recruiters had
-looked at its recommendations without relying on them alone.<sup class="cite"><a href="#src-9" aria-label="Source 9">9</a></sup></p>
+looked at its recommendations without relying on them alone.<sup class="cite"><a href="#src-12" aria-label="Source 12">12</a></sup></p>
 
 <p>None of this was new. In 1988 Britain's Commission for Racial Equality found that a London medical
 school's admissions program, built to agree with the school's past decisions, had marked down women and
-applicants with non-European names.<sup class="cite"><a href="#src-10" aria-label="Source 10">10</a></sup> Thirty years apart, the same mechanism produced the same
+applicants with non-European names.<sup class="cite"><a href="#src-13" aria-label="Source 13">13</a></sup> Thirty years apart, the same mechanism produced the same
 surprise.</p>
 
 <p><strong>Where the decision was hiding: in the examples. The component: data.</strong> Nobody wrote a
@@ -1108,9 +1309,9 @@ killed a project it had wanted badly.</p>
 <div class="mcq"><b>Check yourself</b>Amazon deleted the word "women's" from what the model could use,
 and still could not trust it. Explain why deleting the word could not fix the problem, and name the test
 that would show whether a hiring model treats groups fairly.
-<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>Because the word was a symptom, not the cause. The cause was the labels: ten years of decisions in which men were hired more often. Delete one stand-in for gender and the model finds the next one, such as a college, a sport, or a verb, because the pattern it was trained to reproduce is still in the answer key. Checking the model against past hiring decisions cannot catch this, because agreeing with a skewed past is exactly what the model was built to do. The test that can catch it compares outcomes across groups: do equally qualified men and women get equal scores? That is a fairness test, not an accuracy test, and it is the test section 5 calls a bias audit.</p></details></div>
+<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>Because the word was a symptom, not the cause. The cause was the labels: ten years of decisions in which men were hired more often. Delete one stand-in for gender and the model finds the next one, such as a college, a sport, or a verb, because the pattern it was trained to reproduce is still in the answer key. Checking the model against past hiring decisions cannot catch this, because agreeing with the past is what it was built to do. The test that can catch it compares outcomes across groups: do equally qualified men and women get equal scores? That is a fairness test, not an accuracy test, and it is the test section 9 calls a bias audit.</p></details></div>
 
-<h3>3.2 Mini-case 2 &middot; 2024: the airline that blamed its own chatbot</h3>
+<h3>7.2 Mini-case 2 &middot; 2024: the airline that blamed its own chatbot</h3>
 
 <p>A man booking a flight after a death in his family asked Air Canada's website chatbot about
 bereavement fares. The chatbot told him he could book now and apply for the discount within ninety days.
@@ -1121,20 +1322,20 @@ applied, and was refused.</p>
 remembering. It suggested the chatbot was a separate legal entity responsible for its own actions. The
 tribunal did not accept this. The chatbot was part of the airline's website, it said, and the airline was
 responsible for all the information on it. A customer had no way of knowing which part of a company's
-own website to trust. Air Canada was ordered to pay.<sup class="cite"><a href="#src-11" aria-label="Source 11">11</a></sup></p>
+own website to trust. Air Canada was ordered to pay.<sup class="cite"><a href="#src-14" aria-label="Source 14">14</a></sup></p>
 
 <figure class="diagram" style="margin:1.9rem auto;max-width:560px">
 <img src="air-canada-777.jpg" width="960" height="610" loading="lazy" style="width:100%;height:auto"
  alt="A white Air Canada Boeing 777 passenger jet, with Air Canada in red letters along the body and a red maple leaf on the tail, flying low against a clear blue sky with its landing gear down.">
 <figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">
-An Air Canada 777 coming in to land. The airline employs thousands of people trained on its fare rules. The chatbot was not one of them, and a tribunal ruled that did not matter: a customer cannot be expected to know which part of a company's own website is allowed to be wrong.
+An Air Canada 777 coming in to land. The airline employs thousands of people trained on its fare rules. The chatbot was not one of them, and a tribunal ruled that did not matter.
 <br><br>Photograph: Adrian Pingstone, via Wikimedia Commons, public domain.
 </figcaption>
 </figure>
 
 <p>The sums involved were small. The principle is not, and it was the first clear statement many
 organizations had heard: a company owns what its systems say, in the same way it owns what its staff
-say. Read it beside section 2.2, too. A chatbot that invents a refund policy is a hallucination with a
+say. Read it beside section 5.2, too. A chatbot that invents a refund policy is a hallucination with a
 customer on the other end of it.</p>
 
 <p><strong>Where the decision was hiding: in who answers for it. The component: people.</strong> No
@@ -1142,11 +1343,11 @@ training data caused this and no bias was involved. What failed was the assumpti
 and never tested, that deploying a model does not carry any obligation with it.</p>
 
 <div class="mcq"><b>Check yourself</b>Air Canada argued the chatbot was responsible for itself. Say why
-that argument is tempting for a company to make, then name the specific control from section 2 that
+that argument is tempting for a company to make, then name the specific control from section 5 that
 would have stopped the chatbot inventing a policy in the first place.
-<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>It is tempting because it would make automation risk-free: if a company could disown what its chatbot said, it could disown anything it automated. That is exactly why the tribunal rejected it. A system's output is its owner's statement, and a customer cannot know which page of a company's website is allowed to be wrong. The control is grounding: the chatbot should answer fare questions only from the airline's actual policy pages, passed into each request, and hand the customer to a person when the answer is not in them. Grounding would not have made the chatbot perfect, but it would have changed its question from "what sounds right?" to "what does our policy say?" The responsibility for building the tool sat with its developers; the accountability for what it told customers sat with the airline. That distinction is the one Chapter 10 is built on.</p></details></div>
+<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>It is tempting because it would make automation risk-free: if a company could disown what its chatbot said, it could disown anything it automated. That is exactly why the tribunal rejected it. A system's output is its owner's statement, and a customer cannot know which page of a company's website is allowed to be wrong. The control is grounding: the chatbot should answer fare questions only from the airline's actual policy pages, passed into each request, and hand the customer to a person when the answer is not in them. The responsibility for building the tool sat with its developers; the accountability for what it told customers sat with the airline. That distinction is the one Chapter 10 is built on.</p></details></div>
 
-<h3>3.3 What the two have in common</h3>
+<h3>7.3 What the two have in common</h3>
 
 <p>Two systems, and not one biased rule or false instruction between them. Nobody at Amazon wrote down
 that women should score lower. Nobody at Air Canada told the chatbot to invent a refund policy. In both
@@ -1158,7 +1359,8 @@ pointed at a problem the market had ignored for decades, with people deciding at
 best argument in this book for what machine learning can do, and it has the same two weak points: the
 data it learned from, and the person who has to decide what to do with its answer.</p>
 
-<h2 id="everycure"><span class="num">4</span>Main case &middot; Every Cure: the drugs already on the shelf</h2>
+
+<h2 id="everycure"><span class="num">8</span>Main case &middot; Every Cure: the drugs already on the shelf</h2>
 
 <p>Everything so far in this chapter has been a concept with a short example. This case puts most of it
 in one organization. You will see a model trained on known answers, and a score that can mean "no" or
@@ -1171,10 +1373,10 @@ Joseph.</p>
 <div style="position:relative;width:100%;padding-top:56.25%;background:var(--black)">
 <iframe src="https://www.youtube-nocookie.com/embed/4FxwoOuPGWs" title="Penn Medicine video about David Fajgenbaum and Every Cure" style="position:absolute;inset:0;width:100%;height:100%;border:0" loading="lazy" allow="encrypted-media; picture-in-picture" allowfullscreen></iframe>
 </div>
-<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">Penn Medicine&rsquo;s video about Every Cure, about fourteen minutes. Fajgenbaum&rsquo;s own explanation of the knowledge graph comes about eight minutes in.<sup class="cite"><a href="#src-12" aria-label="Source 12">12</a></sup></figcaption>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin-top:.55rem;line-height:1.55">Penn Medicine&rsquo;s video about Every Cure, about fourteen minutes. Fajgenbaum&rsquo;s own explanation of the knowledge graph comes about eight minutes in.<sup class="cite"><a href="#src-15" aria-label="Source 15">15</a></sup></figcaption>
 </figure>
 
-<h3>4.1 A doctor who ran out of options</h3>
+<h3>8.1 A doctor who ran out of options</h3>
 
 <p>In his third year of medical school at the University of Pennsylvania, Fajgenbaum's organs began
 shutting down. The diagnosis was idiopathic multicentric Castleman disease, a rare disorder in which the
@@ -1182,18 +1384,18 @@ immune system attacks the body. It nearly killed him five times, and the approve
 he studied his own disease. He found an overactive signal in his own blood, and then a decades-old drug,
 sirolimus, given to transplant patients to stop the body rejecting a new organ, that happens to switch
 that signal off. Nobody had used it for Castleman disease. He has been in remission for more than eleven
-years, on a drug that sat in every pharmacy the whole time he was dying.<sup class="cite"><a href="#src-12" aria-label="Source 12">12</a></sup></p>
+years, on a drug that sat in every pharmacy the whole time he was dying.<sup class="cite"><a href="#src-15" aria-label="Source 15">15</a></sup></p>
 
 <p>His question afterward is the one this case is built on: how many other treatments are already on the
 shelf?</p>
 
-<h3>4.2 Why nobody was looking</h3>
+<h3>8.2 Why nobody was looking</h3>
 
 <p><strong>Drug repurposing</strong> is taking a drug already approved for one disease and using it for
 another. It happens more often than people think; aspirin was a painkiller before it was a heart drug. To
 see why it matters, look at the alternative. Developing a new drug usually takes ten to fifteen years,
 and one independent estimate puts the median cost of bringing a new drug to market, counting the
-failures along the way, at close to a billion dollars.<sup class="cite"><a href="#src-13" aria-label="Source 13">13</a></sup> That money comes from investors who
+failures along the way, at close to a billion dollars.<sup class="cite"><a href="#src-16" aria-label="Source 16">16</a></sup> That money comes from investors who
 expect it back, so new drugs get built for diseases with enough paying patients.</p>
 
 <p>Repurposing skips most of that, because the expensive part, proving the drug is safe in people, has
@@ -1203,20 +1405,26 @@ to prove a cheap generic pill treats a rare disease could not stop rivals sellin
 day. The cure might be in every pharmacy, and nobody is paid to notice.</p>
 
 <p>The scale makes it worse. Every Cure counts roughly 4,000 approved drugs and more than 18,000 known
-diseases, about 9,000 of them with no approved treatment at all.<sup class="cite"><a href="#src-14" aria-label="Source 14">14</a></sup> That is tens of millions of
-possible pairs, and the research that might connect them runs to millions of published papers, written
-by scientists who mostly never read each other's work. No team of people could check every pair. That,
-and not the word "AI," is why this is a machine-learning problem.</p>
+diseases, about 9,000 of them with no approved treatment at all.<sup class="cite"><a href="#src-17" aria-label="Source 17">17</a></sup> That is tens of millions of
+possible pairs. The research that might connect them runs to millions of papers, written by scientists who
+mostly never read each other's work. No team of people could check every pair.</p>
 
-<h3>4.3 MATRIX: a map of everything known, and a score for every pair</h3>
+<p>Before AI, a new use for an old drug was usually found one disease at a time, by a researcher who
+happened to read the right papers or a doctor who noticed a side effect. Fajgenbaum's own find, in section 8.1, happened
+that way. Repurposing existed long before machine learning. What machine learning
+changes is the method. It turns repurposing from an accident into a search: one that can score every
+pair, and score them all again every time the research grows. That, and not the word "AI," is why this
+is a machine-learning problem.</p>
+
+<h3>8.3 MATRIX: a map of everything known, and a score for every pair</h3>
 
 <p>In 2022 Fajgenbaum co-founded a nonprofit, Every Cure, and in February 2024 the federal health research
 agency ARPA-H gave it a three-year contract worth $48.3 million to build a platform called
-MATRIX.<sup class="cite"><a href="#src-14" aria-label="Source 14">14</a></sup> MATRIX is built on a <strong>knowledge graph</strong>, a way of storing information
+MATRIX.<sup class="cite"><a href="#src-17" aria-label="Source 17">17</a></sup> MATRIX is built on a <strong>knowledge graph</strong>, a way of storing information
 as connections instead of rows. Each point in the graph is something biomedical research has
 documented: a drug, a disease, a gene, a protein. Each line is a relationship somebody published: this
 drug blocks this protein; this protein drives this disease. In a 2026 release, the graph held about
-nine million points and 33 million connections, drawn from dozens of public databases.<sup class="cite"><a href="#src-14" aria-label="Source 14">14</a></sup></p>
+nine million points and 33 million connections, drawn from dozens of public databases.<sup class="cite"><a href="#src-17" aria-label="Source 17">17</a></sup></p>
 
 <figure class="diagram" style="margin:1.8rem auto;max-width:580px">
 <svg viewBox="0 0 580 230" xmlns="http://www.w3.org/2000/svg" role="img" style="width:100%;height:auto;font-family:var(--sans)" aria-labelledby="grT grD">
@@ -1251,38 +1459,38 @@ stated.</desc>
 <text x="85" y="204" font-size="10.5" fill="var(--muted)" text-anchor="middle">approved for transplant rejection</text>
 <line x1="60" y1="140" x2="60" y2="182" stroke="var(--rule)" stroke-width="1"/>
 </svg>
-<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--muted);margin-top:.55rem;line-height:1.55"><strong style="color:var(--ink)">Three published findings make a path. The path is the prediction.</strong> Every solid arrow is something a study had already shown, usually in a field that did not read the others. The dashed arc is the only thing the machine adds: the observation that the three line up. Fajgenbaum found this path by hand, from a hospital bed. MATRIX is built to find paths like it across tens of millions of pairs, and to rank them.</figcaption>
+<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--muted);margin-top:.55rem;line-height:1.55"><strong style="color:var(--ink)">Three published findings make a path. The path is the prediction.</strong> Every solid arrow is something a study had already shown, usually in a field that did not read the others. The dashed arc is the only thing the machine adds: the observation that the three line up. Fajgenbaum found this path by hand. MATRIX is built to find paths like it across tens of millions of pairs.</figcaption>
 </figure>
 
 <p>A path through the graph is not a finding. It is a place to look. MATRIX adds a model on top of the
-graph, and this is where section 1 comes back. The model is trained on treatments already known to work,
+graph, and this is where section 4 comes back. The model is trained on treatments already known to work,
 so it learns what a real drug-to-disease connection tends to look like. Then it scores every approved drug
 against every disease and sorts the results into a ranked list. Every Cure publishes the scores online,
 with a warning that a score measures how biologically plausible a match looks, not proof that it
-works.<sup class="cite"><a href="#src-14" aria-label="Source 14">14</a></sup> People take it from there: scientists review the top matches, and doctors decide
+works.<sup class="cite"><a href="#src-17" aria-label="Source 17">17</a></sup> People take it from there: scientists review the top matches, and doctors decide
 whether any of them belongs anywhere near a patient.</p>
 
-<h3>4.4 Joseph</h3>
+<h3>8.4 Joseph</h3>
 
 <p>Joseph was diagnosed with POEMS syndrome, a rare blood disorder. He lost forty pounds in weeks, his
 own oncology team's treatment did not work, and a planned stem cell transplant was called off because he
 was too sick to survive it. His doctor raised hospice. His partner emailed Fajgenbaum on a Friday
-afternoon.<sup class="cite"><a href="#src-12" aria-label="Source 12">12</a></sup></p>
+afternoon.<sup class="cite"><a href="#src-15" aria-label="Source 15">15</a></sup></p>
 
 <p>POEMS is rare, but it resembles Castleman disease and the blood cancer multiple myeloma, so drugs used
 for myeloma had paths into it. Fajgenbaum had already thought of three myeloma drugs, and an early
-version of Every Cure's model ranked those same drugs highly.<sup class="cite"><a href="#src-14" aria-label="Source 14">14</a></sup> Then came the hard part, which
+version of Every Cure's model ranked those same drugs highly.<sup class="cite"><a href="#src-17" aria-label="Source 17">17</a></sup> Then came the hard part, which
 no model makes. Chemotherapy is the last thing you give a person who is barely surviving, because it
 could kill him. His doctors gave it. Joseph responded within two weeks, left intensive care, walked
-again, had the transplant after all, and reached full remission.<sup class="cite"><a href="#src-12" aria-label="Source 12">12</a></sup></p>
+again, had the transplant after all, and reached full remission.<sup class="cite"><a href="#src-15" aria-label="Source 15">15</a></sup></p>
 
-<p>One detail belongs beside the story, because section 1.5 taught you to look for it. In a newer public
-release of Every Cure's scores, one of those three drugs ranks 194th for POEMS.<sup class="cite"><a href="#src-14" aria-label="Source 14">14</a></sup> A score
+<p>One detail belongs beside the story, because section 4.3 taught you to look for it. In a newer public
+release of Every Cure's scores, one of those three drugs ranks 194th for POEMS.<sup class="cite"><a href="#src-17" aria-label="Source 17">17</a></sup> A score
 belongs to one version of the model and the data it had at the time. The recovery was real. So was the
 judgment of the doctors who decided to act on a ranking, and a ranking is all the model ever gave
 them.</p>
 
-<h3>4.5 The thin end of the record</h3>
+<h3>8.5 The thin end of the record</h3>
 
 <p>Now look at the data component, because that is where this case teaches the most. Published research
 is not spread evenly across diseases. It piles up where money and patients are. A few hundred common
@@ -1321,16 +1529,17 @@ looked," and it says it with exactly the same number.</p>
 
 <p>That is the research gap becoming a prediction gap, and it is the failure to fear here, because nobody
 ever sees it. A drug that would have worked scores low, so nobody investigates, nobody publishes, and
-nobody ever knows there was anything to know. The second blind spot is the one section 1.5 warned about.
+nobody ever knows there was anything to know. The second blind spot is the one section 4.3 warned about.
 We heard about Joseph. We rarely hear about patients for whom a top-ranked drug did nothing, because those
 stories do not get told. Judging a system only by the cases that made it into the news is called
 <strong>survivorship bias</strong>, and it means nobody outside Every Cure can yet say how often a top
 match works. Without the misses, there is no base rate.</p>
 
-<h3>4.6 The five components at Every Cure</h3>
+<h3>8.6 The five components at Every Cure</h3>
 
-<p>Here is the system as five components, the way this course maps every case. Look at which row holds
-the model and which rows decide whether it helps anyone.</p>
+<p>Here is the system as five components, the same way section 2 mapped the For You page. Look at which
+row holds the model and which rows decide whether it helps anyone. This is also what tool AI looks like at
+its best: the model does a search no person could do, then stops, and people decide what happens next.</p>
 
 <table class="sumtable stack-sm">
 <tr><th>Component</th><th>At Every Cure</th><th>The lesson</th></tr>
@@ -1341,202 +1550,205 @@ the model and which rows decide whether it helps anyone.</p>
 <tr><td data-label="Component"><strong>People</strong></td><td data-label="At Every Cure">Scientists who review matches; doctors who decide; a patient who consents</td><td data-label="The lesson">The model ranks. People decide, and answer for it</td></tr>
 </table>
 
-<h3>4.7 What's next: from candidates to trials</h3>
+<h3>8.7 What's next: from candidates to trials</h3>
 
 <p>MATRIX was named one of TIME's best inventions of 2025. In February 2026 ARPA-H funded a second phase,
 worth up to $76 million, to take twenty top matches into laboratory testing and ten into clinical
-trials.<sup class="cite"><a href="#src-14" aria-label="Source 14">14</a></sup> That is the right next step, because a trial is the one way to answer the question
-this case leaves open: how often does a top-ranked match actually work? It is also the kind of claim a
-student can check. As of this writing, the honest sentence is that the system has produced candidates,
+trials.<sup class="cite"><a href="#src-17" aria-label="Source 17">17</a></sup> That is the right next step, because a trial is the one way to answer the question
+this case leaves open: how often does a top-ranked match actually work? As of this writing, the honest sentence is that the system has produced candidates,
 some are headed for trials, and one patient recovered after a match it ranked highly. Watch what happens
 when that sentence gets shortened to "AI found a cure."</p>
 
-<h3>4.8 What a business technology manager takes from this case</h3>
+<h3>8.8 What a business technology manager takes from this case</h3>
 
 <p>Strip the Every Cure case down to what you can reuse in any company. Four decisions came up in it, and
 each one is a decision you will be in the room for.</p>
 
-<p><strong>Ask what your records are thin on before you trust a model built on them.</strong> MATRIX is
-strongest where research piled up and silent where it did not. Every company's data has the same shape:
-thick on its usual customers, thin on everyone else. That thin end is where a model will be confidently
-wrong, and it is where nobody will notice.</p>
+<p><strong>Ask what your records are thin on before you trust a model built on them.</strong> Every
+company's data has the same shape as MATRIX's: thick on its usual customers, thin on everyone else. The
+thin end is where a model will be confidently wrong, and nobody will notice.</p>
 
 <p><strong>Read every score with its denominator.</strong> A ranked list, a 98 percent accuracy, and a
-moving recovery story all sound like evidence. Ask what the base rate is, which mistakes the system
-makes, and how many tries stand behind the one success you heard about.</p>
+moving recovery story all sound like evidence. Ask how many tries stand behind the one success you heard
+about.</p>
 
 <p><strong>Keep a person at the gate where a mistake cannot be undone.</strong> The model ranked a drug.
-Doctors who knew Joseph decided to give chemotherapy to a man who might not survive it. Decide in advance
-which outputs a model may act on and which must pass through a person who answers for the result.</p>
+Doctors who knew Joseph decided to give chemotherapy to a man who might not survive it. Section 9 turns
+that into a rule you can write down.</p>
 
 <p><strong>Look for value in data you already own.</strong> Every Cure did not invent a drug. It connected
-records nobody had connected. Most organizations have their own shelf: years of repair logs, research
-projects, customer requests, and sales records that were never put side by side. Before paying to build
-something new, ask what you already have that nobody has connected.</p>
+records nobody had connected. Most organizations have their own
+shelf of records that were never put side by side. Before paying to build something new, ask what you
+already have that nobody has connected.</p>
 
 
-<h2 id="cost"><span class="num">5</span>The downside: what AI costs, and who pays</h2>
+<h2 id="governance"><span class="num">9</span>Governance and the human in the loop</h2>
 
-<p>Start with what section 2.6 and section 4 established, because it is true. Machine learning catches
-fraud, screens scans, speeds up the newest workers most, and found a candidate treatment for a man who
-had been sent toward hospice. A chapter that only listed costs would be as wrong as one that only listed
+<p>Every case in this chapter came down to the same two questions. How far was the system allowed to go
+on its own? And who was positioned to catch it when it went wrong? Those questions have names, and
+answering them on purpose is called governance.</p>
+
+<h3>9.1 In, on, or out of the loop</h3>
+
+<p>A <strong>human in the loop</strong> is a person who sets the goal, checks the work, or approves the
+action at the points where a mistake would cost something. It does not mean a person watches every step.
+There are three common settings. A person is <em>in</em> the loop when the system asks before it acts, the
+way a fraud alert waits for you to confirm. A person is <em>on</em> the loop when the system acts and
+reports, the way the refund agent in section 3.3 logs every refund for review. A person is <em>out</em> of
+the loop when the system runs until it is done, the way a resume screener might send rejections nobody
+reads.</p>
+
+<p>None of the three is always right. A spam filter that asked before every email would be useless. A
+hiring decision with nobody in the loop invites a lawsuit. Match the setting to the cost of a mistake.</p>
+
+<h3>9.2 Where a person has to stay</h3>
+
+<p>The cases in this chapter draw the line clearly. Keep a person at the gate wherever a mistake cannot be
+undone, wherever it falls on someone who cannot see it coming, and wherever the law holds the company
+responsible. Every Cure's model ranked a drug, and doctors who knew Joseph decided whether to give
+chemotherapy to a man who might not survive it. Air Canada's chatbot spoke for the company with nobody
+checking what it said, and the company paid for it. OpenAI's agents in section 3.4 showed signs of trouble that nobody acted on. The difference each
+time was where the people were.</p>
+
+<h3>9.3 What AI governance looks like</h3>
+
+<p><strong>AI governance</strong> is Chapter 10's IT governance applied to models: who decides which AI
+systems exist, what they may decide, and who answers when they fail. In practice it is five ordinary
+things.</p>
+
+<ol>
+<li><strong>An inventory.</strong> A list of every AI system the company runs, including the ones employees
+signed up for on their own, each with a named owner.</li>
+<li><strong>A rule for each one.</strong> What it may decide alone, what needs a person, and what it may
+never do. That is where the in, on, or out setting gets written down.</li>
+<li><strong>A test before launch.</strong> A <strong>bias audit</strong> compares outcomes across groups,
+which is the test that caught Amazon's tool. It sits alongside a record of what each model was trained on
+and where it must not be used.</li>
+<li><strong>Monitoring after launch.</strong> Somebody watches what the system actually does, because
+section 4.5 showed that models can change the world they are graded on. An off switch that has been
+tried before it is needed belongs here too.</li>
+<li><strong>Someone with the authority to say no.</strong> None of the first four matters if nobody can stop
+a launch.</li>
+</ol>
+
+<p>None of that requires writing code. You have run a small version all quarter: the Lab 1 traffic lights
+are an AI use policy, with a green tier, a tier that needs your own judgment, and a banned tier.</p>
+
+<p>The law has started to require some of the same things, unevenly. New York City has required an annual
+independent bias audit of automated hiring tools since 2023.<sup class="cite"><a href="#src-18" aria-label="Source 18">18</a></sup>
+Federal guidance on AI in hiring was withdrawn in January 2025, but the discrimination law underneath it
+still applies whether a person or a model does the discriminating.<sup class="cite"><a href="#src-19" aria-label="Source 19">19</a></sup>
+The European Union's AI Act scales its rules to the stakes of each use, which is called <strong>risk-tier
+regulation</strong>. It bans a few uses outright and treats hiring as high-risk, though in 2026 it pushed
+those high-risk rules back to December 2027. The United States has no broad federal AI law.<sup class="cite"><a href="#src-18" aria-label="Source 18">18</a></sup>
+Law moves in years and models change in months, so the protection that lasts is the one this course keeps
+handing you: measurement that is valid, and accountability with a name attached.</p>
+
+<h2 id="cost"><span class="num">10</span>The downside: what AI costs, and who pays</h2>
+
+<p>Start with what sections 6 and 8 established, because it is true. Machine learning catches fraud,
+screens scans, speeds up the newest workers most, and found a candidate treatment for a man who had been
+sent toward hospice. A chapter that only listed costs would be as wrong as one that only listed
 benefits.</p>
 
 <p>But the costs are real, and most of them land on people who did not choose the system and do not
-appear on the company's books. Here are six, each in a few sentences, and then what a company can do
-about them.</p>
+appear on the company's books. Here are six.</p>
 
-<h3>5.1 Bias and discrimination</h3>
+<h3>10.1 Bias and discrimination</h3>
 
-<p>Section 1.6 and mini-case 1 showed the mechanism. A model trained on a skewed history repeats the skew,
+<p>Section 4.4 and mini-case 1 showed the mechanism. A model trained on a skewed history repeats the skew,
 and it repeats it at scale, quickly, and with the authority of a number. In hiring, lending, housing, and
 policing, the people at the thin end of the record are the people most likely to be misjudged, and the
-least likely to find out why. "The algorithm decided" is not a defense, legally or ethically.</p>
+least likely to find out why.</p>
 
-<h3>5.2 Hallucination and misinformation</h3>
+<h3>10.2 Hallucination and misinformation</h3>
 
-<p>A language model's mistakes do not look like mistakes. They arrive fluent, confident, and formatted
-like an answer, which is what made Air Canada's chatbot persuasive. Inside a company, the risk is a
-wrong figure in a report nobody checked. Outside it, the same technology makes it cheap to produce
-convincing false text, images, and audio at a volume no fact-checker can match. The defense is the same
-in both places: grounding, evaluation, and a person accountable for anything that leaves the
-building.</p>
+<p>A language model's mistakes do not look like mistakes. They arrive fluent, confident, and formatted like
+an answer, which is what made Air Canada's chatbot persuasive. Inside a company, the risk is a wrong figure
+in a report nobody checked. Outside it, the same technology makes it cheap to produce convincing false
+text, images, and audio at a volume no fact-checker can match.</p>
 
-<h3>5.3 The people in the data</h3>
+<h3>10.3 The people in the data</h3>
 
 <p>Every system in this chapter runs on data generated by people who never signed up to be training
 examples. The applicants in Amazon's ten years of resumes were job-seekers, not volunteers for an
-experiment that would score people like them. The residents of a heavily patrolled neighborhood never
-agreed to have their arrest records forecast their children's police coverage. Spotify's Archive drew on
-years of retained listening history: delight built on how much a platform remembers about you. And the
-writing that language models learn from was produced by millions of people who were never asked and
-mostly never paid.</p>
+experiment that would score people like them. Your feed learned from your behavior, and from billions of
+other people's. And the writing that language models learn from was produced by millions of people who
+were never asked and mostly never paid.</p>
 
-<h3>5.4 Hidden labor, and entry-level jobs</h3>
+<h3>10.4 Hidden labor, and entry-level jobs</h3>
 
 <p>Behind the models sits work the demos never show. Supervised learning needs labeled examples, and much
-of the labeling is done by contractors, often in lower-wage countries, including people paid to look at
-the disturbing content that moderation models are trained on.</p>
+of the labeling is done by contractors, often in lower-wage countries, including people paid to look at the
+disturbing content that moderation models are trained on.</p>
 
-<p>The labor question closer to you is about entry-level jobs. In 2025 a team of Stanford economists used
-monthly payroll records from millions of American workers to look for early signs. In the occupations
-most exposed to AI, such as software development and customer service, employment for workers aged 22
-to 25 fell about 13 percent relative to other jobs after late 2022. Later versions of the study
-report a larger drop, around 16 percent. Older workers in the same occupations
-held steady or grew. The decline was concentrated where AI automates tasks rather than assisting with
-them, and the authors cautioned that other factors may be involved.<sup class="cite"><a href="#src-15" aria-label="Source 15">15</a></sup> Read it the way section
-2.6 suggests. The work that is easiest to hand to a model is often the routine work a new graduate used to
-learn on, which makes the judgment and accountability side of every job in the table more valuable, not
-less.</p>
+<p>The labor question closer to you is about entry-level jobs, and the evidence points in more than one
+direction. In 2025 Stanford economists studied payroll
+records from millions of American workers. In the jobs most exposed to AI, employment for workers aged 22
+to 25 fell about 13 percent relative to other jobs after late 2022, and later versions of the study put the
+drop closer to 16 percent. The decline was concentrated where AI does the task instead of helping a person
+do it, and the authors cautioned that other factors may be involved.<sup class="cite"><a href="#src-20" aria-label="Source 20">20</a></sup></p>
 
-<p>That is half the story, and it is the half that makes headlines. The other half is just as real.
-A 2026 study linked the actual AI spending of 21,559 U.S. firms to their staffing records. The firms that
-spent the most on AI grew their entry-level headcount about 12 percent in the two years after they
-started, the opposite of the story in which AI arrives and the junior jobs leave. Light users showed no
-change either way. The heavy spenders were already larger and growing faster, so AI may not be the
-reason, and the authors work for companies that sell business-spending and workforce data.<sup class="cite"><a href="#src-16" aria-label="Source 16">16</a></sup></p>
+<p>Other studies complicate that picture. A 2026 study of 21,559 U.S. firms found that the
+heaviest AI spenders grew their entry-level hiring about 12 percent, though those firms were already
+growing faster.<sup class="cite"><a href="#src-21" aria-label="Source 21">21</a></sup> A study from Denmark that
+linked chatbot use at work to government earnings records found no measurable effect on pay or hours two
+years on.<sup class="cite"><a href="#src-22" aria-label="Source 22">22</a></sup> None of these settles the
+argument. Read together, they say the effect of AI on jobs depends on how a company uses it, which is a
+better question than whether AI is good or bad for jobs.</p>
 
-<p>A second 2026 study complicates the timeline. Using unemployment insurance records, it found that the
-risk of unemployment in AI-exposed occupations began rising in early 2022, months before ChatGPT, which
-points to forces that were already at work. And from millions of college syllabi, it found that graduates
-since ChatGPT whose coursework overlapped most with what AI can do earned more in their first jobs and
-found them faster.<sup class="cite"><a href="#src-17" aria-label="Source 17">17</a></sup> A third study, from Denmark, linked large surveys of who
-used AI chatbots at work to government records of every worker's earnings and hours. Two years on, it
-found no measurable effect on either, ruling out changes larger than 2 percent, and the result held for
-heavy users and early-career jobs. People who used the chatbots did shift their tasks and sometimes their
-occupations, but the totals did not move.<sup class="cite"><a href="#src-18" aria-label="Source 18">18</a></sup> None of these studies settles the argument. Each shows a pattern, not a proven
-cause. Read together, they say the effect of AI on jobs depends on how a company uses it and what
-the people using it know, which is a better question than whether AI is good or bad for jobs.</p>
-
-<h3>5.5 The environment</h3>
+<h3>10.5 The environment</h3>
 
 <p>Training a large model and then serving it to hundreds of millions of people takes a great deal of
 electricity, and the data centers doing the work use water to stay cool. The International Energy Agency
 estimates that the world's data centers used about 415 terawatt-hours of electricity in 2024, roughly 1.5
-percent of all electricity on Earth, and about 485 in 2025. Its base case has the figure roughly doubling
-by 2030, with servers built for AI driving close to half of the increase.<sup class="cite"><a href="#src-19" aria-label="Source 19">19</a></sup> How much of that
-electricity comes from coal and gas, and how much from wind, sun, water, and nuclear, decides how much of
-it becomes emissions.</p>
+percent of all electricity on Earth, and about 485 in 2025. Its base case has the figure roughly doubling by
+2030, with servers built for AI driving close to half of the increase.<sup class="cite"><a href="#src-23" aria-label="Source 23">23</a></sup>
+How much of that becomes emissions depends on how much of the electricity comes from coal and gas.</p>
 
-<p>A single question to a chatbot costs very little. At scale, computing is an industry, with an
-industry's appetite for power, water, and land, and the bills land on the communities and grids where
-the buildings go. Chapter 13 is about those buildings. Carry one question there: when an AI answer feels
-free, who is paying, and in what currency?</p>
+<p>A single question to a chatbot costs very little. At scale, computing is an industry, with an industry's
+appetite for power, water, and land, and the bills land on the communities where the buildings go. That is
+the hardware component of section 2, with its costs attached. Chapter 13 is about those buildings.</p>
 
-<h3>5.6 Dependence on a few providers</h3>
+<h3>10.6 Dependence on a few providers</h3>
 
-<p>Section 2.5 said most businesses rent their models from a handful of companies. That is efficient, and
-it is a dependence. The provider sets the price, decides when the model changes underneath your product,
-and holds whatever your employees paste into it. A business that has built its customer service, its
-analysis, and its documents around one provider's model has a supplier it cannot easily replace, which is
-Chapter 13's lock-in problem with a model on top.</p>
+<p>Section 5.4 said most businesses rent their models from a handful of companies. That is efficient, and it
+is a dependence. The provider sets the price, decides when the model changes underneath your product, and
+holds whatever your employees paste into it. That is Chapter 13's lock-in problem with a model on top.</p>
 
-<h3>5.7 Governing all of it</h3>
+<h3>10.7 Where you come in</h3>
 
-<p>The treatments for these costs exist, and running them is business work. <strong>AI governance</strong>
-is Chapter 10's IT governance applied to models: who decides which AI systems exist, what they may
-decide, and who answers when they fail. In practice it means keeping an inventory of every model in use,
-each with a named owner. It means running a <strong>bias audit</strong> before launch, comparing outcomes
-across groups, which is the test that caught Amazon's tool. It means writing down what each model was
-trained on and where it must not be used, and deciding which decisions a model may never make alone. And
-it means monitoring models after launch, because section 1.7 showed they can change the world they are
-graded on.
-None of that requires writing code. All of it requires someone with the authority to say no. You have
-run a small version all quarter: the Lab 1 traffic lights are an AI use policy.</p>
+<p>Read this section's list again and notice what it is a list of. Every cost on it comes from a decision a
+person made: which data to train on, what to measure, where to put the line between the model and the
+person, and who answers when it goes wrong. None of those decisions is made by the model. They are made by
+people who understand both the business and the system, which is the job this course has been preparing you
+for.</p>
 
-<p>The law has started to require the same things, unevenly. New York City has required an annual
-independent bias audit of automated hiring tools since 2023, with published results.<sup class="cite"><a href="#src-20" aria-label="Source 20">20</a></sup> Federal
-guidance on AI in hiring was withdrawn in January 2025, but the discrimination law underneath it still
-applies whether a person or a model does the discriminating.<sup class="cite"><a href="#src-21" aria-label="Source 21">21</a></sup> The European Union's AI Act scales
-its rules to the stakes of each use, which is called <strong>risk-tier regulation</strong>. It bans a few
-uses outright and treats hiring as high-risk, but in 2026 it pushed those high-risk rules back to December
-2027. The United States has no comprehensive federal law, and Colorado repealed its broad AI
-discrimination law in May 2026 before it ever took effect.<sup class="cite"><a href="#src-20" aria-label="Source 20">20</a></sup> Law moves in years and models change
-in months, so the durable protection is the one this course keeps handing you: measurement that is
-valid, and accountability with a name attached.</p>
-
-<h3>5.8 Where you come in</h3>
-
-<p>Read this section's list again and notice what it is a list of. Every cost on it comes from a
-decision a person made: which data to train on, what to measure, where to put the line between the model
-and the person, and who answers when it goes wrong. None of those decisions is made by the model. They are
-made by people who understand both the business and the system, which is the job this course has been
-preparing you for.</p>
-
-<p>The evidence so far points the same way. In the customer support study, the people who gained most from
-AI were the newest and least experienced, because the tool passed on what the best workers knew.<sup class="cite"><a href="#src-7" aria-label="Source 7">7</a></sup> In
-the Stanford payroll study, the young workers losing ground were in jobs where AI was doing the task
-instead of them. Where AI was helping people do the work, employment grew. And in the study of
-21,559 firms, the heaviest AI users hired more new graduates, not fewer.<sup class="cite"><a href="#src-16" aria-label="Source 16">16</a></sup><sup class="cite"><a href="#src-15" aria-label="Source 15">15</a></sup> The difference between
-those two outcomes is how a company chooses to use the tool, and how well the person using it
-understands what it can and cannot do.</p>
-
-<p>That is the positive note this chapter ends on, and it is not a small one. A medical student with a
-rare disease, a library of research nobody had connected, and a team that asked the right question
-found a treatment for a man who had been sent toward hospice. The technology made the search possible.
-People decided what to look for, judged what the machine returned, and took responsibility for acting
-on it. You now know enough to be one of those people: to use these tools well, to ask what they were
-trained on and how anyone knows they work, and to keep a person where a person belongs. The companies
-you join will need exactly that.</p>
+<p>That is the positive note this chapter ends on. At Every Cure, the technology made the search
+possible. People decided what to look for, judged what the machine returned, and took responsibility for
+acting on it. You now know enough to be one of those people.</p>
 
 <div class="takeaways"><span class="obj-tag">Key takeaways</span>
 <ul>
-<li>An AI system is data, infrastructure, a model, its output, and the people who act on it. Most failures, and most fixes, live outside the model.</li>
-<li>A supervised model is a machine for making the future resemble the labeled past. When the past is what you want more of, that is a superpower.</li>
-<li>Accuracy hides more than it shows. Ask the base rate, which mistake the model makes, and who pays for each kind.</li>
-<li>A model's decisions are its training data's decisions. Accountability belongs to the people who chose the data and shipped the system.</li>
-<li>A language model predicts likely text, not true text. Ground it in real documents, evaluate it, and keep a person accountable for what it says.</li>
+<li>AI is software that learns from data instead of following written rules. By that test, your social media feed has been AI for more than a decade.</li>
+<li>An AI system is an information system: hardware, software, data, networks, and people. The model is one box. Most failures, and most fixes, live outside it.</li>
+<li>Most AI in use is tool AI. Agents are autonomous, and the good ones are controlled. The July 2026 test shows what autonomy without control looks like, and people decided both dials.</li>
+<li>A supervised model makes the future resemble the labeled past. Ask the base rate, which mistake it makes, and who pays for each kind.</li>
+<li>A language model predicts likely text, not true text. Ground it in real documents, check it, and keep a person accountable for what it says.</li>
 <li>AI takes the first draft and the routine case in every discipline. The exception, the judgment, and the accountability stay with people.</li>
-<li>Every Cure shows the best of the technology and its two weak points: the thin end of the data, and the person who has to decide what to do with the score.</li>
-<li>Every cost in section 5 traces to a human decision, which means every one can be decided better. People who understand both the business and the model are the ones who make those decisions.</li>
+<li>Every Cure turns drug repurposing from an accident into a search. Its weak points are the thin end of the data and the person who has to decide what to do with a score.</li>
+<li>AI governance is an inventory, a rule for each system, a test before launch, monitoring after, and someone who can say no.</li>
 </ul>
 </div>
 
-<h2 id="vocab"><span class="num">6</span>Vocabulary</h2>
+<h2 id="vocab"><span class="num">11</span>Vocabulary</h2>
 
 <dl class="vocab">
-<div><dt>Artificial intelligence / machine learning</dt><dd>Computers doing tasks that seem to require intelligence / learning patterns from examples instead of following written rules.</dd></div>
-<div><dt>AI system / model</dt><dd>The whole arrangement of data, infrastructure, model, output, and people / the trained software at its center.</dd></div>
+<div><dt>Artificial intelligence / machine learning</dt><dd>Software that learns patterns from data to make judgments or new content / the approach of learning from examples instead of following written rules.</dd></div>
+<div><dt>AI system / model</dt><dd>The whole information system of hardware, software, data, networks, and people / the trained software at its center.</dd></div>
+<div><dt>Predictive / generative / agentic AI</dt><dd>AI that outputs a judgment / AI that produces new content / AI that takes actions toward a goal.</dd></div>
+<div><dt>Tool AI</dt><dd>AI that does a task people give it, inside limits people set, and stops.</dd></div>
+<div><dt>Autonomy / control</dt><dd>How far a system goes on its own before a person sees anything / whether anyone can notice, stop, and undo what it does.</dd></div>
 <div><dt>Training data / label</dt><dd>The past examples a model learns from, and the outcome attached to each.</dd></div>
 <div><dt>Supervised / unsupervised learning</dt><dd>Learning from labeled outcomes vs. finding structure with no labels.</dd></div>
 <div><dt>Inference</dt><dd>Using a trained model on new cases.</dd></div>
@@ -1555,17 +1767,18 @@ you join will need exactly that.</p>
 <div><dt>Knowledge graph</dt><dd>Information stored as connections, so a system can follow paths nobody wrote down.</dd></div>
 <div><dt>Drug repurposing</dt><dd>Using an approved drug for a disease it was not approved for.</dd></div>
 <div><dt>Survivorship bias</dt><dd>Judging something only by the cases that made it far enough to be seen.</dd></div>
+<div><dt>Human in the loop</dt><dd>A person who sets the goal, checks the work, or approves the action where a mistake would cost something.</dd></div>
 <div><dt>AI governance / bias audit</dt><dd>The accountability structure for models / testing whether outcomes differ across groups.</dd></div>
 <div><dt>Risk-tier regulation</dt><dd>Rules that scale with the stakes of a use, from banned to lightly regulated.</dd></div>
 </dl>
+
 
 <div class="ailight g">
   <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
   <div class="lighttext"><strong>Green &middot; AI as coach and sparring partner</strong>
   <p>Fitting week for it: have an AI quiz you on this vocabulary, then run one live experiment on the
   chapter's own subject. Ask it a question about your hometown or a hobby you know deeply, and audit
-  the answer for confident errors. You are performing evaluation, from section 2.3, on the tool
-  itself. One standing rule extends the red light from Lab 1: never paste real people's personal or
+  the answer for confident errors. You are checking the tool the way section 5.2 says a business has to. One standing rule extends the red light from Lab 1: never paste real people's personal or
   identifying data, resumes included, into an AI tool. You would be adding them to somebody's
   training data, which after this chapter needs no further explanation.</p></div>
 </div>
@@ -1581,16 +1794,16 @@ strongest opinion about, and be ready to say it first.</p>
   have had to change instead. <span class="tag">Analyze</span></li>
 
   <li>A vendor tells you its resume screener is "95 percent accurate." Write the three questions from
-  section 1.5 you would ask before believing it, and say which answer would make you walk away.
+  section 4.3 you would ask before believing it, and say which answer would make you walk away.
   <span class="tag">Apply</span></li>
 
   <li>We heard about Joseph. We did not hear about the patients a top-ranked drug did not help. What would
   Every Cure have to publish or test before you would believe the system works rather than got lucky, and
   who should pay for that testing when no company profits from it? <span class="tag">Systems</span></li>
 
-  <li>Take your own major. Name one task AI should take over, one judgment that should stay with a person,
-  and the sign that would tell you the line between them had been drawn in the wrong place.
-  <span class="tag">Apply</span></li>
+  <li>Take your own major and imagine an AI agent your first employer might put to work there. Where would it
+  sit on section 3's two dials? Would you put a person in, on, or out of the loop, and what sign would tell you
+  the line had been drawn in the wrong place? <span class="tag">Apply</span></li>
 
   <li>Every prompt costs a little electricity, and every routine task handed to a model may be one fewer
   first job for a new graduate. Should a company count either cost when it decides to use AI, when the
@@ -1614,30 +1827,33 @@ what it is, and ask who would hold the authority to say no if it were written fo
 <details class="srcbox">
 <summary><h2 id="sources"><span class="num">9</span>Sources and further reading</h2></summary>
 <ul class="sources">
-<li id="src-1"><span class="srcnum">1</span> Greg Linden, Brent Smith and Jeremy York, &ldquo;Amazon.com Recommendations: Item-to-Item Collaborative Filtering,&rdquo; <em>IEEE Internet Computing</em> 7(1), 2003, the recommendation method published by its builders. Section 1.3.</li>
-<li id="src-2"><span class="srcnum">2</span> Wall Street Journal, &ldquo;Inside TikTok&rsquo;s Algorithm&rdquo; video investigation (2021): automated accounts showing watch time alone steering fresh feeds into narrow content within hours. Section 1.7.</li>
-<li id="src-3"><span class="srcnum">3</span> Spotify Engineering, <a href="https://engineering.atspotify.com/2026/3/inside-the-archive-2025-wrapped" target="_blank" rel="noopener">&ldquo;Inside the Archive: The Tech Behind Your 2025 Wrapped Highlights,&rdquo; 12 March 2026</a>: about 350 million users, 1.4 billion reports, the fine-tuned and distilled model, LLM-as-judge evaluation on about 165,000 reports with targeted human review, the timezone bug, and &ldquo;the LLM call is the easy part.&rdquo; Sections 2.2 and 2.3.</li>
-<li id="src-4"><span class="srcnum">4</span> BBC, via <a href="https://www.aol.com/finance/tiktok-closes-deal-split-us-051756047.html" target="_blank" rel="noopener">&ldquo;TikTok closes deal to split US app from global business,&rdquo; January 2026</a>, and <a href="https://www.timesofisrael.com/tiktok-finalizes-deal-to-create-us-entity-and-retrain-algorithm-avoiding-ban/" target="_blank" rel="noopener">AFP via The Times of Israel</a>, for the joint venture, ByteDance&rsquo;s 19.9 percent stake, the licensed algorithm, and its retraining on U.S. data in Oracle&rsquo;s cloud. Section 2.5. Recheck the ownership arrangement before teaching.</li>
-<li id="src-5"><span class="srcnum">5</span> Fortune, <a href="https://fortune.com/2023/09/20/morgan-stanley-ai-assistant-answer-investing-personal-finance-queries/" target="_blank" rel="noopener">20 September 2023</a>, reporting the launch of the AI @ Morgan Stanley Assistant to the firm&rsquo;s financial advisors and its access to about 100,000 research reports and documents; and <a href="https://fortune.com/2023/03/14/morgan-stanley-testing-openai-chatgpt-gpt4-to-help-financial-advisors/" target="_blank" rel="noopener">Fortune, 14 March 2023</a>, on the GPT-4 pilot and the firm&rsquo;s statement that the tool would assist advisors, not replace them. Section 2.6.</li>
-<li id="src-6"><span class="srcnum">6</span> Adweek, <a href="https://www.adweek.com/creativity/how-coca-colas-ai-holiday-ad-went-from-praise-to-rage/" target="_blank" rel="noopener">&ldquo;How Coca-Cola&rsquo;s AI Holiday Ad Went From Praise to Rage,&rdquo; November 2024</a>, for the AI remake of the 1995 &ldquo;Holidays Are Coming&rdquo; ad, its strong early test score from System1, and the backlash that followed; and <a href="https://www.eweek.com/news/coca-cola-ai-holiday-ad-backlash/" target="_blank" rel="noopener">eWeek</a> on the objections from artists. Section 2.6.</li>
-<li id="src-7"><span class="srcnum">7</span> Erik Brynjolfsson, Danielle Li and Lindsey R. Raymond, <a href="https://www.nber.org/system/files/working_papers/w31161/w31161.pdf" target="_blank" rel="noopener">&ldquo;Generative AI at Work,&rdquo; NBER Working Paper 31161</a> (2023), which reported a 14 percent average gain in issues resolved per hour and 34 percent for novice and lower-skilled agents; published in revised form in the <em>Quarterly Journal of Economics</em> 140(2), 2025, with estimates of about 15 percent and about 30 percent. The chapter gives ranges that cover both versions. Section 2.6.</li>
-<li id="src-8"><span class="srcnum">8</span> <a href="https://www.customerexperiencedive.com/news/klarna-reinvests-human-talent-customer-service-AI-chatbot/" target="_blank" rel="noopener">CX Dive, May 2025</a>, for Klarna&rsquo;s February 2024 figures (two-thirds of chats, the work of about 700 agents, which are the company&rsquo;s own claims) and its renewed hiring of human agents; and <a href="https://www.entrepreneur.com/business-news/klarna-ceo-reverses-course-by-hiring-more-humans-not-ai/" target="_blank" rel="noopener">Entrepreneur</a>, reporting the chief executive&rsquo;s Bloomberg interview on lower quality. Section 2.6.</li>
-<li id="src-9"><span class="srcnum">9</span> Jeffrey Dastin, Reuters, <a href="https://www.reuters.com/article/us-amazon-com-jobs-automation-insight/amazon-scraps-secret-ai-recruiting-tool-that-showed-bias-against-women-idUSKCN1MK08G" target="_blank" rel="noopener">&ldquo;Amazon scraps secret AI recruiting tool that showed bias against women,&rdquo; 10 October 2018</a>: the 2014 start, the ten years of resumes, the one-to-five stars, the &ldquo;women&rsquo;s&rdquo; penalty, the two colleges, the favored verbs, Amazon&rsquo;s statement, and the sources&rsquo; account of recruiters viewing its recommendations. Also <a href="https://technologyreview.com/2018/10/10/139858/amazon-ditched-ai-recruitment-software-because-it-was-biased-against-women" target="_blank" rel="noopener">MIT Technology Review&rsquo;s summary</a>. Mini-case 1.</li>
-<li id="src-10"><span class="srcnum">10</span> Commission for Racial Equality, <em>Medical School Admissions: Report of a Formal Investigation into St George&rsquo;s Hospital Medical School</em> (1988), for the program, the finding of discrimination, the as-many-as-sixty applicants a year, and the school&rsquo;s response. Mini-case 1, as historical background.</li>
-<li id="src-11"><span class="srcnum">11</span> <em>Moffatt v. Air Canada</em>, 2024 BCCRT 149, British Columbia Civil Resolution Tribunal (14 February 2024), as reported by <a href="https://www.cbc.ca/amp/1.7116416" target="_blank" rel="noopener">CBC News</a>, for the chatbot&rsquo;s wrong answer, the airline&rsquo;s argument that the chatbot was responsible for its own actions, and the tribunal&rsquo;s rejection of it. Mini-case 2.</li>
-<li id="src-12"><span class="srcnum">12</span> Penn Medicine, <a href="https://www.youtube-nocookie.com/embed/4FxwoOuPGWs" target="_blank" rel="noopener">video on David Fajgenbaum and Every Cure</a>, for Fajgenbaum&rsquo;s illness, sirolimus, and his remission, and for Joseph&rsquo;s diagnosis, the cancelled transplant, the hospice conversation, his partner&rsquo;s email, the decision to treat, and his recovery. Joseph&rsquo;s story is told in his own words on Penn&rsquo;s public channel and is used here as he told it. Sections 4.1 and 4.4.</li>
-<li id="src-13"><span class="srcnum">13</span> Olivier J. Wouters, Martin McKee and Jeroen Luyten, <a href="https://jamanetwork.com/journals/jama/fullarticle/2762311" target="_blank" rel="noopener"><em>JAMA</em>, 2020</a>, for a median of about $985 million per new drug approved from 2009 to 2018, counting failed trials (JAMA published corrections in 2022, so the chapter says close to a billion); and Southey and Brunavs, <a href="https://doi.org/10.3389/fddsv.2023.1314077" target="_blank" rel="noopener"><em>Frontiers in Drug Discovery</em>, 2023</a>, for the ten-to-fifteen-year timeline. Section 4.2.</li>
-<li id="src-14"><span class="srcnum">14</span> Every Cure, <a href="https://everycure.org" target="_blank" rel="noopener">everycure.org</a>, for its founding in 2022, its counts of diseases and of diseases without treatment, and the February 2024 ARPA-H contract of $48.3 million; Every Cure, <a href="https://everycure.org/phase2" target="_blank" rel="noopener">phase two announcement</a>, for up to $76 million in February 2026 for twenty preclinical programs and ten clinical trials; Every Cure, <a href="https://everycure.org/treatments-repurposed-by-every-cure-leadership/" target="_blank" rel="noopener">&ldquo;Treatments Repurposed by Every Cure Leadership&rdquo;</a>, for the three myeloma drugs considered for Joseph and the early model&rsquo;s high scores; Every Cure&rsquo;s <a href="https://prototypes.everycure.org/matrix-heatmap-public" target="_blank" rel="noopener">public score heatmap</a> and its public data page, for the plausibility warning and the scores; the MATRIX data dashboard (v0.15.x releases, 2026) for the graph&rsquo;s size, which changes between releases; and the public matrix-scores release of 1 July 2026, as extracted for the MIS 201 lab, for one of the three drugs ranking 194th for POEMS. TIME&rsquo;s Best Inventions of 2025 for the listing. These are largely the organization&rsquo;s own claims about itself, and are presented that way. Sections 4.2 to 4.7.</li>
-<li id="src-15"><span class="srcnum">15</span> Erik Brynjolfsson, Bharat Chandar and Ruyu Chen, <a href="https://digitaleconomy.stanford.edu/publications/canaries-in-the-coal-mine/" target="_blank" rel="noopener">&ldquo;Canaries in the Coal Mine? Six Facts about the Recent Employment Effects of Artificial Intelligence,&rdquo;</a> Stanford Digital Economy Lab, August 2025, using ADP payroll data, for the 13 percent relative decline for 22-to-25-year-olds in the most exposed occupations, the contrast with older workers, the automation-versus-augmentation split, and the authors&rsquo; caution. Later revisions of the paper extended the data and report a similar or larger decline; check the current version. Section 5.4.</li>
-<li id="src-16"><span class="srcnum">16</span> Ara Kharazian, Lisa Simon and Ryan Stevens, <a href="https://ramp.com/data/ai-jobs-impact/paper" target="_blank" rel="noopener">&ldquo;A New Look at AI&rsquo;s Impact on Jobs: Firm-Level AI Spending and Workforce Adjustment,&rdquo;</a> 30 June 2026, for 21,559 U.S. firms, the 12 percent rise in entry-level headcount among high-intensity adopters over the first 24 months, no significant change for low-intensity adopters, and the authors&rsquo; note that adopters were already larger, more technical, and faster-growing. The authors work at Ramp and Revelio Labs, whose data the study uses. A working paper, not peer-reviewed. Sections 5.4 and 5.8.</li>
-<li id="src-17"><span class="srcnum">17</span> Morgan R. Frank, Alireza Javadian Sabet, Lisa Simon, Sarah H. Bana and Renzhe Yu, <a href="https://arxiv.org/abs/2601.02554" target="_blank" rel="noopener">&ldquo;AI-exposed jobs deteriorated before ChatGPT,&rdquo;</a> arXiv, January 2026, for unemployment risk in AI-exposed occupations rising from early 2022, and for higher first-job pay and shorter job searches after ChatGPT among graduates whose coursework was more AI-exposed. A preprint, not peer-reviewed. Section 5.4.</li>
-<li id="src-18"><span class="srcnum">18</span> Anders Humlum and Emilie Vestergaard, <a href="https://bfi.uchicago.edu/working-papers/large-language-models-small-labor-market-effects/" target="_blank" rel="noopener">&ldquo;Large Language Models, Small Labor Market Effects,&rdquo;</a> Becker Friedman Institute Working Paper, April 2025, linking representative surveys of AI chatbot adoption in Denmark to administrative labor records, for precise null effects on earnings and recorded hours two years after adoption (ruling out effects larger than 2 percent), holding for intensive users, early adopters, and early-career jobs, alongside task restructuring and occupational switching. A working paper, not yet peer-reviewed. Section 5.4.</li>
-<li id="src-19"><span class="srcnum">19</span> International Energy Agency, <a href="https://www.iea.org/reports/energy-and-ai/executive-summary" target="_blank" rel="noopener"><em>Energy and AI</em>, executive summary (April 2025)</a>, for the 415 TWh and 1.5 percent figures for 2024, the base case for 2030, and the share of growth from accelerated servers; and the IEA&rsquo;s <em>Key Questions on Energy and AI</em> (16 April 2026) for the 2025 estimate of about 485 TWh. The same source supports Chapter 13. Section 5.5.</li>
-<li id="src-20"><span class="srcnum">20</span> New York City Local Law 144 of 2021 (enforced from 2023); Illinois&rsquo;s Artificial Intelligence Video Interview Act; Regulation (EU) 2024/1689, the AI Act, as amended by Regulation (EU) 2026/1744 (the Digital Omnibus on AI, in force 27 July 2026), which moved the high-risk deadline for stand-alone systems to 2 December 2027; Colorado SB 24-205 (May 2024), the December 2025 executive order on state AI laws, the April 2026 suit and Justice Department intervention, and Colorado SB 26-189 (signed 14 May 2026, effective 1 January 2027). This area moves faster than any other in the book; check the current position before teaching it. Section 5.7.</li>
-<li id="src-21"><span class="srcnum">21</span> K&amp;L Gates, <a href="https://www.klgates.com/The-Changing-Landscape-of-AI-Federal-Guidance-for-Employers-Reverses-Course-with-New-Administration-1-31-2025" target="_blank" rel="noopener">&ldquo;The Changing Landscape of AI,&rdquo; 31 January 2025</a>, and <a href="https://www.cooley.com/news/insight/2025/2025-02-21-gone-but-not-forgotten-federal-laws-still-apply-despite-guidance-disappearance-act" target="_blank" rel="noopener">Cooley, February 2025</a>, for the EEOC&rsquo;s removal of its AI guidance on 27 January 2025, and the point that the underlying law still applies. Section 5.7.</li>
+<li id="src-1"><span class="srcnum">1</span> Fortune, <a href="https://fortune.com/2019/04/11/youtube-metrics-quality-watch-time/" target="_blank" rel="noopener">11 April 2019</a>, on YouTube rebuilding its service around watch time starting in 2012. Instagram&rsquo;s and Twitter&rsquo;s 2016 move from posting order to a ranked feed, and TikTok&rsquo;s 2018 arrival in the United States through its merger with Musical.ly, are historical and widely reported. Sections 1.2 and 1.3.</li>
+<li id="src-2"><span class="srcnum">2</span> Historical and stable: ImageNet and the 2012 result of Krizhevsky, Sutskever and Hinton (top-five error about 26 to 15 percent); AlphaGo&rsquo;s 4 to 1 win over Lee Sedol, March 2016; ChatGPT&rsquo;s release on 30 November 2022, and UBS&rsquo;s February 2023 estimate of a hundred million users in about two months. Section 1.2.</li>
+<li id="src-3"><span class="srcnum">3</span> OpenAI, <a href="https://openai.com/index/hugging-face-model-evaluation-security-incident/" target="_blank" rel="noopener">disclosure of the Hugging Face incident, 21 July 2026</a>, and its 26 August 2026 technical report; Hugging Face, <a href="https://huggingface.co/blog/security-incident-july-2026" target="_blank" rel="noopener">&ldquo;Security incident disclosure,&rdquo; 16 July 2026</a>; and METR and Redwood Research, <a href="https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/" target="_blank" rel="noopener">outside investigation, 26 August 2026</a>. For the cyber-capability test, the safeguards switched off, the sandbox&rsquo;s single link to an internal system, the agents&rsquo; message board, the July intrusion and its discovery, the joint announcement, and OpenAI&rsquo;s account that staff saw earlier signs and let the run continue. The MIS 201 book&rsquo;s Chapter 1 treats the case at length. Section 3.4.</li>
+<li id="src-4"><span class="srcnum">4</span> Greg Linden, Brent Smith and Jeremy York, &ldquo;Amazon.com Recommendations: Item-to-Item Collaborative Filtering,&rdquo; <em>IEEE Internet Computing</em> 7(1), 2003, the recommendation method published by its builders. Section 4.1.</li>
+<li id="src-5"><span class="srcnum">5</span> Wall Street Journal, &ldquo;Inside TikTok&rsquo;s Algorithm&rdquo; video investigation (2021): automated accounts showing watch time alone steering fresh feeds into narrow content within hours. Section 4.5.</li>
+<li id="src-6"><span class="srcnum">6</span> Spotify Engineering, <a href="https://engineering.atspotify.com/2026/3/inside-the-archive-2025-wrapped" target="_blank" rel="noopener">&ldquo;Inside the Archive: The Tech Behind Your 2025 Wrapped Highlights,&rdquo; 12 March 2026</a>: about 350 million users, 1.4 billion reports, the fine-tuned and distilled model, LLM-as-judge evaluation on about 165,000 reports with targeted human review, the timezone bug, and &ldquo;the LLM call is the easy part.&rdquo; Section 5.2.</li>
+<li id="src-7"><span class="srcnum">7</span> BBC, via <a href="https://www.aol.com/finance/tiktok-closes-deal-split-us-051756047.html" target="_blank" rel="noopener">&ldquo;TikTok closes deal to split US app from global business,&rdquo; January 2026</a>, and <a href="https://www.timesofisrael.com/tiktok-finalizes-deal-to-create-us-entity-and-retrain-algorithm-avoiding-ban/" target="_blank" rel="noopener">AFP via The Times of Israel</a>, for the joint venture, ByteDance&rsquo;s 19.9 percent stake, the licensed algorithm, and its retraining on U.S. data in Oracle&rsquo;s cloud. Section 5.4. Recheck the ownership arrangement before teaching.</li>
+<li id="src-8"><span class="srcnum">8</span> Fortune, <a href="https://fortune.com/2023/09/20/morgan-stanley-ai-assistant-answer-investing-personal-finance-queries/" target="_blank" rel="noopener">20 September 2023</a>, reporting the launch of the AI @ Morgan Stanley Assistant to the firm&rsquo;s financial advisors and its access to about 100,000 research reports and documents; and <a href="https://fortune.com/2023/03/14/morgan-stanley-testing-openai-chatgpt-gpt4-to-help-financial-advisors/" target="_blank" rel="noopener">Fortune, 14 March 2023</a>, on the GPT-4 pilot and the firm&rsquo;s statement that the tool would assist advisors, not replace them. Section 6.2.</li>
+<li id="src-9"><span class="srcnum">9</span> Adweek, <a href="https://www.adweek.com/creativity/how-coca-colas-ai-holiday-ad-went-from-praise-to-rage/" target="_blank" rel="noopener">&ldquo;How Coca-Cola&rsquo;s AI Holiday Ad Went From Praise to Rage,&rdquo; November 2024</a>, for the AI remake of the 1995 &ldquo;Holidays Are Coming&rdquo; ad, its strong early test score from System1, and the backlash that followed; and <a href="https://www.eweek.com/news/coca-cola-ai-holiday-ad-backlash/" target="_blank" rel="noopener">eWeek</a> on the objections from artists. Section 6.2.</li>
+<li id="src-10"><span class="srcnum">10</span> Erik Brynjolfsson, Danielle Li and Lindsey R. Raymond, <a href="https://www.nber.org/system/files/working_papers/w31161/w31161.pdf" target="_blank" rel="noopener">&ldquo;Generative AI at Work,&rdquo; NBER Working Paper 31161</a> (2023), which reported a 14 percent average gain in issues resolved per hour and 34 percent for novice and lower-skilled agents; published in revised form in the <em>Quarterly Journal of Economics</em> 140(2), 2025, with estimates of about 15 percent and about 30 percent. The chapter gives ranges that cover both versions. Section 6.2.</li>
+<li id="src-11"><span class="srcnum">11</span> <a href="https://www.customerexperiencedive.com/news/klarna-reinvests-human-talent-customer-service-AI-chatbot/" target="_blank" rel="noopener">CX Dive, May 2025</a>, for Klarna&rsquo;s February 2024 figures (two-thirds of chats, the work of about 700 agents, which are the company&rsquo;s own claims) and its renewed hiring of human agents; and <a href="https://www.entrepreneur.com/business-news/klarna-ceo-reverses-course-by-hiring-more-humans-not-ai/" target="_blank" rel="noopener">Entrepreneur</a>, reporting the chief executive&rsquo;s Bloomberg interview on lower quality. Section 6.2.</li>
+<li id="src-12"><span class="srcnum">12</span> Jeffrey Dastin, Reuters, <a href="https://www.reuters.com/article/us-amazon-com-jobs-automation-insight/amazon-scraps-secret-ai-recruiting-tool-that-showed-bias-against-women-idUSKCN1MK08G" target="_blank" rel="noopener">&ldquo;Amazon scraps secret AI recruiting tool that showed bias against women,&rdquo; 10 October 2018</a>: the 2014 start, the ten years of resumes, the one-to-five stars, the &ldquo;women&rsquo;s&rdquo; penalty, the two colleges, the favored verbs, Amazon&rsquo;s statement, and the sources&rsquo; account of recruiters viewing its recommendations. Also <a href="https://technologyreview.com/2018/10/10/139858/amazon-ditched-ai-recruitment-software-because-it-was-biased-against-women" target="_blank" rel="noopener">MIT Technology Review&rsquo;s summary</a>. Mini-case 1.</li>
+<li id="src-13"><span class="srcnum">13</span> Commission for Racial Equality, <em>Medical School Admissions: Report of a Formal Investigation into St George&rsquo;s Hospital Medical School</em> (1988), for the program, the finding of discrimination, the as-many-as-sixty applicants a year, and the school&rsquo;s response. Mini-case 1, as historical background.</li>
+<li id="src-14"><span class="srcnum">14</span> <em>Moffatt v. Air Canada</em>, 2024 BCCRT 149, British Columbia Civil Resolution Tribunal (14 February 2024), as reported by <a href="https://www.cbc.ca/amp/1.7116416" target="_blank" rel="noopener">CBC News</a>, for the chatbot&rsquo;s wrong answer, the airline&rsquo;s argument that the chatbot was responsible for its own actions, and the tribunal&rsquo;s rejection of it. Mini-case 2.</li>
+<li id="src-15"><span class="srcnum">15</span> Penn Medicine, <a href="https://www.youtube-nocookie.com/embed/4FxwoOuPGWs" target="_blank" rel="noopener">video on David Fajgenbaum and Every Cure</a>, for Fajgenbaum&rsquo;s illness, sirolimus, and his remission, and for Joseph&rsquo;s diagnosis, the cancelled transplant, the hospice conversation, his partner&rsquo;s email, the decision to treat, and his recovery. Joseph&rsquo;s story is told in his own words on Penn&rsquo;s public channel and is used here as he told it. Sections 8.1 and 8.4.</li>
+<li id="src-16"><span class="srcnum">16</span> Olivier J. Wouters, Martin McKee and Jeroen Luyten, <a href="https://jamanetwork.com/journals/jama/fullarticle/2762311" target="_blank" rel="noopener"><em>JAMA</em>, 2020</a>, for a median of about $985 million per new drug approved from 2009 to 2018, counting failed trials (JAMA published corrections in 2022, so the chapter says close to a billion); and Southey and Brunavs, <a href="https://doi.org/10.3389/fddsv.2023.1314077" target="_blank" rel="noopener"><em>Frontiers in Drug Discovery</em>, 2023</a>, for the ten-to-fifteen-year timeline. Section 8.2.</li>
+<li id="src-17"><span class="srcnum">17</span> Every Cure, <a href="https://everycure.org" target="_blank" rel="noopener">everycure.org</a>, for its founding in 2022, its counts of diseases and of diseases without treatment, and the February 2024 ARPA-H contract of $48.3 million; Every Cure, <a href="https://everycure.org/phase2" target="_blank" rel="noopener">phase two announcement</a>, for up to $76 million in February 2026 for twenty preclinical programs and ten clinical trials; Every Cure, <a href="https://everycure.org/treatments-repurposed-by-every-cure-leadership/" target="_blank" rel="noopener">&ldquo;Treatments Repurposed by Every Cure Leadership&rdquo;</a>, for the three myeloma drugs considered for Joseph and the early model&rsquo;s high scores; Every Cure&rsquo;s <a href="https://prototypes.everycure.org/matrix-heatmap-public" target="_blank" rel="noopener">public score heatmap</a> and its public data page, for the plausibility warning and the scores; the MATRIX data dashboard (v0.15.x releases, 2026) for the graph&rsquo;s size, which changes between releases; and the public matrix-scores release of 1 July 2026, as extracted for the MIS 201 lab, for one of the three drugs ranking 194th for POEMS. TIME&rsquo;s Best Inventions of 2025 for the listing. These are largely the organization&rsquo;s own claims about itself, and are presented that way. Sections 8.2 to 8.7.</li>
+<li id="src-18"><span class="srcnum">18</span> New York City Local Law 144 of 2021 (enforced from 2023); Illinois&rsquo;s Artificial Intelligence Video Interview Act; Regulation (EU) 2024/1689, the AI Act, as amended by Regulation (EU) 2026/1744 (the Digital Omnibus on AI, in force 27 July 2026), which moved the high-risk deadline for stand-alone systems to 2 December 2027; Colorado SB 24-205 (May 2024), the December 2025 executive order on state AI laws, the April 2026 suit and Justice Department intervention, and Colorado SB 26-189 (signed 14 May 2026, effective 1 January 2027). This area moves faster than any other in the book; check the current position before teaching it. Section 9.3.</li>
+<li id="src-19"><span class="srcnum">19</span> K&amp;L Gates, <a href="https://www.klgates.com/The-Changing-Landscape-of-AI-Federal-Guidance-for-Employers-Reverses-Course-with-New-Administration-1-31-2025" target="_blank" rel="noopener">&ldquo;The Changing Landscape of AI,&rdquo; 31 January 2025</a>, and <a href="https://www.cooley.com/news/insight/2025/2025-02-21-gone-but-not-forgotten-federal-laws-still-apply-despite-guidance-disappearance-act" target="_blank" rel="noopener">Cooley, February 2025</a>, for the EEOC&rsquo;s removal of its AI guidance on 27 January 2025, and the point that the underlying law still applies. Section 9.3.</li>
+<li id="src-20"><span class="srcnum">20</span> Erik Brynjolfsson, Bharat Chandar and Ruyu Chen, <a href="https://digitaleconomy.stanford.edu/publications/canaries-in-the-coal-mine/" target="_blank" rel="noopener">&ldquo;Canaries in the Coal Mine? Six Facts about the Recent Employment Effects of Artificial Intelligence,&rdquo;</a> Stanford Digital Economy Lab, August 2025, using ADP payroll data, for the 13 percent relative decline for 22-to-25-year-olds in the most exposed occupations, the contrast with older workers, the automation-versus-augmentation split, and the authors&rsquo; caution. Later revisions of the paper extended the data and report a similar or larger decline; check the current version. Section 10.4.</li>
+<li id="src-21"><span class="srcnum">21</span> Ara Kharazian, Lisa Simon and Ryan Stevens, <a href="https://ramp.com/data/ai-jobs-impact/paper" target="_blank" rel="noopener">&ldquo;A New Look at AI&rsquo;s Impact on Jobs: Firm-Level AI Spending and Workforce Adjustment,&rdquo;</a> 30 June 2026, for 21,559 U.S. firms, the 12 percent rise in entry-level headcount among high-intensity adopters over the first 24 months, no significant change for low-intensity adopters, and the authors&rsquo; note that adopters were already larger, more technical, and faster-growing. The authors work at Ramp and Revelio Labs, whose data the study uses. A working paper, not peer-reviewed. Section 10.4.</li>
+<li id="src-22"><span class="srcnum">22</span> Anders Humlum and Emilie Vestergaard, <a href="https://bfi.uchicago.edu/working-papers/large-language-models-small-labor-market-effects/" target="_blank" rel="noopener">&ldquo;Large Language Models, Small Labor Market Effects,&rdquo;</a> Becker Friedman Institute Working Paper, April 2025, linking representative surveys of AI chatbot adoption in Denmark to administrative labor records, for precise null effects on earnings and recorded hours two years after adoption (ruling out effects larger than 2 percent), holding for intensive users, early adopters, and early-career jobs, alongside task restructuring and occupational switching. A working paper, not yet peer-reviewed. Section 10.4.</li>
+<li id="src-23"><span class="srcnum">23</span> International Energy Agency, <a href="https://www.iea.org/reports/energy-and-ai/executive-summary" target="_blank" rel="noopener"><em>Energy and AI</em>, executive summary (April 2025)</a>, for the 415 TWh and 1.5 percent figures for 2024, the base case for 2030, and the share of growth from accelerated servers; and the IEA&rsquo;s <em>Key Questions on Energy and AI</em> (16 April 2026) for the 2025 estimate of about 485 TWh. The same source supports Chapter 13. Section 10.5.</li>
 <li>Further reading. NIST AI Risk Management Framework 1.0 (2023), the voluntary U.S. framework. James Bessen, &ldquo;Toil and Technology,&rdquo; <em>Finance &amp; Development</em> (IMF, 2015), on what automation did to bank teller jobs, for the question students always ask about their own. The MIS 201 book&rsquo;s Chapter 4 treats the Every Cure case at greater length, with a lab on its scores.</li>
-<li>Unsourced by design. The accounting description in section 2.6 is a general account of common practice, not a reported case. The fraud numbers in section 1.5, the likelihoods in section 2.1, and the shape of the long-tail figure in section 4.5 are illustrative.</li>
+<li>Unsourced by design. The accounting description in section 6.2 is a general account of common practice, not a reported case. The refund agent in section 3.3 is an illustration of a common design, not a named company. The fraud numbers in section 4.3, the likelihoods in section 5.1, the shape of the long-tail figure in section 8.5, and the placements on the dials figure in section 3 are illustrative.</li>
 <li>Images. Air Canada Boeing 777, photograph by Adrian Pingstone, <a href="https://commons.wikimedia.org/wiki/File:Boeing_777-300_(Air_Canada)_C-FITW.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, public domain. The Spheres, Seattle, photograph by Andy Li, 2018, <a href="https://commons.wikimedia.org/wiki/File:Amazon_Spheres_2018.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC0. All diagrams are original to this book.</li>
+<li><strong>Verification note, 19 November 2026 (rebuilt as an overview of AI).</strong> Restructured into ten sections. New: section 1 (rules versus learning, five moments, and why the feed is AI, with a seven-item quiz), section 2 (AI as an information system across all five components), section 3 (predictive, generative and agentic AI; tool AI; autonomy and control, with a new dials figure; the July 2026 OpenAI and Hugging Face test, checked against the MIS 201 Chapter 1 account and current reporting), section 6 (benefits, moved up into its own section), and section 9 (human in the loop and AI governance, absorbing the old 5.7). The Every Cure case now says plainly that repurposing existed before AI and that AI turns it from an accident into a search. Cut for length: most of the old 2.3 on controlling a rented model (folded into 5.4), the Frank and colleagues study, and the Colorado repeal sentence. Every cross-reference renumbered. Recheck before teaching: the OpenAI incident account, which may move as more reporting appears.</li>
 <li><strong>Verification note, 10 November 2026 (rebuild to the Chapter 6 model).</strong> Restructured around two concept sections. New and checked against the entries above: measuring a model (section 1.5); what a language model does, grounding, control, agents, and renting models (sections 2.1 to 2.5); AI across the business disciplines (Morgan Stanley, Coca-Cola, Brynjolfsson and colleagues, Klarna); the Every Cure main case, whose facts follow the MIS 201 chapter&rsquo;s September and October 2026 verification and Every Cure&rsquo;s own pages; the Stanford entry-level employment study; and the IEA energy figures, now stated here rather than deferred to Chapter 13. The St George&rsquo;s case is reduced to background inside mini-case 1. Removed: the unsourced McKinsey estimate of Amazon&rsquo;s recommendation share, the unsourced Spotify spam-track figure, and two sentences that referred to &ldquo;Wednesday&rsquo;s session.&rdquo; The Air Canada check-yourself answer now names the control its question asks for. Added later the same day: section 1.2 on AI as a system rather than a model, with four new original diagrams (the AI system, training and inference, a neural network, and grounding); section 1 subsections and cross-references renumbered to match. Also added: three studies on AI and work (Kharazian, Simon and Stevens; Frank and colleagues; Humlum and Vestergaard on Denmark), checked against the papers, as a counterpoint in sections 5.4 and 5.8, and the larger later estimate from the Stanford study. Recheck before teaching: everything in section 5.7&rsquo;s regulation passage, the TikTok ownership arrangement, Every Cure&rsquo;s trial status, and the Stanford study&rsquo;s current version.</li>
 </ul>
 </details>
