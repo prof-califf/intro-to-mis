@@ -311,6 +311,32 @@ li{margin-bottom:.45rem}
 .jump{font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:var(--magenta);color:#fff;border:1px solid var(--magenta);padding:.5rem .9rem;text-decoration:none;display:inline-block}
 .jump:hover{background:var(--magenta-dark);border-color:var(--magenta-dark);color:#fff}
 main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transform:none;letter-spacing:0;color:var(--off-black);margin:2.1rem 0 .55rem;padding-left:.7rem;border-left:3px solid var(--magenta)}
+.dc-modes{display:flex;gap:8px;margin:.6rem 1rem .8rem}
+.dc-mode{font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:#fff;color:var(--black);border:1px solid var(--black);padding:.5rem .9rem;cursor:pointer}
+.dc-mode.on{background:var(--black);color:#fff}
+.dc-stage{position:relative;margin:0 1rem;border:1px solid var(--border);background:linear-gradient(#f7f6f2,#ecebe6)}
+#dc-canvas{display:block;width:100%;height:430px;touch-action:pan-y;cursor:grab}
+#dc-canvas:active{cursor:grabbing}
+.dc-ctrl{position:absolute;right:8px;bottom:8px;display:flex;flex-wrap:wrap;gap:4px;max-width:60%;justify-content:flex-end}
+.dc-ctrl button{font-family:var(--sans);font-size:14px;min-width:34px;height:32px;background:rgba(255,255,255,.92);border:1px solid var(--border);cursor:pointer}
+.dc-ctrl button:hover{border-color:var(--magenta);color:var(--magenta-dark)}
+.dc-parts{margin:.7rem 1rem 0;font-family:var(--sans);font-size:.85rem;line-height:2.1}
+.dc-partlab{color:var(--text-light);margin-right:.3rem}
+.dc-pbtn{font-family:var(--sans);font-size:.8rem;background:#fff;border:1px solid var(--border);padding:.2rem .55rem;margin:0 .25rem .25rem 0;cursor:pointer}
+.dc-pbtn:hover{border-color:var(--magenta);color:var(--magenta-dark)}
+.dc-panel{font-family:var(--sans);font-size:.95rem;line-height:1.55;margin:.7rem 1rem 0;padding:.8rem 1rem;background:#fff;border:1px solid var(--border);border-left:3px solid var(--magenta);min-height:4.5rem}
+.dc-panel p{margin:0 0 .45rem}
+.dc-panel p:last-child{margin-bottom:0}
+.dc-name{font-family:var(--display);font-weight:600;font-size:1.05rem;text-transform:uppercase;letter-spacing:.03em}
+.dc-chip{display:inline-block;font-family:var(--sans);text-transform:none;letter-spacing:0;font-size:.74rem;font-weight:600;background:var(--magenta-pale);color:var(--magenta-dark);padding:1px 8px;border-radius:999px;vertical-align:.15em;margin-left:.3rem}
+.dc-count{font-size:.85rem;color:var(--text-light)}
+.dc-q{font-weight:600}
+.dc-hint{font-size:.85rem;color:var(--text-light)}
+.dc-btn{font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:var(--black);color:#fff;border:1px solid var(--black);padding:.5rem .9rem;cursor:pointer;margin-top:.5rem}
+.dc-btn.alt{background:#fff;color:var(--black);border-color:var(--black);margin-top:0}
+.dc-fb{margin-top:.7rem;padding:.55rem .8rem;border-left:3px solid var(--good);background:var(--good-pale)}
+.dc-fb.no{border-left-color:var(--warn);background:var(--warn-pale)}
+@media(max-width:600px){#dc-canvas{height:340px}.dc-ctrl{max-width:100%}}
 .ro-step{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dark);margin:1rem 1rem .5rem}
 .ro-pick,#roguess{margin:0 1rem}
 .wbtns button.sel{background:var(--black);border-color:var(--black);color:#fff}
@@ -488,6 +514,264 @@ obligation attached to it. The <strong>software</strong> you choose and the <str
 reach it matter more, not less, because everything now travels over the internet. And the
 <strong>people</strong> making the decisions have not moved at all, which is why a chapter about renting
 computers is mostly a chapter about management.</p>
+
+
+<div class="tryit" id="dc3d">
+  <div class="tryit-head">Try it &middot; Walk through a data center</div>
+  <p class="tryit-intro">This is a cutaway of a cloud data center, with the roof and most of the walls removed so you can see in. Drag sideways to turn it, or use the buttons. First, tap each pink dot to find out what that part does. Then switch to <strong>What broke?</strong> and diagnose six bad days.</p>
+  <div class="dc-modes" role="group" aria-label="Mode">
+    <button type="button" class="dc-mode on" id="dc-m-explore" aria-pressed="true">1. Explore</button>
+    <button type="button" class="dc-mode" id="dc-m-quiz" aria-pressed="false">2. What broke?</button>
+  </div>
+  <div class="dc-stage">
+    <canvas id="dc-canvas" role="img" aria-label="A 3D cutaway of a data center."></canvas>
+    <div class="dc-ctrl" role="group" aria-label="Turn and zoom">
+      <button type="button" data-dc="left" aria-label="Turn left">&#8634;</button>
+      <button type="button" data-dc="right" aria-label="Turn right">&#8635;</button>
+      <button type="button" data-dc="up" aria-label="Look from higher">&#9650;</button>
+      <button type="button" data-dc="down" aria-label="Look from lower">&#9660;</button>
+      <button type="button" data-dc="in" aria-label="Zoom in">+</button>
+      <button type="button" data-dc="out" aria-label="Zoom out">&minus;</button>
+      <button type="button" data-dc="reset" aria-label="Reset the view">Reset</button>
+    </div>
+  </div>
+  <div class="dc-parts" role="group" aria-label="Or pick a part from this list">
+    <span class="dc-partlab">Or pick from a list:</span>
+    <span id="dc-partbtns"></span>
+  </div>
+  <div class="dc-panel" id="dc-panel" aria-live="polite"></div>
+  <p class="tryit-note">The layout is simplified and the scale is not exact, but every part here is in a real data center. Notice what you never see: your software and your data. They live inside the racks, on machines you will never touch. <strong>Try this with an AI:</strong> "I think the weakest component in a data center is [the part you picked]. Argue that I picked the wrong one."</p>
+</div>
+<script>
+(function(){
+  var root=document.getElementById('dc3d'); if(!root)return;
+  var cv=document.getElementById('dc-canvas'), ctx=cv.getContext('2d');
+  var panel=document.getElementById('dc-panel');
+  var REDUCED=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---------- the parts ----------
+  var PARTS={
+    racks:{n:'Server racks',c:'Hardware',t:'Rows of computers stacked in metal cabinets. This is the hardware you rent. Your software runs on these machines and your data sits on their drives, next to other customers’ data, kept apart by software. Servers pull cool air in the front and push hot air out the back, so the rows face each other: a cold aisle (blue floor) and a hot aisle (red floor).'},
+    cooling:{n:'Cooling',c:'Hardware (the building)',t:'Nearly every watt a server uses turns into heat. Air handlers inside pull the hot air away, and cooling towers outside get rid of the heat, many of them by evaporating water. That is why data centers in dry places compete with farms and towns for water (section 6.2).'},
+    ups:{n:'Battery backup (UPS)',c:'Hardware (the building)',t:'Rooms of batteries. If the utility power drops, they take over instantly and carry the servers through the gap until the generators start. Without them, even a few seconds without power would crash every machine.'},
+    gens:{n:'Diesel generators',c:'Hardware (the building)',t:'For a longer outage, generators start up and run the whole building on fuel stored on site. They are tested regularly, and the neighbors hear every test (section 6.2).'},
+    utility:{n:'Utility power',c:'Hardware (the building)',t:'A large data center can use as much electricity as tens of thousands of homes, so it gets its own high-voltage connection to the grid. This is where the local grid strain in section 6.1 comes from.'},
+    network:{n:'Network room and fiber',c:'Networks',t:'Fiber-optic cables from several internet providers enter the building here and connect to the network gear. Without them, every server could be running perfectly and nobody could reach it. Providers bring cables in by more than one route for exactly that reason.'},
+    security:{n:'Security',c:'People and hardware',t:'A fence, a guard booth, cameras, and a mantrap: a two-door entry that lets one checked person through at a time. Under shared responsibility, this is the provider’s job, security of the cloud (section 2.1). Customers are not allowed in.'},
+    people:{n:'Technicians',c:'People',t:'A small crew runs a building with thousands of servers. They swap failed drives, watch the cooling, and answer alarms around the clock. The people who decide what the servers do, and who can see your data, are not here. They work at your company.'}
+  };
+  var ORDER=['racks','cooling','ups','gens','utility','network','security','people'];
+
+  var SCEN=[
+    {q:'A storm knocks out the utility power at 2 a.m. For the first few seconds, before anything else can start, what keeps the servers running?',a:'ups',
+     right:'The batteries take over the instant the power drops and hold the load until the generators are running.',
+     wrong:{gens:'Close, but generators need time to start. Something has to carry the servers through those first seconds.',utility:'That is what just failed.'}},
+    {q:'The outage lasts six hours. What is running the building now?',a:'gens',
+     right:'Batteries cover seconds to minutes. Hours take generators and the fuel stored beside them.',
+     wrong:{ups:'Batteries bridge the gap. They cannot run a building for six hours.',utility:'The utility power is still out.'}},
+    {q:'On a hot afternoon, servers start slowing down and shutting themselves off, even though the power is fine. Which system is failing?',a:'cooling',
+     right:'Servers protect themselves from heat by slowing down or shutting off. When cooling fails, the computers go next.',
+     wrong:{racks:'The servers are reacting to the problem, not causing it. Ask why they are getting too hot.'}},
+    {q:'A road crew cuts a cable down the street. Every server is running, but no customer can reach any of them. Where is the problem?',a:'network',
+     right:'The networks component. A perfectly healthy building is useless if nobody can reach it, which is why providers bring in fiber by more than one route.',
+     wrong:{racks:'The servers are fine. Customers just cannot get to them.'}},
+    {q:'A stranger in a delivery uniform tries to walk in and plug a laptop into a rack. What should stop them?',a:'security',
+     right:'The fence, the guard, and the mantrap. Physical security is the provider’s half of shared responsibility.',
+     wrong:{people:'Technicians might notice, but stopping strangers is the job of the guards, the fence, and the mantrap.'}},
+    {q:'A company’s customer files leak because one of its own employees set a storage folder so anyone on the internet could read it. Where in this building is the problem?',a:'outside',
+     right:'Nothing in the building broke. The servers, cooling, and guards all did their jobs. The mistake was in the company’s own settings, which is the customer’s half of shared responsibility (section 2.1).',
+     wrong:{racks:'The files were stored on these servers, but the servers did exactly what they were told. Who told them to share the folder?',security:'The guards kept everyone out of the building. This leak never needed anyone to walk in.'}}
+  ];
+
+  // ---------- the scene: boxes [x0,y0,z0,x1,y1,z1,color,part] ----------
+  var B=[], FLAT=[];
+  function box(x0,y0,z0,x1,y1,z1,col,part){B.push({p:[x0,y0,z0,x1,y1,z1],c:col,id:part||null});}
+  function flat(x0,z0,x1,z1,y,col,part){FLAT.push({p:[x0,y,z0,x1,y,z1],c:col,id:part||null});}
+  var GROUND=[228,232,224],SLAB=[244,242,238],WALL=[214,210,204],RACK=[52,54,58],RACKF=[80,84,90],
+      CRAH=[196,214,226],TOWER=[176,198,214],UPS=[96,132,104],GEN=[230,186,60],UTIL=[150,150,146],
+      NET=[54,110,170],SEC=[120,120,116],PERSON=[204,20,109],SKIN=[222,190,160],ROAD=[90,90,88];
+  flat(-15,-12,18,12,0,GROUND);
+  flat(-15,9.2,18,11.6,0.01,ROAD);
+  box(-10,0,-6,10,0.2,6,SLAB);
+  box(-6,0.2,-2.3,2.6,0.23,-1.1,[170,205,240],'racks');   // cold aisle
+  box(-6,0.2,0,2.6,0.23,1.2,[244,180,180],'racks');        // hot aisle
+  // cutaway walls: tall at back and left, stubs at front and right
+  box(-10,0.2,-6,10,3.2,-5.8,WALL); box(-10,0.2,-5.8,-9.8,3.2,6,WALL);
+  box(-9.8,0.2,5.8,-1.2,0.7,6,WALL); box(1.2,0.2,5.8,10,0.7,6,WALL); box(9.8,0.2,-5.8,10,0.7,5.8,WALL);
+  box(5.6,0.2,-5.8,5.8,1.2,5.8,WALL); // partition between hall and rooms
+  // racks: three rows of eight
+  [[-3.4,-2.3],[-1.1,0],[1.2,2.3]].forEach(function(r){
+    for(var i=0;i<8;i++){var x=-5.8+i*1.05; box(x,0.2,r[0],x+0.9,2.5,r[1],RACK,'racks');
+      box(x+0.15,1.9,r[1],x+0.75,2.3,r[1]+0.03,RACKF,'racks');}
+  });
+  // cooling units along the back wall, and towers outside
+  for(var i=0;i<4;i++){var x=-8.6+i*2.9; box(x,0.2,-5.6,x+2.2,2.4,-4.6,CRAH,'cooling');}
+  for(var j=0;j<3;j++){var x2=-6+j*3.4; box(x2,0,-10.6,x2+2.6,2.6,-8,TOWER,'cooling'); box(x2+0.5,2.6,-10.1,x2+2.1,3.0,-8.5,[120,140,156],'cooling');}
+  // UPS room
+  for(var k=0;k<4;k++){var z=-5.2+k*1.25; box(6.6,0.2,z,9.3,1.9,z+0.9,UPS,'ups');}
+  // network room
+  box(6.8,0.2,1.6,7.7,2.4,2.6,NET,'network'); box(8.1,0.2,1.6,9.0,2.4,2.6,NET,'network');
+  box(8.3,0,6,8.7,0.15,9.2,[60,60,64],'network'); // fiber conduit to the street
+  // generators and fuel outside on the right
+  for(var g=0;g<3;g++){var gz=-5+g*2.4; box(12,0,gz,15.2,1.7,gz+1.6,GEN,'gens');}
+  box(16,0,-5,17.2,1.2,1.4,[200,170,80],'gens');
+  // utility substation
+  box(12,0,3.2,14.4,2.2,5.6,UTIL,'utility'); box(14.8,0,3.6,15.2,3.4,4.0,UTIL,'utility'); box(14.8,0,4.8,15.2,3.4,5.2,UTIL,'utility');
+  // security: fence, gate booth, mantrap
+  box(-14,0,-11.6,17.8,1.1,-11.45,SEC,'security'); box(-14,0,-11.6,-13.85,1.1,8.6,SEC,'security');
+  box(17.65,0,-11.6,17.8,1.1,8.6,SEC,'security');
+  box(-14,0,8.45,-1.6,1.1,8.6,SEC,'security'); box(2.4,0,8.45,17.8,1.1,8.6,SEC,'security');
+  box(-3.4,0,6.8,-1.9,2.2,8.2,[176,176,170],'security');
+  box(-1.0,0.2,5.0,1.0,2.6,6.4,[160,170,180],'security');
+  // a technician in the cold aisle
+  box(3.25,0.23,-1.85,3.75,1.0,-1.55,[50,50,60],'people');
+  box(3.2,1.0,-1.9,3.8,1.75,-1.5,PERSON,'people');
+  box(3.32,1.75,-1.82,3.68,2.1,-1.58,SKIN,'people');
+
+  var PIN={racks:[-2,2.7,-0.5],cooling:[-4.4,3.1,-5.1],ups:[8,2.1,-3.2],gens:[13.6,1.9,-1.4],utility:[13.2,3.6,4.4],
+           network:[7.9,2.7,2.1],security:[-0.1,2.9,5.7],people:[3.5,2.5,-1.7]};
+
+  // ---------- camera ----------
+  var T=[1.5,0.4,-1.2], yaw=-0.62, pitch=0.62, dist=46, F=1, W=0, H=0, DPR=1;
+  function resize(){DPR=window.devicePixelRatio||1;W=cv.clientWidth;H=cv.clientHeight;cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);ctx.setTransform(DPR,0,0,DPR,0,0);F=Math.min(W,H*1.6)*(W<520?1.45:1.15);draw();}
+  function rot(x,y,z){var cy=Math.cos(yaw),sy=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);
+    var x1=x*cy-z*sy, z1=x*sy+z*cy; return [x1, y*cp-z1*sp, y*sp+z1*cp];}
+  function proj(p){var r=rot(p[0]-T[0],p[1]-T[1],p[2]-T[2]); var d=dist-r[2]; return [W/2+F*r[0]/d, H*0.54-F*r[1]/d, d];}
+  var LIGHT=(function(){var l=[0.45,1,0.65],m=Math.hypot(l[0],l[1],l[2]);return l.map(function(v){return v/m;});})();
+  function faces(o,isFlat){var p=o.p,x0=p[0],y0=p[1],z0=p[2],x1=p[3],y1=p[4],z1=p[5];
+    if(isFlat)return [{v:[[x0,y0,z0],[x1,y0,z0],[x1,y0,z1],[x0,y0,z1]],n:[0,1,0]}];
+    return [{v:[[x0,y1,z0],[x1,y1,z0],[x1,y1,z1],[x0,y1,z1]],n:[0,1,0]},
+            {v:[[x0,y0,z1],[x1,y0,z1],[x1,y1,z1],[x0,y1,z1]],n:[0,0,1]},
+            {v:[[x1,y0,z0],[x0,y0,z0],[x0,y1,z0],[x1,y1,z0]],n:[0,0,-1]},
+            {v:[[x0,y0,z0],[x0,y0,z1],[x0,y1,z1],[x0,y1,z0]],n:[-1,0,0]},
+            {v:[[x1,y0,z1],[x1,y0,z0],[x1,y1,z0],[x1,y1,z1]],n:[1,0,0]}];}
+
+  // ---------- state ----------
+  var mode='explore', sel=null, found={}, flash=null, qi=0, firstTry=0, tried=false, qdone=false, drawn=[], pins=[];
+  function tint(c,t,a){return [c[0]+(t[0]-c[0])*a,c[1]+(t[1]-c[1])*a,c[2]+(t[2]-c[2])*a];}
+  function rgb(c,s){return 'rgb('+Math.round(Math.min(255,c[0]*s))+','+Math.round(Math.min(255,c[1]*s))+','+Math.round(Math.min(255,c[2]*s))+')';}
+  function hl(id){if(!id)return null; if(flash&&flash.id===id)return flash.ok?[46,160,90]:[220,60,50]; if(id===sel)return [204,20,109]; return null;}
+
+  function draw(){
+    if(!W)return;
+    ctx.clearRect(0,0,W,H);
+    var list=[];
+    function push(o,isFlat){faces(o,isFlat).forEach(function(f){
+      var n=rot(f.n[0],f.n[1],f.n[2]);
+      var c=[0,0,0];f.v.forEach(function(v){c[0]+=v[0]/4;c[1]+=v[1]/4;c[2]+=v[2]/4;});
+      var rc=rot(c[0]-T[0],c[1]-T[1],c[2]-T[2]);
+      var view=[-rc[0],-rc[1],dist-rc[2]];
+      if(!isFlat&&n[0]*view[0]+n[1]*view[1]+n[2]*view[2]<=0)return;
+      if(isFlat&&n[1]*view[1]+n[2]*view[2]+n[0]*view[0]<=0)return;
+      var pts=f.v.map(proj);
+      var lam=0.58+0.42*Math.max(0,f.n[0]*LIGHT[0]+f.n[1]*LIGHT[1]+f.n[2]*LIGHT[2]);
+      list.push({pts:pts,depth:dist-rc[2],id:o.id,c:o.c,lam:lam,flat:isFlat});});}
+    FLAT.forEach(function(o){push(o,true);});
+    var flats=list.splice(0); flats.sort(function(a,b){return b.depth-a.depth;});
+    B.forEach(function(o){push(o,false);});
+    list.sort(function(a,b){return b.depth-a.depth;});
+    drawn=flats.concat(list);
+    drawn.forEach(function(f){
+      var h=hl(f.id), col=h?tint(f.c,h,0.45):f.c;
+      ctx.beginPath(); f.pts.forEach(function(p,i){i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]);}); ctx.closePath();
+      ctx.fillStyle=rgb(col,f.lam); ctx.fill();
+      ctx.strokeStyle=h?rgb(h,0.8):'rgba(20,20,20,'+(f.flat?0.08:0.22)+')'; ctx.lineWidth=h?1.4:0.6; ctx.stroke();
+    });
+    // pins and labels
+    pins=[];
+    ctx.font='600 12px '+getComputedStyle(root).getPropertyValue('--sans');
+    ORDER.forEach(function(id,i){
+      var p=proj(PIN[id]); if(p[2]<1)return;
+      var showName=id===sel;
+      if(mode==='quiz'&&!showName){ // small neutral dot in quiz mode
+        ctx.beginPath();ctx.arc(p[0],p[1],5,0,Math.PI*2);ctx.fillStyle='rgba(14,14,13,.55)';ctx.fill();
+        pins.push({id:id,x:p[0],y:p[1],r:12});return;}
+      if(showName){
+        var txt=PARTS[id].n, w=ctx.measureText(txt).width+14;
+        ctx.fillStyle=id===sel?'#cc146d':'rgba(255,255,255,.94)'; ctx.strokeStyle='#0e0e0d'; ctx.lineWidth=1;
+        roundRect(p[0]-w/2,p[1]-22,w,20,4); ctx.fill(); ctx.stroke();
+        ctx.fillStyle=id===sel?'#fff':'#0e0e0d'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(txt,p[0],p[1]-12);
+        pins.push({id:id,x:p[0],y:p[1]-12,r:Math.max(14,w/2)});
+      } else if(mode==='explore'&&found[id]){
+        ctx.beginPath();ctx.arc(p[0],p[1],9,0,Math.PI*2);ctx.fillStyle='#0e0e0d';ctx.fill();
+        ctx.lineWidth=2;ctx.strokeStyle='#fff';ctx.stroke();
+        ctx.fillStyle='#fff';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('\u2713',p[0],p[1]+0.5);
+        pins.push({id:id,x:p[0],y:p[1],r:14});
+      } else {
+        ctx.beginPath();ctx.arc(p[0],p[1],10,0,Math.PI*2);ctx.fillStyle='#cc146d';ctx.fill();
+        ctx.lineWidth=2;ctx.strokeStyle='#fff';ctx.stroke();
+        ctx.fillStyle='#fff';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(String(i+1),p[0],p[1]+0.5);
+        pins.push({id:id,x:p[0],y:p[1],r:14});
+      }
+    });
+    cv.setAttribute('aria-label','A 3D cutaway of a data center, seen from '+(pitch>0.9?'high above':'above and to the side')+'. Parts: '+ORDER.map(function(id){return PARTS[id].n;}).join(', ')+'.'+(sel?' Selected: '+PARTS[sel].n+'.':''));
+  }
+  function roundRect(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+  function inPoly(x,y,pts){var c=false;for(var i=0,j=pts.length-1;i<pts.length;j=i++){var a=pts[i],b=pts[j];
+    if(((a[1]>y)!==(b[1]>y))&&(x<(b[0]-a[0])*(y-a[1])/(b[1]-a[1])+a[0]))c=!c;}return c;}
+  function pick(x,y){
+    for(var i=0;i<pins.length;i++){var p=pins[i];if(Math.hypot(x-p.x,y-p.y)<=p.r)return p.id;}
+    for(var k=drawn.length-1;k>=0;k--){if(inPoly(x,y,drawn[k].pts))return drawn[k].id;}
+    return null;}
+
+  // ---------- panel ----------
+  function chip(c){return '<span class="dc-chip">'+c+'</span>';}
+  function nFound(){return ORDER.filter(function(i){return found[i];}).length;}
+  function explorePanel(){
+    if(!sel){panel.innerHTML='<p class="dc-q">Tap a pink dot, a part of the building, or a name in the list. <b>'+nFound()+' of 8</b> found.</p>';return;}
+    var P=PARTS[sel];
+    panel.innerHTML='<p class="dc-name">'+P.n+' '+chip(P.c)+'</p><p>'+P.t+'</p><p class="dc-count"><b>'+nFound()+' of 8</b> found.'+(nFound()===8?' You found them all. Now try <b>What broke?</b>':'')+'</p>';
+  }
+  function quizPanel(msg){
+    if(qdone){panel.innerHTML='<p class="dc-name">Done</p><p>You got <b>'+firstTry+' of '+SCEN.length+'</b> right on the first try. The last one is the one to remember: in the cloud, a lot of what goes wrong never touches the building at all.</p><button type="button" class="dc-btn" id="dc-again">Try again</button>';
+      document.getElementById('dc-again').onclick=function(){qi=0;firstTry=0;tried=false;qdone=false;sel=null;quizPanel();draw();};return;}
+    var s=SCEN[qi];
+    panel.innerHTML='<p class="dc-count">Bad day '+(qi+1)+' of '+SCEN.length+'</p><p class="dc-q">'+s.q+'</p>'+
+      '<p class="dc-hint">Tap the part of the building, pick from the list, or:</p><button type="button" class="dc-btn alt" id="dc-outside">Not in this building</button>'+(msg||'');
+    document.getElementById('dc-outside').onclick=function(){answer('outside');};
+    var nx=document.getElementById('dc-next'); if(nx)nx.onclick=function(){qi++;tried=false;sel=null;flash=null;if(qi>=SCEN.length)qdone=true;quizPanel();draw();};
+  }
+  function answer(id){
+    var s=SCEN[qi]; if(panel.querySelector('#dc-next'))return;
+    var ok=id===s.a; if(ok&&!tried)firstTry++; tried=true;
+    sel=id==='outside'?null:id; flash=id==='outside'?null:{id:id,ok:ok};
+    var nm=id==='outside'?'Not in this building':PARTS[id].n;
+    var msg=ok?'<div class="dc-fb yes"><b>Right: '+nm+'.</b> '+s.right+'</div><button type="button" class="dc-btn" id="dc-next">'+(qi+1<SCEN.length?'Next bad day':'See your score')+'</button>'
+              :'<div class="dc-fb no"><b>Not '+nm+'.</b> '+((s.wrong&&s.wrong[id])||(id==='outside'?'Something in the building really did fail here. Look again.':'That part is working fine in this story. Try again.'))+'</div>';
+    quizPanel(msg); draw();
+  }
+  function choose(id){
+    if(mode==='explore'){ if(!id)return; sel=id; found[id]=true; explorePanel(); draw(); }
+    else { if(!id)return; answer(id); }
+  }
+
+  // ---------- list buttons ----------
+  var pb=document.getElementById('dc-partbtns');
+  ORDER.forEach(function(id){var b=document.createElement('button');b.type='button';b.className='dc-pbtn';b.textContent=PARTS[id].n;b.onclick=function(){stopSpin();choose(id);};pb.appendChild(b);});
+
+  // ---------- input ----------
+  var down=null, spin=!REDUCED, raf=null;
+  function stopSpin(){spin=false;}
+  cv.addEventListener('pointerdown',function(e){down={x:e.clientX,y:e.clientY,yaw:yaw,pitch:pitch,moved:false};stopSpin();});
+  cv.addEventListener('pointermove',function(e){if(!down)return;var dx=e.clientX-down.x,dy=e.clientY-down.y;
+    if(Math.abs(dx)>4||Math.abs(dy)>4)down.moved=true; yaw=down.yaw+dx*0.01;
+    if(e.pointerType==='mouse')pitch=Math.max(0.22,Math.min(1.35,down.pitch+dy*0.006)); draw();});
+  function up(e){if(!down)return;var d=down;down=null;if(!d.moved){var r=cv.getBoundingClientRect();choose(pick(e.clientX-r.left,e.clientY-r.top));}}
+  cv.addEventListener('pointerup',up); cv.addEventListener('pointercancel',function(){down=null;});
+  root.querySelectorAll('[data-dc]').forEach(function(b){b.addEventListener('click',function(){stopSpin();var a=b.getAttribute('data-dc');
+    if(a==='left')yaw-=0.35; if(a==='right')yaw+=0.35; if(a==='up')pitch=Math.min(1.35,pitch+0.15); if(a==='down')pitch=Math.max(0.22,pitch-0.15);
+    if(a==='in')dist=Math.max(18,dist-4); if(a==='out')dist=Math.min(70,dist+4); if(a==='reset'){yaw=-0.62;pitch=0.62;dist=46;} draw();});});
+  function setMode(m){mode=m;sel=null;flash=null;
+    document.getElementById('dc-m-explore').classList.toggle('on',m==='explore');document.getElementById('dc-m-explore').setAttribute('aria-pressed',String(m==='explore'));
+    document.getElementById('dc-m-quiz').classList.toggle('on',m==='quiz');document.getElementById('dc-m-quiz').setAttribute('aria-pressed',String(m==='quiz'));
+    if(m==='explore')explorePanel(); else {qi=0;firstTry=0;tried=false;qdone=false;quizPanel();} draw();}
+  document.getElementById('dc-m-explore').onclick=function(){setMode('explore');};
+  document.getElementById('dc-m-quiz').onclick=function(){setMode('quiz');};
+  function loop(){if(!spin)return;yaw+=0.0025;draw();raf=requestAnimationFrame(loop);}
+  window.addEventListener('resize',resize);
+  explorePanel(); resize(); if(spin)loop();
+})();
+</script>
 
 <h3>1.2 How we got here: forty years of layers</h3>
 
@@ -1633,6 +1917,7 @@ decides which questions are cheap to answer. (Also: is a hotdog a sandwich? Lab 
 <li>Further reading. Andreessen Horowitz, &ldquo;The Cost of Cloud, a Trillion Dollar Paradox&rdquo; (2021), the source of the &ldquo;cloud paradox&rdquo; argument, and Dropbox&rsquo;s earlier move off AWS. Read both against Netflix&rsquo;s statement that cost was not why it moved. The Ireland and Virginia shares in section 6.1 are commonly cited estimates that move quickly; check them before teaching.</li>
 <li>Unsourced by design. The service-level arithmetic in section 2.4 is computed directly from the percentages. The description of SLA remedies as bill credits is a general account of common cloud contract terms, not a quotation from one provider. The demand curve in section 1.6 and the prices in its toy are illustrative. The discipline descriptions in section 3.2 are general accounts of common practice.</li>
 <li>Images. Microsoft Office CD-ROM box for Macintosh, photograph by Brucery, 2021, <a href="https://commons.wikimedia.org/wiki/File:MicrosoftOffice1forMacCDROMBoxFront.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0. Google data center, The Dalles, Oregon, photograph by Tony Webster, 2015, <a href="https://commons.wikimedia.org/wiki/File:Google_Datacenter_-_The_Dalles,_Oregon_(17832143871).jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY 2.0. Salesforce Tower, photograph by Sharon Hahn Darlin, 2022, <a href="https://commons.wikimedia.org/wiki/File:San_Francisco,_California_April_2022_Salesforce_Tower.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY 2.0. Centre Pompidou website after the OVH fire, screenshot by Fraguando, 2021, <a href="https://commons.wikimedia.org/wiki/File:Falla_de_sitio_web_Pompidou_por_incendio_en_OVH.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0. Netflix envelope, photograph by BlueMint, 2006, <a href="https://commons.wikimedia.org/wiki/File:Netflixenvelope.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY 2.5. AWS buildings in Ashburn, Virginia, photograph by Vahurzpu, 2020, <a href="https://commons.wikimedia.org/wiki/File:AWS_servers_in_Ashburn,_group_1,_2020-10-09_1.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0 (identified as AWS by the photographer). Data centers near Ashburn from the air, photograph by Theodore Christopher, 2025, <a href="https://commons.wikimedia.org/wiki/File:Data_centers_in_Ashburn.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC0. All diagrams are original to this book.</li>
+<li><strong>Update, 21 November 2026 (3D data center).</strong> Added a 3D cutaway of a data center to section 1.1, with an explore mode and a six-question "What broke?" round. The layout is simplified and illustrative, not a model of any one company's building; the descriptions of racks, hot and cold aisles, cooling, battery backup, generators, utility power, fiber entry, and physical security describe common practice.</li>
 <li><strong>Update, 20 November 2026 (rebuilt to the Chapter 12 model).</strong> Added section 3, the upside, with the old 1.5 moved in as 3.1 and a new 3.2 on the cloud in each business discipline (general accounts of common practice, not reported cases, so unsourced by design; FinOps is a widely used industry term). Added a shared responsibility quiz in section 2.1 and a rent-or-own toy in section 1.6, whose prices ($1,000 a month to own a unit, $1,600 to rent it) are illustrative. The downside became section 6 with numbered subsections; its facts are unchanged. Voice pass on the Netflix case, with no facts changed; added two citations to entry 15 that the text already relied on. Sections from 1.5 on and every cross-reference renumbered, including pointers to Chapter 12, whose energy section is now 10.4. Added a photograph of an early boxed Microsoft Office to mini-case 1.</li>
 <li><strong>Verification note, 11 November 2026 (rebuild to the Chapter 6 model).</strong> Reframed for business students, with a short history of the technology layers added in section 1.2 (Census and Pew figures checked, and the 2013 CIA contract with AWS, now mini-case 2 alongside its 2020 multi-provider successor and Capital One as the corporate example that followed): the cloud as a foundational utility, and depending on it as a supplier relationship. New and checked against the entries above: the utility comparison (Carr), the Q3 2026 market size and shares (Synergy), the shared responsibility model (AWS), the 2024 egress waivers (AWS and others), and the EU Data Act switching rules. Technical terms that a manager does not need were removed or explained in plain words (DNS, DynamoDB, load balancers, availability zones, data gravity, cloud-native, petabytes, terabits). The detailed energy figures now live in Chapter 12, section 5.5, with a pointer here. The quiz explanation that referred to a 2017 storage incident the chapter does not contain was corrected. The OVH passage now attributes the founder&rsquo;s statement as the source reports it. Added the same week: a Netflix data section (4.4: recommendations and House of Cards), three photographs, a timeline, and a diagram of what happens at Play; and the November 2026 midterm results on data centers in section 5, from coverage published within a week of the election. The Netflix, 37signals, Salesforce, and OVH material is otherwise unchanged from the 29 October check.</li>
 </ul>
