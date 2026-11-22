@@ -306,6 +306,10 @@ input::placeholder{color:#6b6b68;opacity:1}.cp.done{border-left:4px solid var(--
 </style>
 <link rel="stylesheet" href="book.css">
 <link rel="stylesheet" href="lab.css"></head><body>
+<a href="#top" class="skiplink">Skip to content</a>
+<style>.skiplink{position:absolute;left:-9999px;top:0;z-index:1000;background:#0e0e0d;color:#fff;padding:.6rem 1rem;font:600 15px/1.2 system-ui,sans-serif;text-decoration:none}.skiplink:focus{left:.5rem;top:.5rem;outline:3px solid #fff}</style>
+<div id="srlive" role="status" aria-live="polite" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden"></div>
+
 <nav class="topnav">
   <div class="topnav-in">
     <a class="topnav-brand" href="index.html">MIS 320 &middot; Principles of Management Information Systems</a>
@@ -372,7 +376,7 @@ input::placeholder{color:#6b6b68;opacity:1}.cp.done{border-left:4px solid var(--
   recommendation. The numbers are the easy part.</p>
 
 <div class="toc"><strong>Contents</strong> <a href="#steps">The work</a> &nbsp;·&nbsp; <a href="#finish">Reflection &amp; certificate</a> &nbsp;·&nbsp; <a href="#submit">What to submit</a></div>
-<p class="printbox"><span>Wanna go analog?</span><button type="button" onclick="window.print()" aria-label="Print this page or save it as a PDF">&#9113;&nbsp; Print here</button><span>or save it as a PDF; the navigation drops out</span></p>
+<p class="printbox"><span>Wanna go analog?</span><button type="button" onclick="window.print()" aria-label="Print here: print this page or save it as a PDF">&#9113;&nbsp; Print here</button><span>or save it as a PDF; the navigation drops out</span></p>
 
 <div class="ailight r">
   <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
@@ -635,7 +639,7 @@ function render(){
    +(solved.has(i)?'<p class="msg" style="color:var(--good)">Correct.</p>':'<input type="text" id="in'+i+'" aria-label="Answer '+(i+1)+'">'
    +'<button onclick="chk('+i+')">Check</button>'
    +'<button class="hintb" onclick="hint('+i+')">Hint</button>'
-   +'<p class="msg" id="m'+i+'"></p><p class="hint" id="h'+i+'">'+q.h+'</p>');
+   +'<p class="msg" id="m'+i+'" role="status" aria-live="polite"></p><p class="hint" id="h'+i+'">'+q.h+'</p>');
   c.appendChild(d);
   if(lock)c.insertAdjacentHTML('beforeend','<p class="lockmsg">Clear Checkpoint '+i+' first.</p>');});
  document.getElementById('prog').textContent='Checkpoint progress: '+solved.size+' / '+QS.length;
@@ -657,7 +661,7 @@ function chk(i){
  const ans=atob(QS[i].a);let ok=false;
  if(QS[i].t==='num'){const g=parseFloat(norm(v)),a=parseFloat(ans);ok=!isNaN(g)&&Math.abs(g-a)<=QS[i].tol}
  else ok=norm(v)===norm(ans);
- if(ok){solved.add(i);save();render()}
+ if(ok){solved.add(i);save();render();var sr=document.getElementById('srlive');if(sr)sr.textContent='Checkpoint '+(i+1)+' cleared.';var nx=document.getElementById('in'+(i+1));if(nx)nx.focus();}
  else{m.textContent='Not yet: check the hint, or re-read the step above.';m.style.color='#a03434'}
 }
 function h32(s){let h=5381;for(const c of s)h=((h<<5)+h+c.charCodeAt(0))|0;return(h>>>0).toString(36).toUpperCase()}
