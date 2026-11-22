@@ -331,6 +331,8 @@ li{margin-bottom:.45rem}
 </style>
 <link rel="stylesheet" href="book.css">
 <link rel="stylesheet" href="schedule.css">
+<style id="ux-mobile-nav">@media (max-width:700px){.topnav,nav.top{position:static}}</style>
+<style id="ux-thisweek">.wk.now{scroll-margin-top:80px;outline:3px solid var(--magenta,#D61F69);outline-offset:2px}.wk-now{display:inline-block;margin-left:.6rem;padding:.1rem .5rem;background:var(--magenta,#D61F69);color:#fff;font-family:var(--sans,system-ui);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;vertical-align:middle}.legend a.jump{font-weight:600;color:var(--magenta-dark,#B5185A)}@media print{.wk.now{outline:none}.wk-now,.legend a.jump{display:none}}</style>
 </head>
 <body>
 <a href="#main" class="skiplink">Skip to content</a>
@@ -603,6 +605,24 @@ hands-on. Everything below links to the chapter or lab it refers to.</p>
 </div>
 
 </main>
+<script>(function(){
+var M={Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Sept:8,Oct:9,Nov:10,Dec:11};
+var Y=2026,today=new Date(),pick=null;
+[].forEach.call(document.querySelectorAll('.wk'),function(w){
+  var h=w.querySelector('.wk-num')||w.querySelector('.wk-head');if(!h)return;
+  var m=h.textContent.match(/(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sept|Sep|Oct|Nov|Dec)\s+(\d+)/);if(!m)return;
+  var start=new Date(Y,M[m[1]],+m[2]);start.setDate(start.getDate()-2);
+  if(start<=today)pick=w;
+});
+if(!pick)return;
+var last=document.querySelectorAll('.wk');last=last[last.length-1];
+var lm=(last.querySelector('.wk-num')||last).textContent.match(/(\d+)\s*$/);
+var end=new Date(Y,11,14);if(today>end)return;
+pick.classList.add('now');pick.id=pick.id||'thisweek';
+var hd=pick.querySelector('.wk-num')||pick.querySelector('.wk-head');var b=document.createElement('span');b.className='wk-now';b.textContent='This week';hd.appendChild(b);
+var lg=document.querySelector('.legend');if(lg){var a=document.createElement('a');a.className='jump';a.href='#'+pick.id;a.textContent='Jump to this week \u2193';lg.insertBefore(a,lg.firstChild);}
+})();</script>
+
 
 <!--NAVJS-->
 <script>

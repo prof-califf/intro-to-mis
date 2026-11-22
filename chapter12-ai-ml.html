@@ -425,6 +425,19 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 @media(prefers-reduced-motion:reduce){.nnt-lab{transition:none}.nnt-plist .ptrack span{transition:none}}
 </style>
 <link rel="stylesheet" href="book.css">
+<style id="ux-mobile-nav">@media (max-width:700px){.topnav,nav.top{position:static}}</style>
+<style id="ux-chapter">
+.pn{display:flex;gap:1rem;justify-content:space-between;margin:2.5rem 0 1rem;padding-top:1.4rem;border-top:1px solid var(--border,#ddd)}
+.pn a{flex:1;max-width:48%;display:block;padding:.8rem 1rem;border:1px solid var(--border,#ddd);background:#fff;text-decoration:none;color:inherit;line-height:1.35}
+.pn a:hover,.pn a:focus-visible{border-color:var(--magenta,#D61F69)}
+.pn .pn-k{display:block;font-family:var(--sans,system-ui);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--magenta,#D61F69);margin-bottom:.2rem}
+.pn .pn-t{font-family:var(--sans,system-ui);font-size:15px;font-weight:600}
+.pn .pn-next{margin-left:auto;text-align:right}
+.tocbtn{position:fixed;right:1rem;bottom:1rem;z-index:90;font-family:var(--sans,system-ui);font-size:14px;font-weight:600;background:#0e0e0d;color:#fff;border:1px solid rgba(255,255,255,.3);padding:.55rem .9rem;border-radius:999px;text-decoration:none;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+.tocbtn:hover,.tocbtn:focus-visible{background:var(--magenta-dark,#B5185A)}
+.tocbtn[hidden]{display:none}
+@media print{.pn,.tocbtn{display:none!important}}
+</style>
 </head>
 <body>
 <a href="#main" class="skiplink">Skip to content</a>
@@ -496,7 +509,7 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
   <div class="concepts"><span class="clabel">Key concepts</span><span>AI vs. written rules</span><span>AI as an information system</span><span>Predictive, generative, agentic</span><span>Tool AI and agents</span><span>Supervised learning</span><span>The long tail</span><span>Bias and feedback loops</span><span>LLMs and grounding</span><span>AI governance</span></div>
 </header>
 
-<div class="toc"><strong>Contents</strong>
+<div class="toc" id="toc"><strong>Contents</strong>
 <a href="#what"><span class="tnum">1.</span> What AI is, and why your feed counts</a>
 <a href="#system"><span class="tnum">2.</span> AI is an information system, not just a model</a>
 <a href="#kinds"><span class="tnum">3.</span> Three kinds of AI, and how much freedom each gets</a>
@@ -2317,7 +2330,11 @@ what it is, and ask who would hold the authority to say no if it were written fo
 </ul>
 </details>
 
+<nav class="pn" aria-label="Chapters"><a class="pn-prev" href="chapter11-software.html"><span class="pn-k">&larr; Chapter 11</span><span class="pn-t">Software Design &amp; Selection: Robles v. Domino's</span></a><a class="pn-next" href="chapter13-cloud.html"><span class="pn-k">Chapter 13 &rarr;</span><span class="pn-t">The Cloud &amp; What Computing Costs: Netflix</span></a></nav>
 </main>
+<a href="#toc" class="tocbtn" id="tocbtn" hidden>Contents &uarr;</a>
+<script>(function(){var t=document.getElementById('toc'),b=document.getElementById('tocbtn');if(!t||!b)return;function u(){b.hidden=t.getBoundingClientRect().bottom>0;}window.addEventListener('scroll',u,{passive:true});u();})();</script>
+
 <script>
 (function(){
   function openFor(h){

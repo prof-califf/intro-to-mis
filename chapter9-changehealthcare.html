@@ -357,6 +357,19 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 .srcnum{display:inline-block;min-width:1.6rem;font-weight:700;color:var(--magenta-dark)}
 </style>
 <link rel="stylesheet" href="book.css">
+<style id="ux-mobile-nav">@media (max-width:700px){.topnav,nav.top{position:static}}</style>
+<style id="ux-chapter">
+.pn{display:flex;gap:1rem;justify-content:space-between;margin:2.5rem 0 1rem;padding-top:1.4rem;border-top:1px solid var(--border,#ddd)}
+.pn a{flex:1;max-width:48%;display:block;padding:.8rem 1rem;border:1px solid var(--border,#ddd);background:#fff;text-decoration:none;color:inherit;line-height:1.35}
+.pn a:hover,.pn a:focus-visible{border-color:var(--magenta,#D61F69)}
+.pn .pn-k{display:block;font-family:var(--sans,system-ui);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--magenta,#D61F69);margin-bottom:.2rem}
+.pn .pn-t{font-family:var(--sans,system-ui);font-size:15px;font-weight:600}
+.pn .pn-next{margin-left:auto;text-align:right}
+.tocbtn{position:fixed;right:1rem;bottom:1rem;z-index:90;font-family:var(--sans,system-ui);font-size:14px;font-weight:600;background:#0e0e0d;color:#fff;border:1px solid rgba(255,255,255,.3);padding:.55rem .9rem;border-radius:999px;text-decoration:none;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+.tocbtn:hover,.tocbtn:focus-visible{background:var(--magenta-dark,#B5185A)}
+.tocbtn[hidden]{display:none}
+@media print{.pn,.tocbtn{display:none!important}}
+</style>
 </head>
 <body>
 <a href="#main" class="skiplink">Skip to content</a>
@@ -427,7 +440,7 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
   <div class="concepts"><span class="clabel">Key concepts</span><span>The CIA triad</span><span>Ransomware</span><span>Multi-factor authentication</span><span>The kill chain</span><span>Least privilege and segmentation</span><span>Concentration risk</span><span>Business continuity</span><span>Third-party risk</span></div>
 </header>
 
-<div class="toc"><strong>Contents</strong>
+<div class="toc" id="toc"><strong>Contents</strong>
 <a href="#protect"><span class="tnum">1.</span> What security actually protects</a>
 <a href="#defense"><span class="tnum">2.</span> How attacks work, and how defense works</a>
 <a href="#cases"><span class="tnum">3.</span> Two attacks that came in sideways</a>
@@ -1250,7 +1263,11 @@ Governance: The Audit</strong></a> puts you in that job at Cascadia.</p>
 </ul>
 </details>
 
+<nav class="pn" aria-label="Chapters"><a class="pn-prev" href="chapter8-nike-sap.html"><span class="pn-k">&larr; Chapter 8</span><span class="pn-t">Enterprise Systems: Nike/SAP</span></a><a class="pn-next" href="chapter10-equifax.html"><span class="pn-k">Chapter 10 &rarr;</span><span class="pn-t">IT Governance: Equifax</span></a></nav>
 </main>
+<a href="#toc" class="tocbtn" id="tocbtn" hidden>Contents &uarr;</a>
+<script>(function(){var t=document.getElementById('toc'),b=document.getElementById('tocbtn');if(!t||!b)return;function u(){b.hidden=t.getBoundingClientRect().bottom>0;}window.addEventListener('scroll',u,{passive:true});u();})();</script>
+
 <script>
 (function(){
   function openFor(h){
