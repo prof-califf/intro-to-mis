@@ -387,7 +387,26 @@ input::placeholder{color:#6b6b68;opacity:1}.cp.done{border-left:4px solid var(--
   library that does the real work, <strong>pandas</strong>. Everything runs in your browser. There is
   nothing to install.</p>
 
-<div class="toc"><strong>Contents</strong> <a href="#m1">1 · Python in ten minutes</a> &nbsp;·&nbsp; <a href="#m2">2 · Loading data</a> &nbsp;·&nbsp; <a href="#m3">3 · Filtering</a> &nbsp;·&nbsp; <a href="#m4">4 · Grouping</a> &nbsp;·&nbsp; <a href="#m5">5 · Dates and new columns</a> &nbsp;·&nbsp; <a href="#m6">6 · Pivots and joins</a> &nbsp;·&nbsp; <a href="#m7">7 · Charts</a> &nbsp;·&nbsp; <a href="#m8">Capstone</a> &nbsp;·&nbsp; <a href="#finish">Certificate</a></div>
+<h2 id="why"><span class="num">Why</span>Why Python, if you already have Excel</h2>
+<p>Excel is the right tool until the work gets big, repetitive, or long. <strong>Big:</strong> a
+worksheet stops at 1,048,576 rows, and a year of website visits or card swipes passes that quickly.
+<strong>Repetitive:</strong> the same clean-up of the same export every Monday is an hour you spend
+again and again. In Python you write the steps once and rerun them on next month's file in seconds.
+<strong>Long:</strong> when an analysis takes twenty steps, a spreadsheet full of hand edits cannot tell
+anyone what you did. Code is a written record of every step, so a coworker, or you in six months, can
+check it and run it again.</p>
+<p>Python is also where most data science and AI work happens. The tools for statistics, machine
+learning, and the language models in Chapter 12 are mostly used from Python. You will not build a model
+in this bootcamp, but you will be able to read the code the analysts and engineers around you write,
+and ask better questions about it.</p>
+<div class="callout"><strong>Where you would use it</strong>
+<p style="font-family:var(--sans);font-size:.92rem"><strong>Finance:</strong> rebuild the monthly report
+from the raw export with one click. <strong>Marketing:</strong> combine exports from three tools that
+never line up. <strong>Operations:</strong> check every store's numbers for anything unusual, every week,
+automatically. <strong>Any role:</strong> clean a messy file the same way every time.</p></div>
+
+
+<div class="toc"><strong>Contents</strong> <a href="#why">Why</a> &nbsp;·&nbsp; <a href="#sandbox">Sandbox</a> &nbsp;·&nbsp; <a href="#m1">1 · Python in ten minutes</a> &nbsp;·&nbsp; <a href="#m2">2 · Loading data</a> &nbsp;·&nbsp; <a href="#m3">3 · Filtering</a> &nbsp;·&nbsp; <a href="#m4">4 · Grouping</a> &nbsp;·&nbsp; <a href="#m5">5 · Dates and new columns</a> &nbsp;·&nbsp; <a href="#m6">6 · Pivots and joins</a> &nbsp;·&nbsp; <a href="#m7">7 · Charts</a> &nbsp;·&nbsp; <a href="#m8">Capstone</a> &nbsp;·&nbsp; <a href="#finish">Certificate</a></div>
 <p class="printbox"><span>Wanna go analog?</span><button type="button" onclick="window.print()" aria-label="Print here: print this page or save it as a PDF">&#9113;&nbsp; Print here</button><span>or save it as a PDF; the navigation drops out</span></p>
 
 <div class="callout"><strong>Who this is for, and what you get</strong>
@@ -414,6 +433,17 @@ top.</p>
 loads pandas, which takes 10 to 30 seconds on a laptop and longer on a phone. After that it is quick.
 A laptop is easier than a phone for this bootcamp.</p></div>
 
+<h2 id="sandbox"><span class="num">Tool</span>The sandbox: your scratch space</h2>
+<p>The dark box below is not a checkpoint, and nothing in it is graded. It is a place to try things:
+check a column name, test a filter before you trust it, or work out a checkpoint answer without
+changing the worked cells. It shares the same Python session as every cell on the page, so once you
+have run the cell that loads <code class="inline">df</code>, the sandbox can use it too. Press
+<strong>Dock</strong> and it follows you down the page.</p>
+<div class="pycell pysbx" id="pysbx">
+<div class="pysbx-head"><p>Sandbox &middot; tool, not a checkpoint</p><span><button type="button" id="pysbx-hide" aria-expanded="true">Hide</button><button type="button" id="pysbx-dock" aria-pressed="false">Dock</button></span></div>
+<textarea aria-label="Python sandbox code">df.head()</textarea></div>
+<p class="pysbx-spot" hidden>The sandbox is docked at the bottom of the screen. Press <strong>Undock</strong> on it to put it back here.</p>
+
 <div id="steps">
 
 <div class="callout callout-bridge"><strong>How the checkpoints work</strong>
@@ -438,6 +468,7 @@ print(round(sale_price, 2))
 stores = ["Seattle Flagship", "Bellevue", "Tacoma"]
 for s in stores:
     print("Hello,", s)</textarea></div>
+<details class="walk" open><summary>Line by line</summary><ul><li><code class="inline">price = 289.00</code> Stores the number 289 under the name <em>price</em>. Nothing prints; Python just remembers it.</li><li><code class="inline">sale_price = price * (1 - discount)</code> Does the math with the stored names, the same as an Excel formula that points at cells. <code class="inline">*</code> multiplies.</li><li><code class="inline">print(round(sale_price, 2))</code> Shows the result, rounded to two decimal places.</li><li><code class="inline">stores = ["Seattle Flagship", ...]</code> A <strong>list</strong>: several values in square brackets, in order. Text goes in quotes.</li><li><code class="inline">for s in stores:</code> Repeats the indented line once per item. Each time through, <em>s</em> holds the next store name. The colon at the end is required.</li></ul></details>
 <p>Indentation is not decoration in Python. The indented lines are the ones inside the loop. Now add
 things up with a loop:</p>
 <div class="pycell"><textarea aria-label="Python code">sales = [45, 120, 89.5]
@@ -445,6 +476,7 @@ total = 0
 for amount in sales:
     total = total + amount
 print(total)</textarea></div>
+<details class="walk" open><summary>Line by line</summary><ul><li><code class="inline">total = 0</code> Starts a running total at zero, before the loop.</li><li><code class="inline">for amount in sales:</code> Visits each number in the list, one at a time.</li><li><code class="inline">total = total + amount</code> Takes the old total, adds this amount, and stores it back as the new total. After the last item, <em>total</em> holds the sum.</li><li><code class="inline">print(total)</code> Not indented, so it runs once, after the loop is finished.</li></ul></details>
 <div class="sh" id="step1"><span class="badge">Module 1</span><span class="ttl">A loop that adds</span><span class="cpx">Answer goes in <b>Checkpoint 1</b></span></div>
 <div class="cpslot" data-cp="1"></div>
 
@@ -455,16 +487,19 @@ file is the same <code class="inline">cascadia-sales-2025.csv</code> you used in
 <div class="pycell"><textarea aria-label="Python code">import pandas as pd
 df = pd.read_csv("cascadia-sales-2025.csv")
 df.head()</textarea></div>
+<details class="walk" open><summary>Line by line</summary><ul><li><code class="inline">import pandas as pd</code> Loads the pandas library and gives it the short name <em>pd</em>. Every pandas tool now starts with <code class="inline">pd.</code></li><li><code class="inline">pd.read_csv("cascadia-sales-2025.csv")</code> Reads the file into a table. Each row is a sale; each column is a field from the CSV.</li><li><code class="inline">df = ...</code> Stores that table under the name <em>df</em> so later cells can use it.</li><li><code class="inline">df.head()</code> Shows the first five rows. It is the first thing to run on any new data, to see what you are working with.</li></ul></details>
 <p>When the last line of a cell is a value, the cell shows it, so you do not always need
 <code class="inline">print</code>. A few more ways to look at a table:</p>
 <div class="pycell"><textarea aria-label="Python code">print(df.shape)          # (rows, columns)
 print(df.columns.tolist())
 df["store"].value_counts()</textarea></div>
+<details class="walk" open><summary>Line by line</summary><ul><li><code class="inline">df.shape</code> The size of the table as (rows, columns). No parentheses after <em>shape</em>: it is a fact about the table, not an action.</li><li><code class="inline">df.columns.tolist()</code> The column names as a list. Use it whenever you forget how a column is spelled.</li><li><code class="inline"># (rows, columns)</code> Anything after <code class="inline">#</code> is a comment. Python ignores it; it is a note for people.</li><li><code class="inline">df["store"].value_counts()</code> <code class="inline">df["store"]</code> picks one column. <code class="inline">.value_counts()</code> counts how many rows have each value, largest first.</li></ul></details>
 <div class="sh" id="step2"><span class="badge">Module 2</span><span class="ttl">The shape of the data</span><span class="cpx">Answer goes in <b>Checkpoint 2</b></span></div>
 <div class="cpslot" data-cp="2"></div>
 <p><code class="inline">nunique()</code> counts different values in a column, the same idea as
 COUNT(DISTINCT ...) in SQL.</p>
 <div class="pycell"><textarea aria-label="Python code">df["category"].nunique()</textarea></div>
+<details class="walk" open><summary>Line by line</summary><ul><li><code class="inline">df["category"]</code> Picks the category column.</li><li><code class="inline">.nunique()</code> Counts how many different values it holds. Change the column name in the quotes to count something else.</li></ul></details>
 <div class="sh" id="step3"><span class="badge">Module 2</span><span class="ttl">Counting distinct values</span><span class="cpx">Answer goes in <b>Checkpoint 3</b></span></div>
 <div class="cpslot" data-cp="3"></div>
 
@@ -477,6 +512,7 @@ print(len(tacoma))
 
 big_tacoma = df[(df["store"] == "Tacoma") &amp; (df["quantity"] &gt;= 3)]
 print(len(big_tacoma))</textarea></div>
+<details class="walk" open><summary>Line by line</summary><ul><li><code class="inline">df["store"] == "Tacoma"</code> Checks every row: is the store Tacoma? The answer is a column of True and False. Two equals signs means "is equal to"; one means "store this".</li><li><code class="inline">df[ ... ]</code> Putting that True/False column inside <code class="inline">df[ ]</code> keeps only the True rows.</li><li><code class="inline">len(tacoma)</code> Counts the rows that are left.</li><li><code class="inline">( ... ) &amp; ( ... )</code> Both conditions must be true. Each one needs its own parentheses, or Python reads the line in the wrong order and gives an error.</li></ul></details>
 <div class="sh" id="step4"><span class="badge">Module 3</span><span class="ttl">Two conditions at once</span><span class="cpx">Answer goes in <b>Checkpoint 4</b></span></div>
 <div class="cpslot" data-cp="4"></div>
 
@@ -485,6 +521,7 @@ print(len(big_tacoma))</textarea></div>
 in each, and puts the results back together. It is GROUP BY from SQL and a pivot table from Excel, in
 one line.</p>
 <div class="pycell"><textarea aria-label="Python code">df.groupby("store")["revenue"].sum().sort_values(ascending=False)</textarea></div>
+<details class="walk" open><summary>Line by line</summary><ul><li><code class="inline">df.groupby("store")</code> Splits the table into one pile of rows per store.</li><li><code class="inline">["revenue"]</code> In each pile, look only at the revenue column.</li><li><code class="inline">.sum()</code> Adds up each pile. Swap in <code class="inline">.mean()</code>, <code class="inline">.count()</code>, <code class="inline">.max()</code>, or <code class="inline">.min()</code> for other questions.</li><li><code class="inline">.sort_values(ascending=False)</code> Sorts the result, largest first. <code class="inline">ascending=True</code> (or leaving it out) sorts smallest first.</li></ul></details>
 <p>Change <code class="inline">sum()</code> to <code class="inline">mean()</code> and you get the average
 revenue per sale at each store, a different question from total revenue.</p>
 <div class="sh" id="step5"><span class="badge">Module 4</span><span class="ttl">Average per sale</span><span class="cpx">Answer goes in <b>Checkpoint 5</b></span></div>
@@ -498,6 +535,7 @@ You make a new column by assigning to a name that does not exist yet.</p>
 df["month"] = df["sale_date"].dt.month
 df["weekday"] = df["sale_date"].dt.day_name()
 df.groupby("month").size()</textarea></div>
+<details class="walk" open><summary>Line by line</summary><ul><li><code class="inline">pd.to_datetime(df["sale_date"])</code> Turns text like "2025-03-14" into real dates that Python can do date math on.</li><li><code class="inline">df["sale_date"] = ...</code> Writes the converted dates back over the old column.</li><li><code class="inline">.dt.month</code> <code class="inline">.dt</code> unlocks date tools. <code class="inline">.month</code> gives 1 to 12; <code class="inline">.day_name()</code> gives Monday, Tuesday, and so on.</li><li><code class="inline">df["month"] = ...</code> Assigning to a column name that does not exist yet creates a new column.</li><li><code class="inline">.size()</code> Counts the rows in each group: the number of sales, not the revenue.</li></ul></details>
 <p><code class="inline">size()</code> counts rows in each group, so that is the number of sales per
 month, not revenue.</p>
 <div class="sh" id="step6"><span class="badge">Module 5</span><span class="ttl">The busiest month</span><span class="cpx">Answer goes in <b>Checkpoint 6</b></span></div>
@@ -506,12 +544,14 @@ month, not revenue.</p>
 to Sunday (6), so 5 and 6 are the weekend:</p>
 <div class="pycell"><textarea aria-label="Python code">df["is_weekend"] = df["sale_date"].dt.dayofweek &gt;= 5
 df.groupby("is_weekend")["revenue"].mean()</textarea></div>
+<details class="walk" open><summary>Line by line</summary><ul><li><code class="inline">.dt.dayofweek &gt;= 5</code> Monday is 0 and Sunday is 6, so 5 and 6 are Saturday and Sunday. The result is True for weekend sales.</li><li><code class="inline">groupby("is_weekend")["revenue"].mean()</code> Two groups, False and True, and the average revenue per sale in each.</li></ul></details>
 <div class="sh" id="step7"><span class="badge">Module 5</span><span class="ttl">Weekends</span><span class="cpx">Answer goes in <b>Checkpoint 7</b></span></div>
 <div class="cpslot" data-cp="7"></div>
 <p>A new column can also be arithmetic on other columns, row by row, the way you would fill a formula
 down in Excel:</p>
 <div class="pycell"><textarea aria-label="Python code">df["margin_pct"] = df["gross_margin"] / df["revenue"] * 100
 df["margin_pct"].describe()</textarea></div>
+<details class="walk" open><summary>Line by line</summary><ul><li><code class="inline">df["gross_margin"] / df["revenue"] * 100</code> Math on whole columns works row by row, like filling a formula down in Excel. Every sale gets its own margin percent.</li><li><code class="inline">.describe()</code> A quick summary of a number column: count, average, spread, smallest, largest, and the quartiles.</li></ul></details>
 <div class="sh" id="step8"><span class="badge">Module 5</span><span class="ttl">Thin-margin sales</span><span class="cpx">Answer goes in <b>Checkpoint 8</b></span></div>
 <div class="cpslot" data-cp="8"></div>
 
@@ -521,6 +561,7 @@ one dimension down the side, one across the top, a number in the middle.</p>
 <div class="pycell"><textarea aria-label="Python code">grid = df.pivot_table(index="store", columns="category",
                       values="revenue", aggfunc="sum")
 grid.round(0)</textarea></div>
+<details class="walk" open><summary>Line by line</summary><ul><li><code class="inline">pivot_table(index="store", ...)</code> <em>index</em> is what goes down the side, one row per store.</li><li><code class="inline">columns="category"</code> What goes across the top.</li><li><code class="inline">values="revenue", aggfunc="sum"</code> The number in the middle, and how to combine it: add up revenue for each store and category.</li><li><code class="inline">grid.round(0)</code> Rounds to whole dollars for display. It does not change the numbers stored in <em>grid</em>.</li><li><code class="inline">grid.loc["Tacoma", "Water"]</code> Reads one cell: the row name first, then the column name.</li></ul></details>
 <p>Read one cell with <code class="inline">.loc[row, column]</code>, for example
 <code class="inline">grid.loc["Tacoma", "Water"]</code>.</p>
 <div class="sh" id="step9"><span class="badge">Module 6</span><span class="ttl">One cell of the pivot</span><span class="cpx">Answer goes in <b>Checkpoint 9</b></span></div>
@@ -535,6 +576,7 @@ members = pd.read_sql("SELECT member_id, member_type FROM members", con)
 joined = df.dropna(subset=["member_id"]).merge(members, on="member_id")
 per_member = joined.groupby(["member_type", "member_id"])["revenue"].sum()
 per_member.groupby("member_type").mean()</textarea></div>
+<details class="walk" open><summary>Line by line</summary><ul><li><code class="inline">sqlite3.connect("cascadia.db")</code> Opens the same database file you queried in Lab 7.</li><li><code class="inline">pd.read_sql("SELECT ...", con)</code> Runs a SQL query and hands back the result as a pandas table. Every SQL skill still works here.</li><li><code class="inline">df.dropna(subset=["member_id"])</code> Drops sales with no member attached, because they have nothing to join to.</li><li><code class="inline">.merge(members, on="member_id")</code> The JOIN: matches each sale to its member by member_id and adds the member_type column.</li><li><code class="inline">groupby(["member_type", "member_id"])</code> Groups by two things at once, so you get each member&rsquo;s total for the year.</li><li><code class="inline">per_member.groupby("member_type").mean()</code> Then averages those yearly totals within each membership type.</li></ul></details>
 <p>That is the average total a member spent in 2025, by membership type. Two groupbys in a row: the first
 adds up each member's year, the second averages those totals.</p>
 <div class="sh" id="step10"><span class="badge">Module 6</span><span class="ttl">Lifetime versus Standard</span><span class="cpx">Answer goes in <b>Checkpoint 10</b></span></div>
@@ -548,6 +590,7 @@ monthly = df.groupby("month")["revenue"].sum()
 monthly.plot(kind="line", marker="o", title="Revenue by month, 2025")
 plt.ylim(bottom=0)
 plt.show()</textarea></div>
+<details class="walk" open><summary>Line by line</summary><ul><li><code class="inline">import matplotlib.pyplot as plt</code> Loads the charting library under the short name <em>plt</em>.</li><li><code class="inline">monthly.plot(kind="line", marker="o", ...)</code> pandas draws the chart from the grouped numbers: months along the bottom, revenue up the side. Try <code class="inline">kind="bar"</code>.</li><li><code class="inline">plt.ylim(bottom=0)</code> Starts the vertical axis at zero.</li><li><code class="inline">plt.show()</code> Draws it. Here, the chart appears under the cell.</li></ul></details>
 <p><code class="inline">plt.ylim(bottom=0)</code> starts the axis at zero, so the dips look as big as
 they are and no bigger. Try deleting it and running again to see the difference.</p>
 <div class="sh" id="step11"><span class="badge">Module 7</span><span class="ttl">Reading the chart</span><span class="cpx">Answer goes in <b>Checkpoint 11</b></span></div>
@@ -599,6 +642,24 @@ groupby, and one more column for the difference. Write it in the empty cell.</p>
 <p style="font-family:var(--sans);font-size:.92rem"><strong>File 2: your certificate PDF.</strong> Your memo prints as page 2.</p>
 </main>
 <style id="py-css">
+.pysbx{background:#0e0e0d;border-left:6px solid var(--magenta);border-top:0;border-right:0;border-bottom:0}
+.pysbx-head{display:flex;justify-content:space-between;align-items:center;padding:.6rem .9rem .2rem}
+.pysbx-head p{margin:0;font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#ff8fbd}
+.pysbx-head button{font-family:var(--sans);font-size:12px;font-weight:600;background:transparent;color:#f2f2ee;border:1px solid rgba(255,255,255,.45);padding:.25rem .6rem;margin-left:.4rem;cursor:pointer}
+.pysbx-head button:hover,.pysbx-head button:focus-visible{border-color:#ff8fbd;color:#ff8fbd}
+.pysbx textarea{color:#f2f2ee;background:#1b1b1a;min-height:5.5em}
+.pysbx .pybar{background:#0e0e0d;border-top:1px solid rgba(255,255,255,.15)}
+.pysbx .pybar span{color:#c9c6c0}
+.pysbx.collapsed textarea,.pysbx.collapsed .pybar,.pysbx.collapsed .pyout{display:none}
+.pysbx.docked{position:fixed;left:auto;right:1rem;bottom:1rem;width:min(680px,calc(100vw - 2rem));max-height:60vh;overflow-y:auto;z-index:150;box-shadow:0 8px 30px rgba(0,0,0,.35);margin:0}
+.pysbx-spot{font-family:var(--sans);font-size:.88rem;color:var(--text-light);border:1px dashed var(--border);padding:.6rem .9rem}
+@media print{.pysbx{display:none}}
+
+.walk{margin:-.4rem 0 1.2rem;border:1px solid var(--border);background:#fff;font-family:var(--sans);font-size:.9rem}
+.walk summary{cursor:pointer;padding:.45rem .9rem;font-weight:600;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--magenta-dark)}
+.walk ul{margin:0;padding:.2rem 1rem .7rem 2rem}
+.walk li{margin:.35rem 0;line-height:1.5}
+
 .pycell{margin:.6rem 0 1.1rem;border:1px solid var(--border);border-left:4px solid var(--magenta);background:var(--off-white)}
 .pycell textarea{display:block;width:100%;box-sizing:border-box;border:0;background:transparent;font-family:ui-monospace,Menlo,monospace;font-size:.86rem;line-height:1.55;padding:.7rem .9rem;resize:vertical;color:var(--text-dark,#111);white-space:pre;overflow-x:auto;tab-size:4}
 .pycell textarea:focus{outline:2px solid var(--magenta);outline-offset:-2px}
@@ -686,6 +747,13 @@ function run(cell){
   });
 });
 })();
+(function(){
+var box=document.getElementById('pysbx');if(!box)return;
+var hide=document.getElementById('pysbx-hide'),dock=document.getElementById('pysbx-dock'),spot=document.querySelector('.pysbx-spot');
+hide.addEventListener('click',function(){var c=box.classList.toggle('collapsed');hide.textContent=c?'Show':'Hide';hide.setAttribute('aria-expanded',c?'false':'true');});
+dock.addEventListener('click',function(){var d=box.classList.toggle('docked');dock.textContent=d?'Undock':'Dock';dock.setAttribute('aria-pressed',d?'true':'false');spot.hidden=!d;if(!d)box.scrollIntoView({block:'nearest'});});
+})();
+
 </script>
 
 
