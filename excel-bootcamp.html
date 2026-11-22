@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta name="robots" content="noindex, nofollow"><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Excel Bootcamp (Optional) | MIS 320</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0e0e0d; --off-black:#1a1a18;
+  --magenta:#cc146d; --magenta-onblack:#f0348e; --magenta-dark:#c0146a; --magenta-pale:#fdeaf3;
+  --white:#ffffff; --off-white:#f6f4f1;
+  --text-dark:#0e0e0d; --text-muted:#3a3a38; --text-light:#6b6b68;
+  --border:#e0ddd8;
+  --warn:#b3261e; --warn-pale:#fdeceb;
+  --good:#1f7a53; --good-pale:#e8f4ee;
+  --sans:'Space Grotesk',sans-serif; --display:'Oswald',sans-serif;
+  --wrap:1180px; --col:46rem;
+  /* legacy aliases so existing markup keeps working */
+  --navy:#0e0e0d; --navy-soft:#1a1a18; --accent:#cc146d; --accent-deep:#c0146a;
+  --accent-pale:#fdeaf3; --cream:#ffffff; --cream-deep:#f6f4f1; --paper:#ffffff;
+  --ink:#0e0e0d; --muted:#6b6b68; --rule:#e0ddd8; --serif:'Space Grotesk',sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--white);color:var(--text-dark);
+  font-family:var(--sans);font-size:18.5px;line-height:1.7;-webkit-font-smoothing:antialiased}
+
+/* ---------- shell ---------- */
+.shell{max-width:var(--wrap);margin:0 auto;display:grid;grid-template-columns:15rem minmax(0,1fr);gap:3.5rem;padding:0 1.5rem 6rem}
+main{margin-left:auto;margin-right:auto;max-width:var(--col);min-width:0;padding-top:2.5rem}
+
+/* ---------- sidebar ---------- */
+.rail{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:2.5rem 0 3rem;border-right:1px solid var(--border)}
+.rail .book{font-family:var(--display);font-size:15px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--magenta);margin:0 0 .2rem}
+.rail .course{font-size:13.5px;color:var(--text-light);margin:0 0 1.75rem}
+.rail nav a{display:block;font-size:15px;line-height:1.35;color:var(--text-muted);text-decoration:none;padding:.42rem .8rem .42rem .85rem;border-left:2px solid transparent;margin-left:-.85rem}
+.rail nav a:hover{color:var(--magenta);border-left-color:var(--magenta)}
+.rail nav a.sub{font-size:14px;color:var(--text-light);padding-left:1.7rem}
+.rail .back{display:inline-block;margin-top:2rem;font-size:14px;color:var(--text-light);text-decoration:none}
+.rail .back:hover{color:var(--magenta)}
+.railtoggle{display:none}
+
+/* ---------- chapter head ---------- */
+.chaphead{border-bottom:3px solid var(--black);padding-bottom:1.6rem;margin-bottom:2.5rem}
+.eyebrow{font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--magenta);margin:0 0 .7rem}
+.chaphead h1{font-family:var(--display);font-weight:600;font-size:clamp(1.9rem,4.4vw,2.7rem);line-height:1.12;text-transform:uppercase;letter-spacing:.01em;margin:0 0 .6rem;color:var(--black)}
+.chaphead .anchor{font-size:16px;color:var(--text-light);margin:0}
+.chaphead .anchor strong{color:var(--text-muted);font-weight:500}
+.meta-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.2rem}
+.meta-row span{font-size:13px;letter-spacing:.03em;background:var(--off-white);border:1px solid var(--border);padding:.32rem .65rem;color:var(--text-muted)}
+.meta-row span.alt{background:var(--magenta-pale);border-color:#f6cfe1;color:var(--magenta-dark)}
+
+/* ---------- type ---------- */
+h2{font-family:var(--display);font-weight:600;font-size:1.72rem;line-height:1.22;text-transform:uppercase;letter-spacing:.01em;color:var(--black);margin:3.2rem 0 .9rem}
+h2 .num{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;color:var(--magenta);display:block;margin-bottom:.4rem;text-transform:uppercase}
+h3{font-family:var(--display);font-weight:600;font-size:1.18rem;text-transform:uppercase;letter-spacing:.03em;color:var(--off-black);margin:2rem 0 .55rem}
+p{margin:0 0 1.05rem}
+a{color:var(--magenta-dark)}
+strong{font-weight:600;color:var(--black)}
+.lede{font-size:1.24rem;line-height:1.55;color:var(--text-muted)}
+code.inline{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--off-white);padding:.1em .35em;border:1px solid var(--border)}
+ul,ol{margin:0 0 1.15rem;padding-left:1.3rem}
+li{margin-bottom:.45rem}
+
+/* ---------- numbered step headings ---------- */
+.sh{margin:3rem 0 .7rem;padding-top:.9rem;border-top:2px solid var(--black)}
+.sh .badge{display:inline-block;background:var(--magenta);color:#fff;font-family:var(--display);
+  font-size:12.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  padding:.24rem .62rem;margin-right:.55rem;vertical-align:.17em;white-space:nowrap}
+.sh .ttl{display:inline;font-family:var(--display);font-weight:600;font-size:1.18rem;
+  text-transform:uppercase;letter-spacing:.03em;color:var(--off-black);line-height:1.35}
+.sh .cpx{display:block;clear:both;font-family:var(--sans);font-size:13.5px;line-height:1.4;
+  color:var(--text-light);margin-top:.12rem}
+.sh .cpx b{font-weight:600;color:var(--magenta-dark)}
+@media (max-width:520px){
+  .sh .badge{font-size:11.5px;padding:.2rem .5rem;margin-right:.45rem;vertical-align:.14em}
+  .sh .ttl{font-size:1.05rem}
+}
+
+/* ---------- inline checkpoint slots ---------- */
+.cpslot{margin:1.1rem 0 0}
+.cpslot .cp{margin:0}
+.cp .cphead{display:block;font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--magenta);margin-bottom:.4rem}
+.cp.done .cphead{color:var(--good)}
+.cp.locked .cphead{color:var(--text-light)}
+.progress{border:none}
+.lockmsg{font-family:var(--sans);font-size:.82rem;color:var(--text-light);margin:.4rem 0 0}
+.cp .q,.cp .hint,.cp .msg{overflow-wrap:anywhere}
+
+/* ---------- pull quote ---------- */
+.pull{margin:2.2rem 0;padding:0 0 0 1.4rem;border-left:3px solid var(--magenta)}
+.pull p{font-family:var(--display);font-weight:400;font-size:1.32rem;line-height:1.3;color:var(--black);margin:0 0 .5rem}
+.pull cite{font-style:normal;font-size:12.5px;color:var(--text-light)}
+
+/* ---------- callouts ---------- */
+.callout{border:1px solid var(--border);border-left:4px solid var(--magenta);background:var(--off-white);padding:1.15rem 1.3rem;margin:1.9rem 0}
+.callout > strong:first-child{display:block;font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--magenta);margin-bottom:.5rem}
+.callout p:last-child{margin-bottom:0}
+.callout-caution{border-left-color:var(--warn);background:var(--warn-pale)}
+.callout-caution strong:first-child{color:var(--warn)}
+.callout-bridge{border-left-color:var(--black);background:var(--off-white)}
+.callout-bridge strong:first-child{color:var(--black)}
+.callout-good{border-left-color:var(--good);background:var(--good-pale)}
+.callout-good strong:first-child{color:var(--good)}
+
+/* ---------- signature: value chain rail ---------- */
+.vc{margin:2.4rem 0;border:1px solid var(--border);background:var(--white);overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,.07)}
+.vc-head{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#fff;background:var(--black);padding:.7rem 1rem}
+.vc-strip{display:grid;grid-template-columns:repeat(5,1fr)}
+.vc-cell{padding:.85rem .7rem;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+.vc-cell:last-child{border-right:none}
+.vc-stage{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-light);display:block;margin-bottom:.3rem}
+.vc-cell p{font-size:15.5px;line-height:1.4;margin:0;color:var(--text-muted)}
+.vc-cell.broke{background:var(--magenta-pale)}
+.vc-cell.broke .vc-stage{color:var(--magenta)}
+.vc-cell.broke p{color:#8a1450}
+.vc-note{padding:.8rem 1rem;font-size:14px;color:var(--text-light);background:var(--off-white);border-top:1px solid var(--border)}
+.vc-note b{color:var(--magenta);font-weight:600}
+
+/* ---------- stat band ---------- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(8.5rem,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin:2rem 0}
+.stat{background:var(--white);padding:1rem .9rem}
+.stat b{display:block;font-family:var(--display);font-weight:700;font-size:1.8rem;color:var(--magenta);line-height:1.1}
+.stat span{display:block;font-size:13px;line-height:1.3;color:var(--text-light);margin-top:.3rem}
+
+/* ---------- timeline ---------- */
+.tl{list-style:none;padding:0;margin:1.8rem 0;border-left:2px solid var(--border)}
+.tl li{position:relative;padding:0 0 1.1rem 1.3rem;margin:0}
+.tl li:before{content:"";position:absolute;left:-5px;top:.55em;width:8px;height:8px;border-radius:50%;background:var(--magenta)}
+.tl li.bad:before{background:var(--warn)}
+.tl .when{font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--magenta);display:block}
+.tl li.bad .when{color:var(--warn)}
+
+/* ---------- vocabulary ---------- */
+.vocab{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin:1.8rem 0}
+.vocab div{background:var(--white);padding:.95rem 1rem}
+.vocab dt{font-family:var(--display);font-weight:600;font-size:15px;text-transform:uppercase;letter-spacing:.03em;color:var(--black);margin-bottom:.3rem}
+.vocab dd{margin:0;font-size:16.5px;line-height:1.5;color:var(--text-muted)}
+
+/* ---------- discussion questions ---------- */
+.dq{counter-reset:dq;margin:1.6rem 0 0;padding:0;list-style:none}
+.dq li{counter-increment:dq;position:relative;padding:1rem 0 1rem 2.6rem;border-top:1px solid var(--border)}
+.dq li:last-child{border-bottom:1px solid var(--border)}
+.dq li:before{content:counter(dq,decimal-leading-zero);position:absolute;left:0;top:1.05rem;font-family:var(--display);font-size:14.5px;font-weight:600;color:var(--magenta)}
+.tag{display:inline-block;font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:.2rem .5rem;margin-left:.5rem;vertical-align:.12em}
+.tag-hard{background:var(--warn);color:#fff}
+.tag-open{background:var(--black);color:#fff}
+.tag-warm{background:var(--magenta-pale);color:var(--magenta-dark)}
+
+/* ---------- sources ---------- */
+.sources{margin-top:3.5rem;padding-top:1.2rem;border-top:1px solid var(--border);font-size:14.5px;color:var(--text-light)}
+.sources h3{font-family:var(--display);font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin:0 0 .6rem}
+.sources li{margin-bottom:.35rem;line-height:1.5}
+
+/* ---------- responsive ---------- */
+@media (max-width:860px){
+  .shell{grid-template-columns:minmax(0,1fr);gap:0;padding:0 1.15rem 4rem}
+  .rail{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);padding:1.5rem 0 1rem;margin-bottom:.5rem}
+  .rail nav{display:none}
+  .rail nav.open{display:block;margin-top:.8rem}
+  .railtoggle{display:inline-block;font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--magenta);background:none;border:1px solid var(--border);padding:.4rem .7rem;cursor:pointer}
+  main{padding-top:1.2rem}
+  .vc-strip{grid-template-columns:repeat(2,1fr)}
+}
+:focus-visible{outline:2px solid var(--magenta);outline-offset:2px}
+
+/* ---------- prominent lab link ---------- */
+.lablink{display:inline-block;margin-top:.9rem;font-family:var(--display);font-size:14.5px;font-weight:600;
+  letter-spacing:.06em;text-transform:uppercase;text-decoration:none;background:var(--magenta);color:#fff;
+  padding:.6rem 1.15rem;border:none}
+.lablink:hover{background:var(--magenta-dark);color:#fff}
+.callout .lablink{margin-top:1rem}
+
+/* ---------- global top navigation with dropdowns ---------- */
+.topnav{position:sticky;top:0;z-index:100;background:var(--black);border-bottom:1px solid rgba(255,255,255,.14)}
+.topnav-in{max-width:var(--wrap);margin:0 auto;padding:.7rem 1.5rem;display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap}
+.topnav-brand{font-family:var(--display);font-size:16px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--magenta-onblack);text-decoration:none;margin-right:auto}
+.topnav-brand:hover{color:#fff}
+.dd{position:relative}
+.dd-btn{font-family:var(--display);font-size:14.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:#fff;background:none;border:1px solid rgba(255,255,255,.3);padding:.42rem .85rem;cursor:pointer}
+.dd-btn:hover,.dd-btn[aria-expanded="true"]{background:var(--magenta);border-color:var(--magenta)}
+.dd-btn .caret{font-size:11px;margin-left:.35rem}
+.dd-menu{display:none;position:absolute;right:0;top:calc(100% + .4rem);min-width:20rem;background:#fff;
+  border:1px solid var(--border);box-shadow:0 8px 30px rgba(0,0,0,.22);padding:.4rem 0;max-height:75vh;overflow-y:auto}
+.dd-menu.open{display:block}
+.dd-menu a{display:block;padding:.55rem 1rem;text-decoration:none;color:var(--text-dark);font-size:14.5px;line-height:1.35}
+.dd-menu a:hover{background:var(--magenta-pale);color:var(--magenta-dark)}
+.dd-menu a .lbl{display:block;font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--magenta);margin-bottom:.1rem}
+.dd-menu a.current{background:var(--off-white);border-left:3px solid var(--magenta)}
+.dd-menu a.soon{color:var(--text-light);pointer-events:none}
+.dd-menu a.soon .lbl{color:var(--text-light)}
+.dd-sep{margin:.35rem 0;border-top:1px solid var(--border)}
+@media (max-width:700px){
+  .topnav-in{padding:.6rem 1.15rem;gap:.6rem}
+  .topnav-brand{font-size:13.5px;width:100%;margin-right:0}
+  .dd{flex:1}
+  .dd-btn{width:100%;font-size:13px;padding:.4rem .5rem}
+  .dd-menu{right:auto;left:0;min-width:min(92vw,22rem)}
+}
+
+/* ---------- collapsible step-by-step help ---------- */
+.howto{margin:.7rem 0 1.1rem;border:1px solid var(--border);background:var(--off-white)}
+.howto>summary{cursor:pointer;padding:.6rem .9rem;font-family:var(--display);font-size:13px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--magenta-dark);list-style:none}
+.howto>summary::-webkit-details-marker{display:none}
+.howto>summary:before{content:"\25B8  ";font-size:11px}
+.howto[open]>summary:before{content:"\25BE  "}
+.howto>summary:hover{background:var(--magenta-pale)}
+.howto-body{padding:.3rem 1.1rem 1rem;border-top:1px solid var(--border);background:#fff}
+.howto-body ol{margin:.7rem 0;padding-left:1.3rem}
+.howto-body li{margin-bottom:.45rem;font-size:16.5px;line-height:1.5}
+.howto-body p{font-size:16.5px;margin:.6rem 0}
+.kbd{font-family:ui-monospace,Menlo,monospace;font-size:.85em;background:var(--off-white);
+  border:1px solid var(--border);border-radius:2px;padding:.1em .35em;white-space:nowrap}
+.mac{display:inline-block;font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;background:var(--black);color:#fff;padding:.1rem .4rem;margin-right:.35rem}
+.stuck{border:1px solid var(--border);border-left:4px solid var(--black);background:var(--off-white);
+  padding:1rem 1.2rem;margin:2rem 0 0}
+.stuck strong:first-child{display:block;font-family:var(--display);font-size:12.5px;font-weight:600;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--black);margin-bottom:.5rem}
+.stuck ol{margin:.5rem 0 0;padding-left:1.3rem}
+.stuck li{font-size:16.5px;margin-bottom:.35rem}
+
+/* ---------- AI traffic lights ---------- */
+.ailight{display:flex;gap:1rem;align-items:flex-start;border:1px solid var(--border);background:#fff;
+  padding:1rem 1.2rem;margin:1rem 0}
+.ailight .lamp{flex:0 0 auto;width:34px;background:#1c1c1a;border-radius:8px;padding:7px 0;
+  display:flex;flex-direction:column;align-items:center;gap:5px}
+.ailight .bulb{width:20px;height:20px;border-radius:50%;background:#2e2e2b;box-shadow:inset 0 2px 4px rgba(0,0,0,.6)}
+.ailight.g .bulb.b3{background:#2fae5f;box-shadow:0 0 10px rgba(47,174,95,.8),inset 0 -2px 3px rgba(0,0,0,.25)}
+.ailight.y .bulb.b2{background:#e6b93c;box-shadow:0 0 10px rgba(230,185,60,.8),inset 0 -2px 3px rgba(0,0,0,.25)}
+.ailight.r .bulb.b1{background:#d5453a;box-shadow:0 0 10px rgba(213,69,58,.8),inset 0 -2px 3px rgba(0,0,0,.25)}
+.ailight .lighttext{flex:1;min-width:0}
+.ailight .lighttext > strong:first-child{display:block;font-family:var(--display);font-size:13px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;margin-bottom:.3rem}
+.ailight.g .lighttext strong:first-child{color:#1e7c43}
+.ailight.y .lighttext strong:first-child{color:#a07a10}
+.ailight.r .lighttext strong:first-child{color:#a03434}
+.ailight p{margin:.2rem 0 0;font-size:16.5px;line-height:1.55}
+
+/* ---------- think-pair-share block ---------- */
+.tps{border:1px solid var(--black);background:#fff;margin:2.2rem 0}
+.tps-head{background:var(--black);color:#fff;padding:.6rem 1.1rem;font-family:var(--display);font-size:12.5px;
+  font-weight:600;letter-spacing:.2em;text-transform:uppercase;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.tps-head .mins{color:rgba(255,255,255,.7);letter-spacing:.1em}
+.tps-body{padding:1.1rem 1.25rem}
+.tps-setup{font-size:17px;line-height:1.6;margin:0 0 1rem}
+.tps-q{border-left:4px solid var(--magenta);background:var(--magenta-pale);padding:.8rem 1rem;margin:0 0 1.1rem}
+.tps-q p{margin:0;font-size:17px;line-height:1.5;font-weight:500}
+.tps-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border)}
+.tps-step{background:#fff;padding:.75rem .9rem}
+.tps-step .ph{font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--magenta);margin-bottom:.3rem;display:flex;justify-content:space-between}
+.tps-step .ph span{color:var(--text-light)}
+.tps-step p{margin:0;font-size:16px;line-height:1.45;color:var(--text-muted)}
+.tps-note{border-top:1px solid var(--border);margin-top:1.1rem;padding-top:.9rem;font-size:16px;color:var(--text-muted)}
+.tps-note strong{font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--black);display:block;margin-bottom:.35rem}
+@media(max-width:700px){.tps-steps{grid-template-columns:1fr}}
+
+/* ---------- Monday session plan (instructor-facing) ---------- */
+.plan{border:1px solid var(--border);background:var(--off-white);margin:2rem 0}
+.plan-head{background:var(--off-white);border-bottom:1px solid var(--border);padding:.55rem 1.05rem;
+  font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted)}
+.plan table{width:100%;border-collapse:collapse;background:#fff}
+.plan td{border-bottom:1px solid var(--border);padding:.6rem .9rem;font-size:15.5px;vertical-align:top;line-height:1.45}
+.plan tr:last-child td{border-bottom:none}
+.plan td.t{width:5.5rem;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--magenta);white-space:nowrap}
+.plan td.w{width:8rem;font-weight:600}
+@media(max-width:640px){.plan td.w{width:auto}}
+
+/* ---------- chapter depth: stat strip, TOC, key concept, summary table ---------- */
+.statrow{display:flex;flex-wrap:wrap;gap:1px;background:var(--border);border:1px solid var(--border);margin:1.6rem 0}
+.stat{flex:1 1 8rem;background:#fff;padding:.85rem 1rem;text-align:center}
+.stat b{display:block;font-family:var(--display);font-size:22px;font-weight:600;color:var(--magenta);line-height:1.1}
+.stat span{font-size:12.5px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;font-family:var(--display)}
+.toc{border:1px solid var(--border);background:var(--off-white);padding:1rem 1.25rem;margin:1.6rem 0;font-family:var(--sans);font-size:14.5px;line-height:2}
+.toc strong{display:block;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.3rem}
+.toc a{color:var(--text-dark);text-decoration:none;border-bottom:1px solid var(--border);margin-right:1rem;white-space:normal}
+.toc a:hover{color:var(--magenta-dark);border-bottom-color:var(--magenta)}
+.kc{border:1px solid var(--border);border-left:4px solid var(--magenta);background:#fff;margin:1.4rem 0;padding:1rem 1.2rem}
+.kc .kc-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.15rem}
+.kc .kc-term{font-family:var(--display);font-size:17px;font-weight:600;display:block;margin-bottom:.45rem}
+.kc p{margin:0;font-size:17px;line-height:1.62}
+.sumtable{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:15.5px}
+.sumtable th{background:var(--black);color:#fff;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.55rem .8rem;text-align:left}
+.sumtable td{border:1px solid var(--border);padding:.6rem .8rem;vertical-align:top;line-height:1.5}
+.sumtable tr:nth-child(even) td{background:var(--off-white)}
+
+/* ---------- IS concepts chip strip ---------- */
+.concepts{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;margin:1.1rem 0 0}
+.concepts .clabel{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-right:.3rem}
+.concepts span:not(.clabel){font-family:var(--display);font-size:12.5px;font-weight:500;letter-spacing:.04em;border:1px solid var(--border);background:var(--off-white);padding:.22rem .6rem;color:var(--text-dark)}
+.cp{border:1px solid var(--rule);background:var(--paper);border-radius:2px;margin:1rem 0;padding:1rem 1.15rem}.cp.locked{pointer-events:none;background:var(--off-white)}
+.locked .q,.locked p{color:var(--text-muted)}
+.locked button{background:var(--off-white)!important;color:var(--text-light)!important;border:1px solid var(--rule)!important;cursor:default}
+.locked input{background:var(--off-white)}
+input::placeholder{color:#6b6b68;opacity:1}.cp.done{border-left:4px solid var(--good);background:var(--good-pale)}.cp .q{font-family:var(--sans);font-size:.92rem;color:var(--navy);margin:0 0.6rem;font-weight:500}.cp input[type=text]{font-family:var(--sans);font-size:.9rem;padding:.45rem.6rem;border:1px solid var(--rule);border-radius:2px;width:14rem;max-width:100%}.cp button{font-family:var(--sans);font-size:.8rem;font-weight:600;letter-spacing:.04em;background:var(--accent-deep);color:#fff;border:none;border-radius:2px;padding:.5rem.9rem;cursor:pointer;margin-left:.4rem}.cp button.hintb{background:none;color:var(--accent-deep);border:1px solid var(--rule)}.cp .msg{font-family:var(--sans);font-size:.8rem;margin:.5rem 0 0}.cp .hint{font-family:var(--sans);font-size:.8rem;color:var(--muted);margin:.5rem 0 0;display:none;border-top:1px dashed var(--rule);padding-top:.5rem}.progress{position:sticky;top:0;z-index:5;background:var(--black);color:#fff;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:.6rem 1rem;margin:1.5rem 0}.certbox{border:2px solid var(--black);background:var(--paper);padding:1.2rem 1.3rem;margin:1.5rem 0;display:none}.certbox.show{display:block}.certbox h3{margin-top:0}.codebox code{font-family:ui-monospace,Menlo,monospace;background:var(--cream-deep);padding:.15em.45em;border-radius:2px}
+</style>
+<link rel="stylesheet" href="book.css">
+<link rel="stylesheet" href="lab.css">
+<style id="step-css">
+.lesson{margin:2.2rem 0 1rem}
+.lesson.locked h2{color:var(--text-light)}
+.ldesc{font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin:-.3rem 0 .8rem}
+.lockmsg2{font-family:var(--sans);font-size:.88rem;color:var(--text-light);border:1px dashed var(--border);padding:.55rem .9rem;margin:.6rem 0}
+.st{border:1px solid var(--border);background:#fff;margin:.7rem 0}
+.st[hidden]{display:none}
+.sthead{display:flex;flex-wrap:wrap;align-items:baseline;gap:.2rem .8rem;width:100%;text-align:left;background:none;border:0;padding:.75rem 1rem;cursor:pointer;font:inherit;color:inherit}
+.sthead:focus-visible{outline:2px solid var(--magenta);outline-offset:-2px}
+.stn{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--magenta-dark)}
+.stt{font-family:var(--display);font-weight:700;font-size:1.05rem;flex:1 1 12rem}
+.stok{display:none;font-family:var(--sans);font-size:.8rem;font-weight:700;color:var(--good,#1e7a4a)}
+.st.done .stok{display:inline}
+.st.done{border-left:4px solid var(--good,#1e7a4a)}
+.st.cur{border-left:4px solid var(--magenta);box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.stbody{padding:0 1rem 1rem}
+.st.closed .stbody{display:none}
+.learn p{margin:.3rem 0 .7rem}
+.task{background:#fdf2f7;border-left:4px solid var(--magenta);padding:.6rem .9rem;margin:.6rem 0;font-family:var(--sans);font-size:.95rem}
+.task strong{display:block;font-family:var(--display);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:.2rem}
+.task p{margin:0}
+.st-ed{margin:.6rem 0 .5rem}
+.st-ed{border:1px solid var(--border);border-left:4px solid var(--magenta);background:var(--off-white)}
+.st-ed textarea{display:block;width:100%;box-sizing:border-box;border:0;background:transparent;font-family:ui-monospace,Menlo,monospace;font-size:.86rem;line-height:1.55;padding:.7rem .9rem;resize:vertical;color:#111;white-space:pre;overflow-x:auto;tab-size:4}
+.st-ed textarea:focus{outline:2px solid var(--magenta);outline-offset:-2px}
+.st-ed .pybar{display:flex;flex-wrap:wrap;align-items:center;gap:.7rem;padding:.4rem .9rem;border-top:1px solid var(--border);background:#fff}
+.st-ed .pybar button{font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:var(--magenta);color:#fff;border:0;padding:.4rem .9rem;cursor:pointer}
+.st-ed .pybar button:disabled{opacity:.6;cursor:wait}
+.st-ed .pybar span.stat{font-family:var(--sans);font-size:.8rem;color:#5f5f5f;padding:0;margin:0;border:0;background:none;display:inline}
+.st-ed .pybar span.stat:empty{display:none}
+.st-ed .pyout{margin:0;padding:.6rem .9rem;background:#0e0e0d;color:#f2f2ee;font-family:ui-monospace,Menlo,monospace;font-size:.8rem;line-height:1.45;white-space:pre;overflow-x:auto;max-height:420px;overflow-y:auto}
+.st-ed .pyout:empty{display:none}
+.st-ed .pyout .err{color:#ff9db8}
+.st-ed .pyout img{display:block;max-width:100%;height:auto;background:#fff;margin:.4rem 0}
+#steps.sql .st-ed .pyout{background:#f6f4f1;color:#0e0e0d;white-space:normal;font-family:var(--sans);font-size:.85rem;border-top:1px solid var(--border)}
+#steps.sql .st-ed .pyout .err{color:#a03434}
+
+.st-ed .pybar button+button{background:#fff;color:var(--magenta-dark);border:1px solid var(--magenta)}
+.xlrow{display:flex;flex-wrap:wrap;gap:.6rem 1rem;padding:.7rem .9rem;font-family:var(--sans);font-size:.85rem;font-weight:600}
+.xlrow label{display:flex;flex-direction:column;gap:.25rem;flex:1 1 14rem}
+.xlrow label:last-child{flex:0 1 12rem}
+.xlrow input{font-family:ui-monospace,Menlo,monospace;font-size:.95rem;font-weight:400;padding:.45rem .55rem;border:1px solid var(--border);background:#fff;color:#111}
+.xlrow input:focus{outline:2px solid var(--magenta);outline-offset:0}
+.xled .pyout{background:#fff;color:#111;font-family:var(--sans)}
+kbd{font-family:ui-monospace,Menlo,monospace;font-size:.85em;border:1px solid var(--border);border-bottom-width:2px;padding:0 .3em;background:#fff;border-radius:3px}
+@media (max-width:700px){.xlrow input{font-size:16px}}
+.fb{font-family:var(--sans);font-size:.95rem;margin:.4rem 0;min-height:1.2em}
+.fb.ok{color:var(--good,#1e7a4a);font-weight:600}
+.fb.no{color:#a03434}
+.st .hint{display:none;font-family:var(--sans);font-size:.9rem;background:var(--off-white);border:1px solid var(--border);padding:.55rem .85rem;margin:.4rem 0}
+.st .hint.show{display:block}
+.solbox{border:1px solid var(--border);padding:.5rem .85rem;margin:.4rem 0;font-family:var(--sans);font-size:.88rem}
+.solbox button,.nextb{font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;padding:.45rem 1rem}
+.solbox button{background:#fff;color:var(--magenta-dark);border:1px solid var(--magenta)}
+.nextb{background:var(--good,#1e7a4a);color:#fff;border:0;margin-top:.3rem}
+.pbar{height:10px;background:var(--off-white);border:1px solid var(--border);margin:.5rem 0 .2rem}
+.pbar span{display:block;height:100%;background:var(--magenta);width:0;transition:width .3s}
+.lmap{display:flex;flex-wrap:wrap;gap:.4rem;margin:.6rem 0 0;padding:0;list-style:none;font-family:var(--sans);font-size:.85rem}
+.lmap a{display:inline-block;padding:.25rem .6rem;border:1px solid var(--border);text-decoration:none;color:#1a1a1a;background:#fff}
+.lmap a.full{border-color:#1e7a4a;color:#1e7a4a}
+.lmap a.off{color:#5f5f5f}
+@media (max-width:700px){.st-ed textarea{font-size:16px}.stbody{padding:0 .7rem .9rem}.sthead{padding:.7rem}}
+@media print{.st[hidden]{display:block}.st.closed .stbody{display:block}.pybar,.nextb,.solbox button{display:none}}
+</style>
+<style id="ux-mobile-nav">@media (max-width:700px){.topnav,nav.top{position:relative;z-index:200}.topnav .dd,nav.top .dd{position:static}.topnav .dd-menu,nav.top .dd-menu{left:.75rem;right:.75rem;min-width:0;top:calc(100% - .2rem);max-height:65vh;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}}@media (min-width:701px){.topnav-in{gap:.6rem}.nav-links{gap:.5rem}.topnav-brand{max-width:16rem;line-height:1.3}.topnav .dd-btn{padding-left:.7rem;padding-right:.7rem}}@media (min-width:701px) and (max-width:1100px){.topnav-brand{max-width:none;width:100%}.topnav .dd{position:static}.topnav .dd-menu{left:auto;right:1.5rem;top:calc(100% - .3rem)}}</style>
+<style id="bc-css">pre.bc{background:var(--off-white);border:1px solid var(--border);border-left:4px solid var(--magenta);padding:.75rem .95rem;overflow-x:auto;font-family:ui-monospace,Menlo,monospace;font-size:.86rem;line-height:1.55;margin:.5rem 0 1rem;white-space:pre}</style>
+</head><body>
+<a href="#top" class="skiplink">Skip to content</a>
+<style>.skiplink{position:absolute;left:-9999px;top:0;z-index:1000;background:#0e0e0d;color:#fff;padding:.6rem 1rem;font:600 15px/1.2 system-ui,sans-serif;text-decoration:none}.skiplink:focus{left:.5rem;top:.5rem;outline:3px solid #fff}</style>
+<div id="srlive" role="status" aria-live="polite" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden"></div>
+
+<nav class="topnav">
+  <div class="topnav-in">
+    <a class="topnav-brand" href="index.html">MIS 320 &middot; Principles of Management Information Systems</a>
+    <a class="dd-btn" href="syllabus.html" style="text-decoration:none">Syllabus</a>
+    <a class="dd-btn" href="schedule.html" style="text-decoration:none">Schedule</a>
+<a class="dd-btn" href="search.html" style="text-decoration:none">Search</a>
+    <div class="dd">
+      <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddc">Chapters<span class="caret">&#9660;</span></button>
+      <div class="dd-menu" id="ddc">
+      <a href="preface.html"><span class="lbl">Start here</span>About this book</a>
+      <a href="glossary.html"><span class="lbl">Reference</span>Glossary, A to Z</a>
+      <a href="chapter1-what-is-mis.html"><span class="lbl">Chapter 1 &middot; Week 1</span>What Is MIS? &mdash; Spotify Wrapped</a>
+      <a href="chapter2-starbucks.html"><span class="lbl">Chapter 2 &middot; Week 2</span>The Value of Information &mdash; Starbucks</a>
+      <a href="chapter3-competitive-advantage.html"><span class="lbl">Chapter 3 &middot; Week 3</span>Technology &amp; Competitive Advantage &mdash; Zara</a>
+      <a href="chapter4-dominos.html"><span class="lbl">Chapter 4 &middot; Week 4</span>Business Processes &mdash; Domino's</a>
+      <a href="chapter5-healthcaregov.html"><span class="lbl">Chapter 5 &middot; Week 5</span>Systems Analysis &amp; the SDLC &mdash; Healthcare.gov</a>
+      <a href="chapter6-moneyball.html"><span class="lbl">Chapter 6 &middot; Week 6</span>Business Intelligence &mdash; Moneyball</a>
+      <a href="chapter7-walmart.html"><span class="lbl">Chapter 7 &middot; Week 7</span>What Data Is: Databases &mdash; Walmart</a>
+      <a href="chapter8-nike-sap.html"><span class="lbl">Chapter 8 &middot; Week 7</span>Enterprise Systems &mdash; Nike/SAP</a>
+      <a href="chapter9-changehealthcare.html"><span class="lbl">Chapter 9 &middot; Week 8</span>Cybersecurity &mdash; Change Healthcare</a>
+      <a href="chapter10-equifax.html"><span class="lbl">Chapter 10 &middot; Week 8</span>IT Governance &mdash; Equifax</a>
+      <a href="chapter11-software.html"><span class="lbl">Chapter 11 &middot; Week 9</span>Software Design &amp; Selection &mdash; Robles v. Domino's</a>
+      <a href="chapter12-ai-ml.html"><span class="lbl">Chapter 12 &middot; Week 10</span>What AI Is &mdash; Every Cure</a>
+      <a href="chapter13-cloud.html"><span class="lbl">Chapter 13 &middot; Week 10</span>The Cloud &amp; What Computing Costs &mdash; Netflix</a>
+      </div>
+    </div>
+    <div class="dd">
+      <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddl">Labs<span class="caret">&#9660;</span></button>
+      <div class="dd-menu" id="ddl">
+      <a href="lab1-genai.html"><span class="lbl">Lab 1 &middot; Week 1</span>GenAI for Thinking</a>
+      <a href="lab2-excel-basics.html"><span class="lbl">Lab 2 &middot; Week 2</span>Excel Basics: Meeting the Client</a>
+      <a href="lab3-excel-dataprep.html"><span class="lbl">Lab 3 &middot; Week 3</span>Excel Functions: One Question, One Formula</a>
+      <a href="lab4-excel-dataviz.html"><span class="lbl">Lab 4 &middot; Week 4</span>Data Visualization: Charts That Tell the Truth</a>
+      <a href="lab5-excel-analysis.html"><span class="lbl">Lab 5 &middot; Week 5</span>Data Analysis &amp; Mini Project</a>
+      <a href="lab6-tableau.html"><span class="lbl">Lab 6 &middot; Week 6</span>Tableau: Worksheets to a Dashboard</a>
+      <a href="lab7-sql.html"><span class="lbl">Lab 7 &middot; Week 7</span>SQL Fundamentals</a>
+      <a href="lab8-security.html"><span class="lbl">Lab 8 &middot; Week 8</span>Security &amp; Data Governance: The Audit</a>
+      <a href="lab9-ux.html"><span class="lbl">Lab 9 &middot; Week 9</span>UX Design: The Heuristic Evaluation</a>
+      <a href="lab10-ia.html"><span class="lbl">Lab 10 &middot; Week 10</span>Information Architecture: Making Sense of a Mess</a>
+      <a href="resume.html"><span class="lbl">After the labs</span>Turning the labs into a resume</a>
+      </div>
+    </div>
+    <div class="dd">
+<button aria-expanded="false" aria-haspopup="true" class="dd-btn" data-dd="ddb">Bootcamps<span class="caret">&#9660;</span></button>
+<div class="dd-menu" id="ddb">
+<a class="current" href="excel-bootcamp.html"><span class="lbl">Optional · Extra credit · builds on Labs 2 to 5</span>Excel Bootcamp</a>
+<a href="sql-bootcamp.html"><span class="lbl">Optional · Extra credit · builds on Lab 7</span>SQL Bootcamp</a>
+<a href="python-bootcamp.html"><span class="lbl">Optional · Extra credit · no install</span>Python Bootcamp</a>
+<a href="tableau-bootcamp.html"><span class="lbl">Optional · Extra credit · builds on Lab 6</span>Tableau Bootcamp</a>
+</div>
+</div>
+<div class="dd">
+      <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddd">Data<span class="caret">&#9660;</span></button>
+      <div class="dd-menu" id="ddd">
+      <a href="cascadia-sales-2025.xlsx" download><span class="lbl">Workbook</span>Cascadia sales, clean (.xlsx)</a>
+      <a href="cascadia-sales-2025-RAW.xlsx" download><span class="lbl">Workbook</span>Cascadia sales, RAW export for Lab 7 (.xlsx)</a>
+      <a href="cascadia-excel-bootcamp.xlsx" download><span class="lbl">Workbook</span>Excel Bootcamp workbook (.xlsx)</a>
+      <a href="cascadia-sales-2025.csv" download><span class="lbl">Data</span>Flat CSV for Tableau</a>
+      <a href="cascadia.db"><span class="lbl">Database</span>SQLite database for the SQL lab</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+<main id="top" class="chapwrap">
+<header class="chaphead">
+  <p class="eyebrow">Optional · Extra credit</p>
+  <h1><b>Excel</b> Bootcamp: Lookups, Pivots, and Power Query</h1>
+  <div class="meta-row"><span>About 3 to 5 hours, at your own pace</span><span class="alt"><a href="lab5-excel-analysis.html" style="color:inherit;text-decoration:none">Builds on Labs 2 to 5 &#8594;</a></span></div>
+</header>
+<p class="lede">Labs 2 to 5 taught the Excel most people use: formulas, charts, and a first analysis.
+  This bootcamp is the Excel that gets you trusted with the real workbook: Tables that grow on their own,
+  lookups that pull data from one table into another, sums with conditions, formulas that return whole
+  lists, PivotTables, a model you can run backward, and Power Query to clean a messy export once and
+  for all. It uses the same Cascadia sales, in a workbook made for it.</p>
+
+<h2 id="why"><span class="num">Why</span>Why more Excel, when you have SQL and Python</h2>
+<p>Because it is where the business already works. Budgets, forecasts, price lists, and the export
+someone sends you on Monday morning arrive as spreadsheets, and the people who will read your answer
+open them in Excel. SQL and Python are better for big or repeated jobs. Excel is where most decisions
+are argued over.</p>
+<p>The gap between basic and strong Excel is mostly in this bootcamp. <strong>Lookups</strong> join
+two tables, the same idea as a JOIN in Lab 7. <strong>SUMIFS</strong> and <strong>PivotTables</strong>
+answer most "how much, where, and when" questions in a minute. <strong>Dynamic arrays</strong> let one
+formula return a whole list. <strong>Power Query</strong> turns an hour of hand cleaning into steps that
+rerun with one click, which is Chapter 4's point about processes: do it the same way every time.</p>
+<div class="callout"><strong>Where you would use it</strong>
+<p style="font-family:var(--sans);font-size:.92rem"><strong>Finance:</strong> pull this month's actuals
+next to the budget with a lookup. <strong>Sales:</strong> a PivotTable of bookings by rep and region,
+with a slicer for the quarter. <strong>Operations:</strong> clean the weekly export from the warehouse
+system with Power Query. <strong>Any role:</strong> a small model with inputs a manager can change.</p></div>
+
+<div class="toc"><strong>Contents</strong> <a href="#why">Why</a> &nbsp;·&nbsp; <a href="#l1">1 · Tables</a> &nbsp;·&nbsp; <a href="#l2">2 · Lookups</a> &nbsp;·&nbsp; <a href="#l3">3 · Conditional math</a> &nbsp;·&nbsp; <a href="#l4">4 · Dynamic arrays</a> &nbsp;·&nbsp; <a href="#l5">5 · PivotTables</a> &nbsp;·&nbsp; <a href="#l6">6 · What-if</a> &nbsp;·&nbsp; <a href="#l7">7 · Power Query</a> &nbsp;·&nbsp; <a href="#l8">Capstone</a> &nbsp;·&nbsp; <a href="#finish">Certificate</a> &nbsp;·&nbsp; <a href="#submit">What to submit</a></div>
+<p class="printbox"><span>Wanna go analog?</span><button type="button" onclick="window.print()" aria-label="Print here: print this page or save it as a PDF">&#9113;&nbsp; Print here</button><span>or save it as a PDF; the navigation drops out</span></p>
+
+<div class="callout"><strong>Who this is for, and what you get</strong>
+<p style="font-family:var(--sans);font-size:.95rem">It is optional. If the Excel labs went well and you
+want the skills that show up in analyst interviews, this is it. You learn in 26 short steps, one idea at
+a time, and you build every formula yourself. Pass every step, write a short memo, and upload your
+certificate and your workbook to the <strong>Excel Bootcamp</strong> assignment in Canvas. Each bootcamp
+you finish adds <strong>2 points to your lowest exam score</strong>. Do it in several sittings; your
+progress saves in this browser.</p>
+<p style="font-family:var(--sans);font-size:.95rem">For a resume: <em>Completed a 26-step advanced
+Excel bootcamp: Tables, XLOOKUP, SUMIFS, dynamic arrays, PivotTables, Goal Seek, and Power Query on a
+2,899-row retail dataset.</em> The <a href="resume.html">resume page</a> shows where it goes.</p></div>
+
+<div class="ailight g">
+  <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
+  <div class="lighttext"><strong>Green &middot; AI as coach</strong>
+  <p>Ask an AI what an error like #SPILL! or #N/A means, or where a menu lives on your version of Excel. Then fix it yourself. Do not ask it to write the formula for a step. Writing formulas is the skill, and the certificate says you have it.</p></div>
+</div>
+
+<div class="callout callout-good"><strong>Before you start</strong>
+<p style="font-family:var(--sans);font-size:.95rem">Download <a href="cascadia-excel-bootcamp.xlsx" download><strong>cascadia-excel-bootcamp.xlsx</strong></a>
+and save it somewhere you can find it. Do every step in that one workbook: later steps use the columns
+you add in earlier ones.</p>
+<p style="font-family:var(--sans);font-size:.95rem">Use the desktop Excel app, version Microsoft 365 or
+Excel 2021 or later, on Windows or Mac. Older versions do not have XLOOKUP, FILTER, or UNIQUE.</p></div>
+
+<div id="steps">
+<div class="callout callout-bridge"><strong>How the steps work</strong>
+<p style="font-family:var(--sans);font-size:.95rem">Each step teaches one small idea, then gives you a task. Do the task in Excel, then paste the formula you wrote and type the result Excel shows, and press <strong>Check</strong>. If both are right, the next step opens. If not, you get a note on what to fix. Every step has a hint, and after two tries you can see a solution. There is no penalty for wrong tries.</p>
+<p style="font-family:var(--sans);font-size:.95rem">Your progress saves in this browser, so you can stop and come back. Your work itself lives in your Excel file, so save it often. To start over, use the <button type="button" class="hintb" onclick="resetLab()">Reset this bootcamp</button> button.</p>
+<p class="progress" id="prog" style="margin-bottom:0">Progress: 0 / 26 steps</p>
+<div class="pbar" aria-hidden="true"><span id="pbarfill"></span></div>
+<ul class="lmap" id="lmap"></ul></div>
+<section class="lesson" id="l1" aria-labelledby="l1h"><h2 id="l1h"><span class="num">1</span>Tables</h2><p class="ldesc">Turn a range into a Table and let Excel fill formulas down for you.</p><div class="lsteps"></div><p class="lockmsg2" hidden></p></section>
+<section class="lesson" id="l2" aria-labelledby="l2h"><h2 id="l2h"><span class="num">2</span>Lookups</h2><p class="ldesc">Bring in a value from another table: XLOOKUP and INDEX/MATCH.</p><div class="lsteps"></div><p class="lockmsg2" hidden></p></section>
+<section class="lesson" id="l3" aria-labelledby="l3h"><h2 id="l3h"><span class="num">3</span>Conditional math</h2><p class="ldesc">SUMIFS, COUNTIFS, AVERAGEIFS, and IF logic.</p><div class="lsteps"></div><p class="lockmsg2" hidden></p></section>
+<section class="lesson" id="l4" aria-labelledby="l4h"><h2 id="l4h"><span class="num">4</span>Dynamic arrays</h2><p class="ldesc">Formulas that return a whole list: FILTER, UNIQUE, and spills.</p><div class="lsteps"></div><p class="lockmsg2" hidden></p></section>
+<section class="lesson" id="l5" aria-labelledby="l5h"><h2 id="l5h"><span class="num">5</span>PivotTables</h2><p class="ldesc">Summaries you build by dragging, not typing.</p><div class="lsteps"></div><p class="lockmsg2" hidden></p></section>
+<section class="lesson" id="l6" aria-labelledby="l6h"><h2 id="l6h"><span class="num">6</span>What-if</h2><p class="ldesc">A small model, and Goal Seek to run it backward.</p><div class="lsteps"></div><p class="lockmsg2" hidden></p></section>
+<section class="lesson" id="l7" aria-labelledby="l7h"><h2 id="l7h"><span class="num">7</span>Power Query</h2><p class="ldesc">Clean a messy export once, in steps you can rerun.</p><div class="lsteps"></div><p class="lockmsg2" hidden></p></section>
+<section class="lesson" id="l8" aria-labelledby="l8h"><h2 id="l8h"><span class="num">Capstone</span>Capstone</h2><p class="ldesc">A question with no worked formula.</p><div class="lsteps"></div><p class="lockmsg2" hidden></p></section>
+</div>
+
+<h2 id="finish"><span class="num">Finish</span>Your memo &amp; certificate</h2>
+
+<div class="ailight r">
+  <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
+  <div class="lighttext"><strong>Red &middot; Your memo, your words</strong>
+  <p>Write the memo yourself. Do not ask an AI tool to write it, rewrite it, or clean it up.</p></div>
+</div>
+
+<div class="certbox" id="reflectbox">
+  <h3 id="syour-reply-to-the-general-manager">Your reply to the General Manager</h3>
+  <p style="font-family:var(--sans);font-size:.88rem">Answer the GM's question: is it true at every store that members spend more per sale? Name the store with the biggest gap and the number, and the store where the pitch fails worst. Then name one reason average revenue per sale could mislead, and one more thing you would check.</p>
+  <p style="font-family:var(--sans);font-size:.88rem;color:var(--muted)">Fifty words is the minimum. This prints as page 2 of your certificate.</p>
+  <textarea id="refl" rows="7" style="width:100%;font-family:var(--sans);font-size:.9rem;padding:.6rem;border:1px solid var(--rule);border-radius:2px" aria-label="Your memo to the General Manager"></textarea>
+  <p class="msg" id="reflcount" style="font-family:var(--sans);font-size:.95rem;color:var(--muted)">0 words</p>
+</div>
+<div class="certbox" id="certbox">
+  <h3 id="sall-steps-passed">All steps passed</h3>
+  <p style="font-family:var(--sans);font-size:.95rem">Put your name in exactly as it appears in Canvas,
+  then download your certificate. The code on it is generated from your name, so it is yours and nobody
+  else's.</p>
+  <input type="text" id="nm" placeholder="Last, First" aria-label="Your name as in Canvas">
+  <button onclick="cert()">Download certificate (PDF)</button>
+  <p class="codebox" id="codeout" style="font-family:var(--sans);font-size:.85rem"></p>
+</div>
+
+<h2 id="submit"><span class="num">Canvas</span>What to submit</h2>
+<p style="font-family:var(--sans);font-size:.92rem">Go to the <strong>Excel Bootcamp</strong> extra credit assignment in Canvas and upload two files.</p>
+<p style="font-family:var(--sans);font-size:.92rem"><strong>File 1: your workbook.</strong> The bootcamp workbook with all your work in it, saved as <code class="inline">EXCELBOOTCAMP_Last_First.xlsx</code>.</p>
+<p style="font-family:var(--sans);font-size:.92rem"><strong>File 2: your certificate PDF.</strong> Your memo prints as page 2.</p>
+</main>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+function b64d(x){try{return decodeURIComponent(escape(atob(x)))}catch(e){return ''}}
+function nnum(t){t=String(t).replace(/[$,\s]/g,'');var pct=/%$/.test(t);t=t.replace(/%$/,'');return {v:parseFloat(t),pct:pct,ok:/^[-+]?\d*\.?\d+(e[-+]?\d+)?$/i.test(t)}}
+function ntxt(t){return String(t).trim().replace(/\s+/g,' ').replace(/[.]$/,'').toLowerCase()}
+window.STEPRUN=function(i,code){return new Promise(function(res){
+  var st=STEPS[i],v={};try{v=JSON.parse(code)}catch(e){}
+  var f=(v.f||'').trim(),a=(v.a||'').trim(),ans=b64d(st.ans);
+  function no(m){res({html:'',ok:false,msg:m})}
+  if(!st.nof){
+    if(!f)return no('Paste the formula you wrote. Click its cell in Excel, copy the formula from the formula bar, and paste it here.');
+    if(f[0]!=='='&&f[0]!=='+')return no('A formula starts with =. Copy it from the formula bar, not the cell.');
+    for(var k=0;k<st.need.length;k++){if(!new RegExp(st.need[k][0],'i').test(f))return no(st.need[k][1])}
+  }
+  if(!a)return no(st.nof?'Type your answer.':'Type the result Excel shows.');
+  var ok=false;
+  if(st.typ==='num'||st.typ==='pct'){var g=nnum(a);if(!g.ok)return no('Type just the number, like 1234.56.');var x=g.v,t=parseFloat(ans);
+    if(st.typ==='pct'&&!g.pct&&Math.abs(x)<1&&Math.abs(t)>=1)x=x*100;ok=Math.abs(x-t)<=st.tol+1e-9}
+  else if(st.typ==='txt'){ok=ntxt(a)===ntxt(ans)}
+  else if(st.typ==='pair'){var p=a.split(','),q=ans.split('|');if(p.length<2)return no('Type the store, a comma, then the gap, like: Tacoma, 12.34');
+    var g2=nnum(p.slice(1).join(''));ok=ntxt(p[0])===ntxt(q[0])&&g2.ok&&Math.abs(g2.v-parseFloat(q[1]))<=st.tol}
+  res(ok?{html:'',ok:true}:{html:'',ok:false,msg:st.msg||(st.nof?'That does not match. Check the task and the hint.':'The formula looks right, but the result does not match. Check the task and the hint.')});
+})};
+</script>
+<script>
+const LAB="XLBC", SKEY="mis320_XLBC", LESSONS=[{"id": "l1", "t": "Tables"}, {"id": "l2", "t": "Lookups"}, {"id": "l3", "t": "Conditional math"}, {"id": "l4", "t": "Dynamic arrays"}, {"id": "l5", "t": "PivotTables"}, {"id": "l6", "t": "What-if"}, {"id": "l7", "t": "Power Query"}, {"id": "l8", "t": "Capstone"}], STEPS=[{"l": "l1", "t": "Make it a Table", "learn": "<p>Download the workbook from the box above and open it in Excel. On the <strong>Sales</strong> sheet, click any cell in the data and press <kbd>Ctrl+T</kbd> (<kbd>Cmd+T</kbd> on a Mac), then OK. Excel turns the range into a <strong>Table</strong>: it gets banded rows, filter buttons, and a name. In the <strong>Table Design</strong> tab, change the name in the Table Name box to <code class=\"inline\">Sales</code>.</p><p>Tables grow when you add rows, and formulas can refer to them by name instead of by cell addresses that break.</p>", "task": "In an empty cell on another sheet, type <code class=\"inline\">=ROWS(Sales)</code> to count the data rows. Paste the formula here and type the result.", "code": "", "hint": "If you get #NAME?, the Table is not named Sales yet. Check the Table Name box in Table Design.", "sol": "=ROWS(Sales)", "state": false}, {"l": "l1", "t": "A calculated column", "learn": "<p>Type a heading in the first empty column of the Table and Excel makes it part of the Table. Type a formula in the first row below it and Excel fills it down every row. Inside a Table, <code class=\"inline\">[@quantity]</code> means \"the quantity on this row.\"</p>", "task": "Add a column named <code class=\"inline\">revenue</code> with <code class=\"inline\">=[@quantity]*[@unit_price]</code>. Then, in an empty cell, add it all up with <code class=\"inline\">=SUM(Sales[revenue])</code>. Paste the SUM formula and type the result.", "code": "", "hint": "Name the heading revenue exactly. Sales[revenue] means the whole revenue column of the Sales Table.", "sol": "=SUM(Sales[revenue])", "state": false}, {"l": "l2", "t": "XLOOKUP", "learn": "<p>The Sales Table has the product name but not its category. The <strong>Products</strong> Table has both. <code class=\"inline\">XLOOKUP</code> finds a value in one column and returns the matching value from another.</p><pre class=\"bc\">=XLOOKUP(what to find, where to look, what to return)</pre>", "task": "Add a <code class=\"inline\">category</code> column to Sales with <code class=\"inline\">=XLOOKUP([@product], Products[product], Products[category])</code>. Then count the Snow sales with <code class=\"inline\">=COUNTIF(Sales[category], \"Snow\")</code>. Paste the XLOOKUP formula and type the count.", "code": "", "hint": "The three parts: the product on this row, the product column of Products, and the category column of Products.", "sol": "=XLOOKUP([@product],Products[product],Products[category])", "state": false}, {"l": "l2", "t": "When there is no match", "learn": "<p>Some sales have no member, so a lookup on member_id finds nothing and shows <code class=\"inline\">#N/A</code>. XLOOKUP's fourth part says what to show instead.</p>", "task": "Add a <code class=\"inline\">member_type</code> column that looks up each sale's member_id in the Members Table and shows <code class=\"inline\">No member</code> when there is no match. How many sales say No member?", "code": "", "hint": "Add a fourth part: ,\"No member\" before the closing bracket. Count with COUNTIF(Sales[member_type],\"No member\").", "sol": "=XLOOKUP([@member_id],Members[member_id],Members[member_type],\"No member\")", "state": false}, {"l": "l2", "t": "INDEX and MATCH", "learn": "<p>Workbooks older than XLOOKUP use <code class=\"inline\">INDEX</code> and <code class=\"inline\">MATCH</code> together, and you will meet them at work. <code class=\"inline\">MATCH</code> finds the row number; <code class=\"inline\">INDEX</code> returns the value in that row. The <code class=\"inline\">0</code> at the end of MATCH means exact match.</p><pre class=\"bc\">=INDEX(column to return, MATCH(what to find, column to search, 0))</pre>", "task": "Use INDEX and MATCH to find the <code class=\"inline\">list_price</code> of the Summit Shell Jacket.", "code": "", "hint": "MATCH looks in Products[product]; INDEX returns from Products[list_price].", "sol": "=INDEX(Products[list_price],MATCH(\"Summit Shell Jacket\",Products[product],0))", "state": false}, {"l": "l2", "t": "Lookups that find a range", "learn": "<p>Not every lookup is exact. The <strong>Bands</strong> Table says prices from 0 are Budget, from 50 are Mid, and from 200 are Premium. XLOOKUP's sixth part, <code class=\"inline\">-1</code>, says: if there is no exact match, take the next smaller value. So 120 finds 50, which is Mid.</p>", "task": "Add a <code class=\"inline\">band</code> column to the <strong>Products</strong> Table that looks up each list_price in Bands. How many products are Premium?", "code": "", "hint": "=XLOOKUP([@list_price], Bands[min_price], Bands[band], , -1). The two commas leave the not-found part empty.", "sol": "=XLOOKUP([@list_price],Bands[min_price],Bands[band],,-1)", "state": false}, {"l": "l3", "t": "SUMIFS", "learn": "<p><code class=\"inline\">SUMIFS</code> adds up the rows that meet every condition you give it. The column to add comes first, then pairs of (column, value).</p><pre class=\"bc\">=SUMIFS(Sales[revenue], Sales[store], \"Boise\")</pre>", "task": "What was Tacoma's revenue from the Camping category?", "code": "", "hint": "Two pairs after the revenue column: Sales[store],\"Tacoma\" and Sales[category],\"Camping\".", "sol": "=SUMIFS(Sales[revenue],Sales[store],\"Tacoma\",Sales[category],\"Camping\")", "state": false}, {"l": "l3", "t": "Conditions on dates", "learn": "<p>To count a date range, give the date column twice: once with <code class=\"inline\">\">=\"</code> and once with <code class=\"inline\">\"<=\"</code>. The <code class=\"inline\">&amp;</code> joins the sign to a date, and <code class=\"inline\">DATE(year, month, day)</code> builds the date.</p><pre class=\"bc\">Sales[sale_date], \"&gt;=\"&amp;DATE(2025,3,1)</pre>", "task": "How many sales did Bellingham make in July 2025? Use COUNTIFS.", "code": "", "hint": "Three pairs: the store, then sale_date \">=\"&DATE(2025,7,1), then sale_date \"<=\"&DATE(2025,7,31).", "sol": "=COUNTIFS(Sales[store],\"Bellingham\",Sales[sale_date],\">=\"&DATE(2025,7,1),Sales[sale_date],\"<=\"&DATE(2025,7,31))", "state": false}, {"l": "l3", "t": "AVERAGEIFS", "learn": "<p><code class=\"inline\">AVERAGEIFS</code> works like SUMIFS but gives the average of the rows that meet the conditions.</p>", "task": "What is the average revenue per sale for Lifetime members? Round your answer to the cent.", "code": "", "hint": "Average the revenue column where member_type is Lifetime. You made member_type in Lesson 2.", "sol": "=AVERAGEIFS(Sales[revenue],Sales[member_type],\"Lifetime\")", "state": false}, {"l": "l3", "t": "IF with AND", "learn": "<p><code class=\"inline\">IF(test, value if true, value if false)</code> makes a decision on each row. <code class=\"inline\">AND()</code> is true only when every condition inside it is true. Two quote marks with nothing between them, <code class=\"inline\">\"\"</code>, leave the cell blank.</p>", "task": "Add a <code class=\"inline\">big_order</code> column that says <code class=\"inline\">Big</code> when quantity is 3 or more AND revenue is 500 or more, and is blank otherwise. How many Big orders are there?", "code": "", "hint": "Count them with =COUNTIF(Sales[big_order],\"Big\").", "sol": "=IF(AND([@quantity]>=3,[@revenue]>=500),\"Big\",\"\")", "state": false}, {"l": "l3", "t": "IFS for several labels", "learn": "<p>When there are more than two outcomes, <code class=\"inline\">IFS</code> is easier to read than IFs inside IFs. It checks each test in order and uses the first one that is true. <code class=\"inline\">TRUE</code> as the last test catches everything left.</p>", "task": "Add a <code class=\"inline\">size</code> column: <code class=\"inline\">Large</code> when revenue is 500 or more, <code class=\"inline\">Medium</code> when it is 100 or more, otherwise <code class=\"inline\">Small</code>. How many Large sales are there?", "code": "", "hint": "Test the biggest first. If Medium came first, every Large sale would be called Medium.", "sol": "=IFS([@revenue]>=500,\"Large\",[@revenue]>=100,\"Medium\",TRUE,\"Small\")", "state": false}, {"l": "l4", "t": "FILTER", "learn": "<p><code class=\"inline\">FILTER</code> returns every row that meets a condition, and the answer <strong>spills</strong> into as many cells as it needs. Put it where there is empty space below and to the right.</p><pre class=\"bc\">=FILTER(Sales, Sales[store]=\"Eugene\")</pre>", "task": "How many sales had revenue over 750? Wrap a FILTER in <code class=\"inline\">ROWS()</code> to count what it returns.", "code": "", "hint": "=ROWS(FILTER(Sales, Sales[revenue]>750))", "sol": "=ROWS(FILTER(Sales,Sales[revenue]>750))", "state": false}, {"l": "l4", "t": "UNIQUE", "learn": "<p><code class=\"inline\">UNIQUE</code> returns each value once. Combine it with FILTER to ask how many different things meet a condition. <code class=\"inline\">*</code> between two conditions in FILTER means AND.</p><pre class=\"bc\">=UNIQUE(FILTER(Sales[product], (Sales[store]=\"Boise\")*(Sales[category]=\"Snow\")))</pre>", "task": "How many different products did Boise sell in February 2025? Use <code class=\"inline\">MONTH(Sales[sale_date])=2</code> as the second condition, and wrap the whole thing in <code class=\"inline\">ROWS()</code>.", "code": "", "hint": "Start from the example: change the second condition to MONTH(Sales[sale_date])=2, then wrap it in ROWS().", "sol": "=ROWS(UNIQUE(FILTER(Sales[product],(Sales[store]=\"Boise\")*(MONTH(Sales[sale_date])=2))))", "state": false}, {"l": "l4", "t": "A spilled summary", "learn": "<p>A spill can feed another formula. If <code class=\"inline\">=UNIQUE(Sales[product])</code> is in cell <code class=\"inline\">A2</code>, then <code class=\"inline\">A2#</code> means \"the whole spilled list.\" A SUMIFS that uses <code class=\"inline\">A2#</code> spills one total for each product, so you get a summary table from two formulas.</p>", "task": "On a new, empty sheet, put <code class=\"inline\">=UNIQUE(Sales[product])</code> in A2, and in B2 a SUMIFS of revenue by that list. Which product brought in the most revenue?", "code": "", "hint": "=SUMIFS(Sales[revenue], Sales[product], A2#). Then find the biggest number in column B, or use =XLOOKUP(MAX(B2#),B2#,A2#).", "sol": "=SUMIFS(Sales[revenue],Sales[product],A2#)", "state": false}, {"l": "l4", "t": "Pieces of a date", "learn": "<p><code class=\"inline\">MONTH()</code>, <code class=\"inline\">YEAR()</code>, and <code class=\"inline\">DAY()</code> pull a number out of a date. A column of months makes month questions easy.</p>", "task": "Add a <code class=\"inline\">month</code> column with <code class=\"inline\">=MONTH([@sale_date])</code>. What was revenue in December? Paste the formula that answers it.", "code": "", "hint": "=SUMIFS(Sales[revenue], Sales[month], 12)", "sol": "=SUMIFS(Sales[revenue],Sales[month],12)", "state": false}, {"l": "l4", "t": "Dates as words", "learn": "<p><code class=\"inline\">TEXT(value, format)</code> shows a value in the format you ask for. <code class=\"inline\">\"dddd\"</code> gives the day's full name, like Tuesday, and <code class=\"inline\">\"mmm\"</code> gives a short month name.</p>", "task": "Add a <code class=\"inline\">weekday</code> column with TEXT. Which day of the week brought in the most revenue?", "code": "", "hint": "Then a UNIQUE and SUMIFS pair like two steps back, or a quick COUNTIF for each day, shows the top day.", "sol": "=TEXT([@sale_date],\"dddd\")", "state": false}, {"l": "l5", "t": "Build a PivotTable", "learn": "<p>A PivotTable summarizes a Table without formulas. Click in Sales, then <strong>Insert &gt; PivotTable</strong>, New Worksheet. In the field list, drag <code class=\"inline\">store</code> to Rows, <code class=\"inline\">category</code> to Columns, and <code class=\"inline\">revenue</code> to Values. Values add up by default.</p>", "task": "How much revenue did Bellingham make from Snow? Round to the nearest dollar.", "code": "", "hint": "Find the Bellingham row and the Snow column.", "sol": null, "state": false}, {"l": "l5", "t": "Group dates by month", "learn": "<p>Make a new PivotTable with <code class=\"inline\">sale_date</code> in Rows and <code class=\"inline\">revenue</code> in Values. Excel may group the dates by month on its own. If not, right-click a date in the PivotTable, choose <strong>Group</strong>, and pick Months.</p>", "task": "Which month had the lowest revenue? Type the month's name.", "code": "", "hint": "Sort the revenue column smallest to largest, or scan for the smallest number.", "sol": null, "state": false}, {"l": "l5", "t": "Show values as a percent", "learn": "<p>Raw totals favor big stores. Back in your first PivotTable, right-click a revenue number and choose <strong>Show Values As &gt; % of Row Total</strong>. Now each row adds to 100%, so you can compare the mix of stores of any size.</p>", "task": "What percent of Seattle Flagship's revenue came from Snow? One decimal place.", "code": "", "hint": "Read the Seattle Flagship row, Snow column. Type it like 12.3.", "sol": null, "state": false}, {"l": "l5", "t": "Slicers", "learn": "<p>A <strong>slicer</strong> is a set of buttons that filters a PivotTable. Click in your PivotTable, then <strong>PivotTable Analyze &gt; Insert Slicer</strong>, and pick <code class=\"inline\">member_type</code>. Set the values back to plain totals first (Show Values As &gt; No Calculation).</p>", "task": "Click Lifetime on the slicer. Which store has the most revenue from Lifetime members?", "code": "", "hint": "Look at the Grand Total column with only Lifetime selected.", "sol": null, "state": false}, {"l": "l6", "t": "Build the model", "learn": "<p>A model separates inputs from formulas, so you can change an input and watch the answer move. On the <strong>Model</strong> sheet, the pink cells are inputs: a price change and how much demand moves for each 1% change in price. At -1.2, a 1% price rise loses 1.2% of units sold.</p><pre class=\"bc\">projected = revenue \u00d7 (1 + price change) \u00d7 (1 + demand change \u00d7 price change)</pre>", "task": "In <code class=\"inline\">B7</code>, write the projected revenue formula using the cells, not typed numbers. What does it show with a 5% price change?", "code": "", "hint": "=B3*(1+B4)*(1+B5*B4). Refer to the cells so the model updates when an input changes.", "sol": "=B3*(1+B4)*(1+B5*B4)", "state": false}, {"l": "l6", "t": "Run it backward with Goal Seek", "learn": "<p>Goal Seek finds the input that gives the answer you want. <strong>Data &gt; What-If Analysis &gt; Goal Seek</strong>. Set cell <code class=\"inline\">B7</code>, To value 700000, By changing cell <code class=\"inline\">B4</code>.</p>", "task": "What price change gives projected revenue of exactly $700,000? Type it as a percent with two decimals, like 4.25.", "code": "", "hint": "Goal Seek fills B4 with the answer. Format it as a percent with two decimals to read it.", "sol": null, "state": false}, {"l": "l7", "t": "Load the mess into Power Query", "learn": "<p>The <strong>RAW</strong> sheet is the same year of sales as it came out of the store system: extra spaces, store names in lowercase, categories in capitals, dollar signs in prices, blank quantities, and duplicate rows. Fixing it by hand would take an hour and you would have to do it again next month. <strong>Power Query</strong> records each fix as a step you can rerun on next month's file.</p><p>Click in the RAW data, then <strong>Data &gt; From Table/Range</strong>, and OK. The Power Query Editor opens. Select the <code class=\"inline\">store</code> column, then <strong>Transform &gt; Format &gt; Trim</strong>, then <strong>Format &gt; Capitalize Each Word</strong>. Do the same for <code class=\"inline\">category</code>. Then <strong>Home &gt; Close &amp; Load</strong>. Excel loads the result as a new Table on a new sheet; in Table Design, rename it <code class=\"inline\">RAW_clean</code>.</p>", "task": "Excel loads a new clean table on a new sheet. How many of its rows have the store Seattle Flagship? Make only the fixes in this step for now.", "code": "", "hint": "Count with COUNTIF on the store column of the new table. Use the table name Excel gave it, shown in Table Design.", "sol": "=COUNTIF(RAW_clean[store],\"Seattle Flagship\")", "state": false}, {"l": "l7", "t": "Fix the prices", "learn": "<p>Right-click the query in <strong>Queries &amp; Connections</strong> and choose Edit. Select <code class=\"inline\">unit_price</code>, then <strong>Transform &gt; Replace Values</strong>: replace <code class=\"inline\">$</code> with nothing. Then click the type icon at the left of the column heading and choose <strong>Decimal Number</strong>. If the column already shows plain numbers with no dollar signs, Power Query fixed it when it guessed the types; just check the type is Decimal Number. Close &amp; Load.</p>", "task": "What is the average unit_price in the loaded table, rounded to the cent? Do not remove any rows yet.", "code": "", "hint": "If AVERAGE gives #DIV/0!, the column is still text: set its type to Decimal Number in Power Query.", "sol": "=AVERAGE(RAW_clean[unit_price])", "state": false}, {"l": "l7", "t": "Remove duplicates and blanks", "learn": "<p>Edit the query again. Select <code class=\"inline\">sale_id</code>, then <strong>Home &gt; Remove Rows &gt; Remove Duplicates</strong>. Then click the filter arrow on <code class=\"inline\">quantity</code> and uncheck <strong>(null)</strong> so rows with no quantity drop out. Close &amp; Load.</p><p>Look at the list of <strong>Applied Steps</strong> on the right. That list is the point: next month you paste in the new export and press Refresh, and every step runs again.</p>", "task": "How many rows does the clean table have now?", "code": "", "hint": "Remove Duplicates must be on the sale_id column only. If you selected every column, only exact copies go.", "sol": "=ROWS(RAW_clean)", "state": false}, {"l": "l8", "t": "Answer the General Manager", "learn": "<div class=\"callout\"><strong>Email &middot; Friday, 8:40 AM</strong><p style=\"font-family:var(--sans);font-size:.9rem\"><strong>From:</strong> General Manager<br><br>\"Membership costs us money in discounts and mailings. The pitch is that members spend more per visit. Is that true at every store? For each store, compare the average revenue per sale for members with non-members. Which store has the biggest gap in members' favor, and how big is it?\"</p></div><p>You have every piece: the member_type column, AVERAGEIFS or a PivotTable, and a subtraction. There is no solution button for this one.</p>", "task": "Type the store name, a comma, and the gap in dollars, like: Tacoma, 12.34", "code": "", "hint": "Members are Lifetime or Standard; non-members are No member. A PivotTable with store in Rows, a member yes/no column in Columns, and Average of revenue does it.", "sol": null, "state": false}], EDLABEL="Excel";
+
+const CODEHEAD="MIS 320 Excel Bootcamp", CMT="#", CODEFILE="EXCELBOOTCAMP", CODEEXT=".txt", CERTTITLE="Excel Bootcamp \u00B7 Lookups, Pivots, and Power Query", MEMOTITLE="Memo to the General Manager";
+(function(){var X=[{"xl": true, "nof": false, "typ": "num", "tol": 0.0, "need": [["ROWS\\s*\\(\\s*Sales\\s*\\)", "Use =ROWS(Sales), with the Table name in the brackets."]], "msg": null, "ans": "Mjg5OQ=="}, {"xl": true, "nof": false, "typ": "num", "tol": 0.6, "need": [["SUM\\s*\\(\\s*Sales\\[revenue\\]\\s*\\)", "Use =SUM(Sales[revenue])."]], "msg": "Close, but not the right total. Check that the revenue column multiplies quantity by unit_price on every row.", "ans": "NzEyOTcxLjU="}, {"xl": true, "nof": false, "typ": "num", "tol": 0.0, "need": [["XLOOKUP\\s*\\(", "Paste the XLOOKUP formula from the new column."]], "msg": null, "ans": "MzU3"}, {"xl": true, "nof": false, "typ": "num", "tol": 0.0, "need": [["XLOOKUP\\s*\\(", "Use XLOOKUP."], ["No member", "Add \"No member\" as the fourth part of XLOOKUP."]], "msg": null, "ans": "NDA1"}, {"xl": true, "nof": false, "typ": "num", "tol": 0.0, "need": [["INDEX\\s*\\(", "Use INDEX."], ["MATCH\\s*\\(", "Use MATCH inside INDEX."]], "msg": null, "ans": "Mjk5LjA="}, {"xl": true, "nof": false, "typ": "num", "tol": 0.0, "need": [["XLOOKUP\\s*\\(", "Use XLOOKUP."], ["-\\s*1\\s*\\)?\\s*$", "End with -1 so XLOOKUP takes the next smaller value."]], "msg": null, "ans": "MTI="}, {"xl": true, "nof": false, "typ": "num", "tol": 0.6, "need": [["SUMIFS\\s*\\(", "Use SUMIFS."]], "msg": null, "ans": "MjExMTcuMjU="}, {"xl": true, "nof": false, "typ": "num", "tol": 0.0, "need": [["COUNTIFS\\s*\\(", "Use COUNTIFS."], ["DATE\\s*\\(", "Build the dates with DATE()."]], "msg": null, "ans": "Mjg="}, {"xl": true, "nof": false, "typ": "num", "tol": 0.006, "need": [["AVERAGEIFS\\s*\\(", "Use AVERAGEIFS."]], "msg": null, "ans": "MjMzLjMz"}, {"xl": true, "nof": false, "typ": "num", "tol": 0.0, "need": [["IF\\s*\\(", "Use IF."], ["AND\\s*\\(", "Use AND inside the IF."]], "msg": null, "ans": "NjY="}, {"xl": true, "nof": false, "typ": "num", "tol": 0.0, "need": [["IFS\\s*\\(", "Use IFS."]], "msg": null, "ans": "MjM3"}, {"xl": true, "nof": false, "typ": "num", "tol": 0.0, "need": [["FILTER\\s*\\(", "Use FILTER."]], "msg": null, "ans": "ODU="}, {"xl": true, "nof": false, "typ": "num", "tol": 0.0, "need": [["UNIQUE\\s*\\(", "Use UNIQUE."], ["FILTER\\s*\\(", "Use FILTER inside UNIQUE."]], "msg": null, "ans": "OQ=="}, {"xl": true, "nof": false, "typ": "txt", "tol": 0.0, "need": [["SUMIFS\\s*\\(", "Paste the SUMIFS formula."], ["#", "Refer to the spilled list with # after its cell, like A2#."]], "msg": null, "ans": "VG91cmluZyBTa2kgUGFja2FnZQ=="}, {"xl": true, "nof": false, "typ": "num", "tol": 0.6, "need": [["SUMIFS\\s*\\(", "Use SUMIFS on the month column."]], "msg": null, "ans": "NjQ5ODIuOQ=="}, {"xl": true, "nof": false, "typ": "txt", "tol": 0.0, "need": [["TEXT\\s*\\(", "Paste the TEXT formula from the weekday column."]], "msg": null, "ans": "VHVlc2RheQ=="}, {"xl": true, "nof": true, "typ": "num", "tol": 1, "need": [], "msg": null, "ans": "MTc0MDY="}, {"xl": true, "nof": true, "typ": "txt", "tol": 0.0, "need": [], "msg": null, "ans": "QXByaWw="}, {"xl": true, "nof": true, "typ": "pct", "tol": 0.06, "need": [], "msg": null, "ans": "MjYuNg=="}, {"xl": true, "nof": true, "typ": "txt", "tol": 0.0, "need": [], "msg": null, "ans": "U2VhdHRsZSBGbGFnc2hpcA=="}, {"xl": true, "nof": false, "typ": "num", "tol": 1, "need": [["B3", "Use cell B3 for the revenue, not a typed number."], ["B4", "Use cell B4 for the price change."], ["B5", "Use cell B5 for the demand change."]], "msg": null, "ans": "NzAzNzAyLjg3"}, {"xl": true, "nof": true, "typ": "pct", "tol": 0.06, "need": [], "msg": "Not that one. Start Goal Seek with B4 at 5%, so it finds the price rise, not a price cut.", "ans": "Ni41Mw=="}, {"xl": true, "nof": false, "typ": "num", "tol": 0.0, "need": [["COUNTIF", "Use COUNTIF on the loaded table."]], "msg": "Not yet. Check that Trim and Capitalize Each Word were both applied to the store column.", "ans": "NTk2"}, {"xl": true, "nof": false, "typ": "num", "tol": 0.006, "need": [["AVERAGE\\s*\\(", "Use AVERAGE."]], "msg": null, "ans": "MTk4Ljk3"}, {"xl": true, "nof": false, "typ": "num", "tol": 0.0, "need": [["ROWS\\s*\\(", "Use ROWS on the loaded table."]], "msg": null, "ans": "Mjg0NA=="}, {"xl": true, "nof": true, "typ": "pair", "tol": 0.6, "need": [], "msg": "Not yet. Check that members include both Lifetime and Standard, and that the gap is members minus non-members.", "ans": "Qm9pc2V8NDcuNDM="}];X.forEach(function(x,i){Object.assign(STEPS[i],x)})})();
+let passed=new Set(),codes={},tries={};
+function load(){try{const s=JSON.parse(localStorage.getItem(SKEY)||'null');if(!s)return null;
+ if(Array.isArray(s.passed))passed=new Set(s.passed.filter(i=>Number.isInteger(i)&&i>=0&&i<STEPS.length));
+ if(s.codes&&typeof s.codes==='object')codes=s.codes;return s}catch(e){return null}}
+function save(){try{const r=document.getElementById('refl'),n=document.getElementById('nm');
+ localStorage.setItem(SKEY,JSON.stringify({passed:[...passed],codes:codes,refl:r?r.value:'',nm:n?n.value:''}))}catch(e){}}
+function resetLab(){if(!confirm('Clear your saved progress and code for this bootcamp and start over?'))return;
+ try{localStorage.removeItem(SKEY)}catch(e){}location.reload();}
+function esc2(t){return String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function unlocked(i){return i===0||passed.has(i-1)||passed.has(i)}
+function current(){for(let i=0;i<STEPS.length;i++)if(!passed.has(i))return i;return -1}
+function build(){
+ STEPS.forEach((s,i)=>{
+  const host=document.querySelector('#'+s.l+' .lsteps');
+  const d=document.createElement('div');d.className='st';d.id='st'+i;
+  d.innerHTML='<button type="button" class="sthead" aria-expanded="true" aria-controls="stb'+i+'"><span class="stn">Step '+(i+1)+' of '+STEPS.length+'</span><span class="stt">'+s.t+'</span><span class="stok">&#10003; Passed</span></button>'
+  +'<div class="stbody" id="stb'+i+'"><div class="learn">'+s.learn+'</div>'
+  +'<div class="task"><strong>Your task</strong><p>'+s.task+'</p></div>'
+  +(s.xl?'<div class="pycell st-ed xled"><div class="xlrow">'
+     +(s.nof?'':'<label>The formula you wrote<input type="text" class="xf" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="=..."></label>')
+     +'<label>'+(s.nof?'Your answer':'The result Excel shows')+'<input type="text" class="xa" spellcheck="false" autocomplete="off"></label></div>'
+     +'<div class="pybar"><button type="button" class="go">Check</button><button type="button" class="hb">Hint</button><span class="stat" aria-live="polite"></span></div><pre class="pyout" tabindex="0" aria-label="Result, step '+(i+1)+'"></pre></div>'
+   :'<div class="pycell st-ed"><textarea aria-label="'+EDLABEL+', step '+(i+1)+'" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"></textarea>'
+  +'<div class="pybar"><button type="button" class="go">Run and check</button><button type="button" class="hb">Hint</button><span class="stat" aria-live="polite"></span></div><pre class="pyout" tabindex="0" aria-label="Output, step '+(i+1)+'"></pre></div>')
+  +'<p class="fb" role="status"></p><div class="hint">'+s.hint+'</div>'
+  +(s.sol?'<div class="solbox" hidden><p style="margin:.2rem 0 .4rem">One solution. Read it, then type or copy it in and run it yourself.</p><pre class="bc" tabindex="0"></pre><button type="button" class="cp">Copy into the editor</button></div>':'')
+  +'<button type="button" class="nextb" hidden>Next step &#8595;</button></div>';
+  host.appendChild(d);
+  if(s.xl){const xf=d.querySelector('.xf'),xa=d.querySelector('.xa');let v={};try{v=JSON.parse(codes[i]||'{}')}catch(e){}
+   if(xf)xf.value=v.f||'';xa.value=v.a||'';
+   [xf,xa].forEach(el=>{if(!el)return;el.addEventListener('input',()=>{codes[i]=JSON.stringify({f:xf?xf.value:'',a:xa.value});save()});el.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();go(i)}})});
+   if(s.sol)d.querySelector('.solbox pre').textContent=s.sol;
+   d.querySelector('.sthead').addEventListener('click',()=>toggle(i));d.querySelector('.go').addEventListener('click',()=>go(i));
+   d.querySelector('.hb').addEventListener('click',()=>{d.querySelector('.hint').classList.toggle('show')});
+   if(s.sol)d.querySelector('.cp').addEventListener('click',()=>{if(xf){xf.value=s.sol;xf.dispatchEvent(new Event('input'));xf.focus()}});
+   d.querySelector('.nextb').addEventListener('click',()=>next(i));return;}
+  const ta=d.querySelector('textarea');ta.value=(codes[i]!=null?codes[i]:s.code);fit(ta);
+  if(s.sol)d.querySelector('.solbox pre').textContent=s.sol;
+  d.querySelector('.sthead').addEventListener('click',()=>toggle(i));
+  d.querySelector('.go').addEventListener('click',()=>go(i));
+  d.querySelector('.hb').addEventListener('click',()=>{d.querySelector('.hint').classList.toggle('show')});
+  if(s.sol)d.querySelector('.cp').addEventListener('click',()=>{ta.value=s.sol;fit(ta);codes[i]=ta.value;save();ta.focus()});
+  d.querySelector('.nextb').addEventListener('click',()=>next(i));
+  let tm;ta.addEventListener('input',()=>{fit(ta);clearTimeout(tm);tm=setTimeout(()=>{codes[i]=ta.value;save()},400)});
+  let escd=false;
+  ta.addEventListener('keydown',e=>{
+   if(e.key==='Escape'){escd=true;return}
+   if(e.key==='Enter'&&e.shiftKey){e.preventDefault();go(i);return}
+   if(e.key==='Tab'&&!e.shiftKey&&!escd){e.preventDefault();const a=ta.selectionStart,b=ta.selectionEnd;ta.value=ta.value.slice(0,a)+'    '+ta.value.slice(b);ta.selectionStart=ta.selectionEnd=a+4;ta.dispatchEvent(new Event('input'))}
+   escd=false;});
+ });
+ const lm=document.getElementById('lmap');
+ LESSONS.forEach((l,k)=>{const li=document.createElement('li');li.innerHTML='<a href="#'+l.id+'" id="lm'+k+'"></a>';lm.appendChild(li)});
+}
+function fit(ta){ta.rows=Math.max(3,ta.value.split('\n').length+1)}
+function toggle(i){const d=document.getElementById('st'+i),c=d.classList.toggle('closed');d.querySelector('.sthead').setAttribute('aria-expanded',c?'false':'true')}
+function setOpen(i,open){const d=document.getElementById('st'+i);d.classList.toggle('closed',!open);d.querySelector('.sthead').setAttribute('aria-expanded',open?'true':'false')}
+function paint(first){
+ const cur=current();
+ STEPS.forEach((s,i)=>{const d=document.getElementById('st'+i);d.hidden=!unlocked(i);
+  d.classList.toggle('done',passed.has(i));d.classList.toggle('cur',i===cur);
+  if(first)setOpen(i,i===cur);
+  d.querySelector('.nextb').hidden=!(passed.has(i)&&i+1<STEPS.length);});
+ LESSONS.forEach((l,k)=>{
+  const idx=STEPS.map((s,i)=>s.l===l.id?i:-1).filter(i=>i>=0);
+  const vis=idx.filter(unlocked).length,done=idx.filter(i=>passed.has(i)).length;
+  const sec=document.getElementById(l.id),lk=sec.querySelector('.lockmsg2');
+  sec.classList.toggle('locked',vis===0);
+  if(vis===0){lk.hidden=false;lk.textContent='Locked. This lesson opens when you finish '+(k?LESSONS[k-1].t:'the one before')+'.'}
+  else if(vis<idx.length){lk.hidden=false;lk.textContent=(idx.length-vis)+' more step'+(idx.length-vis>1?'s':'')+' in this lesson open as you go.'}
+  else lk.hidden=true;
+  const a=document.getElementById('lm'+k);a.textContent=(k+1<LESSONS.length?(k+1)+' · ':'')+l.t+' '+done+'/'+idx.length;
+  a.className=done===idx.length?'full':(vis?'':'off');});
+ document.getElementById('prog').textContent='Progress: '+passed.size+' / '+STEPS.length+' steps';
+ document.getElementById('pbarfill').style.width=(100*passed.size/STEPS.length)+'%';
+ const all=passed.size===STEPS.length;
+ document.getElementById('reflectbox').className='certbox'+(all?' show':'');
+ document.getElementById('certbox').className='certbox'+(all&&wc()>=50?' show':'');
+}
+function next(i){setOpen(i,false);const n=document.getElementById('st'+(i+1));if(!n)return;setOpen(i+1,true);
+ n.scrollIntoView({behavior:'smooth',block:'start'});setTimeout(()=>{const f=n.querySelector('textarea,input');if(f)f.focus({preventScroll:true})},350)}
+function go(i){
+ const d=document.getElementById('st'+i),ta=d.querySelector('textarea'),out=d.querySelector('.pyout'),fb=d.querySelector('.fb'),btn=d.querySelector('.go'),st=d.querySelector('.stat');
+ let val;if(STEPS[i].xl){const xf=d.querySelector('.xf'),xa=d.querySelector('.xa');val=JSON.stringify({f:xf?xf.value:'',a:xa.value})}else val=ta.value;
+ codes[i]=val;save();btn.disabled=true;fb.textContent='';fb.className='fb';out.innerHTML='';
+ window.STEPRUN(i,val,m=>{st.textContent=m}).then(r=>{
+  out.innerHTML=r.html||(STEPS[i].xl?'':'<span style="color:#9aa">(ran with no output)</span>');
+  if(r.ok){const first=!passed.has(i);passed.add(i);save();st.textContent='';
+   fb.className='fb ok';fb.textContent=i+1<STEPS.length?'Passed. Nice work.':'Passed. That was the last step. Write your memo below.';
+   if(first&&i+1<STEPS.length)setOpen(i+1,true);paint(false);const sr=document.getElementById('srlive');if(sr)sr.textContent='Step '+(i+1)+' passed.';
+   if(first&&i+1<STEPS.length)d.querySelector('.nextb').focus({preventScroll:true});
+  }else{tries[i]=(tries[i]||0)+1;fb.className='fb no';
+   fb.textContent=r.err?'Your code stopped with an error. Read the last line of the output, fix it, and run it again.':('Not yet. '+(r.msg||'Re-read the task and try again.'));
+   st.textContent='';const sb=d.querySelector('.solbox');if(sb&&tries[i]>=2)sb.hidden=false;}
+ }).catch(e=>{out.innerHTML='<span class="err">'+esc2(e.message||e)+'</span>';st.textContent=''})
+ .then(()=>{btn.disabled=false});
+}
+function wc(){const t=document.getElementById('refl');return t?t.value.trim().split(/\s+/).filter(Boolean).length:0}
+document.addEventListener('input',function(e){
+ if(e.target&&e.target.id==='refl'){const n=wc();
+  document.getElementById('reflcount').textContent=n+' words'+(n<50?': '+(50-n)+' more to unlock your certificate':': certificate unlocked below');
+  document.getElementById('certbox').className='certbox'+(passed.size===STEPS.length&&n>=50?' show':'');save();}
+ if(e.target&&e.target.id==='nm')save();
+});
+function dlcode(){
+ const n=(document.getElementById('nm')||{}).value||'';
+ let t=CODEHEAD+'\n\n';STEPS.forEach((s,i)=>{let c=codes[i]!=null?codes[i]:'';if(s.xl){let v={};try{v=JSON.parse(c||'{}')}catch(e){}c=(s.nof?'':'Formula: '+(v.f||'')+'\n')+'Answer: '+(v.a||'')}t+=CMT+' Step '+(i+1)+' · '+s.t+(passed.has(i)?'':' (not passed yet)')+'\n'+c.trim()+'\n\n'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:'text/plain'}));
+ a.download=CODEFILE+(n.trim()?'_'+n.trim().replace(/[^A-Za-z]+/g,'_').replace(/^_|_$/g,''):'')+CODEEXT;document.body.appendChild(a);a.click();a.remove();
+}
+build();
+(function(){const s=load();if(s){const r=document.getElementById('refl'),n=document.getElementById('nm');if(r&&s.refl){r.value=s.refl;r.dispatchEvent(new Event('input',{bubbles:true}))}if(n&&s.nm)n.value=s.nm;}paint(true);})();
+function h32(s){let h=5381;for(const c of s)h=((h<<5)+h+c.charCodeAt(0))|0;return(h>>>0).toString(36).toUpperCase()}
+function cert(){
+ const n=document.getElementById('nm').value.trim();
+ if(!n){document.getElementById('codeout').textContent='Enter your name first.';return}
+ const r=document.getElementById('refl').value.trim();
+ if(passed.size<STEPS.length){document.getElementById('codeout').textContent='Pass every step first.';return}
+ if(wc()<50){document.getElementById('codeout').textContent='Finish your 50-word memo above first.';return}
+ const N=STEPS.length,code=LAB+'-'+h32(n.toLowerCase()+'|'+LAB+'|'+N);
+ const d=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+ const {jsPDF}=window.jspdf;const p=new jsPDF({orientation:'landscape',unit:'pt',format:[560,380]});
+ p.setFillColor(11,29,51);p.rect(0,0,560,380,'F');p.setFillColor(253,252,250);p.rect(16,16,528,348,'F');
+ p.setTextColor(26,82,118);p.setFont('helvetica','bold');p.setFontSize(10);
+ p.text('MIS 320 · INTRODUCTION TO INFORMATION SYSTEMS · WWU',280,58,{align:'center'});
+ p.setTextColor(26,26,26);p.setFont('times','bold');p.setFontSize(26);p.text('Certificate of Completion',280,105,{align:'center'});
+ p.setFont('times','normal');p.setFontSize(13);p.text('This certifies that',280,140,{align:'center'});
+ p.setFont('times','bold');p.setFontSize(20);p.text(n,280,170,{align:'center'});
+ p.setFont('times','normal');p.setFontSize(13);p.text('completed all '+N+' steps of',280,198,{align:'center'});
+ p.setFont('helvetica','bold');p.setFontSize(15);p.setTextColor(26,82,118);p.text(CERTTITLE,280,222,{align:'center'});
+ p.setFont('helvetica','normal');p.setFontSize(11);p.setTextColor(90,90,90);p.text(d,280,252,{align:'center'});
+ p.setFont('courier','bold');p.setFontSize(12);p.setTextColor(17,120,100);p.text('Verification code: '+code,280,290,{align:'center'});
+ p.setFontSize(8);p.setFont('helvetica','normal');p.setTextColor(150,150,150);
+ p.text('Upload this PDF to Canvas. Memo on page 2. Code is unique to name + bootcamp.',280,330,{align:'center'});
+ p.addPage([560,380],'landscape');p.setFillColor(253,252,250);p.rect(0,0,560,380,'F');
+ p.setTextColor(26,26,26);p.setFont('helvetica','bold');p.setFontSize(13);p.text(MEMOTITLE,40,50);
+ p.setFont('helvetica','normal');p.setFontSize(9);p.setTextColor(90,90,90);p.text(n+' · '+code,40,66);
+ p.setFont('times','normal');p.setFontSize(11);p.setTextColor(26,26,26);
+ const lines=p.splitTextToSize(r,480);p.text(lines.slice(0,24),40,92);
+ p.save(CODEFILE+'_certificate.pdf');
+ document.getElementById('codeout').textContent='Certificate downloaded (memo on page 2). Your code: '+code;
+}
+
+</script>
+
+<!--NAVJS-->
+<script>
+(function(){
+  var btns=[].slice.call(document.querySelectorAll('.dd-btn'));
+  function closeAll(except){
+    btns.forEach(function(b){
+      var m=document.getElementById(b.getAttribute('data-dd'));
+      if(m&&m!==except){m.classList.remove('open');b.setAttribute('aria-expanded','false');}
+    });
+  }
+  btns.forEach(function(b){
+    b.addEventListener('click',function(e){
+      e.stopPropagation();
+      var m=document.getElementById(b.getAttribute('data-dd'));
+      var open=m.classList.contains('open');
+      closeAll();
+      if(!open){m.classList.add('open');b.setAttribute('aria-expanded','true');}
+    });
+  });
+  document.addEventListener('click',function(){closeAll();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeAll();});
+  document.querySelectorAll('.dd-menu').forEach(function(m){
+    m.addEventListener('click',function(e){e.stopPropagation();});
+  });
+})();
+</script>
+</body></html>
