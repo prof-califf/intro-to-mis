@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta name="robots" content="noindex, nofollow"><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Python Bootcamp (Optional) | MIS 320</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0e0e0d; --off-black:#1a1a18;
+  --magenta:#cc146d; --magenta-onblack:#f0348e; --magenta-dark:#c0146a; --magenta-pale:#fdeaf3;
+  --white:#ffffff; --off-white:#f6f4f1;
+  --text-dark:#0e0e0d; --text-muted:#3a3a38; --text-light:#6b6b68;
+  --border:#e0ddd8;
+  --warn:#b3261e; --warn-pale:#fdeceb;
+  --good:#1f7a53; --good-pale:#e8f4ee;
+  --sans:'Space Grotesk',sans-serif; --display:'Oswald',sans-serif;
+  --wrap:1180px; --col:46rem;
+  /* legacy aliases so existing markup keeps working */
+  --navy:#0e0e0d; --navy-soft:#1a1a18; --accent:#cc146d; --accent-deep:#c0146a;
+  --accent-pale:#fdeaf3; --cream:#ffffff; --cream-deep:#f6f4f1; --paper:#ffffff;
+  --ink:#0e0e0d; --muted:#6b6b68; --rule:#e0ddd8; --serif:'Space Grotesk',sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--white);color:var(--text-dark);
+  font-family:var(--sans);font-size:18.5px;line-height:1.7;-webkit-font-smoothing:antialiased}
+
+/* ---------- shell ---------- */
+.shell{max-width:var(--wrap);margin:0 auto;display:grid;grid-template-columns:15rem minmax(0,1fr);gap:3.5rem;padding:0 1.5rem 6rem}
+main{margin-left:auto;margin-right:auto;max-width:var(--col);min-width:0;padding-top:2.5rem}
+
+/* ---------- sidebar ---------- */
+.rail{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:2.5rem 0 3rem;border-right:1px solid var(--border)}
+.rail .book{font-family:var(--display);font-size:15px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--magenta);margin:0 0 .2rem}
+.rail .course{font-size:13.5px;color:var(--text-light);margin:0 0 1.75rem}
+.rail nav a{display:block;font-size:15px;line-height:1.35;color:var(--text-muted);text-decoration:none;padding:.42rem .8rem .42rem .85rem;border-left:2px solid transparent;margin-left:-.85rem}
+.rail nav a:hover{color:var(--magenta);border-left-color:var(--magenta)}
+.rail nav a.sub{font-size:14px;color:var(--text-light);padding-left:1.7rem}
+.rail .back{display:inline-block;margin-top:2rem;font-size:14px;color:var(--text-light);text-decoration:none}
+.rail .back:hover{color:var(--magenta)}
+.railtoggle{display:none}
+
+/* ---------- chapter head ---------- */
+.chaphead{border-bottom:3px solid var(--black);padding-bottom:1.6rem;margin-bottom:2.5rem}
+.eyebrow{font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--magenta);margin:0 0 .7rem}
+.chaphead h1{font-family:var(--display);font-weight:600;font-size:clamp(1.9rem,4.4vw,2.7rem);line-height:1.12;text-transform:uppercase;letter-spacing:.01em;margin:0 0 .6rem;color:var(--black)}
+.chaphead .anchor{font-size:16px;color:var(--text-light);margin:0}
+.chaphead .anchor strong{color:var(--text-muted);font-weight:500}
+.meta-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.2rem}
+.meta-row span{font-size:13px;letter-spacing:.03em;background:var(--off-white);border:1px solid var(--border);padding:.32rem .65rem;color:var(--text-muted)}
+.meta-row span.alt{background:var(--magenta-pale);border-color:#f6cfe1;color:var(--magenta-dark)}
+
+/* ---------- type ---------- */
+h2{font-family:var(--display);font-weight:600;font-size:1.72rem;line-height:1.22;text-transform:uppercase;letter-spacing:.01em;color:var(--black);margin:3.2rem 0 .9rem}
+h2 .num{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;color:var(--magenta);display:block;margin-bottom:.4rem;text-transform:uppercase}
+h3{font-family:var(--display);font-weight:600;font-size:1.18rem;text-transform:uppercase;letter-spacing:.03em;color:var(--off-black);margin:2rem 0 .55rem}
+p{margin:0 0 1.05rem}
+a{color:var(--magenta-dark)}
+strong{font-weight:600;color:var(--black)}
+.lede{font-size:1.24rem;line-height:1.55;color:var(--text-muted)}
+code.inline{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--off-white);padding:.1em .35em;border:1px solid var(--border)}
+ul,ol{margin:0 0 1.15rem;padding-left:1.3rem}
+li{margin-bottom:.45rem}
+
+/* ---------- numbered step headings ---------- */
+.sh{margin:3rem 0 .7rem;padding-top:.9rem;border-top:2px solid var(--black)}
+.sh .badge{display:inline-block;background:var(--magenta);color:#fff;font-family:var(--display);
+  font-size:12.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  padding:.24rem .62rem;margin-right:.55rem;vertical-align:.17em;white-space:nowrap}
+.sh .ttl{display:inline;font-family:var(--display);font-weight:600;font-size:1.18rem;
+  text-transform:uppercase;letter-spacing:.03em;color:var(--off-black);line-height:1.35}
+.sh .cpx{display:block;clear:both;font-family:var(--sans);font-size:13.5px;line-height:1.4;
+  color:var(--text-light);margin-top:.12rem}
+.sh .cpx b{font-weight:600;color:var(--magenta-dark)}
+@media (max-width:520px){
+  .sh .badge{font-size:11.5px;padding:.2rem .5rem;margin-right:.45rem;vertical-align:.14em}
+  .sh .ttl{font-size:1.05rem}
+}
+
+/* ---------- inline checkpoint slots ---------- */
+.cpslot{margin:1.1rem 0 0}
+.cpslot .cp{margin:0}
+.cp .cphead{display:block;font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--magenta);margin-bottom:.4rem}
+.cp.done .cphead{color:var(--good)}
+.cp.locked .cphead{color:var(--text-light)}
+.progress{border:none}
+.lockmsg{font-family:var(--sans);font-size:.82rem;color:var(--text-light);margin:.4rem 0 0}
+.cp .q,.cp .hint,.cp .msg{overflow-wrap:anywhere}
+
+/* ---------- pull quote ---------- */
+.pull{margin:2.2rem 0;padding:0 0 0 1.4rem;border-left:3px solid var(--magenta)}
+.pull p{font-family:var(--display);font-weight:400;font-size:1.32rem;line-height:1.3;color:var(--black);margin:0 0 .5rem}
+.pull cite{font-style:normal;font-size:12.5px;color:var(--text-light)}
+
+/* ---------- callouts ---------- */
+.callout{border:1px solid var(--border);border-left:4px solid var(--magenta);background:var(--off-white);padding:1.15rem 1.3rem;margin:1.9rem 0}
+.callout > strong:first-child{display:block;font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--magenta);margin-bottom:.5rem}
+.callout p:last-child{margin-bottom:0}
+.callout-caution{border-left-color:var(--warn);background:var(--warn-pale)}
+.callout-caution strong:first-child{color:var(--warn)}
+.callout-bridge{border-left-color:var(--black);background:var(--off-white)}
+.callout-bridge strong:first-child{color:var(--black)}
+.callout-good{border-left-color:var(--good);background:var(--good-pale)}
+.callout-good strong:first-child{color:var(--good)}
+
+/* ---------- signature: value chain rail ---------- */
+.vc{margin:2.4rem 0;border:1px solid var(--border);background:var(--white);overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,.07)}
+.vc-head{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#fff;background:var(--black);padding:.7rem 1rem}
+.vc-strip{display:grid;grid-template-columns:repeat(5,1fr)}
+.vc-cell{padding:.85rem .7rem;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+.vc-cell:last-child{border-right:none}
+.vc-stage{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-light);display:block;margin-bottom:.3rem}
+.vc-cell p{font-size:15.5px;line-height:1.4;margin:0;color:var(--text-muted)}
+.vc-cell.broke{background:var(--magenta-pale)}
+.vc-cell.broke .vc-stage{color:var(--magenta)}
+.vc-cell.broke p{color:#8a1450}
+.vc-note{padding:.8rem 1rem;font-size:14px;color:var(--text-light);background:var(--off-white);border-top:1px solid var(--border)}
+.vc-note b{color:var(--magenta);font-weight:600}
+
+/* ---------- stat band ---------- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(8.5rem,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin:2rem 0}
+.stat{background:var(--white);padding:1rem .9rem}
+.stat b{display:block;font-family:var(--display);font-weight:700;font-size:1.8rem;color:var(--magenta);line-height:1.1}
+.stat span{display:block;font-size:13px;line-height:1.3;color:var(--text-light);margin-top:.3rem}
+
+/* ---------- timeline ---------- */
+.tl{list-style:none;padding:0;margin:1.8rem 0;border-left:2px solid var(--border)}
+.tl li{position:relative;padding:0 0 1.1rem 1.3rem;margin:0}
+.tl li:before{content:"";position:absolute;left:-5px;top:.55em;width:8px;height:8px;border-radius:50%;background:var(--magenta)}
+.tl li.bad:before{background:var(--warn)}
+.tl .when{font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--magenta);display:block}
+.tl li.bad .when{color:var(--warn)}
+
+/* ---------- vocabulary ---------- */
+.vocab{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin:1.8rem 0}
+.vocab div{background:var(--white);padding:.95rem 1rem}
+.vocab dt{font-family:var(--display);font-weight:600;font-size:15px;text-transform:uppercase;letter-spacing:.03em;color:var(--black);margin-bottom:.3rem}
+.vocab dd{margin:0;font-size:16.5px;line-height:1.5;color:var(--text-muted)}
+
+/* ---------- discussion questions ---------- */
+.dq{counter-reset:dq;margin:1.6rem 0 0;padding:0;list-style:none}
+.dq li{counter-increment:dq;position:relative;padding:1rem 0 1rem 2.6rem;border-top:1px solid var(--border)}
+.dq li:last-child{border-bottom:1px solid var(--border)}
+.dq li:before{content:counter(dq,decimal-leading-zero);position:absolute;left:0;top:1.05rem;font-family:var(--display);font-size:14.5px;font-weight:600;color:var(--magenta)}
+.tag{display:inline-block;font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:.2rem .5rem;margin-left:.5rem;vertical-align:.12em}
+.tag-hard{background:var(--warn);color:#fff}
+.tag-open{background:var(--black);color:#fff}
+.tag-warm{background:var(--magenta-pale);color:var(--magenta-dark)}
+
+/* ---------- sources ---------- */
+.sources{margin-top:3.5rem;padding-top:1.2rem;border-top:1px solid var(--border);font-size:14.5px;color:var(--text-light)}
+.sources h3{font-family:var(--display);font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin:0 0 .6rem}
+.sources li{margin-bottom:.35rem;line-height:1.5}
+
+/* ---------- responsive ---------- */
+@media (max-width:860px){
+  .shell{grid-template-columns:minmax(0,1fr);gap:0;padding:0 1.15rem 4rem}
+  .rail{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);padding:1.5rem 0 1rem;margin-bottom:.5rem}
+  .rail nav{display:none}
+  .rail nav.open{display:block;margin-top:.8rem}
+  .railtoggle{display:inline-block;font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--magenta);background:none;border:1px solid var(--border);padding:.4rem .7rem;cursor:pointer}
+  main{padding-top:1.2rem}
+  .vc-strip{grid-template-columns:repeat(2,1fr)}
+}
+:focus-visible{outline:2px solid var(--magenta);outline-offset:2px}
+
+/* ---------- prominent lab link ---------- */
+.lablink{display:inline-block;margin-top:.9rem;font-family:var(--display);font-size:14.5px;font-weight:600;
+  letter-spacing:.06em;text-transform:uppercase;text-decoration:none;background:var(--magenta);color:#fff;
+  padding:.6rem 1.15rem;border:none}
+.lablink:hover{background:var(--magenta-dark);color:#fff}
+.callout .lablink{margin-top:1rem}
+
+/* ---------- global top navigation with dropdowns ---------- */
+.topnav{position:sticky;top:0;z-index:100;background:var(--black);border-bottom:1px solid rgba(255,255,255,.14)}
+.topnav-in{max-width:var(--wrap);margin:0 auto;padding:.7rem 1.5rem;display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap}
+.topnav-brand{font-family:var(--display);font-size:16px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--magenta-onblack);text-decoration:none;margin-right:auto}
+.topnav-brand:hover{color:#fff}
+.dd{position:relative}
+.dd-btn{font-family:var(--display);font-size:14.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:#fff;background:none;border:1px solid rgba(255,255,255,.3);padding:.42rem .85rem;cursor:pointer}
+.dd-btn:hover,.dd-btn[aria-expanded="true"]{background:var(--magenta);border-color:var(--magenta)}
+.dd-btn .caret{font-size:11px;margin-left:.35rem}
+.dd-menu{display:none;position:absolute;right:0;top:calc(100% + .4rem);min-width:20rem;background:#fff;
+  border:1px solid var(--border);box-shadow:0 8px 30px rgba(0,0,0,.22);padding:.4rem 0;max-height:75vh;overflow-y:auto}
+.dd-menu.open{display:block}
+.dd-menu a{display:block;padding:.55rem 1rem;text-decoration:none;color:var(--text-dark);font-size:14.5px;line-height:1.35}
+.dd-menu a:hover{background:var(--magenta-pale);color:var(--magenta-dark)}
+.dd-menu a .lbl{display:block;font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--magenta);margin-bottom:.1rem}
+.dd-menu a.current{background:var(--off-white);border-left:3px solid var(--magenta)}
+.dd-menu a.soon{color:var(--text-light);pointer-events:none}
+.dd-menu a.soon .lbl{color:var(--text-light)}
+.dd-sep{margin:.35rem 0;border-top:1px solid var(--border)}
+@media (max-width:700px){
+  .topnav-in{padding:.6rem 1.15rem;gap:.6rem}
+  .topnav-brand{font-size:13.5px;width:100%;margin-right:0}
+  .dd{flex:1}
+  .dd-btn{width:100%;font-size:13px;padding:.4rem .5rem}
+  .dd-menu{right:auto;left:0;min-width:min(92vw,22rem)}
+}
+
+/* ---------- collapsible step-by-step help ---------- */
+.howto{margin:.7rem 0 1.1rem;border:1px solid var(--border);background:var(--off-white)}
+.howto>summary{cursor:pointer;padding:.6rem .9rem;font-family:var(--display);font-size:13px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--magenta-dark);list-style:none}
+.howto>summary::-webkit-details-marker{display:none}
+.howto>summary:before{content:"\25B8  ";font-size:11px}
+.howto[open]>summary:before{content:"\25BE  "}
+.howto>summary:hover{background:var(--magenta-pale)}
+.howto-body{padding:.3rem 1.1rem 1rem;border-top:1px solid var(--border);background:#fff}
+.howto-body ol{margin:.7rem 0;padding-left:1.3rem}
+.howto-body li{margin-bottom:.45rem;font-size:16.5px;line-height:1.5}
+.howto-body p{font-size:16.5px;margin:.6rem 0}
+.kbd{font-family:ui-monospace,Menlo,monospace;font-size:.85em;background:var(--off-white);
+  border:1px solid var(--border);border-radius:2px;padding:.1em .35em;white-space:nowrap}
+.mac{display:inline-block;font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;background:var(--black);color:#fff;padding:.1rem .4rem;margin-right:.35rem}
+.stuck{border:1px solid var(--border);border-left:4px solid var(--black);background:var(--off-white);
+  padding:1rem 1.2rem;margin:2rem 0 0}
+.stuck strong:first-child{display:block;font-family:var(--display);font-size:12.5px;font-weight:600;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--black);margin-bottom:.5rem}
+.stuck ol{margin:.5rem 0 0;padding-left:1.3rem}
+.stuck li{font-size:16.5px;margin-bottom:.35rem}
+
+/* ---------- AI traffic lights ---------- */
+.ailight{display:flex;gap:1rem;align-items:flex-start;border:1px solid var(--border);background:#fff;
+  padding:1rem 1.2rem;margin:1rem 0}
+.ailight .lamp{flex:0 0 auto;width:34px;background:#1c1c1a;border-radius:8px;padding:7px 0;
+  display:flex;flex-direction:column;align-items:center;gap:5px}
+.ailight .bulb{width:20px;height:20px;border-radius:50%;background:#2e2e2b;box-shadow:inset 0 2px 4px rgba(0,0,0,.6)}
+.ailight.g .bulb.b3{background:#2fae5f;box-shadow:0 0 10px rgba(47,174,95,.8),inset 0 -2px 3px rgba(0,0,0,.25)}
+.ailight.y .bulb.b2{background:#e6b93c;box-shadow:0 0 10px rgba(230,185,60,.8),inset 0 -2px 3px rgba(0,0,0,.25)}
+.ailight.r .bulb.b1{background:#d5453a;box-shadow:0 0 10px rgba(213,69,58,.8),inset 0 -2px 3px rgba(0,0,0,.25)}
+.ailight .lighttext{flex:1;min-width:0}
+.ailight .lighttext > strong:first-child{display:block;font-family:var(--display);font-size:13px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;margin-bottom:.3rem}
+.ailight.g .lighttext strong:first-child{color:#1e7c43}
+.ailight.y .lighttext strong:first-child{color:#a07a10}
+.ailight.r .lighttext strong:first-child{color:#a03434}
+.ailight p{margin:.2rem 0 0;font-size:16.5px;line-height:1.55}
+
+/* ---------- think-pair-share block ---------- */
+.tps{border:1px solid var(--black);background:#fff;margin:2.2rem 0}
+.tps-head{background:var(--black);color:#fff;padding:.6rem 1.1rem;font-family:var(--display);font-size:12.5px;
+  font-weight:600;letter-spacing:.2em;text-transform:uppercase;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.tps-head .mins{color:rgba(255,255,255,.7);letter-spacing:.1em}
+.tps-body{padding:1.1rem 1.25rem}
+.tps-setup{font-size:17px;line-height:1.6;margin:0 0 1rem}
+.tps-q{border-left:4px solid var(--magenta);background:var(--magenta-pale);padding:.8rem 1rem;margin:0 0 1.1rem}
+.tps-q p{margin:0;font-size:17px;line-height:1.5;font-weight:500}
+.tps-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border)}
+.tps-step{background:#fff;padding:.75rem .9rem}
+.tps-step .ph{font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--magenta);margin-bottom:.3rem;display:flex;justify-content:space-between}
+.tps-step .ph span{color:var(--text-light)}
+.tps-step p{margin:0;font-size:16px;line-height:1.45;color:var(--text-muted)}
+.tps-note{border-top:1px solid var(--border);margin-top:1.1rem;padding-top:.9rem;font-size:16px;color:var(--text-muted)}
+.tps-note strong{font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--black);display:block;margin-bottom:.35rem}
+@media(max-width:700px){.tps-steps{grid-template-columns:1fr}}
+
+/* ---------- Monday session plan (instructor-facing) ---------- */
+.plan{border:1px solid var(--border);background:var(--off-white);margin:2rem 0}
+.plan-head{background:var(--off-white);border-bottom:1px solid var(--border);padding:.55rem 1.05rem;
+  font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted)}
+.plan table{width:100%;border-collapse:collapse;background:#fff}
+.plan td{border-bottom:1px solid var(--border);padding:.6rem .9rem;font-size:15.5px;vertical-align:top;line-height:1.45}
+.plan tr:last-child td{border-bottom:none}
+.plan td.t{width:5.5rem;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--magenta);white-space:nowrap}
+.plan td.w{width:8rem;font-weight:600}
+@media(max-width:640px){.plan td.w{width:auto}}
+
+/* ---------- chapter depth: stat strip, TOC, key concept, summary table ---------- */
+.statrow{display:flex;flex-wrap:wrap;gap:1px;background:var(--border);border:1px solid var(--border);margin:1.6rem 0}
+.stat{flex:1 1 8rem;background:#fff;padding:.85rem 1rem;text-align:center}
+.stat b{display:block;font-family:var(--display);font-size:22px;font-weight:600;color:var(--magenta);line-height:1.1}
+.stat span{font-size:12.5px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;font-family:var(--display)}
+.toc{border:1px solid var(--border);background:var(--off-white);padding:1rem 1.25rem;margin:1.6rem 0;font-family:var(--sans);font-size:14.5px;line-height:2}
+.toc strong{display:block;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.3rem}
+.toc a{color:var(--text-dark);text-decoration:none;border-bottom:1px solid var(--border);margin-right:1rem;white-space:normal}
+.toc a:hover{color:var(--magenta-dark);border-bottom-color:var(--magenta)}
+.kc{border:1px solid var(--border);border-left:4px solid var(--magenta);background:#fff;margin:1.4rem 0;padding:1rem 1.2rem}
+.kc .kc-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.15rem}
+.kc .kc-term{font-family:var(--display);font-size:17px;font-weight:600;display:block;margin-bottom:.45rem}
+.kc p{margin:0;font-size:17px;line-height:1.62}
+.sumtable{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:15.5px}
+.sumtable th{background:var(--black);color:#fff;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.55rem .8rem;text-align:left}
+.sumtable td{border:1px solid var(--border);padding:.6rem .8rem;vertical-align:top;line-height:1.5}
+.sumtable tr:nth-child(even) td{background:var(--off-white)}
+
+/* ---------- IS concepts chip strip ---------- */
+.concepts{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;margin:1.1rem 0 0}
+.concepts .clabel{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-right:.3rem}
+.concepts span:not(.clabel){font-family:var(--display);font-size:12.5px;font-weight:500;letter-spacing:.04em;border:1px solid var(--border);background:var(--off-white);padding:.22rem .6rem;color:var(--text-dark)}
+.cp{border:1px solid var(--rule);background:var(--paper);border-radius:2px;margin:1rem 0;padding:1rem 1.15rem}.cp.locked{pointer-events:none;background:var(--off-white)}
+.locked .q,.locked p{color:var(--text-muted)}
+.locked button{background:var(--off-white)!important;color:var(--text-light)!important;border:1px solid var(--rule)!important;cursor:default}
+.locked input{background:var(--off-white)}
+input::placeholder{color:#6b6b68;opacity:1}.cp.done{border-left:4px solid var(--good);background:var(--good-pale)}.cp .q{font-family:var(--sans);font-size:.92rem;color:var(--navy);margin:0 0.6rem;font-weight:500}.cp input[type=text]{font-family:var(--sans);font-size:.9rem;padding:.45rem.6rem;border:1px solid var(--rule);border-radius:2px;width:14rem;max-width:100%}.cp button{font-family:var(--sans);font-size:.8rem;font-weight:600;letter-spacing:.04em;background:var(--accent-deep);color:#fff;border:none;border-radius:2px;padding:.5rem.9rem;cursor:pointer;margin-left:.4rem}.cp button.hintb{background:none;color:var(--accent-deep);border:1px solid var(--rule)}.cp .msg{font-family:var(--sans);font-size:.8rem;margin:.5rem 0 0}.cp .hint{font-family:var(--sans);font-size:.8rem;color:var(--muted);margin:.5rem 0 0;display:none;border-top:1px dashed var(--rule);padding-top:.5rem}.progress{position:sticky;top:0;z-index:5;background:var(--black);color:#fff;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:.6rem 1rem;margin:1.5rem 0}.certbox{border:2px solid var(--black);background:var(--paper);padding:1.2rem 1.3rem;margin:1.5rem 0;display:none}.certbox.show{display:block}.certbox h3{margin-top:0}.codebox code{font-family:ui-monospace,Menlo,monospace;background:var(--cream-deep);padding:.15em.45em;border-radius:2px}
+</style>
+<link rel="stylesheet" href="book.css">
+<link rel="stylesheet" href="lab.css"><style id="ux-mobile-nav">@media (max-width:700px){.topnav,nav.top{position:relative;z-index:200}.topnav .dd,nav.top .dd{position:static}.topnav .dd-menu,nav.top .dd-menu{left:.75rem;right:.75rem;min-width:0;top:calc(100% - .2rem);max-height:65vh;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}}@media (min-width:701px){.topnav-in{gap:.6rem}.nav-links{gap:.5rem}.topnav-brand{max-width:16rem;line-height:1.3}.topnav .dd-btn{padding-left:.7rem;padding-right:.7rem}}@media (min-width:701px) and (max-width:1100px){.topnav-brand{max-width:none;width:100%}.topnav .dd{position:static}.topnav .dd-menu{left:auto;right:1.5rem;top:calc(100% - .3rem)}}</style>
+<style id="bc-css">pre.bc{background:var(--off-white);border:1px solid var(--border);border-left:4px solid var(--magenta);padding:.75rem .95rem;overflow-x:auto;font-family:ui-monospace,Menlo,monospace;font-size:.86rem;line-height:1.55;margin:.5rem 0 1rem;white-space:pre}</style>
+</head><body>
+<a href="#top" class="skiplink">Skip to content</a>
+<style>.skiplink{position:absolute;left:-9999px;top:0;z-index:1000;background:#0e0e0d;color:#fff;padding:.6rem 1rem;font:600 15px/1.2 system-ui,sans-serif;text-decoration:none}.skiplink:focus{left:.5rem;top:.5rem;outline:3px solid #fff}</style>
+<div id="srlive" role="status" aria-live="polite" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden"></div>
+
+<nav class="topnav">
+  <div class="topnav-in">
+    <a class="topnav-brand" href="index.html">MIS 320 &middot; Principles of Management Information Systems</a>
+    <a class="dd-btn" href="syllabus.html" style="text-decoration:none">Syllabus</a>
+    <a class="dd-btn" href="schedule.html" style="text-decoration:none">Schedule</a>
+<a class="dd-btn" href="search.html" style="text-decoration:none">Search</a>
+    <div class="dd">
+      <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddc">Chapters<span class="caret">&#9660;</span></button>
+      <div class="dd-menu" id="ddc">
+      <a href="preface.html"><span class="lbl">Start here</span>About this book</a>
+      <a href="glossary.html"><span class="lbl">Reference</span>Glossary, A to Z</a>
+      <a href="chapter1-what-is-mis.html"><span class="lbl">Chapter 1 &middot; Week 1</span>What Is MIS? &mdash; Spotify Wrapped</a>
+      <a href="chapter2-starbucks.html"><span class="lbl">Chapter 2 &middot; Week 2</span>The Value of Information &mdash; Starbucks</a>
+      <a href="chapter3-competitive-advantage.html"><span class="lbl">Chapter 3 &middot; Week 3</span>Technology &amp; Competitive Advantage &mdash; Zara</a>
+      <a href="chapter4-dominos.html"><span class="lbl">Chapter 4 &middot; Week 4</span>Business Processes &mdash; Domino's</a>
+      <a href="chapter5-healthcaregov.html"><span class="lbl">Chapter 5 &middot; Week 5</span>Systems Analysis &amp; the SDLC &mdash; Healthcare.gov</a>
+      <a href="chapter6-moneyball.html"><span class="lbl">Chapter 6 &middot; Week 6</span>Business Intelligence &mdash; Moneyball</a>
+      <a href="chapter7-walmart.html"><span class="lbl">Chapter 7 &middot; Week 7</span>What Data Is: Databases &mdash; Walmart</a>
+      <a href="chapter8-nike-sap.html"><span class="lbl">Chapter 8 &middot; Week 7</span>Enterprise Systems &mdash; Nike/SAP</a>
+      <a href="chapter9-changehealthcare.html"><span class="lbl">Chapter 9 &middot; Week 8</span>Cybersecurity &mdash; Change Healthcare</a>
+      <a href="chapter10-equifax.html"><span class="lbl">Chapter 10 &middot; Week 8</span>IT Governance &mdash; Equifax</a>
+      <a href="chapter11-software.html"><span class="lbl">Chapter 11 &middot; Week 9</span>Software Design &amp; Selection &mdash; Robles v. Domino's</a>
+      <a href="chapter12-ai-ml.html"><span class="lbl">Chapter 12 &middot; Week 10</span>What AI Is &mdash; Every Cure</a>
+      <a href="chapter13-cloud.html"><span class="lbl">Chapter 13 &middot; Week 10</span>The Cloud &amp; What Computing Costs &mdash; Netflix</a>
+      </div>
+    </div>
+    <div class="dd">
+      <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddl">Labs<span class="caret">&#9660;</span></button>
+      <div class="dd-menu" id="ddl">
+      <a href="lab1-genai.html"><span class="lbl">Lab 1 &middot; Week 1</span>GenAI for Thinking</a>
+      <a href="lab2-excel-basics.html"><span class="lbl">Lab 2 &middot; Week 2</span>Excel Basics: Meeting the Client</a>
+      <a href="lab3-excel-dataprep.html"><span class="lbl">Lab 3 &middot; Week 3</span>Excel Functions: One Question, One Formula</a>
+      <a href="lab4-excel-dataviz.html"><span class="lbl">Lab 4 &middot; Week 4</span>Data Visualization: Charts That Tell the Truth</a>
+      <a href="lab5-excel-analysis.html"><span class="lbl">Lab 5 &middot; Week 5</span>Data Analysis &amp; Mini Project</a>
+      <a href="lab6-tableau.html"><span class="lbl">Lab 6 &middot; Week 6</span>Tableau: Worksheets to a Dashboard</a>
+      <a href="lab7-sql.html"><span class="lbl">Lab 7 &middot; Week 7</span>SQL Fundamentals</a>
+      <a href="lab8-security.html"><span class="lbl">Lab 8 &middot; Week 8</span>Security &amp; Data Governance: The Audit</a>
+      <a href="lab9-ux.html"><span class="lbl">Lab 9 &middot; Week 9</span>UX Design: The Heuristic Evaluation</a>
+      <a href="lab10-ia.html"><span class="lbl">Lab 10 &middot; Week 10</span>Information Architecture: Making Sense of a Mess</a>
+      <a href="resume.html"><span class="lbl">After the labs</span>Turning the labs into a resume</a>
+      </div>
+    </div>
+    <div class="dd">
+<button aria-expanded="false" aria-haspopup="true" class="dd-btn" data-dd="ddb">Bootcamps<span class="caret">&#9660;</span></button>
+<div class="dd-menu" id="ddb">
+<a href="sql-bootcamp.html"><span class="lbl">Optional · Extra credit · builds on Lab 7</span>SQL Bootcamp</a>
+<a class="current" href="python-bootcamp.html"><span class="lbl">Optional · Extra credit · no install</span>Python Bootcamp</a>
+<a href="tableau-bootcamp.html"><span class="lbl">Optional · Extra credit · builds on Lab 6</span>Tableau Bootcamp</a>
+</div>
+</div>
+<div class="dd">
+      <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddd">Data<span class="caret">&#9660;</span></button>
+      <div class="dd-menu" id="ddd">
+      <a href="cascadia-sales-2025.xlsx" download><span class="lbl">Workbook</span>Cascadia sales, clean (.xlsx)</a>
+      <a href="cascadia-sales-2025-RAW.xlsx" download><span class="lbl">Workbook</span>Cascadia sales, RAW export for Lab 7 (.xlsx)</a>
+      <a href="cascadia-sales-2025.csv" download><span class="lbl">Data</span>Flat CSV for Tableau</a>
+      <a href="cascadia.db"><span class="lbl">Database</span>SQLite database for the SQL lab</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+<main id="top" class="chapwrap">
+<header class="chaphead">
+  <p class="eyebrow">Optional · Extra credit</p>
+  <h1><b>Python</b> Bootcamp: Analysis with pandas</h1>
+  <div class="meta-row"><span>About 3 to 5 hours, at your own pace</span><span class="alt"><a href="lab5-excel-analysis.html" style="color:inherit;text-decoration:none">Redo your Excel work in code &#8594;</a></span></div>
+</header>
+<p class="lede">All quarter you have analyzed Cascadia's sales in Excel, Tableau, and SQL. Python is the
+  fourth tool, and the one analysts reach for when a question needs many steps, a lot of data, or the
+  same work done again next month. This bootcamp teaches enough Python to be useful and then the
+  library that does the real work, <strong>pandas</strong>. Everything runs in your browser. There is
+  nothing to install.</p>
+
+<div class="toc"><strong>Contents</strong> <a href="#m1">1 · Python in ten minutes</a> &nbsp;·&nbsp; <a href="#m2">2 · Loading data</a> &nbsp;·&nbsp; <a href="#m3">3 · Filtering</a> &nbsp;·&nbsp; <a href="#m4">4 · Grouping</a> &nbsp;·&nbsp; <a href="#m5">5 · Dates and new columns</a> &nbsp;·&nbsp; <a href="#m6">6 · Pivots and joins</a> &nbsp;·&nbsp; <a href="#m7">7 · Charts</a> &nbsp;·&nbsp; <a href="#m8">Capstone</a> &nbsp;·&nbsp; <a href="#finish">Certificate</a></div>
+<p class="printbox"><span>Wanna go analog?</span><button type="button" onclick="window.print()" aria-label="Print here: print this page or save it as a PDF">&#9113;&nbsp; Print here</button><span>or save it as a PDF; the navigation drops out</span></p>
+
+<div class="callout"><strong>Who this is for, and what you get</strong>
+<p style="font-family:var(--sans);font-size:.95rem">It is optional, and no programming background is
+assumed. If you have written an Excel formula, you can do this. Clear all twelve checkpoints, write a
+short memo, and upload your certificate to the <strong>Python Bootcamp</strong> assignment in Canvas. Each bootcamp you finish adds <strong>2 points to your lowest exam score</strong>. Do it in several sittings; your checkpoints save in this browser.</p>
+<p style="font-family:var(--sans);font-size:.95rem">For a resume: <em>Completed a 12-checkpoint Python
+bootcamp: data cleaning, grouping, pivots, joins, and charts in pandas on a 2,899-row retail
+dataset.</em> The <a href="resume.html">resume page</a> shows where it goes.</p></div>
+
+<div class="ailight g">
+  <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
+  <div class="lighttext"><strong>Green &middot; AI as coach</strong>
+  <p>Python error messages are long. Paste one into an AI and ask what it means; that is a good use. Then fix the code yourself. Do not ask it to write the checkpoint code. Reading and changing code is the skill, and the certificate says you have it.</p></div>
+</div>
+
+<div class="callout callout-good"><strong>How the code cells work</strong>
+<p style="font-family:var(--sans);font-size:.95rem">Every gray box with a <strong>Run</strong> button is
+live Python. Edit it, press Run (or Shift and Enter), and the output appears under it. All the cells
+share one Python session, so a variable you create in one cell is there in the next, the same as a
+Jupyter notebook. If something stops making sense, reload the page and run the cells again from the
+top.</p>
+<p style="font-family:var(--sans);font-size:.95rem">The <strong>first</strong> Run starts Python and
+loads pandas, which takes 10 to 30 seconds on a laptop and longer on a phone. After that it is quick.
+A laptop is easier than a phone for this bootcamp.</p></div>
+
+<div id="steps">
+
+<div class="callout callout-bridge"><strong>How the checkpoints work</strong>
+<p style="font-family:var(--sans);font-size:.95rem">Each checkpoint sits under the module that teaches it.
+The worked cells show the idea; the checkpoint asks for a small change. Get it right and the next one
+opens. No penalty for wrong answers, and every checkpoint has a hint.</p>
+<p style="font-family:var(--sans);font-size:.95rem">Your checkpoints save in this browser; your code does
+not, so keep a copy of what works in a text file as you go. You submit it. To start over, use the
+<button type="button" class="hintb" onclick="resetLab()">Reset this bootcamp</button> button.</p>
+<div class="progress" id="prog">Checkpoint progress: 0 / 12</div>
+</div>
+
+<h2 id="m1"><span class="num">1</span>Python in ten minutes</h2>
+<p>About 20 minutes. Python runs top to bottom. A name on the left of <code class="inline">=</code>
+stores whatever is on the right. A list holds several values in order. A <code class="inline">for</code>
+loop repeats the indented lines once per item. <code class="inline">print</code> shows a result.</p>
+<div class="pycell"><textarea aria-label="Python code">price = 289.00
+discount = 0.20
+sale_price = price * (1 - discount)
+print(round(sale_price, 2))
+
+stores = ["Seattle Flagship", "Bellevue", "Tacoma"]
+for s in stores:
+    print("Hello,", s)</textarea></div>
+<p>Indentation is not decoration in Python. The indented lines are the ones inside the loop. Now add
+things up with a loop:</p>
+<div class="pycell"><textarea aria-label="Python code">sales = [45, 120, 89.5]
+total = 0
+for amount in sales:
+    total = total + amount
+print(total)</textarea></div>
+<div class="sh" id="step1"><span class="badge">Module 1</span><span class="ttl">A loop that adds</span><span class="cpx">Answer goes in <b>Checkpoint 1</b></span></div>
+<div class="cpslot" data-cp="1"></div>
+
+<h2 id="m2"><span class="num">2</span>Loading data: a spreadsheet in code</h2>
+<p>About 20 minutes. pandas loads a CSV file into a <strong>DataFrame</strong>, which is a table with named
+columns, much like a sheet in Excel. By convention it is called <code class="inline">df</code>. This
+file is the same <code class="inline">cascadia-sales-2025.csv</code> you used in Tableau.</p>
+<div class="pycell"><textarea aria-label="Python code">import pandas as pd
+df = pd.read_csv("cascadia-sales-2025.csv")
+df.head()</textarea></div>
+<p>When the last line of a cell is a value, the cell shows it, so you do not always need
+<code class="inline">print</code>. A few more ways to look at a table:</p>
+<div class="pycell"><textarea aria-label="Python code">print(df.shape)          # (rows, columns)
+print(df.columns.tolist())
+df["store"].value_counts()</textarea></div>
+<div class="sh" id="step2"><span class="badge">Module 2</span><span class="ttl">The shape of the data</span><span class="cpx">Answer goes in <b>Checkpoint 2</b></span></div>
+<div class="cpslot" data-cp="2"></div>
+<p><code class="inline">nunique()</code> counts different values in a column, the same idea as
+COUNT(DISTINCT ...) in SQL.</p>
+<div class="pycell"><textarea aria-label="Python code">df["category"].nunique()</textarea></div>
+<div class="sh" id="step3"><span class="badge">Module 2</span><span class="ttl">Counting distinct values</span><span class="cpx">Answer goes in <b>Checkpoint 3</b></span></div>
+<div class="cpslot" data-cp="3"></div>
+
+<h2 id="m3"><span class="num">3</span>Filtering: keeping the rows you want</h2>
+<p>About 30 minutes. Put a condition in square brackets and pandas keeps the rows where it is true.
+Combine conditions with <code class="inline">&amp;</code> (and) or <code class="inline">|</code> (or), each
+condition in its own parentheses. <code class="inline">len()</code> counts the rows left.</p>
+<div class="pycell"><textarea aria-label="Python code">tacoma = df[df["store"] == "Tacoma"]
+print(len(tacoma))
+
+big_tacoma = df[(df["store"] == "Tacoma") &amp; (df["quantity"] &gt;= 3)]
+print(len(big_tacoma))</textarea></div>
+<div class="sh" id="step4"><span class="badge">Module 3</span><span class="ttl">Two conditions at once</span><span class="cpx">Answer goes in <b>Checkpoint 4</b></span></div>
+<div class="cpslot" data-cp="4"></div>
+
+<h2 id="m4"><span class="num">4</span>Grouping: the pivot table of pandas</h2>
+<p>About 30 minutes. <code class="inline">groupby</code> splits the table into groups, does a calculation
+in each, and puts the results back together. It is GROUP BY from SQL and a pivot table from Excel, in
+one line.</p>
+<div class="pycell"><textarea aria-label="Python code">df.groupby("store")["revenue"].sum().sort_values(ascending=False)</textarea></div>
+<p>Change <code class="inline">sum()</code> to <code class="inline">mean()</code> and you get the average
+revenue per sale at each store, a different question from total revenue.</p>
+<div class="sh" id="step5"><span class="badge">Module 4</span><span class="ttl">Average per sale</span><span class="cpx">Answer goes in <b>Checkpoint 5</b></span></div>
+<div class="cpslot" data-cp="5"></div>
+
+<h2 id="m5"><span class="num">5</span>Dates and new columns</h2>
+<p>About 40 minutes. The CSV stores dates as text. <code class="inline">pd.to_datetime</code> turns them
+into real dates, and then <code class="inline">.dt</code> pulls out pieces: month, weekday, and so on.
+You make a new column by assigning to a name that does not exist yet.</p>
+<div class="pycell"><textarea aria-label="Python code">df["sale_date"] = pd.to_datetime(df["sale_date"])
+df["month"] = df["sale_date"].dt.month
+df["weekday"] = df["sale_date"].dt.day_name()
+df.groupby("month").size()</textarea></div>
+<p><code class="inline">size()</code> counts rows in each group, so that is the number of sales per
+month, not revenue.</p>
+<div class="sh" id="step6"><span class="badge">Module 5</span><span class="ttl">The busiest month</span><span class="cpx">Answer goes in <b>Checkpoint 6</b></span></div>
+<div class="cpslot" data-cp="6"></div>
+<p>A new column can be a rule. <code class="inline">dayofweek</code> numbers the days from Monday (0)
+to Sunday (6), so 5 and 6 are the weekend:</p>
+<div class="pycell"><textarea aria-label="Python code">df["is_weekend"] = df["sale_date"].dt.dayofweek &gt;= 5
+df.groupby("is_weekend")["revenue"].mean()</textarea></div>
+<div class="sh" id="step7"><span class="badge">Module 5</span><span class="ttl">Weekends</span><span class="cpx">Answer goes in <b>Checkpoint 7</b></span></div>
+<div class="cpslot" data-cp="7"></div>
+<p>A new column can also be arithmetic on other columns, row by row, the way you would fill a formula
+down in Excel:</p>
+<div class="pycell"><textarea aria-label="Python code">df["margin_pct"] = df["gross_margin"] / df["revenue"] * 100
+df["margin_pct"].describe()</textarea></div>
+<div class="sh" id="step8"><span class="badge">Module 5</span><span class="ttl">Thin-margin sales</span><span class="cpx">Answer goes in <b>Checkpoint 8</b></span></div>
+<div class="cpslot" data-cp="8"></div>
+
+<h2 id="m6"><span class="num">6</span>Pivots and joins</h2>
+<p>About 40 minutes. <code class="inline">pivot_table</code> builds the same grid as an Excel pivot table:
+one dimension down the side, one across the top, a number in the middle.</p>
+<div class="pycell"><textarea aria-label="Python code">grid = df.pivot_table(index="store", columns="category",
+                      values="revenue", aggfunc="sum")
+grid.round(0)</textarea></div>
+<p>Read one cell with <code class="inline">.loc[row, column]</code>, for example
+<code class="inline">grid.loc["Tacoma", "Water"]</code>.</p>
+<div class="sh" id="step9"><span class="badge">Module 6</span><span class="ttl">One cell of the pivot</span><span class="cpx">Answer goes in <b>Checkpoint 9</b></span></div>
+<div class="cpslot" data-cp="9"></div>
+<p>The CSV does not say what kind of membership each member has. That lives in the
+<code class="inline">members</code> table in the database you queried in Lab 7. pandas can read it
+straight from the database with SQL, then <strong>merge</strong> it onto the sales, which is a JOIN:</p>
+<div class="pycell"><textarea aria-label="Python code">import sqlite3
+con = sqlite3.connect("cascadia.db")
+members = pd.read_sql("SELECT member_id, member_type FROM members", con)
+
+joined = df.dropna(subset=["member_id"]).merge(members, on="member_id")
+per_member = joined.groupby(["member_type", "member_id"])["revenue"].sum()
+per_member.groupby("member_type").mean()</textarea></div>
+<p>That is the average total a member spent in 2025, by membership type. Two groupbys in a row: the first
+adds up each member's year, the second averages those totals.</p>
+<div class="sh" id="step10"><span class="badge">Module 6</span><span class="ttl">Lifetime versus Standard</span><span class="cpx">Answer goes in <b>Checkpoint 10</b></span></div>
+<div class="cpslot" data-cp="10"></div>
+
+<h2 id="m7"><span class="num">7</span>Charts</h2>
+<p>About 20 minutes. pandas draws charts with a library called matplotlib. The first chart takes a few
+seconds more while it loads.</p>
+<div class="pycell"><textarea aria-label="Python code">import matplotlib.pyplot as plt
+monthly = df.groupby("month")["revenue"].sum()
+monthly.plot(kind="line", marker="o", title="Revenue by month, 2025")
+plt.ylim(bottom=0)
+plt.show()</textarea></div>
+<p><code class="inline">plt.ylim(bottom=0)</code> starts the axis at zero, so the dips look as big as
+they are and no bigger. Try deleting it and running again to see the difference.</p>
+<div class="sh" id="step11"><span class="badge">Module 7</span><span class="ttl">Reading the chart</span><span class="cpx">Answer goes in <b>Checkpoint 11</b></span></div>
+<div class="cpslot" data-cp="11"></div>
+
+<h2 id="m8"><span class="num">Capstone</span>A question with no worked code</h2>
+<p>About 40 minutes.</p>
+<div class="callout"><strong>Email &middot; Monday, 9:05 AM</strong>
+<p style="font-family:var(--sans);font-size:.9rem"><strong>From:</strong> General Manager<br><br>
+"The board wants to know which store has momentum. Compare each store's revenue in the first half of
+2025 (January to June) with the second half (July to December). Which store grew the most, in dollars?
+I need the name and the number by Thursday."</p></div>
+<p>You have every piece: a new column that labels each sale as first half or second half, a pivot or
+groupby, and one more column for the difference. Write it in the empty cell.</p>
+<div class="pycell"><textarea aria-label="Python code, capstone"># Your code here</textarea></div>
+<div class="sh" id="step12"><span class="badge">Capstone</span><span class="ttl">Answer the email</span><span class="cpx">Answer goes in <b>Checkpoint 12</b></span></div>
+<div class="cpslot" data-cp="12"></div>
+
+</div>
+
+<h2 id="finish"><span class="num">Finish</span>Your memo &amp; certificate</h2>
+
+<div class="ailight r">
+  <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
+  <div class="lighttext"><strong>Red &middot; Your memo, your words</strong>
+  <p>Write the memo yourself. Do not ask an AI tool to write it, rewrite it, or clean it up.</p></div>
+</div>
+
+<div class="certbox" id="reflectbox">
+  <h3 id="syour-reply-to-the-general-manager">Your reply to the General Manager</h3>
+  <p style="font-family:var(--sans);font-size:.88rem">Tell the GM which store grew the most, by how much, and how you got the number. Then name one reason the number could mislead the board, and one more thing you would check in the data before anyone calls it momentum.</p>
+  <p style="font-family:var(--sans);font-size:.88rem;color:var(--muted)">Fifty words is the minimum. This prints as page 2 of your certificate.</p>
+  <textarea id="refl" rows="7" style="width:100%;font-family:var(--sans);font-size:.9rem;padding:.6rem;border:1px solid var(--rule);border-radius:2px" aria-label="Your memo to the General Manager"></textarea>
+  <p class="msg" id="reflcount" style="font-family:var(--sans);font-size:.95rem;color:var(--muted)">0 words</p>
+</div>
+<div class="certbox" id="certbox">
+  <h3 id="sall-checkpoints-cleared">All checkpoints cleared</h3>
+  <p style="font-family:var(--sans);font-size:.95rem">Put your name in exactly as it appears in Canvas,
+  then download your certificate. The code on it is generated from your name, so it is yours and nobody
+  else's.</p>
+  <input type="text" id="nm" placeholder="Last, First" aria-label="Your name as in Canvas">
+  <button onclick="cert()">Download certificate (PDF)</button>
+  <p class="codebox" id="codeout" style="font-family:var(--sans);font-size:.85rem"></p>
+</div>
+
+<h2 id="submit"><span class="num">Canvas</span>What to submit</h2>
+<p style="font-family:var(--sans);font-size:.92rem">Go to the <strong>Python Bootcamp</strong> extra credit assignment in Canvas and upload two files.</p>
+<p style="font-family:var(--sans);font-size:.92rem"><strong>File 1: your code.</strong> A plain text file named <code class="inline">PYTHONBOOTCAMP_Last_First.py</code> (or .txt) with the code you used for each checkpoint, in order, each under a comment like <code class="inline"># Checkpoint 4</code>.</p>
+<p style="font-family:var(--sans);font-size:.92rem"><strong>File 2: your certificate PDF.</strong> Your memo prints as page 2.</p>
+</main>
+<style id="py-css">
+.pycell{margin:.6rem 0 1.1rem;border:1px solid var(--border);border-left:4px solid var(--magenta);background:var(--off-white)}
+.pycell textarea{display:block;width:100%;box-sizing:border-box;border:0;background:transparent;font-family:ui-monospace,Menlo,monospace;font-size:.86rem;line-height:1.55;padding:.7rem .9rem;resize:vertical;color:var(--text-dark,#111);white-space:pre;overflow-x:auto;tab-size:4}
+.pycell textarea:focus{outline:2px solid var(--magenta);outline-offset:-2px}
+.pybar{display:flex;align-items:center;gap:.7rem;padding:.4rem .9rem;border-top:1px solid var(--border);background:#fff}
+.pybar button{font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:var(--magenta);color:#fff;border:0;padding:.4rem .9rem;cursor:pointer}
+.pybar button:disabled{opacity:.6;cursor:wait}
+.pybar span{font-family:var(--sans);font-size:.8rem;color:var(--text-light)}
+.pyout{margin:0;padding:.6rem .9rem;background:#0e0e0d;color:#f2f2ee;font-family:ui-monospace,Menlo,monospace;font-size:.8rem;line-height:1.45;white-space:pre;overflow-x:auto;max-height:420px;overflow-y:auto}
+.pyout:empty{display:none}
+.pyout .err{color:#ff9db8}
+.pyout img{display:block;max-width:100%;height:auto;background:#fff;margin:.4rem 0}
+@media print{.pybar{display:none}}
+</style>
+<script>
+(function(){
+var BASE='https://cdn.jsdelivr.net/pyodide/v0.26.4/full/';
+var py=null,booting=null;
+function boot(say){
+  if(booting)return booting;
+  booting=new Promise(function(res,rej){
+    say('Starting Python. The first run takes 10 to 30 seconds…');
+    var s=document.createElement('script');s.src=BASE+'pyodide.js';
+    s.onload=function(){
+      loadPyodide({indexURL:BASE}).then(function(p){
+        py=p;say('Loading pandas…');
+        return p.loadPackage(['pandas']);
+      }).then(function(){
+        return Promise.all([fetch('cascadia-sales-2025.csv').then(function(r){return r.arrayBuffer()}),
+          fetch('cascadia.db').then(function(r){return r.arrayBuffer()}).catch(function(){return null})]);
+      }).then(function(bufs){
+        py.FS.writeFile('cascadia-sales-2025.csv',new Uint8Array(bufs[0]));
+        if(bufs[1])py.FS.writeFile('cascadia.db',new Uint8Array(bufs[1]));
+        py.runPython("import os, warnings\nos.environ['MPLBACKEND']='Agg'\nwarnings.filterwarnings('ignore')");
+        res(py);
+      }).catch(rej);
+    };
+    s.onerror=function(){rej(new Error('Could not download Python. Check your connection and reload the page.'))};
+    document.head.appendChild(s);
+  });
+  booting.catch(function(){booting=null;});
+  return booting;
+}
+var FIGS="import sys\n_figs=[]\nif 'matplotlib.pyplot' in sys.modules:\n    import matplotlib.pyplot as _plt, io as _io, base64 as _b64\n    for _n in _plt.get_fignums():\n        _buf=_io.BytesIO(); _plt.figure(_n).savefig(_buf,format='png',dpi=100,bbox_inches='tight'); _figs.append(_b64.b64encode(_buf.getvalue()).decode())\n    _plt.close('all')\n_figs";
+function esc(t){return String(t).replace(/[&<>]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;'}[c]})}
+function friendly(msg){
+  var lines=String(msg).trim().split('\n'),last=lines[lines.length-1];
+  var tip='';
+  if(/NameError/.test(last))tip='A name is not defined yet. Run the cells above this one first, in order, or check the spelling.';
+  else if(/KeyError/.test(last))tip='That column name does not exist. Column names are case sensitive; print(df.columns.tolist()) shows them.';
+  else if(/SyntaxError|IndentationError/.test(last))tip='Python could not read the code. Check quotes, brackets, colons, and indentation.';
+  else if(/TypeError/.test(last))tip='An operation got the wrong kind of value, often text where a number was expected.';
+  return '<span class="err">'+esc(last)+'</span>'+(tip?'\n'+esc(tip):'');
+}
+function run(cell){
+  var ta=cell.querySelector('textarea'),out=cell.querySelector('.pyout'),btn=cell.querySelector('button'),st=cell.querySelector('.pybar span');
+  btn.disabled=true;out.innerHTML='';
+  var say=function(m){st.textContent=m};
+  boot(say).then(function(p){
+    say('Running…');
+    var buf='';
+    p.setStdout({batched:function(t){buf+=t+'\n'}});
+    p.setStderr({batched:function(t){if(!/^Matplotlib is building|UserWarning|warnings\.warn/.test(t))buf+=t+'\n'}});
+    var code=ta.value;
+    return p.loadPackagesFromImports(code).then(function(){return p.runPythonAsync(code)}).then(function(r){
+      var html=esc(buf);
+      if(r!==undefined&&r!==null){var t=(r&&r.toString)?r.toString():String(r);html+=esc(t);if(r.destroy)r.destroy();}
+      var figs=p.runPython(FIGS);var arr=figs.toJs();figs.destroy();
+      arr.forEach(function(b){html+='<img alt="Chart produced by the code above" src="data:image/png;base64,'+b+'">'});
+      out.innerHTML=html||'<span style="color:#9aa">(ran with no output)</span>';say('Done.');
+    }).catch(function(e){out.innerHTML=esc(buf)+friendly(e.message);say('Error. Read the last line.');});
+  }).catch(function(e){out.innerHTML='<span class="err">'+esc(e.message)+'</span>';say('');})
+  .then(function(){btn.disabled=false;});
+}
+[].forEach.call(document.querySelectorAll('.pycell'),function(cell,i){
+  var ta=cell.querySelector('textarea');
+  ta.setAttribute('spellcheck','false');ta.setAttribute('autocapitalize','off');ta.setAttribute('autocomplete','off');
+  ta.rows=Math.max(2,ta.value.split('\n').length+1);
+  var bar=document.createElement('div');bar.className='pybar';
+  bar.innerHTML='<button type="button">Run</button><span aria-live="polite"></span>';
+  var out=document.createElement('pre');out.className='pyout';out.tabIndex=0;out.setAttribute('aria-label','Output');
+  cell.appendChild(bar);cell.appendChild(out);
+  bar.querySelector('button').addEventListener('click',function(){run(cell)});
+  ta.addEventListener('keydown',function(e){
+    if(e.key==='Enter'&&e.shiftKey){e.preventDefault();run(cell);}
+  });
+});
+})();
+</script>
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+const LAB="PYBC", QS=[{"q": "Checkpoint 1 · Change the list to sales = [120, 89.5, 240, 64] and run the loop. What is the total?", "t": "num", "a": "NTEzLjU=", "tol": 0.001, "h": "Edit only the first line of the second cell, then press Run. The loop does not change."}, {"q": "Checkpoint 2 · How many columns does df have?", "t": "num", "a": "MTQ=", "tol": 0, "h": "df.shape prints (rows, columns). The second number is the answer."}, {"q": "Checkpoint 3 · How many different products does the co-op sell?", "t": "num", "a": "MzU=", "tol": 0, "h": "Same as the nunique cell, but on the product column: df[\"product\"].nunique()"}, {"q": "Checkpoint 4 · How many Boise sales had a quantity of 2 or more?", "t": "num", "a": "ODc=", "tol": 0, "h": "Copy the big_tacoma line. Change the store to \"Boise\" and the quantity rule to >= 2. Keep both conditions in their own parentheses."}, {"q": "Checkpoint 5 · Which store has the LOWEST average revenue per sale? Enter the store name.", "t": "txt", "a": "QmVsbGV2dWU=", "h": "df.groupby(\"store\")[\"revenue\"].mean().sort_values() sorts smallest first, so the top row is the answer."}, {"q": "Checkpoint 6 · Which month had the most sales (rows, not revenue)? Enter the month number.", "t": "num", "a": "MQ==", "tol": 0, "h": "Run the dates cell, then add .sort_values(ascending=False) to the end of the last line. January is 1."}, {"q": "Checkpoint 7 · What is the average revenue per sale on weekends? Round to the cent.", "t": "num", "a": "MjQwLjgy", "tol": 0.006, "h": "Run the is_weekend cell. True is the weekend row. Round 240.8177 to two decimal places."}, {"q": "Checkpoint 8 · How many sales have a margin_pct below 50?", "t": "num", "a": "MTY=", "tol": 0, "h": "Filter the way Module 3 did: len(df[df[\"margin_pct\"] < 50])"}, {"q": "Checkpoint 9 · How much revenue did Bellingham make from the Snow category? Round to the nearest dollar.", "t": "num", "a": "MTc0MDY=", "tol": 0.5, "h": "Run the grid cell, then grid.loc[\"Bellingham\", \"Snow\"]. The exact value is 17405.6, which rounds to 17406."}, {"q": "Checkpoint 10 · What did the average Lifetime member spend in 2025? Round to the nearest dollar.", "t": "num", "a": "MTAzODM=", "tol": 0.5, "h": "Run the merge cell as written and read the Lifetime row. Compare it with Standard: is a Lifetime membership worth much more to the co-op?"}, {"q": "Checkpoint 11 · In the revenue-by-month chart, which month is lowest? Enter the month's name.", "t": "txt", "a": "QXByaWw=", "h": "Find the lowest point on the line and read its month number off the axis. Month 4 is April. To check it in code: monthly.idxmin()"}, {"q": "Checkpoint 12 · Which store grew the most in revenue from the first half of 2025 to the second half? Enter the store name.", "t": "txt", "a": "U3Bva2FuZQ==", "h": "Make a column: df[\"half\"] = df[\"month\"].apply(lambda m: \"H1\" if m <= 6 else \"H2\"). Then pivot_table with index=\"store\", columns=\"half\", values=\"revenue\", aggfunc=\"sum\", add a column H2 minus H1, and sort it."}];
+const SKEY='mis320_'+LAB;
+let solved=new Set();
+function load(){try{const raw=localStorage.getItem(SKEY);if(!raw)return null;const s=JSON.parse(raw);
+ if(Array.isArray(s.solved))solved=new Set(s.solved.filter(i=>Number.isInteger(i)&&i<QS.length));return s}catch(e){return null}}
+function save(){try{const r=document.getElementById('refl'),n=document.getElementById('nm');
+ localStorage.setItem(SKEY,JSON.stringify({solved:[...solved],refl:r?r.value:'',nm:n?n.value:''}))}catch(e){}}
+function resetLab(){if(!confirm('Clear your saved progress for this lab and start over?'))return;
+ try{localStorage.removeItem(SKEY)}catch(e){}solved=new Set();
+ const r=document.getElementById('refl'),n=document.getElementById('nm');if(r)r.value='';if(n)n.value='';
+ render();if(r)r.dispatchEvent(new Event('input',{bubbles:true}));}
+const norm=s=>s.replace(/[$,\s]/g,'').toLowerCase();
+function render(){
+ QS.forEach((q,i)=>{
+  const c=document.querySelector('.cpslot[data-cp="'+(i+1)+'"]');
+  if(!c)return; c.innerHTML='';
+  const lock=i>0&&!solved.has(i-1);
+  const d=document.createElement('div');
+  d.className='cp'+(solved.has(i)?' done':(lock?' locked':''));
+  d.innerHTML='<span class="cphead">Checkpoint '+(i+1)+' of '+QS.length+(solved.has(i)?' \u00b7 cleared':'')+'</span>'
+   +'<p class="q">'+q.q+'</p>'
+   +(solved.has(i)?'<p class="msg" style="color:var(--good)">Correct.</p>':'<input type="text" id="in'+i+'" aria-label="Answer '+(i+1)+'">'
+   +'<button onclick="chk('+i+')">Check</button>'
+   +'<button class="hintb" onclick="hint('+i+')">Hint</button>'
+   +'<p class="msg" id="m'+i+'" role="status" aria-live="polite"></p><p class="hint" id="h'+i+'">'+q.h+'</p>');
+  c.appendChild(d);
+  if(lock)c.insertAdjacentHTML('beforeend','<p class="lockmsg">Clear Checkpoint '+i+' first.</p>');});
+ document.getElementById('prog').textContent='Checkpoint progress: '+solved.size+' / '+QS.length;
+ const done=solved.size===QS.length;
+ document.getElementById('reflectbox').className='certbox'+(done?' show':'');
+ document.getElementById('certbox').className='certbox'+(done&&wc()>=50?' show':'');
+}
+function wc(){const t=document.getElementById('refl');return t?t.value.trim().split(/\s+/).filter(Boolean).length:0}
+document.addEventListener('input',function(e){
+ if(e.target&&e.target.id==='refl'){
+  const n=wc();document.getElementById('reflcount').textContent=n+' words'+(n<50?': '+(50-n)+' more to unlock your certificate':': certificate unlocked below');
+  document.getElementById('certbox').className='certbox'+(solved.size===QS.length&&n>=50?' show':'');save();
+ }
+});
+function hint(i){const h=document.getElementById('h'+i);h.style.display=h.style.display==='block'?'none':'block'}
+function chk(i){
+ const v=document.getElementById('in'+i).value,m=document.getElementById('m'+i);
+ if(!v.trim()){m.textContent='Enter an answer first.';m.style.color='#7d6608';return}
+ const ans=atob(QS[i].a);let ok=false;
+ if(QS[i].t==='num'){const g=parseFloat(norm(v)),a=parseFloat(ans);ok=!isNaN(g)&&Math.abs(g-a)<=QS[i].tol}
+ else ok=norm(v)===norm(ans);
+ if(ok){solved.add(i);save();render();var sr=document.getElementById('srlive');if(sr)sr.textContent='Checkpoint '+(i+1)+' cleared.';var nx=document.getElementById('in'+(i+1));if(nx)nx.focus();}
+ else{m.textContent='Not yet: check the hint, or re-read the step above.';m.style.color='#a03434'}
+}
+function h32(s){let h=5381;for(const c of s)h=((h<<5)+h+c.charCodeAt(0))|0;return(h>>>0).toString(36).toUpperCase()}
+function cert(){
+ const n=document.getElementById('nm').value.trim();
+ if(!n){document.getElementById('codeout').textContent='Enter your name first.';return}
+ const r=document.getElementById('refl').value.trim();
+ if(wc()<50){document.getElementById('codeout').textContent='Finish your 50-word reflection above first.';return}
+ const code=LAB+'-'+h32(n.toLowerCase()+'|'+LAB+'|'+QS.length);
+ const d=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+ const {jsPDF}=window.jspdf;const p=new jsPDF({orientation:'landscape',unit:'pt',format:[560,380]});
+ p.setFillColor(11,29,51);p.rect(0,0,560,380,'F');
+ p.setFillColor(253,252,250);p.rect(16,16,528,348,'F');
+ p.setTextColor(26,82,118);p.setFont('helvetica','bold');p.setFontSize(10);
+ p.text('MIS 320 \u00B7 INTRODUCTION TO INFORMATION SYSTEMS \u00B7 WWU',280,58,{align:'center'});
+ p.setTextColor(26,26,26);p.setFont('times','bold');p.setFontSize(26);
+ p.text('Certificate of Completion',280,105,{align:'center'});
+ p.setFont('times','normal');p.setFontSize(13);p.text('This certifies that',280,140,{align:'center'});
+ p.setFont('times','bold');p.setFontSize(20);p.text(n,280,170,{align:'center'});
+ p.setFont('times','normal');p.setFontSize(13);
+ p.text('completed all '+QS.length+' checkpoints of',280,198,{align:'center'});
+ p.setFont('helvetica','bold');p.setFontSize(15);p.setTextColor(26,82,118);
+ p.text('Python Bootcamp \u00B7 Analysis with pandas',280,222,{align:'center'});
+ p.setFont('helvetica','normal');p.setFontSize(11);p.setTextColor(90,90,90);
+ p.text(d,280,252,{align:'center'});
+ p.setFont('courier','bold');p.setFontSize(12);p.setTextColor(17,120,100);
+ p.text('Verification code: '+code,280,290,{align:'center'});
+ p.setFontSize(8);p.setFont('helvetica','normal');p.setTextColor(150,150,150);
+ p.text('Upload this PDF to Canvas. Reflection on page 2. Code is unique to name + lab.',280,330,{align:'center'});
+ p.addPage([560,380],'landscape');
+ p.setFillColor(253,252,250);p.rect(0,0,560,380,'F');
+ p.setDrawColor(11,29,51);p.setLineWidth(2);p.rect(16,16,528,348);
+ p.setTextColor(26,82,118);p.setFont('helvetica','bold');p.setFontSize(10);
+ p.text('MEMO \u00B7 '+n+' \u00B7 '+code,280,44,{align:'center'});
+ p.setTextColor(60,60,60);p.setFont('times','italic');p.setFontSize(9);
+ const promptLines=p.splitTextToSize('Prompt: Which store grew the most, by how much, and how you got the number. One reason the number could mislead the board, and one more thing to check before calling it momentum.',480);
+ p.text(promptLines,40,70);
+ p.setFont('times','normal');p.setFontSize(11);p.setTextColor(26,26,26);
+ const lines=p.splitTextToSize(r,480);
+ p.text(lines.slice(0,22),40,70+promptLines.length*11+14);
+ p.save(LAB+'_certificate_'+n.replace(/[^a-z0-9]/gi,'_')+'.pdf');
+ document.getElementById('codeout').innerHTML='Certificate downloaded (reflection on page 2). Your code: <code>'+code+'</code>';
+}
+(function(){const s=load();render();
+ if(s){const r=document.getElementById('refl'),n=document.getElementById('nm');
+  if(r&&s.refl){r.value=s.refl;r.dispatchEvent(new Event('input',{bubbles:true}))}
+  if(n&&s.nm)n.value=s.nm;}
+ const nm=document.getElementById('nm');if(nm)nm.addEventListener('input',save);})();
+</script>
+
+<!--NAVJS-->
+<script>
+(function(){
+  var btns=[].slice.call(document.querySelectorAll('.dd-btn'));
+  function closeAll(except){
+    btns.forEach(function(b){
+      var m=document.getElementById(b.getAttribute('data-dd'));
+      if(m&&m!==except){m.classList.remove('open');b.setAttribute('aria-expanded','false');}
+    });
+  }
+  btns.forEach(function(b){
+    b.addEventListener('click',function(e){
+      e.stopPropagation();
+      var m=document.getElementById(b.getAttribute('data-dd'));
+      var open=m.classList.contains('open');
+      closeAll();
+      if(!open){m.classList.add('open');b.setAttribute('aria-expanded','true');}
+    });
+  });
+  document.addEventListener('click',function(){closeAll();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeAll();});
+  document.querySelectorAll('.dd-menu').forEach(function(m){
+    m.addEventListener('click',function(e){e.stopPropagation();});
+  });
+})();
+</script>
+</body></html>
