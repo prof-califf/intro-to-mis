@@ -406,209 +406,59 @@ never line up. <strong>Operations:</strong> check every store's numbers for anyt
 automatically. <strong>Any role:</strong> clean a messy file the same way every time.</p></div>
 
 
-<div class="toc"><strong>Contents</strong> <a href="#why">Why</a> &nbsp;·&nbsp; <a href="#sandbox">Sandbox</a> &nbsp;·&nbsp; <a href="#m1">1 · Python in ten minutes</a> &nbsp;·&nbsp; <a href="#m2">2 · Loading data</a> &nbsp;·&nbsp; <a href="#m3">3 · Filtering</a> &nbsp;·&nbsp; <a href="#m4">4 · Grouping</a> &nbsp;·&nbsp; <a href="#m5">5 · Dates and new columns</a> &nbsp;·&nbsp; <a href="#m6">6 · Pivots and joins</a> &nbsp;·&nbsp; <a href="#m7">7 · Charts</a> &nbsp;·&nbsp; <a href="#m8">Capstone</a> &nbsp;·&nbsp; <a href="#finish">Certificate</a></div>
+<div class="toc"><strong>Contents</strong> <a href="#why">Why</a> &nbsp;·&nbsp; <a href="#sandbox">Sandbox</a> &nbsp;·&nbsp; <a href="#l1">1 · Python basics</a> &nbsp;·&nbsp; <a href="#l2">2 · Loading data</a> &nbsp;·&nbsp; <a href="#l3">3 · Filtering</a> &nbsp;·&nbsp; <a href="#l4">4 · Grouping</a> &nbsp;·&nbsp; <a href="#l5">5 · Dates and new columns</a> &nbsp;·&nbsp; <a href="#l6">6 · Pivots and joins</a> &nbsp;·&nbsp; <a href="#l7">7 · Charts</a> &nbsp;·&nbsp; <a href="#l8">Capstone</a> &nbsp;·&nbsp; <a href="#finish">Certificate</a></div>
 <p class="printbox"><span>Wanna go analog?</span><button type="button" onclick="window.print()" aria-label="Print here: print this page or save it as a PDF">&#9113;&nbsp; Print here</button><span>or save it as a PDF; the navigation drops out</span></p>
 
 <div class="callout"><strong>Who this is for, and what you get</strong>
 <p style="font-family:var(--sans);font-size:.95rem">It is optional, and no programming background is
-assumed. If you have written an Excel formula, you can do this. Clear all twelve checkpoints, write a
-short memo, and upload your certificate to the <strong>Python Bootcamp</strong> assignment in Canvas. Each bootcamp you finish adds <strong>2 points to your lowest exam score</strong>. Do it in several sittings; your checkpoints save in this browser.</p>
-<p style="font-family:var(--sans);font-size:.95rem">For a resume: <em>Completed a 12-checkpoint Python
-bootcamp: data cleaning, grouping, pivots, joins, and charts in pandas on a 2,899-row retail
+assumed. If you have written an Excel formula, you can do this. You learn in 42 short steps, one idea
+at a time, and you write every line of code yourself. Pass every step, write a short memo, and upload
+your certificate and your code to the <strong>Python Bootcamp</strong> assignment in Canvas. Each
+bootcamp you finish adds <strong>2 points to your lowest exam score</strong>. Do it in several sittings;
+your progress saves in this browser.</p>
+<p style="font-family:var(--sans);font-size:.95rem">For a resume: <em>Completed a 42-step Python
+bootcamp: data cleaning, filtering, grouping, pivots, joins, and charts in pandas on a 2,899-row retail
 dataset.</em> The <a href="resume.html">resume page</a> shows where it goes.</p></div>
 
 <div class="ailight g">
   <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
   <div class="lighttext"><strong>Green &middot; AI as coach</strong>
-  <p>Python error messages are long. Paste one into an AI and ask what it means; that is a good use. Then fix the code yourself. Do not ask it to write the checkpoint code. Reading and changing code is the skill, and the certificate says you have it.</p></div>
+  <p>Python error messages are long. Paste one into an AI and ask what it means; that is a good use. Then fix the code yourself. Do not ask it to write the code for a step. Writing code yourself is the skill, and the certificate says you have it.</p></div>
 </div>
 
-<div class="callout callout-good"><strong>How the code cells work</strong>
-<p style="font-family:var(--sans);font-size:.95rem">Every gray box with a <strong>Run</strong> button is
-live Python. Edit it, press Run (or Shift and Enter), and the output appears under it. All the cells
-share one Python session, so a variable you create in one cell is there in the next, the same as a
-Jupyter notebook. If something stops making sense, reload the page and run the cells again from the
-top.</p>
-<p style="font-family:var(--sans);font-size:.95rem">The <strong>first</strong> Run starts Python and
+<div class="callout callout-good"><strong>Python runs in your browser</strong>
+<p style="font-family:var(--sans);font-size:.95rem">Every code box is live Python, and they all share one
+session, so a name you make in one step is there in the next. If you come back later, the steps you
+already passed are set up again for you when you run the next one.</p>
+<p style="font-family:var(--sans);font-size:.95rem">The <strong>first</strong> run starts Python and
 loads pandas, which takes 10 to 30 seconds on a laptop and longer on a phone. After that it is quick.
 A laptop is easier than a phone for this bootcamp.</p></div>
 
 <h2 id="sandbox"><span class="num">Tool</span>The sandbox: your scratch space</h2>
-<p>The dark box below is not a checkpoint, and nothing in it is graded. It is a place to try things:
-check a column name, test a filter before you trust it, or work out a checkpoint answer without
-changing the worked cells. It shares the same Python session as every cell on the page, so once you
+<p>The dark box below is not a step, and nothing in it is graded. It is a place to try things:
+check a column name, test a filter before you trust it, or try an idea before you put it in a step. It shares the same Python session as every cell on the page, so once you
 have run the cell that loads <code class="inline">df</code>, the sandbox can use it too. Press
 <strong>Dock</strong> and it follows you down the page.</p>
 <div class="pycell pysbx" id="pysbx">
-<div class="pysbx-head"><p>Sandbox &middot; tool, not a checkpoint</p><span><button type="button" id="pysbx-hide" aria-expanded="true">Hide</button><button type="button" id="pysbx-dock" aria-pressed="false">Dock</button></span></div>
+<div class="pysbx-head"><p>Sandbox &middot; tool, not a step</p><span><button type="button" id="pysbx-hide" aria-expanded="true">Hide</button><button type="button" id="pysbx-dock" aria-pressed="false">Dock</button></span></div>
 <textarea aria-label="Python sandbox code">df.head()</textarea></div>
 <p class="pysbx-spot" hidden>The sandbox is docked at the bottom of the screen. Press <strong>Undock</strong> on it to put it back here.</p>
 
 <div id="steps">
-
-<div class="callout callout-bridge"><strong>How the checkpoints work</strong>
-<p style="font-family:var(--sans);font-size:.95rem">Each checkpoint sits under the module that teaches it.
-The worked cells show the idea; the checkpoint asks for a small change. Get it right and the next one
-opens. No penalty for wrong answers, and every checkpoint has a hint.</p>
-<p style="font-family:var(--sans);font-size:.95rem">Your checkpoints save in this browser; your code does
-not, so keep a copy of what works in a text file as you go. You submit it. To start over, use the
-<button type="button" class="hintb" onclick="resetLab()">Reset this bootcamp</button> button.</p>
-<div class="progress" id="prog">Checkpoint progress: 0 / 12</div>
-</div>
-
-<h2 id="m1"><span class="num">1</span>Python in ten minutes</h2>
-<p>About 20 minutes. Python runs top to bottom. A name on the left of <code class="inline">=</code>
-stores whatever is on the right. A list holds several values in order. A <code class="inline">for</code>
-loop repeats the indented lines once per item. <code class="inline">print</code> shows a result.</p>
-<div class="pycell"><textarea aria-label="Python code">price = 289.00
-discount = 0.20
-sale_price = price * (1 - discount)
-print(round(sale_price, 2))
-
-stores = ["Seattle Flagship", "Bellevue", "Tacoma"]
-for s in stores:
-    print("Hello,", s)</textarea></div>
-<details class="walk" open><summary>Line by line</summary><ul><li><code class="inline">price = 289.00</code> Stores the number 289 under the name <em>price</em>. Nothing prints; Python just remembers it.</li><li><code class="inline">sale_price = price * (1 - discount)</code> Does the math with the stored names, the same as an Excel formula that points at cells. <code class="inline">*</code> multiplies.</li><li><code class="inline">print(round(sale_price, 2))</code> Shows the result, rounded to two decimal places.</li><li><code class="inline">stores = ["Seattle Flagship", ...]</code> A <strong>list</strong>: several values in square brackets, in order. Text goes in quotes.</li><li><code class="inline">for s in stores:</code> Repeats the indented line once per item. Each time through, <em>s</em> holds the next store name. The colon at the end is required.</li></ul></details>
-<p>Indentation is not decoration in Python. The indented lines are the ones inside the loop. Now add
-things up with a loop:</p>
-<div class="pycell"><textarea aria-label="Python code">sales = [45, 120, 89.5]
-total = 0
-for amount in sales:
-    total = total + amount
-print(total)</textarea></div>
-<details class="walk" open><summary>Line by line</summary><ul><li><code class="inline">total = 0</code> Starts a running total at zero, before the loop.</li><li><code class="inline">for amount in sales:</code> Visits each number in the list, one at a time.</li><li><code class="inline">total = total + amount</code> Takes the old total, adds this amount, and stores it back as the new total. After the last item, <em>total</em> holds the sum.</li><li><code class="inline">print(total)</code> Not indented, so it runs once, after the loop is finished.</li></ul></details>
-<div class="sh" id="step1"><span class="badge">Module 1</span><span class="ttl">A loop that adds</span><span class="cpx">Answer goes in <b>Checkpoint 1</b></span></div>
-<div class="cpslot" data-cp="1"></div>
-
-<h2 id="m2"><span class="num">2</span>Loading data: a spreadsheet in code</h2>
-<p>About 20 minutes. pandas loads a CSV file into a <strong>DataFrame</strong>, which is a table with named
-columns, much like a sheet in Excel. By convention it is called <code class="inline">df</code>. This
-file is the same <code class="inline">cascadia-sales-2025.csv</code> you used in Tableau.</p>
-<div class="pycell"><textarea aria-label="Python code">import pandas as pd
-df = pd.read_csv("cascadia-sales-2025.csv")
-df.head()</textarea></div>
-<details class="walk" open><summary>Line by line</summary><ul><li><code class="inline">import pandas as pd</code> Loads the pandas library and gives it the short name <em>pd</em>. Every pandas tool now starts with <code class="inline">pd.</code></li><li><code class="inline">pd.read_csv("cascadia-sales-2025.csv")</code> Reads the file into a table. Each row is a sale; each column is a field from the CSV.</li><li><code class="inline">df = ...</code> Stores that table under the name <em>df</em> so later cells can use it.</li><li><code class="inline">df.head()</code> Shows the first five rows. It is the first thing to run on any new data, to see what you are working with.</li></ul></details>
-<p>When the last line of a cell is a value, the cell shows it, so you do not always need
-<code class="inline">print</code>. A few more ways to look at a table:</p>
-<div class="pycell"><textarea aria-label="Python code">print(df.shape)          # (rows, columns)
-print(df.columns.tolist())
-df["store"].value_counts()</textarea></div>
-<details class="walk" open><summary>Line by line</summary><ul><li><code class="inline">df.shape</code> The size of the table as (rows, columns). No parentheses after <em>shape</em>: it is a fact about the table, not an action.</li><li><code class="inline">df.columns.tolist()</code> The column names as a list. Use it whenever you forget how a column is spelled.</li><li><code class="inline"># (rows, columns)</code> Anything after <code class="inline">#</code> is a comment. Python ignores it; it is a note for people.</li><li><code class="inline">df["store"].value_counts()</code> <code class="inline">df["store"]</code> picks one column. <code class="inline">.value_counts()</code> counts how many rows have each value, largest first.</li></ul></details>
-<div class="sh" id="step2"><span class="badge">Module 2</span><span class="ttl">The shape of the data</span><span class="cpx">Answer goes in <b>Checkpoint 2</b></span></div>
-<div class="cpslot" data-cp="2"></div>
-<p><code class="inline">nunique()</code> counts different values in a column, the same idea as
-COUNT(DISTINCT ...) in SQL.</p>
-<div class="pycell"><textarea aria-label="Python code">df["category"].nunique()</textarea></div>
-<details class="walk" open><summary>Line by line</summary><ul><li><code class="inline">df["category"]</code> Picks the category column.</li><li><code class="inline">.nunique()</code> Counts how many different values it holds. Change the column name in the quotes to count something else.</li></ul></details>
-<div class="sh" id="step3"><span class="badge">Module 2</span><span class="ttl">Counting distinct values</span><span class="cpx">Answer goes in <b>Checkpoint 3</b></span></div>
-<div class="cpslot" data-cp="3"></div>
-
-<h2 id="m3"><span class="num">3</span>Filtering: keeping the rows you want</h2>
-<p>About 30 minutes. Put a condition in square brackets and pandas keeps the rows where it is true.
-Combine conditions with <code class="inline">&amp;</code> (and) or <code class="inline">|</code> (or), each
-condition in its own parentheses. <code class="inline">len()</code> counts the rows left.</p>
-<div class="pycell"><textarea aria-label="Python code">tacoma = df[df["store"] == "Tacoma"]
-print(len(tacoma))
-
-big_tacoma = df[(df["store"] == "Tacoma") &amp; (df["quantity"] &gt;= 3)]
-print(len(big_tacoma))</textarea></div>
-<details class="walk" open><summary>Line by line</summary><ul><li><code class="inline">df["store"] == "Tacoma"</code> Checks every row: is the store Tacoma? The answer is a column of True and False. Two equals signs means "is equal to"; one means "store this".</li><li><code class="inline">df[ ... ]</code> Putting that True/False column inside <code class="inline">df[ ]</code> keeps only the True rows.</li><li><code class="inline">len(tacoma)</code> Counts the rows that are left.</li><li><code class="inline">( ... ) &amp; ( ... )</code> Both conditions must be true. Each one needs its own parentheses, or Python reads the line in the wrong order and gives an error.</li></ul></details>
-<div class="sh" id="step4"><span class="badge">Module 3</span><span class="ttl">Two conditions at once</span><span class="cpx">Answer goes in <b>Checkpoint 4</b></span></div>
-<div class="cpslot" data-cp="4"></div>
-
-<h2 id="m4"><span class="num">4</span>Grouping: the pivot table of pandas</h2>
-<p>About 30 minutes. <code class="inline">groupby</code> splits the table into groups, does a calculation
-in each, and puts the results back together. It is GROUP BY from SQL and a pivot table from Excel, in
-one line.</p>
-<div class="pycell"><textarea aria-label="Python code">df.groupby("store")["revenue"].sum().sort_values(ascending=False)</textarea></div>
-<details class="walk" open><summary>Line by line</summary><ul><li><code class="inline">df.groupby("store")</code> Splits the table into one pile of rows per store.</li><li><code class="inline">["revenue"]</code> In each pile, look only at the revenue column.</li><li><code class="inline">.sum()</code> Adds up each pile. Swap in <code class="inline">.mean()</code>, <code class="inline">.count()</code>, <code class="inline">.max()</code>, or <code class="inline">.min()</code> for other questions.</li><li><code class="inline">.sort_values(ascending=False)</code> Sorts the result, largest first. <code class="inline">ascending=True</code> (or leaving it out) sorts smallest first.</li></ul></details>
-<p>Change <code class="inline">sum()</code> to <code class="inline">mean()</code> and you get the average
-revenue per sale at each store, a different question from total revenue.</p>
-<div class="sh" id="step5"><span class="badge">Module 4</span><span class="ttl">Average per sale</span><span class="cpx">Answer goes in <b>Checkpoint 5</b></span></div>
-<div class="cpslot" data-cp="5"></div>
-
-<h2 id="m5"><span class="num">5</span>Dates and new columns</h2>
-<p>About 40 minutes. The CSV stores dates as text. <code class="inline">pd.to_datetime</code> turns them
-into real dates, and then <code class="inline">.dt</code> pulls out pieces: month, weekday, and so on.
-You make a new column by assigning to a name that does not exist yet.</p>
-<div class="pycell"><textarea aria-label="Python code">df["sale_date"] = pd.to_datetime(df["sale_date"])
-df["month"] = df["sale_date"].dt.month
-df["weekday"] = df["sale_date"].dt.day_name()
-df.groupby("month").size()</textarea></div>
-<details class="walk" open><summary>Line by line</summary><ul><li><code class="inline">pd.to_datetime(df["sale_date"])</code> Turns text like "2025-03-14" into real dates that Python can do date math on.</li><li><code class="inline">df["sale_date"] = ...</code> Writes the converted dates back over the old column.</li><li><code class="inline">.dt.month</code> <code class="inline">.dt</code> unlocks date tools. <code class="inline">.month</code> gives 1 to 12; <code class="inline">.day_name()</code> gives Monday, Tuesday, and so on.</li><li><code class="inline">df["month"] = ...</code> Assigning to a column name that does not exist yet creates a new column.</li><li><code class="inline">.size()</code> Counts the rows in each group: the number of sales, not the revenue.</li></ul></details>
-<p><code class="inline">size()</code> counts rows in each group, so that is the number of sales per
-month, not revenue.</p>
-<div class="sh" id="step6"><span class="badge">Module 5</span><span class="ttl">The busiest month</span><span class="cpx">Answer goes in <b>Checkpoint 6</b></span></div>
-<div class="cpslot" data-cp="6"></div>
-<p>A new column can be a rule. <code class="inline">dayofweek</code> numbers the days from Monday (0)
-to Sunday (6), so 5 and 6 are the weekend:</p>
-<div class="pycell"><textarea aria-label="Python code">df["is_weekend"] = df["sale_date"].dt.dayofweek &gt;= 5
-df.groupby("is_weekend")["revenue"].mean()</textarea></div>
-<details class="walk" open><summary>Line by line</summary><ul><li><code class="inline">.dt.dayofweek &gt;= 5</code> Monday is 0 and Sunday is 6, so 5 and 6 are Saturday and Sunday. The result is True for weekend sales.</li><li><code class="inline">groupby("is_weekend")["revenue"].mean()</code> Two groups, False and True, and the average revenue per sale in each.</li></ul></details>
-<div class="sh" id="step7"><span class="badge">Module 5</span><span class="ttl">Weekends</span><span class="cpx">Answer goes in <b>Checkpoint 7</b></span></div>
-<div class="cpslot" data-cp="7"></div>
-<p>A new column can also be arithmetic on other columns, row by row, the way you would fill a formula
-down in Excel:</p>
-<div class="pycell"><textarea aria-label="Python code">df["margin_pct"] = df["gross_margin"] / df["revenue"] * 100
-df["margin_pct"].describe()</textarea></div>
-<details class="walk" open><summary>Line by line</summary><ul><li><code class="inline">df["gross_margin"] / df["revenue"] * 100</code> Math on whole columns works row by row, like filling a formula down in Excel. Every sale gets its own margin percent.</li><li><code class="inline">.describe()</code> A quick summary of a number column: count, average, spread, smallest, largest, and the quartiles.</li></ul></details>
-<div class="sh" id="step8"><span class="badge">Module 5</span><span class="ttl">Thin-margin sales</span><span class="cpx">Answer goes in <b>Checkpoint 8</b></span></div>
-<div class="cpslot" data-cp="8"></div>
-
-<h2 id="m6"><span class="num">6</span>Pivots and joins</h2>
-<p>About 40 minutes. <code class="inline">pivot_table</code> builds the same grid as an Excel pivot table:
-one dimension down the side, one across the top, a number in the middle.</p>
-<div class="pycell"><textarea aria-label="Python code">grid = df.pivot_table(index="store", columns="category",
-                      values="revenue", aggfunc="sum")
-grid.round(0)</textarea></div>
-<details class="walk" open><summary>Line by line</summary><ul><li><code class="inline">pivot_table(index="store", ...)</code> <em>index</em> is what goes down the side, one row per store.</li><li><code class="inline">columns="category"</code> What goes across the top.</li><li><code class="inline">values="revenue", aggfunc="sum"</code> The number in the middle, and how to combine it: add up revenue for each store and category.</li><li><code class="inline">grid.round(0)</code> Rounds to whole dollars for display. It does not change the numbers stored in <em>grid</em>.</li><li><code class="inline">grid.loc["Tacoma", "Water"]</code> Reads one cell: the row name first, then the column name.</li></ul></details>
-<p>Read one cell with <code class="inline">.loc[row, column]</code>, for example
-<code class="inline">grid.loc["Tacoma", "Water"]</code>.</p>
-<div class="sh" id="step9"><span class="badge">Module 6</span><span class="ttl">One cell of the pivot</span><span class="cpx">Answer goes in <b>Checkpoint 9</b></span></div>
-<div class="cpslot" data-cp="9"></div>
-<p>The CSV does not say what kind of membership each member has. That lives in the
-<code class="inline">members</code> table in the database you queried in Lab 7. pandas can read it
-straight from the database with SQL, then <strong>merge</strong> it onto the sales, which is a JOIN:</p>
-<div class="pycell"><textarea aria-label="Python code">import sqlite3
-con = sqlite3.connect("cascadia.db")
-members = pd.read_sql("SELECT member_id, member_type FROM members", con)
-
-joined = df.dropna(subset=["member_id"]).merge(members, on="member_id")
-per_member = joined.groupby(["member_type", "member_id"])["revenue"].sum()
-per_member.groupby("member_type").mean()</textarea></div>
-<details class="walk" open><summary>Line by line</summary><ul><li><code class="inline">sqlite3.connect("cascadia.db")</code> Opens the same database file you queried in Lab 7.</li><li><code class="inline">pd.read_sql("SELECT ...", con)</code> Runs a SQL query and hands back the result as a pandas table. Every SQL skill still works here.</li><li><code class="inline">df.dropna(subset=["member_id"])</code> Drops sales with no member attached, because they have nothing to join to.</li><li><code class="inline">.merge(members, on="member_id")</code> The JOIN: matches each sale to its member by member_id and adds the member_type column.</li><li><code class="inline">groupby(["member_type", "member_id"])</code> Groups by two things at once, so you get each member&rsquo;s total for the year.</li><li><code class="inline">per_member.groupby("member_type").mean()</code> Then averages those yearly totals within each membership type.</li></ul></details>
-<p>That is the average total a member spent in 2025, by membership type. Two groupbys in a row: the first
-adds up each member's year, the second averages those totals.</p>
-<div class="sh" id="step10"><span class="badge">Module 6</span><span class="ttl">Lifetime versus Standard</span><span class="cpx">Answer goes in <b>Checkpoint 10</b></span></div>
-<div class="cpslot" data-cp="10"></div>
-
-<h2 id="m7"><span class="num">7</span>Charts</h2>
-<p>About 20 minutes. pandas draws charts with a library called matplotlib. The first chart takes a few
-seconds more while it loads.</p>
-<div class="pycell"><textarea aria-label="Python code">import matplotlib.pyplot as plt
-monthly = df.groupby("month")["revenue"].sum()
-monthly.plot(kind="line", marker="o", title="Revenue by month, 2025")
-plt.ylim(bottom=0)
-plt.show()</textarea></div>
-<details class="walk" open><summary>Line by line</summary><ul><li><code class="inline">import matplotlib.pyplot as plt</code> Loads the charting library under the short name <em>plt</em>.</li><li><code class="inline">monthly.plot(kind="line", marker="o", ...)</code> pandas draws the chart from the grouped numbers: months along the bottom, revenue up the side. Try <code class="inline">kind="bar"</code>.</li><li><code class="inline">plt.ylim(bottom=0)</code> Starts the vertical axis at zero.</li><li><code class="inline">plt.show()</code> Draws it. Here, the chart appears under the cell.</li></ul></details>
-<p><code class="inline">plt.ylim(bottom=0)</code> starts the axis at zero, so the dips look as big as
-they are and no bigger. Try deleting it and running again to see the difference.</p>
-<div class="sh" id="step11"><span class="badge">Module 7</span><span class="ttl">Reading the chart</span><span class="cpx">Answer goes in <b>Checkpoint 11</b></span></div>
-<div class="cpslot" data-cp="11"></div>
-
-<h2 id="m8"><span class="num">Capstone</span>A question with no worked code</h2>
-<p>About 40 minutes.</p>
-<div class="callout"><strong>Email &middot; Monday, 9:05 AM</strong>
-<p style="font-family:var(--sans);font-size:.9rem"><strong>From:</strong> General Manager<br><br>
-"The board wants to know which store has momentum. Compare each store's revenue in the first half of
-2025 (January to June) with the second half (July to December). Which store grew the most, in dollars?
-I need the name and the number by Thursday."</p></div>
-<p>You have every piece: a new column that labels each sale as first half or second half, a pivot or
-groupby, and one more column for the difference. Write it in the empty cell.</p>
-<div class="pycell"><textarea aria-label="Python code, capstone"># Your code here</textarea></div>
-<div class="sh" id="step12"><span class="badge">Capstone</span><span class="ttl">Answer the email</span><span class="cpx">Answer goes in <b>Checkpoint 12</b></span></div>
-<div class="cpslot" data-cp="12"></div>
-
+<div class="callout callout-bridge"><strong>How the steps work</strong>
+<p style="font-family:var(--sans);font-size:.95rem">Each step teaches one small idea, then gives you a task. Write the code in the box and press <strong>Run and check</strong>. If it is right, the next step opens. If not, you get a note on what to fix. Every step has a hint, and after two tries you can see a solution. There is no penalty for wrong tries.</p>
+<p style="font-family:var(--sans);font-size:.95rem">Your progress and your code save in this browser, so you can stop and come back. In the code box, Tab adds an indent; press Esc and then Tab to move on. To start over, use the <button type="button" class="hintb" onclick="resetLab()">Reset this bootcamp</button> button.</p>
+<p class="progress" id="prog" style="margin-bottom:0">Progress: 0 / 42 steps</p>
+<div class="pbar" aria-hidden="true"><span id="pbarfill"></span></div>
+<ul class="lmap" id="lmap"></ul></div>
+<section class="lesson" id="l1" aria-labelledby="l1h"><h2 id="l1h"><span class="num">1</span>Python basics</h2><p class="ldesc">Values, names, lists, and loops. No data yet.</p><div class="lsteps"></div><p class="lockmsg2" hidden></p></section>
+<section class="lesson" id="l2" aria-labelledby="l2h"><h2 id="l2h"><span class="num">2</span>Loading data</h2><p class="ldesc">Read the Cascadia file into a table and look around.</p><div class="lsteps"></div><p class="lockmsg2" hidden></p></section>
+<section class="lesson" id="l3" aria-labelledby="l3h"><h2 id="l3h"><span class="num">3</span>Filtering</h2><p class="ldesc">Keep only the rows you want.</p><div class="lsteps"></div><p class="lockmsg2" hidden></p></section>
+<section class="lesson" id="l4" aria-labelledby="l4h"><h2 id="l4h"><span class="num">4</span>Grouping</h2><p class="ldesc">The pivot table of pandas.</p><div class="lsteps"></div><p class="lockmsg2" hidden></p></section>
+<section class="lesson" id="l5" aria-labelledby="l5h"><h2 id="l5h"><span class="num">5</span>Dates and new columns</h2><p class="ldesc">Turn text into dates and build columns from rules.</p><div class="lsteps"></div><p class="lockmsg2" hidden></p></section>
+<section class="lesson" id="l6" aria-labelledby="l6h"><h2 id="l6h"><span class="num">6</span>Pivots and joins</h2><p class="ldesc">Grids, and data from a second table.</p><div class="lsteps"></div><p class="lockmsg2" hidden></p></section>
+<section class="lesson" id="l7" aria-labelledby="l7h"><h2 id="l7h"><span class="num">7</span>Charts</h2><p class="ldesc">Draw what you found.</p><div class="lsteps"></div><p class="lockmsg2" hidden></p></section>
+<section class="lesson" id="l8" aria-labelledby="l8h"><h2 id="l8h"><span class="num">Capstone</span>Capstone</h2><p class="ldesc">A question with no worked code.</p><div class="lsteps"></div><p class="lockmsg2" hidden></p></section>
 </div>
 
 <h2 id="finish"><span class="num">Finish</span>Your memo &amp; certificate</h2>
@@ -627,7 +477,7 @@ groupby, and one more column for the difference. Write it in the empty cell.</p>
   <p class="msg" id="reflcount" style="font-family:var(--sans);font-size:.95rem;color:var(--muted)">0 words</p>
 </div>
 <div class="certbox" id="certbox">
-  <h3 id="sall-checkpoints-cleared">All checkpoints cleared</h3>
+  <h3 id="sall-steps-passed">All steps passed</h3>
   <p style="font-family:var(--sans);font-size:.95rem">Put your name in exactly as it appears in Canvas,
   then download your certificate. The code on it is generated from your name, so it is yours and nobody
   else's.</p>
@@ -638,9 +488,51 @@ groupby, and one more column for the difference. Write it in the empty cell.</p>
 
 <h2 id="submit"><span class="num">Canvas</span>What to submit</h2>
 <p style="font-family:var(--sans);font-size:.92rem">Go to the <strong>Python Bootcamp</strong> extra credit assignment in Canvas and upload two files.</p>
-<p style="font-family:var(--sans);font-size:.92rem"><strong>File 1: your code.</strong> A plain text file named <code class="inline">PYTHONBOOTCAMP_Last_First.py</code> (or .txt) with the code you used for each checkpoint, in order, each under a comment like <code class="inline"># Checkpoint 4</code>.</p>
+<p style="font-family:var(--sans);font-size:.92rem"><strong>File 1: your code.</strong> Press <button type="button" class="hintb" onclick="dlcode()">Download my code</button> to save every step's code as one <code class="inline">.py</code> file. It saves from this browser, so download it on the computer you used.</p>
 <p style="font-family:var(--sans);font-size:.92rem"><strong>File 2: your certificate PDF.</strong> Your memo prints as page 2.</p>
 </main>
+
+<style id="step-css">
+.lesson{margin:2.2rem 0 1rem}
+.lesson.locked h2{color:var(--text-light)}
+.ldesc{font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin:-.3rem 0 .8rem}
+.lockmsg2{font-family:var(--sans);font-size:.88rem;color:var(--text-light);border:1px dashed var(--border);padding:.55rem .9rem;margin:.6rem 0}
+.st{border:1px solid var(--border);background:#fff;margin:.7rem 0}
+.st[hidden]{display:none}
+.sthead{display:flex;flex-wrap:wrap;align-items:baseline;gap:.2rem .8rem;width:100%;text-align:left;background:none;border:0;padding:.75rem 1rem;cursor:pointer;font:inherit;color:inherit}
+.sthead:focus-visible{outline:2px solid var(--magenta);outline-offset:-2px}
+.stn{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--magenta-dark)}
+.stt{font-family:var(--display);font-weight:700;font-size:1.05rem;flex:1 1 12rem}
+.stok{display:none;font-family:var(--sans);font-size:.8rem;font-weight:700;color:var(--good,#1e7a4a)}
+.st.done .stok{display:inline}
+.st.done{border-left:4px solid var(--good,#1e7a4a)}
+.st.cur{border-left:4px solid var(--magenta);box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.stbody{padding:0 1rem 1rem}
+.st.closed .stbody{display:none}
+.learn p{margin:.3rem 0 .7rem}
+.task{background:#fdf2f7;border-left:4px solid var(--magenta);padding:.6rem .9rem;margin:.6rem 0;font-family:var(--sans);font-size:.95rem}
+.task strong{display:block;font-family:var(--display);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:.2rem}
+.task p{margin:0}
+.st-ed{margin:.6rem 0 .5rem}
+.st-ed .pybar button+button{background:#fff;color:var(--magenta-dark);border:1px solid var(--magenta)}
+.fb{font-family:var(--sans);font-size:.95rem;margin:.4rem 0;min-height:1.2em}
+.fb.ok{color:var(--good,#1e7a4a);font-weight:600}
+.fb.no{color:#a03434}
+.st .hint{display:none;font-family:var(--sans);font-size:.9rem;background:var(--off-white);border:1px solid var(--border);padding:.55rem .85rem;margin:.4rem 0}
+.st .hint.show{display:block}
+.solbox{border:1px solid var(--border);padding:.5rem .85rem;margin:.4rem 0;font-family:var(--sans);font-size:.88rem}
+.solbox button,.nextb{font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;padding:.45rem 1rem}
+.solbox button{background:#fff;color:var(--magenta-dark);border:1px solid var(--magenta)}
+.nextb{background:var(--good,#1e7a4a);color:#fff;border:0;margin-top:.3rem}
+.pbar{height:10px;background:var(--off-white);border:1px solid var(--border);margin:.5rem 0 .2rem}
+.pbar span{display:block;height:100%;background:var(--magenta);width:0;transition:width .3s}
+.lmap{display:flex;flex-wrap:wrap;gap:.4rem;margin:.6rem 0 0;padding:0;list-style:none;font-family:var(--sans);font-size:.85rem}
+.lmap a{display:inline-block;padding:.25rem .6rem;border:1px solid var(--border);text-decoration:none;color:#1a1a1a;background:#fff}
+.lmap a.full{border-color:#1e7a4a;color:#1e7a4a}
+.lmap a.off{color:#5f5f5f}
+@media (max-width:700px){.st-ed textarea{font-size:16px}.stbody{padding:0 .7rem .9rem}.sthead{padding:.7rem}}
+@media print{.st[hidden]{display:block}.st.closed .stbody{display:block}.pybar,.nextb,.solbox button{display:none}}
+</style>
 <style id="py-css">
 .pycell.pysbx{background:#0e0e0d;border-left:6px solid var(--magenta);border-top:0;border-right:0;border-bottom:0}
 .pysbx-head{display:flex;justify-content:space-between;align-items:center;padding:.6rem .9rem .2rem}
@@ -693,6 +585,7 @@ function boot(say){
         py.FS.writeFile('cascadia-sales-2025.csv',new Uint8Array(bufs[0]));
         if(bufs[1])py.FS.writeFile('cascadia.db',new Uint8Array(bufs[1]));
         py.runPython("import os, warnings\nos.environ['MPLBACKEND']='Agg'\nwarnings.filterwarnings('ignore')");
+        py.runPython(HELPERS);py.globals.set("_CHK_JSON","[[[\"'Hello, Cascadia!' in _out\", \"Check the spelling, the comma, and the exclamation mark. Capital H and C.\"]], [[\"_has('price')\", \"Make a name called price, all lower case.\"], [\"_num(price, 289)\", \"price should hold the number 289, with no quotes.\"], [\"_said(289)\", \"Now print it: print(price)\"]], [[\"_has('discount') and _num(discount, 0.2)\", \"Store 0.20 in a name called discount.\"], [\"_has('sale_price') and _num(sale_price, 231.2, 0.001)\", \"sale_price should be price * (1 - discount). Keep the brackets.\"], [\"_said(231.2)\", \"Print it: print(round(sale_price, 2))\"]], [[\"_has('store') and store == 'Tacoma'\", \"store should hold the text \\\"Tacoma\\\", in quotes.\"], [\"_has('items') and _num(items, 3)\", \"items should hold the number 3.\"], [\"'Tacoma sold 3 items' in _out\", \"Print exactly: Tacoma sold 3 items\"], [\"'{' in _src\", \"Use the names inside an f-string, like f\\\"{store} sold ...\\\", not typed-in text.\"]], [[\"_has('sales') and list(sales) == [120, 89.5, 240, 64]\", \"sales should be [120, 89.5, 240, 64], in that order.\"], [\"_said(4) and _said(513.5)\", \"Print both: print(len(sales)) and print(sum(sales))\"]], [[\"all(x in _out for x in ['Seattle Flagship', 'Bellevue', 'Tacoma'])\", \"Each store should print on its own line.\"], [\"_uses('for ')\", \"Use a for loop, not three print lines.\"]], [[\"_uses('for ')\", \"Use a for loop.\"], [\"_has('total') and _num(total, 513.5)\", \"total should end at 513.5. Inside the loop: total = total + amount\"], [\"_nums()[-1:] == [513.5] and len(_nums()) == 1\", \"Print only once, after the loop. Take the indent off the print line.\"]], [[\"_uses('if ')\", \"Use if inside the loop.\"], [\"_nums() == [120.0, 240.0]\", \"Only 120 and 240 should print.\"]], [[\"_has('df') and isinstance(df, pd.DataFrame)\", \"Load the file into a name called df.\"], [\"len(df) == len(_B0())\", \"df should hold the whole file. Check the file name.\"], [\"_uses('head')\", \"End with df.head() to show the first rows.\"]], [[\"_uses('shape')\", \"Use df.shape\"], [\"_said(len(df)) and _said(df.shape[1])\", \"Show df.shape, the rows and the columns.\"]], [[\"_uses('columns')\", \"Use df.columns\"], [\"'member_id' in _out or (isinstance(_r, list) and 'member_id' in _r)\", \"Show df.columns.tolist()\"]], [[\"isinstance(_r, pd.Series) and _r.name == 'product'\", \"Show df[\\\"product\\\"], with the name in quotes inside square brackets.\"]], [[\"_same(_B0()['category'].value_counts())\", \"Show df[\\\"category\\\"].value_counts()\"]], [[\"_uses('nunique')\", \"Use .nunique()\"], [\"_said(_B0()['product'].nunique())\", \"Run nunique() on the product column.\"]], [[\"_uses('sum')\", \"Use .sum() on the revenue column.\"], [\"_said(round(_B0()['revenue'].sum(), 2), 0.01)\", \"Sum the revenue column, then round(..., 2).\"]], [[\"_has('is_tacoma') and isinstance(is_tacoma, pd.Series) and is_tacoma.dtype == bool\", \"is_tacoma = df[\\\"store\\\"] == \\\"Tacoma\\\"  (two equals signs)\"], [\"_said(int((_B0()['store'] == 'Tacoma').sum()))\", \"Now show is_tacoma.sum()\"]], [[\"_has('tacoma') and isinstance(tacoma, pd.DataFrame)\", \"tacoma = df[df[\\\"store\\\"] == \\\"Tacoma\\\"]\"], [\"len(tacoma) == int((_B0()['store'] == 'Tacoma').sum()) and set(tacoma['store']) == {'Tacoma'}\", \"tacoma should hold every Tacoma row and nothing else.\"], [\"_said(len(tacoma))\", \"Show len(tacoma)\"]], [[\"_has('big') and len(big) == int((_B0()['quantity'] >= 3).sum())\", \"big = df[df[\\\"quantity\\\"] >= 3]\"], [\"_said(len(big))\", \"Show len(big)\"]], [[\"_uses('&')\", \"Join the two conditions with &\"], [\"_has('boise2') and len(boise2) == int(((_B0()['store'] == 'Boise') & (_B0()['quantity'] >= 2)).sum())\", \"Both conditions: store is \\\"Boise\\\" and quantity >= 2, each in its own brackets.\"], [\"_said(len(boise2))\", \"Show len(boise2)\"]], [[\"_has('wet_cold') and len(wet_cold) == int(_B0()['category'].isin(['Snow', 'Water']).sum())\", \"Keep rows where category is Snow or Water. Spelling and capitals matter.\"], [\"_said(len(wet_cold))\", \"Show len(wet_cold)\"]], [[\"isinstance(_r, pd.DataFrame) and len(_r) == 5\", \"End with .head(5), so five rows show.\"], [\"_like(list(_r['revenue']), list(_B0()['revenue'].sort_values(ascending=False).head(5)))\", \"Sort by revenue, biggest first: sort_values(\\\"revenue\\\", ascending=False)\"]], [[\"isinstance(_r, pd.DataFrame) and list(_r.columns) == ['product', 'revenue']\", \"Keep only product and revenue, in that order: [[\\\"product\\\", \\\"revenue\\\"]]\"], [\"len(_r) == 5 and _like(list(_r['revenue']), list(_B0()['revenue'].sort_values(ascending=False).head(5)))\", \"Start from the last step's sorted top five.\"]], [[\"_uses('groupby')\", \"Use df.groupby(\\\"store\\\")\"], [\"_same(_B0().groupby('store')['revenue'].sum())\", \"df.groupby(\\\"store\\\")[\\\"revenue\\\"].sum()\"]], [[\"_same(_B0().groupby('store')['revenue'].sum().sort_values(ascending=False))\", \"Add .sort_values(ascending=False) to the end of the last step.\"]], [[\"_same(_B0().groupby('store')['revenue'].mean().sort_values())\", \"Use mean() and sort_values() with no ascending=False, so the smallest is first.\"]], [[\"_same(_B0().groupby('region').size())\", \"df.groupby(\\\"region\\\").size()\"]], [[\"_same(_B0().groupby('category')['revenue'].agg(['sum', 'mean', 'count']))\", \"agg([\\\"sum\\\", \\\"mean\\\", \\\"count\\\"]) on revenue, grouped by category.\"]], [[\"str(df['sale_date'].dtype).startswith('datetime64')\", \"df[\\\"sale_date\\\"] = pd.to_datetime(df[\\\"sale_date\\\"])\"], [\"'datetime64' in _out or 'datetime64' in str(_r)\", \"Show df[\\\"sale_date\\\"].dtype on the last line.\"]], [[\"'month' in df.columns and _like(list(df['month']), list(_B()['month']))\", \"df[\\\"month\\\"] = df[\\\"sale_date\\\"].dt.month\"], [\"_same(_B().groupby('month').size())\", \"Then group by month and count rows with size().\"]], [[\"'weekday' in df.columns and _like(list(df['weekday']), list(_B()['weekday']))\", \"df[\\\"weekday\\\"] = df[\\\"sale_date\\\"].dt.day_name()\"], [\"_same(_B()['weekday'].value_counts()) or _same(_B().groupby('weekday').size())\", \"Count with value_counts() or groupby(\\\"weekday\\\").size()\"]], [[\"'margin_pct' in df.columns and _like(list(df['margin_pct']), list(_B()['margin_pct']))\", \"df[\\\"margin_pct\\\"] = df[\\\"gross_margin\\\"] / df[\\\"revenue\\\"] * 100\"], [\"_uses('describe')\", \"Show df[\\\"margin_pct\\\"].describe()\"]], [[\"_has('thin') and len(thin) == int((_B()['margin_pct'] < 50).sum())\", \"thin = df[df[\\\"margin_pct\\\"] < 50]\"], [\"_said(len(thin))\", \"Show len(thin)\"]], [[\"'is_weekend' in df.columns and _like(list(df['is_weekend']), list(_B()['is_weekend']))\", \"df[\\\"is_weekend\\\"] = df[\\\"sale_date\\\"].dt.dayofweek >= 5\"], [\"_same(_B().groupby('is_weekend')['revenue'].mean())\", \"df.groupby(\\\"is_weekend\\\")[\\\"revenue\\\"].mean()\"]], [[\"_has('grid') and isinstance(grid, pd.DataFrame)\", \"Store the pivot table in a name called grid.\"], [\"_like(grid, _B().pivot_table(index='store', columns='category', values='revenue', aggfunc='sum'))\", \"index=\\\"store\\\", columns=\\\"category\\\", values=\\\"revenue\\\", aggfunc=\\\"sum\\\"\"], [\"_uses('round')\", \"Show grid.round(0)\"]], [[\"_uses('loc')\", \"Use grid.loc[...]\"], [\"_said(float(_B().pivot_table(index='store', columns='category', values='revenue', aggfunc='sum').loc['Bellingham', 'Snow']), 0.01)\", \"grid.loc[\\\"Bellingham\\\", \\\"Snow\\\"]\"]], [[\"_has('members') and isinstance(members, pd.DataFrame)\", \"Store the result in a name called members.\"], [\"list(members.columns) == ['member_id', 'member_type'] and len(members) == len(_M())\", \"SELECT member_id, member_type FROM members\"], [\"isinstance(_r, pd.DataFrame)\", \"End with members.head()\"]], [[\"_has('joined') and 'member_type' in joined.columns\", \"joined = df.dropna(subset=[\\\"member_id\\\"]).merge(members, on=\\\"member_id\\\")\"], [\"len(joined) == len(_J())\", \"Drop the rows with no member_id first, then merge on member_id.\"], [\"_said(len(joined))\", \"Show len(joined)\"]], [[\"_has('per_member') and _like(per_member, _J().groupby(['member_type', 'member_id'])['revenue'].sum())\", \"per_member = joined.groupby([\\\"member_type\\\", \\\"member_id\\\"])[\\\"revenue\\\"].sum()\"], [\"_same(_J().groupby(['member_type', 'member_id'])['revenue'].sum().groupby('member_type').mean())\", \"Then per_member.groupby(\\\"member_type\\\").mean()\"]], [[\"_has('monthly') and _like(monthly, _B().groupby('month')['revenue'].sum())\", \"monthly = df.groupby(\\\"month\\\")[\\\"revenue\\\"].sum()\"], [\"_hasfig()\", \"Draw it: monthly.plot(kind=\\\"line\\\", marker=\\\"o\\\")\"], [\"_uses('ylim')\", \"Add plt.ylim(bottom=0) before plt.show()\"]], [[\"_hasfig()\", \"Draw a chart with .plot(kind=\\\"barh\\\") and plt.show()\"], [\"_uses('barh')\", \"Use kind=\\\"barh\\\"\"], [\"_uses('sort_values')\", \"Sort the totals before you plot them.\"]], [[\"_uses('idxmin')\", \"Use monthly.idxmin()\"], [\"_said(int(_B().groupby('month')['revenue'].sum().idxmin()))\", \"monthly.idxmin()\"]], [[\"_has('winner') and str(winner) == _G()[0]\", \"winner is not the right store yet. Check which half each month falls in, and subtract H1 from H2.\"], [\"_has('growth') and _num(growth, _G()[1], 1)\", \"winner is right. growth should be that store's second-half revenue minus its first-half revenue.\"]]]");py.runPython("_CHK=json.loads(_CHK_JSON)");
         res(py);
       }).catch(rej);
     };
@@ -733,7 +626,7 @@ function run(cell){
   }).catch(function(e){out.innerHTML='<span class="err">'+esc(e.message)+'</span>';say('');})
   .then(function(){btn.disabled=false;});
 }
-[].forEach.call(document.querySelectorAll('.pycell'),function(cell,i){
+[].forEach.call(document.querySelectorAll('.pycell:not(.st-ed)'),function(cell,i){
   var ta=cell.querySelector('textarea');
   ta.setAttribute('spellcheck','false');ta.setAttribute('autocapitalize','off');ta.setAttribute('autocomplete','off');
   ta.rows=Math.max(2,ta.value.split('\n').length+1);
@@ -746,6 +639,29 @@ function run(cell){
     if(e.key==='Enter'&&e.shiftKey){e.preventDefault();run(cell);}
   });
 });
+
+
+var HELPERS="import ast as _ast, io as _io, contextlib as _ctx, json, re as _re, sys as _sys, traceback as _tb\nimport numpy as _np\nimport pandas as pd\n_out = ''; _r = None; _src = ''; _CHK = []\n\ndef _runsrc(src):\n    tree = _ast.parse(src)\n    last = None\n    if tree.body and isinstance(tree.body[-1], _ast.Expr):\n        last = _ast.Expression(tree.body.pop().value)\n    exec(compile(tree, '<your code>', 'exec'), globals())\n    if last is not None:\n        return eval(compile(last, '<your code>', 'eval'), globals())\n    return None\n\ndef _silent(src):\n    buf = _io.StringIO()\n    try:\n        with _ctx.redirect_stdout(buf):\n            _runsrc(src)\n    except Exception:\n        pass\n    if 'matplotlib.pyplot' in _sys.modules:\n        _sys.modules['matplotlib.pyplot'].close('all')\n\ndef _show(r):\n    if r is None: return ''\n    m = type(r).__module__ or ''\n    if m.startswith('matplotlib'): return ''\n    if isinstance(r, (_np.generic, int, float, str, bool)): return str(r)\n    return repr(r)\n\ndef _step(src, i):\n    global _out, _r, _src\n    _src = src; _r = None; err = None\n    buf = _io.StringIO()\n    try:\n        with _ctx.redirect_stdout(buf):\n            _r = _runsrc(src)\n    except Exception as e:\n        err = ''.join(_tb.format_exception_only(type(e), e)).strip().splitlines()[-1]\n    _out = buf.getvalue()\n    shown = _out + _show(_r)\n    ok = False; msg = None\n    if err is None:\n        ok = True\n        for expr, m in _CHK[i]:\n            try:\n                v = eval(expr, globals())\n            except Exception:\n                v = False\n            if not v:\n                ok = False; msg = m; break\n    return json.dumps({'out': shown, 'err': err, 'ok': ok, 'msg': msg})\n\ndef _has(n): return n in globals()\ndef _uses(*w): return all(x in _src for x in w)\ndef _num(a, b, tol=1e-6):\n    try: return abs(float(a) - float(b)) <= tol\n    except Exception: return False\ndef _nums(text=None):\n    t = _out if text is None else text\n    return [float(x) for x in _re.findall(r'-?\\d+(?:\\.\\d+)?(?:e[-+]?\\d+)?', t)]\ndef _said(x, tol=1e-6):\n    shown = _out + _show(_r)\n    if isinstance(x, str): return x in shown\n    return any(abs(n - float(x)) <= max(tol, 1e-9) for n in _nums(shown))\ndef _eq1(x, y, tol):\n    try:\n        if pd.isna(x) and pd.isna(y): return True\n    except Exception: pass\n    if isinstance(x, (bool, _np.bool_)) or isinstance(y, (bool, _np.bool_)): return bool(x) == bool(y)\n    try: return abs(float(x) - float(y)) <= tol\n    except Exception: return str(x) == str(y)\ndef _like(a, b, tol=0.01):\n    try:\n        if isinstance(b, (pd.Series, pd.DataFrame)):\n            if not isinstance(a, type(b)): return False\n            if isinstance(b, pd.DataFrame) and [str(c) for c in a.columns] != [str(c) for c in b.columns]: return False\n            if [str(k) for k in a.index] != [str(k) for k in b.index]: return False\n            av = a.to_numpy().ravel(); bv = b.to_numpy().ravel()\n            return len(av) == len(bv) and all(_eq1(x, y, tol) for x, y in zip(av, bv))\n        if isinstance(b, (list, tuple)):\n            a = list(a)\n            return len(a) == len(b) and all(_eq1(x, y, tol) for x, y in zip(a, b))\n        return _eq1(a, b, tol)\n    except Exception:\n        return False\ndef _same(x, tol=0.01):\n    if _like(_r, x, tol): return True\n    try: return str(x) in _out\n    except Exception: return False\ndef _hasfig():\n    if 'matplotlib.pyplot' not in _sys.modules: return False\n    return len(_sys.modules['matplotlib.pyplot'].get_fignums()) > 0\n\n_cache = {}\ndef _B0():\n    if 'b0' not in _cache: _cache['b0'] = pd.read_csv('cascadia-sales-2025.csv')\n    return _cache['b0'].copy()\ndef _B():\n    if 'b' not in _cache:\n        b = _B0(); b['sale_date'] = pd.to_datetime(b['sale_date'])\n        b['month'] = b['sale_date'].dt.month; b['weekday'] = b['sale_date'].dt.day_name()\n        b['margin_pct'] = b['gross_margin'] / b['revenue'] * 100\n        b['is_weekend'] = b['sale_date'].dt.dayofweek >= 5\n        _cache['b'] = b\n    return _cache['b'].copy()\ndef _M():\n    if 'm' not in _cache:\n        import sqlite3 as _sq\n        c = _sq.connect('cascadia.db'); _cache['m'] = pd.read_sql('SELECT member_id, member_type FROM members', c); c.close()\n    return _cache['m'].copy()\ndef _J():\n    return _B().dropna(subset=['member_id']).merge(_M(), on='member_id')\ndef _G():\n    b = _B(); b['_h'] = _np.where(b['month'] <= 6, 'H1', 'H2')\n    t = b.pivot_table(index='store', columns='_h', values='revenue', aggfunc='sum')\n    g = t['H2'] - t['H1']\n    return (str(g.idxmax()), float(g.max()))\n";
+var ran=new Set();
+function silent(p,j){var src=STEPS[j].sol;return p.loadPackagesFromImports(src).then(function(){p.globals.set('_ssrc',src);p.runPython('_silent(_ssrc)');ran.add(j);});}
+window.STEPRUN=function(i,code,say){
+  return boot(say).then(function(p){
+    var chain=Promise.resolve();
+    for(var j=0;j<i;j++){(function(j){if(STEPS[j].state&&!ran.has(j))chain=chain.then(function(){say('Setting up earlier steps…');return silent(p,j)})})(j);}
+    return chain.then(function(){say('Running…');return p.loadPackagesFromImports(code)}).then(function(){
+      p.globals.set('_src_in',code);p.globals.set('_i_in',i);
+      var r=JSON.parse(p.runPython('_step(_src_in,_i_in)'));
+      var html=esc(r.out);
+      if(r.err)html+=friendly(r.err);
+      var figs=p.runPython(FIGS);var arr=figs.toJs();figs.destroy();
+      arr.forEach(function(b){html+='<img alt="Chart produced by your code" src="data:image/png;base64,'+b+'">'});
+      if(r.ok&&STEPS[i].state){ran.add(i);}
+      if(!r.err&&STEPS[i].state){for(var k=i+1;k<STEPS.length;k++)ran.delete(k);ran.add(i);}
+      return {html:html,ok:r.ok,msg:r.msg,err:r.err};
+    });
+  });
+};
+
 })();
 (function(){
 var box=document.getElementById('pysbx');if(!box)return;
@@ -761,101 +677,139 @@ dock.addEventListener('click',function(){var d=box.classList.toggle('docked');do
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-const LAB="PYBC", QS=[{"q": "Checkpoint 1 · Change the list to sales = [120, 89.5, 240, 64] and run the loop. What is the total?", "t": "num", "a": "NTEzLjU=", "tol": 0.001, "h": "Edit only the first line of the second cell, then press Run. The loop does not change."}, {"q": "Checkpoint 2 · How many columns does df have?", "t": "num", "a": "MTQ=", "tol": 0, "h": "df.shape prints (rows, columns). The second number is the answer."}, {"q": "Checkpoint 3 · How many different products does the co-op sell?", "t": "num", "a": "MzU=", "tol": 0, "h": "Same as the nunique cell, but on the product column: df[\"product\"].nunique()"}, {"q": "Checkpoint 4 · How many Boise sales had a quantity of 2 or more?", "t": "num", "a": "ODc=", "tol": 0, "h": "Copy the big_tacoma line. Change the store to \"Boise\" and the quantity rule to >= 2. Keep both conditions in their own parentheses."}, {"q": "Checkpoint 5 · Which store has the LOWEST average revenue per sale? Enter the store name.", "t": "txt", "a": "QmVsbGV2dWU=", "h": "df.groupby(\"store\")[\"revenue\"].mean().sort_values() sorts smallest first, so the top row is the answer."}, {"q": "Checkpoint 6 · Which month had the most sales (rows, not revenue)? Enter the month number.", "t": "num", "a": "MQ==", "tol": 0, "h": "Run the dates cell, then add .sort_values(ascending=False) to the end of the last line. January is 1."}, {"q": "Checkpoint 7 · What is the average revenue per sale on weekends? Round to the cent.", "t": "num", "a": "MjQwLjgy", "tol": 0.006, "h": "Run the is_weekend cell. True is the weekend row. Round 240.8177 to two decimal places."}, {"q": "Checkpoint 8 · How many sales have a margin_pct below 50?", "t": "num", "a": "MTY=", "tol": 0, "h": "Filter the way Module 3 did: len(df[df[\"margin_pct\"] < 50])"}, {"q": "Checkpoint 9 · How much revenue did Bellingham make from the Snow category? Round to the nearest dollar.", "t": "num", "a": "MTc0MDY=", "tol": 0.5, "h": "Run the grid cell, then grid.loc[\"Bellingham\", \"Snow\"]. The exact value is 17405.6, which rounds to 17406."}, {"q": "Checkpoint 10 · What did the average Lifetime member spend in 2025? Round to the nearest dollar.", "t": "num", "a": "MTAzODM=", "tol": 0.5, "h": "Run the merge cell as written and read the Lifetime row. Compare it with Standard: is a Lifetime membership worth much more to the co-op?"}, {"q": "Checkpoint 11 · In the revenue-by-month chart, which month is lowest? Enter the month's name.", "t": "txt", "a": "QXByaWw=", "h": "Find the lowest point on the line and read its month number off the axis. Month 4 is April. To check it in code: monthly.idxmin()"}, {"q": "Checkpoint 12 · Which store grew the most in revenue from the first half of 2025 to the second half? Enter the store name.", "t": "txt", "a": "U3Bva2FuZQ==", "h": "Make a column: df[\"half\"] = df[\"month\"].apply(lambda m: \"H1\" if m <= 6 else \"H2\"). Then pivot_table with index=\"store\", columns=\"half\", values=\"revenue\", aggfunc=\"sum\", add a column H2 minus H1, and sort it."}];
-const SKEY='mis320_'+LAB;
-let solved=new Set();
-function load(){try{const raw=localStorage.getItem(SKEY);if(!raw)return null;const s=JSON.parse(raw);
- if(Array.isArray(s.solved))solved=new Set(s.solved.filter(i=>Number.isInteger(i)&&i<QS.length));return s}catch(e){return null}}
+const LAB="PYBC", SKEY="mis320_PYBC2", LESSONS=[{"id": "l1", "t": "Python basics"}, {"id": "l2", "t": "Loading data"}, {"id": "l3", "t": "Filtering"}, {"id": "l4", "t": "Grouping"}, {"id": "l5", "t": "Dates and new columns"}, {"id": "l6", "t": "Pivots and joins"}, {"id": "l7", "t": "Charts"}, {"id": "l8", "t": "Capstone"}], STEPS=[{"l": "l1", "t": "Your first line of code", "learn": "<p><code class=\"inline\">print()</code> shows whatever you put inside the brackets. Text goes in quotes, so Python knows it is text and not a name. Press <strong>Run and check</strong> (or Shift and Enter) to run your code.</p>", "task": "Print the text <code class=\"inline\">Hello, Cascadia!</code> exactly, with the comma and the exclamation mark.", "code": "# Write your code below\n", "hint": "Put the text in quotes inside print: <code class=\"inline\">print(\"...\")</code>", "sol": "print(\"Hello, Cascadia!\")", "state": false}, {"l": "l1", "t": "Names hold values", "learn": "<p>A name on the left of <code class=\"inline\">=</code> stores the value on the right. After that, the name stands for the value. Numbers do not go in quotes.</p><pre class=\"bc\">items = 3\nprint(items)</pre>", "task": "Make a name called <code class=\"inline\">price</code> that holds <code class=\"inline\">289</code>. Then print it.", "code": "# Write your code below\n", "hint": "Two lines: one that stores the value with =, and one that prints the name.", "sol": "price = 289\nprint(price)", "state": false}, {"l": "l1", "t": "Math with names", "learn": "<p>Python does arithmetic with <code class=\"inline\">+ - * /</code>. You can do math on names, and store the answer in a new name. <code class=\"inline\">round(x, 2)</code> rounds to two decimal places.</p>", "task": "A $289 jacket is 20% off. Store <code class=\"inline\">0.20</code> in <code class=\"inline\">discount</code>, then make <code class=\"inline\">sale_price</code> equal to <code class=\"inline\">price * (1 - discount)</code>. Print it rounded to 2 places.", "code": "price = 289\n# Write your code below\n", "hint": "The brackets matter: 1 - discount is done first, then multiplied by price.", "sol": "price = 289\ndiscount = 0.20\nsale_price = price * (1 - discount)\nprint(round(sale_price, 2))", "state": false}, {"l": "l1", "t": "Text with values in it", "learn": "<p>Put an <code class=\"inline\">f</code> before the quotes and you can drop names into text with curly brackets. This is how you write a readable result.</p><pre class=\"bc\">name = \"Ana\"\nprint(f\"Hi {name}\")</pre>", "task": "Make <code class=\"inline\">store</code> hold <code class=\"inline\">\"Tacoma\"</code> and <code class=\"inline\">items</code> hold <code class=\"inline\">3</code>. Use an f-string to print exactly <code class=\"inline\">Tacoma sold 3 items</code>.", "code": "# Write your code below\n", "hint": "print(f\"{store} sold {items} items\")", "sol": "store = \"Tacoma\"\nitems = 3\nprint(f\"{store} sold {items} items\")", "state": false}, {"l": "l1", "t": "Lists", "learn": "<p>A list holds several values in order, inside square brackets, separated by commas. <code class=\"inline\">len()</code> counts what is in it and <code class=\"inline\">sum()</code> adds it up.</p>", "task": "Make a list called <code class=\"inline\">sales</code> holding <code class=\"inline\">120, 89.5, 240, 64</code>. Print its length, then print its sum.", "code": "# Write your code below\n", "hint": "sales = [120, 89.5, 240, 64] on the first line.", "sol": "sales = [120, 89.5, 240, 64]\nprint(len(sales))\nprint(sum(sales))", "state": false}, {"l": "l1", "t": "Loops", "learn": "<p>A <code class=\"inline\">for</code> loop runs the indented lines once for each item in a list. The line ends with a colon. The indent is not decoration: the indented lines are the ones inside the loop.</p><pre class=\"bc\">for n in [1, 2, 3]:\n    print(n)</pre>", "task": "Loop over the <code class=\"inline\">stores</code> list and print each store.", "code": "stores = [\"Seattle Flagship\", \"Bellevue\", \"Tacoma\"]\n# Write your code below\n", "hint": "for s in stores:  then, indented four spaces on the next line, print(s)", "sol": "stores = [\"Seattle Flagship\", \"Bellevue\", \"Tacoma\"]\nfor s in stores:\n    print(s)", "state": false}, {"l": "l1", "t": "A loop that adds", "learn": "<p>Start a total at zero, then add each item to it inside the loop. This is what <code class=\"inline\">sum()</code> does for you, but the pattern works for anything you want to build up one item at a time.</p>", "task": "Use a loop to add up <code class=\"inline\">sales</code> into a name called <code class=\"inline\">total</code>. Print it after the loop, not inside it.", "code": "sales = [120, 89.5, 240, 64]\ntotal = 0\n# Write your code below\n", "hint": "for amount in sales:\n    total = total + amount\nprint(total)", "sol": "sales = [120, 89.5, 240, 64]\ntotal = 0\nfor amount in sales:\n    total = total + amount\nprint(total)", "state": false}, {"l": "l1", "t": "Decisions with if", "learn": "<p><code class=\"inline\">if</code> runs its indented lines only when the condition is true. <code class=\"inline\">&gt;</code> means greater than, <code class=\"inline\">&gt;=</code> greater than or equal, and <code class=\"inline\">==</code> (two equals signs) means equal to.</p>", "task": "Loop over <code class=\"inline\">sales</code> and print only the amounts over 100.", "code": "sales = [120, 89.5, 240, 64]\n# Write your code below\n", "hint": "Indent twice: the if is inside the for, and the print is inside the if.", "sol": "sales = [120, 89.5, 240, 64]\nfor amount in sales:\n    if amount > 100:\n        print(amount)", "state": false}, {"l": "l2", "t": "Load the data", "learn": "<p><strong>pandas</strong> is the Python library for tables. <code class=\"inline\">pd.read_csv</code> loads a CSV file into a <strong>DataFrame</strong>, a table with named columns, like a sheet in Excel. By habit it is called <code class=\"inline\">df</code>. When the last line of your code is a value, it shows without print. <code class=\"inline\">df.head()</code> shows the first five rows.</p><p>The first time, Python has to load pandas, which takes 10 to 30 seconds.</p>", "task": "Import pandas as <code class=\"inline\">pd</code>, load <code class=\"inline\">cascadia-sales-2025.csv</code> into <code class=\"inline\">df</code>, and show the first five rows.", "code": "import pandas as pd\n# Write your code below\n", "hint": "df = pd.read_csv(\"cascadia-sales-2025.csv\")", "sol": "import pandas as pd\ndf = pd.read_csv(\"cascadia-sales-2025.csv\")\ndf.head()", "state": true}, {"l": "l2", "t": "How big is it?", "learn": "<p><code class=\"inline\">df.shape</code> gives (rows, columns). There are no brackets after shape, because it is a fact about the table, not an action.</p>", "task": "Show the shape of <code class=\"inline\">df</code>.", "code": "# Write your code below\n", "hint": "Just df.shape on its own line.", "sol": "df.shape", "state": false}, {"l": "l2", "t": "What columns are there?", "learn": "<p><code class=\"inline\">df.columns.tolist()</code> lists the column names. You will need the exact spelling: column names are case sensitive.</p>", "task": "Show the column names as a list.", "code": "# Write your code below\n", "hint": "df.columns.tolist()", "sol": "df.columns.tolist()", "state": false}, {"l": "l2", "t": "One column", "learn": "<p>Square brackets with a column name in quotes pull out one column, called a <strong>Series</strong>.</p><pre class=\"bc\">df[\"store\"]</pre>", "task": "Show the <code class=\"inline\">product</code> column.", "code": "# Write your code below\n", "hint": "df[\"product\"]", "sol": "df[\"product\"]", "state": false}, {"l": "l2", "t": "Count each value", "learn": "<p><code class=\"inline\">.value_counts()</code> counts how many rows have each value, biggest first. It is often the first thing an analyst runs on a new column.</p>", "task": "Count the sales in each <code class=\"inline\">category</code>.", "code": "# Write your code below\n", "hint": "Add .value_counts() to the end of df[\"category\"]", "sol": "df[\"category\"].value_counts()", "state": false}, {"l": "l2", "t": "Count different values", "learn": "<p><code class=\"inline\">.nunique()</code> counts how many <em>different</em> values a column has, the same idea as COUNT(DISTINCT ...) in SQL.</p>", "task": "How many different products does Cascadia sell? Show the number.", "code": "# Write your code below\n", "hint": "df[\"product\"].nunique()", "sol": "df[\"product\"].nunique()", "state": false}, {"l": "l2", "t": "Add up a column", "learn": "<p>A number column has math built in: <code class=\"inline\">.sum()</code>, <code class=\"inline\">.mean()</code>, <code class=\"inline\">.max()</code>, <code class=\"inline\">.min()</code>.</p>", "task": "Show Cascadia's total revenue for 2025, rounded to 2 decimal places.", "code": "# Write your code below\n", "hint": "round(df[\"revenue\"].sum(), 2)", "sol": "round(df[\"revenue\"].sum(), 2)", "state": false}, {"l": "l3", "t": "A true or false column", "learn": "<p>Compare a column with a value and you get a column of True and False, one per row. <code class=\"inline\">.sum()</code> on it counts the Trues, because Python counts True as 1.</p>", "task": "Make <code class=\"inline\">is_tacoma</code> equal to <code class=\"inline\">df[\"store\"] == \"Tacoma\"</code>. Then show how many sales were in Tacoma by summing it.", "code": "# Write your code below\n", "hint": "Two equals signs compare. One equals sign stores.", "sol": "is_tacoma = df[\"store\"] == \"Tacoma\"\nis_tacoma.sum()", "state": false}, {"l": "l3", "t": "Keep the rows you want", "learn": "<p>Put a True and False column inside <code class=\"inline\">df[ ]</code> and pandas keeps only the True rows. This is a filter, like WHERE in SQL.</p><pre class=\"bc\">seattle = df[df[\"store\"] == \"Seattle Flagship\"]</pre>", "task": "Make <code class=\"inline\">tacoma</code> hold only the Tacoma sales. Show <code class=\"inline\">len(tacoma)</code>.", "code": "# Write your code below\n", "hint": "The condition goes inside df[ ], so the line has df twice.", "sol": "tacoma = df[df[\"store\"] == \"Tacoma\"]\nlen(tacoma)", "state": false}, {"l": "l3", "t": "Filter on a number", "learn": "<p>Number columns use <code class=\"inline\">&gt;</code>, <code class=\"inline\">&gt;=</code>, <code class=\"inline\">&lt;</code>, and <code class=\"inline\">&lt;=</code>, with no quotes around the number.</p>", "task": "Make <code class=\"inline\">big</code> hold the sales with a quantity of 3 or more. Show how many there are.", "code": "# Write your code below\n", "hint": "3 or more is >= 3", "sol": "big = df[df[\"quantity\"] >= 3]\nlen(big)", "state": false}, {"l": "l3", "t": "Two conditions at once", "learn": "<p>Join conditions with <code class=\"inline\">&amp;</code> for and. Each condition needs its own brackets, or Python reads them in the wrong order.</p><pre class=\"bc\">df[(df[\"store\"] == \"Tacoma\") &amp; (df[\"quantity\"] &gt;= 3)]</pre>", "task": "Make <code class=\"inline\">boise2</code> hold the Boise sales with a quantity of 2 or more. Show how many there are.", "code": "# Write your code below\n", "hint": "boise2 = df[(df[\"store\"] == \"Boise\") & (df[\"quantity\"] >= 2)]", "sol": "boise2 = df[(df[\"store\"] == \"Boise\") & (df[\"quantity\"] >= 2)]\nlen(boise2)", "state": false}, {"l": "l3", "t": "One of several values", "learn": "<p><code class=\"inline\">|</code> means or. When you want rows that match any value in a list, <code class=\"inline\">.isin()</code> is shorter.</p><pre class=\"bc\">df[df[\"store\"].isin([\"Tacoma\", \"Boise\"])]</pre>", "task": "Make <code class=\"inline\">wet_cold</code> hold the sales in the Snow or Water categories. Show how many there are.", "code": "# Write your code below\n", "hint": "wet_cold = df[df[\"category\"].isin([\"Snow\", \"Water\"])]", "sol": "wet_cold = df[df[\"category\"].isin([\"Snow\", \"Water\"])]\nlen(wet_cold)", "state": false}, {"l": "l3", "t": "Sort", "learn": "<p><code class=\"inline\">.sort_values(\"column\")</code> sorts smallest first. Add <code class=\"inline\">ascending=False</code> for biggest first. <code class=\"inline\">.head(5)</code> keeps the top five.</p>", "task": "Show the five biggest sales by revenue.", "code": "# Write your code below\n", "hint": "df.sort_values(\"revenue\", ascending=False).head(5)", "sol": "df.sort_values(\"revenue\", ascending=False).head(5)", "state": false}, {"l": "l3", "t": "Keep only some columns", "learn": "<p>A list of names inside the brackets keeps just those columns. Note the two pairs of square brackets: the outer pair selects, the inner pair is the list.</p><pre class=\"bc\">df[[\"store\", \"revenue\"]]</pre>", "task": "Show the product and revenue of the five biggest sales, and no other columns.", "code": "# Write your code below\n", "hint": "Add [[\"product\", \"revenue\"]] to the end of the last step's line.", "sol": "df.sort_values(\"revenue\", ascending=False).head(5)[[\"product\", \"revenue\"]]", "state": false}, {"l": "l4", "t": "Total by group", "learn": "<p><code class=\"inline\">groupby</code> splits the table into groups, does a calculation in each one, and puts the answers together. It is GROUP BY in SQL and a pivot table in Excel, in one line. Read it as: group by store, take revenue, add it up.</p>", "task": "Show total revenue for each store.", "code": "# Write your code below\n", "hint": "df.groupby(\"store\")[\"revenue\"].sum()", "sol": "df.groupby(\"store\")[\"revenue\"].sum()", "state": false}, {"l": "l4", "t": "Sort the groups", "learn": "<p>The answer of a groupby is a Series, so you can sort it. You can chain one step after another with dots.</p>", "task": "Show total revenue by store, biggest first.", "code": "# Write your code below\n", "hint": "df.groupby(\"store\")[\"revenue\"].sum().sort_values(ascending=False)", "sol": "df.groupby(\"store\")[\"revenue\"].sum().sort_values(ascending=False)", "state": false}, {"l": "l4", "t": "Average, not total", "learn": "<p>Change <code class=\"inline\">sum()</code> to <code class=\"inline\">mean()</code> and you get the average sale at each store. That is a different question: a store can have the most revenue because it has the most sales, not because each sale is bigger.</p>", "task": "Show average revenue per sale by store, smallest first. Which store is at the top?", "code": "# Write your code below\n", "hint": "df.groupby(\"store\")[\"revenue\"].mean().sort_values()", "sol": "df.groupby(\"store\")[\"revenue\"].mean().sort_values()", "state": false}, {"l": "l4", "t": "Count rows by group", "learn": "<p><code class=\"inline\">.size()</code> counts the rows in each group. You do not pick a column first, because it counts rows, not values.</p>", "task": "Show the number of sales in each region.", "code": "# Write your code below\n", "hint": "df.groupby(\"region\").size()", "sol": "df.groupby(\"region\").size()", "state": false}, {"l": "l4", "t": "Several answers at once", "learn": "<p><code class=\"inline\">.agg()</code> runs several calculations on each group and gives back a table, one column per calculation.</p><pre class=\"bc\">df.groupby(\"store\")[\"quantity\"].agg([\"sum\", \"max\"])</pre>", "task": "For each category, show the sum, mean, and count of revenue, in that order.", "code": "# Write your code below\n", "hint": "df.groupby(\"category\")[\"revenue\"].agg([\"sum\", \"mean\", \"count\"])", "sol": "df.groupby(\"category\")[\"revenue\"].agg([\"sum\", \"mean\", \"count\"])", "state": false}, {"l": "l5", "t": "Text into dates", "learn": "<p>The CSV stores dates as text, so Python cannot tell January from June. <code class=\"inline\">pd.to_datetime</code> turns the column into real dates. Assigning back to <code class=\"inline\">df[\"sale_date\"]</code> replaces the old column.</p>", "task": "Turn <code class=\"inline\">sale_date</code> into dates. Then show <code class=\"inline\">df[\"sale_date\"].dtype</code> to check.", "code": "# Write your code below\n", "hint": "df[\"sale_date\"] = pd.to_datetime(df[\"sale_date\"])", "sol": "df[\"sale_date\"] = pd.to_datetime(df[\"sale_date\"])\ndf[\"sale_date\"].dtype", "state": true}, {"l": "l5", "t": "A new column from a date", "learn": "<p>You make a new column by assigning to a name that does not exist yet. On a date column, <code class=\"inline\">.dt</code> pulls out pieces: <code class=\"inline\">.dt.month</code>, <code class=\"inline\">.dt.year</code>, <code class=\"inline\">.dt.day_name()</code>.</p>", "task": "Make a <code class=\"inline\">month</code> column from <code class=\"inline\">sale_date</code>. Then show the number of sales in each month.", "code": "# Write your code below\n", "hint": "df[\"month\"] = df[\"sale_date\"].dt.month\nthen df.groupby(\"month\").size()", "sol": "df[\"month\"] = df[\"sale_date\"].dt.month\ndf.groupby(\"month\").size()", "state": true}, {"l": "l5", "t": "Days of the week", "learn": "<p><code class=\"inline\">.dt.day_name()</code> gives the name of the day. It has brackets because it builds new text, where <code class=\"inline\">.dt.month</code> just reads a number.</p>", "task": "Make a <code class=\"inline\">weekday</code> column with the day names, then count the sales on each day.", "code": "# Write your code below\n", "hint": "df[\"weekday\"] = df[\"sale_date\"].dt.day_name()\ndf[\"weekday\"].value_counts()", "sol": "df[\"weekday\"] = df[\"sale_date\"].dt.day_name()\ndf[\"weekday\"].value_counts()", "state": true}, {"l": "l5", "t": "A column from arithmetic", "learn": "<p>Math on two columns works row by row, the way you would fill a formula down in Excel.</p><pre class=\"bc\">df[\"unit_margin\"] = df[\"unit_price\"] - df[\"unit_cost\"]</pre>", "task": "Make <code class=\"inline\">margin_pct</code>: gross margin divided by revenue, times 100. Then show <code class=\"inline\">df[\"margin_pct\"].describe()</code>.", "code": "# Write your code below\n", "hint": "df[\"margin_pct\"] = df[\"gross_margin\"] / df[\"revenue\"] * 100", "sol": "df[\"margin_pct\"] = df[\"gross_margin\"] / df[\"revenue\"] * 100\ndf[\"margin_pct\"].describe()", "state": true}, {"l": "l5", "t": "Filter on a new column", "learn": "<p>A column you made works like any other. Filter on it the way you did in Lesson 3.</p>", "task": "Make <code class=\"inline\">thin</code> hold the sales with a <code class=\"inline\">margin_pct</code> below 50. Show how many there are.", "code": "# Write your code below\n", "hint": "thin = df[df[\"margin_pct\"] < 50]", "sol": "thin = df[df[\"margin_pct\"] < 50]\nlen(thin)", "state": false}, {"l": "l5", "t": "A column from a rule", "learn": "<p>A new column can be a condition. <code class=\"inline\">.dt.dayofweek</code> numbers the days from Monday (0) to Sunday (6), so 5 and 6 are the weekend.</p>", "task": "Make <code class=\"inline\">is_weekend</code> (True on Saturday and Sunday). Then show the average revenue per sale for weekends and weekdays.", "code": "# Write your code below\n", "hint": "df[\"is_weekend\"] = df[\"sale_date\"].dt.dayofweek >= 5", "sol": "df[\"is_weekend\"] = df[\"sale_date\"].dt.dayofweek >= 5\ndf.groupby(\"is_weekend\")[\"revenue\"].mean()", "state": true}, {"l": "l6", "t": "A pivot table", "learn": "<p><code class=\"inline\">pivot_table</code> builds the same grid as an Excel pivot table: one thing down the side (<code class=\"inline\">index</code>), one across the top (<code class=\"inline\">columns</code>), and a number in the middle.</p>", "task": "Make <code class=\"inline\">grid</code>: stores down the side, categories across the top, total revenue in the middle. Show it rounded to whole dollars.", "code": "grid = df.pivot_table(index=..., columns=..., values=..., aggfunc=...)\n", "hint": "Fill in each ... with a column name in quotes. aggfunc is \"sum\".", "sol": "grid = df.pivot_table(index=\"store\", columns=\"category\",\n                      values=\"revenue\", aggfunc=\"sum\")\ngrid.round(0)", "state": true}, {"l": "l6", "t": "Read one cell", "learn": "<p><code class=\"inline\">.loc[row, column]</code> reads one cell of a table by its labels.</p><pre class=\"bc\">grid.loc[\"Tacoma\", \"Water\"]</pre>", "task": "Show how much revenue Bellingham made from the Snow category.", "code": "# Write your code below\n", "hint": "Row first, then column, both in quotes.", "sol": "grid.loc[\"Bellingham\", \"Snow\"]", "state": false}, {"l": "l6", "t": "Data from a database", "learn": "<p>The CSV does not say what kind of membership each member has. That lives in the <code class=\"inline\">members</code> table of the database you queried in Lab 7. pandas can run SQL against it and hand back a DataFrame.</p>", "task": "Read <code class=\"inline\">member_id</code> and <code class=\"inline\">member_type</code> from the members table into <code class=\"inline\">members</code>. Show the first rows.", "code": "import sqlite3\ncon = sqlite3.connect(\"cascadia.db\")\nmembers = pd.read_sql(\"SELECT ... FROM ...\", con)\n", "hint": "SELECT member_id, member_type FROM members", "sol": "import sqlite3\ncon = sqlite3.connect(\"cascadia.db\")\nmembers = pd.read_sql(\"SELECT member_id, member_type FROM members\", con)\nmembers.head()", "state": true}, {"l": "l6", "t": "Join two tables", "learn": "<p><code class=\"inline\">.merge()</code> is a JOIN. It matches rows on a shared column. First drop the sales with no member, using <code class=\"inline\">.dropna(subset=[\"member_id\"])</code>, since they have nothing to match.</p>", "task": "Make <code class=\"inline\">joined</code>: the member sales merged with <code class=\"inline\">members</code> on <code class=\"inline\">member_id</code>. Show how many rows it has.", "code": "# Write your code below\n", "hint": "joined = df.dropna(subset=[\"member_id\"]).merge(members, on=\"member_id\")", "sol": "joined = df.dropna(subset=[\"member_id\"]).merge(members, on=\"member_id\")\nlen(joined)", "state": true}, {"l": "l6", "t": "Two groupbys in a row", "learn": "<p>What does the average member spend in a year, by membership type? It takes two steps. First add up each member's year, grouping by type and member. Then average those totals by type.</p>", "task": "Make <code class=\"inline\">per_member</code>, each member's total revenue grouped by <code class=\"inline\">member_type</code> and <code class=\"inline\">member_id</code>. Then show its average by <code class=\"inline\">member_type</code>.", "code": "# Write your code below\n", "hint": "groupby can take a list of columns: groupby([\"member_type\", \"member_id\"])", "sol": "per_member = joined.groupby([\"member_type\", \"member_id\"])[\"revenue\"].sum()\nper_member.groupby(\"member_type\").mean()", "state": false}, {"l": "l7", "t": "A line chart", "learn": "<p>pandas draws charts with a library called matplotlib. Any Series can draw itself with <code class=\"inline\">.plot()</code>. <code class=\"inline\">plt.ylim(bottom=0)</code> starts the axis at zero, so the dips look as big as they are and no bigger. The first chart takes a few seconds more.</p>", "task": "Make <code class=\"inline\">monthly</code>, total revenue by month. Draw it as a line chart with the axis starting at zero.", "code": "import matplotlib.pyplot as plt\n# Write your code below\n", "hint": "monthly.plot(kind=\"line\", marker=\"o\", title=\"Revenue by month, 2025\")\nplt.ylim(bottom=0)\nplt.show()", "sol": "import matplotlib.pyplot as plt\nmonthly = df.groupby(\"month\")[\"revenue\"].sum()\nmonthly.plot(kind=\"line\", marker=\"o\", title=\"Revenue by month, 2025\")\nplt.ylim(bottom=0)\nplt.show()", "state": true}, {"l": "l7", "t": "A bar chart", "learn": "<p>Categories, like stores, read best as bars. <code class=\"inline\">kind=\"barh\"</code> draws them sideways, which leaves room for long names. Sort first so the order means something.</p>", "task": "Draw total revenue by store as a sideways bar chart, sorted.", "code": "import matplotlib.pyplot as plt\n# Write your code below\n", "hint": "df.groupby(\"store\")[\"revenue\"].sum().sort_values().plot(kind=\"barh\")", "sol": "import matplotlib.pyplot as plt\ndf.groupby(\"store\")[\"revenue\"].sum().sort_values().plot(kind=\"barh\", title=\"Revenue by store, 2025\")\nplt.show()", "state": false}, {"l": "l7", "t": "Find the low point in code", "learn": "<p>A chart shows the shape. Code gives the exact answer. <code class=\"inline\">.idxmin()</code> gives the label of the smallest value and <code class=\"inline\">.idxmax()</code> the largest.</p>", "task": "Show which month had the lowest revenue.", "code": "# Write your code below\n", "hint": "monthly.idxmin()", "sol": "monthly.idxmin()", "state": false}, {"l": "l8", "t": "Answer the General Manager", "learn": "<div class=\"callout\"><strong>Email &middot; Monday, 9:05 AM</strong><p style=\"font-family:var(--sans);font-size:.9rem\"><strong>From:</strong> General Manager<br><br>\"The board wants to know which store has momentum. Compare each store's revenue in the first half of 2025 (January to June) with the second half (July to December). Which store grew the most, in dollars? I need the name and the number by Thursday.\"</p></div><p>You have every piece: a column that labels each sale as first half or second half, a pivot or groupby, and one more column for the difference. There is no solution button for this one.</p>", "task": "Store the name of the store that grew the most in <code class=\"inline\">winner</code>, and its growth in dollars in <code class=\"inline\">growth</code>.", "code": "# Write your code below\n", "hint": "One way: df[\"half\"] = df[\"month\"].apply(lambda m: \"H1\" if m &lt;= 6 else \"H2\"). Then pivot_table with index=\"store\", columns=\"half\", values=\"revenue\", aggfunc=\"sum\", add a column for H2 minus H1, and sort it. .idxmax() on that column gives the store.", "sol": null, "state": false}], EDLABEL="Python code";
+
+const CODEHEAD="# MIS 320 Python Bootcamp", CMT="#", CODEFILE="PYTHONBOOTCAMP", CODEEXT=".py", CERTTITLE="Python Bootcamp \u00B7 Analysis with pandas";
+let passed=new Set(),codes={},tries={};
+function load(){try{const s=JSON.parse(localStorage.getItem(SKEY)||'null');if(!s)return null;
+ if(Array.isArray(s.passed))passed=new Set(s.passed.filter(i=>Number.isInteger(i)&&i>=0&&i<STEPS.length));
+ if(s.codes&&typeof s.codes==='object')codes=s.codes;return s}catch(e){return null}}
 function save(){try{const r=document.getElementById('refl'),n=document.getElementById('nm');
- localStorage.setItem(SKEY,JSON.stringify({solved:[...solved],refl:r?r.value:'',nm:n?n.value:''}))}catch(e){}}
-function resetLab(){if(!confirm('Clear your saved progress for this lab and start over?'))return;
- try{localStorage.removeItem(SKEY)}catch(e){}solved=new Set();
- const r=document.getElementById('refl'),n=document.getElementById('nm');if(r)r.value='';if(n)n.value='';
- render();if(r)r.dispatchEvent(new Event('input',{bubbles:true}));}
-const norm=s=>s.replace(/[$,\s]/g,'').toLowerCase();
-function render(){
- QS.forEach((q,i)=>{
-  const c=document.querySelector('.cpslot[data-cp="'+(i+1)+'"]');
-  if(!c)return; c.innerHTML='';
-  const lock=i>0&&!solved.has(i-1);
-  const d=document.createElement('div');
-  d.className='cp'+(solved.has(i)?' done':(lock?' locked':''));
-  d.innerHTML='<span class="cphead">Checkpoint '+(i+1)+' of '+QS.length+(solved.has(i)?' \u00b7 cleared':'')+'</span>'
-   +'<p class="q">'+q.q+'</p>'
-   +(solved.has(i)?'<p class="msg" style="color:var(--good)">Correct.</p>':'<input type="text" id="in'+i+'" aria-label="Answer '+(i+1)+'">'
-   +'<button onclick="chk('+i+')">Check</button>'
-   +'<button class="hintb" onclick="hint('+i+')">Hint</button>'
-   +'<p class="msg" id="m'+i+'" role="status" aria-live="polite"></p><p class="hint" id="h'+i+'">'+q.h+'</p>');
-  c.appendChild(d);
-  if(lock)c.insertAdjacentHTML('beforeend','<p class="lockmsg">Clear Checkpoint '+i+' first.</p>');});
- document.getElementById('prog').textContent='Checkpoint progress: '+solved.size+' / '+QS.length;
- const done=solved.size===QS.length;
- document.getElementById('reflectbox').className='certbox'+(done?' show':'');
- document.getElementById('certbox').className='certbox'+(done&&wc()>=50?' show':'');
+ localStorage.setItem(SKEY,JSON.stringify({passed:[...passed],codes:codes,refl:r?r.value:'',nm:n?n.value:''}))}catch(e){}}
+function resetLab(){if(!confirm('Clear your saved progress and code for this bootcamp and start over?'))return;
+ try{localStorage.removeItem(SKEY)}catch(e){}location.reload();}
+function esc2(t){return String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function unlocked(i){return i===0||passed.has(i-1)||passed.has(i)}
+function current(){for(let i=0;i<STEPS.length;i++)if(!passed.has(i))return i;return -1}
+function build(){
+ STEPS.forEach((s,i)=>{
+  const host=document.querySelector('#'+s.l+' .lsteps');
+  const d=document.createElement('div');d.className='st';d.id='st'+i;
+  d.innerHTML='<button type="button" class="sthead" aria-expanded="true" aria-controls="stb'+i+'"><span class="stn">Step '+(i+1)+' of '+STEPS.length+'</span><span class="stt">'+s.t+'</span><span class="stok">&#10003; Passed</span></button>'
+  +'<div class="stbody" id="stb'+i+'"><div class="learn">'+s.learn+'</div>'
+  +'<div class="task"><strong>Your task</strong><p>'+s.task+'</p></div>'
+  +'<div class="pycell st-ed"><textarea aria-label="'+EDLABEL+', step '+(i+1)+'" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"></textarea>'
+  +'<div class="pybar"><button type="button" class="go">Run and check</button><button type="button" class="hb">Hint</button><span class="stat" aria-live="polite"></span></div><pre class="pyout" tabindex="0" aria-label="Output, step '+(i+1)+'"></pre></div>'
+  +'<p class="fb" role="status"></p><div class="hint">'+s.hint+'</div>'
+  +(s.sol?'<div class="solbox" hidden><p style="margin:.2rem 0 .4rem">One solution. Read it, then type or copy it in and run it yourself.</p><pre class="bc" tabindex="0"></pre><button type="button" class="cp">Copy into the editor</button></div>':'')
+  +'<button type="button" class="nextb" hidden>Next step &#8595;</button></div>';
+  host.appendChild(d);
+  const ta=d.querySelector('textarea');ta.value=(codes[i]!=null?codes[i]:s.code);fit(ta);
+  if(s.sol)d.querySelector('.solbox pre').textContent=s.sol;
+  d.querySelector('.sthead').addEventListener('click',()=>toggle(i));
+  d.querySelector('.go').addEventListener('click',()=>go(i));
+  d.querySelector('.hb').addEventListener('click',()=>{d.querySelector('.hint').classList.toggle('show')});
+  if(s.sol)d.querySelector('.cp').addEventListener('click',()=>{ta.value=s.sol;fit(ta);codes[i]=ta.value;save();ta.focus()});
+  d.querySelector('.nextb').addEventListener('click',()=>next(i));
+  let tm;ta.addEventListener('input',()=>{fit(ta);clearTimeout(tm);tm=setTimeout(()=>{codes[i]=ta.value;save()},400)});
+  let escd=false;
+  ta.addEventListener('keydown',e=>{
+   if(e.key==='Escape'){escd=true;return}
+   if(e.key==='Enter'&&e.shiftKey){e.preventDefault();go(i);return}
+   if(e.key==='Tab'&&!e.shiftKey&&!escd){e.preventDefault();const a=ta.selectionStart,b=ta.selectionEnd;ta.value=ta.value.slice(0,a)+'    '+ta.value.slice(b);ta.selectionStart=ta.selectionEnd=a+4;ta.dispatchEvent(new Event('input'))}
+   escd=false;});
+ });
+ const lm=document.getElementById('lmap');
+ LESSONS.forEach((l,k)=>{const li=document.createElement('li');li.innerHTML='<a href="#'+l.id+'" id="lm'+k+'"></a>';lm.appendChild(li)});
+}
+function fit(ta){ta.rows=Math.max(3,ta.value.split('\n').length+1)}
+function toggle(i){const d=document.getElementById('st'+i),c=d.classList.toggle('closed');d.querySelector('.sthead').setAttribute('aria-expanded',c?'false':'true')}
+function setOpen(i,open){const d=document.getElementById('st'+i);d.classList.toggle('closed',!open);d.querySelector('.sthead').setAttribute('aria-expanded',open?'true':'false')}
+function paint(first){
+ const cur=current();
+ STEPS.forEach((s,i)=>{const d=document.getElementById('st'+i);d.hidden=!unlocked(i);
+  d.classList.toggle('done',passed.has(i));d.classList.toggle('cur',i===cur);
+  if(first)setOpen(i,i===cur);
+  d.querySelector('.nextb').hidden=!(passed.has(i)&&i+1<STEPS.length);});
+ LESSONS.forEach((l,k)=>{
+  const idx=STEPS.map((s,i)=>s.l===l.id?i:-1).filter(i=>i>=0);
+  const vis=idx.filter(unlocked).length,done=idx.filter(i=>passed.has(i)).length;
+  const sec=document.getElementById(l.id),lk=sec.querySelector('.lockmsg2');
+  sec.classList.toggle('locked',vis===0);
+  if(vis===0){lk.hidden=false;lk.textContent='Locked. This lesson opens when you finish '+(k?LESSONS[k-1].t:'the one before')+'.'}
+  else if(vis<idx.length){lk.hidden=false;lk.textContent=(idx.length-vis)+' more step'+(idx.length-vis>1?'s':'')+' in this lesson open as you go.'}
+  else lk.hidden=true;
+  const a=document.getElementById('lm'+k);a.textContent=(k+1<LESSONS.length?(k+1)+' · ':'')+l.t+' '+done+'/'+idx.length;
+  a.className=done===idx.length?'full':(vis?'':'off');});
+ document.getElementById('prog').textContent='Progress: '+passed.size+' / '+STEPS.length+' steps';
+ document.getElementById('pbarfill').style.width=(100*passed.size/STEPS.length)+'%';
+ const all=passed.size===STEPS.length;
+ document.getElementById('reflectbox').className='certbox'+(all?' show':'');
+ document.getElementById('certbox').className='certbox'+(all&&wc()>=50?' show':'');
+}
+function next(i){setOpen(i,false);const n=document.getElementById('st'+(i+1));if(!n)return;setOpen(i+1,true);
+ n.scrollIntoView({behavior:'smooth',block:'start'});setTimeout(()=>n.querySelector('textarea').focus({preventScroll:true}),350)}
+function go(i){
+ const d=document.getElementById('st'+i),ta=d.querySelector('textarea'),out=d.querySelector('.pyout'),fb=d.querySelector('.fb'),btn=d.querySelector('.go'),st=d.querySelector('.stat');
+ codes[i]=ta.value;save();btn.disabled=true;fb.textContent='';fb.className='fb';out.innerHTML='';
+ window.STEPRUN(i,ta.value,m=>{st.textContent=m}).then(r=>{
+  out.innerHTML=r.html||'<span style="color:#9aa">(ran with no output)</span>';
+  if(r.ok){const first=!passed.has(i);passed.add(i);save();st.textContent='';
+   fb.className='fb ok';fb.textContent=i+1<STEPS.length?'Passed. Nice work.':'Passed. That was the last step. Write your memo below.';
+   if(first&&i+1<STEPS.length)setOpen(i+1,true);paint(false);const sr=document.getElementById('srlive');if(sr)sr.textContent='Step '+(i+1)+' passed.';
+   if(first&&i+1<STEPS.length)d.querySelector('.nextb').focus({preventScroll:true});
+  }else{tries[i]=(tries[i]||0)+1;fb.className='fb no';
+   fb.textContent=r.err?'Your code stopped with an error. Read the last line of the output, fix it, and run it again.':('Not yet. '+(r.msg||'Re-read the task and try again.'));
+   st.textContent='';const sb=d.querySelector('.solbox');if(sb&&tries[i]>=2)sb.hidden=false;}
+ }).catch(e=>{out.innerHTML='<span class="err">'+esc2(e.message||e)+'</span>';st.textContent=''})
+ .then(()=>{btn.disabled=false});
 }
 function wc(){const t=document.getElementById('refl');return t?t.value.trim().split(/\s+/).filter(Boolean).length:0}
 document.addEventListener('input',function(e){
- if(e.target&&e.target.id==='refl'){
-  const n=wc();document.getElementById('reflcount').textContent=n+' words'+(n<50?': '+(50-n)+' more to unlock your certificate':': certificate unlocked below');
-  document.getElementById('certbox').className='certbox'+(solved.size===QS.length&&n>=50?' show':'');save();
- }
+ if(e.target&&e.target.id==='refl'){const n=wc();
+  document.getElementById('reflcount').textContent=n+' words'+(n<50?': '+(50-n)+' more to unlock your certificate':': certificate unlocked below');
+  document.getElementById('certbox').className='certbox'+(passed.size===STEPS.length&&n>=50?' show':'');save();}
+ if(e.target&&e.target.id==='nm')save();
 });
-function hint(i){const h=document.getElementById('h'+i);h.style.display=h.style.display==='block'?'none':'block'}
-function chk(i){
- const v=document.getElementById('in'+i).value,m=document.getElementById('m'+i);
- if(!v.trim()){m.textContent='Enter an answer first.';m.style.color='#7d6608';return}
- const ans=atob(QS[i].a);let ok=false;
- if(QS[i].t==='num'){const g=parseFloat(norm(v)),a=parseFloat(ans);ok=!isNaN(g)&&Math.abs(g-a)<=QS[i].tol}
- else ok=norm(v)===norm(ans);
- if(ok){solved.add(i);save();render();var sr=document.getElementById('srlive');if(sr)sr.textContent='Checkpoint '+(i+1)+' cleared.';var nx=document.getElementById('in'+(i+1));if(nx)nx.focus();}
- else{m.textContent='Not yet: check the hint, or re-read the step above.';m.style.color='#a03434'}
+function dlcode(){
+ const n=(document.getElementById('nm')||{}).value||'';
+ let t=CODEHEAD+'\n\n';STEPS.forEach((s,i)=>{const c=codes[i]!=null?codes[i]:'';t+=CMT+' Step '+(i+1)+' · '+s.t+(passed.has(i)?'':' (not passed yet)')+'\n'+c.trim()+'\n\n'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:'text/plain'}));
+ a.download=CODEFILE+(n.trim()?'_'+n.trim().replace(/[^A-Za-z]+/g,'_').replace(/^_|_$/g,''):'')+CODEEXT;document.body.appendChild(a);a.click();a.remove();
 }
+build();
+(function(){const s=load();if(s){const r=document.getElementById('refl'),n=document.getElementById('nm');if(r&&s.refl){r.value=s.refl;r.dispatchEvent(new Event('input',{bubbles:true}))}if(n&&s.nm)n.value=s.nm;}paint(true);})();
 function h32(s){let h=5381;for(const c of s)h=((h<<5)+h+c.charCodeAt(0))|0;return(h>>>0).toString(36).toUpperCase()}
 function cert(){
  const n=document.getElementById('nm').value.trim();
  if(!n){document.getElementById('codeout').textContent='Enter your name first.';return}
  const r=document.getElementById('refl').value.trim();
- if(wc()<50){document.getElementById('codeout').textContent='Finish your 50-word reflection above first.';return}
- const code=LAB+'-'+h32(n.toLowerCase()+'|'+LAB+'|'+QS.length);
+ if(passed.size<STEPS.length){document.getElementById('codeout').textContent='Pass every step first.';return}
+ if(wc()<50){document.getElementById('codeout').textContent='Finish your 50-word memo above first.';return}
+ const N=STEPS.length,code=LAB+'-'+h32(n.toLowerCase()+'|'+LAB+'|'+N);
  const d=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
  const {jsPDF}=window.jspdf;const p=new jsPDF({orientation:'landscape',unit:'pt',format:[560,380]});
- p.setFillColor(11,29,51);p.rect(0,0,560,380,'F');
- p.setFillColor(253,252,250);p.rect(16,16,528,348,'F');
+ p.setFillColor(11,29,51);p.rect(0,0,560,380,'F');p.setFillColor(253,252,250);p.rect(16,16,528,348,'F');
  p.setTextColor(26,82,118);p.setFont('helvetica','bold');p.setFontSize(10);
- p.text('MIS 320 \u00B7 INTRODUCTION TO INFORMATION SYSTEMS \u00B7 WWU',280,58,{align:'center'});
- p.setTextColor(26,26,26);p.setFont('times','bold');p.setFontSize(26);
- p.text('Certificate of Completion',280,105,{align:'center'});
+ p.text('MIS 320 · INTRODUCTION TO INFORMATION SYSTEMS · WWU',280,58,{align:'center'});
+ p.setTextColor(26,26,26);p.setFont('times','bold');p.setFontSize(26);p.text('Certificate of Completion',280,105,{align:'center'});
  p.setFont('times','normal');p.setFontSize(13);p.text('This certifies that',280,140,{align:'center'});
  p.setFont('times','bold');p.setFontSize(20);p.text(n,280,170,{align:'center'});
- p.setFont('times','normal');p.setFontSize(13);
- p.text('completed all '+QS.length+' checkpoints of',280,198,{align:'center'});
- p.setFont('helvetica','bold');p.setFontSize(15);p.setTextColor(26,82,118);
- p.text('Python Bootcamp \u00B7 Analysis with pandas',280,222,{align:'center'});
- p.setFont('helvetica','normal');p.setFontSize(11);p.setTextColor(90,90,90);
- p.text(d,280,252,{align:'center'});
- p.setFont('courier','bold');p.setFontSize(12);p.setTextColor(17,120,100);
- p.text('Verification code: '+code,280,290,{align:'center'});
+ p.setFont('times','normal');p.setFontSize(13);p.text('completed all '+N+' steps of',280,198,{align:'center'});
+ p.setFont('helvetica','bold');p.setFontSize(15);p.setTextColor(26,82,118);p.text(CERTTITLE,280,222,{align:'center'});
+ p.setFont('helvetica','normal');p.setFontSize(11);p.setTextColor(90,90,90);p.text(d,280,252,{align:'center'});
+ p.setFont('courier','bold');p.setFontSize(12);p.setTextColor(17,120,100);p.text('Verification code: '+code,280,290,{align:'center'});
  p.setFontSize(8);p.setFont('helvetica','normal');p.setTextColor(150,150,150);
- p.text('Upload this PDF to Canvas. Reflection on page 2. Code is unique to name + lab.',280,330,{align:'center'});
- p.addPage([560,380],'landscape');
- p.setFillColor(253,252,250);p.rect(0,0,560,380,'F');
- p.setDrawColor(11,29,51);p.setLineWidth(2);p.rect(16,16,528,348);
- p.setTextColor(26,82,118);p.setFont('helvetica','bold');p.setFontSize(10);
- p.text('MEMO \u00B7 '+n+' \u00B7 '+code,280,44,{align:'center'});
- p.setTextColor(60,60,60);p.setFont('times','italic');p.setFontSize(9);
- const promptLines=p.splitTextToSize('Prompt: Which store grew the most, by how much, and how you got the number. One reason the number could mislead the board, and one more thing to check before calling it momentum.',480);
- p.text(promptLines,40,70);
+ p.text('Upload this PDF to Canvas. Memo on page 2. Code is unique to name + bootcamp.',280,330,{align:'center'});
+ p.addPage([560,380],'landscape');p.setFillColor(253,252,250);p.rect(0,0,560,380,'F');
+ p.setTextColor(26,26,26);p.setFont('helvetica','bold');p.setFontSize(13);p.text('Memo to the General Manager',40,50);
+ p.setFont('helvetica','normal');p.setFontSize(9);p.setTextColor(90,90,90);p.text(n+' · '+code,40,66);
  p.setFont('times','normal');p.setFontSize(11);p.setTextColor(26,26,26);
- const lines=p.splitTextToSize(r,480);
- p.text(lines.slice(0,22),40,70+promptLines.length*11+14);
- p.save(LAB+'_certificate_'+n.replace(/[^a-z0-9]/gi,'_')+'.pdf');
- document.getElementById('codeout').innerHTML='Certificate downloaded (reflection on page 2). Your code: <code>'+code+'</code>';
+ const lines=p.splitTextToSize(r,480);p.text(lines.slice(0,24),40,92);
+ p.save(CODEFILE+'_certificate.pdf');
+ document.getElementById('codeout').textContent='Certificate downloaded (memo on page 2). Your code: '+code;
 }
-(function(){const s=load();render();
- if(s){const r=document.getElementById('refl'),n=document.getElementById('nm');
-  if(r&&s.refl){r.value=s.refl;r.dispatchEvent(new Event('input',{bubbles:true}))}
-  if(n&&s.nm)n.value=s.nm;}
- const nm=document.getElementById('nm');if(nm)nm.addEventListener('input',save);})();
+
 </script>
 
 <!--NAVJS-->
