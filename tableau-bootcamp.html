@@ -305,7 +305,16 @@ li{margin-bottom:.45rem}
 input::placeholder{color:#6b6b68;opacity:1}.cp.done{border-left:4px solid var(--good);background:var(--good-pale)}.cp .q{font-family:var(--sans);font-size:.92rem;color:var(--navy);margin:0 0.6rem;font-weight:500}.cp input[type=text]{font-family:var(--sans);font-size:.9rem;padding:.45rem.6rem;border:1px solid var(--rule);border-radius:2px;width:14rem;max-width:100%}.cp button{font-family:var(--sans);font-size:.8rem;font-weight:600;letter-spacing:.04em;background:var(--accent-deep);color:#fff;border:none;border-radius:2px;padding:.5rem.9rem;cursor:pointer;margin-left:.4rem}.cp button.hintb{background:none;color:var(--accent-deep);border:1px solid var(--rule)}.cp .msg{font-family:var(--sans);font-size:.8rem;margin:.5rem 0 0}.cp .hint{font-family:var(--sans);font-size:.8rem;color:var(--muted);margin:.5rem 0 0;display:none;border-top:1px dashed var(--rule);padding-top:.5rem}.progress{position:sticky;top:0;z-index:5;background:var(--black);color:#fff;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:.6rem 1rem;margin:1.5rem 0}.certbox{border:2px solid var(--black);background:var(--paper);padding:1.2rem 1.3rem;margin:1.5rem 0;display:none}.certbox.show{display:block}.certbox h3{margin-top:0}.codebox code{font-family:ui-monospace,Menlo,monospace;background:var(--cream-deep);padding:.15em.45em;border-radius:2px}
 </style>
 <link rel="stylesheet" href="book.css">
-<link rel="stylesheet" href="lab.css"><style id="ux-mobile-nav">@media (max-width:700px){.topnav,nav.top{position:relative;z-index:200}.topnav .dd,nav.top .dd{position:static}.topnav .dd-menu,nav.top .dd-menu{left:.75rem;right:.75rem;min-width:0;top:calc(100% - .2rem);max-height:65vh;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}}@media (min-width:701px){.topnav-in{gap:.6rem}.nav-links{gap:.5rem}.topnav-brand{max-width:16rem;line-height:1.3}.topnav .dd-btn{padding-left:.7rem;padding-right:.7rem}}@media (min-width:701px) and (max-width:1100px){.topnav-brand{max-width:none;width:100%}.topnav .dd{position:static}.topnav .dd-menu{left:auto;right:1.5rem;top:calc(100% - .3rem)}}</style>
+<link rel="stylesheet" href="lab.css"><style id="ask-css">
+.ask{background:#fff;border:1px solid var(--border);border-left:4px solid var(--accent-deep);padding:.75rem 1rem;margin:.2rem 0 1rem}
+.ask p{margin:.2rem 0}
+.ask-h{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-deep)}
+.ask-q{font-size:1.02rem;font-style:italic}
+.ask-d{font-family:var(--sans);font-size:.9rem}
+.lwrap{background:#eef7f1;border-left:4px solid #1e7a4a;padding:.6rem 1rem;margin:.8rem 0;font-family:var(--sans);font-size:.92rem}
+.lwrap strong{color:#1e7a4a}.lwrap p{margin:.2rem 0 0}
+</style>
+<style id="ux-mobile-nav">@media (max-width:700px){.topnav,nav.top{position:relative;z-index:200}.topnav .dd,nav.top .dd{position:static}.topnav .dd-menu,nav.top .dd-menu{left:.75rem;right:.75rem;min-width:0;top:calc(100% - .2rem);max-height:65vh;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}}@media (min-width:701px){.topnav-in{gap:.6rem}.nav-links{gap:.5rem}.topnav-brand{max-width:16rem;line-height:1.3}.topnav .dd-btn{padding-left:.7rem;padding-right:.7rem}}@media (min-width:701px) and (max-width:1100px){.topnav-brand{max-width:none;width:100%}.topnav .dd{position:static}.topnav .dd-menu{left:auto;right:1.5rem;top:calc(100% - .3rem)}}</style>
 <style id="bc-css">pre.bc{background:var(--off-white);border:1px solid var(--border);border-left:4px solid var(--magenta);padding:.75rem .95rem;overflow-x:auto;font-family:ui-monospace,Menlo,monospace;font-size:.86rem;line-height:1.55;margin:.5rem 0 1rem;white-space:pre}</style>
 </head><body>
 <a href="#top" class="skiplink">Skip to content</a>
@@ -444,7 +453,7 @@ does not follow you to another computer or a private window. To start over, use 
 </div>
 
 <h2 id="m1"><span class="num">1</span>Dates: the same sales, cut by time</h2>
-<p class="ldesc" style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin:-.3rem 0 .8rem">Business question: when in the year, and on which days, does Cascadia sell?</p>
+<div class="ask"><p class="ask-h">The ask &middot; from the Marketing Lead</p><p class="ask-q">&ldquo;When in the year, and on which days, should we run promotions?&rdquo;</p><p class="ask-d"><strong>The decision it feeds:</strong> The promotion calendar.</p></div>
 <p>About 30 minutes. Tableau reads <code class="inline">sale_date</code> as a date, which means it can
 roll the 2,899 sales up to any level of time. Drag <code class="inline">sale_date</code> to Columns and
 <code class="inline">revenue</code> to Rows. You get one bar per year, and there is only one year. Click
@@ -460,7 +469,7 @@ pill to switch. For this module, date parts are what you want.</p>
 <div class="cpslot" data-cp="2"></div>
 
 <h2 id="m2"><span class="num">2</span>Calculated fields: columns you invent</h2>
-<p class="ldesc" style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin:-.3rem 0 .8rem">Business question: which suppliers earn the best margins, and how much revenue comes from bulk orders?</p>
+<div class="ask"><p class="ask-h">The ask &middot; from the Purchasing Manager</p><p class="ask-q">&ldquo;Which suppliers earn us the best margins, and how much revenue comes from bulk orders?&rdquo;</p><p class="ask-d"><strong>The decision it feeds:</strong> Supplier talks and bulk pricing.</p></div>
 <p>About 40 minutes. In Lab 6 you built one calculated field, the margin rate. Here is the rule that
 makes those work: <strong>aggregate before you divide</strong>. <code class="inline">SUM([gross_margin]) /
 SUM([revenue])</code> gives the margin rate for whatever the view groups by. Writing
@@ -478,7 +487,7 @@ percentage, and show it by <code class="inline">supplier</code>.</p>
 <div class="cpslot" data-cp="4"></div>
 
 <h2 id="m3"><span class="num">3</span>Table calculations: numbers that depend on other rows</h2>
-<p class="ldesc" style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin:-.3rem 0 .8rem">Business question: what is each category's share, how is the year adding up, and which months dropped?</p>
+<div class="ask"><p class="ask-h">The ask &middot; from the General Manager</p><p class="ask-q">&ldquo;What share does each category bring in, how is the year adding up, and which months dropped?&rdquo;</p><p class="ask-d"><strong>The decision it feeds:</strong> Where to look first when a month goes wrong.</p></div>
 <p>About 45 minutes. A table calculation is computed from the numbers already in the view, after
 Tableau has added them up. You just used one, Percent of Total. Three more cover most of what managers
 ask for: share of the whole, the total so far, and change from last period.</p>
@@ -497,7 +506,7 @@ Switch to bars so the drops stand out.</p>
 <div class="cpslot" data-cp="7"></div>
 
 <h2 id="m4"><span class="num">4</span>Level of detail: fixing a number at the right level</h2>
-<p class="ldesc" style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin:-.3rem 0 .8rem">Business question: how much does each member spend in a year, and when did members first buy?</p>
+<div class="ask"><p class="ask-h">The ask &middot; from the Membership Manager</p><p class="ask-q">&ldquo;How much does each member spend in a year, and when did our members first buy?&rdquo;</p><p class="ask-d"><strong>The decision it feeds:</strong> How to reward the best members, and when new ones join.</p></div>
 <p>About 45 minutes. Every view has a <strong>level of detail</strong>: whatever is on Rows, Columns, and
 the Marks card decides what Tableau adds up. Sometimes you need a number at a different level than the
 view. "How much did each member spend all year?" is a question about members, even when the view shows
@@ -518,7 +527,7 @@ Sales with no member attached show up as a blank member_id; exclude the Null.</p
 <div class="cpslot" data-cp="9"></div>
 
 <h2 id="m5"><span class="num">5</span>Parameters and sets: views a manager can steer</h2>
-<p class="ldesc" style="font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin:-.3rem 0 .8rem">Business question: what would a manager want to adjust in the view without calling you?</p>
+<div class="ask"><p class="ask-h">The ask &middot; from the General Manager</p><p class="ask-q">&ldquo;Build me a view I can adjust myself, so I do not have to ask you every time.&rdquo;</p><p class="ask-d"><strong>The decision it feeds:</strong> Fewer one-off requests, and faster answers in meetings.</p></div>
 <p>About 40 minutes. A <strong>parameter</strong> is a value the viewer controls. Create one called
 <code class="inline">Top N</code>: an integer, current value 5. Then show revenue by product, drag
 <code class="inline">product</code> to Filters, open the <strong>Top</strong> tab, choose <strong>By
