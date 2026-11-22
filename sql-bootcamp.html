@@ -355,7 +355,64 @@ body.sbxdocked:not(.sbxcollapsed) .sbxgrip{display:block}
 code .kw{color:var(--magenta);font-weight:700}
 </style>
 <link rel="stylesheet" href="book.css">
-<link rel="stylesheet" href="lab.css"><style id="ux-mobile-nav">@media (max-width:700px){.topnav,nav.top{position:relative;z-index:200}.topnav .dd,nav.top .dd{position:static}.topnav .dd-menu,nav.top .dd-menu{left:.75rem;right:.75rem;min-width:0;top:calc(100% - .2rem);max-height:65vh;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}}@media (min-width:701px){.topnav-in{gap:.6rem}.nav-links{gap:.5rem}.topnav-brand{max-width:16rem;line-height:1.3}.topnav .dd-btn{padding-left:.7rem;padding-right:.7rem}}@media (min-width:701px) and (max-width:1100px){.topnav-brand{max-width:none;width:100%}.topnav .dd{position:static}.topnav .dd-menu{left:auto;right:1.5rem;top:calc(100% - .3rem)}}</style>
+<link rel="stylesheet" href="lab.css">
+<style id="step-css">
+.lesson{margin:2.2rem 0 1rem}
+.lesson.locked h2{color:var(--text-light)}
+.ldesc{font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin:-.3rem 0 .8rem}
+.lockmsg2{font-family:var(--sans);font-size:.88rem;color:var(--text-light);border:1px dashed var(--border);padding:.55rem .9rem;margin:.6rem 0}
+.st{border:1px solid var(--border);background:#fff;margin:.7rem 0}
+.st[hidden]{display:none}
+.sthead{display:flex;flex-wrap:wrap;align-items:baseline;gap:.2rem .8rem;width:100%;text-align:left;background:none;border:0;padding:.75rem 1rem;cursor:pointer;font:inherit;color:inherit}
+.sthead:focus-visible{outline:2px solid var(--magenta);outline-offset:-2px}
+.stn{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--magenta-dark)}
+.stt{font-family:var(--display);font-weight:700;font-size:1.05rem;flex:1 1 12rem}
+.stok{display:none;font-family:var(--sans);font-size:.8rem;font-weight:700;color:var(--good,#1e7a4a)}
+.st.done .stok{display:inline}
+.st.done{border-left:4px solid var(--good,#1e7a4a)}
+.st.cur{border-left:4px solid var(--magenta);box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.stbody{padding:0 1rem 1rem}
+.st.closed .stbody{display:none}
+.learn p{margin:.3rem 0 .7rem}
+.task{background:#fdf2f7;border-left:4px solid var(--magenta);padding:.6rem .9rem;margin:.6rem 0;font-family:var(--sans);font-size:.95rem}
+.task strong{display:block;font-family:var(--display);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:.2rem}
+.task p{margin:0}
+.st-ed{margin:.6rem 0 .5rem}
+.st-ed{border:1px solid var(--border);border-left:4px solid var(--magenta);background:var(--off-white)}
+.st-ed textarea{display:block;width:100%;box-sizing:border-box;border:0;background:transparent;font-family:ui-monospace,Menlo,monospace;font-size:.86rem;line-height:1.55;padding:.7rem .9rem;resize:vertical;color:#111;white-space:pre;overflow-x:auto;tab-size:4}
+.st-ed textarea:focus{outline:2px solid var(--magenta);outline-offset:-2px}
+.st-ed .pybar{display:flex;flex-wrap:wrap;align-items:center;gap:.7rem;padding:.4rem .9rem;border-top:1px solid var(--border);background:#fff}
+.st-ed .pybar button{font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:var(--magenta);color:#fff;border:0;padding:.4rem .9rem;cursor:pointer}
+.st-ed .pybar button:disabled{opacity:.6;cursor:wait}
+.st-ed .pybar span.stat{font-family:var(--sans);font-size:.8rem;color:#5f5f5f;padding:0;margin:0;border:0;background:none;display:inline}
+.st-ed .pybar span.stat:empty{display:none}
+.st-ed .pyout{margin:0;padding:.6rem .9rem;background:#0e0e0d;color:#f2f2ee;font-family:ui-monospace,Menlo,monospace;font-size:.8rem;line-height:1.45;white-space:pre;overflow-x:auto;max-height:420px;overflow-y:auto}
+.st-ed .pyout:empty{display:none}
+.st-ed .pyout .err{color:#ff9db8}
+.st-ed .pyout img{display:block;max-width:100%;height:auto;background:#fff;margin:.4rem 0}
+#steps.sql .st-ed .pyout{background:#f6f4f1;color:#0e0e0d;white-space:normal;font-family:var(--sans);font-size:.85rem;border-top:1px solid var(--border)}
+#steps.sql .st-ed .pyout .err{color:#a03434}
+
+.st-ed .pybar button+button{background:#fff;color:var(--magenta-dark);border:1px solid var(--magenta)}
+.fb{font-family:var(--sans);font-size:.95rem;margin:.4rem 0;min-height:1.2em}
+.fb.ok{color:var(--good,#1e7a4a);font-weight:600}
+.fb.no{color:#a03434}
+.st .hint{display:none;font-family:var(--sans);font-size:.9rem;background:var(--off-white);border:1px solid var(--border);padding:.55rem .85rem;margin:.4rem 0}
+.st .hint.show{display:block}
+.solbox{border:1px solid var(--border);padding:.5rem .85rem;margin:.4rem 0;font-family:var(--sans);font-size:.88rem}
+.solbox button,.nextb{font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;padding:.45rem 1rem}
+.solbox button{background:#fff;color:var(--magenta-dark);border:1px solid var(--magenta)}
+.nextb{background:var(--good,#1e7a4a);color:#fff;border:0;margin-top:.3rem}
+.pbar{height:10px;background:var(--off-white);border:1px solid var(--border);margin:.5rem 0 .2rem}
+.pbar span{display:block;height:100%;background:var(--magenta);width:0;transition:width .3s}
+.lmap{display:flex;flex-wrap:wrap;gap:.4rem;margin:.6rem 0 0;padding:0;list-style:none;font-family:var(--sans);font-size:.85rem}
+.lmap a{display:inline-block;padding:.25rem .6rem;border:1px solid var(--border);text-decoration:none;color:#1a1a1a;background:#fff}
+.lmap a.full{border-color:#1e7a4a;color:#1e7a4a}
+.lmap a.off{color:#5f5f5f}
+@media (max-width:700px){.st-ed textarea{font-size:16px}.stbody{padding:0 .7rem .9rem}.sthead{padding:.7rem}}
+@media print{.st[hidden]{display:block}.st.closed .stbody{display:block}.pybar,.nextb,.solbox button{display:none}}
+</style>
+<style id="ux-mobile-nav">@media (max-width:700px){.topnav,nav.top{position:relative;z-index:200}.topnav .dd,nav.top .dd{position:static}.topnav .dd-menu,nav.top .dd-menu{left:.75rem;right:.75rem;min-width:0;top:calc(100% - .2rem);max-height:65vh;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}}@media (min-width:701px){.topnav-in{gap:.6rem}.nav-links{gap:.5rem}.topnav-brand{max-width:16rem;line-height:1.3}.topnav .dd-btn{padding-left:.7rem;padding-right:.7rem}}@media (min-width:701px) and (max-width:1100px){.topnav-brand{max-width:none;width:100%}.topnav .dd{position:static}.topnav .dd-menu{left:auto;right:1.5rem;top:calc(100% - .3rem)}}</style>
 <style id="bc-css">pre.bc{background:var(--off-white);border:1px solid var(--border);border-left:4px solid var(--magenta);padding:.75rem .95rem;overflow-x:auto;font-family:ui-monospace,Menlo,monospace;font-size:.86rem;line-height:1.55;margin:.5rem 0 1rem;white-space:pre}</style>
 </head><body>
 <a href="#top" class="skiplink">Skip to content</a>
@@ -457,22 +514,25 @@ disagree. <strong>Operations:</strong> which stores are below their reorder poin
 <strong>HR:</strong> turnover by department and manager. Each one is a query or two.</p></div>
 
 
-<div class="toc"><strong>Contents</strong> <a href="#why">Why</a> &nbsp;·&nbsp; <a href="#m1">1 · Warm-up</a> &nbsp;·&nbsp; <a href="#m2">2 · Joins</a> &nbsp;·&nbsp; <a href="#m3">3 · Groups</a> &nbsp;·&nbsp; <a href="#m4">4 · Dates and CASE</a> &nbsp;·&nbsp; <a href="#m5">5 · Subqueries and CTEs</a> &nbsp;·&nbsp; <a href="#m6">6 · Window functions</a> &nbsp;·&nbsp; <a href="#m7">Capstone</a> &nbsp;·&nbsp; <a href="#finish">Certificate</a> &nbsp;·&nbsp; <a href="#submit">What to submit</a></div>
+<div class="toc"><strong>Contents</strong> <a href="#why">Why</a> &nbsp;·&nbsp; <a href="#sandbox">Sandbox</a> &nbsp;·&nbsp; <a href="#l1">1 · Reading a table</a> &nbsp;·&nbsp; <a href="#l2">2 · Adding things up</a> &nbsp;·&nbsp; <a href="#l3">3 · Joins</a> &nbsp;·&nbsp; <a href="#l4">4 · Dates and CASE</a> &nbsp;·&nbsp; <a href="#l5">5 · Queries inside queries</a> &nbsp;·&nbsp; <a href="#l6">6 · Window functions</a> &nbsp;·&nbsp; <a href="#l7">Capstone</a> &nbsp;·&nbsp; <a href="#finish">Certificate</a></div>
 <p class="printbox"><span>Wanna go analog?</span><button type="button" onclick="window.print()" aria-label="Print here: print this page or save it as a PDF">&#9113;&nbsp; Print here</button><span>or save it as a PDF; the navigation drops out</span></p>
 
 <div class="callout"><strong>Who this is for, and what you get</strong>
 <p style="font-family:var(--sans);font-size:.95rem">It is optional. If Lab 7 made sense and you want a
-skill that shows up in a lot of business job postings, this is it. Finish all twelve checkpoints, write
-a short memo, and upload your certificate to the <strong>SQL Bootcamp</strong> assignment in Canvas. Each bootcamp you finish adds <strong>2 points to your lowest exam score</strong>. Do it in several sittings; your progress saves in this browser.</p>
+skill that shows up in a lot of business job postings, this is it. You learn in 35 short steps, one idea
+at a time, and you write every query yourself. Pass every step, write a short memo, and upload your
+certificate and your queries to the <strong>SQL Bootcamp</strong> assignment in Canvas. Each bootcamp you
+finish adds <strong>2 points to your lowest exam score</strong>. Do it in several sittings; your progress
+saves in this browser.</p>
 <p style="font-family:var(--sans);font-size:.95rem">It is also something you can put on a resume. One
-honest way to say it: <em>Completed a 12-checkpoint SQL bootcamp (joins, aggregation, CTEs, window
+honest way to say it: <em>Completed a 35-step SQL bootcamp (joins, aggregation, CTEs, window
 functions) on a 2,899-row retail database.</em> The <a href="resume.html">resume page</a> shows where a
 line like that goes.</p></div>
 
 <div class="ailight g">
   <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
   <div class="lighttext"><strong>Green &middot; AI as coach</strong>
-  <p>Ask an AI to explain an error message, or what a keyword does, or why your query returns more rows than you expected. Then fix the query yourself. Do not ask it to write the checkpoint queries. Writing them is the skill, and the certificate says you have it.</p></div>
+  <p>Ask an AI to explain an error message, or what a keyword does, or why your query returns more rows than you expected. Then fix the query yourself. Do not ask it to write the query for a step. Writing them is the skill, and the certificate says you have it.</p></div>
 </div>
 
 <div class="callout"><strong>The tables you will use</strong>
@@ -487,24 +547,10 @@ line like that goes.</p></div>
 is <code class="inline">quantity * unit_price</code></strong> from the sales table. The unit_price on a
 sale is what the customer actually paid, which is not always the list price.</p></div>
 
-<div id="steps">
-
-<div class="callout callout-bridge"><strong>How the checkpoints work</strong>
-<p style="font-family:var(--sans);font-size:.95rem">Each checkpoint sits under the module that teaches
-it. Most give you a worked query to run first, then ask a question that needs a small change to it. Get
-it right and the next one opens. There is no penalty for a wrong answer, and every checkpoint has a hint.</p>
-<p style="font-family:var(--sans);font-size:.95rem">Your progress saves automatically in this browser, so
-you can close the tab and come back. It does not follow you to another computer or a private window. To
-start over, use the <button type="button" class="hintb" onclick="resetLab()">Reset this bootcamp</button> button.</p>
-<div class="progress" id="prog">Checkpoint progress: 0 / 12</div>
-</div>
-
-<h2><span class="num">Tool</span>The sandbox: where every query in this lab gets typed</h2>
-<p>The dark box below is not a checkpoint and nothing you type in it is graded. It is your workbench.
-Every step in Part 2 says "type this into the sandbox"; this is the sandbox. Press <strong>Dock</strong>
-and it follows you down the page, so you never have to scroll back up to it.</p>
+<h2 id="sandbox"><span class="num">Tool</span>The sandbox: your scratch space</h2>
+<p>The dark box below is not a step, and nothing you type in it is graded. Use it to look at a table before you write a step's query, or to try an idea. Press <strong>Dock</strong> and it follows you down the page.</p>
 <div id="sqlbox" style="background:var(--off-black);color:#f6f4f1;border-radius:3px;padding:1rem 1.15rem 1.15rem;margin:1.2rem 0;border-left:6px solid var(--magenta)">
-  <div class="sbxbar"><p style="font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--magenta-onblack);margin:0 0 .5rem">Sandbox &middot; tool, not a checkpoint</p>
+  <div class="sbxbar"><p style="font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--magenta-onblack);margin:0 0 .5rem">Sandbox &middot; tool, not a step</p>
   <span class="sbxbtns"><button type="button" class="sbxbtn" id="sbxcollapse" aria-expanded="true" onclick="sbxCollapse()">Hide</button><button type="button" class="sbxbtn" id="sbxdock" aria-pressed="false" onclick="sbxDock()">Dock</button></span></div>
   <p id="sqlstatus" style="font-family:var(--sans);font-size:.85rem;color:#c9c6c0;margin:0 0 .6rem">Loading database&hellip;</p>
   <div class="sqlwrap"><pre id="sqlhl" aria-hidden="true"></pre><textarea id="sqlin" rows="5" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="SQL query" placeholder="SELECT store_name, region FROM stores WHERE region = 'Inland';"></textarea></div>
@@ -517,7 +563,7 @@ and it follows you down the page, so you never have to scroll back up to it.</p>
 <p class="sbxspot">The sandbox is docked. Press <strong>Undock</strong> on it to put it back here.</p>
 
 <details class="howto"><summary>The SQL cheat sheet: every word this lab uses, plus a few more, all runnable</summary><div class="howto-body">
-<p>Every example below runs in the sandbox as written. The four groups are the order the steps use them
+<p>Every example below runs in the sandbox as written. The four groups are the order the lessons use them
 in. Come back here whenever a word looks unfamiliar.</p>
 <p><strong>1. Getting data out: SELECT and FROM.</strong> Every query starts with these two. The star
 means all columns; naming columns keeps the result narrow; DISTINCT means each value once.</p>
@@ -545,183 +591,21 @@ SELECT store_id, SUM(quantity * unit_price) FROM sales GROUP BY store_id;</pre>
 with no spreadsheet equivalent.</p>
 </div></details>
 
-<h2 id="m1"><span class="num">1</span>Warm-up: the Lab 7 words, faster</h2>
-<p>About 20 minutes. Start by getting your bearings. These three queries show what is in the database
-and remind you of the shape every query has.</p>
-<pre class="bc" tabindex="0">SELECT * FROM stores;
-SELECT DISTINCT category FROM products;
-SELECT COUNT(*) FROM products WHERE category = 'Water';</pre>
-<p>The last one counts the products in one category. Change one word to answer the checkpoint.</p>
-<div class="sh" id="step1"><span class="badge">Module 1</span><span class="ttl">Counting with a condition</span><span class="cpx">Answer goes in <b>Checkpoint 1</b></span></div>
-<div class="cpslot" data-cp="1"></div>
-
-<h2 id="m2"><span class="num">2</span>Joins: three tables at once</h2>
-<p>About 45 minutes. A sales row says <code class="inline">product_id = 129</code>, not "Touring Ski
-Package." To get names, you <strong>join</strong> tables on the keys they share. You can chain as many
-joins as you need, and short names after each table, called <strong>aliases</strong>, keep the query
-readable:</p>
-<pre class="bc" tabindex="0">SELECT s.sale_date, p.product_name, st.store_name
-FROM sales s
-JOIN products p ON s.product_id = p.product_id
-JOIN stores st ON s.store_id = st.store_id
-LIMIT 10;</pre>
-<p>Read it from the middle out: start with sales, attach each sale's product, then attach its store.
-Now add a third hop. Suppliers do not connect to sales directly. They connect through products:</p>
-<pre class="bc" tabindex="0">SELECT su.supplier_name, SUM(s.quantity * s.unit_price) AS revenue
-FROM sales s
-JOIN products p ON s.product_id = p.product_id
-JOIN suppliers su ON p.supplier_id = su.supplier_id
-GROUP BY su.supplier_name;</pre>
-<div class="sh" id="step2"><span class="badge">Module 2</span><span class="ttl">Following the keys</span><span class="cpx">Answer goes in <b>Checkpoint 2</b></span></div>
-<div class="cpslot" data-cp="2"></div>
-
-<p>A plain JOIN keeps only rows that match on both sides. Sometimes the question is about what is
-<em>missing</em>: customers who never came back, products that never sold. For that you need a
-<strong>LEFT JOIN</strong>, which keeps every row from the first table and leaves blanks where nothing
-matched. Then you keep only the blanks:</p>
-<pre class="bc" tabindex="0">SELECT m.first_name, m.last_name
-FROM members m
-LEFT JOIN sales s ON m.member_id = s.member_id AND s.store_id = 3
-WHERE s.sale_id IS NULL;</pre>
-<p>That lists the members who have never bought anything at Tacoma (store 3). Notice where the store
-condition goes: inside the ON, not in a WHERE. Put it in the WHERE and the blanks disappear, and so does
-your answer.</p>
-<div class="sh" id="step3"><span class="badge">Module 2</span><span class="ttl">Finding what is missing</span><span class="cpx">Answer goes in <b>Checkpoint 3</b></span></div>
-<div class="cpslot" data-cp="3"></div>
-
-<h2 id="m3"><span class="num">3</span>Groups: GROUP BY and HAVING</h2>
-<p>About 40 minutes. GROUP BY collapses many rows into one row per group, and SUM, COUNT, and AVG work
-inside each group. You used it in Lab 7 for revenue by store. Here it is by category:</p>
-<pre class="bc" tabindex="0">SELECT p.category, SUM(s.quantity * s.unit_price) AS revenue
-FROM sales s
-JOIN products p ON s.product_id = p.product_id
-GROUP BY p.category
-ORDER BY revenue DESC;</pre>
-<div class="sh" id="step4"><span class="badge">Module 3</span><span class="ttl">Revenue by group</span><span class="cpx">Answer goes in <b>Checkpoint 4</b></span></div>
-<div class="cpslot" data-cp="4"></div>
-
-<p>WHERE and HAVING both filter, at different moments. <strong>WHERE</strong> filters rows before they are
-grouped. <strong>HAVING</strong> filters groups after they are formed, which means it can use COUNT and
-SUM. This lists members with at least 40 purchases (one purchase is one row in sales):</p>
-<pre class="bc" tabindex="0">SELECT member_id, COUNT(*) AS purchases
-FROM sales
-WHERE member_id IS NOT NULL
-GROUP BY member_id
-HAVING COUNT(*) &gt;= 40
-ORDER BY purchases DESC;</pre>
-<p>Try it without the WHERE line and look at the top row. Sales with no member attached all land in one
-group with a blank member_id, and that group is large. Leave that line in.</p>
-<div class="sh" id="step5"><span class="badge">Module 3</span><span class="ttl">Filtering groups</span><span class="cpx">Answer goes in <b>Checkpoint 5</b></span></div>
-<div class="cpslot" data-cp="5"></div>
-
-<h2 id="m4"><span class="num">4</span>Dates and CASE</h2>
-<p>About 40 minutes. Dates in this database are text written as year-month-day, like
-<code class="inline">2025-03-14</code>. That order sorts correctly, and
-<code class="inline">strftime</code> pulls out a piece of it. <code class="inline">'%m'</code> is the
-month:</p>
-<pre class="bc" tabindex="0">SELECT strftime('%m', sale_date) AS month, COUNT(*) AS sales
-FROM sales
-GROUP BY month
-ORDER BY month;</pre>
-<div class="sh" id="step6"><span class="badge">Module 4</span><span class="ttl">Revenue by month</span><span class="cpx">Answer goes in <b>Checkpoint 6</b></span></div>
-<div class="cpslot" data-cp="6"></div>
-
-<p><strong>CASE</strong> labels rows by a rule, the way IF did in Excel. This sorts sales into two
-sizes:</p>
-<pre class="bc" tabindex="0">SELECT CASE WHEN quantity &gt;= 3 THEN 'bulk' ELSE 'single' END AS size,
-       COUNT(*) AS sales
-FROM sales
-GROUP BY size;</pre>
-<p>CASE can also sit inside SUM, so you can add up only the rows that meet a rule while still dividing
-by the total. That is how you get a share in one query:</p>
-<pre class="bc" tabindex="0">SELECT 100.0 * SUM(CASE WHEN quantity &gt;= 3 THEN quantity * unit_price ELSE 0 END)
-       / SUM(quantity * unit_price) AS pct_from_bulk
-FROM sales;</pre>
-<div class="sh" id="step7"><span class="badge">Module 4</span><span class="ttl">A share with CASE</span><span class="cpx">Answer goes in <b>Checkpoint 7</b></span></div>
-<div class="cpslot" data-cp="7"></div>
-
-<h2 id="m5"><span class="num">5</span>Subqueries and CTEs: one question in steps</h2>
-<p>About 40 minutes. A <strong>subquery</strong> is a query inside another query. The inner one runs
-first and hands its answer to the outer one. Here the inner query finds the average unit cost, and the
-outer one keeps the products above it:</p>
-<pre class="bc" tabindex="0">SELECT product_name, unit_cost
-FROM products
-WHERE unit_cost &gt; (SELECT AVG(unit_cost) FROM products);</pre>
-<div class="sh" id="step8"><span class="badge">Module 5</span><span class="ttl">Above average</span><span class="cpx">Answer goes in <b>Checkpoint 8</b></span></div>
-<div class="cpslot" data-cp="8"></div>
-
-<p>When a question needs several steps, a <strong>CTE</strong> (common table expression) lets you name
-each step and use it like a table. It starts with <code class="inline">WITH</code>. This one computes
-revenue per store first, then joins it to the stores table:</p>
-<pre class="bc" tabindex="0">WITH store_rev AS (
-  SELECT store_id, SUM(quantity * unit_price) AS revenue
-  FROM sales
-  GROUP BY store_id
-)
-SELECT st.store_name, r.revenue
-FROM store_rev r
-JOIN stores st ON r.store_id = st.store_id
-ORDER BY r.revenue DESC;</pre>
-<p>Seattle is on top, but Seattle is also the biggest store. Chapter 6's question applies: is total
-revenue the right measure? Divide by <code class="inline">st.square_feet</code> and the ranking
-changes.</p>
-<div class="sh" id="step9"><span class="badge">Module 5</span><span class="ttl">The fairer measure</span><span class="cpx">Answer goes in <b>Checkpoint 9</b></span></div>
-<div class="cpslot" data-cp="9"></div>
-
-<h2 id="m6"><span class="num">6</span>Window functions: comparing a row with its neighbors</h2>
-<p>About 45 minutes. GROUP BY collapses rows. A <strong>window function</strong> does a calculation across
-related rows but keeps every row, so you can see each one next to its rank, its running total, or the
-row before it. The window is described after <code class="inline">OVER</code>:</p>
-<pre class="bc" tabindex="0">SELECT st.store_name,
-       SUM(s.quantity * s.unit_price) AS revenue,
-       RANK() OVER (ORDER BY SUM(s.quantity * s.unit_price) DESC) AS rnk
-FROM sales s
-JOIN stores st ON s.store_id = st.store_id
-GROUP BY st.store_name;</pre>
-<p>Add <code class="inline">PARTITION BY</code> and the ranking restarts inside each group. This ranks
-every product within its own category, then keeps only the number ones:</p>
-<pre class="bc" tabindex="0">WITH ranked AS (
-  SELECT p.category, p.product_name,
-         SUM(s.quantity * s.unit_price) AS revenue,
-         RANK() OVER (PARTITION BY p.category
-                      ORDER BY SUM(s.quantity * s.unit_price) DESC) AS rnk
-  FROM sales s
-  JOIN products p ON s.product_id = p.product_id
-  GROUP BY p.category, p.product_name
-)
-SELECT * FROM ranked WHERE rnk = 1;</pre>
-<div class="sh" id="step10"><span class="badge">Module 6</span><span class="ttl">Best in each category</span><span class="cpx">Answer goes in <b>Checkpoint 10</b></span></div>
-<div class="cpslot" data-cp="10"></div>
-
-<p><code class="inline">LAG</code> reaches back to the previous row. Combined with a CTE of monthly
-revenue, it gives month-over-month change, the number a manager asks about first:</p>
-<pre class="bc" tabindex="0">WITH monthly AS (
-  SELECT strftime('%m', sale_date) AS month,
-         SUM(quantity * unit_price) AS revenue
-  FROM sales
-  GROUP BY month
-)
-SELECT month, revenue,
-       revenue - LAG(revenue) OVER (ORDER BY month) AS change
-FROM monthly;</pre>
-<div class="sh" id="step11"><span class="badge">Module 6</span><span class="ttl">Month over month</span><span class="cpx">Answer goes in <b>Checkpoint 11</b></span></div>
-<div class="cpslot" data-cp="11"></div>
-
-<h2 id="m7"><span class="num">Capstone</span>A question nobody has written a query for</h2>
-<p>About 30 minutes. This one comes with an email and no worked query.</p>
-<div class="callout"><strong>Email &middot; Thursday, 4:10 PM</strong>
-<p style="font-family:var(--sans);font-size:.9rem"><strong>From:</strong> Used Gear Program Lead<br><br>
-"We price used gear by condition: Fair, Good, Like New. My hunch is that Like New sells fastest and we
-could charge more for it. Before I change the price sheet, can you check how long each condition takes
-to sell? Only count items that actually sold."</p></div>
-<p>You have every piece you need. Days to sell is <code class="inline">julianday(date_sold) -
-julianday(date_listed)</code>. Unsold items have a blank date_sold. Group by condition, average the days,
-and sort.</p>
-<div class="sh" id="step12"><span class="badge">Capstone</span><span class="ttl">Answer the email</span><span class="cpx">Answer goes in <b>Checkpoint 12</b></span></div>
-<div class="cpslot" data-cp="12"></div>
-<p>The result may not be what the program lead expected. Your reflection below is your reply to that
-email.</p>
-
+<div id="steps" class="sql">
+<div class="callout callout-bridge"><strong>How the steps work</strong>
+<p style="font-family:var(--sans);font-size:.95rem">Each step teaches one small idea, then gives you a task. Write the code in the box and press <strong>Run and check</strong>. If it is right, the next step opens. If not, you get a note on what to fix. Every step has a hint, and after two tries you can see a solution. There is no penalty for wrong tries.</p>
+<p style="font-family:var(--sans);font-size:.95rem">Your progress and your code save in this browser, so you can stop and come back. In the code box, Tab adds an indent; press Esc and then Tab to move on. To start over, use the <button type="button" class="hintb" onclick="resetLab()">Reset this bootcamp</button> button.</p>
+<p class="progress" id="prog" style="margin-bottom:0">Progress: 0 / 35 steps</p>
+<div class="pbar" aria-hidden="true"><span id="pbarfill"></span></div>
+<ul class="lmap" id="lmap"></ul></div>
+<section class="lesson" id="l1" aria-labelledby="l1h"><h2 id="l1h"><span class="num">1</span>Reading a table</h2><p class="ldesc">SELECT, WHERE, ORDER BY: the Lab 7 words, one at a time.</p><div class="lsteps"></div><p class="lockmsg2" hidden></p></section>
+<section class="lesson" id="l2" aria-labelledby="l2h"><h2 id="l2h"><span class="num">2</span>Adding things up</h2><p class="ldesc">COUNT, SUM, AVG, and GROUP BY.</p><div class="lsteps"></div><p class="lockmsg2" hidden></p></section>
+<section class="lesson" id="l3" aria-labelledby="l3h"><h2 id="l3h"><span class="num">3</span>Joins</h2><p class="ldesc">Answers that need more than one table.</p><div class="lsteps"></div><p class="lockmsg2" hidden></p></section>
+<section class="lesson" id="l4" aria-labelledby="l4h"><h2 id="l4h"><span class="num">4</span>Dates and CASE</h2><p class="ldesc">Pull apart dates and sort rows into labels.</p><div class="lsteps"></div><p class="lockmsg2" hidden></p></section>
+<section class="lesson" id="l5" aria-labelledby="l5h"><h2 id="l5h"><span class="num">5</span>Queries inside queries</h2><p class="ldesc">Subqueries and WITH: one question in steps.</p><div class="lsteps"></div><p class="lockmsg2" hidden></p></section>
+<section class="lesson" id="l6" aria-labelledby="l6h"><h2 id="l6h"><span class="num">6</span>Window functions</h2><p class="ldesc">Compare a row with the rows around it.</p><div class="lsteps"></div><p class="lockmsg2" hidden></p></section>
+<section class="lesson" id="l7" aria-labelledby="l7h"><h2 id="l7h"><span class="num">Capstone</span>Capstone</h2><p class="ldesc">A question with no worked query.</p><div class="lsteps"></div><p class="lockmsg2" hidden></p></section>
+</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
 <script>
 var CASCADIA_DB=null;
@@ -774,7 +658,43 @@ function runSQL(){
     out.innerHTML=h;
   }catch(e){out.innerHTML='<span style="color:#a03434">SQL error: '+String(e.message).replace(/</g,'&lt;')+'</span><br><span style="color:var(--muted)">Read it closely. The word right before the error is usually where the problem is.</span>'}
 }
-</script></div>
+</script>
+<script>
+function sqlTable(r){
+  var h='<table style="border-collapse:collapse"><tr>';
+  r.columns.forEach(function(c){h+='<th style="border:1px solid var(--rule);padding:.3rem .6rem;background:var(--off-white);text-align:left">'+String(c).replace(/</g,'&lt;')+'</th>'});h+='</tr>';
+  r.values.slice(0,50).forEach(function(row){h+='<tr>';row.forEach(function(v){h+='<td style="border:1px solid var(--rule);padding:.3rem .6rem">'+(v===null?'<em style="color:#a03434">NULL</em>':String(v).replace(/</g,'&lt;'))+'</td>'});h+='</tr>'});
+  h+='</table>';if(r.values.length>50)h+='<p style="margin:.4rem 0 0">Showing 50 of '+r.values.length+' rows.</p>';return h;
+}
+function sqlCmp(a,b,ord,tol){
+  if(a.columns.length!==b.columns.length)return 'Your result has '+a.columns.length+' column'+(a.columns.length===1?'':'s')+'. The task asks for '+b.columns.length+'.';
+  if(a.values.length!==b.values.length)return 'Your result has '+a.values.length+' row'+(a.values.length===1?'':'s')+'. It should have '+b.values.length+'.';
+  function key(r){return r.map(function(v){return typeof v==='number'?Math.round(v):String(v)}).join('|')}
+  var A=a.values.slice(),B=b.values.slice();
+  if(!ord){A.sort(function(x,y){return key(x)<key(y)?-1:key(x)>key(y)?1:0});B.sort(function(x,y){return key(x)<key(y)?-1:key(x)>key(y)?1:0});}
+  for(var i=0;i<A.length;i++)for(var j=0;j<A[i].length;j++){var x=A[i][j],y=B[i][j];
+    if(typeof x==='number'&&typeof y==='number'){if(Math.abs(x-y)>tol)return null}else if(String(x)!==String(y))return null;}
+  return true;
+}
+window.STEPRUN=function(i,code,say){
+  return new Promise(function(res){
+    var st=STEPS[i];
+    if(!CASCADIA_DB){res({html:'Database still loading. Give it a second and run it again.',ok:false,msg:'The database has not loaded yet.'});return}
+    if(!code.trim()){res({html:'',ok:false,msg:'Write a query in the box first.'});return}
+    if(/\b(DROP|DELETE|UPDATE|INSERT|ALTER|CREATE|REPLACE)\b/i.test(code)){res({html:'',ok:false,msg:'This bootcamp only reads data. Use SELECT (or WITH ... SELECT).'});return}
+    var r;
+    try{var out=CASCADIA_DB.exec(code);r=out.length?out[out.length-1]:null}
+    catch(e){res({html:'<span class="err">SQL error: '+String(e.message).replace(/</g,'&lt;')+'</span>\nThe word right before the error is usually where the problem is.',ok:false,err:e.message});return}
+    var html=r?sqlTable(r):'Query ran, no rows returned.';
+    if(!r){res({html:html,ok:false,msg:'Your query returned no rows. Check the WHERE condition and the spelling of text values.'});return}
+    for(var k=0;k<st.need.length;k++){if(!new RegExp(st.need[k][0].replace(/^\(\?i\)/,''),'i').test(code.trim())){res({html:html,ok:false,msg:st.need[k][1]});return}}
+    var e=CASCADIA_DB.exec(st.exp);e=e[e.length-1];
+    var c=sqlCmp(r,e,st.ord,st.tol);
+    if(c===true)res({html:html,ok:true});
+    else res({html:html,ok:false,msg:c||(st.ord?'The numbers or the order do not match yet. Re-read the task.':'The values do not match yet. Re-read the task.')});
+  });
+};
+</script>
 
 <h2 id="finish"><span class="num">Finish</span>Your memo &amp; certificate</h2>
 
@@ -792,7 +712,7 @@ function runSQL(){
   <p class="msg" id="reflcount" style="font-family:var(--sans);font-size:.95rem;color:var(--muted)">0 words</p>
 </div>
 <div class="certbox" id="certbox">
-  <h3 id="sall-checkpoints-cleared">All checkpoints cleared</h3>
+  <h3 id="sall-steps-passed">All steps passed</h3>
   <p style="font-family:var(--sans);font-size:.95rem">Put your name in exactly as it appears in Canvas,
   then download your certificate. The code on it is generated from your name, so it is yours and nobody
   else's.</p>
@@ -803,109 +723,147 @@ function runSQL(){
 
 <h2 id="submit"><span class="num">Canvas</span>What to submit</h2>
 <p style="font-family:var(--sans);font-size:.92rem">Go to the <strong>SQL Bootcamp</strong> extra credit assignment in Canvas and upload two files.</p>
-<p style="font-family:var(--sans);font-size:.92rem"><strong>File 1: your queries.</strong> A plain text file or Word doc named
-<code class="inline">SQLBOOTCAMP_Last_First</code>, with the query you used for each of the twelve checkpoints, numbered. Paste the query text, not screenshots.</p>
+<p style="font-family:var(--sans);font-size:.92rem"><strong>File 1: your queries.</strong> Press <button type="button" class="hintb" onclick="dlcode()">Download my queries</button> to save every step's query as one <code class="inline">.sql</code> text file. It saves from this browser, so download it on the computer you used.</p>
 <p style="font-family:var(--sans);font-size:.92rem"><strong>File 2: your certificate PDF.</strong> Your memo prints as page 2, so you do not submit it separately.</p>
 </main>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-const LAB="SQLBC", QS=[{"q": "Checkpoint 1 · How many products does the co-op sell in the Camping category?", "t": "num", "a": "MTA=", "tol": 0, "h": "Run the third warm-up query and change 'Water' to 'Camping'. Text goes in single quotes, and the spelling has to match exactly, capital C included."}, {"q": "Checkpoint 2 · Which supplier's products brought in the most revenue in 2025? Enter the supplier name.", "t": "txt", "a": "Tm9yZHZpayBPdXRkb29y", "h": "Run the second Module 2 query, then add ORDER BY revenue DESC so the biggest number comes first. The supplier on the top row is the answer."}, {"q": "Checkpoint 3 · How many members have never bought anything at Bellingham (store 4)?", "t": "num", "a": "Mg==", "h": "Start from the LEFT JOIN query for Tacoma, change the store to 4, and either count the names that come back or replace the SELECT list with COUNT(*). Keep the store condition inside the ON.", "tol": 0}, {"q": "Checkpoint 4 · Which product category earned the most revenue? Enter the category name.", "t": "txt", "a": "Q2FtcGluZw==", "h": "Run the first Module 3 query as written. It is already sorted with the largest revenue first."}, {"q": "Checkpoint 5 · How many members made 50 or more purchases?", "t": "num", "a": "Ng==", "h": "Change the 40 in the HAVING line to 50 and count the rows that come back. If you get 7, the blank-member group snuck in: keep the WHERE member_id IS NOT NULL line.", "tol": 0}, {"q": "Checkpoint 6 · Which month brought in the most revenue? Enter the month as a number (March is 3).", "t": "num", "a": "MQ==", "tol": 0, "h": "Start from the month query, replace COUNT(*) with SUM(quantity * unit_price) AS revenue, and sort by revenue, largest first. The top row's month is the answer; 01 means 1."}, {"q": "Checkpoint 7 · What percent of the co-op's revenue came from sales with a member attached? Round to one decimal place.", "t": "num", "a": "ODYuNg==", "tol": 0.1, "h": "Copy the bulk-sales share query and change the rule inside CASE to member_id IS NOT NULL. Leave the division alone: the bottom is still all revenue."}, {"q": "Checkpoint 8 · How many products have a list price above the average list price?", "t": "num", "a": "MTI=", "h": "Change unit_cost to list_price in both places, then count the rows, or wrap the outer query in SELECT COUNT(*) FROM (...).", "tol": 0}, {"q": "Checkpoint 9 · Which store brings in the most revenue per square foot? Enter the store name.", "t": "txt", "a": "U3Bva2FuZQ==", "h": "In the CTE query, add r.revenue / st.square_feet AS per_sq_ft to the SELECT list and sort by it, largest first."}, {"q": "Checkpoint 10 · Which product ranks first in revenue in the Footwear category? Enter the product name.", "t": "txt", "a": "QXBwcm9hY2ggU2hvZQ==", "h": "Run the PARTITION BY query as written and find the Footwear row. Every category's number one is in that result."}, {"q": "Checkpoint 11 · Which month had the biggest increase in revenue over the month before? Enter the month as a number.", "t": "num", "a": "Mw==", "tol": 0, "h": "Run the LAG query and sort by change, largest first: add ORDER BY change DESC at the end. January has no month before it, so its change is blank."}, {"q": "Checkpoint 12 · Of the used gear that sold, which condition sold fastest on average? Enter Fair, Good, or Like New.", "t": "txt", "a": "R29vZA==", "h": "FROM used_gear WHERE date_sold IS NOT NULL, GROUP BY condition, and SELECT condition, AVG(julianday(date_sold) - julianday(date_listed)) AS days. Sort by days, smallest first."}];
-const SKEY='mis320_'+LAB;
-let solved=new Set();
-function load(){try{const raw=localStorage.getItem(SKEY);if(!raw)return null;const s=JSON.parse(raw);
- if(Array.isArray(s.solved))solved=new Set(s.solved.filter(i=>Number.isInteger(i)&&i<QS.length));return s}catch(e){return null}}
+const LAB="SQLBC", SKEY="mis320_SQLBC2", LESSONS=[{"id": "l1", "t": "Reading a table"}, {"id": "l2", "t": "Adding things up"}, {"id": "l3", "t": "Joins"}, {"id": "l4", "t": "Dates and CASE"}, {"id": "l5", "t": "Queries inside queries"}, {"id": "l6", "t": "Window functions"}, {"id": "l7", "t": "Capstone"}], STEPS=[{"l": "l1", "t": "Every column, every row", "learn": "<p>A query asks the database a question. <code class=\"inline\">SELECT</code> says which columns you want, <code class=\"inline\">FROM</code> says which table, and <code class=\"inline\">*</code> means all columns. The semicolon ends the query.</p>", "task": "Show everything in the <code class=\"inline\">stores</code> table.", "code": "", "hint": "Two words and a table name: SELECT, then *, then FROM stores.", "sol": "SELECT * FROM stores;", "state": false}, {"l": "l1", "t": "Only the columns you need", "learn": "<p>Name the columns, separated by commas, instead of <code class=\"inline\">*</code>. A narrow result is easier to read and faster on big tables.</p>", "task": "Show only <code class=\"inline\">store_name</code> and <code class=\"inline\">region</code> from <code class=\"inline\">stores</code>.", "code": "", "hint": "SELECT store_name, region FROM ...", "sol": "SELECT store_name, region FROM stores;", "state": false}, {"l": "l1", "t": "Each value once", "learn": "<p><code class=\"inline\">DISTINCT</code> removes repeats, so each value shows once.</p>", "task": "List each product <code class=\"inline\">category</code> once.", "code": "", "hint": "SELECT DISTINCT category FROM products;", "sol": "SELECT DISTINCT category FROM products;", "state": false}, {"l": "l1", "t": "Keep some rows", "learn": "<p><code class=\"inline\">WHERE</code> keeps only the rows where a condition is true. Text goes in single quotes, and it must match exactly, capitals included.</p><pre class=\"bc\">SELECT * FROM stores WHERE region = &#39;Inland&#39;;</pre>", "task": "Show the <code class=\"inline\">product_name</code> and <code class=\"inline\">list_price</code> of every product in the <code class=\"inline\">Water</code> category.", "code": "", "hint": "WHERE category = 'Water' with single quotes and a capital W.", "sol": "SELECT product_name, list_price FROM products WHERE category = 'Water';", "state": false}, {"l": "l1", "t": "Compare numbers", "learn": "<p>Numbers use <code class=\"inline\">&lt;</code>, <code class=\"inline\">&gt;</code>, <code class=\"inline\">&lt;=</code>, <code class=\"inline\">&gt;=</code>, and <code class=\"inline\">&lt;&gt;</code> (not equal), with no quotes.</p>", "task": "Show the <code class=\"inline\">product_name</code> and <code class=\"inline\">list_price</code> of products that cost less than 50.", "code": "", "hint": "WHERE list_price < 50", "sol": "SELECT product_name, list_price FROM products WHERE list_price < 50;", "state": false}, {"l": "l1", "t": "Two conditions", "learn": "<p><code class=\"inline\">AND</code> needs both conditions true. <code class=\"inline\">OR</code> needs either one. When you mix them, put brackets around the OR part.</p>", "task": "Show the <code class=\"inline\">store_name</code> of stores in the <code class=\"inline\">Puget Sound</code> region that opened in 2010 or later (<code class=\"inline\">opened_year</code>).", "code": "", "hint": "WHERE region = 'Puget Sound' AND opened_year >= 2010", "sol": "SELECT store_name FROM stores WHERE region = 'Puget Sound' AND opened_year >= 2010;", "state": false}, {"l": "l1", "t": "Match a pattern", "learn": "<p><code class=\"inline\">LIKE</code> matches a pattern. <code class=\"inline\">%</code> stands for any text, including none. So <code class=\"inline\">&#39;%Jacket&#39;</code> means anything that ends in Jacket.</p>", "task": "Show the <code class=\"inline\">product_name</code> of every product with <code class=\"inline\">Kit</code> anywhere in its name.", "code": "", "hint": "Put % on both sides: LIKE '%Kit%'", "sol": "SELECT product_name FROM products WHERE product_name LIKE '%Kit%';", "state": false}, {"l": "l1", "t": "Sort and stop", "learn": "<p><code class=\"inline\">ORDER BY</code> sorts, smallest first. Add <code class=\"inline\">DESC</code> for largest first. <code class=\"inline\">LIMIT</code> stops after that many rows, and it always goes last.</p>", "task": "Show the <code class=\"inline\">product_name</code> and <code class=\"inline\">list_price</code> of the five most expensive products, most expensive first.", "code": "", "hint": "ORDER BY list_price DESC LIMIT 5", "sol": "SELECT product_name, list_price FROM products ORDER BY list_price DESC LIMIT 5;", "state": false}, {"l": "l2", "t": "Count rows", "learn": "<p><code class=\"inline\">COUNT(*)</code> counts rows. With a WHERE, it counts the rows that pass. The whole table becomes one number.</p>", "task": "How many products are in the <code class=\"inline\">Camping</code> category?", "code": "", "hint": "SELECT COUNT(*) FROM products WHERE ...", "sol": "SELECT COUNT(*) FROM products WHERE category = 'Camping';", "state": false}, {"l": "l2", "t": "Add up a calculation", "learn": "<p>The <code class=\"inline\">sales</code> table has no revenue column. Revenue is <code class=\"inline\">quantity * unit_price</code>, worked out row by row. <code class=\"inline\">SUM()</code> adds it up. <code class=\"inline\">AS</code> gives the result a name.</p>", "task": "Show total revenue for 2025 as one number, named <code class=\"inline\">revenue</code>.", "code": "", "hint": "SELECT SUM(quantity * unit_price) AS revenue FROM sales;", "sol": "SELECT SUM(quantity * unit_price) AS revenue FROM sales;", "state": false}, {"l": "l2", "t": "Round it", "learn": "<p><code class=\"inline\">ROUND(x, 2)</code> rounds to two decimal places. Wrap it around the whole SUM.</p>", "task": "Show the same total, rounded to 2 places, still named <code class=\"inline\">revenue</code>.", "code": "", "hint": "ROUND(SUM(...), 2)", "sol": "SELECT ROUND(SUM(quantity * unit_price), 2) AS revenue FROM sales;", "state": false}, {"l": "l2", "t": "One number per group", "learn": "<p><code class=\"inline\">GROUP BY</code> splits the rows into groups and gives one answer per group. Put the group column in the SELECT too, or you will not know which number is which. This is a pivot table in words.</p><pre class=\"bc\">SELECT region, COUNT(*) FROM stores GROUP BY region;</pre>", "task": "Show each <code class=\"inline\">category</code> and how many products it has.", "code": "", "hint": "SELECT category, COUNT(*) FROM products GROUP BY category;", "sol": "SELECT category, COUNT(*) FROM products GROUP BY category;", "state": false}, {"l": "l2", "t": "Sort the groups", "learn": "<p>You can sort by a calculated column using its name from <code class=\"inline\">AS</code>.</p>", "task": "Show each <code class=\"inline\">store_id</code> and its total revenue named <code class=\"inline\">revenue</code>, highest first.", "code": "", "hint": "GROUP BY store_id, then ORDER BY revenue DESC", "sol": "SELECT store_id, SUM(quantity * unit_price) AS revenue FROM sales GROUP BY store_id ORDER BY revenue DESC;", "state": false}, {"l": "l2", "t": "Average per group", "learn": "<p><code class=\"inline\">AVG()</code> gives the mean. Round it so it reads cleanly.</p>", "task": "Show each <code class=\"inline\">category</code> and its average <code class=\"inline\">list_price</code>, rounded to 2 places.", "code": "", "hint": "ROUND(AVG(list_price), 2) with GROUP BY category", "sol": "SELECT category, ROUND(AVG(list_price), 2) FROM products GROUP BY category;", "state": false}, {"l": "l2", "t": "Filter the groups", "learn": "<p>WHERE filters rows before grouping. <code class=\"inline\">HAVING</code> filters the groups after. So a rule about a total or an average goes in HAVING.</p><pre class=\"bc\">SELECT category, COUNT(*) FROM products\nGROUP BY category HAVING COUNT(*) &gt; 5;</pre>", "task": "Show each <code class=\"inline\">category</code> whose average <code class=\"inline\">list_price</code> is over 200, with that average.", "code": "", "hint": "GROUP BY category HAVING AVG(list_price) > 200", "sol": "SELECT category, AVG(list_price) FROM products GROUP BY category HAVING AVG(list_price) > 200;", "state": false}, {"l": "l3", "t": "Join two tables", "learn": "<p>A sales row says <code class=\"inline\">product_id = 129</code>, not a name. To get names, you <strong>join</strong>: match each sale to the product with the same id. <code class=\"inline\">ON</code> says which columns match. Short names after a table, like <code class=\"inline\">s</code> and <code class=\"inline\">p</code>, save typing.</p><pre class=\"bc\">SELECT s.sale_id, p.product_name\nFROM sales s\nJOIN products p ON p.product_id = s.product_id;</pre>", "task": "Show the <code class=\"inline\">sale_id</code>, <code class=\"inline\">product_name</code>, and <code class=\"inline\">quantity</code> of the first five sales, ordered by <code class=\"inline\">sale_id</code>.", "code": "", "hint": "Add ORDER BY s.sale_id LIMIT 5 to the end of the example.", "sol": "SELECT s.sale_id, p.product_name, s.quantity FROM sales s JOIN products p ON p.product_id = s.product_id ORDER BY s.sale_id LIMIT 5;", "state": false}, {"l": "l3", "t": "Group a join", "learn": "<p>Once tables are joined, you can group by any column from either one.</p>", "task": "Show each <code class=\"inline\">store_name</code> and its total revenue named <code class=\"inline\">revenue</code>, highest first.", "code": "", "hint": "JOIN stores on store_id, GROUP BY store_name, ORDER BY revenue DESC", "sol": "SELECT st.store_name, SUM(s.quantity * s.unit_price) AS revenue FROM sales s JOIN stores st ON st.store_id = s.store_id GROUP BY st.store_name ORDER BY revenue DESC;", "state": false}, {"l": "l3", "t": "Three tables", "learn": "<p>Chain joins to walk from table to table. Sales know the product, and products know the supplier.</p>", "task": "Show each <code class=\"inline\">supplier_name</code> and the revenue from its products, named <code class=\"inline\">revenue</code>, highest first.", "code": "", "hint": "sales JOIN products ON product_id, then JOIN suppliers ON supplier_id", "sol": "SELECT su.supplier_name, SUM(s.quantity * s.unit_price) AS revenue FROM sales s JOIN products p ON p.product_id = s.product_id JOIN suppliers su ON su.supplier_id = p.supplier_id GROUP BY su.supplier_name ORDER BY revenue DESC;", "state": false}, {"l": "l3", "t": "Rows that need action", "learn": "<p>Joins turn ids into a list a person can act on. The <code class=\"inline\">inventory</code> table has stock and a reorder point for each store and product.</p>", "task": "Show <code class=\"inline\">store_name</code>, <code class=\"inline\">product_name</code>, <code class=\"inline\">quantity_on_hand</code>, and <code class=\"inline\">reorder_point</code> for every item below its reorder point.", "code": "", "hint": "Join inventory to stores and to products, then WHERE quantity_on_hand < reorder_point.", "sol": "SELECT st.store_name, p.product_name, i.quantity_on_hand, i.reorder_point FROM inventory i JOIN stores st ON st.store_id = i.store_id JOIN products p ON p.product_id = i.product_id WHERE i.quantity_on_hand < i.reorder_point;", "state": false}, {"l": "l3", "t": "When a join drops rows", "learn": "<p>A plain JOIN keeps only rows that match. Sales with no member have a blank (<code class=\"inline\">NULL</code>) member_id, so they match nothing and disappear. <code class=\"inline\">LEFT JOIN</code> keeps every row from the first table and fills the gaps with NULL.</p>", "task": "Count the rows of <code class=\"inline\">sales</code> LEFT JOIN <code class=\"inline\">members</code> on <code class=\"inline\">member_id</code>. Compare it with the 2,899 rows in sales.", "code": "", "hint": "SELECT COUNT(*) FROM sales s LEFT JOIN members m ON m.member_id = s.member_id;", "sol": "SELECT COUNT(*) FROM sales s LEFT JOIN members m ON m.member_id = s.member_id;", "state": false}, {"l": "l3", "t": "Name the blanks", "learn": "<p><code class=\"inline\">COALESCE(x, &#39;text&#39;)</code> swaps a NULL for a label you choose. With a LEFT JOIN, that lets you count the people who are not there.</p>", "task": "Show revenue by membership type, with sales that have no member labeled <code class=\"inline\">No member</code>. Two columns: the type and the revenue.", "code": "", "hint": "COALESCE(m.member_type, 'No member') AS type, then GROUP BY type", "sol": "SELECT COALESCE(m.member_type, 'No member') AS type, SUM(s.quantity * s.unit_price) AS revenue FROM sales s LEFT JOIN members m ON m.member_id = s.member_id GROUP BY type;", "state": false}, {"l": "l4", "t": "Pull the month out of a date", "learn": "<p>Dates are stored as text like <code class=\"inline\">2025-07-14</code>. <code class=\"inline\">strftime(&#39;%m&#39;, sale_date)</code> pulls out the month as <code class=\"inline\">07</code>. Use <code class=\"inline\">%Y</code> for the year and <code class=\"inline\">%w</code> for the day of the week.</p>", "task": "Show each month and the number of sales in it, in month order. Call the first column <code class=\"inline\">month</code>.", "code": "", "hint": "strftime('%m', sale_date) AS month, GROUP BY month, ORDER BY month", "sol": "SELECT strftime('%m', sale_date) AS month, COUNT(*) FROM sales GROUP BY month ORDER BY month;", "state": false}, {"l": "l4", "t": "A date range", "learn": "<p>Because dates are written year first, they sort and compare correctly as text. <code class=\"inline\">BETWEEN a AND b</code> includes both ends.</p>", "task": "How many sales were in July 2025?", "code": "", "hint": "WHERE sale_date BETWEEN '2025-07-01' AND '2025-07-31'", "sol": "SELECT COUNT(*) FROM sales WHERE sale_date BETWEEN '2025-07-01' AND '2025-07-31';", "state": false}, {"l": "l4", "t": "Sort rows into labels", "learn": "<p><code class=\"inline\">CASE</code> is SQL's IF. It checks each WHEN in order and uses the first one that is true.</p><pre class=\"bc\">CASE WHEN quantity &gt;= 3 THEN &#39;Bulk&#39;\n     ELSE &#39;Single&#39; END</pre>", "task": "Label each product <code class=\"inline\">Budget</code> (under 50), <code class=\"inline\">Mid</code> (under 200), or <code class=\"inline\">Premium</code>, and count the products in each label. Two columns.", "code": "", "hint": "CASE WHEN list_price < 50 THEN 'Budget' WHEN list_price < 200 THEN 'Mid' ELSE 'Premium' END AS band, then GROUP BY band", "sol": "SELECT CASE WHEN list_price < 50 THEN 'Budget' WHEN list_price < 200 THEN 'Mid' ELSE 'Premium' END AS band, COUNT(*) FROM products GROUP BY band;", "state": false}, {"l": "l4", "t": "Weekends against weekdays", "learn": "<p><code class=\"inline\">%w</code> numbers the days from Sunday (<code class=\"inline\">0</code>) to Saturday (<code class=\"inline\">6</code>), as text. <code class=\"inline\">IN (&#39;0&#39;, &#39;6&#39;)</code> checks for either.</p>", "task": "Show total revenue for <code class=\"inline\">Weekend</code> and <code class=\"inline\">Weekday</code> sales, using CASE. Two columns.", "code": "", "hint": "CASE WHEN strftime('%w', sale_date) IN ('0', '6') THEN 'Weekend' ELSE 'Weekday' END", "sol": "SELECT CASE WHEN strftime('%w', sale_date) IN ('0', '6') THEN 'Weekend' ELSE 'Weekday' END AS day_type, SUM(quantity * unit_price) AS revenue FROM sales GROUP BY day_type;", "state": false}, {"l": "l4", "t": "Days between two dates", "learn": "<p><code class=\"inline\">julianday()</code> turns a date into a day number, so subtracting two gives the days between them. Unsold used gear has a NULL <code class=\"inline\">date_sold</code>, and math on NULL gives NULL.</p>", "task": "In <code class=\"inline\">used_gear</code>, show the average days from <code class=\"inline\">date_listed</code> to <code class=\"inline\">date_sold</code> for items that sold, rounded to 1 place.", "code": "", "hint": "AVG(julianday(date_sold) - julianday(date_listed)) with WHERE date_sold IS NOT NULL", "sol": "SELECT ROUND(AVG(julianday(date_sold) - julianday(date_listed)), 1) FROM used_gear WHERE date_sold IS NOT NULL;", "state": false}, {"l": "l5", "t": "A query inside a query", "learn": "<p>A <strong>subquery</strong> is a query in brackets that SQL runs first. Its answer is then used like a number.</p><pre class=\"bc\">SELECT AVG(list_price) FROM products</pre>", "task": "Show the <code class=\"inline\">product_name</code> and <code class=\"inline\">list_price</code> of products priced above the average list price.", "code": "", "hint": "WHERE list_price > (SELECT AVG(list_price) FROM products)", "sol": "SELECT product_name, list_price FROM products WHERE list_price > (SELECT AVG(list_price) FROM products);", "state": false}, {"l": "l5", "t": "A list from a subquery", "learn": "<p><code class=\"inline\">IN (SELECT ...)</code> checks against a whole list that another query builds.</p>", "task": "How many sales were of products from the <code class=\"inline\">Snow</code> category? Use IN with a subquery on products.", "code": "", "hint": "WHERE product_id IN (SELECT product_id FROM products WHERE category = 'Snow')", "sol": "SELECT COUNT(*) FROM sales WHERE product_id IN (SELECT product_id FROM products WHERE category = 'Snow');", "state": false}, {"l": "l5", "t": "Name a step with WITH", "learn": "<p><code class=\"inline\">WITH name AS (...)</code> builds a small table first, then lets the main query use it by name. It reads top to bottom, like steps in a recipe.</p><pre class=\"bc\">WITH monthly AS (\n  SELECT strftime(&#39;%m&#39;, sale_date) AS month,\n         SUM(quantity * unit_price) AS revenue\n  FROM sales GROUP BY month\n)\nSELECT * FROM monthly;</pre>", "task": "Use the <code class=\"inline\">monthly</code> table to show the month with the highest revenue: its month and revenue, one row.", "code": "", "hint": "Keep the WITH part. Change the last line to sort by revenue DESC and LIMIT 1.", "sol": "WITH monthly AS (SELECT strftime('%m', sale_date) AS month, SUM(quantity * unit_price) AS revenue FROM sales GROUP BY month) SELECT month, revenue FROM monthly ORDER BY revenue DESC LIMIT 1;", "state": false}, {"l": "l5", "t": "Fair comparisons", "learn": "<p>Big stores sell more because they are big. Revenue per square foot is fairer. Build store revenue in a WITH, then join it to <code class=\"inline\">stores</code> for the size.</p>", "task": "Show each <code class=\"inline\">store_name</code> and its revenue per square foot named <code class=\"inline\">per_sqft</code>, rounded to 2 places, highest first.", "code": "WITH store_rev AS (\n  SELECT store_id, SUM(quantity * unit_price) AS revenue\n  FROM sales GROUP BY store_id\n)\n", "hint": "SELECT st.store_name, ROUND(r.revenue / st.square_feet, 2) AS per_sqft FROM store_rev r JOIN stores st ON ...", "sol": "WITH store_rev AS (SELECT store_id, SUM(quantity * unit_price) AS revenue FROM sales GROUP BY store_id) SELECT st.store_name, ROUND(r.revenue / st.square_feet, 2) AS per_sqft FROM store_rev r JOIN stores st ON st.store_id = r.store_id ORDER BY per_sqft DESC;", "state": false}, {"l": "l6", "t": "Rank the rows", "learn": "<p>A <strong>window function</strong> adds a column that looks at other rows without collapsing them into groups. <code class=\"inline\">RANK() OVER (ORDER BY x DESC)</code> numbers the rows from the largest x.</p>", "task": "Show each <code class=\"inline\">product_name</code>, its <code class=\"inline\">list_price</code>, and a rank by price (1 is the most expensive), sorted by that rank.", "code": "", "hint": "RANK() OVER (ORDER BY list_price DESC) AS price_rank", "sol": "SELECT product_name, list_price, RANK() OVER (ORDER BY list_price DESC) AS price_rank FROM products ORDER BY price_rank, product_name;", "state": false}, {"l": "l6", "t": "Rank inside each group", "learn": "<p><code class=\"inline\">PARTITION BY</code> restarts the count for each group, so you get a ranking inside every category.</p>", "task": "Show <code class=\"inline\">category</code>, <code class=\"inline\">product_name</code>, <code class=\"inline\">list_price</code>, and a price rank within each category (1 is the most expensive).", "code": "", "hint": "RANK() OVER (PARTITION BY category ORDER BY list_price DESC)", "sol": "SELECT category, product_name, list_price, RANK() OVER (PARTITION BY category ORDER BY list_price DESC) AS cat_rank FROM products;", "state": false}, {"l": "l6", "t": "Compare with the row before", "learn": "<p><code class=\"inline\">LAG(x) OVER (ORDER BY ...)</code> reads x from the row before. Subtract it and you get the change from one row to the next.</p>", "task": "Using a <code class=\"inline\">monthly</code> WITH table like Lesson 5's, show month, revenue, and the change from the month before named <code class=\"inline\">change</code>, in month order.", "code": "WITH monthly AS (\n  SELECT strftime('%m', sale_date) AS month,\n         SUM(quantity * unit_price) AS revenue\n  FROM sales GROUP BY month\n)\n", "hint": "revenue - LAG(revenue) OVER (ORDER BY month) AS change", "sol": "WITH monthly AS (SELECT strftime('%m', sale_date) AS month, SUM(quantity * unit_price) AS revenue FROM sales GROUP BY month) SELECT month, revenue, revenue - LAG(revenue) OVER (ORDER BY month) AS change FROM monthly ORDER BY month;", "state": false}, {"l": "l6", "t": "A running total", "learn": "<p><code class=\"inline\">SUM(x) OVER (ORDER BY ...)</code> adds up every row so far: a running total, or year to date.</p>", "task": "Show month, revenue, and year-to-date revenue named <code class=\"inline\">ytd</code>, in month order.", "code": "WITH monthly AS (\n  SELECT strftime('%m', sale_date) AS month,\n         SUM(quantity * unit_price) AS revenue\n  FROM sales GROUP BY month\n)\n", "hint": "SUM(revenue) OVER (ORDER BY month) AS ytd", "sol": "WITH monthly AS (SELECT strftime('%m', sale_date) AS month, SUM(quantity * unit_price) AS revenue FROM sales GROUP BY month) SELECT month, revenue, SUM(revenue) OVER (ORDER BY month) AS ytd FROM monthly ORDER BY month;", "state": false}, {"l": "l7", "t": "Answer the Used Gear Program Lead", "learn": "<div class=\"callout\"><strong>Email &middot; Thursday, 4:10 PM</strong><p style=\"font-family:var(--sans);font-size:.9rem\"><strong>From:</strong> Used Gear Program Lead<br><br>\"We price used gear by condition: Fair, Good, Like New. My hunch is that Like New sells fastest and we could charge more for it. Before I change the price sheet, can you check how long each condition takes to sell? Only count items that actually sold.\"</p></div><p>You have every piece. There is no solution button for this one.</p>", "task": "Show one row per <code class=\"inline\">condition</code> with the average days to sell, rounded to 1 place, fastest first.", "code": "", "hint": "Lesson 4's days-between step, plus GROUP BY condition and ORDER BY.", "sol": null, "state": false}], EDLABEL="SQL query";
+
+const CODEHEAD="-- MIS 320 SQL Bootcamp", CMT="--", CODEFILE="SQLBOOTCAMP", CODEEXT=".sql", CERTTITLE="SQL Bootcamp \u00B7 Joins, Groups, CTEs, and Window Functions", MEMOTITLE="Memo to the Used Gear Program Lead";
+(function(){var X=[{"exp": "SELECT * FROM stores;", "need": [], "ord": false, "tol": 0.01}, {"exp": "SELECT store_name, region FROM stores;", "need": [["(?i)^\\s*select\\s+(?!\\*)", "Name the two columns instead of using *."]], "ord": false, "tol": 0.01}, {"exp": "SELECT DISTINCT category FROM products;", "need": [["(?i)distinct", "Use DISTINCT."]], "ord": false, "tol": 0.01}, {"exp": "SELECT product_name, list_price FROM products WHERE category = 'Water';", "need": [], "ord": false, "tol": 0.01}, {"exp": "SELECT product_name, list_price FROM products WHERE list_price < 50;", "need": [], "ord": false, "tol": 0.01}, {"exp": "SELECT store_name FROM stores WHERE region = 'Puget Sound' AND opened_year >= 2010;", "need": [], "ord": false, "tol": 0.01}, {"exp": "SELECT product_name FROM products WHERE product_name LIKE '%Kit%';", "need": [["(?i)like", "Use LIKE with a pattern."]], "ord": false, "tol": 0.01}, {"exp": "SELECT product_name, list_price FROM products ORDER BY list_price DESC LIMIT 5;", "need": [], "ord": true, "tol": 0.01}, {"exp": "SELECT COUNT(*) FROM products WHERE category = 'Camping';", "need": [["(?i)count\\s*\\(", "Use COUNT(*)."]], "ord": false, "tol": 0.01}, {"exp": "SELECT SUM(quantity * unit_price) AS revenue FROM sales;", "need": [["(?i)sum\\s*\\(", "Use SUM()."]], "ord": false, "tol": 0.01}, {"exp": "SELECT ROUND(SUM(quantity * unit_price), 2) AS revenue FROM sales;", "need": [["(?i)round\\s*\\(", "Use ROUND(..., 2)."]], "ord": false, "tol": 0.001}, {"exp": "SELECT category, COUNT(*) FROM products GROUP BY category;", "need": [["(?i)group\\s+by", "Use GROUP BY."]], "ord": false, "tol": 0.01}, {"exp": "SELECT store_id, SUM(quantity * unit_price) AS revenue FROM sales GROUP BY store_id ORDER BY revenue DESC;", "need": [], "ord": true, "tol": 0.01}, {"exp": "SELECT category, ROUND(AVG(list_price), 2) FROM products GROUP BY category;", "need": [], "ord": false, "tol": 0.006}, {"exp": "SELECT category, AVG(list_price) FROM products GROUP BY category HAVING AVG(list_price) > 200;", "need": [["(?i)having", "Use HAVING, since the rule is about an average."]], "ord": false, "tol": 0.006}, {"exp": "SELECT s.sale_id, p.product_name, s.quantity FROM sales s JOIN products p ON p.product_id = s.product_id ORDER BY s.sale_id LIMIT 5;", "need": [["(?i)join", "Use JOIN."]], "ord": true, "tol": 0.01}, {"exp": "SELECT st.store_name, SUM(s.quantity * s.unit_price) AS revenue FROM sales s JOIN stores st ON st.store_id = s.store_id GROUP BY st.store_name ORDER BY revenue DESC;", "need": [["(?i)join", "Use JOIN to get the store names."]], "ord": true, "tol": 0.01}, {"exp": "SELECT su.supplier_name, SUM(s.quantity * s.unit_price) AS revenue FROM sales s JOIN products p ON p.product_id = s.product_id JOIN suppliers su ON su.supplier_id = p.supplier_id GROUP BY su.supplier_name ORDER BY revenue DESC;", "need": [], "ord": true, "tol": 0.01}, {"exp": "SELECT st.store_name, p.product_name, i.quantity_on_hand, i.reorder_point FROM inventory i JOIN stores st ON st.store_id = i.store_id JOIN products p ON p.product_id = i.product_id WHERE i.quantity_on_hand < i.reorder_point;", "need": [], "ord": false, "tol": 0.01}, {"exp": "SELECT COUNT(*) FROM sales s LEFT JOIN members m ON m.member_id = s.member_id;", "need": [["(?i)left\\s+join", "Use LEFT JOIN."]], "ord": false, "tol": 0.01}, {"exp": "SELECT COALESCE(m.member_type, 'No member') AS type, SUM(s.quantity * s.unit_price) AS revenue FROM sales s LEFT JOIN members m ON m.member_id = s.member_id GROUP BY type;", "need": [["(?i)left\\s+join", "Use LEFT JOIN so the non-member sales stay in."]], "ord": false, "tol": 0.01}, {"exp": "SELECT strftime('%m', sale_date) AS month, COUNT(*) FROM sales GROUP BY month ORDER BY month;", "need": [], "ord": true, "tol": 0.01}, {"exp": "SELECT COUNT(*) FROM sales WHERE sale_date BETWEEN '2025-07-01' AND '2025-07-31';", "need": [], "ord": false, "tol": 0.01}, {"exp": "SELECT CASE WHEN list_price < 50 THEN 'Budget' WHEN list_price < 200 THEN 'Mid' ELSE 'Premium' END AS band, COUNT(*) FROM products GROUP BY band;", "need": [["(?i)case", "Use CASE."]], "ord": false, "tol": 0.01}, {"exp": "SELECT CASE WHEN strftime('%w', sale_date) IN ('0', '6') THEN 'Weekend' ELSE 'Weekday' END AS day_type, SUM(quantity * unit_price) AS revenue FROM sales GROUP BY day_type;", "need": [], "ord": false, "tol": 0.01}, {"exp": "SELECT ROUND(AVG(julianday(date_sold) - julianday(date_listed)), 1) FROM used_gear WHERE date_sold IS NOT NULL;", "need": [], "ord": false, "tol": 0.06}, {"exp": "SELECT product_name, list_price FROM products WHERE list_price > (SELECT AVG(list_price) FROM products);", "need": [["(?i)\\(\\s*select", "Use a subquery in brackets instead of typing the average."]], "ord": false, "tol": 0.01}, {"exp": "SELECT COUNT(*) FROM sales WHERE product_id IN (SELECT product_id FROM products WHERE category = 'Snow');", "need": [["(?i)in\\s*\\(\\s*select", "Use IN (SELECT ...)."]], "ord": false, "tol": 0.01}, {"exp": "WITH monthly AS (SELECT strftime('%m', sale_date) AS month, SUM(quantity * unit_price) AS revenue FROM sales GROUP BY month) SELECT month, revenue FROM monthly ORDER BY revenue DESC LIMIT 1;", "need": [["(?i)^\\s*with", "Start with WITH monthly AS (...)."]], "ord": false, "tol": 0.01}, {"exp": "WITH store_rev AS (SELECT store_id, SUM(quantity * unit_price) AS revenue FROM sales GROUP BY store_id) SELECT st.store_name, ROUND(r.revenue / st.square_feet, 2) AS per_sqft FROM store_rev r JOIN stores st ON st.store_id = r.store_id ORDER BY per_sqft DESC;", "need": [], "ord": true, "tol": 0.006}, {"exp": "SELECT product_name, list_price, RANK() OVER (ORDER BY list_price DESC) AS price_rank FROM products ORDER BY price_rank, product_name;", "need": [["(?i)over\\s*\\(", "Use RANK() OVER (...)."]], "ord": false, "tol": 0.01}, {"exp": "SELECT category, product_name, list_price, RANK() OVER (PARTITION BY category ORDER BY list_price DESC) AS cat_rank FROM products;", "need": [["(?i)partition\\s+by", "Use PARTITION BY category."]], "ord": false, "tol": 0.01}, {"exp": "WITH monthly AS (SELECT strftime('%m', sale_date) AS month, SUM(quantity * unit_price) AS revenue FROM sales GROUP BY month) SELECT month, revenue, revenue - LAG(revenue) OVER (ORDER BY month) AS change FROM monthly ORDER BY month;", "need": [["(?i)lag\\s*\\(", "Use LAG()."]], "ord": true, "tol": 0.01}, {"exp": "WITH monthly AS (SELECT strftime('%m', sale_date) AS month, SUM(quantity * unit_price) AS revenue FROM sales GROUP BY month) SELECT month, revenue, SUM(revenue) OVER (ORDER BY month) AS ytd FROM monthly ORDER BY month;", "need": [["(?i)over\\s*\\(", "Use SUM(...) OVER (ORDER BY month)."]], "ord": true, "tol": 0.01}, {"exp": "SELECT condition, ROUND(AVG(julianday(date_sold) - julianday(date_listed)), 1) AS avg_days FROM used_gear WHERE date_sold IS NOT NULL GROUP BY condition ORDER BY avg_days;", "need": [], "ord": true, "tol": 0.06}];X.forEach(function(x,i){Object.assign(STEPS[i],x)})})();
+let passed=new Set(),codes={},tries={};
+function load(){try{const s=JSON.parse(localStorage.getItem(SKEY)||'null');if(!s)return null;
+ if(Array.isArray(s.passed))passed=new Set(s.passed.filter(i=>Number.isInteger(i)&&i>=0&&i<STEPS.length));
+ if(s.codes&&typeof s.codes==='object')codes=s.codes;return s}catch(e){return null}}
 function save(){try{const r=document.getElementById('refl'),n=document.getElementById('nm');
- localStorage.setItem(SKEY,JSON.stringify({solved:[...solved],refl:r?r.value:'',nm:n?n.value:''}))}catch(e){}}
-function resetLab(){if(!confirm('Clear your saved progress for this lab and start over?'))return;
- try{localStorage.removeItem(SKEY)}catch(e){}solved=new Set();
- const r=document.getElementById('refl'),n=document.getElementById('nm');if(r)r.value='';if(n)n.value='';
- render();if(r)r.dispatchEvent(new Event('input',{bubbles:true}));}
-const norm=s=>s.replace(/[$,\s]/g,'').toLowerCase();
-function render(){
- QS.forEach((q,i)=>{
-  const c=document.querySelector('.cpslot[data-cp="'+(i+1)+'"]');
-  if(!c)return; c.innerHTML='';
-  const lock=i>0&&!solved.has(i-1);
-  const d=document.createElement('div');
-  d.className='cp'+(solved.has(i)?' done':(lock?' locked':''));
-  d.innerHTML='<span class="cphead">Checkpoint '+(i+1)+' of '+QS.length+(solved.has(i)?' \u00b7 cleared':'')+'</span>'
-   +'<p class="q">'+q.q+'</p>'
-   +(solved.has(i)?'<p class="msg" style="color:var(--good)">Correct.</p>':'<input type="text" id="in'+i+'" aria-label="Answer '+(i+1)+'">'
-   +'<button onclick="chk('+i+')">Check</button>'
-   +'<button class="hintb" onclick="hint('+i+')">Hint</button>'
-   +'<p class="msg" id="m'+i+'" role="status" aria-live="polite"></p><p class="hint" id="h'+i+'">'+q.h+'</p>');
-  c.appendChild(d);
-  if(lock)c.insertAdjacentHTML('beforeend','<p class="lockmsg">Clear Checkpoint '+i+' first.</p>');});
- document.getElementById('prog').textContent='Checkpoint progress: '+solved.size+' / '+QS.length;
- const done=solved.size===QS.length;
- document.getElementById('reflectbox').className='certbox'+(done?' show':'');
- document.getElementById('certbox').className='certbox'+(done&&wc()>=50?' show':'');
+ localStorage.setItem(SKEY,JSON.stringify({passed:[...passed],codes:codes,refl:r?r.value:'',nm:n?n.value:''}))}catch(e){}}
+function resetLab(){if(!confirm('Clear your saved progress and code for this bootcamp and start over?'))return;
+ try{localStorage.removeItem(SKEY)}catch(e){}location.reload();}
+function esc2(t){return String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function unlocked(i){return i===0||passed.has(i-1)||passed.has(i)}
+function current(){for(let i=0;i<STEPS.length;i++)if(!passed.has(i))return i;return -1}
+function build(){
+ STEPS.forEach((s,i)=>{
+  const host=document.querySelector('#'+s.l+' .lsteps');
+  const d=document.createElement('div');d.className='st';d.id='st'+i;
+  d.innerHTML='<button type="button" class="sthead" aria-expanded="true" aria-controls="stb'+i+'"><span class="stn">Step '+(i+1)+' of '+STEPS.length+'</span><span class="stt">'+s.t+'</span><span class="stok">&#10003; Passed</span></button>'
+  +'<div class="stbody" id="stb'+i+'"><div class="learn">'+s.learn+'</div>'
+  +'<div class="task"><strong>Your task</strong><p>'+s.task+'</p></div>'
+  +'<div class="pycell st-ed"><textarea aria-label="'+EDLABEL+', step '+(i+1)+'" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"></textarea>'
+  +'<div class="pybar"><button type="button" class="go">Run and check</button><button type="button" class="hb">Hint</button><span class="stat" aria-live="polite"></span></div><pre class="pyout" tabindex="0" aria-label="Output, step '+(i+1)+'"></pre></div>'
+  +'<p class="fb" role="status"></p><div class="hint">'+s.hint+'</div>'
+  +(s.sol?'<div class="solbox" hidden><p style="margin:.2rem 0 .4rem">One solution. Read it, then type or copy it in and run it yourself.</p><pre class="bc" tabindex="0"></pre><button type="button" class="cp">Copy into the editor</button></div>':'')
+  +'<button type="button" class="nextb" hidden>Next step &#8595;</button></div>';
+  host.appendChild(d);
+  const ta=d.querySelector('textarea');ta.value=(codes[i]!=null?codes[i]:s.code);fit(ta);
+  if(s.sol)d.querySelector('.solbox pre').textContent=s.sol;
+  d.querySelector('.sthead').addEventListener('click',()=>toggle(i));
+  d.querySelector('.go').addEventListener('click',()=>go(i));
+  d.querySelector('.hb').addEventListener('click',()=>{d.querySelector('.hint').classList.toggle('show')});
+  if(s.sol)d.querySelector('.cp').addEventListener('click',()=>{ta.value=s.sol;fit(ta);codes[i]=ta.value;save();ta.focus()});
+  d.querySelector('.nextb').addEventListener('click',()=>next(i));
+  let tm;ta.addEventListener('input',()=>{fit(ta);clearTimeout(tm);tm=setTimeout(()=>{codes[i]=ta.value;save()},400)});
+  let escd=false;
+  ta.addEventListener('keydown',e=>{
+   if(e.key==='Escape'){escd=true;return}
+   if(e.key==='Enter'&&e.shiftKey){e.preventDefault();go(i);return}
+   if(e.key==='Tab'&&!e.shiftKey&&!escd){e.preventDefault();const a=ta.selectionStart,b=ta.selectionEnd;ta.value=ta.value.slice(0,a)+'    '+ta.value.slice(b);ta.selectionStart=ta.selectionEnd=a+4;ta.dispatchEvent(new Event('input'))}
+   escd=false;});
+ });
+ const lm=document.getElementById('lmap');
+ LESSONS.forEach((l,k)=>{const li=document.createElement('li');li.innerHTML='<a href="#'+l.id+'" id="lm'+k+'"></a>';lm.appendChild(li)});
+}
+function fit(ta){ta.rows=Math.max(3,ta.value.split('\n').length+1)}
+function toggle(i){const d=document.getElementById('st'+i),c=d.classList.toggle('closed');d.querySelector('.sthead').setAttribute('aria-expanded',c?'false':'true')}
+function setOpen(i,open){const d=document.getElementById('st'+i);d.classList.toggle('closed',!open);d.querySelector('.sthead').setAttribute('aria-expanded',open?'true':'false')}
+function paint(first){
+ const cur=current();
+ STEPS.forEach((s,i)=>{const d=document.getElementById('st'+i);d.hidden=!unlocked(i);
+  d.classList.toggle('done',passed.has(i));d.classList.toggle('cur',i===cur);
+  if(first)setOpen(i,i===cur);
+  d.querySelector('.nextb').hidden=!(passed.has(i)&&i+1<STEPS.length);});
+ LESSONS.forEach((l,k)=>{
+  const idx=STEPS.map((s,i)=>s.l===l.id?i:-1).filter(i=>i>=0);
+  const vis=idx.filter(unlocked).length,done=idx.filter(i=>passed.has(i)).length;
+  const sec=document.getElementById(l.id),lk=sec.querySelector('.lockmsg2');
+  sec.classList.toggle('locked',vis===0);
+  if(vis===0){lk.hidden=false;lk.textContent='Locked. This lesson opens when you finish '+(k?LESSONS[k-1].t:'the one before')+'.'}
+  else if(vis<idx.length){lk.hidden=false;lk.textContent=(idx.length-vis)+' more step'+(idx.length-vis>1?'s':'')+' in this lesson open as you go.'}
+  else lk.hidden=true;
+  const a=document.getElementById('lm'+k);a.textContent=(k+1<LESSONS.length?(k+1)+' · ':'')+l.t+' '+done+'/'+idx.length;
+  a.className=done===idx.length?'full':(vis?'':'off');});
+ document.getElementById('prog').textContent='Progress: '+passed.size+' / '+STEPS.length+' steps';
+ document.getElementById('pbarfill').style.width=(100*passed.size/STEPS.length)+'%';
+ const all=passed.size===STEPS.length;
+ document.getElementById('reflectbox').className='certbox'+(all?' show':'');
+ document.getElementById('certbox').className='certbox'+(all&&wc()>=50?' show':'');
+}
+function next(i){setOpen(i,false);const n=document.getElementById('st'+(i+1));if(!n)return;setOpen(i+1,true);
+ n.scrollIntoView({behavior:'smooth',block:'start'});setTimeout(()=>n.querySelector('textarea').focus({preventScroll:true}),350)}
+function go(i){
+ const d=document.getElementById('st'+i),ta=d.querySelector('textarea'),out=d.querySelector('.pyout'),fb=d.querySelector('.fb'),btn=d.querySelector('.go'),st=d.querySelector('.stat');
+ codes[i]=ta.value;save();btn.disabled=true;fb.textContent='';fb.className='fb';out.innerHTML='';
+ window.STEPRUN(i,ta.value,m=>{st.textContent=m}).then(r=>{
+  out.innerHTML=r.html||'<span style="color:#9aa">(ran with no output)</span>';
+  if(r.ok){const first=!passed.has(i);passed.add(i);save();st.textContent='';
+   fb.className='fb ok';fb.textContent=i+1<STEPS.length?'Passed. Nice work.':'Passed. That was the last step. Write your memo below.';
+   if(first&&i+1<STEPS.length)setOpen(i+1,true);paint(false);const sr=document.getElementById('srlive');if(sr)sr.textContent='Step '+(i+1)+' passed.';
+   if(first&&i+1<STEPS.length)d.querySelector('.nextb').focus({preventScroll:true});
+  }else{tries[i]=(tries[i]||0)+1;fb.className='fb no';
+   fb.textContent=r.err?'Your code stopped with an error. Read the last line of the output, fix it, and run it again.':('Not yet. '+(r.msg||'Re-read the task and try again.'));
+   st.textContent='';const sb=d.querySelector('.solbox');if(sb&&tries[i]>=2)sb.hidden=false;}
+ }).catch(e=>{out.innerHTML='<span class="err">'+esc2(e.message||e)+'</span>';st.textContent=''})
+ .then(()=>{btn.disabled=false});
 }
 function wc(){const t=document.getElementById('refl');return t?t.value.trim().split(/\s+/).filter(Boolean).length:0}
 document.addEventListener('input',function(e){
- if(e.target&&e.target.id==='refl'){
-  const n=wc();document.getElementById('reflcount').textContent=n+' words'+(n<50?': '+(50-n)+' more to unlock your certificate':': certificate unlocked below');
-  document.getElementById('certbox').className='certbox'+(solved.size===QS.length&&n>=50?' show':'');save();
- }
+ if(e.target&&e.target.id==='refl'){const n=wc();
+  document.getElementById('reflcount').textContent=n+' words'+(n<50?': '+(50-n)+' more to unlock your certificate':': certificate unlocked below');
+  document.getElementById('certbox').className='certbox'+(passed.size===STEPS.length&&n>=50?' show':'');save();}
+ if(e.target&&e.target.id==='nm')save();
 });
-function hint(i){const h=document.getElementById('h'+i);h.style.display=h.style.display==='block'?'none':'block'}
-function chk(i){
- const v=document.getElementById('in'+i).value,m=document.getElementById('m'+i);
- if(!v.trim()){m.textContent='Enter an answer first.';m.style.color='#7d6608';return}
- const ans=atob(QS[i].a);let ok=false;
- if(QS[i].t==='num'){const g=parseFloat(norm(v)),a=parseFloat(ans);ok=!isNaN(g)&&Math.abs(g-a)<=QS[i].tol}
- else ok=norm(v)===norm(ans);
- if(ok){solved.add(i);save();render();var sr=document.getElementById('srlive');if(sr)sr.textContent='Checkpoint '+(i+1)+' cleared.';var nx=document.getElementById('in'+(i+1));if(nx)nx.focus();}
- else{m.textContent='Not yet: check the hint, or re-read the step above.';m.style.color='#a03434'}
+function dlcode(){
+ const n=(document.getElementById('nm')||{}).value||'';
+ let t=CODEHEAD+'\n\n';STEPS.forEach((s,i)=>{const c=codes[i]!=null?codes[i]:'';t+=CMT+' Step '+(i+1)+' · '+s.t+(passed.has(i)?'':' (not passed yet)')+'\n'+c.trim()+'\n\n'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:'text/plain'}));
+ a.download=CODEFILE+(n.trim()?'_'+n.trim().replace(/[^A-Za-z]+/g,'_').replace(/^_|_$/g,''):'')+CODEEXT;document.body.appendChild(a);a.click();a.remove();
 }
+build();
+(function(){const s=load();if(s){const r=document.getElementById('refl'),n=document.getElementById('nm');if(r&&s.refl){r.value=s.refl;r.dispatchEvent(new Event('input',{bubbles:true}))}if(n&&s.nm)n.value=s.nm;}paint(true);})();
 function h32(s){let h=5381;for(const c of s)h=((h<<5)+h+c.charCodeAt(0))|0;return(h>>>0).toString(36).toUpperCase()}
 function cert(){
  const n=document.getElementById('nm').value.trim();
  if(!n){document.getElementById('codeout').textContent='Enter your name first.';return}
  const r=document.getElementById('refl').value.trim();
- if(wc()<50){document.getElementById('codeout').textContent='Finish your 50-word reflection above first.';return}
- const code=LAB+'-'+h32(n.toLowerCase()+'|'+LAB+'|'+QS.length);
+ if(passed.size<STEPS.length){document.getElementById('codeout').textContent='Pass every step first.';return}
+ if(wc()<50){document.getElementById('codeout').textContent='Finish your 50-word memo above first.';return}
+ const N=STEPS.length,code=LAB+'-'+h32(n.toLowerCase()+'|'+LAB+'|'+N);
  const d=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
  const {jsPDF}=window.jspdf;const p=new jsPDF({orientation:'landscape',unit:'pt',format:[560,380]});
- p.setFillColor(11,29,51);p.rect(0,0,560,380,'F');
- p.setFillColor(253,252,250);p.rect(16,16,528,348,'F');
+ p.setFillColor(11,29,51);p.rect(0,0,560,380,'F');p.setFillColor(253,252,250);p.rect(16,16,528,348,'F');
  p.setTextColor(26,82,118);p.setFont('helvetica','bold');p.setFontSize(10);
- p.text('MIS 320 \u00B7 INTRODUCTION TO INFORMATION SYSTEMS \u00B7 WWU',280,58,{align:'center'});
- p.setTextColor(26,26,26);p.setFont('times','bold');p.setFontSize(26);
- p.text('Certificate of Completion',280,105,{align:'center'});
+ p.text('MIS 320 · INTRODUCTION TO INFORMATION SYSTEMS · WWU',280,58,{align:'center'});
+ p.setTextColor(26,26,26);p.setFont('times','bold');p.setFontSize(26);p.text('Certificate of Completion',280,105,{align:'center'});
  p.setFont('times','normal');p.setFontSize(13);p.text('This certifies that',280,140,{align:'center'});
  p.setFont('times','bold');p.setFontSize(20);p.text(n,280,170,{align:'center'});
- p.setFont('times','normal');p.setFontSize(13);
- p.text('completed all '+QS.length+' checkpoints of',280,198,{align:'center'});
- p.setFont('helvetica','bold');p.setFontSize(15);p.setTextColor(26,82,118);
- p.text('SQL Bootcamp \u00B7 Joins, Groups, CTEs, and Window Functions',280,222,{align:'center'});
- p.setFont('helvetica','normal');p.setFontSize(11);p.setTextColor(90,90,90);
- p.text(d,280,252,{align:'center'});
- p.setFont('courier','bold');p.setFontSize(12);p.setTextColor(17,120,100);
- p.text('Verification code: '+code,280,290,{align:'center'});
+ p.setFont('times','normal');p.setFontSize(13);p.text('completed all '+N+' steps of',280,198,{align:'center'});
+ p.setFont('helvetica','bold');p.setFontSize(15);p.setTextColor(26,82,118);p.text(CERTTITLE,280,222,{align:'center'});
+ p.setFont('helvetica','normal');p.setFontSize(11);p.setTextColor(90,90,90);p.text(d,280,252,{align:'center'});
+ p.setFont('courier','bold');p.setFontSize(12);p.setTextColor(17,120,100);p.text('Verification code: '+code,280,290,{align:'center'});
  p.setFontSize(8);p.setFont('helvetica','normal');p.setTextColor(150,150,150);
- p.text('Upload this PDF to Canvas. Reflection on page 2. Code is unique to name + lab.',280,330,{align:'center'});
- p.addPage([560,380],'landscape');
- p.setFillColor(253,252,250);p.rect(0,0,560,380,'F');
- p.setDrawColor(11,29,51);p.setLineWidth(2);p.rect(16,16,528,348);
- p.setTextColor(26,82,118);p.setFont('helvetica','bold');p.setFontSize(10);
- p.text('MEMO \u00B7 '+n+' \u00B7 '+code,280,44,{align:'center'});
- p.setTextColor(60,60,60);p.setFont('times','italic');p.setFontSize(9);
- const promptLines=p.splitTextToSize('Prompt: Tell the Used Gear Program Lead what you found about time to sell by condition and whether it supports the hunch. Name one thing to check before changing the price sheet, and the query you would use.',480);
- p.text(promptLines,40,70);
+ p.text('Upload this PDF to Canvas. Memo on page 2. Code is unique to name + bootcamp.',280,330,{align:'center'});
+ p.addPage([560,380],'landscape');p.setFillColor(253,252,250);p.rect(0,0,560,380,'F');
+ p.setTextColor(26,26,26);p.setFont('helvetica','bold');p.setFontSize(13);p.text(MEMOTITLE,40,50);
+ p.setFont('helvetica','normal');p.setFontSize(9);p.setTextColor(90,90,90);p.text(n+' · '+code,40,66);
  p.setFont('times','normal');p.setFontSize(11);p.setTextColor(26,26,26);
- const lines=p.splitTextToSize(r,480);
- p.text(lines.slice(0,22),40,70+promptLines.length*11+14);
- p.save(LAB+'_certificate_'+n.replace(/[^a-z0-9]/gi,'_')+'.pdf');
- document.getElementById('codeout').innerHTML='Certificate downloaded (reflection on page 2). Your code: <code>'+code+'</code>';
+ const lines=p.splitTextToSize(r,480);p.text(lines.slice(0,24),40,92);
+ p.save(CODEFILE+'_certificate.pdf');
+ document.getElementById('codeout').textContent='Certificate downloaded (memo on page 2). Your code: '+code;
 }
-(function(){const s=load();render();
- if(s){const r=document.getElementById('refl'),n=document.getElementById('nm');
-  if(r&&s.refl){r.value=s.refl;r.dispatchEvent(new Event('input',{bubbles:true}))}
-  if(n&&s.nm)n.value=s.nm;}
- const nm=document.getElementById('nm');if(nm)nm.addEventListener('input',save);})();
+
 </script>
 
 <!--NAVJS-->
