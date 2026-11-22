@@ -15,7 +15,7 @@ PAGES = (
     sorted(glob.glob('chapter*.html'), key=lambda f: int(re.search(r'\d+', f).group()))
     + [f for f in sorted(glob.glob('lab*.html'), key=lambda f: int(re.search(r'\d+', f).group()))
        if '-hidden' not in f]
-    + ['excel-bootcamp.html', 'sql-bootcamp.html', 'python-bootcamp.html', 'tableau-bootcamp.html', 'glossary.html', 'syllabus.html', 'schedule.html', 'preface.html', 'resume.html']
+    + ['genai-bootcamp.html', 'excel-bootcamp.html', 'sql-bootcamp.html', 'python-bootcamp.html', 'tableau-bootcamp.html', 'glossary.html', 'syllabus.html', 'schedule.html', 'preface.html', 'resume.html']
 )
 SKIP_CLASSES = {'srcbox', 'printbox', 'toc', 'pn', 'skiplink', 'tocbtn'}
 

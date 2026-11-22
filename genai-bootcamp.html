@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta name="robots" content="noindex, nofollow"><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GenAI for Business Bootcamp (Optional) | MIS 320</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0e0e0d; --off-black:#1a1a18;
+  --magenta:#cc146d; --magenta-onblack:#f0348e; --magenta-dark:#c0146a; --magenta-pale:#fdeaf3;
+  --white:#ffffff; --off-white:#f6f4f1;
+  --text-dark:#0e0e0d; --text-muted:#3a3a38; --text-light:#6b6b68;
+  --border:#e0ddd8;
+  --warn:#b3261e; --warn-pale:#fdeceb;
+  --good:#1f7a53; --good-pale:#e8f4ee;
+  --sans:'Space Grotesk',sans-serif; --display:'Oswald',sans-serif;
+  --wrap:1180px; --col:46rem;
+  /* legacy aliases so existing markup keeps working */
+  --navy:#0e0e0d; --navy-soft:#1a1a18; --accent:#cc146d; --accent-deep:#c0146a;
+  --accent-pale:#fdeaf3; --cream:#ffffff; --cream-deep:#f6f4f1; --paper:#ffffff;
+  --ink:#0e0e0d; --muted:#6b6b68; --rule:#e0ddd8; --serif:'Space Grotesk',sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--white);color:var(--text-dark);
+  font-family:var(--sans);font-size:18.5px;line-height:1.7;-webkit-font-smoothing:antialiased}
+
+/* ---------- shell ---------- */
+.shell{max-width:var(--wrap);margin:0 auto;display:grid;grid-template-columns:15rem minmax(0,1fr);gap:3.5rem;padding:0 1.5rem 6rem}
+main{margin-left:auto;margin-right:auto;max-width:var(--col);min-width:0;padding-top:2.5rem}
+
+/* ---------- sidebar ---------- */
+.rail{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:2.5rem 0 3rem;border-right:1px solid var(--border)}
+.rail .book{font-family:var(--display);font-size:15px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--magenta);margin:0 0 .2rem}
+.rail .course{font-size:13.5px;color:var(--text-light);margin:0 0 1.75rem}
+.rail nav a{display:block;font-size:15px;line-height:1.35;color:var(--text-muted);text-decoration:none;padding:.42rem .8rem .42rem .85rem;border-left:2px solid transparent;margin-left:-.85rem}
+.rail nav a:hover{color:var(--magenta);border-left-color:var(--magenta)}
+.rail nav a.sub{font-size:14px;color:var(--text-light);padding-left:1.7rem}
+.rail .back{display:inline-block;margin-top:2rem;font-size:14px;color:var(--text-light);text-decoration:none}
+.rail .back:hover{color:var(--magenta)}
+.railtoggle{display:none}
+
+/* ---------- chapter head ---------- */
+.chaphead{border-bottom:3px solid var(--black);padding-bottom:1.6rem;margin-bottom:2.5rem}
+.eyebrow{font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--magenta);margin:0 0 .7rem}
+.chaphead h1{font-family:var(--display);font-weight:600;font-size:clamp(1.9rem,4.4vw,2.7rem);line-height:1.12;text-transform:uppercase;letter-spacing:.01em;margin:0 0 .6rem;color:var(--black)}
+.chaphead .anchor{font-size:16px;color:var(--text-light);margin:0}
+.chaphead .anchor strong{color:var(--text-muted);font-weight:500}
+.meta-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.2rem}
+.meta-row span{font-size:13px;letter-spacing:.03em;background:var(--off-white);border:1px solid var(--border);padding:.32rem .65rem;color:var(--text-muted)}
+.meta-row span.alt{background:var(--magenta-pale);border-color:#f6cfe1;color:var(--magenta-dark)}
+
+/* ---------- type ---------- */
+h2{font-family:var(--display);font-weight:600;font-size:1.72rem;line-height:1.22;text-transform:uppercase;letter-spacing:.01em;color:var(--black);margin:3.2rem 0 .9rem}
+h2 .num{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;color:var(--magenta);display:block;margin-bottom:.4rem;text-transform:uppercase}
+h3{font-family:var(--display);font-weight:600;font-size:1.18rem;text-transform:uppercase;letter-spacing:.03em;color:var(--off-black);margin:2rem 0 .55rem}
+p{margin:0 0 1.05rem}
+a{color:var(--magenta-dark)}
+strong{font-weight:600;color:var(--black)}
+.lede{font-size:1.24rem;line-height:1.55;color:var(--text-muted)}
+code.inline{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--off-white);padding:.1em .35em;border:1px solid var(--border)}
+ul,ol{margin:0 0 1.15rem;padding-left:1.3rem}
+li{margin-bottom:.45rem}
+
+/* ---------- numbered step headings ---------- */
+.sh{margin:3rem 0 .7rem;padding-top:.9rem;border-top:2px solid var(--black)}
+.sh .badge{display:inline-block;background:var(--magenta);color:#fff;font-family:var(--display);
+  font-size:12.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  padding:.24rem .62rem;margin-right:.55rem;vertical-align:.17em;white-space:nowrap}
+.sh .ttl{display:inline;font-family:var(--display);font-weight:600;font-size:1.18rem;
+  text-transform:uppercase;letter-spacing:.03em;color:var(--off-black);line-height:1.35}
+.sh .cpx{display:block;clear:both;font-family:var(--sans);font-size:13.5px;line-height:1.4;
+  color:var(--text-light);margin-top:.12rem}
+.sh .cpx b{font-weight:600;color:var(--magenta-dark)}
+@media (max-width:520px){
+  .sh .badge{font-size:11.5px;padding:.2rem .5rem;margin-right:.45rem;vertical-align:.14em}
+  .sh .ttl{font-size:1.05rem}
+}
+
+/* ---------- inline checkpoint slots ---------- */
+.cpslot{margin:1.1rem 0 0}
+.cpslot .cp{margin:0}
+.cp .cphead{display:block;font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--magenta);margin-bottom:.4rem}
+.cp.done .cphead{color:var(--good)}
+.cp.locked .cphead{color:var(--text-light)}
+.progress{border:none}
+.lockmsg{font-family:var(--sans);font-size:.82rem;color:var(--text-light);margin:.4rem 0 0}
+.cp .q,.cp .hint,.cp .msg{overflow-wrap:anywhere}
+
+/* ---------- pull quote ---------- */
+.pull{margin:2.2rem 0;padding:0 0 0 1.4rem;border-left:3px solid var(--magenta)}
+.pull p{font-family:var(--display);font-weight:400;font-size:1.32rem;line-height:1.3;color:var(--black);margin:0 0 .5rem}
+.pull cite{font-style:normal;font-size:12.5px;color:var(--text-light)}
+
+/* ---------- callouts ---------- */
+.callout{border:1px solid var(--border);border-left:4px solid var(--magenta);background:var(--off-white);padding:1.15rem 1.3rem;margin:1.9rem 0}
+.callout > strong:first-child{display:block;font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--magenta);margin-bottom:.5rem}
+.callout p:last-child{margin-bottom:0}
+.callout-caution{border-left-color:var(--warn);background:var(--warn-pale)}
+.callout-caution strong:first-child{color:var(--warn)}
+.callout-bridge{border-left-color:var(--black);background:var(--off-white)}
+.callout-bridge strong:first-child{color:var(--black)}
+.callout-good{border-left-color:var(--good);background:var(--good-pale)}
+.callout-good strong:first-child{color:var(--good)}
+
+/* ---------- signature: value chain rail ---------- */
+.vc{margin:2.4rem 0;border:1px solid var(--border);background:var(--white);overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,.07)}
+.vc-head{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#fff;background:var(--black);padding:.7rem 1rem}
+.vc-strip{display:grid;grid-template-columns:repeat(5,1fr)}
+.vc-cell{padding:.85rem .7rem;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+.vc-cell:last-child{border-right:none}
+.vc-stage{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-light);display:block;margin-bottom:.3rem}
+.vc-cell p{font-size:15.5px;line-height:1.4;margin:0;color:var(--text-muted)}
+.vc-cell.broke{background:var(--magenta-pale)}
+.vc-cell.broke .vc-stage{color:var(--magenta)}
+.vc-cell.broke p{color:#8a1450}
+.vc-note{padding:.8rem 1rem;font-size:14px;color:var(--text-light);background:var(--off-white);border-top:1px solid var(--border)}
+.vc-note b{color:var(--magenta);font-weight:600}
+
+/* ---------- stat band ---------- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(8.5rem,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin:2rem 0}
+.stat{background:var(--white);padding:1rem .9rem}
+.stat b{display:block;font-family:var(--display);font-weight:700;font-size:1.8rem;color:var(--magenta);line-height:1.1}
+.stat span{display:block;font-size:13px;line-height:1.3;color:var(--text-light);margin-top:.3rem}
+
+/* ---------- timeline ---------- */
+.tl{list-style:none;padding:0;margin:1.8rem 0;border-left:2px solid var(--border)}
+.tl li{position:relative;padding:0 0 1.1rem 1.3rem;margin:0}
+.tl li:before{content:"";position:absolute;left:-5px;top:.55em;width:8px;height:8px;border-radius:50%;background:var(--magenta)}
+.tl li.bad:before{background:var(--warn)}
+.tl .when{font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--magenta);display:block}
+.tl li.bad .when{color:var(--warn)}
+
+/* ---------- vocabulary ---------- */
+.vocab{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin:1.8rem 0}
+.vocab div{background:var(--white);padding:.95rem 1rem}
+.vocab dt{font-family:var(--display);font-weight:600;font-size:15px;text-transform:uppercase;letter-spacing:.03em;color:var(--black);margin-bottom:.3rem}
+.vocab dd{margin:0;font-size:16.5px;line-height:1.5;color:var(--text-muted)}
+
+/* ---------- discussion questions ---------- */
+.dq{counter-reset:dq;margin:1.6rem 0 0;padding:0;list-style:none}
+.dq li{counter-increment:dq;position:relative;padding:1rem 0 1rem 2.6rem;border-top:1px solid var(--border)}
+.dq li:last-child{border-bottom:1px solid var(--border)}
+.dq li:before{content:counter(dq,decimal-leading-zero);position:absolute;left:0;top:1.05rem;font-family:var(--display);font-size:14.5px;font-weight:600;color:var(--magenta)}
+.tag{display:inline-block;font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:.2rem .5rem;margin-left:.5rem;vertical-align:.12em}
+.tag-hard{background:var(--warn);color:#fff}
+.tag-open{background:var(--black);color:#fff}
+.tag-warm{background:var(--magenta-pale);color:var(--magenta-dark)}
+
+/* ---------- sources ---------- */
+.sources{margin-top:3.5rem;padding-top:1.2rem;border-top:1px solid var(--border);font-size:14.5px;color:var(--text-light)}
+.sources h3{font-family:var(--display);font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin:0 0 .6rem}
+.sources li{margin-bottom:.35rem;line-height:1.5}
+
+/* ---------- responsive ---------- */
+@media (max-width:860px){
+  .shell{grid-template-columns:minmax(0,1fr);gap:0;padding:0 1.15rem 4rem}
+  .rail{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);padding:1.5rem 0 1rem;margin-bottom:.5rem}
+  .rail nav{display:none}
+  .rail nav.open{display:block;margin-top:.8rem}
+  .railtoggle{display:inline-block;font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--magenta);background:none;border:1px solid var(--border);padding:.4rem .7rem;cursor:pointer}
+  main{padding-top:1.2rem}
+  .vc-strip{grid-template-columns:repeat(2,1fr)}
+}
+:focus-visible{outline:2px solid var(--magenta);outline-offset:2px}
+
+/* ---------- prominent lab link ---------- */
+.lablink{display:inline-block;margin-top:.9rem;font-family:var(--display);font-size:14.5px;font-weight:600;
+  letter-spacing:.06em;text-transform:uppercase;text-decoration:none;background:var(--magenta);color:#fff;
+  padding:.6rem 1.15rem;border:none}
+.lablink:hover{background:var(--magenta-dark);color:#fff}
+.callout .lablink{margin-top:1rem}
+
+/* ---------- global top navigation with dropdowns ---------- */
+.topnav{position:sticky;top:0;z-index:100;background:var(--black);border-bottom:1px solid rgba(255,255,255,.14)}
+.topnav-in{max-width:var(--wrap);margin:0 auto;padding:.7rem 1.5rem;display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap}
+.topnav-brand{font-family:var(--display);font-size:16px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--magenta-onblack);text-decoration:none;margin-right:auto}
+.topnav-brand:hover{color:#fff}
+.dd{position:relative}
+.dd-btn{font-family:var(--display);font-size:14.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:#fff;background:none;border:1px solid rgba(255,255,255,.3);padding:.42rem .85rem;cursor:pointer}
+.dd-btn:hover,.dd-btn[aria-expanded="true"]{background:var(--magenta);border-color:var(--magenta)}
+.dd-btn .caret{font-size:11px;margin-left:.35rem}
+.dd-menu{display:none;position:absolute;right:0;top:calc(100% + .4rem);min-width:20rem;background:#fff;
+  border:1px solid var(--border);box-shadow:0 8px 30px rgba(0,0,0,.22);padding:.4rem 0;max-height:75vh;overflow-y:auto}
+.dd-menu.open{display:block}
+.dd-menu a{display:block;padding:.55rem 1rem;text-decoration:none;color:var(--text-dark);font-size:14.5px;line-height:1.35}
+.dd-menu a:hover{background:var(--magenta-pale);color:var(--magenta-dark)}
+.dd-menu a .lbl{display:block;font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--magenta);margin-bottom:.1rem}
+.dd-menu a.current{background:var(--off-white);border-left:3px solid var(--magenta)}
+.dd-menu a.soon{color:var(--text-light);pointer-events:none}
+.dd-menu a.soon .lbl{color:var(--text-light)}
+.dd-sep{margin:.35rem 0;border-top:1px solid var(--border)}
+@media (max-width:700px){
+  .topnav-in{padding:.6rem 1.15rem;gap:.6rem}
+  .topnav-brand{font-size:13.5px;width:100%;margin-right:0}
+  .dd{flex:1}
+  .dd-btn{width:100%;font-size:13px;padding:.4rem .5rem}
+  .dd-menu{right:auto;left:0;min-width:min(92vw,22rem)}
+}
+
+/* ---------- collapsible step-by-step help ---------- */
+.howto{margin:.7rem 0 1.1rem;border:1px solid var(--border);background:var(--off-white)}
+.howto>summary{cursor:pointer;padding:.6rem .9rem;font-family:var(--display);font-size:13px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--magenta-dark);list-style:none}
+.howto>summary::-webkit-details-marker{display:none}
+.howto>summary:before{content:"\25B8  ";font-size:11px}
+.howto[open]>summary:before{content:"\25BE  "}
+.howto>summary:hover{background:var(--magenta-pale)}
+.howto-body{padding:.3rem 1.1rem 1rem;border-top:1px solid var(--border);background:#fff}
+.howto-body ol{margin:.7rem 0;padding-left:1.3rem}
+.howto-body li{margin-bottom:.45rem;font-size:16.5px;line-height:1.5}
+.howto-body p{font-size:16.5px;margin:.6rem 0}
+.kbd{font-family:ui-monospace,Menlo,monospace;font-size:.85em;background:var(--off-white);
+  border:1px solid var(--border);border-radius:2px;padding:.1em .35em;white-space:nowrap}
+.mac{display:inline-block;font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;background:var(--black);color:#fff;padding:.1rem .4rem;margin-right:.35rem}
+.stuck{border:1px solid var(--border);border-left:4px solid var(--black);background:var(--off-white);
+  padding:1rem 1.2rem;margin:2rem 0 0}
+.stuck strong:first-child{display:block;font-family:var(--display);font-size:12.5px;font-weight:600;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--black);margin-bottom:.5rem}
+.stuck ol{margin:.5rem 0 0;padding-left:1.3rem}
+.stuck li{font-size:16.5px;margin-bottom:.35rem}
+
+/* ---------- AI traffic lights ---------- */
+.ailight{display:flex;gap:1rem;align-items:flex-start;border:1px solid var(--border);background:#fff;
+  padding:1rem 1.2rem;margin:1rem 0}
+.ailight .lamp{flex:0 0 auto;width:34px;background:#1c1c1a;border-radius:8px;padding:7px 0;
+  display:flex;flex-direction:column;align-items:center;gap:5px}
+.ailight .bulb{width:20px;height:20px;border-radius:50%;background:#2e2e2b;box-shadow:inset 0 2px 4px rgba(0,0,0,.6)}
+.ailight.g .bulb.b3{background:#2fae5f;box-shadow:0 0 10px rgba(47,174,95,.8),inset 0 -2px 3px rgba(0,0,0,.25)}
+.ailight.y .bulb.b2{background:#e6b93c;box-shadow:0 0 10px rgba(230,185,60,.8),inset 0 -2px 3px rgba(0,0,0,.25)}
+.ailight.r .bulb.b1{background:#d5453a;box-shadow:0 0 10px rgba(213,69,58,.8),inset 0 -2px 3px rgba(0,0,0,.25)}
+.ailight .lighttext{flex:1;min-width:0}
+.ailight .lighttext > strong:first-child{display:block;font-family:var(--display);font-size:13px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;margin-bottom:.3rem}
+.ailight.g .lighttext strong:first-child{color:#1e7c43}
+.ailight.y .lighttext strong:first-child{color:#a07a10}
+.ailight.r .lighttext strong:first-child{color:#a03434}
+.ailight p{margin:.2rem 0 0;font-size:16.5px;line-height:1.55}
+
+/* ---------- think-pair-share block ---------- */
+.tps{border:1px solid var(--black);background:#fff;margin:2.2rem 0}
+.tps-head{background:var(--black);color:#fff;padding:.6rem 1.1rem;font-family:var(--display);font-size:12.5px;
+  font-weight:600;letter-spacing:.2em;text-transform:uppercase;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.tps-head .mins{color:rgba(255,255,255,.7);letter-spacing:.1em}
+.tps-body{padding:1.1rem 1.25rem}
+.tps-setup{font-size:17px;line-height:1.6;margin:0 0 1rem}
+.tps-q{border-left:4px solid var(--magenta);background:var(--magenta-pale);padding:.8rem 1rem;margin:0 0 1.1rem}
+.tps-q p{margin:0;font-size:17px;line-height:1.5;font-weight:500}
+.tps-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border)}
+.tps-step{background:#fff;padding:.75rem .9rem}
+.tps-step .ph{font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--magenta);margin-bottom:.3rem;display:flex;justify-content:space-between}
+.tps-step .ph span{color:var(--text-light)}
+.tps-step p{margin:0;font-size:16px;line-height:1.45;color:var(--text-muted)}
+.tps-note{border-top:1px solid var(--border);margin-top:1.1rem;padding-top:.9rem;font-size:16px;color:var(--text-muted)}
+.tps-note strong{font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--black);display:block;margin-bottom:.35rem}
+@media(max-width:700px){.tps-steps{grid-template-columns:1fr}}
+
+/* ---------- Monday session plan (instructor-facing) ---------- */
+.plan{border:1px solid var(--border);background:var(--off-white);margin:2rem 0}
+.plan-head{background:var(--off-white);border-bottom:1px solid var(--border);padding:.55rem 1.05rem;
+  font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted)}
+.plan table{width:100%;border-collapse:collapse;background:#fff}
+.plan td{border-bottom:1px solid var(--border);padding:.6rem .9rem;font-size:15.5px;vertical-align:top;line-height:1.45}
+.plan tr:last-child td{border-bottom:none}
+.plan td.t{width:5.5rem;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--magenta);white-space:nowrap}
+.plan td.w{width:8rem;font-weight:600}
+@media(max-width:640px){.plan td.w{width:auto}}
+
+/* ---------- chapter depth: stat strip, TOC, key concept, summary table ---------- */
+.statrow{display:flex;flex-wrap:wrap;gap:1px;background:var(--border);border:1px solid var(--border);margin:1.6rem 0}
+.stat{flex:1 1 8rem;background:#fff;padding:.85rem 1rem;text-align:center}
+.stat b{display:block;font-family:var(--display);font-size:22px;font-weight:600;color:var(--magenta);line-height:1.1}
+.stat span{font-size:12.5px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;font-family:var(--display)}
+.toc{border:1px solid var(--border);background:var(--off-white);padding:1rem 1.25rem;margin:1.6rem 0;font-family:var(--sans);font-size:14.5px;line-height:2}
+.toc strong{display:block;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.3rem}
+.toc a{color:var(--text-dark);text-decoration:none;border-bottom:1px solid var(--border);margin-right:1rem;white-space:normal}
+.toc a:hover{color:var(--magenta-dark);border-bottom-color:var(--magenta)}
+.kc{border:1px solid var(--border);border-left:4px solid var(--magenta);background:#fff;margin:1.4rem 0;padding:1rem 1.2rem}
+.kc .kc-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.15rem}
+.kc .kc-term{font-family:var(--display);font-size:17px;font-weight:600;display:block;margin-bottom:.45rem}
+.kc p{margin:0;font-size:17px;line-height:1.62}
+.sumtable{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:15.5px}
+.sumtable th{background:var(--black);color:#fff;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.55rem .8rem;text-align:left}
+.sumtable td{border:1px solid var(--border);padding:.6rem .8rem;vertical-align:top;line-height:1.5}
+.sumtable tr:nth-child(even) td{background:var(--off-white)}
+
+/* ---------- IS concepts chip strip ---------- */
+.concepts{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;margin:1.1rem 0 0}
+.concepts .clabel{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-right:.3rem}
+.concepts span:not(.clabel){font-family:var(--display);font-size:12.5px;font-weight:500;letter-spacing:.04em;border:1px solid var(--border);background:var(--off-white);padding:.22rem .6rem;color:var(--text-dark)}
+.cp{border:1px solid var(--rule);background:var(--paper);border-radius:2px;margin:1rem 0;padding:1rem 1.15rem}.cp.locked{pointer-events:none;background:var(--off-white)}
+.locked .q,.locked p{color:var(--text-muted)}
+.locked button{background:var(--off-white)!important;color:var(--text-light)!important;border:1px solid var(--rule)!important;cursor:default}
+.locked input{background:var(--off-white)}
+input::placeholder{color:#6b6b68;opacity:1}.cp.done{border-left:4px solid var(--good);background:var(--good-pale)}.cp .q{font-family:var(--sans);font-size:.92rem;color:var(--navy);margin:0 0.6rem;font-weight:500}.cp input[type=text]{font-family:var(--sans);font-size:.9rem;padding:.45rem.6rem;border:1px solid var(--rule);border-radius:2px;width:14rem;max-width:100%}.cp button{font-family:var(--sans);font-size:.8rem;font-weight:600;letter-spacing:.04em;background:var(--accent-deep);color:#fff;border:none;border-radius:2px;padding:.5rem.9rem;cursor:pointer;margin-left:.4rem}.cp button.hintb{background:none;color:var(--accent-deep);border:1px solid var(--rule)}.cp .msg{font-family:var(--sans);font-size:.8rem;margin:.5rem 0 0}.cp .hint{font-family:var(--sans);font-size:.8rem;color:var(--muted);margin:.5rem 0 0;display:none;border-top:1px dashed var(--rule);padding-top:.5rem}.progress{position:sticky;top:0;z-index:5;background:var(--black);color:#fff;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:.6rem 1rem;margin:1.5rem 0}.certbox{border:2px solid var(--black);background:var(--paper);padding:1.2rem 1.3rem;margin:1.5rem 0;display:none}.certbox.show{display:block}.certbox h3{margin-top:0}.codebox code{font-family:ui-monospace,Menlo,monospace;background:var(--cream-deep);padding:.15em.45em;border-radius:2px}
+</style>
+<link rel="stylesheet" href="book.css">
+<link rel="stylesheet" href="lab.css">
+<style id="step-css">
+.ask{background:#fff;border:1px solid var(--border);border-left:4px solid var(--accent-deep);padding:.75rem 1rem;margin:.2rem 0 1rem}
+.ask p{margin:.2rem 0}
+.ask-h{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-deep)}
+.ask-q{font-size:1.02rem;font-style:italic}
+.ask-d{font-family:var(--sans);font-size:.9rem}
+.lwrap{background:#eef7f1;border-left:4px solid #1e7a4a;padding:.6rem 1rem;margin:.8rem 0;font-family:var(--sans);font-size:.92rem}
+.lwrap strong{color:#1e7a4a}.lwrap p{margin:.2rem 0 0}
+
+.lesson{margin:2.2rem 0 1rem}
+.lesson.locked h2{color:var(--text-light)}
+.ldesc{font-family:var(--sans);font-size:.95rem;color:var(--text-light);margin:-.3rem 0 .8rem}
+.lockmsg2{font-family:var(--sans);font-size:.88rem;color:var(--text-light);border:1px dashed var(--border);padding:.55rem .9rem;margin:.6rem 0}
+.st{border:1px solid var(--border);background:#fff;margin:.7rem 0}
+.st[hidden]{display:none}
+.sthead{display:flex;flex-wrap:wrap;align-items:baseline;gap:.2rem .8rem;width:100%;text-align:left;background:none;border:0;padding:.75rem 1rem;cursor:pointer;font:inherit;color:inherit}
+.sthead:focus-visible{outline:2px solid var(--magenta);outline-offset:-2px}
+.stn{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--magenta-dark)}
+.stt{font-family:var(--display);font-weight:700;font-size:1.05rem;flex:1 1 12rem}
+.stok{display:none;font-family:var(--sans);font-size:.8rem;font-weight:700;color:var(--good,#1e7a4a)}
+.st.done .stok{display:inline}
+.st.done{border-left:4px solid var(--good,#1e7a4a)}
+.st.cur{border-left:4px solid var(--magenta);box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.stbody{padding:0 1rem 1rem}
+.st.closed .stbody{display:none}
+.learn p{margin:.3rem 0 .7rem}
+.task{background:#fdf2f7;border-left:4px solid var(--magenta);padding:.6rem .9rem;margin:.6rem 0;font-family:var(--sans);font-size:.95rem}
+.task strong{display:block;font-family:var(--display);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:.2rem}
+.task p{margin:0}
+.st-ed{margin:.6rem 0 .5rem}
+.st-ed{border:1px solid var(--border);border-left:4px solid var(--magenta);background:var(--off-white)}
+.st-ed textarea{display:block;width:100%;box-sizing:border-box;border:0;background:transparent;font-family:ui-monospace,Menlo,monospace;font-size:.86rem;line-height:1.55;padding:.7rem .9rem;resize:vertical;color:#111;white-space:pre;overflow-x:auto;tab-size:4}
+.st-ed textarea:focus{outline:2px solid var(--magenta);outline-offset:-2px}
+.st-ed .pybar{display:flex;flex-wrap:wrap;align-items:center;gap:.7rem;padding:.4rem .9rem;border-top:1px solid var(--border);background:#fff}
+.st-ed .pybar button{font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:var(--magenta);color:#fff;border:0;padding:.4rem .9rem;cursor:pointer}
+.st-ed .pybar button:disabled{opacity:.6;cursor:wait}
+.st-ed .pybar span.stat{font-family:var(--sans);font-size:.8rem;color:#5f5f5f;padding:0;margin:0;border:0;background:none;display:inline}
+.st-ed .pybar span.stat:empty{display:none}
+.st-ed .pyout{margin:0;padding:.6rem .9rem;background:#0e0e0d;color:#f2f2ee;font-family:ui-monospace,Menlo,monospace;font-size:.8rem;line-height:1.45;white-space:pre;overflow-x:auto;max-height:420px;overflow-y:auto}
+.st-ed .pyout:empty{display:none}
+.st-ed .pyout .err{color:#ff9db8}
+.st-ed .pyout img{display:block;max-width:100%;height:auto;background:#fff;margin:.4rem 0}
+#steps.sql .st-ed .pyout{background:#f6f4f1;color:#0e0e0d;white-space:normal;font-family:var(--sans);font-size:.85rem;border-top:1px solid var(--border)}
+#steps.sql .st-ed .pyout .err{color:#a03434}
+
+.st-ed .pybar button+button{background:#fff;color:var(--magenta-dark);border:1px solid var(--magenta)}
+.xlrow{display:flex;flex-wrap:wrap;gap:.6rem 1rem;padding:.7rem .9rem;font-family:var(--sans);font-size:.85rem;font-weight:600}
+.xlrow label{display:flex;flex-direction:column;gap:.25rem;flex:1 1 14rem}
+.xlrow label:last-child{flex:0 1 12rem}
+.xlrow input{font-family:ui-monospace,Menlo,monospace;font-size:.95rem;font-weight:400;padding:.45rem .55rem;border:1px solid var(--border);background:#fff;color:#111}
+.xlrow input:focus{outline:2px solid var(--magenta);outline-offset:0}
+.mcq{border:0;margin:0;padding:.7rem .9rem;font-family:var(--sans);font-size:.95rem}
+.mcq legend{font-weight:600;font-size:.85rem;padding:0;margin-bottom:.3rem}
+.mcq label{display:flex;gap:.55rem;align-items:flex-start;padding:.4rem .5rem;border:1px solid var(--border);background:#fff;margin:.35rem 0;cursor:pointer;line-height:1.4}
+.mcq input{margin-top:.25rem;flex:0 0 auto}
+.xlrow label.wide{flex:1 1 100%}
+.xlrow textarea.ap{font-family:var(--sans);font-size:.95rem;font-weight:400;padding:.5rem .6rem;border:1px solid var(--border);background:#fff;color:#111;resize:vertical;min-height:5em;width:100%;box-sizing:border-box}
+.xlrow textarea.ap:focus{outline:2px solid var(--magenta);outline-offset:0}
+@media (max-width:700px){.xlrow textarea.ap{font-size:16px}}
+.xled .pyout{background:#fff;color:#111;font-family:var(--sans)}
+kbd{font-family:ui-monospace,Menlo,monospace;font-size:.85em;border:1px solid var(--border);border-bottom-width:2px;padding:0 .3em;background:#fff;border-radius:3px}
+@media (max-width:700px){.xlrow input{font-size:16px}}
+.fb{font-family:var(--sans);font-size:.95rem;margin:.4rem 0;min-height:1.2em}
+.fb.ok{color:var(--good,#1e7a4a);font-weight:600}
+.fb.no{color:#a03434}
+.st .hint{display:none;font-family:var(--sans);font-size:.9rem;background:var(--off-white);border:1px solid var(--border);padding:.55rem .85rem;margin:.4rem 0}
+.st .hint.show{display:block}
+.solbox{border:1px solid var(--border);padding:.5rem .85rem;margin:.4rem 0;font-family:var(--sans);font-size:.88rem}
+.solbox button,.nextb{font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;padding:.45rem 1rem}
+.solbox button{background:#fff;color:var(--magenta-dark);border:1px solid var(--magenta)}
+.nextb{background:var(--good,#1e7a4a);color:#fff;border:0;margin-top:.3rem}
+.pbar{height:10px;background:var(--off-white);border:1px solid var(--border);margin:.5rem 0 .2rem}
+.pbar span{display:block;height:100%;background:var(--magenta);width:0;transition:width .3s}
+.lmap{display:flex;flex-wrap:wrap;gap:.4rem;margin:.6rem 0 0;padding:0;list-style:none;font-family:var(--sans);font-size:.85rem}
+.lmap a{display:inline-block;padding:.25rem .6rem;border:1px solid var(--border);text-decoration:none;color:#1a1a1a;background:#fff}
+.lmap a.full{border-color:#1e7a4a;color:#1e7a4a}
+.lmap a.off{color:#5f5f5f}
+@media (max-width:700px){.st-ed textarea{font-size:16px}.stbody{padding:0 .7rem .9rem}.sthead{padding:.7rem}}
+@media print{.st[hidden]{display:block}.st.closed .stbody{display:block}.pybar,.nextb,.solbox button{display:none}}
+</style>
+<style id="ux-mobile-nav">@media (max-width:700px){.topnav,nav.top{position:relative;z-index:200}.topnav .dd,nav.top .dd{position:static}.topnav .dd-menu,nav.top .dd-menu{left:.75rem;right:.75rem;min-width:0;top:calc(100% - .2rem);max-height:65vh;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}}@media (min-width:701px){.topnav-in{gap:.6rem}.nav-links{gap:.5rem}.topnav-brand{max-width:16rem;line-height:1.3}.topnav .dd-btn{padding-left:.7rem;padding-right:.7rem}}@media (min-width:701px) and (max-width:1100px){.topnav-brand{max-width:none;width:100%}.topnav .dd{position:static}.topnav .dd-menu{left:auto;right:1.5rem;top:calc(100% - .3rem)}}</style>
+<style id="bc-css">pre.bc{background:var(--off-white);border:1px solid var(--border);border-left:4px solid var(--magenta);padding:.75rem .95rem;overflow-x:auto;font-family:ui-monospace,Menlo,monospace;font-size:.86rem;line-height:1.55;margin:.5rem 0 1rem;white-space:pre}</style>
+</head><body>
+<a href="#top" class="skiplink">Skip to content</a>
+<style>.skiplink{position:absolute;left:-9999px;top:0;z-index:1000;background:#0e0e0d;color:#fff;padding:.6rem 1rem;font:600 15px/1.2 system-ui,sans-serif;text-decoration:none}.skiplink:focus{left:.5rem;top:.5rem;outline:3px solid #fff}</style>
+<div id="srlive" role="status" aria-live="polite" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden"></div>
+
+<nav class="topnav">
+  <div class="topnav-in">
+    <a class="topnav-brand" href="index.html">MIS 320 &middot; Principles of Management Information Systems</a>
+    <a class="dd-btn" href="syllabus.html" style="text-decoration:none">Syllabus</a>
+    <a class="dd-btn" href="schedule.html" style="text-decoration:none">Schedule</a>
+<a class="dd-btn" href="search.html" style="text-decoration:none">Search</a>
+    <div class="dd">
+      <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddc">Chapters<span class="caret">&#9660;</span></button>
+      <div class="dd-menu" id="ddc">
+      <a href="preface.html"><span class="lbl">Start here</span>About this book</a>
+      <a href="glossary.html"><span class="lbl">Reference</span>Glossary, A to Z</a>
+      <a href="chapter1-what-is-mis.html"><span class="lbl">Chapter 1 &middot; Week 1</span>What Is MIS? &mdash; Spotify Wrapped</a>
+      <a href="chapter2-starbucks.html"><span class="lbl">Chapter 2 &middot; Week 2</span>The Value of Information &mdash; Starbucks</a>
+      <a href="chapter3-competitive-advantage.html"><span class="lbl">Chapter 3 &middot; Week 3</span>Technology &amp; Competitive Advantage &mdash; Zara</a>
+      <a href="chapter4-dominos.html"><span class="lbl">Chapter 4 &middot; Week 4</span>Business Processes &mdash; Domino's</a>
+      <a href="chapter5-healthcaregov.html"><span class="lbl">Chapter 5 &middot; Week 5</span>Systems Analysis &amp; the SDLC &mdash; Healthcare.gov</a>
+      <a href="chapter6-moneyball.html"><span class="lbl">Chapter 6 &middot; Week 6</span>Business Intelligence &mdash; Moneyball</a>
+      <a href="chapter7-walmart.html"><span class="lbl">Chapter 7 &middot; Week 7</span>What Data Is: Databases &mdash; Walmart</a>
+      <a href="chapter8-nike-sap.html"><span class="lbl">Chapter 8 &middot; Week 7</span>Enterprise Systems &mdash; Nike/SAP</a>
+      <a href="chapter9-changehealthcare.html"><span class="lbl">Chapter 9 &middot; Week 8</span>Cybersecurity &mdash; Change Healthcare</a>
+      <a href="chapter10-equifax.html"><span class="lbl">Chapter 10 &middot; Week 8</span>IT Governance &mdash; Equifax</a>
+      <a href="chapter11-software.html"><span class="lbl">Chapter 11 &middot; Week 9</span>Software Design &amp; Selection &mdash; Robles v. Domino's</a>
+      <a href="chapter12-ai-ml.html"><span class="lbl">Chapter 12 &middot; Week 10</span>What AI Is &mdash; Every Cure</a>
+      <a href="chapter13-cloud.html"><span class="lbl">Chapter 13 &middot; Week 10</span>The Cloud &amp; What Computing Costs &mdash; Netflix</a>
+      </div>
+    </div>
+    <div class="dd">
+      <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddl">Labs<span class="caret">&#9660;</span></button>
+      <div class="dd-menu" id="ddl">
+      <a href="lab1-genai.html"><span class="lbl">Lab 1 &middot; Week 1</span>GenAI for Thinking</a>
+      <a href="lab2-excel-basics.html"><span class="lbl">Lab 2 &middot; Week 2</span>Excel Basics: Meeting the Client</a>
+      <a href="lab3-excel-dataprep.html"><span class="lbl">Lab 3 &middot; Week 3</span>Excel Functions: One Question, One Formula</a>
+      <a href="lab4-excel-dataviz.html"><span class="lbl">Lab 4 &middot; Week 4</span>Data Visualization: Charts That Tell the Truth</a>
+      <a href="lab5-excel-analysis.html"><span class="lbl">Lab 5 &middot; Week 5</span>Data Analysis &amp; Mini Project</a>
+      <a href="lab6-tableau.html"><span class="lbl">Lab 6 &middot; Week 6</span>Tableau: Worksheets to a Dashboard</a>
+      <a href="lab7-sql.html"><span class="lbl">Lab 7 &middot; Week 7</span>SQL Fundamentals</a>
+      <a href="lab8-security.html"><span class="lbl">Lab 8 &middot; Week 8</span>Security &amp; Data Governance: The Audit</a>
+      <a href="lab9-ux.html"><span class="lbl">Lab 9 &middot; Week 9</span>UX Design: The Heuristic Evaluation</a>
+      <a href="lab10-ia.html"><span class="lbl">Lab 10 &middot; Week 10</span>Information Architecture: Making Sense of a Mess</a>
+      <a href="resume.html"><span class="lbl">After the labs</span>Turning the labs into a resume</a>
+      </div>
+    </div>
+    <div class="dd">
+<button aria-expanded="false" aria-haspopup="true" class="dd-btn" data-dd="ddb">Bootcamps<span class="caret">&#9660;</span></button>
+<div class="dd-menu" id="ddb">
+<a href="excel-bootcamp.html"><span class="lbl">Optional · Extra credit · builds on Labs 2 to 5</span>Excel for Business</a>
+<a href="sql-bootcamp.html"><span class="lbl">Optional · Extra credit · builds on Lab 7</span>SQL for Business</a>
+<a href="python-bootcamp.html"><span class="lbl">Optional · Extra credit · no install</span>Python for Business</a>
+<a href="tableau-bootcamp.html"><span class="lbl">Optional · Extra credit · builds on Lab 6</span>Tableau for Business</a>
+<a class="current" href="genai-bootcamp.html"><span class="lbl">Optional · Extra credit · builds on Lab 1</span>GenAI for Business</a>
+</div>
+</div>
+<div class="dd">
+      <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddd">Data<span class="caret">&#9660;</span></button>
+      <div class="dd-menu" id="ddd">
+      <a href="cascadia-sales-2025.xlsx" download><span class="lbl">Workbook</span>Cascadia sales, clean (.xlsx)</a>
+      <a href="cascadia-sales-2025-RAW.xlsx" download><span class="lbl">Workbook</span>Cascadia sales, RAW export for Lab 7 (.xlsx)</a>
+      <a href="cascadia-excel-bootcamp.xlsx" download><span class="lbl">Workbook</span>Excel for Business workbook (.xlsx)</a>
+      <a href="cascadia-sales-2025.csv" download><span class="lbl">Data</span>Flat CSV for Tableau</a>
+      <a href="cascadia.db"><span class="lbl">Database</span>SQLite database for the SQL lab</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+<main id="top" class="chapwrap">
+<header class="chaphead">
+  <p class="eyebrow">Optional · Extra credit</p>
+  <h1><b>GenAI</b> for Business: Use It, Then Check It</h1>
+  <div class="meta-row"><span>About 3 to 4 hours, at your own pace</span><span class="alt"><a href="lab1-genai.html" style="color:inherit;text-decoration:none">Builds on Lab 1 &#8594;</a></span></div>
+</header>
+<p class="lede">Lab 1 taught you to read AI output the way an editor reads a draft. This bootcamp puts
+  that habit to work on real jobs: writing a prompt that gets a usable draft, handing an AI the Cascadia
+  sales file and checking its numbers, testing the sources it gives you, deciding what data is safe to
+  paste, editing a draft into a memo you would sign, and building a prompt you can reuse every month.
+  You use a free AI tool on the Cascadia data you already know.</p>
+
+<h2 id="why"><span class="num">Why</span>Why this is a business skill, not a tech one</h2>
+<p>Most people at work will not build AI. They will use it, every day, for first drafts of emails,
+summaries, analysis, and plans. The people who get value from it are not the ones with the cleverest
+prompts. They are the ones who give it the right facts, know which data must never go into it, and
+check what comes back before their name goes on it.</p>
+<p>That checking is the course's main idea applied to a new tool. Information has value only when it
+changes a decision and the change is worth the cost. An AI answer that nobody checked can change a
+decision for the worse, quickly and confidently. You will see that happen on data where you already
+know the right answers.</p>
+<div class="callout"><strong>Where you would use it</strong>
+<p style="font-family:var(--sans);font-size:.92rem"><strong>Marketing:</strong> first drafts of customer
+emails, checked against the offer. <strong>Finance:</strong> the monthly summary from a reusable prompt,
+with every number checked. <strong>Operations:</strong> a first look at an export, confirmed in Excel.
+<strong>Any role:</strong> knowing what you are allowed to paste, and saying no when you are not.</p></div>
+
+<div class="toc"><strong>Contents</strong> <a href="#why">Why</a> &nbsp;·&nbsp; <a href="#l1">1 · Ask well</a> &nbsp;·&nbsp; <a href="#l2">2 · Give it data, then check it</a> &nbsp;·&nbsp; <a href="#l3">3 · Sources and made-up facts</a> &nbsp;·&nbsp; <a href="#l4">4 · Keep data safe</a> &nbsp;·&nbsp; <a href="#l5">5 · Draft, then edit</a> &nbsp;·&nbsp; <a href="#l6">6 · A prompt you can reuse</a> &nbsp;·&nbsp; <a href="#l7">Capstone</a> &nbsp;·&nbsp; <a href="#finish">Certificate</a> &nbsp;·&nbsp; <a href="#submit">What to submit</a></div>
+<p class="printbox"><span>Wanna go analog?</span><button type="button" onclick="window.print()" aria-label="Print here: print this page or save it as a PDF">&#9113;&nbsp; Print here</button><span>or save it as a PDF; the navigation drops out</span></p>
+
+<div class="callout"><strong>Who this is for, and what you get</strong>
+<p style="font-family:var(--sans);font-size:.95rem">It is optional, and you do not need any technical
+background. You learn in 23 short steps. Some ask a question about using AI well; most have you do
+something in a real AI tool and then check it yourself. Pass every step, write a short memo, and upload
+your certificate and your work file to the <strong>GenAI for Business</strong> assignment in Canvas.
+Each bootcamp you finish adds <strong>2 points to your lowest exam score</strong>. Your progress saves
+in this browser.</p>
+<p style="font-family:var(--sans);font-size:.95rem">For a resume: <em>Completed a 23-step bootcamp on
+using generative AI at work: prompting, checking AI analysis against source data, verifying sources, and
+data safety.</em> The <a href="resume.html">resume page</a> shows where it goes.</p></div>
+
+<div class="ailight y">
+  <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
+  <div class="lighttext"><strong>Yellow &middot; AI is the subject, the checking is yours</strong>
+  <p>Use AI in every step that asks you to. Do the checking yourself: the true numbers come from Excel or the table, not from another chatbot. Write the final memo and the memo at the end in your own words.</p></div>
+</div>
+
+<div class="callout callout-good"><strong>Before you start</strong>
+<p style="font-family:var(--sans);font-size:.95rem">Use the free plan of <a href="https://claude.ai">Claude</a>,
+or any chatbot that accepts file uploads. Free Claude accounts can run code on a file you upload; check
+that <strong>Code execution and file creation</strong> is on under Settings &gt; Capabilities
+(<a href="https://support.claude.com/en/articles/12111783-create-and-edit-files-with-claude">Claude Help Center</a>).
+Claude is not on WWU's <a href="https://atus.wwu.edu/kb/ai-tools-list">AI Tools List</a>, so use it only
+for public data. The Cascadia data is made up for teaching and posted on this site, so it is fine.</p>
+<p style="font-family:var(--sans);font-size:.95rem">You also need Excel, for checking numbers, and the
+<a href="cascadia-sales-2025.csv" download>cascadia-sales-2025.csv</a> file. AI answers change from day to
+day, so the steps grade what you check, not what the AI said.</p></div>
+
+<div id="steps">
+<div class="callout callout-bridge"><strong>How the steps work</strong>
+<p style="font-family:var(--sans);font-size:.95rem">Each step teaches one small idea, then gives you a task. Do the task in your AI tool, then answer here and press <strong>Check</strong>. If it is right, the next step opens. If not, you get a note on what to fix. Every step has a hint, and after two tries you can see a solution. There is no penalty for wrong tries.</p>
+<p style="font-family:var(--sans);font-size:.95rem">Your progress and what you type here save in this browser, so you can stop and come back. To start over, use the <button type="button" class="hintb" onclick="resetLab()">Reset this bootcamp</button> button.</p>
+<p class="progress" id="prog" style="margin-bottom:0">Progress: 0 / 23 steps</p>
+<div class="pbar" aria-hidden="true"><span id="pbarfill"></span></div>
+<ul class="lmap" id="lmap"></ul></div>
+<section class="lesson" id="l1" aria-labelledby="l1h"><h2 id="l1h"><span class="num">1</span>Ask well</h2><div class="ask"><p class="ask-h">The ask &middot; from the Marketing Lead</p><p class="ask-q">&ldquo;I need an email for the members-only winter sale. The last AI draft I got was so generic it could have been for any store.&rdquo;</p><p class="ask-d"><strong>The decision it feeds:</strong> Whether the email goes out as written, or someone spends an afternoon rewriting it.</p></div><div class="lsteps"></div><div class="lwrap" hidden><strong>Before you move on</strong><p>Write the one or two sentences you would send back to the Marketing Lead: what you found, what you checked, and what you would do. Keep it in a note. Your memo at the end is the same habit, done once more.</p></div><p class="lockmsg2" hidden></p></section>
+<section class="lesson" id="l2" aria-labelledby="l2h"><h2 id="l2h"><span class="num">2</span>Give it data, then check it</h2><div class="ask"><p class="ask-h">The ask &middot; from the Finance Lead</p><p class="ask-q">&ldquo;Someone gave the sales file to a chatbot and put its numbers on a slide for Monday. Are they right?&rdquo;</p><p class="ask-d"><strong>The decision it feeds:</strong> Whether the slide goes in front of the leadership team.</p></div><div class="lsteps"></div><div class="lwrap" hidden><strong>Before you move on</strong><p>Write the one or two sentences you would send back to the Finance Lead: what you found, what you checked, and what you would do. Keep it in a note. Your memo at the end is the same habit, done once more.</p></div><p class="lockmsg2" hidden></p></section>
+<section class="lesson" id="l3" aria-labelledby="l3h"><h2 id="l3h"><span class="num">3</span>Sources and made-up facts</h2><div class="ask"><p class="ask-h">The ask &middot; from the General Manager</p><p class="ask-q">&ldquo;I want to quote a study about loyalty programs in the board deck. Can AI find me one?&rdquo;</p><p class="ask-d"><strong>The decision it feeds:</strong> What the board is told, and whether Cascadia's name goes next to a source that does not exist.</p></div><div class="lsteps"></div><div class="lwrap" hidden><strong>Before you move on</strong><p>Write the one or two sentences you would send back to the General Manager: what you found, what you checked, and what you would do. Keep it in a note. Your memo at the end is the same habit, done once more.</p></div><p class="lockmsg2" hidden></p></section>
+<section class="lesson" id="l4" aria-labelledby="l4h"><h2 id="l4h"><span class="num">4</span>Keep data safe</h2><div class="ask"><p class="ask-h">The ask &middot; from the Membership Manager</p><p class="ask-q">&ldquo;Can I paste the member list into a chatbot so it writes everyone a personal email?&rdquo;</p><p class="ask-d"><strong>The decision it feeds:</strong> Whether customer data leaves the company.</p></div><div class="lsteps"></div><div class="lwrap" hidden><strong>Before you move on</strong><p>Write the one or two sentences you would send back to the Membership Manager: what you found, what you checked, and what you would do. Keep it in a note. Your memo at the end is the same habit, done once more.</p></div><p class="lockmsg2" hidden></p></section>
+<section class="lesson" id="l5" aria-labelledby="l5h"><h2 id="l5h"><span class="num">5</span>Draft, then edit</h2><div class="ask"><p class="ask-h">The ask &middot; from the General Manager</p><p class="ask-q">&ldquo;Next spring, which category should get more floor space? Give me a short memo I can forward.&rdquo;</p><p class="ask-d"><strong>The decision it feeds:</strong> The spring floor plan in all eight stores.</p></div><div class="lsteps"></div><div class="lwrap" hidden><strong>Before you move on</strong><p>Write the one or two sentences you would send back to the General Manager: what you found, what you checked, and what you would do. Keep it in a note. Your memo at the end is the same habit, done once more.</p></div><p class="lockmsg2" hidden></p></section>
+<section class="lesson" id="l6" aria-labelledby="l6h"><h2 id="l6h"><span class="num">6</span>A prompt you can reuse</h2><div class="ask"><p class="ask-h">The ask &middot; from the Finance Lead</p><p class="ask-q">&ldquo;Every month I write the same sales summary by hand. Can AI do the first draft, the same way every time?&rdquo;</p><p class="ask-d"><strong>The decision it feeds:</strong> Whether an hour a month of writing becomes ten minutes of checking.</p></div><div class="lsteps"></div><div class="lwrap" hidden><strong>Before you move on</strong><p>Write the one or two sentences you would send back to the Finance Lead: what you found, what you checked, and what you would do. Keep it in a note. Your memo at the end is the same habit, done once more.</p></div><p class="lockmsg2" hidden></p></section>
+<section class="lesson" id="l7" aria-labelledby="l7h"><h2 id="l7h"><span class="num">Capstone</span>Capstone</h2><p class="ldesc">The General Manager asks where AI should help. No worked prompt.</p><div class="lsteps"></div><p class="lockmsg2" hidden></p></section>
+</div>
+
+<h2 id="finish"><span class="num">Finish</span>Your memo &amp; certificate</h2>
+
+<div class="ailight r">
+  <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
+  <div class="lighttext"><strong>Red &middot; Your memo, your words</strong>
+  <p>Write the memo yourself. Do not ask an AI tool to write it, rewrite it, or clean it up.</p></div>
+</div>
+
+<div class="certbox" id="reflectbox">
+  <h3 id="syour-reply-to-the-general-manager">Your reply to the General Manager</h3>
+  <p style="font-family:var(--sans);font-size:.88rem">Answer the GM: the job you picked, what AI did well on it, where it failed in your tests, and exactly what a person must still check before anything goes out. End with one kind of work you would not give AI at all, and why.</p>
+  <p style="font-family:var(--sans);font-size:.88rem;color:var(--muted)">Fifty words is the minimum. Write it yourself. This prints as page 2 of your certificate.</p>
+  <textarea id="refl" rows="7" style="width:100%;font-family:var(--sans);font-size:.9rem;padding:.6rem;border:1px solid var(--rule);border-radius:2px" aria-label="Your memo to the General Manager"></textarea>
+  <p class="msg" id="reflcount" style="font-family:var(--sans);font-size:.95rem;color:var(--muted)">0 words</p>
+</div>
+<div class="certbox" id="certbox">
+  <h3 id="sall-steps-passed">All steps passed</h3>
+  <p style="font-family:var(--sans);font-size:.95rem">Put your name in exactly as it appears in Canvas,
+  then download your certificate. The code on it is generated from your name, so it is yours and nobody
+  else's.</p>
+  <input type="text" id="nm" placeholder="Last, First" aria-label="Your name as in Canvas">
+  <button onclick="cert()">Download certificate (PDF)</button>
+  <p class="codebox" id="codeout" style="font-family:var(--sans);font-size:.85rem"></p>
+</div>
+
+<h2 id="submit"><span class="num">Canvas</span>What to submit</h2>
+<p style="font-family:var(--sans);font-size:.92rem">Go to the <strong>GenAI for Business</strong> extra credit assignment in Canvas and upload two files.</p>
+<p style="font-family:var(--sans);font-size:.92rem"><strong>File 1: your work.</strong> Press <button type="button" class="hintb" onclick="dlcode()">Download my work</button> to save your prompts, answers, and final memo from every step as one text file. It saves from this browser, so download it on the computer you used.</p>
+<p style="font-family:var(--sans);font-size:.92rem"><strong>File 2: your certificate PDF.</strong> Your memo prints as page 2.</p>
+</main>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+function b64d(x){try{return decodeURIComponent(escape(atob(x)))}catch(e){return ''}}
+function nnum(t){t=String(t).replace(/[$,\s]/g,'');return {v:parseFloat(t),ok:/^[-+]?\d*\.?\d+(e[-+]?\d+)?$/i.test(t)}}
+function ntxt(t){return String(t).trim().replace(/\s+/g,' ').replace(/[.]$/,'').toLowerCase()}
+window.STEPRUN=function(i,code){return new Promise(function(res){
+  var st=STEPS[i],v={};try{v=JSON.parse(code)}catch(e){}
+  function no(m){res({html:'',ok:false,msg:m})}
+  if(st.mc){if(v.m==null)return no('Choose one answer.');if(String(v.m)!==b64d(st.mca))return no(st.msg||'Not quite. Reread the paragraph and try again.')}
+  if(st.pl){var p=(v.p||'').trim();if(!p)return no('Fill in this box: \u201C'+st.pl+'\u201D');
+    for(var k=0;k<st.need.length;k++){if(!new RegExp(st.need[k][0],'i').test(p))return no(st.need[k][1])}
+    var w=p.split(/\s+/).filter(Boolean).length;if(w<st.minw)return no('Write a bit more here: at least '+st.minw+' words. You have '+w+'.')}
+  if(st.al){var a=(v.a||'').trim();if(!a)return no('Fill in this box: \u201C'+st.al+'\u201D');
+    if(st.typ==='any'){if(a.length<2)return no('Type a few words.')}
+    else if(st.typ==='anynum'){if(!nnum(a).ok)return no('Type just the number, like 123456.78.')}
+    else if(st.typ==='int'){var n=nnum(a);if(!n.ok||Math.round(n.v)!==n.v||n.v<st.lo||n.v>st.hi)return no('Type a whole number from '+st.lo+' to '+st.hi+'.')}
+    else if(st.typ==='num'){var g=nnum(a);if(!g.ok)return no('Type just the number, like 1234.56.');if(Math.abs(g.v-parseFloat(b64d(st.ans)))>st.tol)return no(st.msg||'That number does not match. Work it out again from the source.')}
+    else if(st.typ==='txt'){if(ntxt(a)!==ntxt(b64d(st.ans)))return no(st.msg||'Not that one. Check it against the source.')}}
+  res({html:'',ok:true});
+})};
+</script>
+<script>
+const LAB="AIBC", SKEY="mis320_AIBC", LESSONS=[{"id": "l1", "t": "Ask well"}, {"id": "l2", "t": "Give it data, then check it"}, {"id": "l3", "t": "Sources and made-up facts"}, {"id": "l4", "t": "Keep data safe"}, {"id": "l5", "t": "Draft, then edit"}, {"id": "l6", "t": "A prompt you can reuse"}, {"id": "l7", "t": "Capstone"}], STEPS=[{"l": "l1", "t": "What makes a prompt work", "learn": "<p>A chatbot fills every gap in your request with a guess. Ask for \"an email about our sale\" and it guesses the sale, the customer, the tone, and the length, and the guesses are generic because they have to fit any store. A useful prompt closes the gaps. It has four parts: <strong>who</strong> the AI should write as, the <strong>facts</strong> it must use, the <strong>task</strong>, and the <strong>format</strong> you want back.</p>", "task": "Which prompt is most likely to get a usable first draft?", "code": "", "hint": "Look for the one with all four parts: who, facts, task, format.", "sol": null, "state": false}, {"l": "l1", "t": "Write your prompt", "learn": "<p>Open <a href=\"https://claude.ai\">claude.ai</a> and sign in with a free account, or use any chatbot you like.</p><div class=\"callout\"><strong>The facts, from the Marketing Lead</strong><ul style=\"font-family:var(--sans);font-size:.92rem;margin:.3rem 0 0\"><li>Members-only winter sale, Friday, December 4 to Sunday, December 6.</li><li>20% off everything in the Snow category, for members only.</li><li>In all eight stores. Not online.</li><li>Members show their member number at the register.</li></ul></div>", "task": "Write a prompt with all four parts that asks for the sale email, paste the facts into it, and run it. Paste your prompt here.", "code": "", "hint": "Start with \"You are...\", paste the four facts, say what to write, and say how long and in what shape.", "sol": "You are Cascadia Outfitters' marketing writer. Using only these facts, write a 120-word email to our members announcing the sale. Plain, friendly tone, no exclamation marks. Include a subject line.\n\nFacts:\n- Members-only winter sale, Friday, December 4 to Sunday, December 6\n- 20% off everything in the Snow category, for members only\n- In all eight stores. Not online.\n- Members show their member number at the register.", "state": false}, {"l": "l1", "t": "Read it like an editor", "learn": "<p>Models are built to sound finished, so they fill holes with details that sound right: a promo code, free shipping, an online link, a deadline at midnight. None of those were in your facts. In business, a made-up detail in a customer email is a promise the stores now have to keep.</p>", "task": "Read the draft against the four facts. Name one thing it added that you did not give it, or type <em>none</em> if it stuck to the facts.", "code": "", "hint": "Check for codes, websites, online shopping, extra discounts, times of day, or store names you did not give it.", "sol": null, "state": false}, {"l": "l1", "t": "Fix it with a follow-up", "learn": "<p>You rarely get it right in one message. The fastest fix is a short, specific follow-up: say what to cut, what to keep, and what to change. \"Make it better\" is a guess too.</p>", "task": "Send one follow-up that fixes the draft: remove anything that was not in the facts, or change the length or tone. Paste the follow-up here.", "code": "", "hint": "Something like: \"Remove the promo code and the website. It is in stores only. Keep it under 100 words.\"", "sol": "Remove anything that is not in the four facts, including the promo code and the website. The sale is in stores only. Keep it under 100 words.", "state": false}, {"l": "l2", "t": "Give it the file", "learn": "<p>Download <a href=\"cascadia-sales-2025.csv\" download><strong>cascadia-sales-2025.csv</strong></a>, the 2,899 Cascadia sales from Lab 6. In Claude, attach the file with the + button. If your tool cannot take files, paste the first few hundred rows instead, and notice what that does to its answer.</p>", "task": "Ask for Cascadia's total revenue for 2025 and the revenue for each store. Paste your prompt, and type the total the AI gave you.", "code": "", "hint": "\"Using the attached file, what was total revenue in 2025, and revenue for each store?\" Type its total as a number.", "sol": "Using the attached file, what was Cascadia's total revenue for 2025? Then give revenue for each store, as a table.", "state": false}, {"l": "l2", "t": "Find the true total yourself", "learn": "<p>Now get the real number without AI. Open the same CSV in Excel and add up the <code class=\"inline\">revenue</code> column with <code class=\"inline\">=SUM(K:K)</code>, or a PivotTable. This is the number you would stand behind in a meeting.</p>", "task": "What is the true total revenue for 2025?", "code": "", "hint": "The revenue column is column K. Format the result as a number with two decimals.", "sol": null, "state": false}, {"l": "l2", "t": "Check one store", "learn": "<p>A total can be right while the pieces are wrong, so check a piece too. <code class=\"inline\">=SUMIFS(K:K, C:C, \"Tacoma\")</code> adds revenue where the store is Tacoma.</p>", "task": "What is Tacoma's true revenue? Then say whether the AI's Tacoma number matched.", "code": "", "hint": "Column C is store and column K is revenue.", "sol": null, "state": false}, {"l": "l2", "t": "Why the numbers can be wrong", "learn": "<p>Some AI tools run code over the whole file and get the arithmetic right. Others read part of the file, or produce a number the way they produce words: by predicting what usually comes next. Both kinds answer in the same confident voice, so the answer itself does not tell you which happened.</p>", "task": "Why can a chatbot give a wrong total even when it has the file?", "code": "", "hint": "Reread the paragraph above.", "sol": null, "state": false}, {"l": "l2", "t": "Ask it to show its work", "learn": "<p>A number with no method is a claim, not an answer. Ask the AI to calculate with code and show the code, or to list its steps. Then you can check the method, not just the result, and you can tell your manager how the number was made.</p>", "task": "Ask again, this time telling it to calculate with code over every row and show the code. Paste your prompt and type its new total.", "code": "", "hint": "\"Calculate total revenue by running code over every row of the attached file. Show the code and the result.\"", "sol": "Calculate total revenue by running code over every row of the attached file. Show the code you ran and the result.", "state": false}, {"l": "l3", "t": "Ask for sources, then open them", "learn": "<p>A chatbot can write a citation that looks perfect, with an author, a journal, a year, and a link, for a study that does not exist, or a real link to a page that says something else. Tools that search the web are better at this, but not perfect.</p>", "task": "Ask for three studies or articles on how loyalty programs affect what customers spend, with links. Open every link. How many of the three opened to a real page that says what the AI claimed it says?", "code": "", "hint": "Open each link and read enough to see whether the claim is really there. A real page on a different topic does not count.", "sol": null, "state": false}, {"l": "l3", "t": "What to do with AI-found sources", "learn": "<p>The rule in business is the same as in this course: you cite what you read, not what a tool told you it read.</p>", "task": "How should you use sources an AI finds for you?", "code": "", "hint": "Who is responsible for the claim in the board deck?", "sol": null, "state": false}, {"l": "l3", "t": "Name the problem", "learn": "<p>The name for a fluent, confident answer that is not true is a <strong>hallucination</strong>. It is not a bug that will be fixed next month. It comes from how these models work: they produce likely text, and likely is not the same as true.</p>", "task": "Which is a hallucination?", "code": "", "hint": "Look for the answer that sounds right and is not supported.", "sol": null, "state": false}, {"l": "l4", "t": "Customer data", "learn": "<p>Anything you paste into an AI tool leaves your computer and goes to the company that runs it. Businesses sort their data by how much harm it would do if it got out, and they approve specific tools for specific kinds of data. WWU does the same: it approves Copilot Chat for Category 1 (public) and Category 2 data, and only when you are signed in with your WWU account.</p>", "task": "The Membership Manager wants to paste members' names, emails, and purchase history into a free public chatbot to write personal emails. What is the right answer?", "code": "", "hint": "Whose data is it, and has the company approved this tool for it?", "sol": null, "state": false}, {"l": "l4", "t": "What is safe to paste", "learn": "<p>The safest data to paste has nothing in it that points to a person or a contract: totals, counts, and averages, with names taken out.</p>", "task": "Which of these is safest to paste into an approved AI tool?", "code": "", "hint": "Look for the one with no names, emails, or private terms.", "sol": null, "state": false}, {"l": "l4", "t": "The tool matters", "learn": "<p>The same data can be fine in one tool and off limits in another. WWU's AI Tools List approves each tool for certain kinds of data: Microsoft Copilot Chat for Category 1 (public) and Category 2 data when you sign in with your WWU account, and Google Gemini for public data only. Claude is not on the list, so at WWU it is for public data. Companies keep the same kind of list. Check it before you paste.</p>", "task": "You are using the free Claude plan for this bootcamp. Which of these could you put into it?", "code": "", "hint": "Which one is already public?", "sol": null, "state": false}, {"l": "l5", "t": "Ask for the draft", "learn": "<p>Here you give the AI the numbers instead of a file, so it has less to get wrong. It can still get the reading wrong.</p><div class=\"callout\"><strong>Revenue by category, first half of 2025</strong><table style=\"border-collapse:collapse;font-family:var(--sans);font-size:.9rem;margin-top:.4rem\"><tr><th style=\"text-align:left;padding:.2rem .8rem .2rem 0\">Category</th><th style=\"text-align:right;padding:.2rem .8rem\">Q1 (Jan to Mar)</th><th style=\"text-align:right;padding:.2rem 0 .2rem .8rem\">Q2 (Apr to Jun)</th></tr><tr><td style=\"padding:.15rem .8rem .15rem 0\">Apparel</td><td style=\"text-align:right;padding:.15rem .8rem\">$37,696.35</td><td style=\"text-align:right;padding:.15rem 0 .15rem .8rem\">$20,302.90</td></tr><tr><td style=\"padding:.15rem .8rem .15rem 0\">Camping</td><td style=\"text-align:right;padding:.15rem .8rem\">$34,328.90</td><td style=\"text-align:right;padding:.15rem 0 .15rem .8rem\">$61,240.25</td></tr><tr><td style=\"padding:.15rem .8rem .15rem 0\">Climbing</td><td style=\"text-align:right;padding:.15rem .8rem\">$16,533.75</td><td style=\"text-align:right;padding:.15rem 0 .15rem .8rem\">$17,763.00</td></tr><tr><td style=\"padding:.15rem .8rem .15rem 0\">Footwear</td><td style=\"text-align:right;padding:.15rem .8rem\">$14,221.10</td><td style=\"text-align:right;padding:.15rem 0 .15rem .8rem\">$15,573.30</td></tr><tr><td style=\"padding:.15rem .8rem .15rem 0\">Snow</td><td style=\"text-align:right;padding:.15rem .8rem\">$67,532.75</td><td style=\"text-align:right;padding:.15rem 0 .15rem .8rem\">$16,046.80</td></tr><tr><td style=\"padding:.15rem .8rem .15rem 0\">Water</td><td style=\"text-align:right;padding:.15rem .8rem\">$15,931.30</td><td style=\"text-align:right;padding:.15rem 0 .15rem .8rem\">$26,717.95</td></tr></table><p style=\"font-family:var(--sans);font-size:.82rem;margin:.4rem 0 0\">From cascadia-sales-2025.csv.</p></div>", "task": "Paste the table into your prompt and ask for a memo of about 150 words to the General Manager recommending which category should get more spring floor space, and why. Paste your prompt.", "code": "", "hint": "Give it a role, the table, the task, and the length.", "sol": "You are an analyst at Cascadia Outfitters. Using only the table below, write a 150-word memo to the General Manager recommending which category should get more floor space next spring, and why. Use the numbers.\n\nCategory, Q1, Q2\nApparel, 37696.35, 20302.90\nCamping, 34328.90, 61240.25\nClimbing, 16533.75, 17763.00\nFootwear, 14221.10, 15573.30\nSnow, 67532.75, 16046.80\nWater, 15931.30, 26717.95", "state": false}, {"l": "l5", "t": "Check its reading", "learn": "<p>Read the draft and find every number and every comparison it makes. Check each one against the table yourself. Watch for growth it states without showing the math.</p>", "task": "Which category grew the most from Q1 to Q2, in dollars? Work it out from the table, not from the draft.", "code": "", "hint": "Subtract Q1 from Q2 for each category.", "sol": null, "state": false}, {"l": "l5", "t": "Check its math", "learn": "<p>If the draft says a number, you are the one who will be asked about it.</p>", "task": "By how many dollars did that category grow from Q1 to Q2?", "code": "", "hint": "Q2 minus Q1 for that row.", "sol": null, "state": false}, {"l": "l5", "t": "Your edit", "learn": "<p>Now edit the draft into something you would sign. Fix every wrong number, cut what you cannot support, and keep the recommendation clear. This is the job AI does not take from you: deciding what is true and what to say.</p>", "task": "Paste your final memo, and type how many numbers or claims you had to fix in the AI's draft.", "code": "", "hint": "Count each number or claim you changed. Zero is a fine answer if it really was right.", "sol": null, "state": false}, {"l": "l6", "t": "Write a template", "learn": "<p>A prompt you use every month should be written once and reused, with blanks for the parts that change. Mark the blanks clearly, like <code class=\"inline\">[MONTH]</code> and <code class=\"inline\">[TABLE]</code>. Put the rules that never change in the template: the audience, the length, what to compare, and what not to do.</p>", "task": "Write a template for a monthly sales summary for the Finance Lead. Use blanks for the month and the table. Paste it here.", "code": "", "hint": "Include: who it is for, compare with the month before, the biggest change and its cause, a length limit, and \"do not add numbers that are not in the table\".", "sol": "You are a financial analyst at Cascadia Outfitters. Below is revenue by category for [MONTH] and the month before.\n\n[TABLE]\n\nWrite a summary of no more than 100 words for the Finance Lead. Give the total for each month and the change in dollars. Name the category that changed the most. Use only numbers from the table, and do not guess at causes.", "state": false}, {"l": "l6", "t": "Test it on real numbers", "learn": "<p>Fill in the blanks with April and this table, and run it.</p><div class=\"callout\"><strong>Revenue by category, March and April 2025</strong><table style=\"border-collapse:collapse;font-family:var(--sans);font-size:.9rem;margin-top:.4rem\"><tr><th style=\"text-align:left;padding:.2rem .8rem .2rem 0\">Category</th><th style=\"text-align:right;padding:.2rem .8rem\">March</th><th style=\"text-align:right;padding:.2rem 0 .2rem .8rem\">April</th></tr><tr><td style=\"padding:.15rem .8rem .15rem 0\">Apparel</td><td style=\"text-align:right;padding:.15rem .8rem\">$12,186.05</td><td style=\"text-align:right;padding:.15rem 0 .15rem .8rem\">$7,655.55</td></tr><tr><td style=\"padding:.15rem .8rem .15rem 0\">Camping</td><td style=\"text-align:right;padding:.15rem .8rem\">$13,330.30</td><td style=\"text-align:right;padding:.15rem 0 .15rem .8rem\">$15,643.05</td></tr><tr><td style=\"padding:.15rem .8rem .15rem 0\">Climbing</td><td style=\"text-align:right;padding:.15rem .8rem\">$6,773.95</td><td style=\"text-align:right;padding:.15rem 0 .15rem .8rem\">$5,874.15</td></tr><tr><td style=\"padding:.15rem .8rem .15rem 0\">Footwear</td><td style=\"text-align:right;padding:.15rem .8rem\">$3,802.80</td><td style=\"text-align:right;padding:.15rem 0 .15rem .8rem\">$4,088.15</td></tr><tr><td style=\"padding:.15rem .8rem .15rem 0\">Snow</td><td style=\"text-align:right;padding:.15rem .8rem\">$21,415.00</td><td style=\"text-align:right;padding:.15rem 0 .15rem .8rem\">$8,416.15</td></tr><tr><td style=\"padding:.15rem .8rem .15rem 0\">Water</td><td style=\"text-align:right;padding:.15rem .8rem\">$7,244.05</td><td style=\"text-align:right;padding:.15rem 0 .15rem .8rem\">$9,861.25</td></tr></table></div>", "task": "Check the summary yourself. What was the change in total revenue from March to April, in dollars? (A drop is a negative number.)", "code": "", "hint": "Add each column, then April total minus March total.", "sol": null, "state": false}, {"l": "l6", "t": "Find the driver", "learn": "<p>A good summary names what moved the total, not just that it moved.</p>", "task": "Which category drove most of that change? Then say whether the AI named the same one.", "code": "", "hint": "Which row changed the most?", "sol": null, "state": false}, {"l": "l7", "t": "Build a workflow for one Cascadia job", "learn": "<div class=\"callout\"><strong>Email &middot; Monday, 7:55 AM</strong><p style=\"font-family:var(--sans);font-size:.9rem\"><strong>From:</strong> General Manager<br><br>\"Everyone is asking whether we should use AI. Pick one job someone at Cascadia does every week, show me how AI would do the first draft, and tell me honestly where it failed and what a person still has to check.\"</p></div><p>Pick a weekly job: the sales summary, a reorder note to a supplier, replies to common customer questions, a staffing note. Write one prompt for it, test it on three different cases, and keep track of what you had to fix. There is no solution button for this one.</p>", "task": "Paste your final prompt, and type how many of your three tests needed a fix.", "code": "", "hint": "Use the four parts, put the rules that never change in the prompt, and test on three cases that are different from each other.", "sol": null, "state": false}], EDLABEL="GenAI";
+
+const CODEHEAD="MIS 320 GenAI for Business", CMT="#", CODEFILE="GENAIBOOTCAMP", CODEEXT=".txt", CERTTITLE="GenAI for Business \u00B7 Use It, Then Check It", MEMOTITLE="Memo to the General Manager";
+(function(){var X=[{"ai": true, "mc": ["Write an email about our winter sale.", "Write an amazing, exciting email about our sale that people will love.", "You are Cascadia's marketing writer. Using only the facts below, write a 120-word email to members about the winter sale. Plain, friendly tone. Include a subject line.", "Write a marketing email. Make it go viral."], "mca": "Mg==", "pl": null, "al": null, "typ": null, "ans": null, "tol": 0.0, "lo": null, "hi": null, "minw": 0, "need": [], "msg": "That one leaves most of the gaps open. Which prompt says who, gives facts, names the task, and sets a format?"}, {"ai": true, "mc": null, "mca": null, "pl": "Your prompt", "al": null, "typ": null, "ans": null, "tol": 0.0, "lo": null, "hi": null, "minw": 35, "need": [["\\b(you are|act as|as (a|an|the|cascadia))\\b", "Say who the AI should write as, like \"You are Cascadia's marketing writer.\""], ["(dec|december)", "Paste the facts in, including the dates."], ["20", "Paste the facts in, including the 20% discount."], ["(subject|words|sentences|paragraph|bullet|short|under|length)", "Say what shape you want back: length, subject line, or bullet points."]], "msg": null}, {"ai": true, "mc": null, "mca": null, "pl": null, "al": "Something it added (or none)", "typ": "any", "ans": null, "tol": 0.0, "lo": null, "hi": null, "minw": 0, "need": [], "msg": null}, {"ai": true, "mc": null, "mca": null, "pl": "Your follow-up", "al": null, "typ": null, "ans": null, "tol": 0.0, "lo": null, "hi": null, "minw": 8, "need": [["(remove|cut|delete|drop|only|do not|don't|shorter|under|change|keep|replace|fix)", "Say exactly what to change: remove, keep, shorten, or replace something."]], "msg": null}, {"ai": true, "mc": null, "mca": null, "pl": "Your prompt", "al": "The total the AI gave", "typ": "anynum", "ans": null, "tol": 0.0, "lo": null, "hi": null, "minw": 6, "need": [["revenue", "Ask for revenue."]], "msg": null}, {"ai": true, "mc": null, "mca": null, "pl": null, "al": "The true total", "typ": "num", "ans": "NzEyOTcxLjU=", "tol": 1, "lo": null, "hi": null, "minw": 0, "need": [], "msg": "Not the true total. Check that you summed the revenue column, every row."}, {"ai": true, "mc": null, "mca": null, "pl": "Did the AI's Tacoma number match? What did it say?", "al": "Tacoma's true revenue", "typ": "num", "ans": "ODI1MTAuNTU=", "tol": 1, "lo": null, "hi": null, "minw": 3, "need": [], "msg": "Not Tacoma's true revenue. Check the SUMIFS ranges: revenue first, then store and \"Tacoma\"."}, {"ai": true, "mc": ["The file is too old for it to read.", "It always rounds to the nearest thousand.", "Unless it runs code over every row, it may read part of the file or predict a number that looks right.", "Chatbots are not allowed to do math."], "mca": "Mg==", "pl": null, "al": null, "typ": null, "ans": null, "tol": 0.0, "lo": null, "hi": null, "minw": 0, "need": [], "msg": "Think about the difference between calculating and predicting."}, {"ai": true, "mc": null, "mca": null, "pl": "Your prompt", "al": "Its new total", "typ": "anynum", "ans": null, "tol": 0.0, "lo": null, "hi": null, "minw": 6, "need": [["(code|python|show|steps|formula|method)", "Ask it to show its method: code, a formula, or its steps."]], "msg": null}, {"ai": true, "mc": null, "mca": null, "pl": "One sentence on what you found", "al": "How many of 3 checked out (0 to 3)", "typ": "int", "ans": null, "tol": 0.0, "lo": 0, "hi": 3, "minw": 8, "need": [], "msg": null}, {"ai": true, "mc": ["Cite them as the AI wrote them; it is faster.", "Treat them as leads: open each one, read it, and cite the original.", "Cite the AI tool as the source.", "Never use any source an AI mentions."], "mca": "MQ==", "pl": null, "al": null, "typ": null, "ans": null, "tol": 0.0, "lo": null, "hi": null, "minw": 0, "need": [], "msg": "Think about who stands behind the claim when the board asks about it."}, {"ai": true, "mc": ["The AI says it does not know the answer.", "The AI gives a correct answer in a different format than you asked for.", "The AI cites a 2021 Harvard study on loyalty programs, with a link, and no such study exists.", "The AI takes ten seconds to answer."], "mca": "Mg==", "pl": null, "al": null, "typ": null, "ans": null, "tol": 0.0, "lo": null, "hi": null, "minw": 0, "need": [], "msg": "A hallucination is confident and wrong, not slow or unsure."}, {"ai": true, "mc": ["Fine, as long as the emails are good.", "Fine, if you delete the chat afterward.", "No. That is personal customer data. Use only a tool the company has approved for it, or remove the names and emails first.", "Fine, because members agreed to get emails."], "mca": "Mg==", "pl": null, "al": null, "typ": null, "ans": null, "tol": 0.0, "lo": null, "hi": null, "minw": 0, "need": [], "msg": "Deleting the chat does not unsend the data, and agreeing to emails is not agreeing to share data with an AI company."}, {"ai": true, "mc": ["A supplier contract with the prices Cascadia negotiated.", "An employee's performance review.", "Revenue totals by category for March, with no customer details.", "The member list with emails."], "mca": "Mg==", "pl": null, "al": null, "typ": null, "ans": null, "tol": 0.0, "lo": null, "hi": null, "minw": 0, "need": [], "msg": "That one has private or personal details in it. Look for the one with only totals."}, {"ai": true, "mc": ["A classmate's grades.", "Your employer's customer list.", "The Cascadia sales file, which is made up and posted on the course website.", "Student records from a campus job."], "mca": "Mg==", "pl": null, "al": null, "typ": null, "ans": null, "tol": 0.0, "lo": null, "hi": null, "minw": 0, "need": [], "msg": "It is private data, and Claude is not on WWU's list for anything but public data."}, {"ai": true, "mc": null, "mca": null, "pl": "Your prompt", "al": null, "typ": null, "ans": null, "tol": 0.0, "lo": null, "hi": null, "minw": 30, "need": [["(camping|snow|apparel|water)", "Paste the table into the prompt, so the AI has the numbers."], ["\\d", "Paste the table, with its numbers, into the prompt."]], "msg": null}, {"ai": true, "mc": null, "mca": null, "pl": null, "al": "Category", "typ": "txt", "ans": "Q2FtcGluZw==", "tol": 0.0, "lo": null, "hi": null, "minw": 0, "need": [], "msg": "Subtract Q1 from Q2 for every row and compare."}, {"ai": true, "mc": null, "mca": null, "pl": null, "al": "Growth in dollars", "typ": "num", "ans": "MjY5MTEuMzU=", "tol": 1, "lo": null, "hi": null, "minw": 0, "need": [], "msg": null}, {"ai": true, "mc": null, "mca": null, "pl": "Your final memo", "al": "Number of fixes", "typ": "int", "ans": null, "tol": 0.0, "lo": 0, "hi": 50, "minw": 90, "need": [], "msg": null}, {"ai": true, "mc": null, "mca": null, "pl": "Your template", "al": null, "typ": null, "ans": null, "tol": 0.0, "lo": null, "hi": null, "minw": 40, "need": [["[\\[\\{<]", "Mark the blanks, like [MONTH] and [TABLE]."], ["month", "Mention the month, so the template works every month."]], "msg": null}, {"ai": true, "mc": null, "mca": null, "pl": null, "al": "Change in total revenue", "typ": "num", "ans": "LTEzMjEzLjg1", "tol": 1, "lo": null, "hi": null, "minw": 0, "need": [], "msg": "Not yet. Add up each month's column first, then subtract March from April."}, {"ai": true, "mc": null, "mca": null, "pl": "Did the AI name the same category?", "al": "Category", "typ": "txt", "ans": "U25vdw==", "tol": 0.0, "lo": null, "hi": null, "minw": 2, "need": [], "msg": null}, {"ai": true, "mc": null, "mca": null, "pl": "Your final prompt", "al": "Tests that needed a fix (0 to 3)", "typ": "int", "ans": null, "tol": 0.0, "lo": 0, "hi": 3, "minw": 60, "need": [], "msg": null}];X.forEach(function(x,i){Object.assign(STEPS[i],x)})})();
+let passed=new Set(),codes={},tries={};
+function load(){try{const s=JSON.parse(localStorage.getItem(SKEY)||'null');if(!s)return null;
+ if(Array.isArray(s.passed))passed=new Set(s.passed.filter(i=>Number.isInteger(i)&&i>=0&&i<STEPS.length));
+ if(s.codes&&typeof s.codes==='object')codes=s.codes;return s}catch(e){return null}}
+function save(){try{const r=document.getElementById('refl'),n=document.getElementById('nm');
+ localStorage.setItem(SKEY,JSON.stringify({passed:[...passed],codes:codes,refl:r?r.value:'',nm:n?n.value:''}))}catch(e){}}
+function resetLab(){if(!confirm('Clear your saved progress and code for this bootcamp and start over?'))return;
+ try{localStorage.removeItem(SKEY)}catch(e){}location.reload();}
+function esc2(t){return String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function unlocked(i){return i===0||passed.has(i-1)||passed.has(i)}
+function current(){for(let i=0;i<STEPS.length;i++)if(!passed.has(i))return i;return -1}
+function build(){
+ STEPS.forEach((s,i)=>{
+  const host=document.querySelector('#'+s.l+' .lsteps');
+  const d=document.createElement('div');d.className='st';d.id='st'+i;
+  d.innerHTML='<button type="button" class="sthead" aria-expanded="true" aria-controls="stb'+i+'"><span class="stn">Step '+(i+1)+' of '+STEPS.length+'</span><span class="stt">'+s.t+'</span><span class="stok">&#10003; Passed</span></button>'
+  +'<div class="stbody" id="stb'+i+'"><div class="learn">'+s.learn+'</div>'
+  +'<div class="task"><strong>Your task</strong><p>'+s.task+'</p></div>'
+  +(s.ai?'<div class="pycell st-ed xled aibox">'
+     +(s.mc?'<fieldset class="mcq"><legend>Choose one</legend>'+s.mc.map((o,k)=>'<label><input type="radio" name="mc'+i+'" value="'+k+'"> '+o+'</label>').join('')+'</fieldset>':'')
+     +((s.pl||s.al)?'<div class="xlrow">'+(s.pl?'<label class="wide">'+s.pl+'<textarea class="ap" spellcheck="true"></textarea></label>':'')+(s.al?'<label>'+s.al+'<input type="text" class="aa" autocomplete="off"></label>':'')+'</div>':'')
+     +'<div class="pybar"><button type="button" class="go">Check</button><button type="button" class="hb">Hint</button><span class="stat" aria-live="polite"></span></div><pre class="pyout" tabindex="0" aria-label="Result, step '+(i+1)+'"></pre></div>'
+   :(s.xl?'<div class="pycell st-ed xled"><div class="xlrow">'
+     +(s.nof?'':'<label>The formula you wrote<input type="text" class="xf" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="=..."></label>')
+     +'<label>'+(s.nof?'Your answer':'The result Excel shows')+'<input type="text" class="xa" spellcheck="false" autocomplete="off"></label></div>'
+     +'<div class="pybar"><button type="button" class="go">Check</button><button type="button" class="hb">Hint</button><span class="stat" aria-live="polite"></span></div><pre class="pyout" tabindex="0" aria-label="Result, step '+(i+1)+'"></pre></div>'
+   :'<div class="pycell st-ed"><textarea aria-label="'+EDLABEL+', step '+(i+1)+'" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"></textarea>'
+  +'<div class="pybar"><button type="button" class="go">Run and check</button><button type="button" class="hb">Hint</button><span class="stat" aria-live="polite"></span></div><pre class="pyout" tabindex="0" aria-label="Output, step '+(i+1)+'"></pre></div>'))
+  +'<p class="fb" role="status"></p><div class="hint">'+s.hint+'</div>'
+  +(s.sol?'<div class="solbox" hidden><p style="margin:.2rem 0 .4rem">One solution. Read it, then type or copy it in and run it yourself.</p><pre class="bc" tabindex="0"></pre><button type="button" class="cp">Copy into the editor</button></div>':'')
+  +'<button type="button" class="nextb" hidden>Next step &#8595;</button></div>';
+  host.appendChild(d);
+  if(s.ai){const body=d.querySelector('.aibox');let v={};try{v=JSON.parse(codes[i]||'{}')}catch(e){}
+   const tp=d.querySelector('.ap'),ta2=d.querySelector('.aa');if(tp){tp.value=v.p||'';fit(tp)}if(ta2)ta2.value=v.a||'';
+   if(v.m!=null){const r=d.querySelector('input[type=radio][value="'+v.m+'"]');if(r)r.checked=true}
+   const sv=()=>{const r=d.querySelector('input[type=radio]:checked');codes[i]=JSON.stringify({p:tp?tp.value:'',a:ta2?ta2.value:'',m:r?r.value:null});save()};
+   d.querySelectorAll('.ap,.aa,input[type=radio]').forEach(el=>{el.addEventListener('input',()=>{if(el===tp)fit(tp);sv()});el.addEventListener('change',sv)});
+   if(ta2)ta2.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();go(i)}});
+   if(tp)tp.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.shiftKey){e.preventDefault();go(i)}});
+   if(s.sol)d.querySelector('.solbox pre').textContent=s.sol;
+   d.querySelector('.sthead').addEventListener('click',()=>toggle(i));d.querySelector('.go').addEventListener('click',()=>go(i));
+   d.querySelector('.hb').addEventListener('click',()=>{d.querySelector('.hint').classList.toggle('show')});
+   if(s.sol)d.querySelector('.cp').addEventListener('click',()=>{if(tp){tp.value=s.sol;fit(tp);sv();tp.focus()}});
+   d.querySelector('.nextb').addEventListener('click',()=>next(i));return;}
+  if(s.xl){const xf=d.querySelector('.xf'),xa=d.querySelector('.xa');let v={};try{v=JSON.parse(codes[i]||'{}')}catch(e){}
+   if(xf)xf.value=v.f||'';xa.value=v.a||'';
+   [xf,xa].forEach(el=>{if(!el)return;el.addEventListener('input',()=>{codes[i]=JSON.stringify({f:xf?xf.value:'',a:xa.value});save()});el.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();go(i)}})});
+   if(s.sol)d.querySelector('.solbox pre').textContent=s.sol;
+   d.querySelector('.sthead').addEventListener('click',()=>toggle(i));d.querySelector('.go').addEventListener('click',()=>go(i));
+   d.querySelector('.hb').addEventListener('click',()=>{d.querySelector('.hint').classList.toggle('show')});
+   if(s.sol)d.querySelector('.cp').addEventListener('click',()=>{if(xf){xf.value=s.sol;xf.dispatchEvent(new Event('input'));xf.focus()}});
+   d.querySelector('.nextb').addEventListener('click',()=>next(i));return;}
+  const ta=d.querySelector('textarea');ta.value=(codes[i]!=null?codes[i]:s.code);fit(ta);
+  if(s.sol)d.querySelector('.solbox pre').textContent=s.sol;
+  d.querySelector('.sthead').addEventListener('click',()=>toggle(i));
+  d.querySelector('.go').addEventListener('click',()=>go(i));
+  d.querySelector('.hb').addEventListener('click',()=>{d.querySelector('.hint').classList.toggle('show')});
+  if(s.sol)d.querySelector('.cp').addEventListener('click',()=>{ta.value=s.sol;fit(ta);codes[i]=ta.value;save();ta.focus()});
+  d.querySelector('.nextb').addEventListener('click',()=>next(i));
+  let tm;ta.addEventListener('input',()=>{fit(ta);clearTimeout(tm);tm=setTimeout(()=>{codes[i]=ta.value;save()},400)});
+  let escd=false;
+  ta.addEventListener('keydown',e=>{
+   if(e.key==='Escape'){escd=true;return}
+   if(e.key==='Enter'&&e.shiftKey){e.preventDefault();go(i);return}
+   if(e.key==='Tab'&&!e.shiftKey&&!escd){e.preventDefault();const a=ta.selectionStart,b=ta.selectionEnd;ta.value=ta.value.slice(0,a)+'    '+ta.value.slice(b);ta.selectionStart=ta.selectionEnd=a+4;ta.dispatchEvent(new Event('input'))}
+   escd=false;});
+ });
+ const lm=document.getElementById('lmap');
+ LESSONS.forEach((l,k)=>{const li=document.createElement('li');li.innerHTML='<a href="#'+l.id+'" id="lm'+k+'"></a>';lm.appendChild(li)});
+}
+function fit(ta){ta.rows=Math.max(3,ta.value.split('\n').length+1)}
+function toggle(i){const d=document.getElementById('st'+i),c=d.classList.toggle('closed');d.querySelector('.sthead').setAttribute('aria-expanded',c?'false':'true')}
+function setOpen(i,open){const d=document.getElementById('st'+i);d.classList.toggle('closed',!open);d.querySelector('.sthead').setAttribute('aria-expanded',open?'true':'false')}
+function paint(first){
+ const cur=current();
+ STEPS.forEach((s,i)=>{const d=document.getElementById('st'+i);d.hidden=!unlocked(i);
+  d.classList.toggle('done',passed.has(i));d.classList.toggle('cur',i===cur);
+  if(first)setOpen(i,i===cur);
+  d.querySelector('.nextb').hidden=!(passed.has(i)&&i+1<STEPS.length);});
+ LESSONS.forEach((l,k)=>{
+  const idx=STEPS.map((s,i)=>s.l===l.id?i:-1).filter(i=>i>=0);
+  const vis=idx.filter(unlocked).length,done=idx.filter(i=>passed.has(i)).length;
+  const sec=document.getElementById(l.id),lk=sec.querySelector('.lockmsg2');const lw=sec.querySelector('.lwrap');if(lw)lw.hidden=done<idx.length;
+  sec.classList.toggle('locked',vis===0);
+  if(vis===0){lk.hidden=false;lk.textContent='Locked. This lesson opens when you finish '+(k?LESSONS[k-1].t:'the one before')+'.'}
+  else if(vis<idx.length){lk.hidden=false;lk.textContent=(idx.length-vis)+' more step'+(idx.length-vis>1?'s':'')+' in this lesson open as you go.'}
+  else lk.hidden=true;
+  const a=document.getElementById('lm'+k);a.textContent=(k+1<LESSONS.length?(k+1)+' · ':'')+l.t+' '+done+'/'+idx.length;
+  a.className=done===idx.length?'full':(vis?'':'off');});
+ document.getElementById('prog').textContent='Progress: '+passed.size+' / '+STEPS.length+' steps';
+ document.getElementById('pbarfill').style.width=(100*passed.size/STEPS.length)+'%';
+ const all=passed.size===STEPS.length;
+ document.getElementById('reflectbox').className='certbox'+(all?' show':'');
+ document.getElementById('certbox').className='certbox'+(all&&wc()>=50?' show':'');
+}
+function next(i){setOpen(i,false);const n=document.getElementById('st'+(i+1));if(!n)return;setOpen(i+1,true);
+ n.scrollIntoView({behavior:'smooth',block:'start'});setTimeout(()=>{const f=n.querySelector('textarea,input');if(f)f.focus({preventScroll:true})},350)}
+function go(i){
+ const d=document.getElementById('st'+i),ta=d.querySelector('textarea'),out=d.querySelector('.pyout'),fb=d.querySelector('.fb'),btn=d.querySelector('.go'),st=d.querySelector('.stat');
+ let val;if(STEPS[i].ai){const tp=d.querySelector('.ap'),aa=d.querySelector('.aa'),r=d.querySelector('input[type=radio]:checked');val=JSON.stringify({p:tp?tp.value:'',a:aa?aa.value:'',m:r?r.value:null})}else if(STEPS[i].xl){const xf=d.querySelector('.xf'),xa=d.querySelector('.xa');val=JSON.stringify({f:xf?xf.value:'',a:xa.value})}else val=ta.value;
+ codes[i]=val;save();btn.disabled=true;fb.textContent='';fb.className='fb';out.innerHTML='';
+ window.STEPRUN(i,val,m=>{st.textContent=m}).then(r=>{
+  out.innerHTML=r.html||(STEPS[i].xl?'':'<span style="color:#9aa">(ran with no output)</span>');
+  if(r.ok){const first=!passed.has(i);passed.add(i);save();st.textContent='';
+   fb.className='fb ok';fb.textContent=i+1<STEPS.length?'Passed. Nice work.':'Passed. That was the last step. Write your memo below.';
+   if(first&&i+1<STEPS.length)setOpen(i+1,true);paint(false);const sr=document.getElementById('srlive');if(sr)sr.textContent='Step '+(i+1)+' passed.';
+   if(first&&i+1<STEPS.length)d.querySelector('.nextb').focus({preventScroll:true});
+  }else{tries[i]=(tries[i]||0)+1;fb.className='fb no';
+   fb.textContent=r.err?'Your code stopped with an error. Read the last line of the output, fix it, and run it again.':('Not yet. '+(r.msg||'Re-read the task and try again.'));
+   st.textContent='';const sb=d.querySelector('.solbox');if(sb&&tries[i]>=2)sb.hidden=false;}
+ }).catch(e=>{out.innerHTML='<span class="err">'+esc2(e.message||e)+'</span>';st.textContent=''})
+ .then(()=>{btn.disabled=false});
+}
+function wc(){const t=document.getElementById('refl');return t?t.value.trim().split(/\s+/).filter(Boolean).length:0}
+document.addEventListener('input',function(e){
+ if(e.target&&e.target.id==='refl'){const n=wc();
+  document.getElementById('reflcount').textContent=n+' words'+(n<50?': '+(50-n)+' more to unlock your certificate':': certificate unlocked below');
+  document.getElementById('certbox').className='certbox'+(passed.size===STEPS.length&&n>=50?' show':'');save();}
+ if(e.target&&e.target.id==='nm')save();
+});
+function dlcode(){
+ const n=(document.getElementById('nm')||{}).value||'';
+ let t=CODEHEAD+'\n\n';STEPS.forEach((s,i)=>{let c=codes[i]!=null?codes[i]:'';if(s.xl){let v={};try{v=JSON.parse(c||'{}')}catch(e){}c=(s.nof?'':'Formula: '+(v.f||'')+'\n')+'Answer: '+(v.a||'')}if(s.ai){let v={};try{v=JSON.parse(c||'{}')}catch(e){}c=(s.pl?s.pl+':\n'+(v.p||'')+'\n':'')+(s.al?s.al+': '+(v.a||'')+'\n':'')+(s.mc&&v.m!=null?'Choice: '+String(s.mc[v.m]).replace(/<[^>]*>/g,''):'')}t+=CMT+' Step '+(i+1)+' · '+s.t+(passed.has(i)?'':' (not passed yet)')+'\n'+c.trim()+'\n\n'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:'text/plain'}));
+ a.download=CODEFILE+(n.trim()?'_'+n.trim().replace(/[^A-Za-z]+/g,'_').replace(/^_|_$/g,''):'')+CODEEXT;document.body.appendChild(a);a.click();a.remove();
+}
+build();
+(function(){const s=load();if(s){const r=document.getElementById('refl'),n=document.getElementById('nm');if(r&&s.refl){r.value=s.refl;r.dispatchEvent(new Event('input',{bubbles:true}))}if(n&&s.nm)n.value=s.nm;}paint(true);})();
+function h32(s){let h=5381;for(const c of s)h=((h<<5)+h+c.charCodeAt(0))|0;return(h>>>0).toString(36).toUpperCase()}
+function cert(){
+ const n=document.getElementById('nm').value.trim();
+ if(!n){document.getElementById('codeout').textContent='Enter your name first.';return}
+ const r=document.getElementById('refl').value.trim();
+ if(passed.size<STEPS.length){document.getElementById('codeout').textContent='Pass every step first.';return}
+ if(wc()<50){document.getElementById('codeout').textContent='Finish your 50-word memo above first.';return}
+ const N=STEPS.length,code=LAB+'-'+h32(n.toLowerCase()+'|'+LAB+'|'+N);
+ const d=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+ const {jsPDF}=window.jspdf;const p=new jsPDF({orientation:'landscape',unit:'pt',format:[560,380]});
+ p.setFillColor(11,29,51);p.rect(0,0,560,380,'F');p.setFillColor(253,252,250);p.rect(16,16,528,348,'F');
+ p.setTextColor(26,82,118);p.setFont('helvetica','bold');p.setFontSize(10);
+ p.text('MIS 320 · INTRODUCTION TO INFORMATION SYSTEMS · WWU',280,58,{align:'center'});
+ p.setTextColor(26,26,26);p.setFont('times','bold');p.setFontSize(26);p.text('Certificate of Completion',280,105,{align:'center'});
+ p.setFont('times','normal');p.setFontSize(13);p.text('This certifies that',280,140,{align:'center'});
+ p.setFont('times','bold');p.setFontSize(20);p.text(n,280,170,{align:'center'});
+ p.setFont('times','normal');p.setFontSize(13);p.text('completed all '+N+' steps of',280,198,{align:'center'});
+ p.setFont('helvetica','bold');p.setFontSize(15);p.setTextColor(26,82,118);p.text(CERTTITLE,280,222,{align:'center'});
+ p.setFont('helvetica','normal');p.setFontSize(11);p.setTextColor(90,90,90);p.text(d,280,252,{align:'center'});
+ p.setFont('courier','bold');p.setFontSize(12);p.setTextColor(17,120,100);p.text('Verification code: '+code,280,290,{align:'center'});
+ p.setFontSize(8);p.setFont('helvetica','normal');p.setTextColor(150,150,150);
+ p.text('Upload this PDF to Canvas. Memo on page 2. Code is unique to name + bootcamp.',280,330,{align:'center'});
+ p.addPage([560,380],'landscape');p.setFillColor(253,252,250);p.rect(0,0,560,380,'F');
+ p.setTextColor(26,26,26);p.setFont('helvetica','bold');p.setFontSize(13);p.text(MEMOTITLE,40,50);
+ p.setFont('helvetica','normal');p.setFontSize(9);p.setTextColor(90,90,90);p.text(n+' · '+code,40,66);
+ p.setFont('times','normal');p.setFontSize(11);p.setTextColor(26,26,26);
+ const lines=p.splitTextToSize(r,480);p.text(lines.slice(0,24),40,92);
+ p.save(CODEFILE+'_certificate.pdf');
+ document.getElementById('codeout').textContent='Certificate downloaded (memo on page 2). Your code: '+code;
+}
+
+</script>
+
+<!--NAVJS-->
+<script>
+(function(){
+  var btns=[].slice.call(document.querySelectorAll('.dd-btn'));
+  function closeAll(except){
+    btns.forEach(function(b){
+      var m=document.getElementById(b.getAttribute('data-dd'));
+      if(m&&m!==except){m.classList.remove('open');b.setAttribute('aria-expanded','false');}
+    });
+  }
+  btns.forEach(function(b){
+    b.addEventListener('click',function(e){
+      e.stopPropagation();
+      var m=document.getElementById(b.getAttribute('data-dd'));
+      var open=m.classList.contains('open');
+      closeAll();
+      if(!open){m.classList.add('open');b.setAttribute('aria-expanded','true');}
+    });
+  });
+  document.addEventListener('click',function(){closeAll();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeAll();});
+  document.querySelectorAll('.dd-menu').forEach(function(m){
+    m.addEventListener('click',function(e){e.stopPropagation();});
+  });
+})();
+</script>
+</body></html>
