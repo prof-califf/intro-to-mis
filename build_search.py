@@ -15,7 +15,7 @@ PAGES = (
     sorted(glob.glob('chapter*.html'), key=lambda f: int(re.search(r'\d+', f).group()))
     + [f for f in sorted(glob.glob('lab*.html'), key=lambda f: int(re.search(r'\d+', f).group()))
        if '-hidden' not in f]
-    + ['glossary.html', 'syllabus.html', 'schedule.html', 'preface.html', 'resume.html']
+    + ['sql-bootcamp.html', 'glossary.html', 'syllabus.html', 'schedule.html', 'preface.html', 'resume.html']
 )
 SKIP_CLASSES = {'srcbox', 'printbox', 'toc', 'pn', 'skiplink', 'tocbtn'}
 

@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SQL Bootcamp (Optional) | MIS 320</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0e0e0d; --off-black:#1a1a18;
+  --magenta:#cc146d; --magenta-onblack:#f0348e; --magenta-dark:#c0146a; --magenta-pale:#fdeaf3;
+  --white:#ffffff; --off-white:#f6f4f1;
+  --text-dark:#0e0e0d; --text-muted:#3a3a38; --text-light:#6b6b68;
+  --border:#e0ddd8;
+  --warn:#b3261e; --warn-pale:#fdeceb;
+  --good:#1f7a53; --good-pale:#e8f4ee;
+  --sans:'Space Grotesk',sans-serif; --display:'Oswald',sans-serif;
+  --wrap:1180px; --col:46rem;
+  /* legacy aliases so existing markup keeps working */
+  --navy:#0e0e0d; --navy-soft:#1a1a18; --accent:#cc146d; --accent-deep:#c0146a;
+  --accent-pale:#fdeaf3; --cream:#ffffff; --cream-deep:#f6f4f1; --paper:#ffffff;
+  --ink:#0e0e0d; --muted:#6b6b68; --rule:#e0ddd8; --serif:'Space Grotesk',sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--white);color:var(--text-dark);
+  font-family:var(--sans);font-size:18.5px;line-height:1.7;-webkit-font-smoothing:antialiased}
+
+/* ---------- shell ---------- */
+.shell{max-width:var(--wrap);margin:0 auto;display:grid;grid-template-columns:15rem minmax(0,1fr);gap:3.5rem;padding:0 1.5rem 6rem}
+main{margin-left:auto;margin-right:auto;max-width:var(--col);min-width:0;padding-top:2.5rem}
+
+/* ---------- sidebar ---------- */
+.rail{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:2.5rem 0 3rem;border-right:1px solid var(--border)}
+.rail .book{font-family:var(--display);font-size:15px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--magenta);margin:0 0 .2rem}
+.rail .course{font-size:13.5px;color:var(--text-light);margin:0 0 1.75rem}
+.rail nav a{display:block;font-size:15px;line-height:1.35;color:var(--text-muted);text-decoration:none;padding:.42rem .8rem .42rem .85rem;border-left:2px solid transparent;margin-left:-.85rem}
+.rail nav a:hover{color:var(--magenta);border-left-color:var(--magenta)}
+.rail nav a.sub{font-size:14px;color:var(--text-light);padding-left:1.7rem}
+.rail .back{display:inline-block;margin-top:2rem;font-size:14px;color:var(--text-light);text-decoration:none}
+.rail .back:hover{color:var(--magenta)}
+.railtoggle{display:none}
+
+/* ---------- chapter head ---------- */
+.chaphead{border-bottom:3px solid var(--black);padding-bottom:1.6rem;margin-bottom:2.5rem}
+.eyebrow{font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--magenta);margin:0 0 .7rem}
+.chaphead h1{font-family:var(--display);font-weight:600;font-size:clamp(1.9rem,4.4vw,2.7rem);line-height:1.12;text-transform:uppercase;letter-spacing:.01em;margin:0 0 .6rem;color:var(--black)}
+.chaphead .anchor{font-size:16px;color:var(--text-light);margin:0}
+.chaphead .anchor strong{color:var(--text-muted);font-weight:500}
+.meta-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.2rem}
+.meta-row span{font-size:13px;letter-spacing:.03em;background:var(--off-white);border:1px solid var(--border);padding:.32rem .65rem;color:var(--text-muted)}
+.meta-row span.alt{background:var(--magenta-pale);border-color:#f6cfe1;color:var(--magenta-dark)}
+
+/* ---------- type ---------- */
+h2{font-family:var(--display);font-weight:600;font-size:1.72rem;line-height:1.22;text-transform:uppercase;letter-spacing:.01em;color:var(--black);margin:3.2rem 0 .9rem}
+h2 .num{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;color:var(--magenta);display:block;margin-bottom:.4rem;text-transform:uppercase}
+h3{font-family:var(--display);font-weight:600;font-size:1.18rem;text-transform:uppercase;letter-spacing:.03em;color:var(--off-black);margin:2rem 0 .55rem}
+p{margin:0 0 1.05rem}
+a{color:var(--magenta-dark)}
+strong{font-weight:600;color:var(--black)}
+.lede{font-size:1.24rem;line-height:1.55;color:var(--text-muted)}
+code.inline{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--off-white);padding:.1em .35em;border:1px solid var(--border)}
+ul,ol{margin:0 0 1.15rem;padding-left:1.3rem}
+li{margin-bottom:.45rem}
+
+/* ---------- numbered step headings ---------- */
+.sh{margin:3rem 0 .7rem;padding-top:.9rem;border-top:2px solid var(--black)}
+.sh .badge{display:inline-block;background:var(--magenta);color:#fff;font-family:var(--display);
+  font-size:12.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  padding:.24rem .62rem;margin-right:.55rem;vertical-align:.17em;white-space:nowrap}
+.sh .ttl{display:inline;font-family:var(--display);font-weight:600;font-size:1.18rem;
+  text-transform:uppercase;letter-spacing:.03em;color:var(--off-black);line-height:1.35}
+.sh .cpx{display:block;clear:both;font-family:var(--sans);font-size:13.5px;line-height:1.4;
+  color:var(--text-light);margin-top:.12rem}
+.sh .cpx b{font-weight:600;color:var(--magenta-dark)}
+@media (max-width:520px){
+  .sh .badge{font-size:11.5px;padding:.2rem .5rem;margin-right:.45rem;vertical-align:.14em}
+  .sh .ttl{font-size:1.05rem}
+}
+
+/* ---------- inline checkpoint slots ---------- */
+.cpslot{margin:1.1rem 0 0}
+.cpslot .cp{margin:0}
+.cp .cphead{display:block;font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--magenta);margin-bottom:.4rem}
+.cp.done .cphead{color:var(--good)}
+.cp.locked .cphead{color:var(--text-light)}
+.progress{border:none}
+.lockmsg{font-family:var(--sans);font-size:.82rem;color:var(--text-light);margin:.4rem 0 0}
+.cp .q,.cp .hint,.cp .msg{overflow-wrap:anywhere}
+
+/* ---------- pull quote ---------- */
+.pull{margin:2.2rem 0;padding:0 0 0 1.4rem;border-left:3px solid var(--magenta)}
+.pull p{font-family:var(--display);font-weight:400;font-size:1.32rem;line-height:1.3;color:var(--black);margin:0 0 .5rem}
+.pull cite{font-style:normal;font-size:12.5px;color:var(--text-light)}
+
+/* ---------- callouts ---------- */
+.callout{border:1px solid var(--border);border-left:4px solid var(--magenta);background:var(--off-white);padding:1.15rem 1.3rem;margin:1.9rem 0}
+.callout > strong:first-child{display:block;font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--magenta);margin-bottom:.5rem}
+.callout p:last-child{margin-bottom:0}
+.callout-caution{border-left-color:var(--warn);background:var(--warn-pale)}
+.callout-caution strong:first-child{color:var(--warn)}
+.callout-bridge{border-left-color:var(--black);background:var(--off-white)}
+.callout-bridge strong:first-child{color:var(--black)}
+.callout-good{border-left-color:var(--good);background:var(--good-pale)}
+.callout-good strong:first-child{color:var(--good)}
+
+/* ---------- signature: value chain rail ---------- */
+.vc{margin:2.4rem 0;border:1px solid var(--border);background:var(--white);overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,.07)}
+.vc-head{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#fff;background:var(--black);padding:.7rem 1rem}
+.vc-strip{display:grid;grid-template-columns:repeat(5,1fr)}
+.vc-cell{padding:.85rem .7rem;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+.vc-cell:last-child{border-right:none}
+.vc-stage{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-light);display:block;margin-bottom:.3rem}
+.vc-cell p{font-size:15.5px;line-height:1.4;margin:0;color:var(--text-muted)}
+.vc-cell.broke{background:var(--magenta-pale)}
+.vc-cell.broke .vc-stage{color:var(--magenta)}
+.vc-cell.broke p{color:#8a1450}
+.vc-note{padding:.8rem 1rem;font-size:14px;color:var(--text-light);background:var(--off-white);border-top:1px solid var(--border)}
+.vc-note b{color:var(--magenta);font-weight:600}
+
+/* ---------- stat band ---------- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(8.5rem,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin:2rem 0}
+.stat{background:var(--white);padding:1rem .9rem}
+.stat b{display:block;font-family:var(--display);font-weight:700;font-size:1.8rem;color:var(--magenta);line-height:1.1}
+.stat span{display:block;font-size:13px;line-height:1.3;color:var(--text-light);margin-top:.3rem}
+
+/* ---------- timeline ---------- */
+.tl{list-style:none;padding:0;margin:1.8rem 0;border-left:2px solid var(--border)}
+.tl li{position:relative;padding:0 0 1.1rem 1.3rem;margin:0}
+.tl li:before{content:"";position:absolute;left:-5px;top:.55em;width:8px;height:8px;border-radius:50%;background:var(--magenta)}
+.tl li.bad:before{background:var(--warn)}
+.tl .when{font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--magenta);display:block}
+.tl li.bad .when{color:var(--warn)}
+
+/* ---------- vocabulary ---------- */
+.vocab{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin:1.8rem 0}
+.vocab div{background:var(--white);padding:.95rem 1rem}
+.vocab dt{font-family:var(--display);font-weight:600;font-size:15px;text-transform:uppercase;letter-spacing:.03em;color:var(--black);margin-bottom:.3rem}
+.vocab dd{margin:0;font-size:16.5px;line-height:1.5;color:var(--text-muted)}
+
+/* ---------- discussion questions ---------- */
+.dq{counter-reset:dq;margin:1.6rem 0 0;padding:0;list-style:none}
+.dq li{counter-increment:dq;position:relative;padding:1rem 0 1rem 2.6rem;border-top:1px solid var(--border)}
+.dq li:last-child{border-bottom:1px solid var(--border)}
+.dq li:before{content:counter(dq,decimal-leading-zero);position:absolute;left:0;top:1.05rem;font-family:var(--display);font-size:14.5px;font-weight:600;color:var(--magenta)}
+.tag{display:inline-block;font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:.2rem .5rem;margin-left:.5rem;vertical-align:.12em}
+.tag-hard{background:var(--warn);color:#fff}
+.tag-open{background:var(--black);color:#fff}
+.tag-warm{background:var(--magenta-pale);color:var(--magenta-dark)}
+
+/* ---------- sources ---------- */
+.sources{margin-top:3.5rem;padding-top:1.2rem;border-top:1px solid var(--border);font-size:14.5px;color:var(--text-light)}
+.sources h3{font-family:var(--display);font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin:0 0 .6rem}
+.sources li{margin-bottom:.35rem;line-height:1.5}
+
+/* ---------- responsive ---------- */
+@media (max-width:860px){
+  .shell{grid-template-columns:minmax(0,1fr);gap:0;padding:0 1.15rem 4rem}
+  .rail{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);padding:1.5rem 0 1rem;margin-bottom:.5rem}
+  .rail nav{display:none}
+  .rail nav.open{display:block;margin-top:.8rem}
+  .railtoggle{display:inline-block;font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--magenta);background:none;border:1px solid var(--border);padding:.4rem .7rem;cursor:pointer}
+  main{padding-top:1.2rem}
+  .vc-strip{grid-template-columns:repeat(2,1fr)}
+}
+:focus-visible{outline:2px solid var(--magenta);outline-offset:2px}
+
+/* ---------- prominent lab link ---------- */
+.lablink{display:inline-block;margin-top:.9rem;font-family:var(--display);font-size:14.5px;font-weight:600;
+  letter-spacing:.06em;text-transform:uppercase;text-decoration:none;background:var(--magenta);color:#fff;
+  padding:.6rem 1.15rem;border:none}
+.lablink:hover{background:var(--magenta-dark);color:#fff}
+.callout .lablink{margin-top:1rem}
+
+/* ---------- global top navigation with dropdowns ---------- */
+.topnav{position:sticky;top:0;z-index:100;background:var(--black);border-bottom:1px solid rgba(255,255,255,.14)}
+.topnav-in{max-width:var(--wrap);margin:0 auto;padding:.7rem 1.5rem;display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap}
+.topnav-brand{font-family:var(--display);font-size:16px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--magenta-onblack);text-decoration:none;margin-right:auto}
+.topnav-brand:hover{color:#fff}
+.dd{position:relative}
+.dd-btn{font-family:var(--display);font-size:14.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:#fff;background:none;border:1px solid rgba(255,255,255,.3);padding:.42rem .85rem;cursor:pointer}
+.dd-btn:hover,.dd-btn[aria-expanded="true"]{background:var(--magenta);border-color:var(--magenta)}
+.dd-btn .caret{font-size:11px;margin-left:.35rem}
+.dd-menu{display:none;position:absolute;right:0;top:calc(100% + .4rem);min-width:20rem;background:#fff;
+  border:1px solid var(--border);box-shadow:0 8px 30px rgba(0,0,0,.22);padding:.4rem 0;max-height:75vh;overflow-y:auto}
+.dd-menu.open{display:block}
+.dd-menu a{display:block;padding:.55rem 1rem;text-decoration:none;color:var(--text-dark);font-size:14.5px;line-height:1.35}
+.dd-menu a:hover{background:var(--magenta-pale);color:var(--magenta-dark)}
+.dd-menu a .lbl{display:block;font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--magenta);margin-bottom:.1rem}
+.dd-menu a.current{background:var(--off-white);border-left:3px solid var(--magenta)}
+.dd-menu a.soon{color:var(--text-light);pointer-events:none}
+.dd-menu a.soon .lbl{color:var(--text-light)}
+.dd-sep{margin:.35rem 0;border-top:1px solid var(--border)}
+@media (max-width:700px){
+  .topnav-in{padding:.6rem 1.15rem;gap:.6rem}
+  .topnav-brand{font-size:13.5px;width:100%;margin-right:0}
+  .dd{flex:1}
+  .dd-btn{width:100%;font-size:13px;padding:.4rem .5rem}
+  .dd-menu{right:auto;left:0;min-width:min(92vw,22rem)}
+}
+
+/* ---------- collapsible step-by-step help ---------- */
+.howto{margin:.7rem 0 1.1rem;border:1px solid var(--border);background:var(--off-white)}
+.howto>summary{cursor:pointer;padding:.6rem .9rem;font-family:var(--display);font-size:13px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--magenta-dark);list-style:none}
+.howto>summary::-webkit-details-marker{display:none}
+.howto>summary:before{content:"\25B8  ";font-size:11px}
+.howto[open]>summary:before{content:"\25BE  "}
+.howto>summary:hover{background:var(--magenta-pale)}
+.howto-body{padding:.3rem 1.1rem 1rem;border-top:1px solid var(--border);background:#fff}
+.howto-body ol{margin:.7rem 0;padding-left:1.3rem}
+.howto-body li{margin-bottom:.45rem;font-size:16.5px;line-height:1.5}
+.howto-body p{font-size:16.5px;margin:.6rem 0}
+.kbd{font-family:ui-monospace,Menlo,monospace;font-size:.85em;background:var(--off-white);
+  border:1px solid var(--border);border-radius:2px;padding:.1em .35em;white-space:nowrap}
+.mac{display:inline-block;font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;background:var(--black);color:#fff;padding:.1rem .4rem;margin-right:.35rem}
+.stuck{border:1px solid var(--border);border-left:4px solid var(--black);background:var(--off-white);
+  padding:1rem 1.2rem;margin:2rem 0 0}
+.stuck strong:first-child{display:block;font-family:var(--display);font-size:12.5px;font-weight:600;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--black);margin-bottom:.5rem}
+.stuck ol{margin:.5rem 0 0;padding-left:1.3rem}
+.stuck li{font-size:16.5px;margin-bottom:.35rem}
+
+/* ---------- AI traffic lights ---------- */
+.ailight{display:flex;gap:1rem;align-items:flex-start;border:1px solid var(--border);background:#fff;
+  padding:1rem 1.2rem;margin:1rem 0}
+.ailight .lamp{flex:0 0 auto;width:34px;background:#1c1c1a;border-radius:8px;padding:7px 0;
+  display:flex;flex-direction:column;align-items:center;gap:5px}
+.ailight .bulb{width:20px;height:20px;border-radius:50%;background:#2e2e2b;box-shadow:inset 0 2px 4px rgba(0,0,0,.6)}
+.ailight.g .bulb.b3{background:#2fae5f;box-shadow:0 0 10px rgba(47,174,95,.8),inset 0 -2px 3px rgba(0,0,0,.25)}
+.ailight.y .bulb.b2{background:#e6b93c;box-shadow:0 0 10px rgba(230,185,60,.8),inset 0 -2px 3px rgba(0,0,0,.25)}
+.ailight.r .bulb.b1{background:#d5453a;box-shadow:0 0 10px rgba(213,69,58,.8),inset 0 -2px 3px rgba(0,0,0,.25)}
+.ailight .lighttext{flex:1;min-width:0}
+.ailight .lighttext > strong:first-child{display:block;font-family:var(--display);font-size:13px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;margin-bottom:.3rem}
+.ailight.g .lighttext strong:first-child{color:#1e7c43}
+.ailight.y .lighttext strong:first-child{color:#a07a10}
+.ailight.r .lighttext strong:first-child{color:#a03434}
+.ailight p{margin:.2rem 0 0;font-size:16.5px;line-height:1.55}
+
+/* ---------- think-pair-share block ---------- */
+.tps{border:1px solid var(--black);background:#fff;margin:2.2rem 0}
+.tps-head{background:var(--black);color:#fff;padding:.6rem 1.1rem;font-family:var(--display);font-size:12.5px;
+  font-weight:600;letter-spacing:.2em;text-transform:uppercase;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.tps-head .mins{color:rgba(255,255,255,.7);letter-spacing:.1em}
+.tps-body{padding:1.1rem 1.25rem}
+.tps-setup{font-size:17px;line-height:1.6;margin:0 0 1rem}
+.tps-q{border-left:4px solid var(--magenta);background:var(--magenta-pale);padding:.8rem 1rem;margin:0 0 1.1rem}
+.tps-q p{margin:0;font-size:17px;line-height:1.5;font-weight:500}
+.tps-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border)}
+.tps-step{background:#fff;padding:.75rem .9rem}
+.tps-step .ph{font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--magenta);margin-bottom:.3rem;display:flex;justify-content:space-between}
+.tps-step .ph span{color:var(--text-light)}
+.tps-step p{margin:0;font-size:16px;line-height:1.45;color:var(--text-muted)}
+.tps-note{border-top:1px solid var(--border);margin-top:1.1rem;padding-top:.9rem;font-size:16px;color:var(--text-muted)}
+.tps-note strong{font-family:var(--display);font-size:11.5px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--black);display:block;margin-bottom:.35rem}
+@media(max-width:700px){.tps-steps{grid-template-columns:1fr}}
+
+/* ---------- Monday session plan (instructor-facing) ---------- */
+.plan{border:1px solid var(--border);background:var(--off-white);margin:2rem 0}
+.plan-head{background:var(--off-white);border-bottom:1px solid var(--border);padding:.55rem 1.05rem;
+  font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted)}
+.plan table{width:100%;border-collapse:collapse;background:#fff}
+.plan td{border-bottom:1px solid var(--border);padding:.6rem .9rem;font-size:15.5px;vertical-align:top;line-height:1.45}
+.plan tr:last-child td{border-bottom:none}
+.plan td.t{width:5.5rem;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--magenta);white-space:nowrap}
+.plan td.w{width:8rem;font-weight:600}
+@media(max-width:640px){.plan td.w{width:auto}}
+
+/* ---------- chapter depth: stat strip, TOC, key concept, summary table ---------- */
+.statrow{display:flex;flex-wrap:wrap;gap:1px;background:var(--border);border:1px solid var(--border);margin:1.6rem 0}
+.stat{flex:1 1 8rem;background:#fff;padding:.85rem 1rem;text-align:center}
+.stat b{display:block;font-family:var(--display);font-size:22px;font-weight:600;color:var(--magenta);line-height:1.1}
+.stat span{font-size:12.5px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;font-family:var(--display)}
+.toc{border:1px solid var(--border);background:var(--off-white);padding:1rem 1.25rem;margin:1.6rem 0;font-family:var(--sans);font-size:14.5px;line-height:2}
+.toc strong{display:block;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.3rem}
+.toc a{color:var(--text-dark);text-decoration:none;border-bottom:1px solid var(--border);margin-right:1rem;white-space:normal}
+.toc a:hover{color:var(--magenta-dark);border-bottom-color:var(--magenta)}
+.kc{border:1px solid var(--border);border-left:4px solid var(--magenta);background:#fff;margin:1.4rem 0;padding:1rem 1.2rem}
+.kc .kc-tag{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta);display:block;margin-bottom:.15rem}
+.kc .kc-term{font-family:var(--display);font-size:17px;font-weight:600;display:block;margin-bottom:.45rem}
+.kc p{margin:0;font-size:17px;line-height:1.62}
+.sumtable{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:15.5px}
+.sumtable th{background:var(--black);color:#fff;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.55rem .8rem;text-align:left}
+.sumtable td{border:1px solid var(--border);padding:.6rem .8rem;vertical-align:top;line-height:1.5}
+.sumtable tr:nth-child(even) td{background:var(--off-white)}
+
+/* ---------- IS concepts chip strip ---------- */
+.concepts{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;margin:1.1rem 0 0}
+.concepts .clabel{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-right:.3rem}
+.concepts span:not(.clabel){font-family:var(--display);font-size:12.5px;font-weight:500;letter-spacing:.04em;border:1px solid var(--border);background:var(--off-white);padding:.22rem .6rem;color:var(--text-dark)}
+.cp{border:1px solid var(--rule);background:var(--paper);border-radius:2px;margin:1rem 0;padding:1rem 1.15rem}.cp.locked{pointer-events:none;background:var(--off-white)}
+.locked .q,.locked p{color:var(--text-muted)}
+.locked button{background:var(--off-white)!important;color:var(--text-light)!important;border:1px solid var(--rule)!important;cursor:default}
+.locked input{background:var(--off-white)}
+input::placeholder{color:#6b6b68;opacity:1}.cp.done{border-left:4px solid var(--good);background:var(--good-pale)}.cp .q{font-family:var(--sans);font-size:.92rem;color:var(--navy);margin:0 0.6rem;font-weight:500}.cp input[type=text]{font-family:var(--sans);font-size:.9rem;padding:.45rem.6rem;border:1px solid var(--rule);border-radius:2px;width:14rem;max-width:100%}.cp button{font-family:var(--sans);font-size:.8rem;font-weight:600;letter-spacing:.04em;background:var(--accent-deep);color:#fff;border:none;border-radius:2px;padding:.5rem.9rem;cursor:pointer;margin-left:.4rem}.cp button.hintb{background:none;color:var(--accent-deep);border:1px solid var(--rule)}.cp .msg{font-family:var(--sans);font-size:.8rem;margin:.5rem 0 0}.cp .hint{font-family:var(--sans);font-size:.8rem;color:var(--muted);margin:.5rem 0 0;display:none;border-top:1px dashed var(--rule);padding-top:.5rem}.progress{position:sticky;top:0;z-index:5;background:var(--black);color:#fff;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:.6rem 1rem;margin:1.5rem 0}.certbox{border:2px solid var(--black);background:var(--paper);padding:1.2rem 1.3rem;margin:1.5rem 0;display:none}.certbox.show{display:block}.certbox h3{margin-top:0}.codebox code{font-family:ui-monospace,Menlo,monospace;background:var(--cream-deep);padding:.15em.45em;border-radius:2px}
+
+/* ---------- docked sandbox ---------- */
+.sbxbar{display:flex;align-items:center;justify-content:space-between;gap:.6rem;margin:0 0 .5rem}
+.sbxbar p{margin:0!important}
+.sbxbtns{display:flex;gap:.4rem}
+.sbxbtn{font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:none;color:#f6f4f1;border:1px solid #6b6b68;padding:.3rem .7rem;cursor:pointer}
+.sbxbtn:hover,.sbxbtn:focus-visible{border-color:var(--magenta-onblack);color:var(--magenta-onblack);outline:none}
+#sbxcollapse{display:none}
+#sqlbox.docked{position:fixed;z-index:50;margin:0!important;box-shadow:0 -4px 24px rgba(0,0,0,.35);overflow-y:auto}
+#sqlbox.docked #sqlout{max-height:none;overflow:auto}
+/* laptops and phones: bottom drawer */
+:root{--sbxw:30rem;--sbxh:55vh}
+#sqlbox.docked{left:0;right:0;bottom:0;height:var(--sbxh);border-radius:0}
+#sqlbox.docked.collapsed{height:auto}
+#sqlbox.docked #sbxcollapse{display:inline-block}
+#sqlbox.docked.collapsed #sqlstatus,#sqlbox.docked.collapsed .sqlwrap,#sqlbox.docked.collapsed .sbxrun,#sqlbox.docked.collapsed #sqlout{display:none}
+body.sbxdocked{padding-bottom:calc(var(--sbxh) + 3vh)}
+body.sbxdocked.sbxcollapsed{padding-bottom:4rem}
+/* wide screens: right-hand panel */
+@media (min-width:1500px){
+  #sqlbox.docked{left:auto;top:0;right:0;bottom:0;width:var(--sbxw);height:auto;border-left:6px solid var(--magenta)}
+  #sqlbox.docked #sbxcollapse{display:none}
+  #sqlbox.docked #sqlout{max-height:none}
+  body.sbxdocked{padding-bottom:0;padding-right:calc(var(--sbxw) + 1rem)}
+}
+.sbxspot{display:none;font-family:var(--sans);font-size:.85rem;color:var(--text-light);border:1px dashed var(--border);padding:.6rem .9rem;margin:1.2rem 0}
+body.sbxdocked .sbxspot{display:block}
+
+/* drag handle for the docked sandbox */
+.sbxgrip{display:none;position:fixed;z-index:51;left:0;right:0;bottom:calc(var(--sbxh) - 7px);height:14px;cursor:ns-resize;touch-action:none;
+  background:linear-gradient(var(--magenta),var(--magenta)) center/48px 4px no-repeat}
+.sbxgrip:hover,.sbxgrip:focus-visible{background-size:96px 6px;outline:none}
+body.sbxdocked:not(.sbxcollapsed) .sbxgrip{display:block}
+@media (min-width:1500px){
+  .sbxgrip{left:auto;right:calc(var(--sbxw) - 7px);top:0;bottom:0;width:14px;height:auto;cursor:ew-resize;background-size:4px 48px}
+  .sbxgrip:hover,.sbxgrip:focus-visible{background-size:6px 96px}
+  body.sbxdocked .sbxgrip{display:block}
+}
+
+/* SQL keyword colouring */
+.sqlwrap{position:relative;background:#0e0e0d;border:1px solid #3a3a38;border-radius:2px}
+#sqlhl,#sqlin{font-family:ui-monospace,Menlo,monospace;font-size:.92rem;line-height:1.5;padding:.6rem;margin:0;border:0;
+  white-space:pre-wrap;overflow-wrap:break-word;word-break:normal;tab-size:4;letter-spacing:normal;box-sizing:border-box;width:100%}
+#sqlhl{position:absolute;inset:0;overflow:hidden;color:#f6f4f1;pointer-events:none;background:none}
+#sqlin{position:relative;display:block;background:transparent;color:transparent;caret-color:#f6f4f1;resize:vertical;overflow:hidden;min-height:7.5rem}
+#sqlin::placeholder{color:#6b6b68}
+#sqlin:focus{outline:2px solid var(--magenta-onblack);outline-offset:1px}
+#sqlhl .kw{color:var(--magenta-onblack);font-weight:700}
+#sqlhl .str{color:#9fd3a8}
+code .kw{color:var(--magenta);font-weight:700}
+</style>
+<link rel="stylesheet" href="book.css">
+<link rel="stylesheet" href="lab.css"><style id="ux-mobile-nav">@media (max-width:700px){.topnav,nav.top{position:relative;z-index:200}.topnav .dd,nav.top .dd{position:static}.topnav .dd-menu,nav.top .dd-menu{left:.75rem;right:.75rem;min-width:0;top:calc(100% - .2rem);max-height:65vh;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}}@media (min-width:701px){.topnav-in{gap:.75rem}.nav-links{gap:.5rem}}</style>
+<style id="bc-css">pre.bc{background:var(--off-white);border:1px solid var(--border);border-left:4px solid var(--magenta);padding:.75rem .95rem;overflow-x:auto;font-family:ui-monospace,Menlo,monospace;font-size:.86rem;line-height:1.55;margin:.5rem 0 1rem;white-space:pre}</style>
+</head><body>
+<a href="#top" class="skiplink">Skip to content</a>
+<style>.skiplink{position:absolute;left:-9999px;top:0;z-index:1000;background:#0e0e0d;color:#fff;padding:.6rem 1rem;font:600 15px/1.2 system-ui,sans-serif;text-decoration:none}.skiplink:focus{left:.5rem;top:.5rem;outline:3px solid #fff}</style>
+<div id="srlive" role="status" aria-live="polite" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden"></div>
+
+<nav class="topnav">
+  <div class="topnav-in">
+    <a class="topnav-brand" href="index.html">MIS 320 &middot; Principles of Management Information Systems</a>
+    <a class="dd-btn" href="syllabus.html" style="text-decoration:none">Syllabus</a>
+    <a class="dd-btn" href="schedule.html" style="text-decoration:none">Schedule</a>
+<a class="dd-btn" href="search.html" style="text-decoration:none">Search</a>
+    <div class="dd">
+      <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddc">Chapters<span class="caret">&#9660;</span></button>
+      <div class="dd-menu" id="ddc">
+      <a href="preface.html"><span class="lbl">Start here</span>About this book</a>
+      <a href="glossary.html"><span class="lbl">Reference</span>Glossary, A to Z</a>
+      <a href="chapter1-what-is-mis.html"><span class="lbl">Chapter 1 &middot; Week 1</span>What Is MIS? &mdash; Spotify Wrapped</a>
+      <a href="chapter2-starbucks.html"><span class="lbl">Chapter 2 &middot; Week 2</span>The Value of Information &mdash; Starbucks</a>
+      <a href="chapter3-competitive-advantage.html"><span class="lbl">Chapter 3 &middot; Week 3</span>Technology &amp; Competitive Advantage &mdash; Zara</a>
+      <a href="chapter4-dominos.html"><span class="lbl">Chapter 4 &middot; Week 4</span>Business Processes &mdash; Domino's</a>
+      <a href="chapter5-healthcaregov.html"><span class="lbl">Chapter 5 &middot; Week 5</span>Systems Analysis &amp; the SDLC &mdash; Healthcare.gov</a>
+      <a href="chapter6-moneyball.html"><span class="lbl">Chapter 6 &middot; Week 6</span>Business Intelligence &mdash; Moneyball</a>
+      <a href="chapter7-walmart.html"><span class="lbl">Chapter 7 &middot; Week 7</span>What Data Is: Databases &mdash; Walmart</a>
+      <a href="chapter8-nike-sap.html"><span class="lbl">Chapter 8 &middot; Week 7</span>Enterprise Systems &mdash; Nike/SAP</a>
+      <a href="chapter9-changehealthcare.html"><span class="lbl">Chapter 9 &middot; Week 8</span>Cybersecurity &mdash; Change Healthcare</a>
+      <a href="chapter10-equifax.html"><span class="lbl">Chapter 10 &middot; Week 8</span>IT Governance &mdash; Equifax</a>
+      <a href="chapter11-software.html"><span class="lbl">Chapter 11 &middot; Week 9</span>Software Design &amp; Selection &mdash; Robles v. Domino's</a>
+      <a href="chapter12-ai-ml.html"><span class="lbl">Chapter 12 &middot; Week 10</span>What AI Is &mdash; Every Cure</a>
+      <a href="chapter13-cloud.html"><span class="lbl">Chapter 13 &middot; Week 10</span>The Cloud &amp; What Computing Costs &mdash; Netflix</a>
+      </div>
+    </div>
+    <div class="dd">
+      <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddl">Labs<span class="caret">&#9660;</span></button>
+      <div class="dd-menu" id="ddl">
+      <a href="lab1-genai.html"><span class="lbl">Lab 1 &middot; Week 1</span>GenAI for Thinking</a>
+      <a href="lab2-excel-basics.html"><span class="lbl">Lab 2 &middot; Week 2</span>Excel Basics: Meeting the Client</a>
+      <a href="lab3-excel-dataprep.html"><span class="lbl">Lab 3 &middot; Week 3</span>Excel Functions: One Question, One Formula</a>
+      <a href="lab4-excel-dataviz.html"><span class="lbl">Lab 4 &middot; Week 4</span>Data Visualization: Charts That Tell the Truth</a>
+      <a href="lab5-excel-analysis.html"><span class="lbl">Lab 5 &middot; Week 5</span>Data Analysis &amp; Mini Project</a>
+      <a href="lab6-tableau.html"><span class="lbl">Lab 6 &middot; Week 6</span>Tableau: Worksheets to a Dashboard</a>
+      <a href="lab7-sql.html"><span class="lbl">Lab 7 &middot; Week 7</span>SQL Fundamentals</a>
+      <a href="lab8-security.html"><span class="lbl">Lab 8 &middot; Week 8</span>Security &amp; Data Governance: The Audit</a>
+      <a href="lab9-ux.html"><span class="lbl">Lab 9 &middot; Week 9</span>UX Design: The Heuristic Evaluation</a>
+      <a href="lab10-ia.html"><span class="lbl">Lab 10 &middot; Week 10</span>Information Architecture: Making Sense of a Mess</a>
+<a class="current" href="sql-bootcamp.html"><span class="lbl">Optional · Extra credit</span>SQL Bootcamp</a>
+      <a href="resume.html"><span class="lbl">After the labs</span>Turning the labs into a resume</a>
+      </div>
+    </div>
+    <div class="dd">
+      <button class="dd-btn" aria-expanded="false" aria-haspopup="true" data-dd="ddd">Data<span class="caret">&#9660;</span></button>
+      <div class="dd-menu" id="ddd">
+      <a href="cascadia-sales-2025.xlsx" download><span class="lbl">Workbook</span>Cascadia sales, clean (.xlsx)</a>
+      <a href="cascadia-sales-2025-RAW.xlsx" download><span class="lbl">Workbook</span>Cascadia sales, RAW export for Lab 7 (.xlsx)</a>
+      <a href="cascadia-sales-2025.csv" download><span class="lbl">Data</span>Flat CSV for Tableau</a>
+      <a href="cascadia.db"><span class="lbl">Database</span>SQLite database for the SQL lab</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+<main id="top" class="chapwrap">
+<header class="chaphead">
+  <p class="eyebrow">Optional · Extra credit</p>
+  <h1><b>SQL</b> Bootcamp: From One Query to Real Analysis</h1>
+  <div class="meta-row"><span>About 3 to 5 hours, at your own pace</span><span class="alt"><a href="lab7-sql.html" style="color:inherit;text-decoration:none">Builds on Lab 7 &#8594;</a></span></div>
+</header>
+<p class="lede">Lab 7 showed you that you can ask a database a question. One week is enough to learn
+  that, and not enough to learn what analysts do with SQL every day. This bootcamp is the rest of it:
+  joining several tables at once, grouping and filtering groups, working with dates, labeling rows,
+  breaking a hard question into steps, and comparing each row with the ones around it. You work on the
+  same Cascadia database, in your browser, with nothing to install.</p>
+
+<div class="toc"><strong>Contents</strong> <a href="#m1">1 · Warm-up</a> &nbsp;·&nbsp; <a href="#m2">2 · Joins</a> &nbsp;·&nbsp; <a href="#m3">3 · Groups</a> &nbsp;·&nbsp; <a href="#m4">4 · Dates and CASE</a> &nbsp;·&nbsp; <a href="#m5">5 · Subqueries and CTEs</a> &nbsp;·&nbsp; <a href="#m6">6 · Window functions</a> &nbsp;·&nbsp; <a href="#m7">Capstone</a> &nbsp;·&nbsp; <a href="#finish">Certificate</a> &nbsp;·&nbsp; <a href="#submit">What to submit</a></div>
+<p class="printbox"><span>Wanna go analog?</span><button type="button" onclick="window.print()" aria-label="Print here: print this page or save it as a PDF">&#9113;&nbsp; Print here</button><span>or save it as a PDF; the navigation drops out</span></p>
+
+<div class="callout"><strong>Who this is for, and what you get</strong>
+<p style="font-family:var(--sans);font-size:.95rem">It is optional. If Lab 7 made sense and you want a
+skill that shows up in a lot of business job postings, this is it. Finish all twelve checkpoints, write
+a short memo, and upload your certificate to the <strong>SQL Bootcamp</strong> assignment in Canvas for
+the extra credit listed there. Do it in several sittings; your progress saves in this browser.</p>
+<p style="font-family:var(--sans);font-size:.95rem">It is also something you can put on a resume. One
+honest way to say it: <em>Completed a 12-checkpoint SQL bootcamp (joins, aggregation, CTEs, window
+functions) on a 2,899-row retail database.</em> The <a href="resume.html">resume page</a> shows where a
+line like that goes.</p></div>
+
+<div class="ailight g">
+  <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
+  <div class="lighttext"><strong>Green &middot; AI as coach</strong>
+  <p>Ask an AI to explain an error message, or what a keyword does, or why your query returns more rows than you expected. Then fix the query yourself. Do not ask it to write the checkpoint queries. Writing them is the skill, and the certificate says you have it.</p></div>
+</div>
+
+<div class="callout"><strong>The tables you will use</strong>
+<p style="font-family:var(--sans);font-size:.88rem"><code class="inline">sales</code>(sale_id, sale_date, store_id, product_id, member_id, quantity, unit_price) &#183;
+<code class="inline">stores</code>(store_id, store_name, region, opened_year, square_feet) &#183;
+<code class="inline">products</code>(product_id, product_name, category, supplier_id, unit_cost, list_price) &#183;
+<code class="inline">suppliers</code>(supplier_id, supplier_name, country, lead_time_days) &#183;
+<code class="inline">members</code>(member_id, first_name, last_name, city, state, member_type, join_date) &#183;
+<code class="inline">inventory</code>(store_id, product_id, quantity_on_hand, reorder_point) &#183;
+<code class="inline">used_gear</code>(item_id, product_id, store_id, condition, listed_price, date_listed, date_sold)</p>
+<p style="font-family:var(--sans);font-size:.88rem">One rule for the whole bootcamp: <strong>revenue
+is <code class="inline">quantity * unit_price</code></strong> from the sales table. The unit_price on a
+sale is what the customer actually paid, which is not always the list price.</p></div>
+
+<div id="steps">
+
+<div class="callout callout-bridge"><strong>How the checkpoints work</strong>
+<p style="font-family:var(--sans);font-size:.95rem">Each checkpoint sits under the module that teaches
+it. Most give you a worked query to run first, then ask a question that needs a small change to it. Get
+it right and the next one opens. There is no penalty for a wrong answer, and every checkpoint has a hint.</p>
+<p style="font-family:var(--sans);font-size:.95rem">Your progress saves automatically in this browser, so
+you can close the tab and come back. It does not follow you to another computer or a private window. To
+start over, use the <button type="button" class="hintb" onclick="resetLab()">Reset this bootcamp</button> button.</p>
+<div class="progress" id="prog">Checkpoint progress: 0 / 12</div>
+</div>
+
+<h2><span class="num">Tool</span>The sandbox: where every query in this lab gets typed</h2>
+<p>The dark box below is not a checkpoint and nothing you type in it is graded. It is your workbench.
+Every step in Part 2 says "type this into the sandbox"; this is the sandbox. Press <strong>Dock</strong>
+and it follows you down the page, so you never have to scroll back up to it.</p>
+<div id="sqlbox" style="background:var(--off-black);color:#f6f4f1;border-radius:3px;padding:1rem 1.15rem 1.15rem;margin:1.2rem 0;border-left:6px solid var(--magenta)">
+  <div class="sbxbar"><p style="font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--magenta-onblack);margin:0 0 .5rem">Sandbox &middot; tool, not a checkpoint</p>
+  <span class="sbxbtns"><button type="button" class="sbxbtn" id="sbxcollapse" aria-expanded="true" onclick="sbxCollapse()">Hide</button><button type="button" class="sbxbtn" id="sbxdock" aria-pressed="false" onclick="sbxDock()">Dock</button></span></div>
+  <p id="sqlstatus" style="font-family:var(--sans);font-size:.85rem;color:#c9c6c0;margin:0 0 .6rem">Loading database&hellip;</p>
+  <div class="sqlwrap"><pre id="sqlhl" aria-hidden="true"></pre><textarea id="sqlin" rows="5" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="SQL query" placeholder="SELECT store_name, region FROM stores WHERE region = 'Inland';"></textarea></div>
+  <p id="sbxpastemsg" aria-live="polite" style="font-family:var(--sans);font-size:.8rem;color:var(--magenta-onblack);margin:.35rem 0 0;min-height:0"></p>
+  <button class="sbxrun" onclick="runSQL()" style="font-family:var(--display);font-size:14px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--magenta);color:#fff;border:none;padding:.5rem 1.1rem;cursor:pointer;margin-top:.5rem">Run query</button>
+  <div id="sqlout" style="overflow-x:auto;margin-top:.8rem;font-family:var(--sans);font-size:.85rem;background:#f6f4f1;color:#0e0e0d;padding:.6rem .8rem;border-radius:2px;min-height:1.5rem"></div>
+</div>
+
+<div class="sbxgrip" id="sbxgrip" role="separator" tabindex="0" aria-label="Resize the sandbox. Drag, or use the arrow keys."></div>
+<p class="sbxspot">The sandbox is docked. Press <strong>Undock</strong> on it to put it back here.</p>
+
+<details class="howto"><summary>The SQL cheat sheet: every word this lab uses, plus a few more, all runnable</summary><div class="howto-body">
+<p>Every example below runs in the sandbox as written. The four groups are the order the steps use them
+in. Come back here whenever a word looks unfamiliar.</p>
+<p><strong>1. Getting data out: SELECT and FROM.</strong> Every query starts with these two. The star
+means all columns; naming columns keeps the result narrow; DISTINCT means each value once.</p>
+<pre style="background:var(--off-white);border:1px solid var(--border);padding:.7rem .9rem;overflow-x:auto;font-family:ui-monospace,Menlo,monospace;font-size:.85rem;line-height:1.5;margin:.4rem 0 .8rem">SELECT * FROM stores;
+SELECT store_name, region FROM stores;
+SELECT DISTINCT category FROM products;</pre>
+<p><strong>2. Keeping some rows: WHERE.</strong> Compare with =, &gt;, &lt;, and &lt;&gt; (not equal).
+LIKE matches a pattern, where % means "anything here." AND needs both conditions true; OR needs either.
+Text goes in single quotes; numbers do not.</p>
+<pre style="background:var(--off-white);border:1px solid var(--border);padding:.7rem .9rem;overflow-x:auto;font-family:ui-monospace,Menlo,monospace;font-size:.85rem;line-height:1.5;margin:.4rem 0 .8rem">SELECT product_name, list_price FROM products WHERE list_price &lt; 30;
+SELECT product_name FROM products WHERE product_name LIKE 'Ridgeline%';
+SELECT COUNT(*) FROM sales WHERE store_id = 4 AND quantity &gt; 2;
+SELECT COUNT(*) FROM sales WHERE store_id = 5 OR store_id = 8;</pre>
+<p><strong>3. Sorting and stopping: ORDER BY and LIMIT.</strong> ORDER BY sorts smallest first unless
+you add DESC. LIMIT stops after that many rows, and it always goes last.</p>
+<pre style="background:var(--off-white);border:1px solid var(--border);padding:.7rem .9rem;overflow-x:auto;font-family:ui-monospace,Menlo,monospace;font-size:.85rem;line-height:1.5;margin:.4rem 0 .8rem">SELECT product_name, list_price FROM products ORDER BY list_price DESC LIMIT 5;</pre>
+<p><strong>4. Adding things up: COUNT, SUM, AVG, MIN, MAX, and GROUP BY.</strong> On their own, these
+turn a whole table into one number. Add GROUP BY and you get one number per group, which is a pivot
+table in words.</p>
+<pre style="background:var(--off-white);border:1px solid var(--border);padding:.7rem .9rem;overflow-x:auto;font-family:ui-monospace,Menlo,monospace;font-size:.85rem;line-height:1.5;margin:.4rem 0 .8rem">SELECT AVG(list_price) FROM products;
+SELECT MIN(list_price), MAX(list_price) FROM products;
+SELECT category, COUNT(*) FROM products GROUP BY category;
+SELECT store_id, SUM(quantity * unit_price) FROM sales GROUP BY store_id;</pre>
+<p><strong>Then JOIN</strong>, which Steps 5 and 6 teach on their own, because it is the one idea here
+with no spreadsheet equivalent.</p>
+</div></details>
+
+<h2 id="m1"><span class="num">1</span>Warm-up: the Lab 7 words, faster</h2>
+<p>About 20 minutes. Start by getting your bearings. These three queries show what is in the database
+and remind you of the shape every query has.</p>
+<pre class="bc" tabindex="0">SELECT * FROM stores;
+SELECT DISTINCT category FROM products;
+SELECT COUNT(*) FROM products WHERE category = 'Water';</pre>
+<p>The last one counts the products in one category. Change one word to answer the checkpoint.</p>
+<div class="sh" id="step1"><span class="badge">Module 1</span><span class="ttl">Counting with a condition</span><span class="cpx">Answer goes in <b>Checkpoint 1</b></span></div>
+<div class="cpslot" data-cp="1"></div>
+
+<h2 id="m2"><span class="num">2</span>Joins: three tables at once</h2>
+<p>About 45 minutes. A sales row says <code class="inline">product_id = 129</code>, not "Touring Ski
+Package." To get names, you <strong>join</strong> tables on the keys they share. You can chain as many
+joins as you need, and short names after each table, called <strong>aliases</strong>, keep the query
+readable:</p>
+<pre class="bc" tabindex="0">SELECT s.sale_date, p.product_name, st.store_name
+FROM sales s
+JOIN products p ON s.product_id = p.product_id
+JOIN stores st ON s.store_id = st.store_id
+LIMIT 10;</pre>
+<p>Read it from the middle out: start with sales, attach each sale's product, then attach its store.
+Now add a third hop. Suppliers do not connect to sales directly. They connect through products:</p>
+<pre class="bc" tabindex="0">SELECT su.supplier_name, SUM(s.quantity * s.unit_price) AS revenue
+FROM sales s
+JOIN products p ON s.product_id = p.product_id
+JOIN suppliers su ON p.supplier_id = su.supplier_id
+GROUP BY su.supplier_name;</pre>
+<div class="sh" id="step2"><span class="badge">Module 2</span><span class="ttl">Following the keys</span><span class="cpx">Answer goes in <b>Checkpoint 2</b></span></div>
+<div class="cpslot" data-cp="2"></div>
+
+<p>A plain JOIN keeps only rows that match on both sides. Sometimes the question is about what is
+<em>missing</em>: customers who never came back, products that never sold. For that you need a
+<strong>LEFT JOIN</strong>, which keeps every row from the first table and leaves blanks where nothing
+matched. Then you keep only the blanks:</p>
+<pre class="bc" tabindex="0">SELECT m.first_name, m.last_name
+FROM members m
+LEFT JOIN sales s ON m.member_id = s.member_id AND s.store_id = 3
+WHERE s.sale_id IS NULL;</pre>
+<p>That lists the members who have never bought anything at Tacoma (store 3). Notice where the store
+condition goes: inside the ON, not in a WHERE. Put it in the WHERE and the blanks disappear, and so does
+your answer.</p>
+<div class="sh" id="step3"><span class="badge">Module 2</span><span class="ttl">Finding what is missing</span><span class="cpx">Answer goes in <b>Checkpoint 3</b></span></div>
+<div class="cpslot" data-cp="3"></div>
+
+<h2 id="m3"><span class="num">3</span>Groups: GROUP BY and HAVING</h2>
+<p>About 40 minutes. GROUP BY collapses many rows into one row per group, and SUM, COUNT, and AVG work
+inside each group. You used it in Lab 7 for revenue by store. Here it is by category:</p>
+<pre class="bc" tabindex="0">SELECT p.category, SUM(s.quantity * s.unit_price) AS revenue
+FROM sales s
+JOIN products p ON s.product_id = p.product_id
+GROUP BY p.category
+ORDER BY revenue DESC;</pre>
+<div class="sh" id="step4"><span class="badge">Module 3</span><span class="ttl">Revenue by group</span><span class="cpx">Answer goes in <b>Checkpoint 4</b></span></div>
+<div class="cpslot" data-cp="4"></div>
+
+<p>WHERE and HAVING both filter, at different moments. <strong>WHERE</strong> filters rows before they are
+grouped. <strong>HAVING</strong> filters groups after they are formed, which means it can use COUNT and
+SUM. This lists members with at least 40 purchases (one purchase is one row in sales):</p>
+<pre class="bc" tabindex="0">SELECT member_id, COUNT(*) AS purchases
+FROM sales
+WHERE member_id IS NOT NULL
+GROUP BY member_id
+HAVING COUNT(*) &gt;= 40
+ORDER BY purchases DESC;</pre>
+<p>Try it without the WHERE line and look at the top row. Sales with no member attached all land in one
+group with a blank member_id, and that group is large. Leave that line in.</p>
+<div class="sh" id="step5"><span class="badge">Module 3</span><span class="ttl">Filtering groups</span><span class="cpx">Answer goes in <b>Checkpoint 5</b></span></div>
+<div class="cpslot" data-cp="5"></div>
+
+<h2 id="m4"><span class="num">4</span>Dates and CASE</h2>
+<p>About 40 minutes. Dates in this database are text written as year-month-day, like
+<code class="inline">2025-03-14</code>. That order sorts correctly, and
+<code class="inline">strftime</code> pulls out a piece of it. <code class="inline">'%m'</code> is the
+month:</p>
+<pre class="bc" tabindex="0">SELECT strftime('%m', sale_date) AS month, COUNT(*) AS sales
+FROM sales
+GROUP BY month
+ORDER BY month;</pre>
+<div class="sh" id="step6"><span class="badge">Module 4</span><span class="ttl">Revenue by month</span><span class="cpx">Answer goes in <b>Checkpoint 6</b></span></div>
+<div class="cpslot" data-cp="6"></div>
+
+<p><strong>CASE</strong> labels rows by a rule, the way IF did in Excel. This sorts sales into two
+sizes:</p>
+<pre class="bc" tabindex="0">SELECT CASE WHEN quantity &gt;= 3 THEN 'bulk' ELSE 'single' END AS size,
+       COUNT(*) AS sales
+FROM sales
+GROUP BY size;</pre>
+<p>CASE can also sit inside SUM, so you can add up only the rows that meet a rule while still dividing
+by the total. That is how you get a share in one query:</p>
+<pre class="bc" tabindex="0">SELECT 100.0 * SUM(CASE WHEN quantity &gt;= 3 THEN quantity * unit_price ELSE 0 END)
+       / SUM(quantity * unit_price) AS pct_from_bulk
+FROM sales;</pre>
+<div class="sh" id="step7"><span class="badge">Module 4</span><span class="ttl">A share with CASE</span><span class="cpx">Answer goes in <b>Checkpoint 7</b></span></div>
+<div class="cpslot" data-cp="7"></div>
+
+<h2 id="m5"><span class="num">5</span>Subqueries and CTEs: one question in steps</h2>
+<p>About 40 minutes. A <strong>subquery</strong> is a query inside another query. The inner one runs
+first and hands its answer to the outer one. Here the inner query finds the average unit cost, and the
+outer one keeps the products above it:</p>
+<pre class="bc" tabindex="0">SELECT product_name, unit_cost
+FROM products
+WHERE unit_cost &gt; (SELECT AVG(unit_cost) FROM products);</pre>
+<div class="sh" id="step8"><span class="badge">Module 5</span><span class="ttl">Above average</span><span class="cpx">Answer goes in <b>Checkpoint 8</b></span></div>
+<div class="cpslot" data-cp="8"></div>
+
+<p>When a question needs several steps, a <strong>CTE</strong> (common table expression) lets you name
+each step and use it like a table. It starts with <code class="inline">WITH</code>. This one computes
+revenue per store first, then joins it to the stores table:</p>
+<pre class="bc" tabindex="0">WITH store_rev AS (
+  SELECT store_id, SUM(quantity * unit_price) AS revenue
+  FROM sales
+  GROUP BY store_id
+)
+SELECT st.store_name, r.revenue
+FROM store_rev r
+JOIN stores st ON r.store_id = st.store_id
+ORDER BY r.revenue DESC;</pre>
+<p>Seattle is on top, but Seattle is also the biggest store. Chapter 6's question applies: is total
+revenue the right measure? Divide by <code class="inline">st.square_feet</code> and the ranking
+changes.</p>
+<div class="sh" id="step9"><span class="badge">Module 5</span><span class="ttl">The fairer measure</span><span class="cpx">Answer goes in <b>Checkpoint 9</b></span></div>
+<div class="cpslot" data-cp="9"></div>
+
+<h2 id="m6"><span class="num">6</span>Window functions: comparing a row with its neighbors</h2>
+<p>About 45 minutes. GROUP BY collapses rows. A <strong>window function</strong> does a calculation across
+related rows but keeps every row, so you can see each one next to its rank, its running total, or the
+row before it. The window is described after <code class="inline">OVER</code>:</p>
+<pre class="bc" tabindex="0">SELECT st.store_name,
+       SUM(s.quantity * s.unit_price) AS revenue,
+       RANK() OVER (ORDER BY SUM(s.quantity * s.unit_price) DESC) AS rnk
+FROM sales s
+JOIN stores st ON s.store_id = st.store_id
+GROUP BY st.store_name;</pre>
+<p>Add <code class="inline">PARTITION BY</code> and the ranking restarts inside each group. This ranks
+every product within its own category, then keeps only the number ones:</p>
+<pre class="bc" tabindex="0">WITH ranked AS (
+  SELECT p.category, p.product_name,
+         SUM(s.quantity * s.unit_price) AS revenue,
+         RANK() OVER (PARTITION BY p.category
+                      ORDER BY SUM(s.quantity * s.unit_price) DESC) AS rnk
+  FROM sales s
+  JOIN products p ON s.product_id = p.product_id
+  GROUP BY p.category, p.product_name
+)
+SELECT * FROM ranked WHERE rnk = 1;</pre>
+<div class="sh" id="step10"><span class="badge">Module 6</span><span class="ttl">Best in each category</span><span class="cpx">Answer goes in <b>Checkpoint 10</b></span></div>
+<div class="cpslot" data-cp="10"></div>
+
+<p><code class="inline">LAG</code> reaches back to the previous row. Combined with a CTE of monthly
+revenue, it gives month-over-month change, the number a manager asks about first:</p>
+<pre class="bc" tabindex="0">WITH monthly AS (
+  SELECT strftime('%m', sale_date) AS month,
+         SUM(quantity * unit_price) AS revenue
+  FROM sales
+  GROUP BY month
+)
+SELECT month, revenue,
+       revenue - LAG(revenue) OVER (ORDER BY month) AS change
+FROM monthly;</pre>
+<div class="sh" id="step11"><span class="badge">Module 6</span><span class="ttl">Month over month</span><span class="cpx">Answer goes in <b>Checkpoint 11</b></span></div>
+<div class="cpslot" data-cp="11"></div>
+
+<h2 id="m7"><span class="num">Capstone</span>A question nobody has written a query for</h2>
+<p>About 30 minutes. This one comes with an email and no worked query.</p>
+<div class="callout"><strong>Email &middot; Thursday, 4:10 PM</strong>
+<p style="font-family:var(--sans);font-size:.9rem"><strong>From:</strong> Used Gear Program Lead<br><br>
+"We price used gear by condition: Fair, Good, Like New. My hunch is that Like New sells fastest and we
+could charge more for it. Before I change the price sheet, can you check how long each condition takes
+to sell? Only count items that actually sold."</p></div>
+<p>You have every piece you need. Days to sell is <code class="inline">julianday(date_sold) -
+julianday(date_listed)</code>. Unsold items have a blank date_sold. Group by condition, average the days,
+and sort.</p>
+<div class="sh" id="step12"><span class="badge">Capstone</span><span class="ttl">Answer the email</span><span class="cpx">Answer goes in <b>Checkpoint 12</b></span></div>
+<div class="cpslot" data-cp="12"></div>
+<p>The result may not be what the program lead expected. Your reflection below is your reply to that
+email.</p>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
+<script>
+var CASCADIA_DB=null;
+initSqlJs({locateFile:function(f){return 'https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/'+f}})
+.then(function(SQL){return fetch('cascadia.db').then(function(r){if(!r.ok)throw new Error('db fetch '+r.status);return r.arrayBuffer()}).then(function(buf){
+  CASCADIA_DB=new SQL.Database(new Uint8Array(buf));
+  document.getElementById('sqlstatus').textContent='Database loaded. Type a query and press Run.';
+})}).catch(function(e){
+  document.getElementById('sqlstatus').innerHTML='Could not load the database ('+e.message+'). The sandbox has to be served over http, so it works on the course site but not from a file you opened locally. You can also run these queries at <a href="https://sqliteonline.com">sqliteonline.com</a> by uploading <a href="cascadia.db">cascadia.db</a>.';
+});
+function explainSQL(q,r){
+  var s=q.replace(/\s+/g,' ').replace(/;\s*$/,'').trim(), up=s.toUpperCase(), parts=[];
+  function grab(kw,stops){var i=up.indexOf(' '+kw+' ');if(i<0&&up.indexOf(kw+' ')===0)i=-1;if(i<0)return null;var st=i+kw.length+2,en=s.length;stops.forEach(function(k){var j=up.indexOf(' '+k+' ',st);if(j>=0&&j<en)en=j});return s.slice(st,en).trim()}
+  var from=grab('FROM',['JOIN','WHERE','GROUP BY','ORDER BY','LIMIT']);
+  var join=grab('JOIN',['WHERE','GROUP BY','ORDER BY','LIMIT']);
+  var where=grab('WHERE',['GROUP BY','ORDER BY','LIMIT']);
+  var group=grab('GROUP BY',['ORDER BY','LIMIT']);
+  var order=grab('ORDER BY',['LIMIT']);
+  var limit=grab('LIMIT',[]);
+  var sel=up.indexOf('SELECT')===0? s.slice(6, from? up.indexOf(' FROM '):s.length).trim() : null;
+  if(from){ var f=from.split(' ')[0]; parts.push('Looked in the <b>'+f+'</b> table'+(join?', joined to <b>'+join.split(' ')[0]+'</b> by matching '+(join.split(/ ON /i)[1]||'the shared key'):'')+'.'); }
+  if(where) parts.push('Kept only the rows where '+where.replace(/ IS NULL/i,' is blank').replace(/ IS NOT NULL/i,' is not blank')+'.');
+  if(group) parts.push('Collected the rows into one line per '+group+'.');
+  if(sel){
+    var su=sel.toUpperCase();
+    if(su.indexOf('COUNT(DISTINCT')>=0) parts.push('Counted how many different values there are.');
+    else if(su.indexOf('COUNT(')>=0) parts.push(group?'Counted the rows in each group.':'Counted the rows.');
+    if(su.indexOf('SUM(')>=0) parts.push('Added up '+sel.replace(/.*SUM\(([^)]*)\).*/i,'$1')+(group?' for each group.':'.'));
+    if(su.indexOf('COUNT(')<0&&su.indexOf('SUM(')<0) parts.push(sel==='*'?'Showed every column.':'Showed the columns '+sel+'.');
+  }
+  if(order) parts.push('Sorted by '+order.replace(/ DESC/i,' with the largest first').replace(/ ASC/i,' with the smallest first')+'.');
+  if(limit) parts.push('Stopped after '+limit+' rows.');
+  parts.push('Result: '+r.values.length+' row'+(r.values.length===1?'':'s')+', '+r.columns.length+' column'+(r.columns.length===1?'':'s')+'.');
+  return parts.join(' ');
+}
+function runSQL(){
+  var out=document.getElementById('sqlout');
+  if(!CASCADIA_DB){out.textContent='Database still loading, give it a second.';return}
+  var q=document.getElementById('sqlin').value;
+  try{
+    var res=CASCADIA_DB.exec(q);
+    if(!res.length){out.textContent='Query ran, no rows returned.';return}
+    var r=res[0],h='<table style="border-collapse:collapse"><tr>';
+    r.columns.forEach(function(c){h+='<th style="border:1px solid var(--rule);padding:.35rem .65rem;background:var(--off-white);text-align:left">'+c+'</th>'});
+    h+='</tr>';
+    r.values.slice(0,50).forEach(function(row){h+='<tr>';row.forEach(function(v){h+='<td style="border:1px solid var(--rule);padding:.35rem .65rem">'+(v===null?'<em style="color:#a03434">NULL</em>':String(v).replace(/</g,'&lt;'))+'</td>'});h+='</tr>'});
+    h+='</table>';
+    if(r.values.length>50)h+='<p style="color:var(--muted)">Showing 50 of '+r.values.length+' rows.</p>';
+    h+='<p style="margin:.7rem 0 0;padding:.55rem .7rem;border-left:3px solid var(--magenta);background:#fff;font-size:.85rem"><strong>What that query did:</strong> '+explainSQL(q,r)+'</p>';
+    out.innerHTML=h;
+  }catch(e){out.innerHTML='<span style="color:#a03434">SQL error: '+String(e.message).replace(/</g,'&lt;')+'</span><br><span style="color:var(--muted)">Read it closely. The word right before the error is usually where the problem is.</span>'}
+}
+</script></div>
+
+<h2 id="finish"><span class="num">Finish</span>Your memo &amp; certificate</h2>
+
+<div class="ailight r">
+  <div class="lamp"><div class="bulb b1"></div><div class="bulb b2"></div><div class="bulb b3"></div></div>
+  <div class="lighttext"><strong>Red &middot; Your memo, your words</strong>
+  <p>Write the memo yourself. Do not ask an AI tool to write it, rewrite it, or clean it up. It is the part that shows how you think.</p></div>
+</div>
+
+<div class="certbox" id="reflectbox">
+  <h3 id="syour-reply-to-the-used-gear-program-lead">Your reply to the Used Gear Program Lead</h3>
+  <p style="font-family:var(--sans);font-size:.88rem">In a short memo, tell the program lead what you found about time to sell by condition, and whether it supports the hunch. Then name one thing you would check before anyone changes the price sheet, and write the query you would use to check it (in words is fine).</p>
+  <p style="font-family:var(--sans);font-size:.88rem;color:var(--muted)">Fifty words is the minimum. This prints as page 2 of your certificate.</p>
+  <textarea id="refl" rows="7" style="width:100%;font-family:var(--sans);font-size:.9rem;padding:.6rem;border:1px solid var(--rule);border-radius:2px" aria-label="Your memo to the Used Gear Program Lead"></textarea>
+  <p class="msg" id="reflcount" style="font-family:var(--sans);font-size:.95rem;color:var(--muted)">0 words</p>
+</div>
+<div class="certbox" id="certbox">
+  <h3 id="sall-checkpoints-cleared">All checkpoints cleared</h3>
+  <p style="font-family:var(--sans);font-size:.95rem">Put your name in exactly as it appears in Canvas,
+  then download your certificate. The code on it is generated from your name, so it is yours and nobody
+  else's.</p>
+  <input type="text" id="nm" placeholder="Last, First" aria-label="Your name as in Canvas">
+  <button onclick="cert()">Download certificate (PDF)</button>
+  <p class="codebox" id="codeout" style="font-family:var(--sans);font-size:.85rem"></p>
+</div>
+
+<h2 id="submit"><span class="num">Canvas</span>What to submit</h2>
+<p style="font-family:var(--sans);font-size:.92rem">Go to the <strong>SQL Bootcamp</strong> extra credit assignment in Canvas and upload two files.</p>
+<p style="font-family:var(--sans);font-size:.92rem"><strong>File 1: your queries.</strong> A plain text file or Word doc named
+<code class="inline">SQLBOOTCAMP_Last_First</code>, with the query you used for each of the twelve checkpoints, numbered. Paste the query text, not screenshots.</p>
+<p style="font-family:var(--sans);font-size:.92rem"><strong>File 2: your certificate PDF.</strong> Your memo prints as page 2, so you do not submit it separately.</p>
+</main>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+const LAB="SQLBC", QS=[{"q": "Checkpoint 1 · How many products does the co-op sell in the Camping category?", "t": "num", "a": "MTA=", "tol": 0, "h": "Run the third warm-up query and change 'Water' to 'Camping'. Text goes in single quotes, and the spelling has to match exactly, capital C included."}, {"q": "Checkpoint 2 · Which supplier's products brought in the most revenue in 2025? Enter the supplier name.", "t": "txt", "a": "Tm9yZHZpayBPdXRkb29y", "h": "Run the second Module 2 query, then add ORDER BY revenue DESC so the biggest number comes first. The supplier on the top row is the answer."}, {"q": "Checkpoint 3 · How many members have never bought anything at Bellingham (store 4)?", "t": "num", "a": "Mg==", "h": "Start from the LEFT JOIN query for Tacoma, change the store to 4, and either count the names that come back or replace the SELECT list with COUNT(*). Keep the store condition inside the ON.", "tol": 0}, {"q": "Checkpoint 4 · Which product category earned the most revenue? Enter the category name.", "t": "txt", "a": "Q2FtcGluZw==", "h": "Run the first Module 3 query as written. It is already sorted with the largest revenue first."}, {"q": "Checkpoint 5 · How many members made 50 or more purchases?", "t": "num", "a": "Ng==", "h": "Change the 40 in the HAVING line to 50 and count the rows that come back. If you get 7, the blank-member group snuck in: keep the WHERE member_id IS NOT NULL line.", "tol": 0}, {"q": "Checkpoint 6 · Which month brought in the most revenue? Enter the month as a number (March is 3).", "t": "num", "a": "MQ==", "tol": 0, "h": "Start from the month query, replace COUNT(*) with SUM(quantity * unit_price) AS revenue, and sort by revenue, largest first. The top row's month is the answer; 01 means 1."}, {"q": "Checkpoint 7 · What percent of the co-op's revenue came from sales with a member attached? Round to one decimal place.", "t": "num", "a": "ODYuNg==", "tol": 0.1, "h": "Copy the bulk-sales share query and change the rule inside CASE to member_id IS NOT NULL. Leave the division alone: the bottom is still all revenue."}, {"q": "Checkpoint 8 · How many products have a list price above the average list price?", "t": "num", "a": "MTI=", "h": "Change unit_cost to list_price in both places, then count the rows, or wrap the outer query in SELECT COUNT(*) FROM (...).", "tol": 0}, {"q": "Checkpoint 9 · Which store brings in the most revenue per square foot? Enter the store name.", "t": "txt", "a": "U3Bva2FuZQ==", "h": "In the CTE query, add r.revenue / st.square_feet AS per_sq_ft to the SELECT list and sort by it, largest first."}, {"q": "Checkpoint 10 · Which product ranks first in revenue in the Footwear category? Enter the product name.", "t": "txt", "a": "QXBwcm9hY2ggU2hvZQ==", "h": "Run the PARTITION BY query as written and find the Footwear row. Every category's number one is in that result."}, {"q": "Checkpoint 11 · Which month had the biggest increase in revenue over the month before? Enter the month as a number.", "t": "num", "a": "Mw==", "tol": 0, "h": "Run the LAG query and sort by change, largest first: add ORDER BY change DESC at the end. January has no month before it, so its change is blank."}, {"q": "Checkpoint 12 · Of the used gear that sold, which condition sold fastest on average? Enter Fair, Good, or Like New.", "t": "txt", "a": "R29vZA==", "h": "FROM used_gear WHERE date_sold IS NOT NULL, GROUP BY condition, and SELECT condition, AVG(julianday(date_sold) - julianday(date_listed)) AS days. Sort by days, smallest first."}];
+const SKEY='mis320_'+LAB;
+let solved=new Set();
+function load(){try{const raw=localStorage.getItem(SKEY);if(!raw)return null;const s=JSON.parse(raw);
+ if(Array.isArray(s.solved))solved=new Set(s.solved.filter(i=>Number.isInteger(i)&&i<QS.length));return s}catch(e){return null}}
+function save(){try{const r=document.getElementById('refl'),n=document.getElementById('nm');
+ localStorage.setItem(SKEY,JSON.stringify({solved:[...solved],refl:r?r.value:'',nm:n?n.value:''}))}catch(e){}}
+function resetLab(){if(!confirm('Clear your saved progress for this lab and start over?'))return;
+ try{localStorage.removeItem(SKEY)}catch(e){}solved=new Set();
+ const r=document.getElementById('refl'),n=document.getElementById('nm');if(r)r.value='';if(n)n.value='';
+ render();if(r)r.dispatchEvent(new Event('input',{bubbles:true}));}
+const norm=s=>s.replace(/[$,\s]/g,'').toLowerCase();
+function render(){
+ QS.forEach((q,i)=>{
+  const c=document.querySelector('.cpslot[data-cp="'+(i+1)+'"]');
+  if(!c)return; c.innerHTML='';
+  const lock=i>0&&!solved.has(i-1);
+  const d=document.createElement('div');
+  d.className='cp'+(solved.has(i)?' done':(lock?' locked':''));
+  d.innerHTML='<span class="cphead">Checkpoint '+(i+1)+' of '+QS.length+(solved.has(i)?' \u00b7 cleared':'')+'</span>'
+   +'<p class="q">'+q.q+'</p>'
+   +(solved.has(i)?'<p class="msg" style="color:var(--good)">Correct.</p>':'<input type="text" id="in'+i+'" aria-label="Answer '+(i+1)+'">'
+   +'<button onclick="chk('+i+')">Check</button>'
+   +'<button class="hintb" onclick="hint('+i+')">Hint</button>'
+   +'<p class="msg" id="m'+i+'" role="status" aria-live="polite"></p><p class="hint" id="h'+i+'">'+q.h+'</p>');
+  c.appendChild(d);
+  if(lock)c.insertAdjacentHTML('beforeend','<p class="lockmsg">Clear Checkpoint '+i+' first.</p>');});
+ document.getElementById('prog').textContent='Checkpoint progress: '+solved.size+' / '+QS.length;
+ const done=solved.size===QS.length;
+ document.getElementById('reflectbox').className='certbox'+(done?' show':'');
+ document.getElementById('certbox').className='certbox'+(done&&wc()>=50?' show':'');
+}
+function wc(){const t=document.getElementById('refl');return t?t.value.trim().split(/\s+/).filter(Boolean).length:0}
+document.addEventListener('input',function(e){
+ if(e.target&&e.target.id==='refl'){
+  const n=wc();document.getElementById('reflcount').textContent=n+' words'+(n<50?': '+(50-n)+' more to unlock your certificate':': certificate unlocked below');
+  document.getElementById('certbox').className='certbox'+(solved.size===QS.length&&n>=50?' show':'');save();
+ }
+});
+function hint(i){const h=document.getElementById('h'+i);h.style.display=h.style.display==='block'?'none':'block'}
+function chk(i){
+ const v=document.getElementById('in'+i).value,m=document.getElementById('m'+i);
+ if(!v.trim()){m.textContent='Enter an answer first.';m.style.color='#7d6608';return}
+ const ans=atob(QS[i].a);let ok=false;
+ if(QS[i].t==='num'){const g=parseFloat(norm(v)),a=parseFloat(ans);ok=!isNaN(g)&&Math.abs(g-a)<=QS[i].tol}
+ else ok=norm(v)===norm(ans);
+ if(ok){solved.add(i);save();render();var sr=document.getElementById('srlive');if(sr)sr.textContent='Checkpoint '+(i+1)+' cleared.';var nx=document.getElementById('in'+(i+1));if(nx)nx.focus();}
+ else{m.textContent='Not yet: check the hint, or re-read the step above.';m.style.color='#a03434'}
+}
+function h32(s){let h=5381;for(const c of s)h=((h<<5)+h+c.charCodeAt(0))|0;return(h>>>0).toString(36).toUpperCase()}
+function cert(){
+ const n=document.getElementById('nm').value.trim();
+ if(!n){document.getElementById('codeout').textContent='Enter your name first.';return}
+ const r=document.getElementById('refl').value.trim();
+ if(wc()<50){document.getElementById('codeout').textContent='Finish your 50-word reflection above first.';return}
+ const code=LAB+'-'+h32(n.toLowerCase()+'|'+LAB+'|'+QS.length);
+ const d=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+ const {jsPDF}=window.jspdf;const p=new jsPDF({orientation:'landscape',unit:'pt',format:[560,380]});
+ p.setFillColor(11,29,51);p.rect(0,0,560,380,'F');
+ p.setFillColor(253,252,250);p.rect(16,16,528,348,'F');
+ p.setTextColor(26,82,118);p.setFont('helvetica','bold');p.setFontSize(10);
+ p.text('MIS 320 \u00B7 INTRODUCTION TO INFORMATION SYSTEMS \u00B7 WWU',280,58,{align:'center'});
+ p.setTextColor(26,26,26);p.setFont('times','bold');p.setFontSize(26);
+ p.text('Certificate of Completion',280,105,{align:'center'});
+ p.setFont('times','normal');p.setFontSize(13);p.text('This certifies that',280,140,{align:'center'});
+ p.setFont('times','bold');p.setFontSize(20);p.text(n,280,170,{align:'center'});
+ p.setFont('times','normal');p.setFontSize(13);
+ p.text('completed all '+QS.length+' checkpoints of',280,198,{align:'center'});
+ p.setFont('helvetica','bold');p.setFontSize(15);p.setTextColor(26,82,118);
+ p.text('SQL Bootcamp \u00B7 Joins, Groups, CTEs, and Window Functions',280,222,{align:'center'});
+ p.setFont('helvetica','normal');p.setFontSize(11);p.setTextColor(90,90,90);
+ p.text(d,280,252,{align:'center'});
+ p.setFont('courier','bold');p.setFontSize(12);p.setTextColor(17,120,100);
+ p.text('Verification code: '+code,280,290,{align:'center'});
+ p.setFontSize(8);p.setFont('helvetica','normal');p.setTextColor(150,150,150);
+ p.text('Upload this PDF to Canvas. Reflection on page 2. Code is unique to name + lab.',280,330,{align:'center'});
+ p.addPage([560,380],'landscape');
+ p.setFillColor(253,252,250);p.rect(0,0,560,380,'F');
+ p.setDrawColor(11,29,51);p.setLineWidth(2);p.rect(16,16,528,348);
+ p.setTextColor(26,82,118);p.setFont('helvetica','bold');p.setFontSize(10);
+ p.text('MEMO \u00B7 '+n+' \u00B7 '+code,280,44,{align:'center'});
+ p.setTextColor(60,60,60);p.setFont('times','italic');p.setFontSize(9);
+ const promptLines=p.splitTextToSize('Prompt: Tell the Used Gear Program Lead what you found about time to sell by condition and whether it supports the hunch. Name one thing to check before changing the price sheet, and the query you would use.',480);
+ p.text(promptLines,40,70);
+ p.setFont('times','normal');p.setFontSize(11);p.setTextColor(26,26,26);
+ const lines=p.splitTextToSize(r,480);
+ p.text(lines.slice(0,22),40,70+promptLines.length*11+14);
+ p.save(LAB+'_certificate_'+n.replace(/[^a-z0-9]/gi,'_')+'.pdf');
+ document.getElementById('codeout').innerHTML='Certificate downloaded (reflection on page 2). Your code: <code>'+code+'</code>';
+}
+(function(){const s=load();render();
+ if(s){const r=document.getElementById('refl'),n=document.getElementById('nm');
+  if(r&&s.refl){r.value=s.refl;r.dispatchEvent(new Event('input',{bubbles:true}))}
+  if(n&&s.nm)n.value=s.nm;}
+ const nm=document.getElementById('nm');if(nm)nm.addEventListener('input',save);})();
+</script>
+
+<!--NAVJS-->
+<script>
+(function(){
+  var btns=[].slice.call(document.querySelectorAll('.dd-btn'));
+  function closeAll(except){
+    btns.forEach(function(b){
+      var m=document.getElementById(b.getAttribute('data-dd'));
+      if(m&&m!==except){m.classList.remove('open');b.setAttribute('aria-expanded','false');}
+    });
+  }
+  btns.forEach(function(b){
+    b.addEventListener('click',function(e){
+      e.stopPropagation();
+      var m=document.getElementById(b.getAttribute('data-dd'));
+      var open=m.classList.contains('open');
+      closeAll();
+      if(!open){m.classList.add('open');b.setAttribute('aria-expanded','true');}
+    });
+  });
+  document.addEventListener('click',function(){closeAll();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeAll();});
+  document.querySelectorAll('.dd-menu').forEach(function(m){
+    m.addEventListener('click',function(e){e.stopPropagation();});
+  });
+})();
+</script>
+<script>
+function sbxDock(){
+  var b=document.getElementById('sqlbox'),btn=document.getElementById('sbxdock');
+  var on=!b.classList.contains('docked');
+  b.classList.toggle('docked',on); document.body.classList.toggle('sbxdocked',on);
+  if(!on){b.classList.remove('collapsed');document.body.classList.remove('sbxcollapsed');
+    var c=document.getElementById('sbxcollapse');c.textContent='Hide';c.setAttribute('aria-expanded','true');}
+  btn.textContent=on?'Undock':'Dock'; btn.setAttribute('aria-pressed',on?'true':'false');
+  if(on)document.getElementById('sqlin').focus();
+}
+function sbxCollapse(){
+  var b=document.getElementById('sqlbox'),c=document.getElementById('sbxcollapse');
+  var hid=!b.classList.contains('collapsed');
+  b.classList.toggle('collapsed',hid); document.body.classList.toggle('sbxcollapsed',hid);
+  c.textContent=hid?'Show':'Hide'; c.setAttribute('aria-expanded',hid?'false':'true');
+  if(!hid)document.getElementById('sqlin').focus();
+}
+</script>
+<script>
+(function(){
+  var g=document.getElementById('sbxgrip'),root=document.documentElement,wide=window.matchMedia('(min-width:1500px)');
+  function setSize(px){
+    if(wide.matches){px=Math.max(320,Math.min(px,window.innerWidth*0.7));root.style.setProperty('--sbxw',px+'px');}
+    else{px=Math.max(140,Math.min(px,window.innerHeight*0.85));root.style.setProperty('--sbxh',px+'px');}
+  }
+  function cur(){var b=document.getElementById('sqlbox').getBoundingClientRect();return wide.matches?b.width:b.height;}
+  g.addEventListener('pointerdown',function(e){
+    e.preventDefault();g.setPointerCapture(e.pointerId);document.body.style.userSelect='none';
+    function mv(ev){setSize(wide.matches?window.innerWidth-ev.clientX:window.innerHeight-ev.clientY);}
+    function up(){g.removeEventListener('pointermove',mv);g.removeEventListener('pointerup',up);g.removeEventListener('pointercancel',up);document.body.style.userSelect='';}
+    g.addEventListener('pointermove',mv);g.addEventListener('pointerup',up);g.addEventListener('pointercancel',up);
+  });
+  g.addEventListener('keydown',function(e){
+    var grow=wide.matches?'ArrowLeft':'ArrowUp',shrink=wide.matches?'ArrowRight':'ArrowDown';
+    if(e.key===grow){setSize(cur()+40);e.preventDefault();}
+    else if(e.key===shrink){setSize(cur()-40);e.preventDefault();}
+  });
+})();
+</script>
+<script>
+(function(){
+  var t=document.getElementById('sqlin'),m=document.getElementById('sbxpastemsg'),timer;
+  function no(e){e.preventDefault();m.textContent='Pasting is turned off here. Type the query: typing is how the words stick.';
+    clearTimeout(timer);timer=setTimeout(function(){m.textContent='';},4000);}
+  t.addEventListener('paste',no);t.addEventListener('drop',no);
+  t.addEventListener('beforeinput',function(e){if(e.inputType==='insertFromPaste'||e.inputType==='insertFromDrop'||e.inputType==='insertFromPasteAsQuotation')no(e);});
+})();
+</script>
+<script>
+(function(){
+  var KW=/\b(SELECT|FROM|WHERE|AND|OR|NOT|ORDER|GROUP|BY|HAVING|LIMIT|JOIN|INNER|LEFT|RIGHT|OUTER|ON|AS|DESC|ASC|DISTINCT|IN|LIKE|IS|NULL|BETWEEN|COUNT|SUM|AVG|MAX|MIN|ROUND)\b/gi;
+  function esc(x){return x.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  function hl(text,strings){
+    var out='',re=/('[^']*'?)/g,last=0,m;
+    while((m=re.exec(text))){out+=esc(text.slice(last,m.index)).replace(KW,'<span class="kw">$1</span>');
+      out+=strings?'<span class="str">'+esc(m[0])+'</span>':esc(m[0]);last=re.lastIndex;}
+    return out+esc(text.slice(last)).replace(KW,'<span class="kw">$1</span>');
+  }
+  window.sqlHighlight=hl;
+  var t=document.getElementById('sqlin'),pre=document.getElementById('sqlhl');
+  function grow(){t.style.height='auto';t.style.height=t.scrollHeight+'px';}
+  function upd(){pre.innerHTML=hl(t.value,true)+'\n';grow();}
+  t.addEventListener('input',upd);upd();
+  // colour the example queries on the page (only code made of plain text)
+  function colourCode(root){(root||document).querySelectorAll('code').forEach(function(c){
+    if(c.dataset.hl||c.children.length)return;c.dataset.hl='1';c.innerHTML=hl(c.textContent,false);});}
+  colourCode();
+  new MutationObserver(function(){colourCode();}).observe(document.body,{childList:true,subtree:true});
+})();
+</script>
+</body></html>
