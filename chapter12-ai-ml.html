@@ -1812,41 +1812,121 @@ documented: a drug, a disease, a gene, a protein. Each line is a relationship so
 drug blocks this protein; this protein drives this disease. In a 2026 release, the graph held about
 nine million points and 33 million connections, drawn from dozens of public databases.<sup class="cite"><a href="#src-18" aria-label="Source 18">18</a></sup></p>
 
-<figure class="diagram" style="margin:1.8rem auto;max-width:580px">
-<svg viewBox="0 0 580 230" xmlns="http://www.w3.org/2000/svg" role="img" style="width:100%;height:auto;font-family:var(--sans)" aria-labelledby="grT grD">
-<defs><marker id="gra" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--ink)"/></marker></defs>
-<title id="grT">One path through a medical knowledge graph</title>
-<desc id="grD">Four boxes in a row joined by arrows. Sirolimus, a drug, blocks mTOR, a protein. mTOR
-switches on certain immune cells. Those immune cells, when overactive, drive one form of Castleman
-disease. A side box shows that sirolimus is approved to prevent transplant rejection. A dashed arc runs
-over the top from sirolimus directly to Castleman disease, labeled as the prediction that no study had
-stated.</desc>
-<path d="M60 92 C 160 34, 420 34, 520 92" fill="none" stroke="var(--magenta)" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#gra)"/>
-<text x="290" y="22" font-size="11" font-weight="700" fill="var(--magenta)" text-anchor="middle">The prediction: no study had said this</text>
-<rect x="0" y="96" width="120" height="44" fill="var(--magenta)" stroke="var(--ink)" stroke-width="1"/>
-<text x="60" y="116" font-size="12" font-weight="700" fill="var(--white)" text-anchor="middle">Sirolimus</text>
-<text x="60" y="131" font-size="10" fill="var(--white)" text-anchor="middle">an old drug</text>
-<rect x="152" y="96" width="120" height="44" fill="var(--off-white)" stroke="var(--ink)" stroke-width="1"/>
-<text x="212" y="116" font-size="12" font-weight="700" fill="var(--ink)" text-anchor="middle">mTOR</text>
-<text x="212" y="131" font-size="10" fill="var(--muted)" text-anchor="middle">a protein</text>
-<rect x="304" y="96" width="120" height="44" fill="var(--off-white)" stroke="var(--ink)" stroke-width="1"/>
-<text x="364" y="116" font-size="12" font-weight="700" fill="var(--ink)" text-anchor="middle">Immune cells</text>
-<text x="364" y="131" font-size="10" fill="var(--muted)" text-anchor="middle">overactive</text>
-<rect x="456" y="96" width="124" height="44" fill="var(--off-white)" stroke="var(--ink)" stroke-width="1"/>
-<text x="518" y="116" font-size="12" font-weight="700" fill="var(--ink)" text-anchor="middle">Castleman</text>
-<text x="518" y="131" font-size="10" fill="var(--muted)" text-anchor="middle">a rare disease</text>
-<line x1="120" y1="118" x2="150" y2="118" stroke="var(--ink)" stroke-width="1.4" marker-end="url(#gra)"/>
-<line x1="272" y1="118" x2="302" y2="118" stroke="var(--ink)" stroke-width="1.4" marker-end="url(#gra)"/>
-<line x1="424" y1="118" x2="454" y2="118" stroke="var(--ink)" stroke-width="1.4" marker-end="url(#gra)"/>
-<text x="136" y="160" font-size="10.5" fill="var(--ink)" text-anchor="middle">blocks</text>
-<text x="288" y="160" font-size="10.5" fill="var(--ink)" text-anchor="middle">switches on</text>
-<text x="440" y="160" font-size="10.5" fill="var(--ink)" text-anchor="middle">drive</text>
-<rect x="0" y="182" width="170" height="36" fill="none" stroke="var(--rule)" stroke-width="1"/>
-<text x="85" y="204" font-size="10.5" fill="var(--muted)" text-anchor="middle">approved for transplant rejection</text>
-<line x1="60" y1="140" x2="60" y2="182" stroke="var(--rule)" stroke-width="1"/>
-</svg>
-<figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--muted);margin-top:.55rem;line-height:1.55"><strong style="color:var(--ink)">Three published findings make a path. The path is the prediction.</strong> Every solid arrow is something a study had already shown, usually in a field that did not read the others. The dashed arc is the only thing the machine adds: the observation that the three line up. Fajgenbaum found this path by hand. MATRIX is built to find paths like it across tens of millions of pairs.</figcaption>
-</figure>
+<div class="tryit" id="kgw">
+  <div class="tryit-head">Try it &middot; Walk a medical knowledge graph</div>
+  <p class="tryit-intro">This is a tiny piece of a graph like MATRIX's. Each box is something research has documented, and each line is a relationship someone published. Thicker lines have more studies behind them. Step through the path Fajgenbaum found, or tap any line or box to see what the record holds there.</p>
+  <div class="kgw-steps" role="group" aria-label="Steps">
+    <button type="button" data-step="0">1 &middot; The drug</button>
+    <button type="button" data-step="1">2 &middot; Hop 1</button>
+    <button type="button" data-step="2">3 &middot; Hop 2</button>
+    <button type="button" data-step="3">4 &middot; Hop 3</button>
+    <button type="button" data-step="4">5 &middot; The prediction</button>
+    <button type="button" data-step="5">6 &middot; The empty corner</button>
+  </div>
+  <div class="kgw-box"><svg id="kgw-svg" role="img" aria-labelledby="kgw-t kgw-d"><title id="kgw-t">A small medical knowledge graph</title><desc id="kgw-d">Sirolimus, a drug, is approved to prevent transplant rejection and blocks a protein called mTOR. mTOR switches on certain immune cells and drives blood vessel growth. Overactive immune cells drive one form of Castleman disease. A dashed arc from sirolimus to Castleman disease marks the prediction no study had stated. Apart from the rest, ROHHAD syndrome, a rare disease, has no lines at all.</desc></svg></div>
+  <p class="kgw-out" id="kgw-out" aria-live="polite">Press <b>1 &middot; The drug</b> to start, or tap anything in the graph.</p>
+  <p class="tryit-note">Simplified from Every Cure's description of MATRIX and from published research on sirolimus and Castleman disease. Line thickness shows the relative amount of research, not exact counts.</p>
+</div>
+<style>
+.kgw-steps{display:flex;flex-wrap:wrap;gap:.4rem;margin:.2rem 1rem .8rem}
+.kgw-steps button{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:#fff;color:var(--black);border:1px solid var(--black);padding:.4rem .7rem;cursor:pointer}
+.kgw-steps button:hover,.kgw-steps button:focus-visible{border-color:var(--magenta);color:var(--magenta-dark)}
+.kgw-steps button[aria-pressed="true"]{background:var(--black);color:#fff}
+.kgw-box{margin:0 1rem;border:1px solid var(--border);background:#fbfbf9}
+#kgw-svg{display:block;width:100%;height:auto;font-family:var(--sans)}
+#kgw-svg .kgw-el{cursor:pointer;transition:opacity .25s}
+#kgw-svg .kgw-el:focus{outline:none}
+#kgw-svg .kgw-el:focus-visible rect,#kgw-svg .kgw-el.on rect{stroke:var(--magenta);stroke-width:3}
+#kgw-svg .dim{opacity:.18}
+.kgw-out{font-family:var(--sans);font-size:.97rem;line-height:1.55;margin:.8rem 1rem 0;padding:.75rem .95rem;background:var(--black);color:#eef0f3;min-height:3.2em}
+.kgw-out b{color:#fff}
+@media (prefers-reduced-motion:reduce){#kgw-svg .kgw-el{transition:none}}
+@media print{.kgw-steps{display:none}}
+</style>
+<script>
+(function(){
+var root=document.getElementById('kgw');if(!root)return;
+var svg=document.getElementById('kgw-svg'),out=document.getElementById('kgw-out');
+var NS='http://www.w3.org/2000/svg',PINK='#D61F69',INK='#14181D',MUTE='#5A626C';
+var N={
+ D:{t:'Sirolimus',k:'an old drug',h:'<b>Sirolimus</b> is an old drug, approved in 1999 to keep the body from rejecting a transplanted kidney. Its uses are some of the best-documented lines in the whole graph.'},
+ T:{t:'Transplant rejection',k:'what it is approved for',h:'<b>Transplant rejection.</b> The use sirolimus was approved for. A thick line: decades of studies and prescriptions stand behind it.'},
+ P:{t:'mTOR',k:'a protein',h:'<b>mTOR</b> is a protein that helps control how cells grow and when immune cells switch on. Sirolimus blocks it.'},
+ V:{t:'Blood vessel growth',k:'a process',h:'<b>Blood vessel growth.</b> mTOR drives this too. A graph branches everywhere, and most branches lead nowhere useful for a given disease. The model weighs many paths at once.'},
+ I:{t:'Immune cells',k:'overactive',h:'<b>Overactive immune cells.</b> Immunology research showed that mTOR switches these on. That research was not about Castleman disease.'},
+ C:{t:'Castleman disease',k:'a rare disease',h:'<b>Castleman disease</b> is a rare disease that nearly killed Fajgenbaum. In one form of it, overactive immune cells drive the illness.'},
+ R:{t:'ROHHAD syndrome',k:'a rare disease',h:'<b>ROHHAD syndrome</b> is a very rare childhood disease with only a small number of published studies. In this graph it has no lines at all.'}
+};
+var E=[
+ {a:'D',b:'T',l:'approved to prevent',w:6,h:'<b>Sirolimus prevents transplant rejection.</b> Heavily studied, which is why the line is thick.'},
+ {a:'D',b:'P',l:'blocks',w:6,h:'<b>Hop 1 &middot; Sirolimus blocks mTOR.</b> Well documented: transplant researchers have studied this for decades.'},
+ {a:'P',b:'I',l:'switches on',w:3.5,h:'<b>Hop 2 &middot; mTOR switches on certain immune cells.</b> Documented in immunology, a different field that was not looking at Castleman disease.'},
+ {a:'P',b:'V',l:'drives',w:3.5,h:'<b>mTOR drives blood vessel growth.</b> A real link, but a branch that does not lead to Castleman disease.'},
+ {a:'I',b:'C',l:'drives',w:1.6,h:'<b>Hop 3 &middot; Overactive immune cells drive one form of Castleman disease.</b> The thinnest line on the path: a small number of studies, several from Fajgenbaum&rsquo;s own team. The whole prediction hangs on it.'}
+];
+var STEPS=[
+ {on:['D','e0'],h:'<b>Start at the drug.</b> Sirolimus has been approved since 1999 to keep the body from rejecting a transplanted kidney. Nobody had a reason to try it on Castleman disease.'},
+ {on:['D','P','e1'],h:E[1].h},
+ {on:['P','I','e2'],h:E[2].h},
+ {on:['I','C','e4'],h:E[4].h},
+ {on:['D','P','I','C','e1','e2','e4','arc'],h:'<b>The prediction.</b> No study ever said sirolimus treats Castleman disease. The machine adds one thing: three published lines connect. The dashed arc is a place to look, not a finding. Fajgenbaum followed this path by hand, and MATRIX looks for paths like it across every drug and every disease.'},
+ {on:['R','sep'],h:'<b>The empty corner.</b> ROHHAD syndrome has almost no published research, so it has no lines here. No lines means no paths, and no paths means a low score for every drug. The low score does not mean nothing would work. It means nobody has looked. That is the long tail from <a href="#s4-3" style="color:#fff">section 4.3</a>.'}
+];
+var LAY={
+ wide:{W:820,H:400,bw:146,bh:54,p:{D:[85,200],T:[280,320],P:[280,140],V:[500,240],I:[500,140],C:[725,140],R:[725,345]},arc:'M85,175 C100,15 710,15 725,115',al:[405,42],sep:[640,288,820,288]},
+ tall:{W:360,H:640,bw:132,bh:50,p:{D:[115,60],T:[275,150],P:[115,200],V:[275,290],I:[115,340],C:[115,480],R:[260,595]},arc:'M49,60 C-15,60 -15,480 49,480',al:[30,270],sep:[180,550,360,550]}
+};
+var mode=null,els={},cur=-1,pinned=null;
+function mk(t,a,p){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e;}
+function draw(){
+  var m=window.innerWidth<600?'tall':'wide';if(m===mode)return;mode=m;var L=LAY[m];
+  [].slice.call(svg.querySelectorAll('g,path,line.sep,text.sep')).forEach(function(x){x.remove();});
+  svg.setAttribute('viewBox',(m==='tall'?'-30 0 390 ':'0 0 '+L.W+' ')+L.H);
+  els={};
+  var arc=mk('g',{'class':'kgw-el',tabindex:'0',role:'button','aria-label':'The prediction: sirolimus to Castleman disease'});
+  mk('path',{d:L.arc,fill:'none',stroke:PINK,'stroke-width':2.5,'stroke-dasharray':'7 6'},arc);
+  mk('path',{d:L.arc,fill:'none',stroke:'transparent','stroke-width':16},arc);
+  var at=mk('text',{x:L.al[0],y:L.al[1],'text-anchor':'middle','font-size':12,'font-weight':600,fill:PINK},arc);
+  if(m==='tall'){at.setAttribute('transform','rotate(-90 '+L.al[0]+' '+L.al[1]+')');}
+  at.textContent='the prediction: no study said this';
+  arc._h=STEPS[4].h;els.arc=arc;
+  var s1=mk('g',{'class':'sep'});
+  mk('line',{x1:L.sep[0],y1:L.sep[1],x2:L.sep[2],y2:L.sep[3],stroke:MUTE,'stroke-dasharray':'4 4'},s1);
+  var st=mk('text',{x:(L.sep[0]+L.sep[2])/2,y:L.sep[1]-8,'text-anchor':'middle','font-size':11,fill:MUTE},s1);st.textContent='barely studied';els.sep=s1;
+  E.forEach(function(e,i){
+    var a=L.p[e.a],b=L.p[e.b],g=mk('g',{'class':'kgw-el',tabindex:'0',role:'button','aria-label':e.l});
+    mk('line',{x1:a[0],y1:a[1],x2:b[0],y2:b[1],stroke:INK,'stroke-width':e.w},g);
+    mk('line',{x1:a[0],y1:a[1],x2:b[0],y2:b[1],stroke:'transparent','stroke-width':18},g);
+    var mx=(a[0]+b[0])/2,my=(a[1]+b[1])/2,tw=e.l.length*(m==='wide'?7:6.2)+10;
+    mk('rect',{x:mx-tw/2,y:my-10,width:tw,height:18,rx:3,fill:'#fbfbf9',stroke:'none'},g);
+    var t=mk('text',{x:mx,y:my+4,'text-anchor':'middle','font-size':m==='wide'?12.5:11,fill:MUTE},g);t.textContent=e.l;
+    g._h=e.h;g._line=g.firstChild;els['e'+i]=g;
+  });
+  Object.keys(N).forEach(function(k){
+    var c=L.p[k],n=N[k],g=mk('g',{'class':'kgw-el',tabindex:'0',role:'button','aria-label':n.t+', '+n.k});
+    mk('rect',{x:c[0]-L.bw/2,y:c[1]-L.bh/2,width:L.bw,height:L.bh,rx:6,fill:k==='C'||k==='R'?'#FDE7F0':'#fff',stroke:INK,'stroke-width':1.5},g);
+    var t1=mk('text',{x:c[0],y:c[1]-3,'text-anchor':'middle','font-size':m==='wide'?15.5:13.5,'font-weight':700,fill:INK},g);t1.textContent=n.t;
+    var t2=mk('text',{x:c[0],y:c[1]+15,'text-anchor':'middle','font-size':m==='wide'?12.5:11,fill:MUTE},g);t2.textContent=n.k;
+    g._h=n.h;els[k]=g;
+  });
+  Object.keys(els).forEach(function(k){var g=els[k];if(!g._h)return;
+    g.addEventListener('click',function(ev){ev.stopPropagation();pick(g);});
+    g.addEventListener('keydown',function(ev){if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();pick(g);}});
+  });
+  if(cur>=0)step(cur);
+}
+function clear(){Object.keys(els).forEach(function(k){els[k].classList.remove('dim','on');var l=els[k]._line;if(l)l.setAttribute('stroke',INK);});}
+function light(ids){clear();Object.keys(els).forEach(function(k){if(ids.indexOf(k)<0)els[k].classList.add('dim');});
+  ids.forEach(function(k){var g=els[k];if(!g)return;if(g._line)g._line.setAttribute('stroke',PINK);else if(N[k])g.classList.add('on');});}
+function step(i){cur=i;pinned=null;light(STEPS[i].on);out.innerHTML=STEPS[i].h;
+  [].forEach.call(root.querySelectorAll('.kgw-steps button'),function(b,j){b.setAttribute('aria-pressed',j===i?'true':'false');});}
+function pick(g){cur=-1;[].forEach.call(root.querySelectorAll('.kgw-steps button'),function(b){b.setAttribute('aria-pressed','false');});
+  var id=Object.keys(els).filter(function(k){return els[k]===g;})[0];light(id==='arc'?STEPS[4].on:[id]);out.innerHTML=g._h;}
+[].forEach.call(root.querySelectorAll('.kgw-steps button'),function(b){b.setAttribute('aria-pressed','false');b.addEventListener('click',function(){step(+b.getAttribute('data-step'));});});
+draw();var rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(draw,150);});
+})();
+</script>
+
 
 <p>A path through the graph is not a finding. It is a place to look. MATRIX adds a model on top of the
 graph, and this is where section 4 comes back. The model is trained on treatments already known to work,
@@ -2337,6 +2417,7 @@ what it is, and ask who would hold the authority to say no if it were written fo
 <li>Further reading. NIST AI Risk Management Framework 1.0 (2023), the voluntary U.S. framework. James Bessen, &ldquo;Toil and Technology,&rdquo; <em>Finance &amp; Development</em> (IMF, 2015), on what automation did to bank teller jobs, for the question students always ask about their own. The MIS 201 book&rsquo;s Chapter 4 treats the Every Cure case at greater length, with a lab on its scores.</li>
 <li>Unsourced by design. The accounting, marketing, and operations descriptions in section 6.3 are general accounts of common practice, not reported cases. The refund agent in section 3.3 is an illustration of a common design, not a named company. The screening numbers in section 4.3, the likelihoods in section 5.1, the shape of the long-tail figure in section 8.5, and the placements on the dials figure in section 3 are illustrative.</li>
 <li>Images. Air Canada Boeing 777, photograph by Adrian Pingstone, <a href="https://commons.wikimedia.org/wiki/File:Boeing_777-300_(Air_Canada)_C-FITW.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, public domain. The Spheres, Seattle, photograph by Andy Li, 2018, <a href="https://commons.wikimedia.org/wiki/File:Amazon_Spheres_2018.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC0. All diagrams are original to this book.</li>
+<li><strong>Update, 21 November 2026 (knowledge graph).</strong> The static path diagram in section 8.3 is now an interactive walk through a small medical knowledge graph: the sirolimus-to-Castleman path step by step, a branch that leads nowhere, and an unconnected rare disease that ties back to section 4.3. Sirolimus&rsquo;s 1999 approval for kidney transplant rejection and the mTOR findings in Castleman disease are from the sources in entry 18 and Fajgenbaum&rsquo;s published work; line thickness is relative, not exact counts.</li>
 <li><strong>Update, 21 November 2026 (other causes of the entry-level squeeze).</strong> Added a passage to section 10.2 on forces besides AI that hit entry-level hiring at the same time: interest rates, the end of the pandemic hiring boom, remote work, tariffs and trade uncertainty, and the 2026 war with Iran, with entries 35 to 38 and the Stanford authors&rsquo; counterpoint on interest rates.</li>
 <li><strong>Verification note, 21 November 2026 (recheck before Week 10).</strong> Rechecked the fast-moving claims. The EU AI Act&rsquo;s December 2027 high-risk date, Colorado&rsquo;s SB 26-189, the TikTok joint venture, and Every Cure&rsquo;s ARPA-H phase two all stand as written; no Every Cure trial results were found. Updated the Stanford employment figure to the August 2026 revision (about 19 percent), added the White House&rsquo;s March 2026 call to preempt state AI laws, and fixed a section 8.8 cross-reference left over from the old 4.3.</li>
 <li><strong>Update, 21 November 2026 (the long tail).</strong> Section 4.3 was rewritten around the long tail: where a model's data runs thin, the speech recognition study, rare diseases, the Orphan Drug Act, and NIH funding that follows past funding. It replaces the cancer-screening example and the Detroit face-recognition arrest; base rate and false positives and negatives were removed from the vocabulary, and entry 5 now holds the speech study. All new figures were checked against the linked sources on this date.</li>
