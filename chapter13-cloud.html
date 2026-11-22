@@ -1220,6 +1220,45 @@ gets written down. Some systems can wait a day. Some cannot be down for an hour.
 which, and paying for the difference, is a manager's job, and the third mini-case below shows what
 happened to customers who never made the decision at all.</p>
 
+<h3>2.6 Who answers when the cloud goes down</h3>
+
+<p>Section 2.5 put the insurance decision on the customer. That is fair for one company. Now look at
+the whole picture. Three companies run the computers that a large share of hospitals, banks,
+airlines, and stores depend on. When one of them fails, thousands of businesses fail with it. So who
+answers for that?</p>
+
+<p>Start with the contract. Amazon's customer agreement says Amazon owes nothing for lost profits,
+lost customers, or the service being unavailable. It also caps everything Amazon could owe a customer
+at what that customer paid for the failed service in the 12 months before the problem.<sup class="cite"><a href="#src-26" aria-label="Source 26">26</a></sup>
+A clause like this is called a <strong>limitation of liability</strong>: a cap on what a supplier owes
+when its product fails. So a store that loses a day of sales in an outage gets, at most, the bill credit
+the SLA promises. The lost sales are its own problem.</p>
+
+<p>Then look at government. Concentration is a risk no single customer can fix alone. If every bank
+buys a backup in a second region of the same provider, the whole banking system still depends on that
+one provider. Regulators have started to notice. In 2023, the U.S. Treasury published a report on banks'
+use of the cloud. It named the concentration of cloud services in a few providers as a risk to the
+financial system and called for more study, but it created no new rules.<sup class="cite"><a href="#src-27" aria-label="Source 27">27</a></sup>
+In November 2025, European financial regulators went further. They named 19 technology providers as
+critical to Europe's financial system, including Amazon Web Services, Google Cloud, and Microsoft. The
+regulators can now examine those providers directly, including how they manage risk and report
+incidents.<sup class="cite"><a href="#src-28" aria-label="Source 28">28</a></sup></p>
+
+<p>Even under the European rules, each bank stays responsible for its own risk, and the rules cover
+finance only. In most industries, the contract is still most of the accountability there is, and the
+customer is often too locked in to leave (section 2.3). People disagree about whether that should
+change. Some argue that more oversight would slow down the companies that made computing cheap and
+reliable. Others argue that anything the whole economy depends on should answer to someone besides its
+own customers. Either way, your job as a manager is the same: read the liability clause as closely as
+the SLA, and plan as if the losses from an outage will be yours, because under the contract they
+are.</p>
+
+<div class="mcq"><b>Check yourself</b>Your company's online store runs on a cloud provider with a
+contract like Amazon's. The provider has an outage, and the store is down for a full day. You lose
+$80,000 in sales. You pay the provider $3,000 a month for that service. How much of the $80,000 can
+you recover from the provider, and what could you have done beforehand?
+<details style="margin-top:.6rem"><summary style="cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600">Show the answer</summary><p>Almost none of it. The contract excludes lost profits and lost revenue completely, so the $80,000 is not something you can claim. What you can usually get is the credit the SLA promises, which is a share of that month's $3,000 bill. Even the overall cap, 12 months of fees, or $36,000, would not cover the loss, and lost sales are excluded before the cap comes into play. The protection had to be bought in advance: a copy of the store in a second region or with a second provider (section 2.5), and a continuity plan that says how long the store can afford to be down.</p></details></div>
+
 
 <h2 id="upside"><span class="num">3</span>The upside: what the cloud does for every part of the business</h2>
 
@@ -1804,6 +1843,7 @@ cannot buy by the hour.</p>
 <li>The cloud's biggest gift is not a lower bill. It takes running machines off the list, so people in every part of the business spend more time on the work only they can do.</li>
 <li>Renting the computers moves none of the ownership of, or responsibility for, the data on them. Ask how you would get it back before you put it in.</li>
 <li>A few providers run most of the world's rented computing, so one landlord's bad morning becomes everyone's. Resilience is insurance, bought in advance.</li>
+<li>When the cloud fails, the contract caps what the provider owes, and lost sales are excluded. Outside finance in Europe, almost no one else holds the providers to account, so plan as if the losses will be yours.</li>
 <li>Lock-in is built from exit fees, provider-only tools, and accumulated data. Law is removing the first; planning the exit on day one handles the rest.</li>
 <li>Renting wins when demand is spiky, uncertain, or growing. Owning can win when demand is large and steady. Redo the sum when the workload changes.</li>
 <li>Build or rent is decided capability by capability. Netflix rented the commodity from its fiercest rival and built the one piece customers would notice.</li>
@@ -1818,6 +1858,7 @@ cannot buy by the hour.</p>
 <div><dt>Utility</dt><dd>A service so basic a business assumes it, paid for by use; what computing has become.</dd></div>
 <div><dt>IaaS / PaaS / SaaS</dt><dd>Renting the empty apartment, the furnished apartment, or the hotel room: less to manage, less you can change.</dd></div>
 <div><dt>Capex vs. opex</dt><dd>Buying capacity years ahead vs. paying monthly for what you use.</dd></div>
+<div><dt>Limitation of liability</dt><dd>A contract clause that caps what a supplier owes when its product fails. In cloud contracts it usually excludes lost sales entirely.</dd></div>
 <div><dt>FinOps</dt><dd>Short for financial operations: finance staff and engineers watching the cloud bill together, team by team.</dd></div>
 <div><dt>Elasticity</dt><dd>Capacity that grows and shrinks with demand, so you pay for the peak only while it lasts.</dd></div>
 <div><dt>Data ownership</dt><dd>Keeping the rights to, and responsibility for, your data wherever it is stored.</dd></div>
@@ -1855,6 +1896,11 @@ strongest opinion about, and be ready to say it first.</p>
   <li>On the October 2025 morning, thousands of companies discovered they had a landlord. Explain how
   the cloud being a utility makes this kind of outage more likely to be shared, and say what a company
   can realistically do about it without doubling its costs. <span class="tag">Analyze</span></li>
+
+  <li>Three companies run much of the computing the economy depends on, and their contracts exclude
+  the losses their outages cause. Should cloud providers be regulated more like electric utilities?
+  Make the strongest case on each side using section 2.6, then say which side you take and what
+  rule you would write. <span class="tag">Evaluate</span></li>
 
   <li>Cascadia is about to move its member records and sales history to a SaaS provider. Write the four
   data-ownership questions from section 2.1 for this deal, say which answer would make you refuse to
@@ -1914,9 +1960,13 @@ decides which questions are cheap to answer. (Also: is a hotdog a sandwich? Lab 
 <li id="src-23"><span class="srcnum">23</span> Fortune, <a href="https://fortune.com/2026/11/04/data-centers-abdul-el-sayed-michigan-incumbents-data/" target="_blank" rel="noopener">4 November 2026</a>, for candidates in both parties linking data centers to electric bills and proposing moratoriums or restrictions, including both major-party nominees for governor of Ohio. Section 6.3.</li>
 <li id="src-24"><span class="srcnum">24</span> CNN, <a href="https://cnn.com/2026/11/11/tech/ai-data-center-opponents-midterm-fight" target="_blank" rel="noopener">&ldquo;AI data center opponents are cheering midterm results, but they say the fight isn&rsquo;t over,&rdquo; 11 November 2026</a>, for candidates who made data centers central to their campaigns winning, and for CNN&rsquo;s voter poll finding opposition to local data centers by about three to one. Coverage written days after the election; results and interpretations may be revised. Recheck before teaching. Section 6.3.</li>
 <li id="src-25"><span class="srcnum">25</span> International Energy Agency, <a href="https://www.iea.org/reports/energy-and-ai/executive-summary" target="_blank" rel="noopener"><em>Energy and AI</em>, executive summary (April 2025)</a>, for the 415 TWh and 1.5 percent figures for 2024, the roughly 945 TWh base case for 2030, the growth rate, and the U.S. share; and the IEA&rsquo;s <em>Key Questions on Energy and AI</em> (16 April 2026) for the 2025 estimate of about 485 TWh. The IEA updates these figures; use the current edition. Section 6.1; the full figures are in Chapter 12, section 10.4.</li>
+<li id="src-26"><span class="srcnum">26</span> Amazon Web Services, <a href="https://aws.amazon.com/agreement/" target="_blank" rel="noopener">AWS Customer Agreement</a>, sections 9.1 and 9.2 (last updated 29 October 2026). For the exclusion of lost profits, revenue, customers, and unavailability of the services, and the cap at amounts paid for the services that gave rise to the liability in the prior 12 months. Section 2.6.</li>
+<li id="src-27"><span class="srcnum">27</span> U.S. Department of the Treasury, <a href="https://home.treasury.gov/news/press-releases/jy1252" target="_blank" rel="noopener">&ldquo;New Treasury Report Assesses Opportunities, Challenges Facing Financial Sector Cloud-Based Technology Adoption,&rdquo; 8 February 2023</a>. For the report&rsquo;s finding on the concentration of cloud services and its call for further evaluation. The report itself created no new requirements. Section 2.6.</li>
+<li id="src-28"><span class="srcnum">28</span> European Banking Authority, <a href="https://www.eba.europa.eu/publications-and-media/press-releases/european-supervisory-authorities-designate-critical-ict-third-party-providers-under-digital%5C" target="_blank" rel="noopener">&ldquo;The European Supervisory Authorities designate critical ICT third-party providers under the Digital Operational Resilience Act,&rdquo; 18 November 2025</a>. For the designation of critical providers under DORA; the count of 19 and the inclusion of Amazon Web Services, Google Cloud, and Microsoft are from TLT LLP&rsquo;s summary of the published list. The list is updated each year. Section 2.6.</li>
 <li>Further reading. Andreessen Horowitz, &ldquo;The Cost of Cloud, a Trillion Dollar Paradox&rdquo; (2021), the source of the &ldquo;cloud paradox&rdquo; argument, and Dropbox&rsquo;s earlier move off AWS. Read both against Netflix&rsquo;s statement that cost was not why it moved. The Ireland and Virginia shares in section 6.1 are commonly cited estimates that move quickly; check them before teaching.</li>
 <li>Unsourced by design. The service-level arithmetic in section 2.4 is computed directly from the percentages. The description of SLA remedies as bill credits is a general account of common cloud contract terms, not a quotation from one provider. The demand curve in section 1.6 and the prices in its toy are illustrative. The discipline descriptions in section 3.2 are general accounts of common practice.</li>
 <li>Images. Microsoft Office CD-ROM box for Macintosh, photograph by Brucery, 2021, <a href="https://commons.wikimedia.org/wiki/File:MicrosoftOffice1forMacCDROMBoxFront.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0. Google data center, The Dalles, Oregon, photograph by Tony Webster, 2015, <a href="https://commons.wikimedia.org/wiki/File:Google_Datacenter_-_The_Dalles,_Oregon_(17832143871).jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY 2.0. Salesforce Tower, photograph by Sharon Hahn Darlin, 2022, <a href="https://commons.wikimedia.org/wiki/File:San_Francisco,_California_April_2022_Salesforce_Tower.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY 2.0. Centre Pompidou website after the OVH fire, screenshot by Fraguando, 2021, <a href="https://commons.wikimedia.org/wiki/File:Falla_de_sitio_web_Pompidou_por_incendio_en_OVH.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0. Netflix envelope, photograph by BlueMint, 2006, <a href="https://commons.wikimedia.org/wiki/File:Netflixenvelope.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY 2.5. AWS buildings in Ashburn, Virginia, photograph by Vahurzpu, 2020, <a href="https://commons.wikimedia.org/wiki/File:AWS_servers_in_Ashburn,_group_1,_2020-10-09_1.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0 (identified as AWS by the photographer). Data centers near Ashburn from the air, photograph by Theodore Christopher, 2025, <a href="https://commons.wikimedia.org/wiki/File:Data_centers_in_Ashburn.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC0. All diagrams are original to this book.</li>
+<li><strong>Update, 21 November 2026 (who answers when the cloud goes down).</strong> Added section 2.6 on accountability for cloud outages: the AWS Customer Agreement&rsquo;s liability terms, the 2023 Treasury report, and the EU&rsquo;s November 2025 designation of critical providers under DORA, with a check-yourself question, a vocabulary entry, a takeaway, and a discussion question. Checked against entries 26 to 28 on this date. Recheck before teaching: the AWS agreement&rsquo;s current terms and the current DORA list.</li>
 <li><strong>Update, 21 November 2026 (3D data center).</strong> Added a 3D cutaway of a data center to section 1.1, with an explore mode and a six-question "What broke?" round. The layout is simplified and illustrative, not a model of any one company's building; the descriptions of racks, hot and cold aisles, cooling, battery backup, generators, utility power, fiber entry, and physical security describe common practice.</li>
 <li><strong>Update, 20 November 2026 (rebuilt to the Chapter 12 model).</strong> Added section 3, the upside, with the old 1.5 moved in as 3.1 and a new 3.2 on the cloud in each business discipline (general accounts of common practice, not reported cases, so unsourced by design; FinOps is a widely used industry term). Added a shared responsibility quiz in section 2.1 and a rent-or-own toy in section 1.6, whose prices ($1,000 a month to own a unit, $1,600 to rent it) are illustrative. The downside became section 6 with numbered subsections; its facts are unchanged. Voice pass on the Netflix case, with no facts changed; added two citations to entry 15 that the text already relied on. Sections from 1.5 on and every cross-reference renumbered, including pointers to Chapter 12, whose energy section is now 10.4. Added a photograph of an early boxed Microsoft Office to mini-case 1.</li>
 <li><strong>Verification note, 11 November 2026 (rebuild to the Chapter 6 model).</strong> Reframed for business students, with a short history of the technology layers added in section 1.2 (Census and Pew figures checked, and the 2013 CIA contract with AWS, now mini-case 2 alongside its 2020 multi-provider successor and Capital One as the corporate example that followed): the cloud as a foundational utility, and depending on it as a supplier relationship. New and checked against the entries above: the utility comparison (Carr), the Q3 2026 market size and shares (Synergy), the shared responsibility model (AWS), the 2024 egress waivers (AWS and others), and the EU Data Act switching rules. Technical terms that a manager does not need were removed or explained in plain words (DNS, DynamoDB, load balancers, availability zones, data gravity, cloud-native, petabytes, terabits). The detailed energy figures now live in Chapter 12, section 5.5, with a pointer here. The quiz explanation that referred to a 2017 storage incident the chapter does not contain was corrected. The OVH passage now attributes the founder&rsquo;s statement as the source reports it. Added the same week: a Netflix data section (4.4: recommendations and House of Cards), three photographs, a timeline, and a diagram of what happens at Play; and the November 2026 midterm results on data centers in section 5, from coverage published within a week of the election. The Netflix, 37signals, Salesforce, and OVH material is otherwise unchanged from the 29 October check.</li>
