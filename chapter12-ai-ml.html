@@ -423,6 +423,7 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 .nnt-tests .trow{display:grid;grid-template-columns:80px 1.7fr 1fr 1fr;gap:12px;align-items:center;padding:10px 6px;border-bottom:1px solid var(--border);font-size:.9rem}
 .nnt-tests .te{display:block;width:100%;height:auto;border-radius:4px;border:1px solid var(--border)}
 .nnt-tests .td small{display:block;color:var(--text-light);font-size:.78rem;margin-top:2px}
+.nnt-tests .td small.why{color:var(--black);margin-top:4px;line-height:1.4}.nnt-tests .td small.why b{color:var(--magenta-dark)}
 .nnt-tests .trow.tail{background:#fdf3f8}
 .nnt-tests .trow.none{background:var(--off-white)}
 .nnt-tests .ttag{display:block;font-size:.82rem}
@@ -1275,12 +1276,21 @@ photos, so you are the teacher.</p>
     retrain(justX,function(){
       $('nnt-status').textContent=idx<TRAIN.length?'You said '+LABELS[l]+'. The network retrained on '+labels.length+' photo'+(labels.length===1?'':'s')+'. Photo '+(idx+1)+' of 9.':'All nine labeled. Press Test it on new photos.';
       $('nnt-test').disabled=idx<TRAIN.length;renderCard();});});});
+  // why it answered: take each clue away in turn and see how far its confidence in its answer falls
+  function why(x,k){var base=fwd(net,x).p[k],d=[];
+    for(var i=0;i<7;i++){if(!x[i])continue;var y=x.slice();y[i]=0;var pk=fwd(net,y).p[k];d.push([i,base-pk,pk]);}
+    d.sort(function(a,b){return b[1]-a[1];});
+    if(!d.length||d[0][1]<0.05)return 'Why: no single clue decides it; several add up.';
+    var a=d[0],out='Why: mostly <b>'+CLUES[a[0]]+'</b>. Take that clue away and '+LABELS[k]+' falls to '+Math.round(a[2]*100)+'%.';
+    if(d[1]&&d[1][1]>=0.1)out+=' Next is <b>'+CLUES[d[1][0]]+'</b>.';
+    if(a[0]>=4)out+=' That clue is about the background, not the animal.';
+    return out;}
   function runTests(){var h='',ok=[0,0],n=[0,0],roo=0;
     TEST.forEach(function(t){var p=fwd(net,t[3]).p,k=argmax(p),c=Math.round(p[k]*100),cls=t[5]===1?' tail':(t[5]===2?' none':'');
       var good=t[4]===k;if(t[5]<2){n[t[5]]++;if(good)ok[t[5]]++;}if(t[5]===2)roo=c;
       var truth=t[4]<0?'none of your three labels fits':LABELS[t[4]];
       var tag=t[4]<0?'<span class="ttag bad">No label for this</span>':(good?'<span class="ttag ok">Right</span>':'<span class="ttag bad">Wrong</span>');
-      h+='<div class="trow'+cls+'">'+pic(t,'te')+'<div class="td">'+t[1]+'<small>Really: '+truth+(t[5]===1?' &middot; the background does not match':'')+'</small></div><div class="tg">The network says <b>'+LABELS[k]+'</b></div><div>'+c+'% sure '+tag+'</div></div>';});
+      h+='<div class="trow'+cls+'">'+pic(t,'te')+'<div class="td">'+t[1]+'<small>Really: '+truth+(t[5]===1?' &middot; the background does not match':'')+'</small><small class="why">'+why(t[3],k)+'</small></div><div class="tg">The network says <b>'+LABELS[k]+'</b></div><div>'+c+'% sure '+tag+'</div></div>';});
     $('nnt-tests').innerHTML=h;
     var read=(extraOn?'Retrained with the data team’s four photos (13 examples). ':'Trained on your nine labels. ')+'Photos like the ones it trained on: <b>'+ok[0]+' of '+n[0]+'</b> right. Photos where the background does not match: <b>'+ok[1]+' of '+n[1]+'</b> right.';
     if(!extraOn)read+=ok[1]<n[1]?' In your training photos, every person was indoors, every rabbit was on grass, and every turtle was in water. Backgrounds are big and easy to see, so the network learned the background instead of the animal. Look at which clues have the thickest lines. Now press <b>Add four photos the data team labeled</b>.':' It handled the mismatched backgrounds. That is unusual; check your labels against the photos. Then press <b>Add four photos</b> anyway.';
