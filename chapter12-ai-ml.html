@@ -1052,7 +1052,7 @@ and you are also the data.</p>
   <details class="nnt-how" open>
     <summary>Your job</summary>
     <ol>
-      <li><strong>Swipe nine videos</strong> the way you really would: watched it all, watched some, or swiped away. After each one, the network retrains on everything you have done so far.</li>
+      <li><strong>Pick what you would do with nine videos.</strong> For each one, tap <b>Watch it all</b>, <b>Watch some</b>, or <b>Swipe away</b>, the way you really would on your phone. After each one, the network retrains on everything you have done so far.</li>
       <li><strong>Watch it guess first.</strong> From the second video on, the network predicts what you will do before you swipe. Watch the guesses improve, and watch the lines in the diagram thicken as it learns your taste.</li>
       <li><strong>Press Rank seven new videos.</strong> It builds your feed from videos it has never shown you. Some are like what you swiped. Two are about topics it knows nothing about.</li>
       <li><strong>Then let it pick your feed.</strong> Stop swiping and let the network choose what you see for five rounds. Watch which topics come back, and which never do.</li>
@@ -1062,13 +1062,13 @@ and you are also the data.</p>
   <div class="nnt-bench">
     <div id="nnt-card" class="nnt-scene" aria-live="polite"></div>
     <div id="nnt-guess" class="nnt-guess" aria-live="polite"></div>
-    <p class="nnt-ask" id="nnt-ask">What would you do?</p>
+    <p class="nnt-ask" id="nnt-ask">What would you do with this video? Tap one.</p>
     <div class="nnt-pad" role="group" aria-labelledby="nnt-ask">
-      <button type="button" class="nnt-lab" data-lab="0"><span class="li" aria-hidden="true">&#x2705;</span>Watched it all</button>
-      <button type="button" class="nnt-lab" data-lab="1"><span class="li" aria-hidden="true">&#x23F8;&#xFE0F;</span>Watched some</button>
-      <button type="button" class="nnt-lab" data-lab="2"><span class="li" aria-hidden="true">&#x1F446;</span>Swiped away</button>
+      <button type="button" class="nnt-lab" data-lab="0"><span class="li" aria-hidden="true">&#x2705;</span>Watch it all</button>
+      <button type="button" class="nnt-lab" data-lab="1"><span class="li" aria-hidden="true">&#x23F8;&#xFE0F;</span>Watch some</button>
+      <button type="button" class="nnt-lab" data-lab="2"><span class="li" aria-hidden="true">&#x1F446;</span>Swipe away</button>
     </div>
-    <p class="nnt-status" id="nnt-status" aria-live="polite">Video 1 of 9. Swipe it.</p>
+    <p class="nnt-status" id="nnt-status" aria-live="polite">Video 1 of 9. Tap what you would do.</p>
 
     <div class="nnt-netbox">
       <p class="nt">The network, as you have trained it</p>
@@ -1184,7 +1184,7 @@ and you are also the data.</p>
   function renderCard(){var c=$('nnt-card');
     if(idx<TRAIN.length){var s=TRAIN[idx];
       c.innerHTML=pic(s,'ph')+'<div><div class="sk">Video '+(idx+1)+' of 9 &middot; the clues, 0 to 1</div><div class="sd">'+s[1]+'</div>'+chips(s[3])+'</div>';
-      if(labels.length){var p=fwd(net,s[3]).p,k=argmax(p);$('nnt-guess').innerHTML='The network’s guess before you swipe: <b>'+LABELS[k]+'</b>, '+Math.round(p[k]*100)+'% sure.';}
+      if(labels.length){var p=fwd(net,s[3]).p,k=argmax(p);$('nnt-guess').innerHTML='The network’s guess before you choose: <b>'+LABELS[k]+'</b>, '+Math.round(p[k]*100)+'% sure.';}
       else $('nnt-guess').innerHTML='No guess yet. The network has seen nothing from you, so its weights are still random.';
       drawNet(s[3]);
     } else {
@@ -1258,7 +1258,7 @@ and you are also the data.</p>
     labels.push(l);var justX=TRAIN[idx][3];idx++;
     $('nnt-status').textContent='You: '+LABELS[l]+'. Watch the weights move as the network retrains on '+labels.length+' video'+(labels.length===1?'':'s')+'.';
     retrain(justX,function(){
-      $('nnt-status').textContent=idx<TRAIN.length?'You: '+LABELS[l]+'. The network retrained on '+labels.length+' video'+(labels.length===1?'':'s')+'. Video '+(idx+1)+' of 9.':'All nine swiped. Press Rank seven new videos.';
+      $('nnt-status').textContent=idx<TRAIN.length?'You: '+LABELS[l]+'. The network retrained on '+labels.length+' video'+(labels.length===1?'':'s')+'. Video '+(idx+1)+' of 9: tap what you would do.':'All nine done. Press Rank seven new videos.';
       $('nnt-test').disabled=idx<TRAIN.length;renderCard();});});});
   // why it answered: take each clue away in turn and see how far its confidence in its answer falls
   function why(x,k){var base=fwd(net,x).p[k],d=[];
@@ -1308,7 +1308,7 @@ and you are also the data.</p>
     $('nnt-read').innerHTML=read;$('nnt-status').textContent='Done. Read what happened below.';$('nnt-test').disabled=true;}
   $('nnt-test').addEventListener('click',function(){if(training||labels.length<TRAIN.length)return;runTests();$('nnt-add').hidden=extraOn;$('nnt-status').textContent='Ranked seven new videos. Read your feed below.';});
   $('nnt-add').addEventListener('click',function(){if(training)return;extraOn=true;$('nnt-add').hidden=true;$('nnt-test').disabled=true;$('nnt-read').innerHTML='';loopRound(0);});
-  $('nnt-reset').addEventListener('click',function(){runId++;training=false;labels=[];idx=0;net=initNet(7);before=null;guessed=0;right=0;extraOn=false;LOOP=[];FEEDS=[];EXTRA.length=0;['nnt-tests','nnt-read','nnt-train','nnt-delta'].forEach(function(i){$(i).innerHTML='';});$('nnt-add').hidden=true;$('nnt-test').disabled=true;$('nnt-status').textContent='Cleared. Video 1 of 9. Swipe it.';renderCard();});
+  $('nnt-reset').addEventListener('click',function(){runId++;training=false;labels=[];idx=0;net=initNet(7);before=null;guessed=0;right=0;extraOn=false;LOOP=[];FEEDS=[];EXTRA.length=0;['nnt-tests','nnt-read','nnt-train','nnt-delta'].forEach(function(i){$(i).innerHTML='';});$('nnt-add').hidden=true;$('nnt-test').disabled=true;$('nnt-status').textContent='Cleared. Video 1 of 9. Tap what you would do.';renderCard();});
 
   // ---------- 3D view: the photo turns into pixels, the pixels into clues, and the clues travel the weights ----------
   var VIEW='flat', lastX=TRAIN[0][3], lastItem=TRAIN[0];
