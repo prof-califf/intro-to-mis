@@ -340,6 +340,23 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 .ro-bar{display:grid;grid-template-columns:3rem 1fr 6.5rem;gap:.5rem;align-items:center;margin:.25rem 0;font-size:.88rem}
 .ro-bar .track{background:var(--white);border:1px solid var(--border);height:14px;position:relative}
 .ro-bar .fill{position:absolute;left:0;top:0;bottom:0;background:var(--magenta)}
+.st-pick{margin:0 1rem}
+.st-pick button{display:flex;flex-direction:column;align-items:flex-start;gap:.15rem;padding:.45rem .7rem}
+.st-pick button small{font-family:var(--sans);font-size:.72rem;font-weight:400;letter-spacing:0;text-transform:none;color:var(--text-light)}
+.st-pick button.sel small{color:#E7EAEF}
+.st-stack{margin:.9rem 1rem 0;border:1px solid var(--border)}
+.st-row{display:grid;grid-template-columns:minmax(0,1fr) 7.5rem;align-items:stretch;border-top:1px solid var(--border)}
+.st-row:first-child{border-top:none}
+.st-lab{font-family:var(--sans);padding:.55rem .8rem;line-height:1.35}
+.st-lab b{display:block;font-size:.95rem;color:var(--text-dark)}
+.st-lab span{font-size:.85rem;color:var(--text-light)}
+.st-who{display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;background:var(--off-white);color:var(--text-light);transition:background .35s,color .35s}
+.st-row.you .st-who{background:var(--magenta);color:#fff}
+.st-meters{margin:.8rem 1rem 0}
+.st-bar{grid-template-columns:10.5rem 1fr 3rem}
+.st-sum{font-family:var(--sans);font-size:.95rem;line-height:1.5;margin:.7rem 1rem 0;padding:.6rem .8rem;border-left:3px solid var(--magenta);background:var(--magenta-pale);color:var(--text-dark)}
+.st-see{display:block;font-size:.85rem;color:var(--text-light);margin-top:.25rem}
+@media(max-width:600px){.st-row{grid-template-columns:minmax(0,1fr) 5.5rem}.st-bar{grid-template-columns:8rem 1fr 2.6rem;font-size:.8rem}}
 .pairline{font-family:var(--sans);font-size:.9rem;color:var(--text-light);margin:.4rem 0 0}
 
 .tryit{border:1px solid var(--border);background:var(--white);box-shadow:0 2px 12px rgba(0,0,0,.06);margin:2rem 0;padding:0 0 1rem}
@@ -943,6 +960,100 @@ SaaS the provider takes everything except your data. The data row says you in ev
 </svg>
 <figcaption style="font-family:var(--sans);font-size:.95rem;color:var(--muted);margin-top:.55rem;line-height:1.55"><strong style="color:var(--ink)">The higher the layer you rent, the less you manage and the less you can change.</strong> A hotel room is wonderfully easy until you want to move the furniture. Moving right hands work to the provider, and with it control over when things change. What never moves is the top row, and section 2 is about why that matters.</figcaption>
 </figure>
+
+<div class="tryit" id="stack">
+  <div class="tryit-head">Try it &middot; Who runs what?</div>
+  <p class="tryit-intro">Cascadia Outfitters wants to launch a members app. Move from owning everything to renting everything, one layer at a time, and watch which jobs leave Cascadia's team and which never do.</p>
+  <div class="ro-step">1. Pick how much to rent</div>
+  <div class="wbtns st-pick" id="stpick" role="group" aria-label="How much to rent"></div>
+  <div class="st-stack" id="ststack" aria-live="polite"></div>
+  <div class="st-meters" id="stmeters"></div>
+  <p class="st-sum" id="stsum"></p>
+  <div class="ro-step">2. Match the need to the layer</div>
+  <div id="strows"></div>
+  <p class="tryit-note">Read the top row: at every layer, Cascadia's member records are still Cascadia's. Renting a higher layer hands over work, and with it control over how things work and when they change. The meters are illustrative. <strong>Try this with an AI:</strong> "Cascadia is choosing a layer for its members app, and I picked PaaS. Argue for a different layer, and tell me what I would give up."</p>
+</div>
+<script>
+(function(){
+  var root=document.getElementById('stack'); if(!root)return;
+  var L=[
+    {k:'own',b:'Own it all',a:'your own building',
+     sum:'Cascadia can change anything, and Cascadia fixes everything, including the dead disk at 2 a.m.'},
+    {k:'IaaS',b:'IaaS',a:'an empty apartment',
+     sum:'The provider keeps the machines and the building running. Everything Cascadia installs on them is still Cascadia’s job.'},
+    {k:'PaaS',b:'PaaS',a:'a furnished apartment',
+     sum:'Cascadia’s developers only build the app. They gave up control of the tools underneath to stop worrying about them.'},
+    {k:'SaaS',b:'SaaS',a:'a hotel room',
+     sum:'Cascadia logs in and uses it. The vendor owns the code, the servers, and the upgrade schedule, which is the convenience and the lock-in at once.'}
+  ];
+  var R=[
+    {n:'Your data',d:'Member records, and who is allowed to see them',owner:[1,1,1,1]},
+    {n:'Your application',d:'The members app itself: its features, bugs, and updates',owner:[1,1,1,0]},
+    {n:'Standard tools',d:'The database the app stores things in, and the security updates',owner:[1,1,0,0]},
+    {n:'The building',d:'Computers, power, cooling, the network, and replacing what breaks',owner:[1,0,0,0]}
+  ];
+  var pick=document.getElementById('stpick'), st=document.getElementById('ststack'),
+      me=document.getElementById('stmeters'), sm=document.getElementById('stsum');
+  var rowEls=R.map(function(r){
+    var d=document.createElement('div'); d.className='st-row';
+    d.innerHTML='<div class="st-lab"><b>'+r.n+'</b><span>'+r.d+'</span></div><div class="st-who"></div>';
+    st.appendChild(d); return d;
+  });
+  me.innerHTML='<div class="ro-bar st-bar"><span>Work Cascadia does</span><span class="track"><span class="fill" id="stw"></span></span><span id="stwv"></span></div>'
+    +'<div class="ro-bar st-bar"><span>Control Cascadia keeps</span><span class="track"><span class="fill" id="stc"></span></span><span id="stcv"></span></div>';
+  var btns=L.map(function(l,i){
+    var b=document.createElement('button'); b.type='button';
+    b.innerHTML=l.b+'<small>'+l.a+'</small>'; b.setAttribute('aria-pressed','false');
+    b.addEventListener('click',function(){show(i);}); pick.appendChild(b); return b;
+  });
+  var WORDS=['','Low','Some','Most','All'];
+  function show(i){
+    btns.forEach(function(b,j){b.classList.toggle('sel',j===i);b.setAttribute('aria-pressed',j===i?'true':'false');});
+    var mine=0;
+    R.forEach(function(r,j){
+      var you=r.owner[i]===1; if(you)mine++;
+      var el=rowEls[j]; el.classList.toggle('you',you);
+      el.querySelector('.st-who').textContent=you?'Cascadia':'Provider';
+    });
+    var pct=(mine/4*100)+'%';
+    document.getElementById('stw').style.width=pct; document.getElementById('stc').style.width=pct;
+    document.getElementById('stwv').textContent=WORDS[mine]; document.getElementById('stcv').textContent=WORDS[mine];
+    sm.innerHTML='<b>'+(i===0?'Owning it all is like owning the whole building.':L[i].k+' is like '+L[i].a+'.')+'</b> '+L[i].sum;
+  }
+  show(0);
+  var Q=[
+    {t:'Email and calendars for staff in all eight stores, working by Monday, with nobody to run servers.',a:'SaaS',
+     why:'Nothing to build and nothing to run. Cascadia’s job shrinks to the top row: who gets an account, and what happens to it when someone leaves.'},
+    {t:'Two developers want to build the members app without ever looking after a database.',a:'PaaS',
+     why:'They build the app, and the provider runs the tools under it. The trade: the database works the provider’s way and changes when the provider changes it.'},
+    {t:'The data team wants rented machines set up exactly their way, to run analysis software they install themselves.',a:'IaaS',
+     why:'Full control of everything above the hardware, and full responsibility for it. Furnish the empty apartment however you like, then fix it yourself.'},
+    {t:'Software for the registers in every store, kept up to date by the vendor.',a:'SaaS',
+     why:'The easiest choice to run. But if the vendor’s service goes down, every register goes down with it, which is what section 2 is about.'}
+  ];
+  var host=document.getElementById('strows'), F=['IaaS','PaaS','SaaS'];
+  Q.forEach(function(q){
+    var row=document.createElement('div'); row.className='wrow';
+    row.innerHTML='<div class="wq">'+q.t+'</div><div class="wbtns">'
+      +F.map(function(f){return '<button type="button" data-f="'+f+'">'+f+'</button>';}).join('')
+      +'</div><div class="wout" role="status" aria-live="polite" hidden></div>';
+    host.appendChild(row);
+    var bs=row.querySelectorAll('button'), out=row.querySelector('.wout');
+    bs.forEach(function(b){
+      b.addEventListener('click',function(){
+        if(!out.hidden)return;
+        var ok=b.getAttribute('data-f')===q.a;
+        bs.forEach(function(x){x.disabled=true;});
+        b.className='you '+(ok?'right':'wrong');
+        if(!ok) bs.forEach(function(x){ if(x.getAttribute('data-f')===q.a) x.className='you right'; });
+        out.hidden=false; out.className='wout '+(ok?'yes':'no');
+        out.innerHTML='<b>'+q.a+'.</b> '+q.why+' <span class="st-see">The stack above now shows '+q.a+'.</span>';
+        show(F.indexOf(q.a)+1);
+      });
+    });
+  });
+})();
+</script>
 
 <p>The money changes shape too. Owning computers is <strong>capital expenditure (capex)</strong>: a large
 purchase made years ahead of need, which sits on the balance sheet and loses value. Renting them is
@@ -1985,6 +2096,7 @@ decides which questions are cheap to answer. (Also: is a hotdog a sandwich? Lab 
 <li>Further reading. Andreessen Horowitz, &ldquo;The Cost of Cloud, a Trillion Dollar Paradox&rdquo; (2021), the source of the &ldquo;cloud paradox&rdquo; argument, and Dropbox&rsquo;s earlier move off AWS. Read both against Netflix&rsquo;s statement that cost was not why it moved. The Ireland and Virginia shares in section 6.1 are commonly cited estimates that move quickly; check them before teaching.</li>
 <li>Unsourced by design. The service-level arithmetic in section 2.4 is computed directly from the percentages. The description of SLA remedies as bill credits is a general account of common cloud contract terms, not a quotation from one provider. The demand curve in section 1.6 and the prices in its toy are illustrative. The discipline descriptions in section 3.2 are general accounts of common practice.</li>
 <li>Images. Microsoft Office CD-ROM box for Macintosh, photograph by Brucery, 2021, <a href="https://commons.wikimedia.org/wiki/File:MicrosoftOffice1forMacCDROMBoxFront.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0. Google data center, The Dalles, Oregon, photograph by Tony Webster, 2015, <a href="https://commons.wikimedia.org/wiki/File:Google_Datacenter_-_The_Dalles,_Oregon_(17832143871).jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY 2.0. Salesforce Tower, photograph by Sharon Hahn Darlin, 2022, <a href="https://commons.wikimedia.org/wiki/File:San_Francisco,_California_April_2022_Salesforce_Tower.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY 2.0. Centre Pompidou website after the OVH fire, screenshot by Fraguando, 2021, <a href="https://commons.wikimedia.org/wiki/File:Falla_de_sitio_web_Pompidou_por_incendio_en_OVH.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0. Netflix envelope, photograph by BlueMint, 2006, <a href="https://commons.wikimedia.org/wiki/File:Netflixenvelope.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY 2.5. AWS buildings in Ashburn, Virginia, photograph by Vahurzpu, 2020, <a href="https://commons.wikimedia.org/wiki/File:AWS_servers_in_Ashburn,_group_1,_2020-10-09_1.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 4.0 (identified as AWS by the photographer). Data centers near Ashburn from the air, photograph by Theodore Christopher, 2025, <a href="https://commons.wikimedia.org/wiki/File:Data_centers_in_Ashburn.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC0. All diagrams are original to this book.</li>
+<li><strong>Update, 23 November 2026 (service layers toy).</strong> Added a "Who runs what?" toy to section 1.5: students move Cascadia’s members app from owning everything to IaaS, PaaS, and SaaS and watch which jobs move to the provider, then match four Cascadia needs to a layer. Cascadia’s members app and the four needs are illustrative, the layer assignments follow the grid in the same section, and the work and control meters are illustrative, so the toy is unsourced by design.</li>
 <li><strong>Update, 21 November 2026 (who answers when the cloud goes down).</strong> Added section 2.6 on accountability for cloud outages: the AWS Customer Agreement&rsquo;s liability terms, the 2023 Treasury report, and the EU&rsquo;s November 2025 designation of critical providers under DORA, with a check-yourself question, a vocabulary entry, a takeaway, and a discussion question. Checked against entries 26 to 28 on this date. Recheck before teaching: the AWS agreement&rsquo;s current terms and the current DORA list.</li>
 <li><strong>Update, 21 November 2026 (3D data center).</strong> Added a 3D cutaway of a data center to section 1.1, with an explore mode and a six-question "What broke?" round. The layout is simplified and illustrative, not a model of any one company's building; the descriptions of racks, hot and cold aisles, cooling, battery backup, generators, utility power, fiber entry, and physical security describe common practice.</li>
 <li><strong>Update, 20 November 2026 (rebuilt to the Chapter 12 model).</strong> Added section 3, the upside, with the old 1.5 moved in as 3.1 and a new 3.2 on the cloud in each business discipline (general accounts of common practice, not reported cases, so unsourced by design; FinOps is a widely used industry term). Added a shared responsibility quiz in section 2.1 and a rent-or-own toy in section 1.6, whose prices ($1,000 a month to own a unit, $1,600 to rent it) are illustrative. The downside became section 6 with numbered subsections; its facts are unchanged. Voice pass on the Netflix case, with no facts changed; added two citations to entry 15 that the text already relied on. Sections from 1.5 on and every cross-reference renumbered, including pointers to Chapter 12, whose energy section is now 10.4. Added a photograph of an early boxed Microsoft Office to mini-case 1.</li>
