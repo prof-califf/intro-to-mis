@@ -381,24 +381,6 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 #nnt-3d[hidden]{display:none}
 .nnt-3dhint{font-size:.78rem;color:var(--text-light);margin:4px 0 0}
 @media(max-width:600px){#nnt-3d{height:300px}}
-.agt-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:14px;margin:0 1rem;font-family:var(--sans)}
-.agt-box{border:1px solid var(--border);background:var(--off-white);padding:10px 12px;margin-bottom:10px;font-size:.86rem;line-height:1.45}
-.agt-k{display:block;font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-light);margin-bottom:4px}
-.agt-goal{background:#fff;border-left:3px solid var(--magenta);font-weight:600}
-.agt-plan{margin:0;padding-left:1.2rem}.agt-plan li{margin:2px 0;color:var(--text-light)}.agt-plan li.on{color:var(--black);font-weight:700}.agt-plan li.on::marker{color:var(--magenta)}
-.agt-plan li.agt-wait{list-style:none;margin-left:-1.2rem;font-style:italic}
-.agt-leash ul{margin:0;padding-left:1.1rem}.agt-leash li{margin:2px 0}
-.agt-q{display:grid;gap:6px;margin-bottom:10px}
-.agt-c{display:grid;grid-template-columns:1fr auto;gap:0 10px;border:1px solid var(--border);padding:7px 10px;font-size:.84rem;background:#fff}
-.agt-c span{grid-column:1;color:var(--text-light);font-size:.8rem}.agt-c em{grid-column:2;grid-row:1/3;align-self:center;font-style:normal;font-size:.74rem;font-weight:700;padding:2px 8px;border-radius:999px;background:#efefea}
-.agt-c.on{border-color:var(--black)}.agt-c.wait em{background:var(--magenta);color:#fff}.agt-c.done em{background:var(--black);color:#fff}
-.agt-log{list-style:none;margin:0 0 10px;padding:0;max-height:260px;overflow:auto;border-top:1px solid var(--border)}
-.agt-log li{display:grid;grid-template-columns:26px 1fr;gap:6px;padding:7px 4px;border-bottom:1px solid var(--border);font-size:.86rem;line-height:1.45}
-.agt-log li.stop{background:#fdf3f8}.agt-log li.you{background:#f3f7f1}.agt-log .ai{font-size:1.05rem;line-height:1.2}
-.agt-ask{border:2px solid var(--black);padding:10px 12px;margin-bottom:10px;font-size:.88rem;background:#fff}.agt-ask p{margin:0 0 8px}.agt-ask .nnt-btn{margin:2px 4px 2px 0}
-.agt-ctrl{display:flex;flex-wrap:wrap;gap:8px}
-.agt-sum{font-family:var(--sans);font-size:.9rem;line-height:1.5;margin:.8rem 1rem 0;border-left:3px solid var(--magenta);padding:4px 10px}.agt-sum:empty{display:none}
-@media(max-width:700px){.agt-grid{grid-template-columns:1fr}}
 .nnt-netbox svg text{font-family:var(--sans);font-size:12px;fill:var(--ink)}
 .nnt-netbox svg text.dim{fill:var(--text-light);font-size:11px}
 .nnt-netbox svg text.wlab{font-size:10.5px;font-weight:700;font-variant-numeric:tabular-nums}
@@ -447,6 +429,65 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 .tocbtn:hover,.tocbtn:focus-visible{background:var(--magenta-dark,#B5185A)}
 .tocbtn[hidden]{display:none}
 @media print{.pn,.tocbtn{display:none!important}}
+</style>
+<style>
+.ar{background:#191917;border:1px solid #34332f;border-top:4px solid var(--magenta,#D61F69);margin:1.4rem auto .5rem;max-width:480px;color:#d8d5cf;font-family:var(--sans)}
+.ar-head{display:flex;justify-content:space-between;align-items:center;padding:.5rem .8rem;border-bottom:1px solid #34332f;gap:.7rem;flex-wrap:wrap}
+.ar-head span{font-size:.78rem;color:#a8a59f}
+.ar-run{font:700 .8rem var(--sans);background:var(--magenta,#D61F69);color:#fff;border:0;padding:.45rem .85rem;cursor:pointer;border-radius:2px}
+.ar-run:hover{background:#ff2b8c}
+.ar-run[disabled]{opacity:.6;cursor:default}
+.ar-run:focus-visible,.ar-draft button:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.ar svg{display:block;width:100%;height:auto;background:radial-gradient(#2a2926 1px,transparent 1px) 0 0/16px 16px}
+.ar-node rect,.ar-node circle{fill:#252522;stroke:#4a4844;stroke-width:2;transition:fill .25s,stroke .25s}
+.ar-node text{fill:#e6e3de;font:500 13px var(--sans)}
+.ar-node .sub{fill:#9c998f;font-size:11px}
+.ar-db{fill:none;stroke:#6a6862;stroke-width:1.5;stroke-dasharray:3 3}
+.ar-dbl{fill:#a8a59f;font:600 10px var(--sans);letter-spacing:.04em}
+.ar-node .tbl{font-family:ui-monospace,Menlo,monospace;font-size:12px}
+.ar-node .model{fill:#ff7fb7;font-size:11px;font-weight:600}
+.ar-mail{margin:.6rem .8rem;padding:.5rem .7rem;background:#f6f4f1;color:#1d1d1b;font-size:.78rem;line-height:1.45;border-left:4px solid #8a877f;border-radius:2px;transition:border-color .25s,box-shadow .25s}
+.ar-mail.on{border-left-color:var(--magenta,#D61F69);box-shadow:0 0 0 2px var(--magenta,#D61F69)}
+.ar-mail-h{display:flex;flex-direction:column;gap:.05rem;color:#55534e;font-size:.72rem;margin-bottom:.25rem}
+.ar-mail p{margin:0}
+.ar-node.on rect,.ar-node.on circle{stroke:var(--magenta,#D61F69);fill:#3a1027}
+.ar-node.done rect,.ar-node.done circle{stroke:#4cc58a}
+.ar-human rect{stroke-dasharray:4 3}
+.ar-human .ar-head,.ar-human .ar-body{fill:#e0a54a;stroke:none}
+.ar-node.ar-human.on rect{stroke:#e0a54a;fill:#3a2c10;stroke-dasharray:none}
+.ar-node.ar-human.done rect{stroke:#4cc58a;stroke-dasharray:none}
+.ar-node.ar-human.done .ar-head,.ar-node.ar-human.done .ar-body{fill:#4cc58a}
+.ar-node.ar-human.on .ar-head,.ar-node.ar-human.done .ar-head{stroke:none}
+.ar-wire.wait{stroke:#e0a54a;animation:arflow .6s linear infinite}
+.ar-log li.human::before{background:#e0a54a;border-radius:50%}
+.ar-wire{stroke:#4a4844;stroke-width:2;fill:none;stroke-dasharray:5 5}
+.ar-wire.on{stroke:var(--magenta,#D61F69);animation:arflow .6s linear infinite}
+@keyframes arflow{to{stroke-dashoffset:-20}}
+.ar-log{list-style:none;margin:0;padding:.5rem .8rem .7rem;min-height:4.5rem;font-size:.78rem;border-top:1px solid #34332f}
+.ar-log li{padding:.2rem 0 .2rem 1.2rem;position:relative;border-bottom:1px dashed #2f2e2b;line-height:1.4}
+.ar-log li::before{content:"";position:absolute;left:.25rem;top:.6rem;width:7px;height:7px;background:var(--magenta,#D61F69)}
+.ar-log li.flag::before{background:#e0a54a}
+.ar-log li.hold::before{background:#4cc58a}
+.ar-log li.empty{color:#8a877f;padding-left:0;border:0}
+.ar-log li.empty::before{display:none}
+.ar-draft{display:none;margin:0 .8rem .8rem;padding:.6rem .8rem;background:#f6f4f1;color:#1d1d1b;font-size:.8rem;line-height:1.45;border-left:5px solid #e0a54a}
+.ar-draft.show{display:block}
+.ar-reply{background:#fff;border:1px solid #d9d6d0;padding:.5rem .65rem;margin:.35rem 0;border-radius:2px}
+.ar-reply p{margin:0 0 .3rem}
+.ar-att{font-size:.72rem;font-weight:700;color:#8a5a12;margin:0!important}
+.ar-after,.ar-draft .btns{display:none}
+.ar-draft.ok{border-left-color:#4cc58a}
+.ar-draft.ok .ar-after{display:block;margin:.3rem 0 0}
+.ar-draft.ok .btns{display:flex}
+#apsim p,#apsim li{font-size:inherit;line-height:1.45;font-family:var(--sans);color:inherit}
+#apsim .ar-log li{color:#d8d5cf}
+#apsim .ar-att{color:#8a5a12;font-size:.72rem}
+.ar-draft>b{display:block;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.2rem}
+.ar-draft .btns{display:flex;gap:.5rem;margin-top:.45rem;flex-wrap:wrap}
+.ar-draft button{font:600 .74rem var(--sans);padding:.3rem .6rem;border:1px solid #1d1d1b;background:#fff;color:#1d1d1b;cursor:pointer}
+.ar-draft button.send{background:#d9d6d0;color:#77746e;border-color:#c9c6c0;cursor:not-allowed}
+.ar-cap{font-size:.84rem;line-height:1.5;color:var(--text-muted,#555);margin:.3rem auto 1.4rem;max-width:480px}
+@media (prefers-reduced-motion:reduce){.ar-wire.on{animation:none}}
 </style>
 </head>
 <body>
@@ -1754,87 +1795,80 @@ to decide which steps of a process to hand to an agent. Here is the rule underne
 agent the authority you would give a new employee in their first week: real work, a short list of things
 it may never do alone, and a person who reviews anything that cannot be undone.</p>
 
-<div class="tryit" id="agt">
-  <div class="tryit-head">Try it &middot; Supervise an agent</div>
-  <p class="tryit-intro">Hospitals spend hours fighting insurance denials: an insurer refuses to pay a claim, and someone has to read the chart, find the insurer's rule, and write an appeal. Here an agent works a small queue on its own. You are the denial specialist. Press <b>Next step</b> and watch it turn one goal into tasks. It cannot send anything without you.</p>
-  <div class="agt-grid">
-    <div class="agt-side">
-      <div class="agt-box agt-goal"><span class="agt-k">The goal a person gave it</span>Get every denied claim in today's queue appealed or handed to the right person before its deadline.</div>
-      <div class="agt-box"><span class="agt-k">The tasks it picked for itself</span>
-        <ol class="agt-plan" id="agt-plan"><li class="agt-wait">Waiting to start</li></ol></div>
-      <div class="agt-box agt-leash"><span class="agt-k">Its leash, set by the hospital</span>
-        <ul><li><b>May</b> read denial notices, patient charts, and insurer rules</li><li><b>May</b> draft appeal letters and hand cases to people</li><li><b>May not</b> send an appeal without a specialist's approval</li><li><b>May not</b> change a billing code or add facts to a chart</li><li>Every step is logged</li></ul></div>
-    </div>
-    <div class="agt-main">
-      <div class="agt-q" id="agt-q"></div>
-      <ol class="agt-log" id="agt-log" aria-live="polite"></ol>
-      <div class="agt-ask" id="agt-ask" hidden></div>
-      <div class="agt-ctrl">
-        <button type="button" class="nnt-btn" id="agt-next">Next step</button>
-        <button type="button" class="nnt-btn alt" id="agt-run">Run until it needs me</button>
-        <button type="button" class="nnt-btn alt" id="agt-reset">Start over</button>
-      </div>
-    </div>
+<div class="ar" id="apsim">
+  <div class="ar-head"><span><b style="color:#fff">Try it</b> &middot; press run to watch a hospital&rsquo;s appeals agent handle one denied claim.</span><button class="ar-run" id="apRun" type="button">Run the agent</button></div>
+  <div class="ar-mail" id="apMail">
+    <div class="ar-mail-h"><span><b>From:</b> Evergreen Health Plan, Claims Department</span><span><b>Received:</b> April 2 &middot; <b>Re:</b> Claim 30418, knee MRI, $1,240</span></div>
+    <p>This claim is denied. Our review found the service was not medically necessary. You may appeal within 60 days of this notice.</p>
   </div>
-  <p class="agt-sum" id="agt-sum" aria-live="polite"></p>
-  <p class="tryit-note">A simulation with invented claims, not real software or patients. Real tools are moving this way. Epic, whose records system many U.S. hospitals run on, sells AI that drafts appeal letters for denied claims from the patient's chart, as a starting point for a denial specialist.<sup class="cite"><a href="#src-63" aria-label="Source 63">63</a></sup> Watch for three things: the agent writes its own task list from one goal, it stops at the edge of its leash, and on claim 3 it refuses to write an appeal it cannot back up. <strong>Try this with an AI:</strong> "Give me the goal, the task list, and the leash for an agent that works one process at a company I might join. Which step should always wait for a person, and why?"</p>
+  <svg viewBox="10 30 540 232" role="img" aria-label="Workflow: a denial notice from an insurer arrives in the hospital's denial queue and triggers the appeals agent. The agent uses a large language model as its brain. It reads the claim record and the patient's chart in the hospital's records system, and the insurer's coverage rule. It drafts an appeal letter, and a denial specialist reviews it before anything is sent: the human in the loop.">
+    <path class="ar-wire" id="apW1" d="M120 70 L170 70"/>
+    <path class="ar-wire" id="apW5" d="M330 70 L390 70"/>
+    <path class="ar-wire" id="apW2" d="M205 100 L100 176"/>
+    <path class="ar-wire" id="apW3" d="M240 100 L232 176"/>
+    <path class="ar-wire" id="apW6" d="M265 100 L310 176"/>
+    <path class="ar-wire" id="apW4" d="M300 100 L440 176"/>
+    <rect class="ar-db" x="182" y="150" width="178" height="88" rx="6"/>
+    <text class="ar-dbl" x="271" y="164" text-anchor="middle">Hospital records system</text>
+    <g class="ar-node" id="apTrig"><rect x="20" y="40" width="100" height="60"/><text x="70" y="66" text-anchor="middle">Denial queue</text><text class="sub" x="70" y="84" text-anchor="middle">a denial arrives</text></g>
+    <g class="ar-node" id="apAgent"><rect x="170" y="40" width="160" height="60"/><text x="250" y="66" text-anchor="middle">Appeals agent</text><text class="sub" x="250" y="84" text-anchor="middle">plans the steps</text></g>
+    <g class="ar-node ar-human" id="apHuman"><rect x="390" y="40" width="150" height="60"/><circle class="ar-head" cx="410" cy="60" r="6"/><path class="ar-body" d="M400 82 Q410 66 420 82 Z"/><text x="482" y="66" text-anchor="middle">Specialist</text><text class="sub" x="482" y="84" text-anchor="middle">reviews the draft</text></g>
+    <g class="ar-node" id="apBrain"><circle cx="95" cy="205" r="30"/><text x="95" y="203" text-anchor="middle">Brain</text><text class="sub" x="95" y="218" text-anchor="middle">LLM</text><text class="model" x="95" y="252" text-anchor="middle">a language model</text></g>
+    <g class="ar-node" id="apClaim"><circle cx="230" cy="205" r="30"/><text x="230" y="203" text-anchor="middle">Claim</text><text class="sub" x="230" y="218" text-anchor="middle">record</text></g>
+    <g class="ar-node" id="apChart"><circle cx="312" cy="205" r="30"/><text x="312" y="203" text-anchor="middle">Patient</text><text class="sub" x="312" y="218" text-anchor="middle">chart</text></g>
+    <g class="ar-node" id="apRule"><circle cx="445" cy="205" r="30"/><text x="445" y="203" text-anchor="middle">Insurer</text><text class="sub" x="445" y="218" text-anchor="middle">rule</text></g>
+  </svg>
+  <ol class="ar-log" id="apLog" aria-live="polite"><li class="empty">The agent&rsquo;s steps will appear here as it works.</li></ol>
+  <div class="ar-draft" id="apDraft">
+    <b id="apStatus">Draft appeal &middot; waiting for the specialist</b>
+    <div class="ar-reply">
+      <div class="ar-mail-h"><span><b>To:</b> Evergreen Health Plan, Appeals</span><span><b>Re:</b> Appeal of claim 30418, knee MRI</span></div>
+      <p>We ask you to reverse this denial. Your coverage rule pays for a knee MRI after six weeks of treatment
+      that has not helped. The patient had physical therapy from January 12 to February 23 with no improvement,
+      as the attached therapy notes show, and her doctor then ordered the MRI. The service meets your rule.</p>
+      <p class="ar-att">Attached: therapy notes from January 12 and February 23; the doctor&rsquo;s order</p>
+    </div>
+    <p class="ar-after" id="apAfter">The agent did the reading and wrote the letter in seconds. A person opened the chart herself before anything went to the insurer.</p>
+  </div>
 </div>
+<p class="ar-cap">An invented claim, but a real kind of work. Epic, whose records system many U.S. hospitals
+run on, sells AI that drafts appeal letters for denied claims from the patient&rsquo;s chart, as a starting
+point for a denial specialist.<sup class="cite"><a href="#src-63" aria-label="Source 63">63</a></sup> Notice
+what the person in the dashed box did. She did not just read the tidy letter and click yes. She opened the
+chart and found the two therapy notes herself. If the notes had not been there, the right move would be no
+appeal at all, because a letter that cites evidence the chart does not have is a false statement to an
+insurer.</p>
+
 <script>
 (function(){
-  var root=document.getElementById('agt');if(!root)return;
-  function $(id){return document.getElementById(id);}
-  var CLAIMS=[
-    {t:'Claim 1 &middot; Knee MRI',r:'Denied: not medically necessary'},
-    {t:'Claim 2 &middot; Two-night hospital stay',r:'Denied: billing code does not match the diagnosis'},
-    {t:'Claim 3 &middot; Twelve physical therapy visits',r:'Denied: not medically necessary'}];
-  var PLAN=['Read each denial notice','Pull the patient chart','Find the insurer’s rule for that service','Draft an appeal, or hand the case to the right person','Get a specialist’s approval before anything goes out'];
-  // icon, claim index, text, plan step it works on, claim status after, optional decision
-  var STEPS=[
-    ['\u{1F9ED}',-1,'Breaks the goal into five tasks it will repeat for each claim.',-1,null],
-    ['\u{1F4E8}',0,'Reads the denial: the insurer says the MRI was not medically necessary.',0,'Working'],
-    ['\u{1F4C1}',0,'Pulls the chart: knee pain for two months, and six weeks of physical therapy that did not help.',1,'Working'],
-    ['\u{1F4D6}',0,'Finds the insurer’s rule: an MRI is covered after six weeks of treatment that fails. The chart meets it.',2,'Working'],
-    ['✍️',0,'Drafts a one-page appeal that quotes the rule and cites the two therapy notes by date.',3,'Draft ready'],
-    ['✋',0,'Stops. Sending an appeal needs your approval.',4,'Waiting for you','c1'],
-    ['\u{1F4E8}',1,'Reads the denial: the billing code does not match the diagnosis in the chart.',0,'Working'],
-    ['\u{1F4C1}',1,'Pulls the chart: the diagnosis looks right. The code on the bill may be wrong.',1,'Working'],
-    ['\u{1F6A7}',1,'This is not an appeal. The fix is a corrected code, and changing codes is off its leash.',3,'Working'],
-    ['\u{1F4E4}',1,'Hands the claim to a human coder, with a note on which code looks wrong and why. Deadline: 9 days.',3,'With a coder'],
-    ['\u{1F4E8}',2,'Reads the denial: the insurer says twelve therapy visits were not medically necessary.',0,'Working'],
-    ['\u{1F4C1}',2,'Pulls the chart: notes for the first four visits. Visits five to twelve have no progress notes.',1,'Working'],
-    ['\u{1F4D6}',2,'Finds the insurer’s rule: each visit past four needs a note showing progress.',2,'Working'],
-    ['\u{1F6D1}',2,'Will not draft an appeal. Nothing in the chart supports it, and writing as if it did would be making up evidence.',3,'Working'],
-    ['\u{1F4E4}',2,'Hands it to you with what is missing: progress notes for visits five to twelve. If the therapist has them, the appeal is easy.',3,'Waiting for you','c3']];
-  var i,status,decisions,running,timer;
-  function reset(){clearTimeout(timer);i=0;status=CLAIMS.map(function(){return 'In the queue';});decisions={};running=false;
-    $('agt-log').innerHTML='';$('agt-ask').hidden=true;$('agt-ask').innerHTML='';$('agt-sum').innerHTML='';
-    $('agt-plan').innerHTML='<li class="agt-wait">Waiting to start</li>';$('agt-next').disabled=false;$('agt-run').disabled=false;drawQ(-1);}
-  function drawQ(active){$('agt-q').innerHTML=CLAIMS.map(function(c,k){var s=status[k],cls=s==='Waiting for you'?' wait':(/Sent|With a coder|Back to|With you|Waiting on/.test(s)?' done':'');
-    return '<div class="agt-c'+(k===active?' on':'')+cls+'"><b>'+c.t+'</b><span>'+c.r+'</span><em>'+s+'</em></div>';}).join('');}
-  function drawPlan(cur){$('agt-plan').innerHTML=PLAN.map(function(p,k){return '<li'+(k===cur?' class="on"':'')+'>'+p+'</li>';}).join('');}
-  function ask(id){var a=$('agt-ask');a.hidden=false;$('agt-next').disabled=true;$('agt-run').disabled=true;running=false;
-    if(id==='c1')a.innerHTML='<p><b>Claim 1 needs you.</b> The draft quotes the insurer’s rule and cites the two therapy notes. Check it before you approve. Whoever approves answers for what goes out.</p><button type="button" class="nnt-btn" data-d="ok">Approve and send</button> <button type="button" class="nnt-btn alt" data-d="no">Send it back</button>';
-    else a.innerHTML='<p><b>Claim 3 needs you.</b> The agent found no evidence for visits five to twelve. What do you do?</p><button type="button" class="nnt-btn" data-d="ask">Ask the therapist for the notes</button> <button type="button" class="nnt-btn alt" data-d="push">Tell it to write the appeal anyway</button>';
-    [].forEach.call(a.querySelectorAll('[data-d]'),function(b){b.onclick=function(){decide(id,b.getAttribute('data-d'));};});a.querySelector('button').focus();}
-  function log(icon,txt,cls){var li=document.createElement('li');if(cls)li.className=cls;li.innerHTML='<span class="ai" aria-hidden="true">'+icon+'</span><span>'+txt+'</span>';var lg=$('agt-log');lg.appendChild(li);lg.scrollTop=lg.scrollHeight;}
-  function decide(id,d){$('agt-ask').hidden=true;decisions[id]=d;
-    if(id==='c1'){if(d==='ok'){status[0]='Sent';log('✅','<b>You approved.</b> The agent sends the appeal and logs who approved it and when.','you');}
-      else{status[0]='Back to the agent';log('↩️','<b>You sent it back.</b> Nothing goes out. The agent logs your reason and moves on.','you');}}
-    else{if(d==='ask'){status[2]='Waiting on notes';log('✅','<b>You asked the therapist.</b> The agent sets a reminder three days before the deadline.','you');}
-      else{status[2]='With you';log('⛔','<b>You pushed.</b> The agent still refuses: saying care was documented when it was not would be a false statement to an insurer. It logs your request and leaves the claim with you.','you');}}
-    drawQ(-1);$('agt-next').disabled=i>=STEPS.length;$('agt-run').disabled=i>=STEPS.length;if(i>=STEPS.length)finish();}
-  function step(){if(i>=STEPS.length)return false;var s=STEPS[i++];
-    if(s[1]<0){drawPlan(-1);log(s[0],'<b>Plans.</b> '+s[2]);drawQ(-1);}
-    else{status[s[1]]=s[4];drawPlan(s[3]);log(s[0],'<b>Claim '+(s[1]+1)+'.</b> '+s[2],s[5]?'stop':'');drawQ(s[1]);}
-    if(s[5]){ask(s[5]);return false;}
-    if(i>=STEPS.length){$('agt-next').disabled=true;$('agt-run').disabled=true;finish();}
-    return true;}
-  function finish(){if(!decisions.c1||!decisions.c3)return;
-    $('agt-sum').innerHTML='<b>Goal met.</b> All three claims were appealed or handed to a person before their deadlines. The agent took '+STEPS.length+' steps on its own and picked every one. You made 2 decisions. It sent nothing you did not approve, it did not touch the billing code, and it would not write an appeal the chart could not back up. That is an agent that is autonomous and controlled, the bottom right of the square in section 3.3.';}
-  function run(){running=true;(function go(){if(!running)return;if(step())timer=setTimeout(go,window.matchMedia('(prefers-reduced-motion: reduce)').matches?60:650);})();}
-  $('agt-next').onclick=function(){running=false;clearTimeout(timer);step();};
-  $('agt-run').onclick=run;$('agt-reset').onclick=reset;
-  reset();
+ var btn=document.getElementById('apRun'),log=document.getElementById('apLog'),draft=document.getElementById('apDraft');
+ if(!btn||!log||!draft)return;
+ var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ var steps=[
+  {on:['apTrig','apMail'],wire:['apW1'],text:'A denial arrives: claim 30418, a $1,240 knee MRI, denied as not medically necessary. The deadline to appeal is 60 days.'},
+  {on:['apAgent','apBrain'],wire:['apW2'],text:'The brain, a large language model, reads the denial and sets the goal: show the insurer that the MRI was needed, before the deadline.'},
+  {on:['apAgent','apClaim'],wire:['apW3'],text:'Looks up claim 30418 in the claim record: a knee MRI on March 3, ordered by the patient’s doctor.'},
+  {on:['apAgent','apChart'],wire:['apW6'],text:'Reads the patient’s chart: knee pain since January, physical therapy from January 12 to February 23 that did not help, then the doctor’s order for an MRI.'},
+  {on:['apAgent','apRule'],wire:['apW4'],text:'Checks the insurer’s rule: a knee MRI is covered after six weeks of treatment that has not helped. Six weeks of therapy meets it.'},
+  {on:['apAgent'],wire:[],text:'Checks its own rules: an appeal is a statement to an insurer, so a person has to approve it. Drafts a one-page appeal that quotes the rule and attaches the two therapy notes.',cls:'flag'},
+  {on:['apAgent','apHuman'],wire:['apW5'],wait:true,draft:'pending',text:'Stops and sends the draft to a denial specialist. Nothing goes to the insurer until a person says yes.',cls:'hold'},
+  {on:['apHuman'],wire:[],draft:'approved',text:'The specialist opens the chart herself and finds both therapy notes. The dates match the letter. She approves, and the appeal goes to the insurer.',cls:'human'}
+ ];
+ function clear(){document.querySelectorAll('#apsim .ar-node,#apMail').forEach(function(n){n.classList.remove('on','done');});document.querySelectorAll('#apsim .ar-wire').forEach(function(w){w.classList.remove('on','wait');});}
+ btn.addEventListener('click',function(){
+  btn.disabled=true;btn.textContent='Running…';log.innerHTML='';draft.classList.remove('show','ok');clear();
+  var i=0;
+  function next(){
+   if(i>0){steps[i-1].on.forEach(function(id){var n=document.getElementById(id);n.classList.remove('on');n.classList.add('done');});steps[i-1].wire.forEach(function(id){document.getElementById(id).classList.remove('on','wait');});}
+   if(i>=steps.length){btn.disabled=false;btn.textContent='Run again';return;}
+   var s=steps[i];s.on.forEach(function(id){document.getElementById(id).classList.add('on');});s.wire.forEach(function(id){document.getElementById(id).classList.add(s.wait?'wait':'on');});
+   if(s.draft==='pending'){draft.classList.add('show');draft.classList.remove('ok');document.getElementById('apStatus').textContent='Draft appeal · waiting for the specialist';}
+   if(s.draft==='approved'){draft.classList.add('ok');document.getElementById('apStatus').textContent='Approved by the specialist · sent to the insurer';}
+   var li=document.createElement('li');li.textContent=(i+1)+'. '+s.text;if(s.cls)li.className=s.cls;log.appendChild(li);
+   i++;setTimeout(next,reduce?60:1500);
+  }
+  next();
+ });
 })();
 </script>
 
@@ -2983,7 +3017,7 @@ what it is, and ask who would hold the authority to say no if it were written fo
 <li>Further reading. NIST AI Risk Management Framework 1.0 (2023), the voluntary U.S. framework. James Bessen, &ldquo;Toil and Technology,&rdquo; <em>Finance &amp; Development</em> (IMF, 2015), on what automation did to bank teller jobs, for the question students always ask about their own. The MIS 201 book&rsquo;s Chapter 4 treats the Every Cure case at greater length, with a lab on its scores.</li>
 <li>Unsourced by design. The accounting, marketing, and operations descriptions in section 6.3 are general accounts of common practice, not reported cases. The refund agent in section 3.3 is an illustration of a common design, not a named company. The screening numbers in section 4.3, the likelihoods in section 5.1, the shape of the long-tail figure in section 8.5, and the placements on the dials figure in section 3 are illustrative.</li>
 <li>Images. Air Canada Boeing 777, photograph by Adrian Pingstone, <a href="https://commons.wikimedia.org/wiki/File:Boeing_777-300_(Air_Canada)_C-FITW.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, public domain. The Spheres, Seattle, photograph by Andy Li, 2018, <a href="https://commons.wikimedia.org/wiki/File:Amazon_Spheres_2018.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC0. All diagrams are original to this book.</li>
-<li><strong>Update, 23 November 2026 (pictures and an agent).</strong> The neural network toy in section 4.2 now shows drawn scenes for each photo, and its 3D view follows the photo in: it breaks into pixels, the pixels become the seven clues, and the clues travel the weights to a guess. Section 4.3 adds a chart of the long tail of medical research. Section 5.3 adds a simulated agent that works a queue of denied insurance claims with a student as the approving specialist; source 63.</li>
+<li><strong>Update, 23 November 2026 (pictures and an agent).</strong> The neural network toy in section 4.2 now shows drawn scenes for each photo, and its 3D view follows the photo in: it breaks into pixels, the pixels become the seven clues, and the clues travel the weights to a guess. Section 4.3 adds a chart of the long tail of medical research. Section 5.3 adds a run-the-agent example, built like the one in Lab 8: a hospital agent reads a denied claim, the chart, and the insurer’s rule, drafts an appeal, and waits for a denial specialist; source 63.</li>
 <li><strong>Update, 23 November 2026 (who is most at risk).</strong> Section 10.2 adds the Burning Glass Institute and RAISE US report (later the same day: the BLS projection to 2035, unemployment for young graduates, the largest employers still hiring beginners, and in 10.3 the rise in stakeholder and interpersonal skills and the case for hiring new graduates): the jobs most likely to be automated are mostly held by workers without degrees, office and administrative support lost the most, and business and software jobs grew. New bullet in the &ldquo;too simple&rdquo; box. Sources 61 and 62.</li>
 <li><strong>Update, 23 November 2026 (AI safety and regulation).</strong> New section 9.4 on AI safety (the International AI Safety Report 2026&rsquo;s three kinds of risk, company safety frameworks, and expert disagreement) and section 9.5 on who makes the rules (the EU AI Act and its 2026 delay, U.S. federal action without a statute, California SB 53, and Colorado&rsquo;s repeal and replacement). The regulation paragraph formerly at the end of 9.3 moved into 9.5. Two vocabulary entries; sources 56 to 60.</li>
 <li><strong>Update, 23 November 2026 (AI and electricity).</strong> Section 6.3 adds a box comparing AI with electricity: Andrew Ng&rsquo;s comparison, general purpose technologies (Bresnahan and Trajtenberg), the slow factory payoff, where the comparison holds, and where it breaks down. Sources 54 and 55.</li>
