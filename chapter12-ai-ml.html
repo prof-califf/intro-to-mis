@@ -392,7 +392,7 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 .nnt-delta .wv{font-variant-numeric:tabular-nums;font-weight:700}
 .nnt-blank{font-size:.85rem;color:var(--text-light);font-style:italic;margin:0}
 .nnt-plist{display:grid;gap:6px;margin:10px 0 4px}
-.nnt-plist .prow{display:grid;grid-template-columns:80px 1fr 46px;gap:10px;align-items:center;font-size:.86rem}
+.nnt-plist .prow{display:grid;grid-template-columns:112px 1fr 46px;gap:10px;align-items:center;font-size:.86rem}
 .nnt-plist .ptrack{height:12px;background:#efefea;border:1px solid var(--border);border-radius:999px;overflow:hidden;display:block}
 .nnt-plist .ptrack span{display:block;height:100%;background:var(--black);transition:width .3s ease}
 .nnt-plist .prow.top .ptrack span{background:var(--magenta)}
@@ -411,6 +411,11 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 .nnt-tests .ttag{display:block;font-size:.82rem}
 .nnt-tests .ttag.ok{color:var(--good)}
 .nnt-tests .ttag.bad{color:var(--magenta-dark);font-weight:700}
+@media(max-width:480px){.nnt-pad{gap:6px;padding:0 12px 14px}.nnt-lab{font-size:10.5px;letter-spacing:.02em;white-space:normal;text-align:center;padding:8px 4px;min-width:0}}
+.nnt-feedhead{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dark);margin:.4rem 0 .3rem}
+.nnt-round{display:grid;grid-template-columns:5.5rem auto 1fr;gap:12px;align-items:center;padding:8px 6px;border-bottom:1px solid var(--border);font-size:.9rem}
+.nnt-round .rl{font-weight:600}.nnt-round .rv{font-size:1.5rem;letter-spacing:.15em;line-height:1}.nnt-round .rt{color:var(--text-light)}.nnt-round .rt b{color:var(--magenta-dark)}.nnt-sum{background:var(--off-white)}
+@media(max-width:600px){.nnt-round{grid-template-columns:4.5rem 1fr}.nnt-round .rt{grid-column:1/-1}}
 .nnt-read{font-family:var(--sans);font-size:.94rem;line-height:1.6;border-left:3px solid var(--magenta);background:var(--off-white);padding:10px 14px;margin:14px 1rem}
 .nnt-read:empty{display:none}
 @media(max-width:600px){.nnt-tests .trow{grid-template-columns:68px 1fr 1fr}.nnt-tests .td{grid-column:2/-1}.nnt-tests .te{grid-row:span 2}.nnt-scene{grid-template-columns:1fr}.nnt-scene .emo{max-width:120px}.nnt-scene .ph{max-width:260px}}
@@ -1034,44 +1039,47 @@ what a cat looks like. The network works out which features went with the label,
 came with "cat" in the pictures it saw. The network does not know what a cat is; it knows what cats
 tended to look like in one pile of pictures. And you chose the pile.</p>
 
-<p>Try it. The toy below is a real neural network, small enough to train in your browser. A camera does
-not see a rabbit. It sees numbers. Here each photo has already been boiled down to seven clues, each scored
-from 0 to 1, and the network has to learn which clues go with which label. You are the one who labels the
-photos, so you are the teacher.</p>
+<p>Now point the same machinery at your feed. ByteDance's engineers have described the kind of system
+behind short-video feeds: a deep learning recommender that keeps retraining on what people do, as they do
+it.<sup class="cite"><a href="#src-64" aria-label="Source 64">64</a></sup> The real one has billions of
+dials and reads far more than any toy can. The toy below is a real neural network too, just small enough to
+train in your browser. Each video has been boiled down to seven clues, each scored from 0 to 1, and the
+network has to learn which clues go with how long you watch. You do the swiping, so you are the teacher,
+and you are also the data.</p>
 
 <div class="tryit" id="nnt">
-  <div class="tryit-head">Try it &middot; Train a neural network</div>
+  <div class="tryit-head">Try it &middot; Train a feed like TikTok&rsquo;s</div>
   <details class="nnt-how" open>
     <summary>Your job</summary>
     <ol>
-      <li><strong>Label nine photos</strong> as a person, a rabbit, or a turtle. After each one, the network retrains on everything you have labeled so far.</li>
-      <li><strong>Watch it guess first.</strong> From the second photo on, the network guesses before you answer. Watch the guesses improve, and watch the lines in the diagram thicken as it settles on what matters.</li>
-      <li><strong>Press Test it on new photos.</strong> Seven photos it has never seen arrive. Some look like what it trained on. Some do not.</li>
-      <li><strong>Then fix it the way a company would</strong>, with more data. Add four photos the data team labeled, and test again.</li>
+      <li><strong>Swipe nine videos</strong> the way you really would: watched it all, watched some, or swiped away. After each one, the network retrains on everything you have done so far.</li>
+      <li><strong>Watch it guess first.</strong> From the second video on, the network predicts what you will do before you swipe. Watch the guesses improve, and watch the lines in the diagram thicken as it learns your taste.</li>
+      <li><strong>Press Rank seven new videos.</strong> It builds your feed from videos it has never shown you. Some are like what you swiped. Two are about topics it knows nothing about.</li>
+      <li><strong>Then let it pick your feed.</strong> Stop swiping and let the network choose what you see for five rounds. Watch which topics come back, and which never do.</li>
     </ol>
   </details>
 
   <div class="nnt-bench">
     <div id="nnt-card" class="nnt-scene" aria-live="polite"></div>
     <div id="nnt-guess" class="nnt-guess" aria-live="polite"></div>
-    <p class="nnt-ask" id="nnt-ask">What is it?</p>
+    <p class="nnt-ask" id="nnt-ask">What would you do?</p>
     <div class="nnt-pad" role="group" aria-labelledby="nnt-ask">
-      <button type="button" class="nnt-lab" data-lab="0"><span class="li" aria-hidden="true">&#x1F9D1;</span>Person</button>
-      <button type="button" class="nnt-lab" data-lab="1"><span class="li" aria-hidden="true">&#x1F407;</span>Rabbit</button>
-      <button type="button" class="nnt-lab" data-lab="2"><span class="li" aria-hidden="true">&#x1F422;</span>Turtle</button>
+      <button type="button" class="nnt-lab" data-lab="0"><span class="li" aria-hidden="true">&#x2705;</span>Watched it all</button>
+      <button type="button" class="nnt-lab" data-lab="1"><span class="li" aria-hidden="true">&#x23F8;&#xFE0F;</span>Watched some</button>
+      <button type="button" class="nnt-lab" data-lab="2"><span class="li" aria-hidden="true">&#x1F446;</span>Swiped away</button>
     </div>
-    <p class="nnt-status" id="nnt-status" aria-live="polite">Photo 1 of 9. Label it.</p>
+    <p class="nnt-status" id="nnt-status" aria-live="polite">Video 1 of 9. Swipe it.</p>
 
     <div class="nnt-netbox">
       <p class="nt">The network, as you have trained it</p>
-      <p class="nk">Seven clues in, two hidden layers, three labels out. Each line is a weight, one of the dials. Thicker means it counts for more. Black lines push toward a label; pink lines push away. Shaded circles are the units firing for this photo. The six strongest weights show their numbers, and you can hover over any line to see its value. It starts blank: before you label anything, the network knows nothing. Label the first photo and watch the lines appear.</p>
+      <p class="nk">Seven clues in, two hidden layers, three predictions out. Each line is a weight, one of the dials. Thicker means it counts for more. Black lines push toward a label; pink lines push away. Shaded circles are the units firing for this video. The six strongest weights show their numbers, and you can hover over any line to see its value. It starts blank: before you swipe anything, the network knows nothing about you. Swipe the first video and watch the lines appear.</p>
       <div class="nnt-views" role="group" aria-label="Diagram view">
         <button type="button" class="nnt-view on" id="nnt-vflat" aria-pressed="true">Flat view, with the numbers</button>
-        <button type="button" class="nnt-view" id="nnt-v3d" aria-pressed="false">3D view: follow the photo in</button>
-        <button type="button" class="nnt-view" id="nnt-replay" hidden>Send the photo through again</button>
+        <button type="button" class="nnt-view" id="nnt-v3d" aria-pressed="false">3D view: follow the video in</button>
+        <button type="button" class="nnt-view" id="nnt-replay" hidden>Send the video through again</button>
       </div>
       <canvas id="nnt-3d" role="img" aria-label="A 3D view of the network." hidden></canvas>
-      <p class="nnt-3dhint" id="nnt-3dhint" hidden>You start behind the photo. It breaks into pixels, the pixels pour into the seven clues, and the clues travel the weights to a guess. Bigger pink dots carry more. Real image networks read the pixels directly; this one boils them down to seven clues so you can follow along. Drag to turn it. The flat view shows each weight's number.</p>
+      <p class="nnt-3dhint" id="nnt-3dhint" hidden>You start behind the video. It breaks into pixels, the pixels pour into the seven clues, and the clues travel the weights to a prediction. Bigger pink dots carry more. Real feeds read the video itself plus who posted it, the sound, and how millions of other people reacted; this one boils it all down to seven clues so you can follow along. Drag to turn it. The flat view shows each weight's number.</p>
       <div id="nnt-net"></div>
       <p class="nnt-trainline" id="nnt-train" aria-live="polite"></p>
       <div class="nnt-delta" id="nnt-delta"></div>
@@ -1080,13 +1088,13 @@ photos, so you are the teacher.</p>
   </div>
 
   <div class="nnt-ctrl">
-    <button type="button" class="nnt-btn" id="nnt-test" disabled>Test it on new photos</button>
-    <button type="button" class="nnt-btn alt" id="nnt-add" hidden>Add four photos the data team labeled</button>
+    <button type="button" class="nnt-btn" id="nnt-test" disabled>Rank seven new videos</button>
+    <button type="button" class="nnt-btn alt" id="nnt-add" hidden>Let it pick your feed</button>
     <button type="button" class="nnt-btn alt" id="nnt-reset">Clear and start over</button>
   </div>
   <div id="nnt-tests" class="nnt-tests"></div>
   <p class="nnt-read" id="nnt-read" aria-live="polite"></p>
-  <p class="tryit-note">Invented photos, a real network: 7 inputs, hidden layers of 4 and 3, 3 outputs, trained by backpropagation in your browser. Each new label adds 300 training passes on top of what it already learned. Nothing is saved. Look at which clues on the left have the thickest lines after you finish labeling, then again after the data team&rsquo;s photos. You never touched the network. You only changed the data. <strong>Try this with an AI:</strong> "A classifier learned that turtles are animals photographed in water. Name three other shortcuts like this that a model trained on real company data might learn without anyone noticing."</p>
+  <p class="tryit-note">Invented videos, a real network: 7 inputs, hidden layers of 4 and 3, 3 outputs, trained by backpropagation in your browser. Each swipe adds 300 training passes on top of what it already learned. Nothing is saved. Look at which clues on the left have the thickest lines after your nine swipes, then again after the network picks your feed. You never touched the network. You only changed the data, and in the last step the network changed it for you. <strong>Try this with an AI:</strong> "A video feed is trained to maximize watch time. Name three things it might learn to show people that keep them watching but that nobody at the company would choose on purpose."</p>
 </div>
 <script>
 (function(){
@@ -1095,34 +1103,33 @@ photos, so you are the teacher.</p>
   var NS='http://www.w3.org/2000/svg';
   function el(n,a,t){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);if(t!=null)e.textContent=t;return e;}
   var REDUCED=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var CLUES=['long ears','shell','fur','two legs','water','grass','indoors'];
-  var LABELS=['Person','Rabbit','Turtle'];
-  var EMO=['\u{1F9D1}','\u{1F407}','\u{1F422}'];
-  // [emoji, description, background, clue scores, true label]
+  var CLUES=['pets','comedy','sports','cooking','someone you follow','trending sound','over a minute'];
+  var LABELS=['Watched it all','Watched some','Swiped away'];
+  var TOPICS=['pets','comedy','sports','cooking'];
+  // [emoji, description, topic color, clue scores, unused, kind]
   var TRAIN=[
-    [EMO[0],'A person at a desk',2,[0,0,0,.6,0,0,1],0],
-    [EMO[1],'A rabbit on a lawn',1,[.5,0,.4,0,0,1,0],1],
-    [EMO[2],'A turtle swimming',0,[0,.4,0,0,1,0,0],2],
-    [EMO[1],'A rabbit with its ears down',1,[0,0,.5,0,0,1,0],1],
-    [EMO[0],'A person on a couch',2,[0,0,0,.2,0,0,1],0],
-    [EMO[2],'A turtle mostly underwater',0,[0,.1,0,0,1,0,0],2],
-    [EMO[1],'A rabbit in tall grass',1,[.3,0,.1,0,0,1,0],1],
-    [EMO[2],'A turtle on a log in a pond',0,[0,.6,0,0,1,0,0],2],
-    [EMO[0],'A person cooking',2,[0,0,0,.5,0,0,1],0]];
-  // kind: 0 ordinary, 1 the background does not match, 2 no label fits
+    ['\u{1F436}','A puppy sees snow for the first time',0,[1,.3,0,0,0,1,0],0],
+    ['\u{1F3C0}','Dunk highlights from last night',2,[0,0,1,0,0,1,0],0],
+    ['\u{1F373}','One-pan pasta in 60 seconds',3,[0,0,0,1,0,.5,0],0],
+    ['\u{1F602}','A prank video from someone you follow',1,[0,1,0,0,1,0,0],0],
+    ['\u{1F431}','A cat knocks a glass off the table',0,[1,.8,0,0,0,0,0],0],
+    ['⚽','A full soccer match breakdown',2,[0,0,1,0,0,0,1],0],
+    ['\u{1F9C1}','Ten minutes of cake decorating',3,[0,0,0,1,0,0,1],0],
+    ['\u{1F3A4}','A stand-up clip with a trending sound',1,[0,1,0,0,0,1,0],0],
+    ['\u{1F422}','A turtle eats a strawberry',0,[1,.3,0,0,0,1,0],0]];
+  // kind: 0 like the videos you swiped, 1 none of the topics it has seen
   var TEST=[
-    [EMO[1],'A rabbit in a garden',1,[.6,0,.5,0,0,1,0],1,0],
-    [EMO[2],'A turtle in a stream',0,[0,.5,0,0,1,0,0],2,0],
-    [EMO[0],'A person in a kitchen',2,[0,0,0,.5,0,0,1],0,0],
-    [EMO[1],'A rabbit at the beach',0,[.6,0,.5,0,1,0,0],1,1],
-    [EMO[2],'A turtle in a backyard',1,[0,.5,0,0,0,1,0],2,1],
-    [EMO[0],'A person at a lake',0,[0,0,0,.6,1,0,0],0,1],
-    ['\u{1F998}','A kangaroo in a field',1,[.6,0,.5,.7,0,1,0],-1,2]];
-  var EXTRA=[
-    [EMO[1],'A rabbit by a pond',0,[.5,0,.4,0,1,0,0],1],
-    [EMO[2],'A turtle crossing a lawn',1,[0,.6,0,0,0,1,0],2],
-    [EMO[0],'A person on a beach',0,[0,0,0,.6,1,0,0],0],
-    [EMO[1],'A pet rabbit indoors',2,[.5,0,.5,0,0,0,1],1]];
+    ['\u{1F415}','A dog learns to surf',0,[1,.5,0,0,0,1,0],-1,0],
+    ['\u{1F3C8}','Football bloopers',2,[0,.8,1,0,0,1,0],-1,0],
+    ['\u{1F957}','Meal prep for the whole week',3,[0,0,0,1,0,0,1],-1,0],
+    ['\u{1F3AE}','A friend’s video game clip',1,[0,.3,0,0,1,0,0],-1,0],
+    ['\u{1F483}','A dance with a trending sound',1,[0,.2,0,0,0,1,0],-1,0],
+    ['\u{1F331}','How to grow tomatoes on a balcony',4,[0,0,0,0,0,0,1],-1,1],
+    ['\u{1F4F0}','A news explainer from someone you follow',4,[0,0,0,0,1,0,1],-1,1]];
+  var EXTRA=[];
+  // the feed's own picks, made up fresh each round: four videos per topic
+  var POOLEMO=[['\u{1F436}','\u{1F431}','\u{1F439}','\u{1F99C}'],['\u{1F602}','\u{1F921}','\u{1F3AD}','\u{1F923}'],['\u{1F3C0}','⚽','\u{1F3BE}','⛳'],['\u{1F373}','\u{1F355}','\u{1F35C}','\u{1F950}']];
+  var POOLTXT=[['A puppy','A cat','A hamster','A parrot'],['A sketch','A prank','A parody','A blooper reel'],['Basketball','Soccer','Tennis','Golf'],['Breakfast','Pizza','Ramen','Baking']];
 
   function rng(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
   // two hidden layers (4 and 3 units); the last number in each row is the bias
@@ -1146,93 +1153,29 @@ photos, so you are the teacher.</p>
   var EPOCHS=300;
   var labels=[],idx=0,net=initNet(7),before=null,guessed=0,right=0,extraOn=false,training=false,runId=0;
   var labBtns=[].slice.call(root.querySelectorAll('[data-lab]'));
-  var LAYERNAME=['hidden layer 1','hidden layer 2','the label'];
+  var LAYERNAME=['hidden layer 1','hidden layer 2','the prediction'];
 
-  // ---------- the photos: small drawn scenes, painted once and reused by the card, the tests, and the 3D view ----------
-  var SCENE={'A person at a desk':'desk','A rabbit on a lawn':'lawn','A turtle swimming':'swim','A rabbit with its ears down':'lawn2',
-    'A person on a couch':'couch','A turtle mostly underwater':'under','A rabbit in tall grass':'tallgrass','A turtle on a log in a pond':'log',
-    'A person cooking':'kitchen','A rabbit in a garden':'garden','A turtle in a stream':'stream','A person in a kitchen':'kitchen2',
-    'A rabbit at the beach':'beach','A turtle in a backyard':'backyard','A person at a lake':'lake','A kangaroo in a field':'field',
-    'A rabbit by a pond':'pond','A turtle crossing a lawn':'lawn3','A person on a beach':'beach2','A pet rabbit indoors':'rug'};
+  // ---------- the videos: small drawn phone screens, painted once and reused by the card, the tests, and the 3D view ----------
   var EMOJI_FONT='"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
   var SW=240,SH=180,SGX=16,SGY=12,SCACHE={};
+  var TCOL=[['#ffd7a8','#f6a65a'],['#ffe7f0','#f08cb6'],['#cfe6ff','#5c9be0'],['#fff1c9','#e8b23e'],['#e4ecdf','#8aa67c']];
   function scene(item){var key=item[1];if(SCACHE[key])return SCACHE[key];
     var cv=document.createElement('canvas');cv.width=SW*2;cv.height=SH*2;var g=cv.getContext('2d');g.scale(2,2);
-    function R(x,y,w,h,c){g.fillStyle=c;g.fillRect(x,y,w,h);}
-    function lg(y0,y1,c0,c1){var l=g.createLinearGradient(0,y0,0,y1);l.addColorStop(0,c0);l.addColorStop(1,c1);return l;}
-    function E(x,y,rx,ry,c){g.beginPath();g.ellipse(x,y,rx,ry,0,0,Math.PI*2);g.fillStyle=c;g.fill();}
-    function P(pts,c){g.beginPath();g.moveTo(pts[0],pts[1]);for(var i=2;i<pts.length;i+=2)g.lineTo(pts[i],pts[i+1]);g.closePath();g.fillStyle=c;g.fill();}
-    function sky(h){g.fillStyle=lg(0,h,'#93c9ee','#e2f2fb');g.fillRect(0,0,SW,h);}
-    function cloud(x,y){E(x,y,16,7,'#fff');E(x+12,y-4,11,7,'#fff');E(x-11,y-1,9,6,'#fff');}
-    function trees(y){for(var i=0;i<10;i++)E(8+i*26,y-((i*37)%10),17,13,i%2?'#4f8a3c':'#5f9b49');}
-    function lawn(top,c0,c1){g.fillStyle=lg(top,SH,c0||'#93cc6e',c1||'#6aa84b');g.fillRect(0,top,SW,SH-top);g.globalAlpha=.13;for(var i=0;i<6;i++)R(i*44,top,22,SH-top,'#fff');g.globalAlpha=1;}
-    function blades(y0,y1,n,col,hmin,hmax,seed){var r=rng(seed);g.strokeStyle=col;g.lineWidth=1.7;g.lineCap='round';
-      for(var i=0;i<n;i++){var x=r()*SW,y=y0+r()*(y1-y0),h=hmin+r()*(hmax-hmin);g.beginPath();g.moveTo(x,y);g.quadraticCurveTo(x+2,y-h/2,x+(r()-.5)*8,y-h);g.stroke();}}
-    function ripples(top,bot,seed){var r=rng(seed);g.strokeStyle='rgba(255,255,255,.55)';g.lineWidth=1.5;
-      for(var i=0;i<9;i++){var y=top+6+r()*(bot-top-10),x=r()*(SW-30);g.beginPath();g.moveTo(x,y);g.quadraticCurveTo(x+10,y-3,x+22,y);g.stroke();}}
-    function water(top,bot,c0,c1,seed){g.fillStyle=lg(top,bot,c0,c1);g.fillRect(0,top,SW,bot-top);ripples(top,bot,seed||3);}
-    function sand(top){g.fillStyle=lg(top,SH,'#f3e2b3','#e0c68a');g.fillRect(0,top,SW,SH-top);}
-    function floor(top,c){R(0,top,SW,SH-top,c);g.strokeStyle='rgba(0,0,0,.09)';g.lineWidth=1;for(var i=0;i<9;i++){g.beginPath();g.moveTo(i*32,top);g.lineTo(i*32-24,SH);g.stroke();}}
-    function win(x,y,w,h){R(x-3,y-3,w+6,h+6,'#fff');g.fillStyle=lg(y,y+h,'#a6d4f1','#e4f3fb');g.fillRect(x,y,w,h);R(x+w/2-1.5,y,3,h,'#fff');R(x,y+h/2-1.5,w,3,'#fff');}
-    function fence(y,h){for(var i=0;i<14;i++){R(i*18+2,y,12,h,'#cfae83');P([i*18+2,y,i*18+8,y-6,i*18+14,y],'#cfae83');}R(0,y+7,SW,4,'#b08d62');R(0,y+h-12,SW,4,'#b08d62');}
-    function bubbles(seed){var r=rng(seed);g.strokeStyle='rgba(255,255,255,.75)';g.lineWidth=1.2;for(var i=0;i<12;i++){g.beginPath();g.arc(r()*SW,40+r()*130,1.5+r()*3,0,Math.PI*2);g.stroke();}}
-    function flowers(y0,y1,n,seed){var r=rng(seed),cols=['#f6c344','#f28cb5','#ffffff','#e8577e'];for(var i=0;i<n;i++)E(r()*SW,y0+r()*(y1-y0),2.4,2.4,cols[i%4]);}
-    var sx=120,sy=120,ss=64,id=SCENE[key]||'lawn',flip=false,after=null;
-    switch(id){
-    case 'desk':R(0,0,SW,122,'#eee4d3');win(18,18,62,48);floor(122,'#c6a985');
-      R(104,96,128,8,'#7b5839');R(112,104,6,44,'#6a4b31');R(220,104,6,44,'#6a4b31');
-      R(148,50,58,40,'#2b2b2b');R(152,54,50,32,'#86c3e6');R(174,90,10,6,'#2b2b2b');R(210,84,9,12,'#cc146d');
-      R(116,60,3,36,'#555');E(118,58,9,5,'#f2c14e');sx=78;sy=112;ss=70;break;
-    case 'couch':R(0,0,SW,140,'#e8d8c1');R(148,18,56,38,'#8b6b4a');R(152,22,48,30,'#cfe3c8');P([152,52,168,34,180,44,190,36,200,52],'#7fae75');
-      floor(140,'#b88f66');E(120,162,96,13,'rgba(199,90,122,.55)');
-      R(34,74,172,50,'#5f7a99');R(26,118,188,28,'#526c8a');R(16,94,24,54,'#4b6380');R(200,94,24,54,'#4b6380');
-      R(56,84,40,32,'#e7b44b');sx=132;sy=100;ss=66;break;
-    case 'kitchen':case 'kitchen2':R(0,0,SW,114,'#f4efe6');g.strokeStyle='rgba(0,0,0,.07)';for(var i=0;i<12;i++){g.beginPath();g.moveTo(i*20,52);g.lineTo(i*20,114);g.stroke();}
-      for(var j=0;j<4;j++){g.beginPath();g.moveTo(0,52+j*16);g.lineTo(SW,52+j*16);g.stroke();}
-      R(0,8,SW,40,'#9fb69a');for(var k=1;k<6;k++)R(k*40,8,2,40,'#8aa285');win(96,58,48,34);
-      R(0,112,SW,9,'#d8ccb6');R(0,121,SW,59,'#8ea789');for(var m=1;m<6;m++)R(m*40,121,2,59,'#7d9578');
-      R(150,104,66,8,'#2e2e2e');R(156,86,32,18,'#c23a2b');R(188,92,14,3,'#555');
-      g.strokeStyle='rgba(255,255,255,.9)';g.lineWidth=2;for(var n=0;n<3;n++){g.beginPath();g.moveTo(164+n*8,82);g.quadraticCurveTo(160+n*8,74,166+n*8,66);g.stroke();}
-      sx=id==='kitchen'?86:62;sy=96;ss=68;break;
-    case 'lawn':case 'lawn2':case 'lawn3':sky(82);cloud(52,24);cloud(184,36);trees(80);lawn(80);flowers(96,176,id==='lawn3'?22:10,id.length);
-      if(id==='lawn'){sx=118;sy=130;}else if(id==='lawn2'){sx=82;sy=134;}else{sx=140;sy=134;ss=58;}break;
-    case 'garden':sky(56);cloud(180,22);fence(50,42);R(0,92,SW,88,'#86603f');
-      for(var a=0;a<3;a++){R(0,104+a*26,SW,9,'#6f4e32');for(var b=0;b<11;b++){E(10+b*22,102+a*26,8,6,'#4f9a3f');if((a+b)%3===0)E(12+b*22,98+a*26,2.6,2.6,a===1?'#e2483d':'#f2c14e');}}
-      sx=128;sy=124;ss=60;break;
-    case 'tallgrass':sky(66);cloud(60,22);trees(66);lawn(66,'#7fb85a','#5c9a3e');sx=120;sy=120;ss=60;
-      after=function(){blades(100,182,110,'#4c8f33',14,30,11);blades(140,186,45,'#6fb24c',20,40,12);};break;
-    case 'field':sky(100);cloud(60,30);cloud(150,20);E(60,104,90,16,'#9fb07a');E(190,106,80,13,'#a9b984');
-      g.fillStyle=lg(100,SH,'#cdd27a','#a7b457');g.fillRect(0,100,SW,80);blades(104,180,70,'#b3a24e',5,10,21);
-      R(190,66,6,36,'#6b4a2e');E(193,58,22,18,'#4f8a3c');sx=96;sy=120;ss=72;break;
-    case 'backyard':sky(70);cloud(50,22);fence(66,38);R(150,12,90,96,'#e1cfb6');P([142,14,195,-14,248,14],'#9a5b44');win(170,38,42,32);
-      lawn(102);flowers(104,116,14,5);R(20,112,40,6,'#8a6a4a');sx=92;sy=138;ss=56;break;
-    case 'lake':sky(80);cloud(58,22);cloud(178,30);P([0,84,40,40,80,84],'#8aa4bf');P([50,84,110,30,170,84],'#7891ae');P([140,84,190,46,240,84],'#8aa4bf');
-      P([98,40,110,30,122,40],'#f3f6f9');trees(88);water(86,140,'#64acd7','#3b82b6',7);g.fillStyle=lg(138,SH,'#b7c784','#93a965');g.fillRect(0,138,SW,42);
-      sx=120;sy=128;ss=62;break;
-    case 'pond':lawn(0,'#8fc96b','#6fae4f');E(112,122,96,40,'#3f86b9');E(112,120,92,36,'#5aa5d4');ripples(96,150,9);
-      E(70,124,9,5,'#3f8a3a');E(150,112,8,4,'#3f8a3a');blades(84,104,30,'#3e7d2c',14,26,4);sx=192;sy=70;ss=52;break;
-    case 'stream':lawn(0,'#8cc66a','#6aa84b');g.strokeStyle='#4f9bd0';g.lineWidth=58;g.lineCap='butt';g.beginPath();g.moveTo(-20,30);g.bezierCurveTo(80,40,120,140,260,150);g.stroke();
-      g.strokeStyle='#73b6e0';g.lineWidth=40;g.stroke();ripples(60,150,15);E(30,74,10,6,'#9a9a94');E(200,170,12,7,'#8e8e88');E(178,118,8,5,'#a3a39d');
-      sx=118;sy=98;ss=56;break;
-    case 'beach':case 'beach2':sky(80);E(200,30,15,15,'#ffd54a');cloud(70,26);water(80,114,'#5aa9d8','#3f8cc0',13);g.strokeStyle='#fff';g.lineWidth=3;
-      g.beginPath();g.moveTo(0,113);for(var c=0;c<=SW;c+=20)g.quadraticCurveTo(c+10,108,c+20,113);g.stroke();sand(114);E(40,160,5,3,'#f6c3b5');E(200,150,4,3,'#fff4e0');
-      if(id==='beach2'){R(176,94,3,62,'#7b5839');P([146,98,178,78,210,98],'#cc146d');sx=106;sy=132;ss=64;}else{sx=112;sy=140;ss=60;}break;
-    case 'swim':g.fillStyle=lg(0,SH,'#86c9ea','#2c74a8');g.fillRect(0,0,SW,SH);R(0,0,SW,14,'#c4e7f7');ripples(2,14,2);
-      g.fillStyle='rgba(255,255,255,.12)';P([30,14,60,14,20,180,-10,180],g.fillStyle);P([130,14,155,14,140,180,105,180],'rgba(255,255,255,.12)');bubbles(5);
-      sx=120;sy=96;ss=70;break;
-    case 'under':sky(28);g.fillStyle=lg(28,SH,'#4f9ccc','#1d5a88');g.fillRect(0,28,SW,152);ripples(28,40,4);bubbles(8);sx=120;sy=112;ss=64;
-      after=function(){g.fillStyle='rgba(32,96,150,.55)';g.fillRect(0,34,SW,146);bubbles(9);};break;
-    case 'log':sky(38);R(0,38,SW,22,'#6aa84b');trees(42);water(58,SH,'#5aa5d4','#357fb5',6);E(56,150,12,5,'#4c9a3e');E(188,160,14,6,'#4c9a3e');
-      R(40,108,164,22,'#7a5536');R(40,112,164,3,'#6a4a2f');E(204,119,10,11,'#b4875c');E(204,119,5,6,'#8c6340');sx=118;sy=94;ss=58;break;
-    case 'rug':R(0,0,SW,122,'#e6dac6');R(168,16,58,104,'#7b5839');for(var s=0;s<3;s++){R(172,20+s*34,50,28,'#6a4b31');for(var q=0;q<5;q++)R(174+q*9,26+s*34,7,22,['#cc146d','#3d6f9e','#e2b23e','#4f8a3c','#e8e2d6'][(q+s)%5]);}
-      win(26,20,60,46);floor(122,'#c09a6c');E(104,152,96,22,'#5d88a8');E(104,152,82,16,'#6f9ab9');sx=104;sy=134;ss=60;break;
-    }
-    g.save();g.globalAlpha=1;g.fillStyle='#000';g.font=ss+'px '+EMOJI_FONT;g.textAlign='center';g.textBaseline='middle';g.translate(sx,sy);if(flip)g.scale(-1,1);g.fillText(item[0],0,0);g.restore();
-    if(after)after();
-    // average the picture into a 16 x 12 grid of pixels for the 3D view
+    var tc=TCOL[item[2]]||TCOL[4],gr=g.createLinearGradient(0,0,0,SH);gr.addColorStop(0,tc[0]);gr.addColorStop(1,tc[1]);
+    g.fillStyle='#0e0e0d';g.fillRect(0,0,SW,SH);
+    g.fillStyle=gr;g.fillRect(64,6,112,168);
+    var r=rng(key.length*7+item[2]);g.globalAlpha=.25;for(var i=0;i<7;i++){g.beginPath();g.arc(64+r()*112,6+r()*168,6+r()*16,0,Math.PI*2);g.fillStyle='#fff';g.fill();}g.globalAlpha=1;
+    var sx=120,sy=78,ss=58;
+    g.save();g.font=ss+'px '+EMOJI_FONT;g.textAlign='center';g.textBaseline='middle';g.fillStyle='#000';g.fillText(item[0],sx,sy);g.restore();
+    // caption bar, heart, and progress bar, like a short-video app
+    g.fillStyle='rgba(0,0,0,.45)';g.fillRect(64,128,112,46);
+    g.fillStyle='#fff';g.font='600 8.5px sans-serif';g.textAlign='left';g.textBaseline='top';
+    var words=key.split(' '),line='',y=133;words.forEach(function(w){if(g.measureText(line+w).width>92&&line){g.fillText(line.trim(),70,y);y+=11;line='';}line+=w+' ';});if(y<160)g.fillText(line.trim(),70,y);
+    g.font='14px '+EMOJI_FONT;g.textAlign='center';g.fillText('❤️',162,104);
+    g.fillStyle='rgba(255,255,255,.35)';g.fillRect(64,171,112,3);g.fillStyle='#ff3d8a';g.fillRect(64,171,38,3);
     var d=g.getImageData(0,0,cv.width,cv.height).data,bw=cv.width/SGX,bh=cv.height/SGY,px=[];
-    for(var y=0;y<SGY;y++)for(var x=0;x<SGX;x++){var rr=0,gg=0,bb=0,cnt=0;
-      for(var yy=Math.floor(y*bh);yy<Math.floor((y+1)*bh);yy+=3)for(var xx=Math.floor(x*bw);xx<Math.floor((x+1)*bw);xx+=3){var o=(yy*cv.width+xx)*4;rr+=d[o];gg+=d[o+1];bb+=d[o+2];cnt++;}
+    for(var yy0=0;yy0<SGY;yy0++)for(var x=0;x<SGX;x++){var rr=0,gg=0,bb=0,cnt=0;
+      for(var yy=Math.floor(yy0*bh);yy<Math.floor((yy0+1)*bh);yy+=3)for(var xx=Math.floor(x*bw);xx<Math.floor((x+1)*bw);xx+=3){var o=(yy*cv.width+xx)*4;rr+=d[o];gg+=d[o+1];bb+=d[o+2];cnt++;}
       px.push('rgb('+Math.round(rr/cnt)+','+Math.round(gg/cnt)+','+Math.round(bb/cnt)+')');}
     return (SCACHE[key]={c:cv,url:cv.toDataURL('image/png'),sx:sx,sy:sy,ss:ss,px:px});}
   function pic(item,cls){return '<img class="'+cls+'" src="'+scene(item).url+'" width="240" height="180" alt="" aria-hidden="true">';}
@@ -1240,12 +1183,12 @@ photos, so you are the teacher.</p>
   function setButtons(){labBtns.forEach(function(b){b.disabled=training||idx>=TRAIN.length;});}
   function renderCard(){var c=$('nnt-card');
     if(idx<TRAIN.length){var s=TRAIN[idx];
-      c.innerHTML=pic(s,'ph')+'<div><div class="sk">Photo '+(idx+1)+' of 9 &middot; the clues, 0 to 1</div><div class="sd">'+s[1]+'</div>'+chips(s[3])+'</div>';
-      if(labels.length){var p=fwd(net,s[3]).p,k=argmax(p);$('nnt-guess').innerHTML='The network’s guess before you answer: <b>'+LABELS[k]+'</b>, '+Math.round(p[k]*100)+'% sure.';}
-      else $('nnt-guess').innerHTML='No guess yet. The network has seen nothing, so its weights are still random.';
+      c.innerHTML=pic(s,'ph')+'<div><div class="sk">Video '+(idx+1)+' of 9 &middot; the clues, 0 to 1</div><div class="sd">'+s[1]+'</div>'+chips(s[3])+'</div>';
+      if(labels.length){var p=fwd(net,s[3]).p,k=argmax(p);$('nnt-guess').innerHTML='The network’s guess before you swipe: <b>'+LABELS[k]+'</b>, '+Math.round(p[k]*100)+'% sure.';}
+      else $('nnt-guess').innerHTML='No guess yet. The network has seen nothing from you, so its weights are still random.';
       drawNet(s[3]);
     } else {
-      c.innerHTML='<div class="emo" aria-hidden="true">✅</div><div><div class="sk">Training data complete</div><div class="sd">You labeled all nine photos.</div><p style="margin:0;font-size:.92rem">The network was right on <b>'+right+' of '+guessed+'</b> guesses it made before you answered. Now press <b>Test it on new photos</b>.</p></div>';
+      c.innerHTML='<div class="emo" aria-hidden="true">✅</div><div><div class="sk">Training data complete</div><div class="sd">You swiped through all nine videos.</div><p style="margin:0;font-size:.92rem">The network was right on <b>'+right+' of '+guessed+'</b> guesses it made before you swiped. Now press <b>Rank seven new videos</b>.</p></div>';
       $('nnt-guess').innerHTML='';drawNet(TRAIN[8][3]);
     }
     labBtns.forEach(function(b){b.classList.remove('on');b.setAttribute('aria-pressed','false');});setButtons();
@@ -1260,7 +1203,7 @@ photos, so you are the teacher.</p>
   function drawNet(x){lastX=x;lastItem=itemOf(x)||lastItem;drawFlat(x);if(VIEW==='3d'){if(!seq||seq.item!==lastItem)startSeq(lastItem);else kick3();}}
   function drawFlat(x){var box=$('nnt-net');box.innerHTML='';
     var tc=topClues();
-    var svg=el('svg',{viewBox:'0 0 640 300',role:'img','aria-label':'Network diagram: seven clues, two hidden layers of four and three units, three labels. '+(labels.length?'Trained on '+labels.length+' labeled photo'+(labels.length===1?'':'s')+'. The clues with the strongest weights are '+tc[0]+', '+tc[1]+', and '+tc[2]+'.':'Weights are random before training.')});
+    var svg=el('svg',{viewBox:'0 0 640 300',role:'img','aria-label':'Network diagram: seven clues, two hidden layers of four and three units, three labels. '+(labels.length?'Trained on '+labels.length+' swiped video'+(labels.length===1?'':'s')+'. The clues with the strongest weights are '+tc[0]+', '+tc[1]+', and '+tc[2]+'.':'Weights are random before training.')});
     var f=fwd(net,x);
     var L=[{x:150,n:7},{x:300,n:4},{x:420,n:3},{x:530,n:3}];
     function ys(n){var a=[],top=140-(n-1)*19;for(var i=0;i<n;i++)a.push(top+i*38);return a;}
@@ -1274,8 +1217,8 @@ photos, so you are the teacher.</p>
       for(var bl=0;bl<4;bl++)for(var bi=0;bi<L[bl].n;bi++)svg.appendChild(el('circle',{cx:L[bl].x,cy:P[bl][bi],r:bl===0||bl===3?11:9,fill:'#fff',stroke:'#6b6b68','stroke-width':1.5}));
       CLUES.forEach(function(c,i){svg.appendChild(el('text',{x:132,y:P[0][i]+4,'text-anchor':'end'},c));});
       LABELS.forEach(function(c,i){svg.appendChild(el('text',{x:548,y:P[3][i]+4},c));});
-      [['clues in',150],['hidden layer 1',300],['hidden layer 2',420],['label out',530]].forEach(function(t){svg.appendChild(el('text',{x:t[1],y:294,'text-anchor':'middle','class':'dim'},t[0]));});
-      box.appendChild(svg);$('nnt-probs').innerHTML='<p class="nnt-blank">Blank until you label the first photo.</p>';return;}
+      [['clues in',150],['hidden layer 1',300],['hidden layer 2',420],['prediction',530]].forEach(function(t){svg.appendChild(el('text',{x:t[1],y:294,'text-anchor':'middle','class':'dim'},t[0]));});
+      box.appendChild(svg);$('nnt-probs').innerHTML='<p class="nnt-blank">Blank until you swipe the first video.</p>';return;}
     E.forEach(function(e){var ln=el('line',{'class':'edge',x1:L[e.li].x,y1:P[e.li][e.fr],x2:L[e.li+1].x,y2:P[e.li+1][e.to],stroke:e.w>=0?'#0e0e0d':'#cc146d','stroke-width':(0.4+Math.min(Math.abs(e.w),3)*1.3).toFixed(2),'stroke-opacity':'0.7'});
       ln.appendChild(el('title',{},fromName(e)+' → '+toName(e)+': weight '+sgn(e.w)));svg.appendChild(ln);});
     function shade(v){var c=Math.round(255-Math.max(0,Math.min(1,v))*220);return 'rgb('+c+','+c+','+c+')';}
@@ -1291,7 +1234,7 @@ photos, so you are the teacher.</p>
       svg.appendChild(el('text',{'class':'wlab',x:mx.toFixed(1),y:(my+3.5).toFixed(1),'text-anchor':'middle',fill:col},txt));});
     CLUES.forEach(function(c,i){svg.appendChild(el('text',{x:132,y:P[0][i]+4,'text-anchor':'end'},c));});
     LABELS.forEach(function(c,i){svg.appendChild(el('text',{x:548,y:P[3][i]+4,'font-weight':(i===top&&labels.length)?'700':'400'},c));});
-    [['clues in',150],['hidden layer 1',300],['hidden layer 2',420],['label out',530]].forEach(function(t){svg.appendChild(el('text',{x:t[1],y:294,'text-anchor':'middle','class':'dim'},t[0]));});
+    [['clues in',150],['hidden layer 1',300],['hidden layer 2',420],['prediction',530]].forEach(function(t){svg.appendChild(el('text',{x:t[1],y:294,'text-anchor':'middle','class':'dim'},t[0]));});
     box.appendChild(svg);
     var h='';LABELS.forEach(function(l,i){h+='<div class="prow'+(i===top?' top':'')+'"><span>'+l+'</span><span class="ptrack" aria-hidden="true"><span style="width:'+(f.p[i]*100).toFixed(1)+'%"></span></span><span class="pv">'+Math.round(f.p[i]*100)+'%</span></div>';});
     $('nnt-probs').innerHTML=h;
@@ -1299,13 +1242,13 @@ photos, so you are the teacher.</p>
   function showDelta(){if(!before){$('nnt-delta').innerHTML='';return;}
     var E=edges(net,before).sort(function(a,b){return Math.abs(b.w-b.ref)-Math.abs(a.w-a.ref);}).slice(0,3);
     $('nnt-delta').innerHTML='<b>Biggest moves this round</b> (glowing pink in the diagram): '+E.map(function(e){return fromName(e)+' into '+toName(e)+', <span class="wv">'+sgn(e.ref)+'</span> to <span class="wv">'+sgn(e.w)+'</span>';}).join('; ')+'. Units count from the top.';}
-  function trainSet(){var set=labels.map(function(l,i){return [TRAIN[i][3],l];});if(extraOn)EXTRA.forEach(function(e){set.push([e[3],e[4]]);});return set;}
+  function trainSet(){var set=labels.map(function(l,i){return [TRAIN[i][3],l];});LOOP.forEach(function(e){set.push([e[3],0]);});return set;}
   function retrain(showX,done){var set=trainSet(),X=set.map(function(s){return s[0];}),Y=set.map(function(s){return s[1];});
     var my=++runId,e=0,per=REDUCED?EPOCHS:6;before=clone(net);training=true;setButtons();$('nnt-test').disabled=true;
     function tick(){if(my!==runId)return;
       for(var s=0;s<per&&e<EPOCHS;s++,e++)epoch(net,X,Y,0.15);
       drawNet(showX);
-      $('nnt-train').innerHTML=(e<EPOCHS?'Training: ':'Trained: ')+'pass <b>'+e+'</b> of '+EPOCHS+' through your '+X.length+' labeled photo'+(X.length===1?'':'s')+'. Error <b>'+lossOf(net,X,Y).toFixed(2)+'</b> (lower is better).';
+      $('nnt-train').innerHTML=(e<EPOCHS?'Training: ':'Trained: ')+'pass <b>'+e+'</b> of '+EPOCHS+' through your '+X.length+' swiped video'+(X.length===1?'':'s')+'. Error <b>'+lossOf(net,X,Y).toFixed(2)+'</b> (lower is better).';
       if(e<EPOCHS){requestAnimationFrame(tick);return;}
       training=false;showDelta();setButtons();done&&done();}
     tick();}
@@ -1313,9 +1256,9 @@ photos, so you are the teacher.</p>
     if(labels.length){var p=fwd(net,TRAIN[idx][3]).p;guessed++;if(argmax(p)===l)right++;}
     labBtns.forEach(function(x){x.classList.toggle('on',x===b);x.setAttribute('aria-pressed',String(x===b));});
     labels.push(l);var justX=TRAIN[idx][3];idx++;
-    $('nnt-status').textContent='You said '+LABELS[l]+'. Watch the weights move as the network retrains on '+labels.length+' photo'+(labels.length===1?'':'s')+'.';
+    $('nnt-status').textContent='You: '+LABELS[l]+'. Watch the weights move as the network retrains on '+labels.length+' video'+(labels.length===1?'':'s')+'.';
     retrain(justX,function(){
-      $('nnt-status').textContent=idx<TRAIN.length?'You said '+LABELS[l]+'. The network retrained on '+labels.length+' photo'+(labels.length===1?'':'s')+'. Photo '+(idx+1)+' of 9.':'All nine labeled. Press Test it on new photos.';
+      $('nnt-status').textContent=idx<TRAIN.length?'You: '+LABELS[l]+'. The network retrained on '+labels.length+' video'+(labels.length===1?'':'s')+'. Video '+(idx+1)+' of 9.':'All nine swiped. Press Rank seven new videos.';
       $('nnt-test').disabled=idx<TRAIN.length;renderCard();});});});
   // why it answered: take each clue away in turn and see how far its confidence in its answer falls
   function why(x,k){var base=fwd(net,x).p[k],d=[];
@@ -1324,23 +1267,48 @@ photos, so you are the teacher.</p>
     if(!d.length||d[0][1]<0.05)return 'Why: no single clue decides it; several add up.';
     var a=d[0],out='Why: mostly <b>'+CLUES[a[0]]+'</b>. Take that clue away and '+LABELS[k]+' falls to '+Math.round(a[2]*100)+'%.';
     if(d[1]&&d[1][1]>=0.1)out+=' Next is <b>'+CLUES[d[1][0]]+'</b>.';
-    if(a[0]>=4)out+=' That clue is about the background, not the animal.';
     return out;}
-  function runTests(){var h='',ok=[0,0],n=[0,0],roo=0;
-    TEST.forEach(function(t){var p=fwd(net,t[3]).p,k=argmax(p),c=Math.round(p[k]*100),cls=t[5]===1?' tail':(t[5]===2?' none':'');
-      var good=t[4]===k;if(t[5]<2){n[t[5]]++;if(good)ok[t[5]]++;}if(t[5]===2)roo=c;
-      var truth=t[4]<0?'none of your three labels fits':LABELS[t[4]];
-      var tag=t[4]<0?'<span class="ttag bad">No label for this</span>':(good?'<span class="ttag ok">Right</span>':'<span class="ttag bad">Wrong</span>');
-      h+='<div class="trow'+cls+'">'+pic(t,'te')+'<div class="td">'+t[1]+'<small>Really: '+truth+(t[5]===1?' &middot; the background does not match':'')+'</small><small class="why">'+why(t[3],k)+'</small></div><div class="tg">The network says <b>'+LABELS[k]+'</b></div><div>'+c+'% sure '+tag+'</div></div>';});
+  var LOOP=[],FEEDS=[];
+  function score(x){var p=fwd(net,x).p;return p[0]+0.5*p[1];}
+  function topicOf(x){var b=-1,v=0.5;for(var i=0;i<4;i++)if(x[i]>v){v=x[i];b=i;}return b;}
+  function runTests(){var rows=TEST.map(function(t){return [t,score(t[3])];});rows.sort(function(a,b){return b[1]-a[1];});
+    var h='<p class="nnt-feedhead">Your feed, ranked by what the network predicts you will watch</p>',tail=[];
+    rows.forEach(function(rw,n){var t=rw[0],p=fwd(net,t[3]).p,k=argmax(p),c=Math.round(p[k]*100);if(t[5]===1)tail.push([t,k,c]);
+      h+='<div class="trow'+(t[5]===1?' tail':'')+'">'+pic(t,'te')+'<div class="td">'+t[1]+(t[5]===1?'<small>None of the topics it has seen from you</small>':'')+'<small class="why">'+why(t[3],k)+'</small></div><div class="tg">#'+(n+1)+' in your feed</div><div>Predicts <b>'+LABELS[k]+'</b>, '+c+'% sure</div></div>';});
     $('nnt-tests').innerHTML=h;
-    var read=(extraOn?'Retrained with the data team’s four photos (13 examples). ':'Trained on your nine labels. ')+'Photos like the ones it trained on: <b>'+ok[0]+' of '+n[0]+'</b> right. Photos where the background does not match: <b>'+ok[1]+' of '+n[1]+'</b> right.';
-    if(!extraOn)read+=ok[1]<n[1]?' In your training photos, every person was indoors, every rabbit was on grass, and every turtle was in water. Backgrounds are big and easy to see, so the network learned the background instead of the animal. Look at which clues have the thickest lines. Now press <b>Add four photos the data team labeled</b>.':' It handled the mismatched backgrounds. That is unusual; check your labels against the photos. Then press <b>Add four photos</b> anyway.';
-    else read+=' Once the backgrounds stopped lining up with the labels, the network had to use the ears, the fur, and the shell instead. You fixed the model without touching it. You fixed the data. Now look at the kangaroo: still '+roo+'% sure, and still wrong, because you never gave it a label for "something else." It can only answer with the labels you gave it.';
+    var tops=rows.slice(0,3).map(function(rw){return rw[0][1].toLowerCase();});
+    var read='Trained on your nine swipes. The top of your feed: '+tops.join('; ')+'. Does that match what you would actually watch? ';
+    read+='Now look at the two videos tinted pink. They carry none of the topic clues you trained it on, so it has no data about you and these topics. It still predicts <b>'+LABELS[tail[0][1]]+'</b> and <b>'+LABELS[tail[1][1]]+'</b>, '+tail[0][2]+'% and '+tail[1][2]+'% sure. That is the long tail from section 4.3: no data, same confidence. ';
+    read+='Next, press <b>Let it pick your feed</b>, and stop swiping. From here on the network chooses what you see.';
     $('nnt-read').innerHTML=read;}
-  $('nnt-test').addEventListener('click',function(){if(training||labels.length<TRAIN.length)return;runTests();$('nnt-add').hidden=extraOn;$('nnt-status').textContent='Tested on seven new photos. Read the rows below.';});
-  $('nnt-add').addEventListener('click',function(){if(training)return;extraOn=true;$('nnt-add').hidden=true;$('nnt-status').textContent='Adding four labeled photos. Watch the weights move as it retrains.';
-    retrain(TEST[3][3],function(){runTests();$('nnt-test').disabled=false;$('nnt-status').textContent='Added four labeled photos and retrained. Tested again below.';});});
-  $('nnt-reset').addEventListener('click',function(){runId++;training=false;labels=[];idx=0;net=initNet(7);before=null;guessed=0;right=0;extraOn=false;['nnt-tests','nnt-read','nnt-train','nnt-delta'].forEach(function(i){$(i).innerHTML='';});$('nnt-add').hidden=true;$('nnt-test').disabled=true;$('nnt-status').textContent='Cleared. Photo 1 of 9. Label it.';renderCard();});
+  function makePool(round){var r=rng(101+round),pool=[];
+    for(var t=0;t<4;t++)for(var v=0;v<4;v++){var x=[0,0,0,0,0,0,0];x[t]=1;if(t!==1&&r()<.3)x[1]=Math.round(r()*6)/10;x[4]=r()<.3?1:0;x[5]=r()<.5?1:0;x[6]=r()<.4?1:0;
+      pool.push([POOLEMO[t][v],POOLTXT[t][v]+' video, round '+(round+1),t,x,-1,0]);}
+    return pool;}
+  function drawFeeds(){var h='<p class="nnt-feedhead">What the network chose to show you, round by round</p>';
+    FEEDS.forEach(function(f,i){var tp={};f.forEach(function(v){tp[TOPICS[topicOf(v[3])]]=1;});var nt=Object.keys(tp).length;
+      h+='<div class="nnt-round"><span class="rl">Round '+(i+1)+'</span><span class="rv">'+f.map(function(v){return '<span title="'+v[1]+'">'+v[0]+'</span>';}).join('')+'</span><span class="rt"><b>'+nt+'</b> topic'+(nt===1?'':'s')+': '+Object.keys(tp).join(', ')+'</span></div>';});
+    $('nnt-tests').innerHTML=h;}
+  var ROUNDS=5;
+  function loopRound(i){if(i>=ROUNDS){loopDone();return;}
+    var pool=makePool(i);pool.sort(function(a,b){return score(b[3])-score(a[3]);});var feed=pool.slice(0,6);
+    FEEDS.push(feed);feed.forEach(function(v){LOOP.push(v);EXTRA.push(v);});drawFeeds();
+    $('nnt-status').textContent='Round '+(i+1)+' of '+ROUNDS+': the network picked six videos. You watched them, because they were what was on your screen. It retrains on what you watched.';
+    retrain(feed[0][3],function(){setTimeout(function(){loopRound(i+1);},REDUCED?0:350);});}
+  function loopDone(){var shown=[0,0,0,0],tot=0;FEEDS.forEach(function(f){f.forEach(function(v){var t=topicOf(v[3]);if(t>=0){shown[t]++;tot++;}});});
+    var yours=[-1,-1,-1,-1];labels.forEach(function(l,i){var t=topicOf(TRAIN[i][3]);if(t>=0){var v=l===0?2:(l===1?1:0);if(v>yours[t])yours[t]=v;}});
+    var h=$('nnt-tests').innerHTML+'<div class="nnt-round nnt-sum"><span class="rl">All '+ROUNDS+' rounds</span><span class="rt" style="grid-column:2/-1">'+TOPICS.map(function(t,i){return t+' <b>'+shown[i]+'</b>';}).join(' &middot; ')+' of '+tot+' videos</span></div>';
+    $('nnt-tests').innerHTML=h;
+    var missed=TOPICS.filter(function(t,i){return yours[i]>=1&&shown[i]<=1;}),never=TOPICS.filter(function(t,i){return shown[i]===0;});
+    var read='You never swiped. The network picked what you saw, what you saw became its training data, and it retrained on that, five times. ';
+    if(missed.length)read+='In your own nine swipes you watched at least some <b>'+missed.join('</b> and <b>')+'</b>. The feed almost never showed '+(missed.length>1?'them':'it')+' to you again, so it can never find out whether you still like '+(missed.length>1?'them':'it')+'. ';
+    else if(never.length)read+='Your feed kept serving what you liked. Now look at what never came back: <b>'+never.join('</b>, <b>')+'</b>. If your taste changed tomorrow, the feed would have no way to notice, because it stopped asking. ';
+    else read+='Your feed kept a mix this time, because you liked every topic about equally. Press <b>Clear and start over</b>, swipe away a couple of topics, and run it again. ';
+    read+='That is a feedback loop (section 4.5): acting on the prediction decided what data the network got next. Nothing about you changed, and nobody touched the network. Only the data did. Now picture this with watch time as the goal, a billion users, and no end to the rounds.';
+    $('nnt-read').innerHTML=read;$('nnt-status').textContent='Done. Read what happened below.';$('nnt-test').disabled=true;}
+  $('nnt-test').addEventListener('click',function(){if(training||labels.length<TRAIN.length)return;runTests();$('nnt-add').hidden=extraOn;$('nnt-status').textContent='Ranked seven new videos. Read your feed below.';});
+  $('nnt-add').addEventListener('click',function(){if(training)return;extraOn=true;$('nnt-add').hidden=true;$('nnt-test').disabled=true;$('nnt-read').innerHTML='';loopRound(0);});
+  $('nnt-reset').addEventListener('click',function(){runId++;training=false;labels=[];idx=0;net=initNet(7);before=null;guessed=0;right=0;extraOn=false;LOOP=[];FEEDS=[];EXTRA.length=0;['nnt-tests','nnt-read','nnt-train','nnt-delta'].forEach(function(i){$(i).innerHTML='';});$('nnt-add').hidden=true;$('nnt-test').disabled=true;$('nnt-status').textContent='Cleared. Video 1 of 9. Swipe it.';renderCard();});
 
   // ---------- 3D view: the photo turns into pixels, the pixels into clues, and the clues travel the weights ----------
   var VIEW='flat', lastX=TRAIN[0][3], lastItem=TRAIN[0];
@@ -1370,7 +1338,7 @@ photos, so you are the teacher.</p>
     var sc=scene(item),x=item[3],r=rng(17),px=[],tot=[0,0,0,0,0,0,0];
     function pick(group){var s=0;group.forEach(function(i){s+=x[i];});if(s<=0)return -1;var q=r()*s;for(var k=0;k<group.length;k++){q-=x[group[k]];if(q<=0)return group[k];}return group[group.length-1];}
     for(var j=0;j<SGY;j++)for(var i=0;i<SGX;i++){
-      // pixels on the animal or person feed the clues about it; background pixels feed the clues about the background
+      // pixels on the subject feed the topic clues; the rest feed the clues about how the video was posted
       var cx=(i+.5)*SW/SGX,cy=(j+.5)*SH/SGY,onSubject=Math.hypot(cx-sc.sx,cy-sc.sy)<sc.ss*0.5;
       var k=pick(onSubject?[0,1,2,3]:[4,5,6]);if(k<0)k=pick(onSubject?[4,5,6]:[0,1,2,3]);
       var P0=[PHX,PHH/2-(j+.5)*CELL,-PHW/2+(i+.5)*CELL],Q=k>=0?POS[0][k]:null;
@@ -1379,7 +1347,7 @@ photos, so you are the teacher.</p>
     seq={item:item,t0:performance.now(),px:px,tot:tot,img:sc.c,done:!!REDUCED};
     spin3=false;yaw3=YAW0;pitch3=PITCH0;sway3=0;kick3();}
   function pf(p,flyP){return c01((flyP-p.d)/0.55);}
-  var STAGES=['The photo','To a computer, a photo is a grid of colored pixels','The pixels are boiled down to seven clues','The clues travel the weights, one layer at a time'];
+  var STAGES=['The video','To a computer, a video frame is a grid of colored pixels','The video is boiled down to seven clues','The clues travel the weights, one layer at a time'];
   function draw3d(){
     if(VIEW!=='3d'||!c3.clientWidth)return;
     if(c3.clientWidth!==W3||c3.clientHeight!==H3)size3();
@@ -1436,7 +1404,7 @@ photos, so you are the teacher.</p>
         g3.font=(isTop?'700 ':'500 ')+(W3<520?'10.5px ':'12px ')+SANS;g3.fillStyle=isTop?'#c0146a':'#0e0e0d';g3.textBaseline='middle';
         if(n.li===0){g3.textAlign='right';g3.fillText(lab,n.p[0]-r-5,n.p[1]);}else{g3.textAlign='left';g3.fillText(lab,n.p[0]+r+5,n.p[1]);}}});
     g3.globalAlpha=Math.min(labA,netA);g3.font='11px '+SANS;g3.fillStyle='#6b6b68';g3.textAlign='center';
-    if(W3>=520)[['clues in',0],['hidden layer 1',1],['hidden layer 2',2],['label out',3]].forEach(function(c){var p=p3([LX[c[1]],-LR[c[1]]-(c[1]===0?1.05:0.6),LZ[c[1]]]);g3.fillText(c[0],p[0],p[1]);});
+    if(W3>=520)[['clues in',0],['hidden layer 1',1],['hidden layer 2',2],['prediction',3]].forEach(function(c){var p=p3([LX[c[1]],-LR[c[1]]-(c[1]===0?1.05:0.6),LZ[c[1]]]);g3.fillText(c[0],p[0],p[1]);});
     g3.globalAlpha=1;
     // the photo, then its pixels, drawn last because they sit nearest the camera
     if(playing&&t<T_FLY){
@@ -1463,7 +1431,7 @@ photos, so you are the teacher.</p>
     var tw=Math.max.apply(null,lines.map(function(l){return g3.measureText(l).width;}));
     g3.fillStyle='rgba(255,255,255,.88)';g3.fillRect(8,8,ind+tw+16,lines.length*lh+8);
     g3.fillStyle='#cc146d';g3.fillText(String(num),16,13);g3.fillStyle='#0e0e0d';lines.forEach(function(l,i){g3.fillText(l,16+ind,13+i*lh);});
-    c3.setAttribute('aria-label','A 3D view of the network. The photo, '+(seq?seq.item:lastItem)[1].toLowerCase()+', breaks into pixels, the pixels become seven clues, and the clues travel the weights through two hidden layers to three labels. '+(blank?'The network is blank until you label the first photo.':'The strongest clues right now are '+topClues().join(', ')+'. It leans '+LABELS[top]+', '+Math.round(f.p[top]*100)+'% sure.'));
+    c3.setAttribute('aria-label','A 3D view of the network. The video, '+(seq?seq.item:lastItem)[1].toLowerCase()+', breaks into pixels, the pixels become seven clues, and the clues travel the weights through two hidden layers to three predictions. '+(blank?'The network is blank until you swipe the first video.':'The strongest clues right now are '+topClues().join(', ')+'. It leans '+LABELS[top]+', '+Math.round(f.p[top]*100)+'% sure.'));
   }
   function spawn(){var E=edges(net,before);var tot=0;E.forEach(function(e){tot+=Math.min(Math.abs(e.w),3);});
     for(var s=0;s<3;s++){var r=Math.random()*tot,k=0;for(;k<E.length;k++){r-=Math.min(Math.abs(E[k].w),3);if(r<=0)break;}
@@ -3014,9 +2982,11 @@ what it is, and ask who would hold the authority to say no if it were written fo
 <li id="src-61"><span class="srcnum">61</span> Harry Carr, Erik Leiden, Dan Restuccia, Matt Sigelman, Mariano Mamertino, and Gaius Ahamide, <em>Fewer Rungs, New Bridges: How AI Is Realigning the Career Ladder as We Know It</em> (Burning Glass Institute and RAISE US, November 2026), pp. 6&ndash;11, for workers without a bachelor&rsquo;s degree holding 80 percent of jobs that tilt toward automation (versus 64 percent of all jobs); the fall of 780,000 office and administrative support jobs from 2023 to 2025 while management, business, and financial jobs grew by more than a million; the loss of about 820,000 jobs in automation-leaning occupations against a gain of 1.4 million in augmentation-leaning ones; customer service jobs falling while software developer jobs grew despite similar AI exposure; and the 1.5 million white-collar shortfall, a net figure that reflects technology of all kinds and offshoring, with hiring, not layoffs, falling. The report calls AI &ldquo;one likely factor among several.&rdquo; Summarized by <a href="https://www.digitaltrends.com/computing/ai-is-squeezing-entry-level-office-jobs-and-workers-without-degrees-are-most-exposed/" target="_blank" rel="noopener">Digital Trends</a>, 23 November 2026. Also, from the same report: the BLS projection that 89 percent of augmentation-leaning occupations and 45 percent of automation-leaning ones will grow through 2035; unemployment for graduates aged 20&ndash;24 and 25&ndash;34 higher than in more than 60 percent of months since 2003; the 50 employers with the most postings raising their entry-level share by 3.7 percent; the rise from 2019 to 2025 in entry-level postings mentioning stakeholders (71 percent) and interpersonal skills (36 percent); and the report&rsquo;s advice that junior hires cost less and may bring habits of working with AI. Sections 10.2 and 10.3.</li>
 <li id="src-62"><span class="srcnum">62</span> Steve Inskeep, <a href="https://www.npr.org/2026/11/23/nx-s1-6048624/ai-is-making-it-hard-for-young-people-to-find-work-report-says" target="_blank" rel="noopener">&ldquo;AI Is Making It Hard for Young People to Find Work, Report Says,&rdquo;</a> <em>Morning Edition</em>, NPR, 23 November 2026, interview with Matt Sigelman of the Burning Glass Institute, for the advice to build experience before graduating. Section 10.2.</li>
 <li id="src-63"><span class="srcnum">63</span> Epic, <a href="https://www.epic.com/software/penny" target="_blank" rel="noopener">&ldquo;Penny&rdquo;</a> and <a href="https://www.epic.com/software/ai-operations/" target="_blank" rel="noopener">AI for operations</a> pages, accessed 23 November 2026, for AI that drafts denial appeal letters and supporting clinical summaries from the patient’s chart, described as a starting point for denial specialists. These are the company’s own descriptions. Section 5.3.</li>
+<li id="src-64"><span class="srcnum">64</span> Zhuoran Liu and colleagues (ByteDance), <a href="https://arxiv.org/abs/2209.07663" target="_blank" rel="noopener">&ldquo;Monolith: Real Time Recommendation System With Collisionless Embedding Table,&rdquo;</a> ACM Conference on Recommender Systems (RecSys) workshop, 2022, for a deep learning recommender built for short-video ranking that trains on user interactions in real time. The paper describes ByteDance&rsquo;s approach, not TikTok&rsquo;s exact production algorithm. Section 4.2.</li>
 <li>Further reading. NIST AI Risk Management Framework 1.0 (2023), the voluntary U.S. framework. James Bessen, &ldquo;Toil and Technology,&rdquo; <em>Finance &amp; Development</em> (IMF, 2015), on what automation did to bank teller jobs, for the question students always ask about their own. The MIS 201 book&rsquo;s Chapter 4 treats the Every Cure case at greater length, with a lab on its scores.</li>
 <li>Unsourced by design. The accounting, marketing, and operations descriptions in section 6.3 are general accounts of common practice, not reported cases. The refund agent in section 3.3 is an illustration of a common design, not a named company. The screening numbers in section 4.3, the likelihoods in section 5.1, the shape of the long-tail figure in section 8.5, and the placements on the dials figure in section 3 are illustrative.</li>
 <li>Images. Air Canada Boeing 777, photograph by Adrian Pingstone, <a href="https://commons.wikimedia.org/wiki/File:Boeing_777-300_(Air_Canada)_C-FITW.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, public domain. The Spheres, Seattle, photograph by Andy Li, 2018, <a href="https://commons.wikimedia.org/wiki/File:Amazon_Spheres_2018.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, CC0. All diagrams are original to this book.</li>
+<li><strong>Update, 24 November 2026 (a feed instead of photos).</strong> The neural network toy in section 4.2 now trains on short videos instead of photos of people, rabbits, and turtles: students swipe nine videos (watched it all, watched some, swiped away), the network ranks seven new ones into a feed, including two on topics it has never seen, and then picks the feed itself for five rounds, which shows a feedback loop: topics it stops showing never get tested again. The videos, clue scores, and rounds are invented; the network and its training are real. Section 4.2 adds a sentence on ByteDance&rsquo;s published recommender design; source 64.</li>
 <li><strong>Update, 23 November 2026 (pictures and an agent).</strong> The neural network toy in section 4.2 now shows drawn scenes for each photo, and its 3D view follows the photo in: it breaks into pixels, the pixels become the seven clues, and the clues travel the weights to a guess. Section 4.3 adds a chart of the long tail of medical research. Section 5.3 adds a run-the-agent example, built like the one in Lab 8: a hospital agent reads a denied claim, the chart, and the insurer’s rule, drafts an appeal, and waits for a denial specialist; source 63.</li>
 <li><strong>Update, 23 November 2026 (who is most at risk).</strong> Section 10.2 adds the Burning Glass Institute and RAISE US report (later the same day: the BLS projection to 2035, unemployment for young graduates, the largest employers still hiring beginners, and in 10.3 the rise in stakeholder and interpersonal skills and the case for hiring new graduates): the jobs most likely to be automated are mostly held by workers without degrees, office and administrative support lost the most, and business and software jobs grew. New bullet in the &ldquo;too simple&rdquo; box. Sources 61 and 62.</li>
 <li><strong>Update, 23 November 2026 (AI safety and regulation).</strong> New section 9.4 on AI safety (the International AI Safety Report 2026&rsquo;s three kinds of risk, company safety frameworks, and expert disagreement) and section 9.5 on who makes the rules (the EU AI Act and its 2026 delay, U.S. federal action without a statute, California SB 53, and Colorado&rsquo;s repeal and replacement). The regulation paragraph formerly at the end of 9.3 moved into 9.5. Two vocabulary entries; sources 56 to 60.</li>
