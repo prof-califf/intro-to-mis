@@ -358,7 +358,10 @@ main h3{font-family:var(--display);font-weight:600;font-size:1.12rem;text-transf
 .nnt-scene .sd{font-family:var(--display);font-size:1.08rem;font-weight:600;margin-bottom:8px}
 .nnt-feats{display:flex;flex-wrap:wrap;gap:6px}
 .nnt-feat{font-size:.74rem;font-weight:600;padding:2px 9px;border-radius:999px;border:1px solid var(--border);background:#fff}
-.nnt-feat b{color:var(--magenta-dark);font-variant-numeric:tabular-nums}
+.nnt-feat b{color:var(--magenta-dark);font-variant-numeric:tabular-nums;margin-left:2px}
+.nnt-feat i{font-style:normal;font-weight:700}
+.nnt-feat.off{color:var(--text-light);background:var(--off-white);font-weight:500}.nnt-feat.off i{font-weight:500}.nnt-feat.off b{color:var(--text-light)}
+.nnt-key{font-size:.8rem;line-height:1.45;color:var(--text-light);margin:8px 0 0}.nnt-key b{color:var(--black)}
 .nnt-guess{font-family:var(--sans);font-size:.9rem;border:1px solid var(--border);border-left:3px solid var(--black);padding:8px 12px;margin:0 18px 4px}
 .nnt-guess:empty{display:none}
 .nnt-ask{font-family:var(--display);font-weight:600;font-size:1rem;margin:10px 18px 8px}
@@ -1179,11 +1182,14 @@ and you are also the data.</p>
       px.push('rgb('+Math.round(rr/cnt)+','+Math.round(gg/cnt)+','+Math.round(bb/cnt)+')');}
     return (SCACHE[key]={c:cv,url:cv.toDataURL('image/png'),sx:sx,sy:sy,ss:ss,px:px});}
   function pic(item,cls){return '<img class="'+cls+'" src="'+scene(item).url+'" width="240" height="180" alt="" aria-hidden="true">';}
-  function chips(x){return '<div class="nnt-feats">'+x.map(function(v,i){return '<span class="nnt-feat">'+CLUES[i]+' <b>'+(v===0?'0':v===1?'1':v.toFixed(1).replace(/^0/,''))+'</b></span>';}).join('')+'</div>';}
+  var CLUEQ=['About pets?','Funny?','About sports?','About cooking?','From someone you follow?','Uses a trending sound?','Over a minute long?'];
+  function word(v){return v===1?'yes':v===0?'no':v>=0.8?'mostly':v>=0.5?'partly':'a little';}
+  function chips(x){return '<div class="nnt-feats">'+x.map(function(v,i){return '<span class="nnt-feat'+(v===0?' off':'')+'">'+CLUEQ[i]+' <i>'+word(v)+'</i> <b>'+(v===0?'0':v===1?'1':v.toFixed(1))+'</b></span>';}).join('')+'</div>'+
+    '<p class="nnt-key">The network cannot watch the video. All it gets are these seven answers as numbers: <b>1</b> means yes, <b>0</b> means no, and anything between means partly.</p>';}
   function setButtons(){labBtns.forEach(function(b){b.disabled=training||idx>=TRAIN.length;});}
   function renderCard(){var c=$('nnt-card');
     if(idx<TRAIN.length){var s=TRAIN[idx];
-      c.innerHTML=pic(s,'ph')+'<div><div class="sk">Video '+(idx+1)+' of 9 &middot; the clues, 0 to 1</div><div class="sd">'+s[1]+'</div>'+chips(s[3])+'</div>';
+      c.innerHTML=pic(s,'ph')+'<div><div class="sk">Video '+(idx+1)+' of 9 &middot; what the network sees</div><div class="sd">'+s[1]+'</div>'+chips(s[3])+'</div>';
       if(labels.length){var p=fwd(net,s[3]).p,k=argmax(p);$('nnt-guess').innerHTML='The network’s guess before you choose: <b>'+LABELS[k]+'</b>, '+Math.round(p[k]*100)+'% sure.';}
       else $('nnt-guess').innerHTML='No guess yet. The network has seen nothing from you, so its weights are still random.';
       drawNet(s[3]);
